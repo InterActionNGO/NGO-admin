@@ -18,7 +18,7 @@ set :scm, :git
 # set :git_enable_submodules, 1
 set :git_shallow_clone, 1
 set :scm_user, 'ubuntu'
-set :repository, "git://github.com/Vizzuality/iom.git"
+set :repository, "git://github.com/simbiotica/iom.git"
 ssh_options[:forward_agent] = true
 set :keep_releases, 5
 
