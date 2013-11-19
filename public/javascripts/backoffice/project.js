@@ -372,13 +372,13 @@ $(document).ready(function(ev){
       resetCombo($('span#sector'));
     }else {
       $(this).removeClass('clicked');
-      $(this).css('position','static');
+      //$(this).css('position','static');
     }
 
     $(document).click(function(event) {
       if ((!$(event.target).closest('span.combo_sector_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
         $('span.combo_sector_options.clicked').removeClass('clicked');
-        $('span#sector').css('position','static');
+        // $('span#sector').css('position','static');
       };
     });
   });
