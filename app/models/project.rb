@@ -62,9 +62,9 @@ class Project < ActiveRecord::Base
   validate :sync_mode_validations,                                   :if     => lambda { sync_mode }
   validates_presence_of :name, :description, :start_date, :end_date, :unless => lambda { sync_mode }
   validates_presence_of :primary_organization_id,                    :unless => lambda { sync_mode }
+  validates_presence_of :sectors
   validate :location_presence,                                       :unless => lambda { sync_mode }
   validate :dates_consistency#, :presence_of_clusters_and_sectors
-  validate :presence_of_sectors
 
   #validates_uniqueness_of :intervention_id, :if => (lambda do
     #intervention_id.present?
@@ -194,7 +194,6 @@ class Project < ActiveRecord::Base
     where << '(p.end_date is null OR p.end_date > now())' if !options[:include_non_active]
 
 
-debugger
     if options[:kml]
       # kml_select = <<-SQL
       #   , CASE WHEN regions_ids IS NOT NULL AND regions_ids != ('{}')::integer[] THEN
@@ -664,20 +663,6 @@ SQL
     self.region_ids = region_ids.uniq
   end
 
-  def sectors_ids
-    return "" if self.new_record?
-    sql = "select sector_id from projects_sectors where project_id=#{self.id}"
-    ActiveRecord::Base.connection.execute(sql).map{ |s| s['sector_id'] }.uniq.join(',')
-  end
-
-  def sectors_ids=(value)
-    sector_ids = []
-    value.each do |id|
-      sector_ids += id
-    end
-    self.sectors_ids = sectors_ids.uniq
-  end
-
   def set_cached_sites
 
     #We also update its geometry
@@ -1136,11 +1121,4 @@ SQL
       errors.add(:clusters, "can't be blank")
     end
   end  
-
-  def presence_of_sectors
-    return unless self.new_record?
-    if sectors_ids.blank? && sectors.empty?
-      self.errors.add(:sectors, "can't be blank")
-    end
-  end
 end
