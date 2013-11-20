@@ -4,7 +4,7 @@ development:
   encoding: unicode
   host: localhost
   database: iom_development
-  username: postgres
+  username: davidsingal
   password:
 
 test:
@@ -27,6 +27,7 @@ production:
   adapter: postgresql
   template: template_postgis
   encoding: unicode
-  database: iom_production
-  username: postgres
+  host: localhost
+  database: iom_development
+  username: davidsingal
   password:

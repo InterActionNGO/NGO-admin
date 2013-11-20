@@ -1,42 +1,28 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title><%= title %></title>
-  <%=raw(javascript_include_merged(:base)) %>
-  <%=raw(javascript_include_merged(:base_2)) %>
-  <%=raw(stylesheet_link_merged(:base)) %>
-  <%=stylesheet_link_tag @site.theme.css_file if @site.theme %>
-  <%=auto_discovery_link_tag(:rss, "#{url(@site)}/.xml", {:title => @site.name}) %>
-  <link rel="shortcut icon" href="/images/favicon.ico"/>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
 
+    <%=raw(stylesheet_link_merged(:base)) %>
+    <%=stylesheet_link_tag @site.theme.css_file if @site.theme %>
+    <%=stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css"%>
 
+    <%=auto_discovery_link_tag(:rss, "#{url(@site)}/.xml", {:title => @site.name}) %>
 
-  <% if Rails.env.production? %>
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
-  _gaq.push(['_trackPageview']);
+    <link rel="icon" href="/images/favicon.ico"/>
+  </head>
+  <body>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-  </script>
-  <% end %>
-</head>
-<body>
-
-  <% unless action_name == 'home' && controller_name == 'sites' %>
-    <% cache("#{@site.id}/home/menu") do %>
-      <%= render :partial => 'shared/menu' %>
+    <% unless action_name == 'home' && controller_name == 'sites' %>
+      <% cache("#{@site.id}/home/menu") do %>
+        <%= render :partial => 'shared/menu' %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <div id="outer_layout">
+    <div id="outer_layout">
 
-    <%= yield %> <!-- Main layout has to content <div id="layout"> -->
+      <%= yield %> <!-- Main layout has to content <div id="layout"> -->
 
     </div>
 
@@ -45,8 +31,24 @@
     <% else %>
       <%= render :partial => 'shared/footer_general' %>
     <% end %>
+    
+    <%=raw(javascript_include_merged(:base)) %>
+    <%=raw(javascript_include_merged(:base_2)) %>
 
-  </div>
-  <%= yield :js %>
-</body>
+    <%= yield :js %>
+
+    <% if Rails.env.production? %>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+  </body>
 </html>

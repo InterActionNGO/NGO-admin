@@ -25,7 +25,7 @@ javascripts:
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - clusters_sectors_show:
   - sites/mercatorProjection
   - sites/IOMMarker
@@ -43,13 +43,13 @@ javascripts:
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - organizations_show:
   - sites/location
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - projects_show:
   - plugins/galleria
   - plugins/galleria.classic

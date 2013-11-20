@@ -27,7 +27,7 @@
   <%= render :partial => 'shared/menu'  %>
 <% end %>
 
-<div id="map" class="home"></div>
+<!-- <div id="map" class="home"></div>
 <a href="#zoom_in" id="zoomIn" onclick="zoomIn()"></a>
 <a href="#zoom_out" id="zoomOut" onclick="zoomOut()"></a>
 <div class="map_style">
@@ -36,8 +36,8 @@
     <li><a id="plain_map" href="#plain">PLAIN</a></li>
     <li><a id="satellite_map" href="#satellite">SATELLITE</a></li>
   </ul>
-</div>
-
+</div> -->
+<%= render :partial => 'partials/map' %>
 
 <div id="layout">
 <div id="left_column">
@@ -135,23 +135,26 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  <% if @site.overview_map_lat && @site.overview_map_lon %>
-  var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-  <% else %>
-  var map_center = [];
-  <% end %>
-  var map_zoom = <%= @site.overview_map_zoom %>;
-  var chco = "<%=@overview_map_chco%>";
-  var chf = "<%=@overview_map_chf%>";
-  var chld = "<%=@chld%>";
-  var chd = "<%=@chd%>";
-  var map_data = <%=raw(@map_data)%>;
-  var max_count = <%=@map_data_max_count%>;
-  var map_type = 'overview_map';
-  var theme = "<%=@site.theme_id%>";
-  var stylez = <%=raw @site.map_styles  %>
-</script>
-
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3"></script>
-<%=raw(javascript_include_merged(:sites_home)) %>
+<% content_for :js do %>
+  <script>
+    <% if @site.overview_map_lat && @site.overview_map_lon %>
+    var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
+    <% else %>
+    var map_center = [];
+    <% end %>
+    var map_zoom = <%= @site.overview_map_zoom %>;
+    var chco = "<%=@overview_map_chco%>";
+    var chf = "<%=@overview_map_chf%>";
+    var chld = "<%=@chld%>";
+    var chd = "<%=@chd%>";
+    var map_data = <%=raw(@map_data)%>;
+    var max_count = <%=@map_data_max_count%>;
+    var map_type = 'overview_map';
+    var theme = "<%=@site.theme_id%>";
+    var stylez = <%=raw @site.map_styles  %>
+  </script>
+  <!--<script src="http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3"></script>-->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLF_4Hka9T0of09Z0eGPmExn-tG2ZIveU&sensor=false"></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+  <%=raw(javascript_include_merged(:sites_home)) %>
+<% end %>
