@@ -118,17 +118,25 @@ class Admin::ProjectsController < Admin::AdminController
 
   def update
     @project = find_project(params[:id])
+    @sectors = @project.sectors
     @project.attributes = params[:project]
     @project.updated_by = current_user
-
-    if @project.save
-      flash[:notice] = 'Project updated successfully.'
-      redirect_to edit_admin_project_path(@project), :flash => {:success => 'Project has been updated successfully'}
+    if params[:project][:sector_ids].nil? && !@project.sectors.empty?
+        @organizations_ids   = organizations_ids
+        @countries_iso_codes = countries_iso_codes
+        @project.sectors = @sectors
+        flash.now[:error] = 'Sorry, you can\'t remove all sectors'
+        render :action => 'edit'
     else
-      @organizations_ids   = organizations_ids
-      @countries_iso_codes = countries_iso_codes
-      flash.now[:error] = 'Sorry, there are some errors that must be corrected.'
-      render :action => 'edit'
+      if @project.save
+        flash[:notice] = 'Project updated successfully.'
+        redirect_to edit_admin_project_path(@project), :flash => {:success => 'Project has been updated successfully'}
+      else
+        @organizations_ids   = organizations_ids
+        @countries_iso_codes = countries_iso_codes
+        flash.now[:error] = 'Sorry, there are some errors that must be corrected.'
+        render :action => 'edit'
+      end
     end
   end
 
