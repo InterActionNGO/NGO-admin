@@ -228,12 +228,11 @@ class Project < ActiveRecord::Base
         region_id,
       SQL
     end
-    debugger
     if options[:region]
-      where << "regions_ids && '{#{options[:region]}}' and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:region]} and site_id=#{site.id}"
       if options[:region_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:region_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:region_category_id]}"
         else
           where << "ps2.sector_id = #{options[:region_category_id]}"
         end
@@ -243,13 +242,13 @@ class Project < ActiveRecord::Base
       where << "cp.country_id = #{options[:country]} and site_id = #{site.id}"
       if options[:country_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:country_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:country_category_id]}"
         else
           where << "ps2.sector_id = #{options[:country_category_id]}"
         end
       end
     elsif options[:cluster]
-      where << "cluster_ids && '{#{options[:cluster]}}' and site_id=#{site.id}"
+      where << "clpr.cluster_id = #{options[:cluster]} and site_id=#{site.id}"
       where << "pr.region_id = #{options[:cluster_region_id]}" if options[:cluster_region_id]
       where << "cp.country_id = #{options[:cluster_country_id]}" if options[:cluster_country_id]
     elsif options[:sector]
@@ -262,7 +261,7 @@ class Project < ActiveRecord::Base
 
       if options[:organization_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:organization_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:organization_category_id]}"
         else
           where << "ps2.sector_id = #{options[:organization_category_id]}"
         end
@@ -355,7 +354,8 @@ class Project < ActiveRecord::Base
         LEFT OUTER JOIN projects_sites ps      ON  ps.project_id = p.id
         LEFT OUTER JOIN countries_projects cp  ON  cp.project_id = p.id
         LEFT OUTER JOIN projects_regions pr    ON  pr.project_id = p.id
-        LEFT OUTER JOIN projects_sectors ps2    ON  ps2.project_id = p.id
+        LEFT OUTER JOIN projects_sectors ps2   ON  ps2.project_id = p.id
+        LEFT OUTER JOIN clusters_projects clpr ON  clpr.project_id = p.id
         #{where}
         GROUP BY
         p.id,
