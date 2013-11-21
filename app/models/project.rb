@@ -228,14 +228,14 @@ class Project < ActiveRecord::Base
         region_id,
       SQL
     end
-
+    debugger
     if options[:region]
       where << "regions_ids && '{#{options[:region]}}' and site_id=#{site.id}"
       if options[:region_category_id]
         if site.navigate_by_cluster?
           where << "cluster_ids && '{#{options[:region_category_id]}}'"
         else
-          where << "sector_ids && '{#{options[:region_category_id]}}'"
+          where << "ps2.sector_id = #{options[:region_category_id]}"
         end
       end
     elsif options[:country]
@@ -264,7 +264,7 @@ class Project < ActiveRecord::Base
         if site.navigate_by_cluster?
           where << "cluster_ids && '{#{options[:organization_category_id]}}'"
         else
-          where << "sector_ids && '{#{options[:organization_category_id]}}'"
+          where << "ps2.sector_id = #{options[:organization_category_id]}"
         end
       end
 
