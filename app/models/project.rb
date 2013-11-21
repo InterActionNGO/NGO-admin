@@ -62,9 +62,9 @@ class Project < ActiveRecord::Base
   validate :sync_mode_validations,                                   :if     => lambda { sync_mode }
   validates_presence_of :name, :description, :start_date, :end_date, :unless => lambda { sync_mode }
   validates_presence_of :primary_organization_id,                    :unless => lambda { sync_mode }
+  validates_presence_of :sectors
   validate :location_presence,                                       :unless => lambda { sync_mode }
   validate :dates_consistency#, :presence_of_clusters_and_sectors
-  validate :presence_of_sectors
 
   #validates_uniqueness_of :intervention_id, :if => (lambda do
     #intervention_id.present?
@@ -194,66 +194,81 @@ class Project < ActiveRecord::Base
     where << '(p.end_date is null OR p.end_date > now())' if !options[:include_non_active]
 
 
-
     if options[:kml]
+      # kml_select = <<-SQL
+      #   , CASE WHEN regions_ids IS NOT NULL AND regions_ids != ('{}')::integer[] THEN
+      #   (select
+      #   '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
+      #   from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id where ('{'||r.id||'}')::integer[] && regions_ids and pr.project_id=p.id)
+      #   ELSE
+      #   (select
+      #   '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
+      #   from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where ('{'||c.id||'}')::integer[] && countries_ids and cp.project_id=p.id)
+      #   END
+      #   as kml
+      # SQL
+      # kml_group_by = <<-SQL
+      #   countries_ids,
+      #   regions_ids,
+      # SQL 
       kml_select = <<-SQL
-        , CASE WHEN regions_ids IS NOT NULL AND regions_ids != ('{}')::integer[] THEN
+        , CASE WHEN pr.region_id IS NOT NULL THEN
         (select
         '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-        from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id where ('{'||r.id||'}')::integer[] && regions_ids and pr.project_id=p.id)
+        from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE pr.project_id=p.id)
         ELSE
         (select
         '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-        from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where ('{'||c.id||'}')::integer[] && countries_ids and cp.project_id=p.id)
+        from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where cp.project_id=p.id)
         END
         as kml
       SQL
       kml_group_by = <<-SQL
-        countries_ids,
-        regions_ids,
+        country_id,
+        region_id,
       SQL
     end
-
     if options[:region]
-      where << "regions_ids && '{#{options[:region]}}' and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:region]} and site_id=#{site.id}"
       if options[:region_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:region_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:region_category_id]}"
         else
-          where << "sector_ids && '{#{options[:region_category_id]}}'"
+          where << "ps2.sector_id = #{options[:region_category_id]}"
         end
       end
     elsif options[:country]
-      where << "countries_ids && '{#{options[:country]}}' and site_id=#{site.id}"
+      # where << "countries_ids && '{#{options[:country]}}' and site_id=#{site.id}"
+      where << "cp.country_id = #{options[:country]} and site_id = #{site.id}"
       if options[:country_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:country_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:country_category_id]}"
         else
-          where << "sector_ids && '{#{options[:country_category_id]}}'"
+          where << "ps2.sector_id = #{options[:country_category_id]}"
         end
       end
     elsif options[:cluster]
-      where << "cluster_ids && '{#{options[:cluster]}}' and site_id=#{site.id}"
-      where << "regions_ids && '{#{options[:cluster_region_id]}}'" if options[:cluster_region_id]
-      where << "countries_ids && '{#{options[:cluster_country_id]}}'" if options[:cluster_country_id]
+      where << "clpr.cluster_id = #{options[:cluster]} and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:cluster_region_id]}" if options[:cluster_region_id]
+      where << "cp.country_id = #{options[:cluster_country_id]}" if options[:cluster_country_id]
     elsif options[:sector]
-      where << "sector_ids && '{#{options[:sector]}}' and site_id=#{site.id}"
-      where << "regions_ids && '{#{options[:sector_region_id]}}'" if options[:sector_region_id]
-      where << "countries_ids && '{#{options[:sector_country_id]}}'" if options[:sector_country_id]
+      where << "ps2.sector_id = #{options[:sector]} and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:sector_region_id]}" if options[:sector_region_id]
+      where << "cp.country_id = #{options[:sector_country_id]}" if options[:sector_country_id]
     elsif options[:organization]
       where << "p.primary_organization_id = #{options[:organization]}"
-      where << "site_id=#{site.id}" if site
+      where << "site_id = #{site.id}" if site
 
       if options[:organization_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:organization_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:organization_category_id]}"
         else
-          where << "sector_ids && '{#{options[:organization_category_id]}}'"
+          where << "ps2.sector_id = #{options[:organization_category_id]}"
         end
       end
 
-      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id]
-      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
+      where << "pr_region_id = #{options[:organization_region_id]}" if options[:organization_region_id]
+      where << "cp.country_id = #{options[:organization_country_id]}" if options[:organization_country_id]
     elsif options[:project]
       where << "project_id = #{options[:project]}"
     end
@@ -339,6 +354,8 @@ class Project < ActiveRecord::Base
         LEFT OUTER JOIN projects_sites ps      ON  ps.project_id = p.id
         LEFT OUTER JOIN countries_projects cp  ON  cp.project_id = p.id
         LEFT OUTER JOIN projects_regions pr    ON  pr.project_id = p.id
+        LEFT OUTER JOIN projects_sectors ps2   ON  ps2.project_id = p.id
+        LEFT OUTER JOIN clusters_projects clpr ON  clpr.project_id = p.id
         #{where}
         GROUP BY
         p.id,
@@ -380,7 +397,7 @@ class Project < ActiveRecord::Base
   def self.to_csv(site, options = {})
     projects = self.list_for_export(site, options)
     csv_headers = self.export_headers(options[:headers_options])
-
+    
     csv_data = FasterCSV.generate(:col_sep => ',') do |csv|
       csv << csv_headers
       projects.each do |project|
@@ -644,21 +661,6 @@ SQL
     end
     self.country_ids = country_ids.uniq
     self.region_ids = region_ids.uniq
-  end
-
-  def sectors_ids
-    return "" if self.new_record?
-    sql = "select sector_id from projects_sectors where project_id=#{self.id}"
-    ActiveRecord::Base.connection.execute(sql).map{ |s| s['sector_id'] }.uniq.join(',')
-  end
-
-  def sectors_ids=(value)
-    sector_ids = []
-    debugger
-    value.each do |id|
-      sector_ids += id
-    end
-    self.sectors_ids = sectors_ids.uniq
   end
 
   def set_cached_sites
@@ -1119,11 +1121,4 @@ SQL
       errors.add(:clusters, "can't be blank")
     end
   end  
-
-  def presence_of_sectors
-    return unless self.new_record?
-    if sectors_ids.blank? && sectors.empty?
-      self.errors.add(:sectors, "can't be blank")
-    end
-  end
 end
