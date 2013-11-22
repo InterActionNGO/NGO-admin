@@ -195,22 +195,6 @@ class Project < ActiveRecord::Base
 
 
     if options[:kml]
-      # kml_select = <<-SQL
-      #   , CASE WHEN regions_ids IS NOT NULL AND regions_ids != ('{}')::integer[] THEN
-      #   (select
-      #   '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-      #   from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id where ('{'||r.id||'}')::integer[] && regions_ids and pr.project_id=p.id)
-      #   ELSE
-      #   (select
-      #   '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-      #   from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where ('{'||c.id||'}')::integer[] && countries_ids and cp.project_id=p.id)
-      #   END
-      #   as kml
-      # SQL
-      # kml_group_by = <<-SQL
-      #   countries_ids,
-      #   regions_ids,
-      # SQL 
       kml_select = <<-SQL
         , CASE WHEN pr.region_id IS NOT NULL THEN
         (select
@@ -238,7 +222,6 @@ class Project < ActiveRecord::Base
         end
       end
     elsif options[:country]
-      # where << "countries_ids && '{#{options[:country]}}' and site_id=#{site.id}"
       where << "cp.country_id = #{options[:country]} and site_id = #{site.id}"
       if options[:country_category_id]
         if site.navigate_by_cluster?
