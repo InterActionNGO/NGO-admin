@@ -34,10 +34,14 @@ class Admin::SitesController < Admin::AdminController
 
   def customization
     @site = Site.find(params[:id])
+    @layers = Layer.where({:status => true})
+    @layer_styles = LayerStyle.all
     render :action => 'edit'
   end
 
   def update
+    @layers = params[:site][:layers_ids]
+    params[:site].delete :layers_ids
     @site = Site.find(params[:id])
     @site.attributes = params[:site]
     if params[:site] && params[:site][:show_blog] == '0'
@@ -46,6 +50,8 @@ class Admin::SitesController < Admin::AdminController
     if @site.save
       flash[:notice] = 'Site updated successfully.'
       if params[:customization]
+        @site.clean_layers
+        self.add_layers(@layers) if !@layers.blank?
         redirect_to customization_admin_site_path(@site), :flash => {:success => 'Site has been updated successfully'}
       else
         redirect_to edit_admin_site_path(@site), :flash => {:success => 'Site has been updated successfully'}
@@ -100,4 +106,14 @@ class Admin::SitesController < Admin::AdminController
     redirect_to admin_sites_path, :flash => {:success => 'Site has been deleted successfully'}
   end
 
+  def add_layers(value)
+    value.each do |v|
+      @l = v.split('#')
+      @sl = SiteLayer.new
+      @sl.site = @site
+      @sl.layer = Layer.find(@l[0])
+      @sl.layer_style = LayerStyle.find(@l[1])
+      @sl.save
+    end
+  end
 end
