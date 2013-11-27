@@ -159,6 +159,38 @@
     </div>
   </div>
 
+  <div class="common">
+    <h3>Site layers</h3>
+    <ul id="sites_layer_list">
+    <% @site.site_layers.each do |sl| %>
+      <li><h5><%= sl.layer.title %> >> <%= sl.layer_style.name%> <a class="close" href="#">x</a></h5>
+      <input type="hidden" name="site[layers_ids][]" value="<%= sl.layer.id %>#<%= sl.layer_style.id %>">
+      </li>
+    <% end %>
+    <ul>
+  </div>
+
+  <div class="common">
+    <h3>Add layer</h3>
+    <label>Layer</label>
+    <select name="layer" id="layer">
+      <option value="-">--Select one</option>
+      <% Layer.where({:status => true}).each do |l| %>
+        <option value="<%= l.id %>"><%= l.title %></option>
+      <% end %>
+    </select>
+    <br />
+    <label>Layer style</label>
+    <select name="layer" id="layer_style">
+      <option value="-">--Select one</option>
+      <% LayerStyle.all.each do |ls| %>
+        <option value="<%= ls.id %>"><%= ls.name %></option>
+      <% end %>
+    </select>
+    <br />
+    <h5><a class="" id="add_site_layer">add layer</a></h5>
+  </div>
+
   <%= f.hidden_field :theme_id, :value => Theme.first.id %>
   <input type="hidden" name="customization" value="true" />
 
@@ -202,6 +234,8 @@
         <%= f.file_field :logo, :class => "#{'error' if @partner && @partner.errors.on(:label)}" %>
       </div>
     </div>
+
+
 
     <div class="field">
       <%= f.submit 'Add partner', :class=>"partner" %>

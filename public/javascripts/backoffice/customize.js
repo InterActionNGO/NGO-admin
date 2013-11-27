@@ -119,6 +119,30 @@
           $('#site_overview_map_zoom').attr('value',map.getZoom());
         });
       });
+
+      // Site layers
+      $('a.close').live('click', function(e){
+        e.preventDefault();
+        var li = $(this).closest('li')
+        li.remove();
+        $(window).unbind('resize');
+      });
+
+      $('#add_site_layer').live('click', function(e){
+        e.preventDefault();
+        var $layer = $('#layer');
+        var $layerStyle = $('#layer_style');
+        if($layer.val() != '-' && $layerStyle.val() != '-')
+        {
+          layer = $layer.val();
+          layer_text = $layer.find('option[value="'+layer+'"]').text();
+          layer_style = $layerStyle.val();
+          layer_style_text = $layerStyle.find('option[value="'+layer_style+'"]').text();
+          $('#sites_layer_list').append('<li><h5>'+ layer_text +'>>' + layer_style_text +'<a class="close" href="#"> x</a></h5><input type="hidden" name="site[layers_ids][]" value="'+layer+'#'+layer_style+'"></li>');
+        }
+      });
+
+
     });
 
     function hideAllMapCombos(){
