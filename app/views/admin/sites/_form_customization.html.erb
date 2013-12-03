@@ -172,23 +172,43 @@
 
   <div class="common">
     <h3>Add layer</h3>
+
     <label>Layer</label>
-    <select name="layer" id="layer">
-      <option value="-">--Select one</option>
-      <% Layer.where({:status => true}).each do |l| %>
-        <option value="<%= l.id %>"><%= l.title %></option>
-      <% end %>
-    </select>
-    <br />
+    <div class="combo_select">
+      <span class="combo_select_options">
+        <p>Layer</p>
+        <div class="wrapper">
+          <ul class="options scroll_pane">
+            <% Layer.where({:status => true}).each do |l| %>
+              <li><a id="<%= l.id %>"><%= l.title %></a></li>
+            <% end %>
+            <li><a href="">Lorem ipsum dolor sit amet</a></li>
+            <li><a href="">Lorem ipsum dolor sit amet</a></li>
+            <li><a href="">Lorem ipsum dolor sit amet</a></li>
+            <li><a href="">Lorem ipsum dolor sit amet</a></li>
+            <li class="last"></li>
+          </ul>
+        </div>
+      </span>
+      <a id="add_site_layer" class="add_btn museo_sans shadow_green">add layer</a>
+    </div>
+    
     <label>Layer style</label>
-    <select name="layer" id="layer_style">
-      <option value="-">--Select one</option>
-      <% LayerStyle.all.each do |ls| %>
-        <option value="<%= ls.id %>"><%= ls.name %></option>
-      <% end %>
-    </select>
-    <br />
-    <h5><a class="" id="add_site_layer">add layer</a></h5>
+    <div class="combo_select">
+      <span class="combo_select_options">
+        <p>Layer style</p>
+        <div class="wrapper">
+          <ul class="options scroll_pane">
+            <% LayerStyle.all.each do |ls| %>
+              <li><a id="<%= ls.id %>"><%= ls.name %></a></li>
+            <% end %>
+            <li class="last"></li>
+          </ul>
+        </div>
+      </span>
+      <a id="add_site_layer_style" class="add_btn museo_sans shadow_green">add layer</a>
+    </div>
+
   </div>
 
   <%= f.hidden_field :theme_id, :value => Theme.first.id %>
@@ -246,3 +266,4 @@
 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3"></script>
 <script src="/javascripts/backoffice/customize.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/backoffice/smbtc-customize.js" type="text/javascript" charset="utf-8"></script>
