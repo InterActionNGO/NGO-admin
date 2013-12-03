@@ -1,0 +1,73 @@
+
+// Big selects
+.combo_select {
+  float: left;
+  margin: 10px 0 0 0;
+  background: url('/images/backoffice/projects/bkg_cluster_options.png') no-repeat 0 0;
+  width: 411px;
+  height: 50px;
+  span.combo_select_options {
+    float: left;
+    margin: 10px 0 0 10px;
+    background: url('/images/backoffice/projects/combos/combo_add_cluster.png') no-repeat 0 0;
+    width: 254px;
+    height: 24px;
+    padding: 8px 0 0 10px;
+    p {
+      font: normal 13px Arial;
+      color: #999999;
+    }
+    ul.options {
+      display: none;
+      top: 32px;
+      left: 0;
+      width: 281px;
+      height: 197px;
+      z-index: 100;
+      background: url('/images/backoffice/projects/combos/body_combo_cluster.png') no-repeat 0 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: absolute;
+    }
+    &.clicked {
+      background: url('/images/backoffice/projects/combos/combo_add_cluster_clicked.png') no-repeat 0 0;
+      ul.options {
+        display: block;
+        li {
+          float: left;
+          margin: 0 0 0 1px;
+          width: 240px;
+          height: auto;
+          padding: 4px 11px;
+          &:hover {
+            background-color: #E4F0CA;
+          }
+          a {
+            font: normal 13px Arial;
+            color: #666666;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  a.add_btn {
+    float: left;
+    margin: 10px 0 0 9px;
+    background: url('/images/backoffice/projects/add_cluster_bttn.png') no-repeat 0 0;
+    width: 118px;
+    height: 25px;
+    font: 500 15px "Museo Sans",Arial;
+    color: #FFFFFF;
+    text-shadow: 0 1px #6E8C30;
+    text-align: center;
+    padding: 7px 0 0 0;
+    &:hover {
+      cursor: pointer;
+      background-position: 0 -32px;
+    }
+  }
+}

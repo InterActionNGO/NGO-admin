@@ -3,6 +3,7 @@
 
 
     $(document).ready( function() {
+
       $('#site_show_blog').click(function(){
         if (!$('#tumbler_id').is(':visible')) {
           $(this).parent().addClass('selected');
@@ -132,8 +133,7 @@
         e.preventDefault();
         var $layer = $('#layer');
         var $layerStyle = $('#layer_style');
-        if($layer.val() != '-' && $layerStyle.val() != '-')
-        {
+        if ($layer.val() != '-' && $layerStyle.val() != '-') {
           layer = $layer.val();
           layer_text = $layer.find('option[value="'+layer+'"]').text();
           layer_style = $layerStyle.val();
