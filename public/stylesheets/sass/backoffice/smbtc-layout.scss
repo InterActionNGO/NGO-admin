@@ -1,5 +1,160 @@
+.input_short {
+        float: left;
+        margin: 5px 0 0 0;
+        width: 272px;
+        height: 34px;
+        background: url('/images/backoffice/projects/bkg_input_short.png') no-repeat 0 0;
+        p.msg {
+          float: right;
+          margin: 8px 8px 0 0;
+          font: italic 15px Arial;
+          color: #999999;
+        }
+        input[type="text"] {
+          float: left;
+          margin: 8px 0 0 5px;
+          width: 210px;
+          height: 20px;
+          border: none;
+        }
+      }
+
 
 // COMBO SELECT
+.combo_search_select {
+  float: left;
+  width: 800px;
+  height: auto;
+  margin: 20px 0 0 0;
+  li.comboselect {
+    float: left;
+    margin-bottom: 10px;
+    width: 190px;
+    height: 100%;
+    &.status {
+      width: 190px;
+    }
+    &.date {
+      width: 380px;
+      .select_date {
+        clear: both;
+        .chzn-container {
+          width: 120px !important;
+        }
+      }
+    }
+    span.combo {
+      float: left;
+      margin: 6px 0 0 0;
+      background: url('/images/backoffice/projects/single_combo_head.png') no-repeat 0 0;
+      font: normal 13px Arial;
+      color: #333333;
+      text-decoration: none;
+      width: 134px;
+      height: 24px;
+      padding: 8px 0 0 11px;
+      position: relative;
+      &:focus {
+        outline: none;
+      }
+      p {
+        width: 130px;
+      }
+      ul.elements {
+        display: none;
+      }
+      &.clicked {
+        background: url('/images/backoffice/projects/combos/index_search_head.png') no-repeat 0 0;
+        width: 135px;
+        position: relative;
+        div.elements_content {
+          position: absolute;
+          top: 31px;
+          left: 0;
+          display: inline;
+          background: url('/images/backoffice/projects/combos/body_combo_search.png') no-repeat 0 0;
+          width: 148px;
+          height: 198px;
+          z-index: 50;
+        }
+        ul.elements {
+          float: left;
+          width: 148px;
+          height: 194px;
+          overflow-x: hidden;
+          overflow-y: auto;
+          display: inline;
+          li {
+            float: left;
+            width: 88px;
+            height: auto;
+            padding: 5px 30px 5px 12px;
+            margin: 0 0 0 1px;
+            &:hover {
+              background-color: #E4F0CA;
+            }
+          }
+        }
+      }
+      ul.elements.short {
+        display: none;
+      }
+      &.clicked ul.elements.short {
+        position: absolute;
+        top: 31px;
+        left: -1px;
+        display: inline;
+        width: 148px;
+        height: auto;
+        background: none;
+        z-index: 50;
+        li {
+          float: left;
+          width: 120px;
+          height: auto;
+          background: url('/images/backoffice/projects/combos/index_search_content.png') repeat-y 0;
+          padding: 5px 5px 5px 12px;
+          margin: 0 0 0 1px;
+          &:hover {
+            float: left;
+            width: 264px;
+            background: url('/images/backoffice/projects/combos/index_search_content_hover.png') repeat-y 0;
+          }
+          &.first {
+            float: left;
+            width: 135px;
+            height: 6px;
+            background: url('/images/backoffice/projects/combos/index_search_content_first.png') no-repeat 0 0;
+            margin: 0 0 0 0 1px;
+            padding: 0;
+          }
+          &.last {
+            float: left;
+            width: 135px;
+            height: 6px;
+            background: url('/images/backoffice/projects/combos/index_search_bottom.png') no-repeat 0 0;
+            &:hover {
+              background: url('/images/backoffice/projects/combos/index_search_bottom.png') no-repeat 0 0;
+            }
+          }
+        }
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    label {
+      display: block;
+      clear: both;
+      width: 104px;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+
+// COMBO DYNAMIC SELECT
 .combo_select {
   background: #cbe598;
   border: 1px solid #bfbfbf;
@@ -111,5 +266,16 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+// HELPERS
+.clearfix {
+  &:after, &:before {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
   }
 }
