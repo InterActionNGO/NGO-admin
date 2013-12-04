@@ -161,7 +161,7 @@
 
   <div class="common">
     <h3>Site layers</h3>
-    <ul id="sites_layer_list">
+    <ul class="combo_list">
     <% @site.site_layers.each do |sl| %>
       <li><h5><%= sl.layer.title %> >> <%= sl.layer_style.name%> <a class="close" href="#">x</a></h5>
       <input type="hidden" name="site[layers_ids][]" value="<%= sl.layer.id %>#<%= sl.layer_style.id %>">
