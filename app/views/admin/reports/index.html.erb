@@ -7,7 +7,7 @@
           <label>SEARCH BY TEXT</label>
           <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place,..." name="q" class="main_search"/>
           <input type="submit" value="" />
-          <ul class="combos">
+          <ul class="combo_search_select clearfix">
       	    <li class="comboselect">
               <label>Organization</label>
               <%= select_tag :organization,
@@ -24,7 +24,7 @@
               <label>SECTOR</label>
 
               <%= select_tag :sector,
-                options_for_select([['Any sector',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-sectors-select", :multiple => true, :size => 5 %>
+                options_for_select([['Any sector',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
             </li>
 
             <li class="comboselect">
@@ -34,43 +34,31 @@
             </li>
 
             <li class="comboselect">
-            	<label>Start date</label>
-            	<%= select_date Date.today, :prefix => :start_date %>
-            </li>
-
-            <li class="comboselect">
-            	<label>End date</label>
-            	<%= select_date nil, :prefix => :start_date %>
-            </li>
-            <li class="comboselect">
-            	<label>Text search</label>
-				<%= text_area_tag(:message, "", :size => "24x6") %>
-            </li>
-            
-            <li class="comboselect">
               <label>Layer</label>
               <%= select_tag :layer,
                 options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.id] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
             </li>
 
-<!--             <li class="comboselect status">
-              <label>STATUS</label>
-              <%= select_tag :status,
-                options_for_select([['All statuses', 0], ['Active', 'active'], ['Closed', 'closed']], params[:status]), :class => :"chzn-select" %>
+            <li class="comboselect date">
+              <label>Start date</label>
+              <div class="select_date">
+                <%= select_date Date.today, :prefix => :start_date %>
+              </div>
             </li>
 
+            <li class="comboselect date">
+              <label>End date</label>
+              <div class="select_date">
+                <%= select_date nil, :prefix => :end_date %>
+              </div>
+            </li>
 
-
-            <li class="comboselect">
-              <label>SITE</label>
-
-              <%= select_tag :site,
-                options_for_select([['Any site',0]] + Site.get_select_values.collect { |c| [c.name.capitalize.strip, c.id] }, params[:site]), :class => :"chzn-sites-select" %>
-
-            </li> -->
           </ul>
         <% end %>
       </div>
       <span class="bottom"></span>
     </div>
   </div>
+</div>
+
+<script src="/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
