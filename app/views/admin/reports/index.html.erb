@@ -11,32 +11,32 @@
       	    <li class="comboselect">
               <label>Organization</label>
               <%= select_tag :organization,
-                options_for_select([['All',0]] + Organization.get_select_values.collect{ |o| [o.name, o.id] }, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select([['All','All']] + Organization.get_select_values.collect{ |o| [o.name, o.name] }, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
             </li>
 
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
-                options_for_select([['All',0]] + Country.get_select_values.collect{ |c| [c.name, c.id] }, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select([['All','All']] + Country.get_select_values.collect{ |c| [c.name, c.name] }, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
             </li>
 
             <li class="comboselect">
               <label>SECTOR</label>
 
               <%= select_tag :sector,
-                options_for_select([['Any sector',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select([['Any sector','All']] + Sector.get_select_values.collect { |c| [c.name, c.name] }, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
             </li>
 
             <li class="comboselect">
               <label>DONOR</label>
               <%= select_tag :donor,
-                options_for_select([['All',0]] + Donor.get_select_values.collect{ |d| [d.name, d.id] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
+                options_for_select([['Any donor','All']] + Donor.get_select_values.collect{ |d| [d.name, d.name] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
             </li>
 
             <li class="comboselect">
               <label>Layer</label>
               <%= select_tag :layer,
-                options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.id] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
+                options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.title] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
             </li>
 
             <li class="comboselect date">
