@@ -132,6 +132,12 @@
 
 	if (map_type!="overview_map") {
 	  map.fitBounds(bounds);
+
+    if (map_data[0].type === 'country') {
+      setTimeout(function() {
+        map.setZoom(8);
+      }, 1000);
+    }
 	}
 
 	if (map_type=="project_map") {
