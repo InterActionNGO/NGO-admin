@@ -92,8 +92,8 @@
 
       $close.click(function(e) {
         e.preventDefault();
-        var $currentClose = $(e.currentTarget);
-        $currentClose.closest('li').fadeOut('fast', function() {
+        var $currentClose = $(e.currentTarget).closest('li');
+        $currentClose.fadeOut('fast', function() {
           $currentClose.remove();
         });
       });
@@ -121,8 +121,8 @@
 
     $('.combo_list').find('.close').click(function(e) {
       e.preventDefault();
-      var $el = $(e.currentTarget);
-      $el.closest('li').fadeOut('fast', function() {
+      var $el = $(e.currentTarget).closest('li');
+      $el.fadeOut('fast', function() {
         $el.remove();
       });
     });
