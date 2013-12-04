@@ -1,0 +1,76 @@
+<div class="main_layout">
+  <div class="block">
+    <div class="long_search">
+      <span class="top"></span>
+      <div class="content padding">
+        <%= form_tag(admin_report_generate_path, :method => :get, :class => :search) do %>
+          <label>SEARCH BY TEXT</label>
+          <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place,..." name="q" class="main_search"/>
+          <input type="submit" value="" />
+          <ul class="combos">
+      	    <li class="comboselect">
+              <label>Organization</label>
+              <%= select_tag :organization,
+                options_for_select([['All',0]] + Organization.get_select_values.collect{ |o| [o.name, o.id] }, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+            </li>
+
+            <li class="comboselect">
+              <label>COUNTRY</label>
+              <%= select_tag :country,
+                options_for_select([['All',0]] + Country.get_select_values.collect{ |c| [c.name, c.id] }, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+            </li>
+
+            <li class="comboselect">
+              <label>SECTOR</label>
+
+              <%= select_tag :sector,
+                options_for_select([['Any sector',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-sectors-select", :multiple => true, :size => 5 %>
+            </li>
+
+            <li class="comboselect">
+              <label>DONOR</label>
+              <%= select_tag :donor,
+                options_for_select([['All',0]] + Donor.get_select_values.collect{ |d| [d.name, d.id] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
+            </li>
+
+            <li class="comboselect">
+            	<label>Start date</label>
+            	<%= select_date Date.today, :prefix => :start_date %>
+            </li>
+
+            <li class="comboselect">
+            	<label>End date</label>
+            	<%= select_date nil, :prefix => :start_date %>
+            </li>
+            <li class="comboselect">
+            	<label>Text search</label>
+				<%= text_area_tag(:message, "", :size => "24x6") %>
+            </li>
+            
+            <li class="comboselect">
+              <label>Layer</label>
+              <%= select_tag :layer,
+                options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.id] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
+            </li>
+
+<!--             <li class="comboselect status">
+              <label>STATUS</label>
+              <%= select_tag :status,
+                options_for_select([['All statuses', 0], ['Active', 'active'], ['Closed', 'closed']], params[:status]), :class => :"chzn-select" %>
+            </li>
+
+
+
+            <li class="comboselect">
+              <label>SITE</label>
+
+              <%= select_tag :site,
+                options_for_select([['Any site',0]] + Site.get_select_values.collect { |c| [c.name.capitalize.strip, c.id] }, params[:site]), :class => :"chzn-sites-select" %>
+
+            </li> -->
+          </ul>
+        <% end %>
+      </div>
+      <span class="bottom"></span>
+    </div>
+  </div>
