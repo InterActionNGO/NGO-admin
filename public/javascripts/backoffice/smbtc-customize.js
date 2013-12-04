@@ -90,6 +90,14 @@
 
       this.$target.append($item);
 
+      $close.click(function(e) {
+        e.preventDefault();
+        var $currentClose = $(e.currentTarget);
+        $currentClose.closest('li').fadeOut('fast', function() {
+          $currentClose.remove();
+        });
+      });
+
     };
 
     this.each(function() {
@@ -109,6 +117,14 @@
     $('.combo_select').comboSelect({
       target: '#sites_layer_list',
       name: 'site[layers_ids]'
+    });
+
+    $('.combo_list').find('.close').click(function(e) {
+      e.preventDefault();
+      var $el = $(e.currentTarget);
+      $el.closest('li').fadeOut('fast', function() {
+        $el.remove();
+      });
     });
 
   }
