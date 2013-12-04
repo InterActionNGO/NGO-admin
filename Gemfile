@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.19'
 
 # PostgreSQL
-gem 'pg',                       '0.9.0'
+gem 'pg',                       '0.11.0'
 gem 'nofxx-georuby',                          :require => 'geo_ruby'
 gem 'spatial_adapter'
 
@@ -22,6 +22,11 @@ gem 'spreadsheet'
 gem 'roadie'
 gem 'ruby-oembed'
 gem 'sass'
+gem 'cartodb-rb-client'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+# gem 'searchlogic'
+gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
 
 group :development do
   gem 'git-up'
