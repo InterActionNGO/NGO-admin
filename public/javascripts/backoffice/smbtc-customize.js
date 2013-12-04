@@ -60,6 +60,7 @@
     ComboSelect.prototype.createInputHidden = function() {
 
       var $input = $('<input type="hidden">');
+      var $listItem = $('<li></li>');
       var $item = $('<h5></h5>');
       var $close = $('<a class="close" href="#">x</a>');
       var values = '';
@@ -87,8 +88,9 @@
 
       $input.attr('name', this.name + '[' + this.counter + ']').val(values.slice(1));
       $item.text(labels.slice(3)).append($close).append($input);
+      $listItem.append($item);
 
-      this.$target.append('<li>' + $item + '</li>');
+      this.$target.append($listItem);
 
       $close.click(function(e) {
         e.preventDefault();
