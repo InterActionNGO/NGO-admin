@@ -88,7 +88,7 @@
       $input.attr('name', this.name + '[' + this.counter + ']').val(values.slice(1));
       $item.text(labels.slice(3)).append($close).append($input);
 
-      this.$target.append($item);
+      this.$target.append('<li>' + $item + '</li>');
 
       $close.click(function(e) {
         e.preventDefault();
