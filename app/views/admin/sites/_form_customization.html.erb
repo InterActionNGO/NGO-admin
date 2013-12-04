@@ -167,42 +167,28 @@
       <input type="hidden" name="site[layers_ids][]" value="<%= sl.layer.id %>#<%= sl.layer_style.id %>">
       </li>
     <% end %>
-    <ul>
-  </div>
+    </ul>
 
-  <div class="common">
-    <h3>Add layer</h3>
+    <label>Layer and layer style</label>
 
-    <label>Layer</label>
     <div class="combo_select">
       <span class="combo_select_options">
-        <p>Layer</p>
+        <p class="combo_value">Layer</p>
         <div class="wrapper">
           <ul class="options scroll_pane">
             <% Layer.where({:status => true}).each do |l| %>
-              <li><a id="<%= l.id %>"><%= l.title %></a></li>
+              <li><a href="#<%= l.id %>" id="<%= l.id %>"><%= l.title %></a></li>
             <% end %>
-            <li><a href="">Lorem ipsum dolor sit amet</a></li>
-            <li><a href="">Lorem ipsum dolor sit amet</a></li>
-            <li><a href="">Lorem ipsum dolor sit amet</a></li>
-            <li><a href="">Lorem ipsum dolor sit amet</a></li>
-            <li class="last"></li>
           </ul>
         </div>
       </span>
-      <a id="add_site_layer" class="add_btn museo_sans shadow_green">add layer</a>
-    </div>
-    
-    <label>Layer style</label>
-    <div class="combo_select">
       <span class="combo_select_options">
-        <p>Layer style</p>
+        <p class="combo_value">Layer style</p>
         <div class="wrapper">
           <ul class="options scroll_pane">
             <% LayerStyle.all.each do |ls| %>
-              <li><a id="<%= ls.id %>"><%= ls.name %></a></li>
+              <li><a href="#<%= ls.id %>" id="<%= ls.id %>"><%= ls.name %></a></li>
             <% end %>
-            <li class="last"></li>
           </ul>
         </div>
       </span>
