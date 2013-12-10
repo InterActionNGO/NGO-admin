@@ -42,14 +42,14 @@
             <li class="comboselect date">
               <label>Start date</label>
               <div class="select_date">
-                <%= select_date Date.today, :prefix => :start_date %>
+                <%= select_date Date.new(2005, 1, 1), :prefix => :start_date %>
               </div>
             </li>
 
             <li class="comboselect date">
               <label>End date</label>
               <div class="select_date">
-                <%= select_date nil, :prefix => :end_date %>
+                <%= select_date Date.today, :prefix => :end_date %>
               </div>
             </li>
 
