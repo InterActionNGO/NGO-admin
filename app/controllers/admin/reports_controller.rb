@@ -1,5 +1,5 @@
 class Admin::ReportsController < Admin::AdminController
-	
+
 	def index
 		respond_to do |format|
 			format.html do
@@ -9,7 +9,6 @@ class Admin::ReportsController < Admin::AdminController
 	end
 
 	def report
-
 		start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
 		end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year'])
 		countries = donors = sectors = organizations = []
