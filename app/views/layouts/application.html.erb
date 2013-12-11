@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>IOM - Administrator</title>
-    <%= stylesheet_link_tag 'backoffice/jscroll.css','backoffice/layout.css', 'backoffice/chosen.css', 'plugins/fineuploader-3.3.0.css'  %>
-
+    <%= stylesheet_link_tag 'backoffice/jscroll.css','backoffice/layout.css', 'backoffice/chosen.css', 'plugins/fineuploader-3.3.0.css', 'backoffice/smbtc-layout.css'  %>
     <%= javascript_include_tag 'jquery.min', 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.position', 'jquery.ui.autocomplete', 'rails', 'plugins/chosen/chosen.jquery.js', 'plugins/jquery.mousewheel.js','plugins/jquery.jscrollpane.js', 'plugins/date_combos.js' %>
     <%= csrf_meta_tag %>
-    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <link rel="icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png" />
   </head>
   <body>
 
@@ -24,7 +24,7 @@
                 <li class="<%= (((controller_name == 'projects' && !@organization) || (@element && @element.is_a?(Project)) || (controller_name == 'activities' && action_name == 'show' && @project.present?)) ? 'selected' : nil) %>"><%= link_to(admin_projects_path) do %><span class="museo_sans">projects</span><% end %></li>
                 <li class="<%= ((@organization || controller_name == 'organizations' || (@element && @element.is_a?(Organization))) ? 'selected' : nil) %>"><%= link_to(admin_organizations_path) do %><span class="museo_sans">organizations</span><% end %></li>
                 <li class="<%= ((controller_name == 'donors' || (@element && @element.is_a?(Donor)) || (controller_name == 'offices' && params[:donor_id].present?)) ? 'selected' : nil) %>"><%= link_to(admin_donors_path) do %><span class="museo_sans">donors</span><% end %></li>
-                <li class="<%= (((controller_name == 'offices' && params[:donor_id].blank?) || (@element && @element.is_a?(Office))) ? 'selected' : nil) %>"><%= link_to(admin_offices_path) do %><span class="museo_sans">offices</span><% end %></li>
+                <!--<li class="<%= (((controller_name == 'offices' && params[:donor_id].blank?) || (@element && @element.is_a?(Office))) ? 'selected' : nil) %>"><%= link_to(admin_offices_path) do %><span class="museo_sans">offices</span><% end %></li>-->
                 <li class="<%= (controller_name == 'activities' && action_name == 'show' && @project.blank? && @organization.blank? ? 'selected' : nil) %>"><%= link_to(admin_activity_path) do %><span class="museo_sans">activity</span><% end %></li>
                 <li class="<%= (controller_name == 'pages' && @site.blank? ? 'selected' : nil) %>"><%= link_to(admin_pages_path) do %><span class="museo_sans">pages</span><% end %></li>
               <% else -%>
@@ -66,13 +66,18 @@
 
       <div id="modal_window">
         <div class="alert">
+          <div class="top_border"></div>
           <h4></h4>
 
           <ul id="errors">
           </ul>
 
           <p></p>
-          <span><a class="cancel">cancel</a><a href="#" class="button remove">delete</a></span>
+          <div class="messages">
+            <a class="cancel">cancel</a>
+            <a href="#" class="button remove"></a>
+          </div>
+          <div class="bottom_border"></div>
         </div>
       </div>
 

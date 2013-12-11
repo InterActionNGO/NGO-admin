@@ -7,8 +7,12 @@ class Admin::DonationsController < Admin::AdminController
     donor = Donor.where(:id => params[:donation][:donor_id]).first
     office = Office.where(:id => params[:donation][:office_id]).first
     @donation = Donation.new(params[:donation].slice!(:donor_id, :office_id))
-    @donation.donor = donor if donor.present?
-    @donation.office = office if office.present?
+    if donor.present?
+      @donation.donor = donor
+      @donation.office = office if office.present?
+    end
+    @donation.office = nil unless @donation.office && @donation.office.valid?
+    @donation.office.donor = @donation.donor if @donation.office.present? && @donation.office.donor.blank?
     @project.donations << @donation
     @project.updated_by = current_user
 

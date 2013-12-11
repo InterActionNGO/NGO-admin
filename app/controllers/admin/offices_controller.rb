@@ -29,7 +29,7 @@ class Admin::OfficesController < Admin::AdminController
     @offices = @offices.paginate :per_page => 20,
                                                      :order => 'created_at DESC',
                                                      :page => params[:page]
-    @donors = [['All', nil]] + Donor.all.map{|d| [d.name, d.id]}
+    @donors = [['All', nil]] + Donor.order('name').map{|d| [d.name, d.id]}
 
     respond_to do |format|
       format.html
@@ -41,7 +41,7 @@ class Admin::OfficesController < Admin::AdminController
 
   def new
     @office = Office.new(:donor_id => params[:donor_id])
-    @donors = Donor.all.map{|d| [d.name, d.id]}
+    @donors = Donor.all.map{|d| [d.name, d.id]}.sort{|a, b| a[0] <=> b[0]}
   end
 
   def create

@@ -3010,7 +3010,7 @@ div {
     }
     input {
       &[type="text"].main_search {
-        width: 525px;
+        width: 432px;
         height: 29px;
         margin: 5px 0 0 0;
         padding: 7px 10px 5px 10px;
@@ -3989,6 +3989,7 @@ div {
         width: 254px;
         height: 24px;
         padding: 8px 0 0 10px;
+        position: relative;
         p {
           font: normal 13px Arial;
           color: #999999;
@@ -4794,7 +4795,7 @@ div {
                 float: left;
                 width: 132px;
                 height: 64px;
-                margin: 0;
+                margin: 0 10px 0 15px;
                 span {
                   float: left;
                   width: 132px;
@@ -6316,6 +6317,7 @@ textarea.huge {
 div {
   &#modal_window {
     position: absolute;
+    background: url('/images/backoffice/common/modal_bkg.png') repeat 0 0;
     display: none;
     top: 0;
     left: 0;
@@ -6324,7 +6326,7 @@ div {
     z-index: 10;
 
     div.alert {
-      position: relative;
+      position: absolute;
       top: 50%;
       left: 50%;
       width: 450px;
@@ -6361,7 +6363,7 @@ div {
         font: normal 15px Arial;
         color: #666666;
       }
-      div {
+      div.messages {
         margin: 0;
         text-align: right;
         padding: 15px 0 0;
@@ -6412,6 +6414,11 @@ div {
             width: 63px;
             height: 26px;
           }
+          &.button.ok {
+            background: url('/images/backoffice/common/ok_button.png') no-repeat 0 -52px;
+            width: 63px;
+            height: 26px;
+          }
         }
       }
       ul#errors {
@@ -6430,27 +6437,38 @@ div {
         background: url('/images/backoffice/common/alert_csv_ok_bkg.png') no-repeat 0 0 !important;
         width: 450px;
         height: 96px;
+
+        .top_border, .bottom_border {
+          display: none;
+        }
+
+        div.messages {
+          a.button.ok {
+            background: url('/images/backoffice/common/ok_button.png') no-repeat 0 0;
+            width: 63px;
+            height: 26px;
+          }
+        }
       }
       &.error {
-        background: url('/images/backoffice/common/alert_csv_error_bkg.png') no-repeat 0 0 !important;
         width: 450px;
-        height: 340px;
         top: 30%;
         left: 50%;
         ul#errors {
-          margin: 15px 0 0 15px;
-          display: inline;
-          width: 425px;
+          padding: 15px 0 0 15px;
+          display: block;
+          width: 466px;
           height: 190px;
           overflow-x: hidden;
           overflow-y: auto;
           li {
             margin: 7px 0 0 0;
             background: url('/images/backoffice/common/li_style.png') no-repeat 0 7px;
-            padding: 0 0 0 7px;
+            padding: 0 0 0 15px;
             font: normal 15px Arial;
             color: #666666;
             width: 418px;
+            text-align: left;
           }
         }
       }

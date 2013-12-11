@@ -3,6 +3,7 @@
 
 
     $(document).ready( function() {
+
       $('#site_show_blog').click(function(){
         if (!$('#tumbler_id').is(':visible')) {
           $(this).parent().addClass('selected');
@@ -119,6 +120,7 @@
           $('#site_overview_map_zoom').attr('value',map.getZoom());
         });
       });
+
     });
 
     function hideAllMapCombos(){

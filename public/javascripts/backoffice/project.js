@@ -281,6 +281,14 @@ $(document).ready(function(ev){
     ev.stopPropagation();
     ev.preventDefault();
 
+    // Check if clicks in jscrollpane
+    if (
+      $(ev.target).hasClass('jspTrack') ||
+      $(ev.target).hasClass('jspDrag')
+    ) {
+      return false;
+    }
+
     if (!$(this).hasClass('clicked')){
 
       // THIS IS A IE HACK
@@ -350,19 +358,27 @@ $(document).ready(function(ev){
     ev.stopPropagation();
     ev.preventDefault();
 
+    // Check if clicks in jscrollpane
+    if (
+      $(ev.target).hasClass('jspTrack') ||
+      $(ev.target).hasClass('jspDrag')
+    ) {
+      return false;
+    }
+
     if (!$(this).hasClass('clicked')){
       $(this).css('position','relative');
       $(this).addClass('clicked');
       resetCombo($('span#sector'));
     }else {
       $(this).removeClass('clicked');
-      $(this).css('position','static');
+      //$(this).css('position','static');
     }
 
     $(document).click(function(event) {
       if ((!$(event.target).closest('span.combo_sector_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
         $('span.combo_sector_options.clicked').removeClass('clicked');
-        $('span#sector').css('position','static');
+        // $('span#sector').css('position','static');
       };
     });
   });
@@ -748,8 +764,6 @@ $(function() {
       select: function( event, ui ) {
         $('#donation_donor_id').val(ui.item.element_id);
         $('#donation_office_attributes_donor_id').val(ui.item.element_id);
-        $('#autocomplete_office_name').attr('disabled', false);
-        $('#autocomplete_office_name').closest('span').removeClass('disabled');
       },
       refresh: function(){
         console.log('entra')
@@ -765,7 +779,7 @@ $(function() {
     $("#autocomplete_office_name").autocomplete({
       style:'donor_names',
       source: function( request, response ) {
-        if($('#autocomplete_office_name:disabled')[0]) {
+        if($('#autocomplete_office_name:disabled')[0] || !$('#donation_donor_id').val() || $('#donation_donor_id').val() == '') {
           return false;
         };
         var custom_offices_url = '/admin/donors/' + $('#donation_office_attributes_donor_id').val() + '/offices?q=';

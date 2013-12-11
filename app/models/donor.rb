@@ -62,6 +62,11 @@ class Donor < ActiveRecord::Base
     }
   end
 
+  # to get only id and name
+  def self.get_select_values
+    scoped.select("id,name").order("name ASC")
+  end  
+
   # Array of arrays
   # [[category, count], [category, count]]
   def projects_sectors_or_clusters(site)

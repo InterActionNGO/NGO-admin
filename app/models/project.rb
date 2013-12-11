@@ -57,10 +57,20 @@ class Project < ActiveRecord::Base
                           includes(:countries).
                           where('countries_projects.project_id IS NULL AND regions.id IS NOT NULL')
 
-  validates_presence_of :primary_organization_id, :name, :description, :start_date, :end_date
-  validate :location_presence
+  attr_accessor :sync_errors, :sync_mode, :location
+
+  validate :sync_mode_validations,                                   :if     => lambda { sync_mode }
+  validates_presence_of :name, :description, :start_date, :end_date, :unless => lambda { sync_mode }
+  validates_presence_of :primary_organization_id,                    :unless => lambda { sync_mode }
+  validates_presence_of :sectors
+  validate :location_presence,                                       :unless => lambda { sync_mode }
   validate :dates_consistency#, :presence_of_clusters_and_sectors
 
+  #validates_uniqueness_of :intervention_id, :if => (lambda do
+    #intervention_id.present?
+  #end)
+
+  after_create :generate_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
 
@@ -70,7 +80,7 @@ class Project < ActiveRecord::Base
       return
     end
     if tag_names.is_a?(String)
-      tag_names = tag_names.split(',').map{ |t| t.strip }.compact.delete_if{ |t| t.blank? }
+      tag_names = tag_names.split(/[\||,]/).map{ |t| t.strip }.compact.delete_if{ |t| t.blank? }
     end
     Tag.transaction do
       tags.clear
@@ -165,130 +175,139 @@ class Project < ActiveRecord::Base
     the_geom.as_kml if the_geom.present?
   end
 
-  # execute "CREATE TABLE data_denormalization
-  # (
-  #   project_id integer,
-  #   project_name character varying(2000),
-  #   project_description text,
-  #   organization_id integer,
-  #   organization_name character varying(2000),
-  #   end_date date,
-  #   regions text,
-  #   regions_ids integer[],
-  #   countries text,
-  #   countries_ids integer[],
-  #   sectors text,
-  #   sector_ids integer[],
-  #   clusters text,
-  #   cluster_ids integer[],
-  #   donors_ids integer[],
-  #   is_active boolean,
-  #   site_id integer,
-  #   created_at timestamp without time zone
-  # ) WITH (OIDS=FALSE)"
-
-
   def self.export_headers(options = {})
     options = {:show_private_fields => false}.merge(options || {})
 
     if options[:show_private_fields]
-      %w(organization interaction_intervention_id org_intervention_id project_name project_description activities additional_information start_date end_date budget_numeric clusters sectors cross_cutting_issues international_partners local_partners donors prime_awardee estimated_people_reached target_groups countries regions_level1 regions_level2 regions_level3 verbatim_location idprefugee_camp project_contact_person project_contact_position project_contact_email project_contact_phone_number project_website date_provided date_updated)
+      %w(organization interaction_intervention_id org_intervention_id project_tags project_name project_description activities additional_information start_date end_date clusters sectors cross_cutting_issues budget_numeric international_partners local_partners prime_awardee estimated_people_reached target_groups location verbatim_location idprefugee_camp project_contact_person project_contact_position project_contact_email project_contact_phone_number project_website date_provided date_updated status donors)
     else
-      %w(organization interaction_intervention_id org_intervention_id project_name project_description activities additional_information start_date end_date budget_numeric clusters sectors cross_cutting_issues international_partners local_partners donors prime_awardee estimated_people_reached target_groups countries regions_level1 regions_level2 regions_level3 project_contact_person project_contact_position project_contact_email project_contact_phone_number project_website date_provided date_updated)
+      %w(organization interaction_intervention_id org_intervention_id project_tags project_name project_description activities additional_information start_date end_date clusters sectors cross_cutting_issues budget_numeric international_partners local_partners prime_awardee estimated_people_reached target_groups location project_contact_person project_contact_position project_contact_email project_contact_phone_number project_website date_provided date_updated status donors)
     end
   end
 
   def self.list_for_export(site = nil, options = {})
     where = []
+
+    where << "(cp.country_id IS NOT NULL OR pr.region_id IS NOT NULL)"
     where << "site_id = #{site.id}" if site
 
     where << '(p.end_date is null OR p.end_date > now())' if !options[:include_non_active]
 
 
-
     if options[:kml]
       kml_select = <<-SQL
-        , CASE WHEN regions_ids IS NOT NULL AND regions_ids != ('{}')::integer[] THEN
+        , CASE WHEN pr.region_id IS NOT NULL THEN
         (select
         '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-        from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id where ('{'||r.id||'}')::integer[] && regions_ids and pr.project_id=dd.project_id)
+        from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE pr.project_id=p.id)
         ELSE
         (select
         '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-        from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where ('{'||c.id||'}')::integer[] && countries_ids and cp.project_id=dd.project_id)
+        from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where cp.project_id=p.id)
         END
         as kml
       SQL
       kml_group_by = <<-SQL
-        countries_ids,
-        regions_ids,
+        country_id,
+        region_id,
       SQL
     end
-
     if options[:region]
-      where << "regions_ids && '{#{options[:region]}}' and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:region]} and site_id=#{site.id}"
       if options[:region_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:region_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:region_category_id]}"
         else
-          where << "sector_ids && '{#{options[:region_category_id]}}'"
+          where << "ps2.sector_id = #{options[:region_category_id]}"
         end
       end
     elsif options[:country]
-      where << "countries_ids && '{#{options[:country]}}' and site_id=#{site.id}"
+      where << "cp.country_id = #{options[:country]} and site_id = #{site.id}"
       if options[:country_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:country_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:country_category_id]}"
         else
-          where << "sector_ids && '{#{options[:country_category_id]}}'"
+          where << "ps2.sector_id = #{options[:country_category_id]}"
         end
       end
     elsif options[:cluster]
-      where << "cluster_ids && '{#{options[:cluster]}}' and site_id=#{site.id}"
-      where << "regions_ids && '{#{options[:cluster_region_id]}}'" if options[:cluster_region_id]
-      where << "countries_ids && '{#{options[:cluster_country_id]}}'" if options[:cluster_country_id]
+      where << "clpr.cluster_id = #{options[:cluster]} and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:cluster_region_id]}" if options[:cluster_region_id]
+      where << "cp.country_id = #{options[:cluster_country_id]}" if options[:cluster_country_id]
     elsif options[:sector]
-      where << "sector_ids && '{#{options[:sector]}}' and site_id=#{site.id}"
-      where << "regions_ids && '{#{options[:sector_region_id]}}'" if options[:sector_region_id]
-      where << "countries_ids && '{#{options[:sector_country_id]}}'" if options[:sector_country_id]
+      where << "ps2.sector_id = #{options[:sector]} and site_id=#{site.id}"
+      where << "pr.region_id = #{options[:sector_region_id]}" if options[:sector_region_id]
+      where << "cp.country_id = #{options[:sector_country_id]}" if options[:sector_country_id]
     elsif options[:organization]
-      where << "dd.organization_id = #{options[:organization]}"
-      where << "site_id=#{site.id}" if site
+      where << "p.primary_organization_id = #{options[:organization]}"
+      where << "site_id = #{site.id}" if site
 
       if options[:organization_category_id]
         if site.navigate_by_cluster?
-          where << "cluster_ids && '{#{options[:organization_category_id]}}'"
+          where << "clpr.cluster_id = #{options[:organization_category_id]}"
         else
-          where << "sector_ids && '{#{options[:organization_category_id]}}'"
+          where << "ps2.sector_id = #{options[:organization_category_id]}"
         end
       end
 
-      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id]
-      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
+      where << "pr_region_id = #{options[:organization_region_id]}" if options[:organization_region_id]
+      where << "cp.country_id = #{options[:organization_country_id]}" if options[:organization_country_id]
     elsif options[:project]
       where << "project_id = #{options[:project]}"
     end
 
     where = "WHERE #{where.join(' AND ')}" if where.present?
 
+
     sql = <<-SQL
+        WITH r AS (
+          SELECT r3.id,
+                 r3.level,
+          c.name || '>' || r1.name || '>' || r2.name || '>' || r3.name AS full_name
+          FROM regions r3
+          LEFT OUTER JOIN regions r2 ON  r3.parent_region_id = r2.id
+          LEFT OUTER JOIN regions r1 ON  r2.parent_region_id = r1.id
+          INNER JOIN countries c ON r3.country_id = c.id
+          WHERE r3.level = 3
+          UNION
+          SELECT r2.id,
+                 r2.level,
+          c.name || '>' || r1.name || '>' || r2.name AS full_name
+          FROM regions r2
+          LEFT OUTER JOIN regions r1 ON  r2.parent_region_id = r1.id
+          INNER JOIN countries c ON r2.country_id = c.id
+          WHERE r2.level = 2
+          UNION
+          SELECT r1.id,
+                 r1.level,
+          c.name || '>' || r1.name AS full_name
+          FROM regions r1
+          INNER JOIN countries c ON r1.country_id = c.id
+          WHERE r1.level = 1
+        ),
+        c AS (
+          SELECT c.id, c.name AS name
+          FROM countries c
+        )
+
+
         SELECT DISTINCT
-        project_id,
-        project_name,
-        project_description,
-        dd.organization_id,
-        organization_name AS organization,
+        p.id,
+        p.name as project_name,
+        p.description as project_description,
+        primary_organization_id,
+        o.name AS organization,
         implementing_organization as international_partners,
         partner_organizations AS local_partners,
         cross_cutting_issues,
         p.start_date,
         p.end_date,
-        CASE WHEN budget=0 THEN null ELSE budget END AS budget_numeric,
+        CASE WHEN p.budget=0 THEN null ELSE p.budget END AS budget_numeric,
         target as target_groups,
-        estimated_people_reached,
+        p.estimated_people_reached,
         contact_person AS project_contact_person,
-        contact_email AS project_contact_email,
-        contact_phone_number AS project_contact_phone_number,
+        p.contact_email AS project_contact_email,
+        p.contact_phone_number AS project_contact_phone_number,
         activities,
         intervention_id,
         intervention_id as interaction_intervention_id,
@@ -296,40 +315,48 @@ class Project < ActiveRecord::Base
         awardee_type as prime_awardee,
         date_provided,
         date_updated,
-        contact_position AS project_contact_position,
-        website AS project_website,
+        p.contact_position AS project_contact_position,
+        p.website AS project_website,
         verbatim_location,
-        sectors,
-        clusters,
-        '|' || array_to_string(array_agg(distinct site_id),'|') ||'|' as site_ids,
-        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM tags AS t INNER JOIN projects_tags AS pt ON t.id=pt.tag_id WHERE pt.project_id=dd.project_id) AS project_tags,
-        countries,
-        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM regions AS r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE r.level=1 AND pr.project_id=dd.project_id) AS regions_level1,
-        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM regions AS r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE r.level=2 AND pr.project_id=dd.project_id) AS regions_level2,
-        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM regions AS r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE r.level=3 AND pr.project_id=dd.project_id) AS regions_level3,
-        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM donors AS d INNER JOIN donations AS dn ON d.id=dn.donor_id AND dn.project_id=dd.project_id) AS donors,
-        p.organization_id as org_intervention_id
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM sectors AS s INNER JOIN projects_sectors AS ps ON s.id=ps.sector_id WHERE ps.project_id=p.id) AS sectors,
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM clusters AS c INNER JOIN clusters_projects AS cp ON c.id=cp.cluster_id WHERE cp.project_id=p.id) AS clusters,
+        '|' || array_to_string(array_agg(distinct ps.site_id),'|') ||'|' as site_ids,
+        COALESCE(
+          (SELECT '|' || array_to_string(array_agg(distinct full_name),'|') || '|' FROM r INNER JOIN projects_regions pr ON pr.project_id = p.id AND pr.region_id = r.id WHERE r.level = 3),
+          (SELECT '|' || array_to_string(array_agg(distinct full_name),'|') || '|' FROM r INNER JOIN projects_regions pr ON pr.project_id = p.id AND pr.region_id = r.id WHERE r.level = 2),
+          (SELECT '|' || array_to_string(array_agg(distinct full_name),'|') || '|' FROM r INNER JOIN projects_regions pr ON pr.project_id = p.id AND pr.region_id = r.id WHERE r.level = 1),
+          (SELECT '|' || array_to_string(array_agg(distinct name),'|') || '|' FROM c INNER JOIN countries_projects cp ON cp.project_id = p.id AND cp.country_id = c.id)
+        ) AS location,
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM tags AS t INNER JOIN projects_tags AS pt ON t.id=pt.tag_id WHERE pt.project_id=p.id) AS project_tags,
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM donors AS d INNER JOIN donations AS dn ON d.id=dn.donor_id AND dn.project_id=p.id) AS donors,
+        p.organization_id as org_intervention_id,
+        CASE WHEN p.end_date > current_date THEN 'active' ELSE 'closed' END AS status
         #{kml_select}
-        FROM data_denormalization AS dd
-        INNER JOIN projects AS p ON dd.project_id=p.id
+        FROM projects AS p
+        LEFT OUTER JOIN organizations o        ON  o.id = p.primary_organization_id
+        LEFT OUTER JOIN projects_sites ps      ON  ps.project_id = p.id
+        LEFT OUTER JOIN countries_projects cp  ON  cp.project_id = p.id
+        LEFT OUTER JOIN projects_regions pr    ON  pr.project_id = p.id
+        LEFT OUTER JOIN projects_sectors ps2   ON  ps2.project_id = p.id
+        LEFT OUTER JOIN clusters_projects clpr ON  clpr.project_id = p.id
         #{where}
         GROUP BY
-        project_id,
-        project_name,
-        project_description,
-        dd.organization_id,
-        organization_name,
+        p.id,
+        p.name,
+        p.description,
+        primary_organization_id,
+        o.name,
         implementing_organization,
         partner_organizations,
         cross_cutting_issues,
         p.start_date,
         p.end_date,
-        budget,
+        p.budget,
         target,
-        estimated_people_reached,
+        p.estimated_people_reached,
         contact_person,
-        contact_email,
-        contact_phone_number,
+        p.contact_email,
+        p.contact_phone_number,
         activities,
         intervention_id,
         p.organization_id,
@@ -337,14 +364,15 @@ class Project < ActiveRecord::Base
         awardee_type,
         date_provided,
         date_updated,
-        contact_position,
-        website,
+        p.contact_position,
+        p.website,
         verbatim_location,
         idprefugee_camp,
-        countries,
+        status,
         #{kml_group_by}
         sectors,
         clusters
+        ORDER BY interaction_intervention_id
     SQL
     ActiveRecord::Base.connection.execute(sql)
   end
@@ -352,7 +380,7 @@ class Project < ActiveRecord::Base
   def self.to_csv(site, options = {})
     projects = self.list_for_export(site, options)
     csv_headers = self.export_headers(options[:headers_options])
-
+    
     csv_data = FasterCSV.generate(:col_sep => ',') do |csv|
       csv << csv_headers
       projects.each do |project|
@@ -756,8 +784,284 @@ SQL
   end
 
   def generate_intervention_id
-    self.intervention_id = [primary_organization.try(:organization_id).presence || 'XXXX', countries.first.try(:iso2_code).presence || 'XX', Time.now.strftime('%y'), organization_id.presence || 'XXX'].join('-')
+    Project.where(:id => id).update_all(:intervention_id => [
+      primary_organization.try(:organization_id).presence || 'XXXX',
+      countries.first.try(:iso2_code).presence || 'XX',
+      start_date.strftime('%y'),
+      id
+    ].join('-'))
   end
+
+  def create_intervention_id
+    generate_intervention_id
+    update_attribute(:intervention_id, intervention_id)
+  end
+
+  def update_intervention_id
+    generate_intervention_id if Project.where('intervention_id = ? AND id <> ?', intervention_id, id).count > 0
+  end
+
+  ##############################
+  # PROJECT SYNCHRONIZATION
+
+  def sync_errors
+    @sync_errors ||= []
+  end
+
+  def sync_line=(value)
+    @sync_line = value
+  end
+
+  def project_name_sync=(value)
+    self.name = value
+  end
+
+  def project_description_sync=(value)
+    self.description = value
+  end
+
+  def org_intervention_id_sync=(value)
+    self.organization_id = value
+  end
+
+  def international_partners_sync=(value)
+    self.implementing_organization = value
+  end
+
+  def local_partners_sync=(value)
+    self.partner_organizations = value
+  end
+
+  def budget_numeric_sync=(value)
+    @budget = value
+  end
+
+  def target_groups_sync=(value)
+    self.target = value
+  end
+
+  def project_contact_person_sync=(value)
+    self.contact_person = value
+  end
+
+  def project_contact_email_sync=(value)
+    self.contact_email = value
+  end
+
+  def project_contact_phone_number_sync=(value)
+    self.contact_phone_number = value
+  end
+
+  def interaction_intervention_id_sync=(value)
+  end
+
+  def prime_awardee_sync=(value)
+    self.awardee_type = value
+  end
+
+  def project_contact_position_sync=(value)
+    self.contact_position = value
+  end
+
+  def project_website_sync=(value)
+    self.website = value
+  end
+
+  def activities_sync=(value)
+    self.activities = value
+  end
+
+  def additional_information_sync=(value)
+    self.additional_information = value
+  end
+
+  def start_date_sync=(value)
+    self.start_date = value
+  end
+
+  def end_date_sync=(value)
+    self.end_date = value
+  end
+
+  def cross_cutting_issues_sync=(value)
+    self.cross_cutting_issues = value
+  end
+
+  def estimated_people_reached_sync=(value)
+    @estimated_people_reached_sync = value
+  end
+
+  def verbatim_location_sync=(value)
+    self.verbatim_location = value
+  end
+
+  def idprefugee_camp_sync=(value)
+    self.idprefugee_camp = value
+  end
+
+  def date_provided_sync=(value)
+  end
+
+  def date_updated_sync=(value)
+  end
+
+  def status_sync=(value)
+  end
+
+  def project_tags_sync=(value)
+    self.tags = value
+  end
+
+  def organization_sync=(value)
+    @organization_name = value || ''
+  end
+
+  def location_sync=(value)
+    @location_sync = value || []
+  end
+
+  def sectors_sync=(value)
+    @sectors_sync = value || []
+  end
+
+  def clusters_sync=(value)
+    @clusters_sync = value || []
+  end
+
+  def donors_sync=(value)
+    @donors_sync = value || []
+  end
+
+  def sync_mode_validations
+    self.date_provided = Time.now.to_date if new_record?
+
+    errors.add(:name,        :blank ) if name.blank?
+    errors.add(:description, :blank ) if description.blank?
+    errors.add(:start_date,  :blank ) if start_date.blank?
+    errors.add(:end_date,    :blank ) if end_date.blank?
+
+    begin
+      self.budget = Float(@budget)
+    rescue
+      errors.add(:budget, "only accepts numeric values")
+    end if @budget.present?
+
+    self.start_date = case start_date
+                      when Date, DateTime, Time
+                        start_date
+                      when String
+                        Date.parse(start_date) rescue self.errors.add(:start_date, "Start date is invalid")
+                      else
+                        self.errors.add(:start_date, "Start date is invalid")
+                      end if start_date.present?
+
+    self.end_date = case end_date
+                    when Date, DateTime, Time
+                      end_date
+                    when String
+                      Date.parse(end_date) rescue self.errors.add(:end_date, "End date is invalid")
+                    else
+                      self.errors.add(:end_date, "End date is invalid")
+                    end if end_date.present?
+
+    self.date_provided = Time.now if new_record?
+    self.date_updated = Time.now
+
+    begin
+      self.estimated_people_reached = Float(@estimated_people_reached_sync)
+    rescue
+      self.errors.add(:estimated_people_reached, "only accepts numeric values")
+    end if @estimated_people_reached_sync.present?
+
+    if @organization_name && (organization = Organization.where('lower(trim(name)) = lower(trim(?))', @organization_name).first) && organization.present?
+      self.primary_organization_id = organization.id
+    else
+      self.errors.add(:organization, %Q{"#{@organization_name}" doesn't exist})
+    end if new_record?
+
+
+    if @location_sync
+      self.countries.clear
+      self.regions.clear
+
+      if @location_sync.present? && (locations = @location_sync.text2array)
+        locations.each do |location|
+          country_name, *regions = location.split('>')
+
+          if country_name
+            country = Country.where('lower(trim(name)) = lower(trim(?))', country_name).first
+            if country.blank?
+              self.sync_errors << "Country #{country_name} doesn't exist on row #@sync_line"
+            else
+              self.countries << country unless self.countries.include?(country)
+            end
+          end
+
+          if regions.present?
+            regions.each_with_index do |region_name, level|
+              level += 1
+
+              region = Region.where('lower(trim(name)) = lower(trim(?))', region_name).first
+              if region.blank?
+                self.sync_errors << "#{level.ordinalize} Admin level #{region_name} doesn't exist on row #@sync_line"
+                next
+              end
+              self.regions << region unless self.regions.include?(region)
+            end
+          end
+        end
+      end
+    end
+
+    if @sectors_sync
+      self.sectors.clear
+      if @sectors_sync.present? && (sectors = @sectors_sync.text2array)
+        sectors.each do |sector_name|
+          sector = Sector.where('lower(trim(name)) = lower(trim(?))', sector_name).first
+          if sector.blank? && new_record?
+            errors.add(:sector,  "#{sector_name} doesn't exist")
+            next
+          end
+          self.sectors << sector
+        end
+      end
+    end
+
+    if @clusters_sync
+      self.clusters.clear
+      if @clusters_sync.present? && (clusters = @clusters_sync.text2array)
+        clusters.each do |cluster_name|
+          cluster = Cluster.where('lower(trim(name)) = lower(trim(?))', cluster_name).first
+          if cluster.blank?
+            errors.add(:cluster,  "#{cluster_name} doesn't exist")
+            next
+          end
+          self.clusters << cluster
+        end
+      end
+    end
+
+    if @donors_sync
+      self.donors.clear
+      if @donors_sync.present? && (donors = @donors_sync.text2array)
+        donors.each do |donor_name|
+          donor = Donor.where('lower(trim(name)) = lower(trim(?))', donor_name)
+          if donor.blank?
+            errors.add(:donor,  "#{donor_name} doesn't exist")
+            next
+          end
+          self.donors << donor
+        end
+      end
+    end
+
+    errors.add(:sectors, :blank)                 if (new_record? && self.sectors.blank?) || (@sectors_sync && @sectors_sync.empty?)
+    errors.add(:location, :blank)                if (new_record? && self.countries.blank? && self.regions.blank?) || (@location_sync && @location_sync.empty?)
+    errors.add(:primary_organization_id, :blank) if (new_record? && self.primary_organization_id.blank?) || (@organization_name && @organization_name.empty?)
+  end
+
+  # PROJECT SYNCHRONIZATION
+  ##############################
 
   private
 
@@ -799,5 +1103,5 @@ SQL
     if clusters_ids.blank? && clusters.empty?
       errors.add(:clusters, "can't be blank")
     end
-  end
+  end  
 end

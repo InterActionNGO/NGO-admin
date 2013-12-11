@@ -1,0 +1,17 @@
+{
+  "name": "iom",
+  "version": "2.0.0",
+  "homepage": "https://github.com/simbiotica/iom",
+  "authors": [
+    "Simbiotica"
+  ],
+  "description": "A webapp",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/vendors",
+    "test",
+    "tests"
+  ]
+}
