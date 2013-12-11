@@ -62,6 +62,14 @@
     }
     var diameter = 0;
 
+  // If region exist, reject a country object
+  _.each(map_data, function(d) {
+    if (d.type === 'region') {
+      map_data = _.reject(map_data, {type: 'country'});
+      return false;
+    }
+  });
+
 	for (var i = 0; i<map_data.length; i++) {
 	  var image_source = '';
 
