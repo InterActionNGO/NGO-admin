@@ -25,10 +25,10 @@
     </div>
   </div>
 
-  <div class="field <%= 'hidden' unless current_user.admin? %>">
+  <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
     <label>InterAction Intervention ID</label>
     <span class="input_large">
-      <%= f.text_field :intervention_id, :class => action_name == 'new' ? 'auto' : nil %>
+      <%= f.text_field :intervention_id, :readonly => true %>
     </span>
   </div>
 
@@ -244,7 +244,7 @@
 
   <h3 class="section museo_sans">CONTEXT</h3>
   <div id="clusters_content" class="field">
-    <label>CLUSTERS  <strong>*</strong>
+    <label>CLUSTERS <span class="info">(Only valid for UN-coordinated emergencies.)</span>
       <!-- FIELD DESCRIPTION -->
       <div class="field_info">
         <span class="info">i</span>
@@ -292,7 +292,10 @@
   </div>
   <div class="field">
     <label>SECTORS  <strong>*</strong></label>
-
+<!--     <span id="hidden" class="combo_large <%= 'error' if @project.errors[:sectors].present? %>">
+        <%= errors_for @project, :sectors %>
+       <a class="organization"><%= @project.primary_organization.try(:name) %></a> -->
+      </span> -->
     <ul class="sectors">
       <% unless @project.sectors.empty? %>
         <% @project.sectors.each do |sector| %>

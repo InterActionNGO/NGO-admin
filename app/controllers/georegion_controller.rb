@@ -63,12 +63,24 @@ class GeoregionController < ApplicationController
                   ELSE
                       '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                   END as url,
-                  r.code
+                  r.code, 'region' as type
                   from ((projects_regions as pr inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{@site.id})
                   inner join projects as p on pr.project_id=p.id and (p.end_date is null OR p.end_date > now())
                   inner join regions as r on pr.region_id=r.id and r.level=#{@site.levels_for_region.min} and r.country_id=#{country.id})
                   #{category_join}
-                  group by r.id,r.name,lon,lat,r.name,r.path,r.code"
+                  group by r.id,r.name,lon,lat,r.name,r.path,r.code
+                  UNION
+                  select c.id,count(cp.project_id) as count,c.name,c.center_lon as lon, c.center_lat as lat,c.name,
+                  CASE WHEN count(ps.project_id) > 1 THEN
+                  '/location/'||c.id
+                  ELSE
+                  '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                  END as url,
+                  c.code, 'country' as type
+                  from ((countries_projects as cp inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{@site.id}) inner join projects as p 
+                  on cp.project_id=p.id and (p.end_date is null OR p.end_date > now() AND cp.country_id=#{country.id}) inner join countries as c on cp.country_id=c.id and c.id=#{country.id} )
+                  group by c.id,c.name,lon,lat,c.name,c.code
+                  "
       else
         sql="select *
           from(
@@ -140,7 +152,6 @@ class GeoregionController < ApplicationController
 
     respond_to do |format|
       format.html do
-
         @georegion_map_chco          = @site.theme.data[:georegion_map_chco]
         @georegion_map_chf           = @site.theme.data[:georegion_map_chf]
         @georegion_map_marker_source = @site.theme.data[:georegion_map_marker_source]

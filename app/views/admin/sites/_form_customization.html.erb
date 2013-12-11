@@ -159,6 +159,44 @@
     </div>
   </div>
 
+  <div class="common">
+    <h3>Site layers</h3>
+    <ul class="combo_list" id="sites_layer_list">
+    <% @site.site_layers.each do |sl| %>
+      <li><h5><%= sl.layer.title %> > <%= sl.layer_style.name%> <a class="close" href="#"></a></h5>
+      <input type="hidden" name="site[layers_ids][]" value="<%= sl.layer.id %>#<%= sl.layer_style.id %>">
+      </li>
+    <% end %>
+    </ul>
+
+    <label>Layer and layer style</label>
+
+    <div class="combo_select">
+      <span class="combo_select_options">
+        <p class="combo_value">Layer</p>
+        <div class="wrapper">
+          <ul class="options scroll_pane">
+            <% Layer.where({:status => true}).each do |l| %>
+              <li><a href="#<%= l.id %>" id="<%= l.id %>"><%= l.title %></a></li>
+            <% end %>
+          </ul>
+        </div>
+      </span>
+      <span class="combo_select_options">
+        <p class="combo_value">Layer style</p>
+        <div class="wrapper">
+          <ul class="options scroll_pane">
+            <% LayerStyle.all.each do |ls| %>
+              <li><a href="#<%= ls.id %>" id="<%= ls.id %>"><%= ls.name %></a></li>
+            <% end %>
+          </ul>
+        </div>
+      </span>
+      <a id="add_site_layer_style" class="add_btn museo_sans shadow_green">add layer</a>
+    </div>
+
+  </div>
+
   <%= f.hidden_field :theme_id, :value => Theme.first.id %>
   <input type="hidden" name="customization" value="true" />
 
@@ -203,6 +241,8 @@
       </div>
     </div>
 
+
+
     <div class="field">
       <%= f.submit 'Add partner', :class=>"partner" %>
     </div>
@@ -212,3 +252,4 @@
 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3"></script>
 <script src="/javascripts/backoffice/customize.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/backoffice/smbtc-customize.js" type="text/javascript" charset="utf-8"></script>

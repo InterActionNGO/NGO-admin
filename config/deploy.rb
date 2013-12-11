@@ -1,10 +1,14 @@
 require 'capistrano/ext/multistage'
 require 'config/boot'
-require 'hoptoad_notifier/capistrano'
+require "bundler/capistrano"
 
 set :stages, %w(staging production)
 
-require "bundler/capistrano"
+APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
+
+set :rollbar_token, APP_CONFIG['rollbar_token']
+set(:rollbar_env) { stage }
+
 
 default_run_options[:pty] = true
 
@@ -14,7 +18,7 @@ set :scm, :git
 # set :git_enable_submodules, 1
 set :git_shallow_clone, 1
 set :scm_user, 'ubuntu'
-set :repository, "git://github.com/Vizzuality/iom.git"
+set :repository, "git://github.com/simbiotica/iom.git"
 ssh_options[:forward_agent] = true
 set :keep_releases, 5
 
@@ -58,6 +62,6 @@ task :asset_packages, :roles => [:app] do
  run <<-CMD
    export RAILS_ENV=production &&
    cd #{release_path} &&
-   bundle exec rake asset:packager:build_all
+   bundle exec rake sass:update asset:packager:build_all
  CMD
 end
