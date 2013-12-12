@@ -99,7 +99,7 @@ class Project < ActiveRecord::Base
 
   def budget=(ammount)
     if ammount.blank?
-      write_attribute(:budget, 0)
+      write_attribute(:budget, nil)
     else
       case ammount
         when String then write_attribute(:budget, ammount.delete(',').to_f)
@@ -110,7 +110,7 @@ class Project < ActiveRecord::Base
 
   def estimated_people_reached=(ammount)
     if ammount.blank?
-      write_attribute(:estimated_people_reached, 0)
+      write_attribute(:estimated_people_reached, nil)
     else
       case ammount
         when String then write_attribute(:estimated_people_reached, ammount.delete(',').to_f)
@@ -304,7 +304,7 @@ class Project < ActiveRecord::Base
         p.end_date,
         CASE WHEN p.budget=0 THEN null ELSE p.budget END AS budget_numeric,
         target as target_groups,
-        p.estimated_people_reached,
+        CASE WHEN p.estimated_people_reached=0 THEN null ELSE p.estimated_people_reached END,
         contact_person AS project_contact_person,
         p.contact_email AS project_contact_email,
         p.contact_phone_number AS project_contact_phone_number,
