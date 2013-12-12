@@ -2,7 +2,7 @@ var global_index = 10;
 
 (function() {
 
-  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer;
+  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector;
 
   if (map_type === 'overview_map' || map_type === 'project_map') {
     latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -11,6 +11,8 @@ var global_index = 10;
     latlng = new google.maps.LatLng(0, 0);
     zoom = 1;
   }
+
+  $layerSelector = $('#layerSelector');
 
   mapOptions = {
     zoom: zoom,
@@ -28,15 +30,28 @@ var global_index = 10;
     user_name: 'simbiotica',
     type: 'cartodb',
     cartodb_logo: false,
-    sublayers: [{
-      sql: 'SELECT wb_malnutrition.country_name, wb_malnutrition.code, wb_malnutrition.year,wb_malnutrition.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM  wb_malnutrition join ne_10m_admin_0_countries on wb_malnutrition.code=ne_10m_admin_0_countries.adm0_a3',
-      cartocss: '#wb_malnutrition{line-color: #FFF; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;} #wb_malnutrition [ data <= 45.3] {polygon-fill: #B10026;} #wb_malnutrition [ data <= 29.2] {polygon-fill: #E31A1C;} #wb_malnutrition [ data <= 19.2] {polygon-fill: #FC4E2A;} #wb_malnutrition [ data <= 14.9] {polygon-fill: #FD8D3C;} #wb_malnutrition [ data <= 10.1] {polygon-fill: #FEB24C;} #wb_malnutrition [ data <= 6] {polygon-fill: #FED976;} #wb_malnutrition [ data <= 3.1] {polygon-fill: #FFFFB2;}',
-      interactivity: 'country_name'
-    }]
+    legends: true,
+    sublayers: []
   };
 
   bounds = new google.maps.LatLngBounds();
 
+  function onSelectLayer(e) {
+    var $el = $(e.currentTarget);
+
+    if (currentLayer.layers.length > 0) {
+      var sublayer = currentLayer.getSubLayer(0);
+      sublayer.remove();
+    }
+
+    if ($el.data('layer') === 'layer1') {
+      currentLayer.createSubLayer({
+        sql: 'SELECT wb_malnutrition.country_name, wb_malnutrition.code, wb_malnutrition.year,wb_malnutrition.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM  wb_malnutrition join ne_10m_admin_0_countries on wb_malnutrition.code=ne_10m_admin_0_countries.adm0_a3',
+        cartocss: $el.data('cartocss'),
+        interactivity: 'data'
+      });
+    }
+  }
 
   function onWindowLoad() {
 
@@ -65,18 +80,15 @@ var global_index = 10;
       }
     });
 
+    // Cartodb
     cartoDBLayer = cartodb.createLayer(map, cartodbOptions);
 
-    // cartoDBLayer.on('done', function(layer) {
-    //   console.log(layer);
-    // });
+    cartoDBLayer.on('done', function(layer) {
+      currentLayer = layer;
+      $layerSelector.fadeIn('fast');
+    }).addTo(map);
 
-    cartoDBLayer.addTo(map);
-
-    // cartodb
-    //   .createLayer(map, vizjson)
-    //   .addTo(map);
-
+    // Markers
     for (var i = 0; i < map_data.length; i++) {
       var image_source = '';
 
@@ -150,6 +162,13 @@ var global_index = 10;
     if (map_type == "project_map") {
       map.panBy(130, 20);
     }
+
+    // Layer selector
+    $layerSelector.find('a').click(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      onSelectLayer(e);
+    });
 
   }
 

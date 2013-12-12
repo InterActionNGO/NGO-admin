@@ -828,6 +828,17 @@ div {
   }
 }
 
+.map-wrapper {
+  position: relative;
+  .selector {
+    display: none;
+    top: 10px;
+    right: 130px;
+    position: absolute;
+    z-index: 1000;
+  }
+}
+
 /* COMMON TO ALL BLOCKS AND TO SHOW WITH DEFAULT STYLES */
 
 /* HEADER */
@@ -1018,7 +1029,7 @@ div {
         div.fund_logo {
           float: right;
           display: inline-block;
-          margin: 0 10px 0 0;          
+          margin: 0 10px 0 0;
           vertical-align: middle;
         }
       }
