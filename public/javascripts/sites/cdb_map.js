@@ -2,7 +2,7 @@ var global_index = 10;
 
 (function() {
 
-  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector;
+  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper;
 
   if (map_type === 'overview_map' || map_type === 'project_map') {
     latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -13,6 +13,7 @@ var global_index = 10;
   }
 
   $layerSelector = $('#layerSelector');
+  $legendWrapper = $('#legendWrapper');
 
   mapOptions = {
     zoom: zoom,
@@ -30,8 +31,22 @@ var global_index = 10;
     user_name: 'simbiotica',
     type: 'cartodb',
     cartodb_logo: false,
-    legends: true,
+    legends: false,
     sublayers: []
+  };
+
+  //#wb_malnutrition{line-color: #FFF; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;} #wb_malnutrition [ data <= 45.3] {polygon-fill: #B10026;} #wb_malnutrition [ data <= 29.2] {polygon-fill: #E31A1C;} #wb_malnutrition [ data <= 19.2] {polygon-fill: #FC4E2A;} #wb_malnutrition [ data <= 14.9] {polygon-fill: #FD8D3C;} #wb_malnutrition [ data <= 10.1] {polygon-fill: #FEB24C;} #wb_malnutrition [ data <= 6] {polygon-fill: #FED976;} #wb_malnutrition [ data <= 3.1] {polygon-fill: #FFFFB2;}
+
+  legends = {
+    red: {
+      left: "10", right: "20", colors: [ "#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026" ]
+    },
+    blue: {
+      left: "10", right: "20", colors: [ "#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026" ]
+    },
+    green: {
+      left: "10", right: "20", colors: [ "#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026" ]
+    }
   };
 
   bounds = new google.maps.LatLngBounds();
@@ -39,17 +54,41 @@ var global_index = 10;
   function onSelectLayer(e) {
     var $el = $(e.currentTarget);
 
+    var currentLegend;
+    switch(theme) {
+    case 1:
+      currentLegend = legends.red;
+      break;
+    case 2:
+      currentLegend = legends.green;
+      break;
+    case 3:
+      currentLegend = legends.blue;
+      break;
+    default:
+      currentLegend = legends.red;
+    }
+
+    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(currentLegend);
+    var stackedLegend = new cdb.geo.ui.Legend.Stacked({
+      legends: [choroplethLegend]
+    });
+    var currentSQL = $el.data('sql');
+    var currentCSS = $el.data('cartocss');
+
     if (currentLayer.layers.length > 0) {
       var sublayer = currentLayer.getSubLayer(0);
       sublayer.remove();
     }
 
-    if ($el.data('layer') === 'layer1') {
+    $legendWrapper.html('');
+
+    if (currentSQL && currentCSS) {
       currentLayer.createSubLayer({
-        sql: 'SELECT wb_malnutrition.country_name, wb_malnutrition.code, wb_malnutrition.year,wb_malnutrition.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM  wb_malnutrition join ne_10m_admin_0_countries on wb_malnutrition.code=ne_10m_admin_0_countries.adm0_a3',
-        cartocss: $el.data('cartocss'),
-        interactivity: 'data'
+        sql: currentSQL,
+        cartocss: currentCSS
       });
+      $legendWrapper.html(stackedLegend.render().$el);
     }
   }
 
