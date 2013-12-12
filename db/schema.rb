@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212155239) do
+ActiveRecord::Schema.define(:version => 20131212163356) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(:version => 20131212155239) do
   create_table "layer_styles", :force => true do |t|
     t.string "name"
     t.string "thumbnail"
-    t.text   "cartocss"
   end
 
   create_table "layers", :force => true do |t|
