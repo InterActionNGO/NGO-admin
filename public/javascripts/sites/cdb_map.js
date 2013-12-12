@@ -35,17 +35,15 @@ var global_index = 10;
     sublayers: []
   };
 
-  //#wb_malnutrition{line-color: #FFF; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;} #wb_malnutrition [ data <= 45.3] {polygon-fill: #B10026;} #wb_malnutrition [ data <= 29.2] {polygon-fill: #E31A1C;} #wb_malnutrition [ data <= 19.2] {polygon-fill: #FC4E2A;} #wb_malnutrition [ data <= 14.9] {polygon-fill: #FD8D3C;} #wb_malnutrition [ data <= 10.1] {polygon-fill: #FEB24C;} #wb_malnutrition [ data <= 6] {polygon-fill: #FED976;} #wb_malnutrition [ data <= 3.1] {polygon-fill: #FFFFB2;}
-
   legends = {
     red: {
-      left: "10", right: "20", colors: [ "#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026" ]
+      left: "0", right: "100", colors: [ '#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026' ]
     },
     blue: {
-      left: "10", right: "20", colors: [ "#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026" ]
+      left: "0", right: "100", colors: [ '#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e' ]
     },
     green: {
-      left: "10", right: "20", colors: [ "#FFFFB2", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#B10026" ]
+      left: "0", right: "100", colors: [ '#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#005824' ]
     }
   };
 
@@ -54,27 +52,37 @@ var global_index = 10;
   function onSelectLayer(e) {
     var $el = $(e.currentTarget);
 
+    var currentTable = $el.data('table');
+    var currentSQL = $el.data('sql');
+    var currentMin = $el.data('min');
+    var currentDiff = $el.data('max') - currentMin;
+
     var currentLegend;
     switch(theme) {
-    case 1:
+    case '1':
       currentLegend = legends.red;
       break;
-    case 2:
+    case '2':
       currentLegend = legends.green;
       break;
-    case 3:
+    case '3':
       currentLegend = legends.blue;
       break;
     default:
       currentLegend = legends.red;
     }
 
+    var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
+    var c_len = currentLegend.colors.length;
+
+    _.each(currentLegend.colors, function(c, i) {
+      currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len -i -1], ( ((currentDiff/c_len) * (c_len - i)) - currentMin ).toFixed(1));
+    });
+
     var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(currentLegend);
     var stackedLegend = new cdb.geo.ui.Legend.Stacked({
       legends: [choroplethLegend]
     });
-    var currentSQL = $el.data('sql');
-    var currentCSS = $el.data('cartocss');
 
     if (currentLayer.layers.length > 0) {
       var sublayer = currentLayer.getSubLayer(0);
@@ -83,13 +91,15 @@ var global_index = 10;
 
     $legendWrapper.html('');
 
-    if (currentSQL && currentCSS) {
+    if (currentSQL) {
       currentLayer.createSubLayer({
         sql: currentSQL,
         cartocss: currentCSS
       });
       $legendWrapper.html(stackedLegend.render().$el);
     }
+
+    $layerSelector.find('.current_selector').text($el.text());
   }
 
   function onWindowLoad() {

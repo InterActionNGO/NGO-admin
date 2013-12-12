@@ -831,11 +831,38 @@ div {
 .map-wrapper {
   position: relative;
   .selector {
+    background: #fff;
+    border: 1px solid #ccc;
     display: none;
-    top: 10px;
-    right: 130px;
+    font-size: 13px;
+    top: 7px;
+    right: 110px;
     position: absolute;
     z-index: 1000;
+    ul ul {
+      background: #fff;
+      border: 1px solid #ccc;
+      display: none;
+      position: absolute;
+      z-index: 10001;
+      li:hover {
+        background: #eee;
+      }
+    }
+    li {
+      position: relative;
+      a {
+        display: block;
+        padding: 3px 10px;
+      }
+      span {
+        display: block;
+        padding: 1px 10px;
+      }
+    }
+    li:hover ul {
+      display: block;
+    }
   }
 }
 
