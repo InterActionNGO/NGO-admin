@@ -5,7 +5,8 @@
 #  id             :integer         not null, primary key
 #  title          :string(255)     
 #  description 	  :text            
-#  credits     	  :text            
+#  credits     	  :text 
+#  sql			  :text           
 #  date	       	  :date            
 #  min       	  :integer            
 #  max       	  :integer            
