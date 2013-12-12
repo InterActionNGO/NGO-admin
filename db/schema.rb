@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131126093052) do
+ActiveRecord::Schema.define(:version => 20131212114555) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -162,9 +162,9 @@ ActiveRecord::Schema.define(:version => 20131126093052) do
   add_index "donors", ["name"], :name => "index_donors_on_name"
 
   create_table "layer_styles", :force => true do |t|
-    t.string "cartocss"
     t.string "name"
     t.string "thumbnail"
+    t.text   "cartocss"
   end
 
   create_table "layers", :force => true do |t|
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20131126093052) do
     t.integer  "units"
     t.boolean  "status"
     t.string   "cartodb_table"
+    t.text     "sql"
   end
 
   create_table "media_resources", :force => true do |t|
