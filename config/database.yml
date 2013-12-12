@@ -4,8 +4,8 @@ development:
   encoding: unicode
   host: localhost
   database: iom_development
-  username: davidsingal
-  password:
+  username: postgres
+  password: simbiotic4
 
 test:
   adapter: postgresql
@@ -28,6 +28,6 @@ production:
   template: template_postgis
   encoding: unicode
   host: localhost
-  database: iom_development
-  username: davidsingal
+  database: iom_production
+  username: postgres
   password:
