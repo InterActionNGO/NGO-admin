@@ -86,7 +86,7 @@
 
       this.counter = this.counter + 1;
 
-      $input.attr('name', this.name + '[' + this.counter + ']').val(values.slice(1));
+      $input.attr('name', this.name + '[]').val(values.slice(1));
       $item.text(labels.slice(3)).append($close).append($input);
       $listItem.append($item);
 
