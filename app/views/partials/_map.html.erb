@@ -1,9 +1,18 @@
-<div id="map"></div>
+<div class="map-wrapper">
+  <div id="map"></div>
 
-<div class="selector">
-  <ul>
-    <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-      <li><a href="#" data-layer="<%= sl.layer.title %>" data-table="<%= sl.layer.cartodb_table %>" data-cartocss="<%= sl.layer_style.cartocss %>"><%= sl.layer.title %></a></li>
-    <% end %>
-  </ul>
+  <div class="selector" id="layerSelector">
+    <ul>
+      <li><span class="current">None</span>
+        <ul>
+          <li><a href="#" data-layer="none">None</a></li>
+          <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+            <li><a href="#" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>" data-cartocss="<%= sl.layer_style.cartocss %>"><%= sl.layer.title %></a></li>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div id="legendWrapper"></div>
 </div>
