@@ -3,11 +3,11 @@
 
   <div class="selector" id="layerSelector">
     <ul>
-      <li><span class="current">None</span>
+      <li><span class="current_selector">None</span>
         <ul>
           <li><a href="#" data-layer="none">None</a></li>
           <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-            <li><a href="#" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>" data-cartocss="<%= sl.layer_style.cartocss %>"><%= sl.layer.title %></a></li>
+            <li><a href="#" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %></a></li>
           <% end %>
         </ul>
       </li>
