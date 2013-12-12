@@ -153,16 +153,15 @@
   var stylez = <%=raw @site.map_styles  %>
 </script>
 <script type="text/javascript">
-var layers = new Array();
-<% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-  var l = {
-    layer: '<%= sl.layer.title %>',
-    cartodb_table: '<%= sl.layer.cartodb_table %>',
-    cartocss: '<%= sl.layer_style.cartocss %>'
-  }
+  var layers = ['none'];
 
-  layers.push(l);
-<% end %>
+  <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+    layers.push({
+      layer: '<%= sl.layer.title %>',
+      cartodb_table: '<%= sl.layer.cartodb_table %>',
+      cartocss: '<%= sl.layer_style.cartocss %>'
+    });
+  <% end %>
 </script>
 
 <%=raw(javascript_include_merged(:sites_home)) %>
