@@ -62,7 +62,7 @@
       var $input = $('<input type="hidden">');
       var $listItem = $('<li></li>');
       var $item = $('<h5></h5>');
-      var $close = $('<a class="close" href="#">x</a>');
+      var $close = $('<a class="close" href="#"></a>');
       var values = '';
       var labels = '';
 
