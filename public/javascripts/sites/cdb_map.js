@@ -37,13 +37,19 @@ var global_index = 10;
 
   legends = {
     red: {
-      left: "0", right: "100", colors: [ '#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026' ]
+      left: "0",
+      right: "100",
+      colors: ['#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026']
     },
     blue: {
-      left: "0", right: "100", colors: [ '#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e' ]
+      left: "0",
+      right: "100",
+      colors: ['#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
     },
     green: {
-      left: "0", right: "100", colors: [ '#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#005824' ]
+      left: "0",
+      right: "100",
+      colors: ['#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#005824']
     }
   };
 
@@ -58,25 +64,25 @@ var global_index = 10;
     var currentDiff = $el.data('max') - currentMin;
 
     var currentLegend;
-    switch(theme) {
-    case '1':
-      currentLegend = legends.red;
-      break;
-    case '2':
-      currentLegend = legends.green;
-      break;
-    case '3':
-      currentLegend = legends.blue;
-      break;
-    default:
-      currentLegend = legends.red;
+    switch (theme) {
+      case '1':
+        currentLegend = legends.red;
+        break;
+      case '2':
+        currentLegend = legends.green;
+        break;
+      case '3':
+        currentLegend = legends.blue;
+        break;
+      default:
+        currentLegend = legends.red;
     }
 
     var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
     var c_len = currentLegend.colors.length;
 
     _.each(currentLegend.colors, function(c, i) {
-      currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len -i -1], ( ((currentDiff/c_len) * (c_len - i)) - currentMin ).toFixed(1));
+      currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
     });
 
     var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(currentLegend);
@@ -206,6 +212,12 @@ var global_index = 10;
 
     if (map_type != "overview_map") {
       map.fitBounds(bounds);
+
+      if (map_data[0].type === 'country') {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 1000);
+      }
     }
 
     if (map_type == "project_map") {
