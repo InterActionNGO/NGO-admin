@@ -6,6 +6,14 @@
   border-radius: $arguments;
 }
 
+@mixin box-shadow($arguments) {
+  -webkit-border-radius: $arguments;
+  -moz-border-radius: $arguments;
+  -ms-border-radius: $arguments;
+  -o-border-radius: $arguments;
+  border-radius: $arguments;
+}
+
 body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, form, fieldset, p {
   margin: 0;
   padding: 0;
@@ -914,7 +922,7 @@ div {
       background: #555;
       display: inline-block;
       float: right;
-      font-family: sans-serif;
+      font-family: serif;
       font-style: italic;
       height: 14px;
       line-height: 14px;
@@ -933,6 +941,37 @@ div {
 div.cartodb-popup p {
   margin: 5px 0;
   padding: 0;
+}
+
+#overlay {
+  background: rgba(0, 0, 0, .6);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  .content-overlay {
+    background: white;
+    left: 50%;
+    margin-left: -325px;
+    padding: 50px;
+    position: absolute;
+    top: 20%;
+    width: 600px;
+    @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
+  }
+  .close-overlay {
+    display: block;
+    font-family: monospace;
+    font-size: 21px;
+    line-height: 1;
+    padding: 10px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
 }
 
 /* COMMON TO ALL BLOCKS AND TO SHOW WITH DEFAULT STYLES */

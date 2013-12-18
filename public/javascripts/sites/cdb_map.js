@@ -125,9 +125,17 @@ var global_index = 10;
 
   function onWindowLoad() {
 
+    var $overlay = $('#overlay');
+    var $contentOverlay = $('#contentOverlay');
+
     $layerSelector = $('#layerSelector');
     $mapTypeSelector = $('#mapTypeSelector');
     $legendWrapper = $('#legendWrapper');
+
+    $('#closeOverlay').click(function(e) {
+      e.preventDefault();
+      $overlay.fadeOut('fast');
+    });
 
     if ($('#map').length > 0) {
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -247,6 +255,14 @@ var global_index = 10;
       e.preventDefault();
       e.stopPropagation();
       onSelectLayer(e);
+    });
+
+    $layerSelector.find('.icon-info').click(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log($contentOverlay);
+      $contentOverlay.html('<h2>Lorem ipsum</h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, officia, numquam, odio, doloribus molestias velit aspernatur corrupti dicta cupiditate vitae reiciendis veniam iusto minima enim ad obcaecati facere. Commodi, fugit.</p>');
+      $overlay.fadeIn('fast');
     });
 
     $mapTypeSelector.find('a').click(function(e) {

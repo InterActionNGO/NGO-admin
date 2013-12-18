@@ -51,7 +51,12 @@
 
   </div>
 
-  <div id="overlay"></div>
+  <div id="overlay">
+    <div class="content-overlay">
+      <a href="#close-overlay" class="close-overlay" id="closeOverlay">x</a>
+      <div id="contentOverlay"></div>
+    </div>
+  </div>
 
   <%= yield :js %>
 </body>
