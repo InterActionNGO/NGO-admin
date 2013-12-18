@@ -901,13 +901,30 @@ div {
       border: 1px solid #111;
       display: none;
       left: 50%;
-      margin-left: -61px;
+      margin-left: -71px;
       position: absolute;
-      width: 120px;
+      width: 140px;
       z-index: 10001;
       @include border-radius(3px);
       li:hover {
         background: #666;
+      }
+    }
+    .icon-info {
+      background: #555;
+      display: inline-block;
+      float: right;
+      font-family: sans-serif;
+      font-style: italic;
+      height: 14px;
+      line-height: 14px;
+      padding: 0;
+      text-transform: none;
+      text-align: center;
+      width: 14px;
+      @include border-radius(100%);
+      &:hover {
+        background-color: #333;
       }
     }
   }
