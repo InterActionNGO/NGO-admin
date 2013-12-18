@@ -66,7 +66,8 @@ var global_index = 10;
     var currentTable = $el.data('table');
     var currentSQL = $el.data('sql');
     var currentMin = $el.data('min');
-    var currentDiff = $el.data('max') - currentMin;
+    var currentMax = $el.data('max');
+    var currentDiff = currentMax - currentMin;
 
     var currentLegend;
     switch (theme) {
@@ -90,7 +91,7 @@ var global_index = 10;
       currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
     });
 
-    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend({title: $el.data('layer')}, currentLegend));
+    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + '%', right: currentMax + '%'}));
     var stackedLegend = new cdb.geo.ui.Legend.Stacked({
       legends: [choroplethLegend]
     });
