@@ -13,11 +13,14 @@ var global_index = 10;
   }
 
   $layerSelector = $('#layerSelector');
+  $mapTypeSelector = $('#mapTypeSelector');
   $legendWrapper = $('#legendWrapper');
 
   mapOptions = {
     zoom: zoom,
     center: latlng,
+    disableDefaultUI: true,
+    zoomControl: false,
     scrollwheel: false,
     zoomControlOptions: {
       style: google.maps.ZoomControlStyle.SMALL
@@ -37,18 +40,18 @@ var global_index = 10;
 
   legends = {
     red: {
-      left: "0",
-      right: "100",
+      left: "0%",
+      right: "100%",
       colors: ['#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026']
     },
     blue: {
-      left: "0",
-      right: "100",
+      left: "0%",
+      right: "100%",
       colors: ['#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
     },
     green: {
-      left: "0",
-      right: "100",
+      left: "0%",
+      right: "100%",
       colors: ['#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#005824']
     }
   };
@@ -85,7 +88,7 @@ var global_index = 10;
       currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
     });
 
-    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(currentLegend);
+    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend({title: $el.data('layer')}, currentLegend));
     var stackedLegend = new cdb.geo.ui.Legend.Stacked({
       legends: [choroplethLegend]
     });
@@ -105,7 +108,7 @@ var global_index = 10;
       $legendWrapper.html(stackedLegend.render().$el);
     }
 
-    $layerSelector.find('.current_selector').text($el.text());
+    $layerSelector.find('.current-selector').text($el.text());
   }
 
   function onWindowLoad() {
@@ -229,6 +232,23 @@ var global_index = 10;
       e.preventDefault();
       e.stopPropagation();
       onSelectLayer(e);
+    });
+
+    $mapTypeSelector.find('a').click(function(e) {
+      e.preventDefault();
+      var $current = $(e.currentTarget);
+      map.setMapTypeId(google.maps.MapTypeId[$current.data('type')]);
+      $mapTypeSelector.find('.current-selector').text($current.text());
+    });
+
+    $('#zoomOut').click(function(e) {
+      e.preventDefault();
+      map.setZoom(map.getZoom() - 1);
+    });
+
+    $('#zoomIn').click(function(e) {
+      e.preventDefault();
+      map.setZoom(map.getZoom() + 1);
     });
 
   }
