@@ -125,6 +125,10 @@ var global_index = 10;
 
   function onWindowLoad() {
 
+    $layerSelector = $('#layerSelector');
+    $mapTypeSelector = $('#mapTypeSelector');
+    $legendWrapper = $('#legendWrapper');
+
     if ($('#map').length > 0) {
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
     } else {
