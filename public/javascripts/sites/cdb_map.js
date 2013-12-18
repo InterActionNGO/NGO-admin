@@ -2,7 +2,9 @@ var global_index = 10;
 
 (function() {
 
-  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper;
+  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, infowindowHtml;
+
+  infowindowHtml = '<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p><strong>Value</strong>: {{content.data.data}}</p><p><strong>Year</strong>: {{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>';
 
   if (map_type === 'overview_map' || map_type === 'project_map') {
     latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -105,6 +107,16 @@ var global_index = 10;
         sql: currentSQL,
         cartocss: currentCSS
       });
+
+      var sublayer = currentLayer.getSubLayer(0);
+
+      sublayer.setInteraction(true);
+
+      cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
+        infowindowTemplate: infowindowHtml,
+        cursorInteraction: true
+      });
+
       $legendWrapper.html(stackedLegend.render().$el);
     }
 
@@ -143,7 +155,6 @@ var global_index = 10;
 
     cartoDBLayer.on('done', function(layer) {
       currentLayer = layer;
-      $layerSelector.fadeIn('fast');
     }).addTo(map);
 
     // Markers
