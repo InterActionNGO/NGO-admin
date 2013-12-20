@@ -151,6 +151,7 @@ var global_index = 10;
       $('#emptyLayer').removeClass('hide').find('a').trigger('click');
     } else {
       $('#emptyLayer').addClass('hide');
+      map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
     }
 
     $layerSelector.find('.current-selector').html($el.html());
