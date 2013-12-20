@@ -1,8 +1,32 @@
 var global_index = 10;
 
 (function() {
+  /**
+   * @constructor
+   * @implements {google.maps.MapType}
+   */
+  function EmptyMapType() {
+  }
 
-  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, infowindowHtml;
+  EmptyMapType.prototype.tileSize = new google.maps.Size(256,256);
+  EmptyMapType.prototype.maxZoom = 19;
+
+  EmptyMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+    var div = ownerDocument.createElement('div');
+    div.style.width = this.tileSize.width + 'px';
+    div.style.height = this.tileSize.height + 'px';
+    div.style.fontSize = '10';
+    div.style.borderWidth = '0';
+    div.style.backgroundColor = '#FFFFFF';
+    return div;
+  };
+
+  EmptyMapType.prototype.name = 'Void';
+  EmptyMapType.prototype.alt = 'A empty tile';
+
+  var emptyMapType = new EmptyMapType();
+
+  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, infowindowHtml, layerActive;
 
   infowindowHtml = '<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p><strong>Value</strong>: {{content.data.data}}</p><p><strong>Year</strong>: {{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>';
 
@@ -22,14 +46,10 @@ var global_index = 10;
     zoom: zoom,
     center: latlng,
     disableDefaultUI: true,
-    zoomControl: false,
-    scrollwheel: false,
-    zoomControlOptions: {
-      style: google.maps.ZoomControlStyle.SMALL
-    },
-    panControl: false,
-    scaleControl: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControlOptions: {
+      mapTypeIds: ['EMPTY', google.maps.MapTypeId.ROADMAP]
+    }
   };
 
   cartodbOptions = {
@@ -67,43 +87,47 @@ var global_index = 10;
     var currentSQL = $el.data('sql');
     var currentMin = $el.data('min');
     var currentMax = $el.data('max');
-    var currentDiff = currentMax - currentMin;
+    var currentDiff = currentMax + currentMin;
 
-    var currentLegend;
-    switch (theme) {
-      case '1':
-        currentLegend = legends.red;
-        break;
-      case '2':
-        currentLegend = legends.green;
-        break;
-      case '3':
-        currentLegend = legends.blue;
-        break;
-      default:
-        currentLegend = legends.red;
-    }
-
-    var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
-    var c_len = currentLegend.colors.length;
-
-    _.each(currentLegend.colors, function(c, i) {
-      currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
-    });
-
-    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + '%', right: currentMax + '%'}));
-    var stackedLegend = new cdb.geo.ui.Legend.Stacked({
-      legends: [choroplethLegend]
-    });
+    $legendWrapper.html('');
 
     if (currentLayer.layers.length > 0) {
       var sublayer = currentLayer.getSubLayer(0);
       sublayer.remove();
     }
 
-    $legendWrapper.html('');
+    layerActive = false;
 
     if (currentSQL) {
+
+      var currentLegend;
+
+      switch (theme) {
+        case '1':
+          currentLegend = legends.red;
+          break;
+        case '2':
+          currentLegend = legends.green;
+          break;
+        case '3':
+          currentLegend = legends.blue;
+          break;
+        default:
+          currentLegend = legends.red;
+      }
+
+      var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
+      var c_len = currentLegend.colors.length;
+
+      _.each(currentLegend.colors, function(c, i) {
+        currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
+      });
+
+      var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + '%', right: currentMax + '%'}));
+      var stackedLegend = new cdb.geo.ui.Legend.Stacked({
+        legends: [choroplethLegend]
+      });
+
       currentLayer.createSubLayer({
         sql: currentSQL,
         cartocss: currentCSS
@@ -118,10 +142,18 @@ var global_index = 10;
         cursorInteraction: true
       });
 
+      layerActive = true;
+
       $legendWrapper.html(stackedLegend.render().$el);
     }
 
-    $layerSelector.find('.current-selector').text($el.text());
+    if (layerActive) {
+      $('#emptyLayer').removeClass('hide').find('a').trigger('click');
+    } else {
+      $('#emptyLayer').addClass('hide');
+    }
+
+    $layerSelector.find('.current-selector').html($el.html());
   }
 
   function onWindowLoad() {
@@ -143,6 +175,8 @@ var global_index = 10;
     } else {
       map = new google.maps.Map(document.getElementById("small_map"), mapOptions);
     }
+
+    map.mapTypes.set('EMPTY', emptyMapType);
 
     google.maps.event.addListener(map, "zoom_changed", function() {
       if (map.getZoom() > 12) map.setZoom(12);
@@ -261,7 +295,6 @@ var global_index = 10;
     $layerSelector.find('.icon-info').click(function(e) {
       e.preventDefault();
       e.stopPropagation();
-      console.log($contentOverlay);
       $contentOverlay.html('<h2>Lorem ipsum</h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, officia, numquam, odio, doloribus molestias velit aspernatur corrupti dicta cupiditate vitae reiciendis veniam iusto minima enim ad obcaecati facere. Commodi, fugit.</p>');
       $overlay.fadeIn('fast');
     });
@@ -269,7 +302,12 @@ var global_index = 10;
     $mapTypeSelector.find('a').click(function(e) {
       e.preventDefault();
       var $current = $(e.currentTarget);
-      map.setMapTypeId(google.maps.MapTypeId[$current.data('type')]);
+      var type = $current.data('type');
+      if (type === 'EMPTY') {
+        map.setMapTypeId(type);
+      } else {
+        map.setMapTypeId(google.maps.MapTypeId[type]);
+      }
       $mapTypeSelector.find('.current-selector').text($current.text());
     });
 
