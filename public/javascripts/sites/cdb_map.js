@@ -17,7 +17,7 @@ var global_index = 10;
     div.style.height = this.tileSize.height + 'px';
     div.style.fontSize = '10';
     div.style.borderWidth = '0';
-    div.style.backgroundColor = '#FFFFFF';
+    div.style.backgroundColor = '#EEEEEE';
     return div;
   };
 
