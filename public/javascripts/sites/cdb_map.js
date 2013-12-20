@@ -155,13 +155,10 @@ var global_index = 10;
     if (layerActive) {
       if (window.sessionStorage && window.sessionStorage.getItem('type')) {
         $('#' + window.sessionStorage.getItem('type')).trigger('click');
-      } else {
-        $emptyLayer.removeClass('hide').find('a').trigger('click');
       }
+      $emptyLayer.removeClass('hide').find('a').trigger('click');
     } else {
-      $emptyLayer.addClass('hide');
-      $mapTypeSelector.find('.current-selector').text('ROADMAP');
-      map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+      $emptyLayer.addClass('hide').find('a').trigger('click');
     }
 
     $layerSelector.find('.current-selector').html($el.html());
