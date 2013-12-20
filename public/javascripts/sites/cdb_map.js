@@ -97,6 +97,10 @@ var global_index = 10;
       sublayer.remove();
     }
 
+    if (window.sessionStorage) {
+      window.sessionStorage.setItem('layer', $el.attr('id'));
+    }
+
     layerActive = false;
 
     if (currentSQL) {
@@ -149,7 +153,11 @@ var global_index = 10;
     }
 
     if (layerActive) {
-      $emptyLayer.removeClass('hide').find('a').trigger('click');
+      if (window.sessionStorage && window.sessionStorage.getItem('type')) {
+        $('#' + window.sessionStorage.getItem('type')).trigger('click');
+      } else {
+        $emptyLayer.removeClass('hide').find('a').trigger('click');
+      }
     } else {
       $emptyLayer.addClass('hide');
       $mapTypeSelector.find('.current-selector').text('ROADMAP');
@@ -205,6 +213,9 @@ var global_index = 10;
 
     cartoDBLayer.on('done', function(layer) {
       currentLayer = layer;
+      if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
+        $('#' + window.sessionStorage.getItem('layer')).trigger('click');
+      }
     }).addTo(map);
 
     // Markers
@@ -312,6 +323,9 @@ var global_index = 10;
         map.setMapTypeId(google.maps.MapTypeId[type]);
       }
       $mapTypeSelector.find('.current-selector').text($current.text());
+      if (window.sessionStorage) {
+        window.sessionStorage.setItem('type', $current.attr('id'));
+      }
     });
 
     $('#zoomOut').click(function(e) {

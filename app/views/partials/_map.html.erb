@@ -9,7 +9,7 @@
             <ul class="selector-options">
               <li><a href="#" data-layer="none">None</a></li>
               <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-                <li><a href="#" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+                <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
               <% end %>
             </ul>
           </li>
@@ -21,10 +21,10 @@
           <li><span class="current-selector">Roadmap</span>
             <ul class="selector-options">
               <li class="hide" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
-              <li><a href="#" data-type="ROADMAP">Roadmap</a></li>
-              <li><a href="#" data-type="TERRAIN">Terrain</a></li>
-              <li><a href="#" data-type="HYBRID">Hybrid</a></li>
-              <li><a href="#" data-type="SATELLITE">Satellite</a></li>
+              <li><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
+              <li><a href="#" id="terrainLayer" data-type="TERRAIN">Terrain</a></li>
+              <li><a href="#" id="hybridLayer" data-type="HYBRID">Hybrid</a></li>
+              <li><a href="#" id="satelliteLayer" data-type="SATELLITE">Satellite</a></li>
             </ul>
           </li>
         </ul>
