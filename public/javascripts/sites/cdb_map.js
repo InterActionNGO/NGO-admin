@@ -82,6 +82,7 @@ var global_index = 10;
 
   function onSelectLayer(e) {
     var $el = $(e.currentTarget);
+    var $emptyLayer = $('#emptyLayer');
 
     var currentTable = $el.data('table');
     var currentSQL = $el.data('sql');
@@ -148,9 +149,10 @@ var global_index = 10;
     }
 
     if (layerActive) {
-      $('#emptyLayer').removeClass('hide').find('a').trigger('click');
+      $emptyLayer.removeClass('hide').find('a').trigger('click');
     } else {
-      $('#emptyLayer').addClass('hide');
+      $emptyLayer.addClass('hide');
+      $mapTypeSelector.find('.current-selector').text('ROADMAP');
       map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
     }
 
