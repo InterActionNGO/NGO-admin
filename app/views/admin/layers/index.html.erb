@@ -1,0 +1,60 @@
+    <div class="main_layout">
+<!--       <div class="block">
+        <div class="long_search">
+          <span class="top"></span>
+          <div class="content padding">
+            <%= form_tag(admin_layers_path, :method => :get, :class => 'search') do %>
+              <label>SEARCH BY TEXT</label>
+              <input type="text" value="<%= params[:q] || 'Search Organizations by name, place,...'%>" name="q" class="main_search"/>
+              <input type="submit" value="" />
+            <% end %>
+          </div>
+          <span class="bottom"></span>
+        </div>
+      </div>
+ -->
+      <div class="block">
+        <div class="top"></div>
+        <div class="med ngos_list">
+          <% unless @layers.empty? %>
+            <div class="header no_border">
+              <h2><%= pluralize(@layers.count, 'Layer', 'Layers') %> 
+                <% if params[:q]%>
+                on <a class="remove" href="<%= admin_organizations_path %>"><%= params[:q] %></a>
+                <% end %>
+              </h2>
+              <span class="buttons">
+                <a class="add_project museo_sans shadow_green" href="<%= new_admin_layer_path %>">New layer.</a>
+              </span>
+            </div>
+            <ul>
+              <% @layers.each do |layer| %>
+                <li>
+                  <h3><%= link_to(truncate(layer.title, :length => 60), edit_admin_layer_path(layer)) %></h3>
+                </li>
+              <% end -%>
+            </ul>
+          <!-- <% else %> -->
+<!--             <% if Organization.count>1 %>
+              <div class="no_results">
+                <h2>There are not organizations for your search</h2>
+                <p>Try to search with different terms or simply <a href="<%= admin_organizations_path %>">browse all organizations</a></p>
+              </div>
+            <% else %>
+              <div class="no_results">
+                <h2>There are not organizations in the site</h2>
+                <p>Try to <a href="<%= new_admin_organization_path %>">add new one</a>.</p>
+              </div>
+            <% end %> -->
+          <!-- <% end %> -->
+        </div>
+      </div>
+
+      <div class="add_new">
+        <a href="<%= new_admin_layer_path %>">
+          Add a new Layer<br/>
+          <strong>There are already <%= pluralize(Layer.count, 'Layer', 'Layers') %> created</strong>
+        </a>
+      </div>
+    </div>
+
