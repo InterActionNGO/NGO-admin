@@ -141,6 +141,8 @@
 	if (map_type!="overview_map") {
 	  map.fitBounds(bounds);
 
+    console.log(map_data[0].type, map);
+
     if (map_data[0].type === 'country') {
       setTimeout(function() {
         map.setZoom(8);

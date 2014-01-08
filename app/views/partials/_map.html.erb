@@ -1,18 +1,44 @@
 <div class="map-wrapper">
-  <div id="map"></div>
 
-  <div class="selector" id="layerSelector">
-    <ul>
-      <li><span class="current_selector">None</span>
+  <div class="controls">
+    <div class="control-navbar">
+
+      <div class="selector" id="layerSelector">
         <ul>
-          <li><a href="#" data-layer="none">None</a></li>
-          <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-            <li><a href="#" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %></a></li>
-          <% end %>
+          <li><span class="current-selector">Select a layer</span>
+            <ul class="selector-options">
+              <li><a href="#" data-layer="none">None</a></li>
+              <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+                <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+              <% end %>
+            </ul>
+          </li>
         </ul>
-      </li>
-    </ul>
+      </div>
+
+      <div class="selector" id="mapTypeSelector">
+        <ul>
+          <li><span class="current-selector">Roadmap</span>
+            <ul class="selector-options">
+              <li class="hide" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
+              <li><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
+              <li><a href="#" id="terrainLayer" data-type="TERRAIN">Terrain</a></li>
+              <li><a href="#" id="hybridLayer" data-type="HYBRID">Hybrid</a></li>
+              <li><a href="#" id="satelliteLayer" data-type="SATELLITE">Satellite</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="control-zoom" id="controlZoom">
+      <a href="#zoom-in" class="zoom-in" id="zoomIn">+</a>
+      <a href="#zoom-in" class="zoom-out" id="zoomOut">-</a>
+    </div>
   </div>
+
+  <div id="map"></div>
 
   <div id="legendWrapper"></div>
 </div>
