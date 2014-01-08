@@ -1,8 +1,34 @@
 var global_index = 10;
 
 (function() {
+  /**
+   * @constructor
+   * @implements {google.maps.MapType}
+   */
+  function EmptyMapType() {
+  }
 
-  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper;
+  EmptyMapType.prototype.tileSize = new google.maps.Size(256,256);
+  EmptyMapType.prototype.maxZoom = 19;
+
+  EmptyMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+    var div = ownerDocument.createElement('div');
+    div.style.width = this.tileSize.width + 'px';
+    div.style.height = this.tileSize.height + 'px';
+    div.style.fontSize = '10';
+    div.style.borderWidth = '0';
+    div.style.backgroundColor = '#EEEEEE';
+    return div;
+  };
+
+  EmptyMapType.prototype.name = 'Void';
+  EmptyMapType.prototype.alt = 'A empty tile';
+
+  var emptyMapType = new EmptyMapType();
+
+  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, infowindowHtml, layerActive;
+
+  infowindowHtml = '<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p><strong>Value</strong>: {{content.data.data}}</p><p><strong>Year</strong>: {{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>';
 
   if (map_type === 'overview_map' || map_type === 'project_map') {
     latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -13,18 +39,17 @@ var global_index = 10;
   }
 
   $layerSelector = $('#layerSelector');
+  $mapTypeSelector = $('#mapTypeSelector');
   $legendWrapper = $('#legendWrapper');
 
   mapOptions = {
     zoom: zoom,
     center: latlng,
-    scrollwheel: false,
-    zoomControlOptions: {
-      style: google.maps.ZoomControlStyle.SMALL
-    },
-    panControl: false,
-    scaleControl: false,
+    disableDefaultUI: true,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControlOptions: {
+      mapTypeIds: ['EMPTY', google.maps.MapTypeId.ROADMAP]
+    }
   };
 
   cartodbOptions = {
@@ -37,13 +62,19 @@ var global_index = 10;
 
   legends = {
     red: {
-      left: "0", right: "100", colors: [ '#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026' ]
+      left: "0%",
+      right: "100%",
+      colors: ['#ffffb2', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026']
     },
     blue: {
-      left: "0", right: "100", colors: [ '#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e' ]
+      left: "0%",
+      right: "100%",
+      colors: ['#f0f9e8', '#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
     },
     green: {
-      left: "0", right: "100", colors: [ '#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#005824' ]
+      left: "0%",
+      right: "100%",
+      colors: ['#edf8fb', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#005824']
     }
   };
 
@@ -51,64 +82,109 @@ var global_index = 10;
 
   function onSelectLayer(e) {
     var $el = $(e.currentTarget);
+    var $emptyLayer = $('#emptyLayer');
 
     var currentTable = $el.data('table');
     var currentSQL = $el.data('sql');
     var currentMin = $el.data('min');
-    var currentDiff = $el.data('max') - currentMin;
+    var currentMax = $el.data('max');
+    var currentDiff = currentMax + currentMin;
 
-    var currentLegend;
-    switch(theme) {
-    case '1':
-      currentLegend = legends.red;
-      break;
-    case '2':
-      currentLegend = legends.green;
-      break;
-    case '3':
-      currentLegend = legends.blue;
-      break;
-    default:
-      currentLegend = legends.red;
-    }
-
-    var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
-    var c_len = currentLegend.colors.length;
-
-    _.each(currentLegend.colors, function(c, i) {
-      currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len -i -1], ( ((currentDiff/c_len) * (c_len - i)) - currentMin ).toFixed(1));
-    });
-
-    var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(currentLegend);
-    var stackedLegend = new cdb.geo.ui.Legend.Stacked({
-      legends: [choroplethLegend]
-    });
+    $legendWrapper.html('');
 
     if (currentLayer.layers.length > 0) {
       var sublayer = currentLayer.getSubLayer(0);
       sublayer.remove();
     }
 
-    $legendWrapper.html('');
+    if (window.sessionStorage) {
+      window.sessionStorage.setItem('layer', $el.attr('id'));
+    }
+
+    layerActive = false;
 
     if (currentSQL) {
+
+      var currentLegend;
+
+      switch (theme) {
+        case '1':
+          currentLegend = legends.red;
+          break;
+        case '2':
+          currentLegend = legends.green;
+          break;
+        case '3':
+          currentLegend = legends.blue;
+          break;
+        default:
+          currentLegend = legends.red;
+      }
+
+      var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
+      var c_len = currentLegend.colors.length;
+
+      _.each(currentLegend.colors, function(c, i) {
+        currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
+      });
+
+      var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + '%', right: currentMax + '%'}));
+      var stackedLegend = new cdb.geo.ui.Legend.Stacked({
+        legends: [choroplethLegend]
+      });
+
       currentLayer.createSubLayer({
         sql: currentSQL,
         cartocss: currentCSS
       });
+
+      var sublayer = currentLayer.getSubLayer(0);
+
+      sublayer.setInteraction(true);
+
+      cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
+        infowindowTemplate: infowindowHtml,
+        cursorInteraction: true
+      });
+
+      layerActive = true;
+
       $legendWrapper.html(stackedLegend.render().$el);
     }
 
-    $layerSelector.find('.current_selector').text($el.text());
+    if (layerActive) {
+      if (window.sessionStorage && window.sessionStorage.getItem('type')) {
+        $('#' + window.sessionStorage.getItem('type')).trigger('click');
+      }
+      $emptyLayer.removeClass('hide').find('a').trigger('click');
+    } else {
+      $emptyLayer.addClass('hide').find('a').trigger('click');
+    }
+
+    $layerSelector.find('.current-selector').html($el.html());
   }
 
   function onWindowLoad() {
+
+    var $overlay = $('#overlay');
+    var $contentOverlay = $('#contentOverlay');
+
+    $layerSelector = $('#layerSelector');
+    $mapTypeSelector = $('#mapTypeSelector');
+    $legendWrapper = $('#legendWrapper');
+
+    $('#closeOverlay').click(function(e) {
+      e.preventDefault();
+      $overlay.fadeOut('fast');
+    });
 
     if ($('#map').length > 0) {
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
     } else {
       map = new google.maps.Map(document.getElementById("small_map"), mapOptions);
     }
+
+    map.mapTypes.set('EMPTY', emptyMapType);
 
     google.maps.event.addListener(map, "zoom_changed", function() {
       if (map.getZoom() > 12) map.setZoom(12);
@@ -134,7 +210,9 @@ var global_index = 10;
 
     cartoDBLayer.on('done', function(layer) {
       currentLayer = layer;
-      $layerSelector.fadeIn('fast');
+      if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
+        $('#' + window.sessionStorage.getItem('layer')).trigger('click');
+      }
     }).addTo(map);
 
     // Markers
@@ -206,6 +284,12 @@ var global_index = 10;
 
     if (map_type != "overview_map") {
       map.fitBounds(bounds);
+
+      if (map_data[0].type === 'country') {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 1000);
+      }
     }
 
     if (map_type == "project_map") {
@@ -217,6 +301,38 @@ var global_index = 10;
       e.preventDefault();
       e.stopPropagation();
       onSelectLayer(e);
+    });
+
+    $layerSelector.find('.icon-info').click(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $contentOverlay.html('<h2>Lorem ipsum</h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, officia, numquam, odio, doloribus molestias velit aspernatur corrupti dicta cupiditate vitae reiciendis veniam iusto minima enim ad obcaecati facere. Commodi, fugit.</p>');
+      $overlay.fadeIn('fast');
+    });
+
+    $mapTypeSelector.find('a').click(function(e) {
+      e.preventDefault();
+      var $current = $(e.currentTarget);
+      var type = $current.data('type');
+      if (type === 'EMPTY') {
+        map.setMapTypeId(type);
+      } else {
+        map.setMapTypeId(google.maps.MapTypeId[type]);
+      }
+      $mapTypeSelector.find('.current-selector').text($current.text());
+      if (window.sessionStorage) {
+        window.sessionStorage.setItem('type', $current.attr('id'));
+      }
+    });
+
+    $('#zoomOut').click(function(e) {
+      e.preventDefault();
+      map.setZoom(map.getZoom() - 1);
+    });
+
+    $('#zoomIn').click(function(e) {
+      e.preventDefault();
+      map.setZoom(map.getZoom() + 1);
     });
 
   }

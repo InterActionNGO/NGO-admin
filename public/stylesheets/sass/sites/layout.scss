@@ -1,3 +1,19 @@
+@mixin border-radius($arguments) {
+  -webkit-border-radius: $arguments;
+  -moz-border-radius: $arguments;
+  -ms-border-radius: $arguments;
+  -o-border-radius: $arguments;
+  border-radius: $arguments;
+}
+
+@mixin box-shadow($arguments) {
+  -webkit-border-radius: $arguments;
+  -moz-border-radius: $arguments;
+  -ms-border-radius: $arguments;
+  -o-border-radius: $arguments;
+  border-radius: $arguments;
+}
+
 body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, form, fieldset, p {
   margin: 0;
   padding: 0;
@@ -830,39 +846,137 @@ div {
 
 .map-wrapper {
   position: relative;
-  .selector {
-    background: #fff;
-    border: 1px solid #ccc;
-    display: none;
-    font-size: 13px;
-    top: 7px;
-    right: 110px;
+  .controls {
+    margin: 0 auto;
+    position: relative;
+    width: 932px;
+  }
+  .control-navbar, .control-zoom {
+    top: 10px;
     position: absolute;
     z-index: 1000;
-    ul ul {
-      background: #fff;
-      border: 1px solid #ccc;
-      display: none;
-      position: absolute;
-      z-index: 10001;
-      li:hover {
-        background: #eee;
+  }
+  .control-navbar {
+    right: 0;
+  }
+  .control-zoom {
+    left: 0;
+    top: 40px;
+    a {
+      background: #333;
+      border: 1px solid #111;
+      color: #eee;
+      display: block;
+      float: left;
+      font-family: monospace;
+      line-height: 16px;
+      margin-right: 10px;
+      padding: 2px 0;
+      text-align: center;
+      width: 20px;
+      @include border-radius(3px);
+      &:hover {
+        background-color: #000;
       }
+    }
+  }
+  .selector {
+    background: #333;
+    border: 1px solid #111;
+    float: left;
+    font-size: 12px;
+    margin-left: 10px;
+    min-width: 80px;
+    .current-selector {
+      background: url(/images/assets/icon-selector.png) no-repeat 95% 50%;
+      padding-right: 20px;
+      .icon-info {
+        display: none;
+      }
+    }
+    @include border-radius(3px);
+    span, a {
+      color: #eee;
+      display: block;
+      padding: 3px 10px;
+      text-transform: uppercase;
     }
     li {
       position: relative;
-      a {
-        display: block;
-        padding: 3px 10px;
-      }
-      span {
-        display: block;
-        padding: 1px 10px;
+      &.hide {
+        display: none;
       }
     }
-    li:hover ul {
+    li:hover .selector-options {
       display: block;
     }
+    .selector-options {
+      background: #333;
+      border: 1px solid #111;
+      display: none;
+      left: 50%;
+      margin-left: -71px;
+      position: absolute;
+      width: 140px;
+      z-index: 10001;
+      @include border-radius(3px);
+      li:hover {
+        background: #666;
+      }
+    }
+    .icon-info {
+      background: #555;
+      display: inline-block;
+      float: right;
+      font-family: serif;
+      font-style: italic;
+      height: 14px;
+      line-height: 14px;
+      padding: 0;
+      text-transform: none;
+      text-align: center;
+      width: 14px;
+      @include border-radius(100%);
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
+}
+
+div.cartodb-popup p {
+  margin: 5px 0;
+  padding: 0;
+}
+
+#overlay {
+  background: rgba(0, 0, 0, .6);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  .content-overlay {
+    background: white;
+    left: 50%;
+    margin-left: -325px;
+    padding: 50px;
+    position: absolute;
+    top: 20%;
+    width: 600px;
+    @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
+  }
+  .close-overlay {
+    display: block;
+    font-family: Menlo, Monaco;
+    font-size: 21px;
+    line-height: 1;
+    padding: 10px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
 }
 
@@ -874,34 +988,34 @@ div {
 
 /*REGION*/
 
-a {
-  &#zoomIn {
-    position: absolute;
-    display: none;
-    width: 24px;
-    height: 24px;
-    top: 10px;
-    left: 10px;
-    background: url('/images/sites/maps/zoom_in.png') no-repeat 0 0;
-    z-index: 100;
-    &:hover {
-      background-position: 0 -24px;
-    }
-  }
-  &#zoomOut {
-    position: absolute;
-    display: none;
-    width: 24px;
-    height: 24px;
-    top: 10px;
-    left: 40px;
-    background: url('/images/sites/maps/zoom_out.png') no-repeat 0 0;
-    z-index: 100;
-    &:hover {
-      background-position: 0 -24px;
-    }
-  }
-}
+// a {
+//   &#zoomIn {
+//     position: absolute;
+//     display: none;
+//     width: 24px;
+//     height: 24px;
+//     top: 10px;
+//     left: 10px;
+//     background: url('/images/sites/maps/zoom_in.png') no-repeat 0 0;
+//     z-index: 100;
+//     &:hover {
+//       background-position: 0 -24px;
+//     }
+//   }
+//   &#zoomOut {
+//     position: absolute;
+//     display: none;
+//     width: 24px;
+//     height: 24px;
+//     top: 10px;
+//     left: 40px;
+//     background: url('/images/sites/maps/zoom_out.png') no-repeat 0 0;
+//     z-index: 100;
+//     &:hover {
+//       background-position: 0 -24px;
+//     }
+//   }
+// }
 
 div {
   &.map_style {
