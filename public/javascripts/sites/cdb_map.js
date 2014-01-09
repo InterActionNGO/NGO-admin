@@ -158,7 +158,7 @@ var global_index = 10;
       }
       $emptyLayer.removeClass('hide').find('a').trigger('click');
     } else {
-      $emptyLayer.addClass('hide').find('a').trigger('click');
+      $emptyLayer.addClass('hide').next().find('a').trigger('click');
     }
 
     $layerSelector.find('.current-selector').html($el.html());
