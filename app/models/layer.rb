@@ -20,7 +20,7 @@ class Layer < ActiveRecord::Base
   has_many  :site_layers
   has_many  :site, :through => :site_layers
 
-  validates_presence_of :title, :cartodb_table, :sql, :min, :max
+  validates_presence_of :title, :long_title, :cartodb_table, :sql, :min, :max
   # accepts_nested_attributes_for :site_layers
 
   # to get only id and name

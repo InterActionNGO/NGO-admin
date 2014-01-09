@@ -10,6 +10,13 @@
     </span>
   </div>
   <div class="field">
+    <label class="first">LAYER LONG TITLE <strong>*</strong></label>
+    <span class="input_large <%= 'error' if !@layer.errors[:long_title].empty? && action_name != 'new' %>">
+      <%= f.text_field :long_title, :class=>"long #{'error' if !@layer.errors[:long_title].empty? && action_name != 'new'}" %>
+      <%= errors_for @layer, :long_title %>
+    </span>
+  </div>  
+  <div class="field">
     <span class="chars">
       <label>CartoDB Table <strong>*</strong></label>
     </span>
