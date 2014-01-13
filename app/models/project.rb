@@ -1104,4 +1104,78 @@ SQL
       errors.add(:clusters, "can't be blank")
     end
   end  
+
+  def self.report(params = {})
+    debugger
+    start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
+    end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year'])
+    countries = donors = sectors = organizations = []
+    countries = params[:country] if params[:country]
+    donors = params[:donor] if params[:donor]
+    sectors = params[:sector] if params[:sector]
+    organizations = params[:organization] if params[:organization]
+
+    # case params[:start_date_op]
+    #   when '>'
+    #     @projects_start = Project.start_date_gt(start_date)
+    #   when '>='
+    #     @projects_start = Project.start_date_gte(start_date)
+    #   when '<'
+    #     @projects_start = Project.start_date_lt(start_date)
+    #   when '<='
+    #     @projects_start = Project.start_date_lte(start_date)
+    #   else
+    #     @projects_start = Project.start_date_eq(start_date)
+    #   end
+
+    # case params[:end_date_op]
+    #   when '>'
+    #     @projects_end = Project.end_date_gt(end_date)
+    #   when '>='
+    #     @projects_end = Project.end_date_gte(end_date)
+    #   when '<'
+    #     @projects_end = Project.end_date_lt(end_date)
+    #   when '<='
+    #     @projects_end = Project.end_date_lte(end_date)
+    #   else
+    #     @projects_end = Project.end_date_eq(end_date)
+    #   end
+    
+    @projects_start = Project.start_date_lte(end_date)
+    @projects_end = Project.end_date_gte(start_date)
+
+    if params[:country_include] === "include"
+      @projects_start = @projects_start.countries_name_in(countries) if ( params[:country] && !params[:country].include?('All') )
+      @projects_end = @projects_end.countries_name_in(countries)  if ( params[:country] && !params[:country].include?('All') )
+    else
+      @projects_start = @projects_start.countries_name_not_in(countries) if ( params[:country] && !params[:country].include?('All') )
+      @projects_end = @projects_end.countries_name_not_in(countries)  if ( params[:country] && !params[:country].include?('All') )
+    end
+
+    if params[:organization_include] === "include"
+      @projects_start = @projects_start.primary_organization_name_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+      @projects_end = @projects_end.primary_organization_name_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+    else
+      @projects_start = @projects_start.primary_organization_name_not_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+      @projects_end = @projects_end.primary_organization_name_not_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+    end
+
+    if params[:donor_include] === "include"
+      @projects_start = @projects_start.donors_name_in(donors) if ( params[:donor] && !params[:donor].include?('All') )
+      @projects_end = @projects_end.donors_name_in(donors)  if ( params[:donor] && !params[:donor].include?('All') )
+    else
+      @projects_start = @projects_start.donors_name_not_in(donors) if ( params[:donor] && !params[:donor].include?('All') )
+      @projects_end = @projects_end.donors_name_not_in(donors)  if ( params[:donor] && !params[:donor].include?('All') )
+    end
+
+    if params[:sectors_include] === "include"
+      @projects_start = @projects_start.sectors_name_in(sectors) if ( params[:sector] && !params[:sector].include?('All') )
+      @projects_end = @projects_end.sectors_name_in(sectors)  if ( params[:sector] && !params[:sector].include?('All') )
+    else
+      @projects_start = @projects_start.sectors_name_not_in(sectors) if ( params[:sector] && !params[:sector].include?('All') )
+      @projects_end = @projects_end.sectors_name_not_in(sectors)  if ( params[:sector] && !params[:sector].include?('All') )
+    end
+
+    @projects = (@projects_start + @projects_end).uniq    
+  end
 end
