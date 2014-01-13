@@ -2,6 +2,9 @@ Iom::Application.routes.draw do
 
   # Home
   root :to => "sites#home"
+  # report page
+  match 'reports' => 'reports#index' , :as => :report_index
+  match 'report_generate' => 'reports#report', :as => :report_generate
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
   match 'about-interaction' => 'sites#about_interaction'
@@ -13,7 +16,7 @@ Iom::Application.routes.draw do
   match 'faq' => 'sites#faq'
   match 'contact' => 'sites#contact'
   match 'explore' => 'sites#explore'
-
+  
   # Session
   resource :session, :only => [:new, :create, :destroy]
   match 'login' => 'sessions#new', :as => :login
@@ -22,6 +25,7 @@ Iom::Application.routes.draw do
   resource :passwords
 
   # Front urls
+  # resources :reports
   resources :donors,        :only => [:index, :show]
   resources :offices,      :only => [:show]
   resources :projects,      :only => [:index, :show]
@@ -53,8 +57,8 @@ Iom::Application.routes.draw do
     match '/' => 'admin#index', :as => :admin
     match '/export_projects' => 'admin#export_projects', :as => :export_projects
     match '/export_organizations' => 'admin#export_organizations', :as => :export_organizations
-    match '/report' => 'reports#index', :as => :report_index
-    match '/report_generate' => 'reports#report', :as => :report_generate
+    # match '/report' => 'reports#index', :as => :report_index
+    # match '/report_generate' => 'reports#report', :as => :report_generate
     resources :settings, :only => [:edit, :update]
     resources :users
     resources :tags, :only => [:index]
