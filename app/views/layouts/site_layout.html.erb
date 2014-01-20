@@ -2,8 +2,11 @@
 <html>
 <head>
   <title><%= title %></title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLF_4Hka9T0of09Z0eGPmExn-tG2ZIveU&sensor=false"></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
   <%=raw(javascript_include_merged(:base)) %>
   <%=raw(javascript_include_merged(:base_2)) %>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
   <%=raw(stylesheet_link_merged(:base)) %>
   <%=stylesheet_link_tag @site.theme.css_file if @site.theme %>
   <%=auto_discovery_link_tag(:rss, "#{url(@site)}/.xml", {:title => @site.name}) %>
@@ -47,6 +50,14 @@
     <% end %>
 
   </div>
+
+  <div id="overlay">
+    <div class="content-overlay">
+      <a href="#close-overlay" class="close-overlay" id="closeOverlay">x</a>
+      <div id="contentOverlay"></div>
+    </div>
+  </div>
+
   <%= yield :js %>
 </body>
 </html>

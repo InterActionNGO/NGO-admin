@@ -65,6 +65,9 @@ class Site < ActiveRecord::Base
   belongs_to :geographic_context_region, :class_name => 'Region'
   has_many :stats, :dependent => :destroy
 
+  has_many :site_layers
+  has_many :layer, :through => :site_layers
+  
   has_attached_file :logo, :styles => {
                                       :small => {
                                         :geometry => "80x46>",
@@ -754,6 +757,15 @@ SQL
     Project.
     joins('INNER JOIN projects_sites ps ON ps.project_id = projects.id').
     where(:primary_organization_id => organization.id, :'ps.site_id' => id)
+  end
+  
+  def site_layers
+    return "" if self.new_record?
+    SiteLayer.where({:site_id => self.id})
+  end
+
+  def clean_layers
+    ActiveRecord::Base.connection.execute("DELETE from site_layers where site_id=#{self.id}")
   end
 
   private

@@ -8,6 +8,7 @@ javascripts:
   - plugins/jquery.mousewheel
   - plugins/jquery.jscrollpane
   - plugins/quicksilver
+  - plugins/sprintf
 - base_2:
   - plugins/jquery.livesearch
   - rails
@@ -25,12 +26,12 @@ javascripts:
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - clusters_sectors_show:
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
   - sites/location
 - georegion_show:
   - sites/location
@@ -43,13 +44,13 @@ javascripts:
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - organizations_show:
   - sites/location
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - projects_show:
   - plugins/galleria
   - plugins/galleria.classic
@@ -57,7 +58,7 @@ javascripts:
   - sites/mercatorProjection
   - sites/IOMMarker
   - sites/labels_style
-  - sites/overview_map
+  - sites/cdb_map
 - search:
   - jquery.ui.autocomplete
   - plugins/jquery.stylish-select

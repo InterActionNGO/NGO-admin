@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130419202532) do
+ActiveRecord::Schema.define(:version => 20140109150408) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -84,16 +84,11 @@ ActiveRecord::Schema.define(:version => 20130419202532) do
     t.date     "start_date"
   end
 
-  add_index "data_denormalization", ["cluster_ids"], :name => "data_denormalization_cluster_idsx"
-  add_index "data_denormalization", ["countries_ids"], :name => "data_denormalization_countries_idsx"
-  add_index "data_denormalization", ["donors_ids"], :name => "data_denormalization_donors_idsx"
   add_index "data_denormalization", ["is_active"], :name => "data_denormalization_is_activex"
   add_index "data_denormalization", ["organization_id"], :name => "data_denormalization_organization_idx"
   add_index "data_denormalization", ["organization_name"], :name => "data_denormalization_organization_namex"
   add_index "data_denormalization", ["project_id"], :name => "data_denormalization_project_idx"
   add_index "data_denormalization", ["project_name"], :name => "data_denormalization_project_name_idx"
-  add_index "data_denormalization", ["regions_ids"], :name => "data_denormalization_regions_idsx"
-  add_index "data_denormalization", ["sector_ids"], :name => "data_denormalization_sector_idsx"
   add_index "data_denormalization", ["site_id"], :name => "data_denormalization_site_idx"
 
   create_table "data_export", :id => false, :force => true do |t|
@@ -165,6 +160,25 @@ ActiveRecord::Schema.define(:version => 20130419202532) do
   end
 
   add_index "donors", ["name"], :name => "index_donors_on_name"
+
+  create_table "layer_styles", :force => true do |t|
+    t.string "name"
+    t.string "thumbnail"
+  end
+
+  create_table "layers", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "credits"
+    t.datetime "date"
+    t.float    "min"
+    t.float    "max"
+    t.string   "units"
+    t.boolean  "status"
+    t.string   "cartodb_table"
+    t.text     "sql"
+    t.string   "long_title"
+  end
 
   create_table "media_resources", :force => true do |t|
     t.integer  "position",                 :default => 0
@@ -463,6 +477,16 @@ ActiveRecord::Schema.define(:version => 20130419202532) do
   create_table "settings", :force => true do |t|
     t.text "data"
   end
+
+  create_table "site_layers", :id => false, :force => true do |t|
+    t.integer "site_id"
+    t.integer "layer_id"
+    t.integer "layer_style_id"
+  end
+
+  add_index "site_layers", ["layer_id"], :name => "index_site_layers_on_layer_id"
+  add_index "site_layers", ["layer_style_id"], :name => "index_site_layers_on_layer_style_id"
+  add_index "site_layers", ["site_id"], :name => "index_site_layers_on_site_id"
 
   create_table "sites", :force => true do |t|
     t.string   "name"

@@ -36,7 +36,7 @@ $(document).ready(function(ev){
     }
     /************** SITE PAGE  ************************** */
 		if ($('select').length) {
-  	  $('select#gc_limited_country_section').sSelect({ddMaxWidth: '245px',ddMaxHeight:'231px',containerClass:'country'});
+  	  $('select#gc_limited_country_section').select({ddMaxWidth: '245px',ddMaxHeight:'231px',containerClass:'country'});
 		}
 
         if ($('input#site_project_classification').length > 0){

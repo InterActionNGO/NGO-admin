@@ -1,0 +1,64 @@
+<div class="main_layout">
+  <div class="block">
+    <div class="long_search">
+      <span class="top"></span>
+      <div class="content padding">
+        <%= form_tag(admin_report_generate_path, :method => :get, :class => :search) do %>
+          <label>SEARCH BY TEXT</label>
+          <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place,..." name="q" class="main_search"/>
+          <input type="submit" value="" />
+          <ul class="combo_search_select clearfix">
+      	    <li class="comboselect">
+              <label>Organization</label>
+              <%= select_tag :organization,
+                options_for_select([['All','All']] + Organization.get_select_values.collect{ |o| [o.name, o.name] }, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+            </li>
+
+            <li class="comboselect">
+              <label>COUNTRY</label>
+              <%= select_tag :country,
+                options_for_select([['All','All']] + Country.get_select_values.collect{ |c| [c.name, c.name] }, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+            </li>
+
+            <li class="comboselect">
+              <label>SECTOR</label>
+
+              <%= select_tag :sector,
+                options_for_select([['Any sector','All']] + Sector.get_select_values.collect { |c| [c.name, c.name] }, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+            </li>
+
+            <li class="comboselect">
+              <label>DONOR</label>
+              <%= select_tag :donor,
+                options_for_select([['Any donor','All']] + Donor.get_select_values.collect{ |d| [d.name, d.name] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
+            </li>
+
+            <li class="comboselect">
+              <label>Layer</label>
+              <%= select_tag :layer,
+                options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.title] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
+            </li>
+
+            <li class="comboselect date">
+              <label>Start date</label>
+              <div class="select_date">
+                <%= select_date Date.new(2005, 1, 1), :prefix => :start_date %>
+              </div>
+            </li>
+
+            <li class="comboselect date">
+              <label>End date</label>
+              <div class="select_date">
+                <%= select_date Date.today, :prefix => :end_date %>
+              </div>
+            </li>
+
+          </ul>
+        <% end %>
+      </div>
+      <span class="bottom"></span>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
