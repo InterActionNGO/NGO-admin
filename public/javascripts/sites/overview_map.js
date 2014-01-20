@@ -62,6 +62,14 @@
     }
     var diameter = 0;
 
+  // If region exist, reject a country object
+  _.each(map_data, function(d) {
+    if (d.type === 'region') {
+      map_data = _.reject(map_data, {type: 'country'});
+      return false;
+    }
+  });
+
 	for (var i = 0; i<map_data.length; i++) {
 	  var image_source = '';
 
@@ -132,6 +140,14 @@
 
 	if (map_type!="overview_map") {
 	  map.fitBounds(bounds);
+
+    console.log(map_data[0].type, map);
+
+    if (map_data[0].type === 'country') {
+      setTimeout(function() {
+        map.setZoom(8);
+      }, 1000);
+    }
 	}
 
 	if (map_type=="project_map") {
