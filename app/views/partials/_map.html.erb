@@ -2,19 +2,20 @@
 
   <div class="controls">
     <div class="control-navbar">
-
-      <div class="selector" id="layerSelector">
-        <ul>
-          <li><span class="current-selector">Select a layer</span>
-            <ul class="selector-options">
-              <li><a href="#" data-layer="none">None</a></li>
-              <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-                <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
-              <% end %>
-            </ul>
-          </li>
-        </ul>
-      </div>
+      <% if SiteLayer.where({:site_id => @site.id}).length >= 1 %>
+        <div class="selector" id="layerSelector">
+          <ul>
+            <li><span class="current-selector">Select a layer</span>
+              <ul class="selector-options">
+                <li><a href="#" data-layer="none">None</a></li>
+                <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+                  <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-table="<%= sl.layer.cartodb_table %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      <% end %>
 
       <div class="selector" id="mapTypeSelector">
         <ul>
