@@ -1114,6 +1114,8 @@ SQL
     sectors = params[:sector] if params[:sector]
     organizations = params[:organization] if params[:organization]
 
+    @data = {}
+
     @projects_start = Project.start_date_lte(end_date)
     @projects_end = Project.end_date_gte(start_date)
 
@@ -1156,9 +1158,13 @@ SQL
     
     @projects = (@projects_start + @projects_end).uniq 
 
-    debugger
+    # debugger
     @projects.each do |project|
-      @organizations[project.primary_organization.name] = {:budget => 0, :people => project.estimated_people_reached.to_i }
+      if @organizations.key?(project.primary_organization.name)
+        @organizations[project.primary_organization.name][:people] += project.estimated_people_reached.to_i
+      else  
+        @organizations[project.primary_organization.name] = {:budget => 0, :people => project.estimated_people_reached.to_i }
+      end
       project.donations.each do |donation|
         # Donors data table
         if @donors.key?(donation.donor.name)
@@ -1181,9 +1187,13 @@ SQL
       end
     end
 
-    debugger
-
-    @projects
+    # debugger
+    @data[:projects] = @projects
+    @data[:donors] = @donors
+    @data[:organizations] = @organizations
+    @data[:countries] = @countries
+    # @projects
+    @data
   end
 
 end
