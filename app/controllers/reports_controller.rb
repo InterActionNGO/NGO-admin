@@ -11,12 +11,15 @@ class ReportsController < ApplicationController
 	end
 
 	def report
-		@projects = Project.report(params)
+		@data = Project.report(params)
 
 		respond_to do |format|
-			format.pdf do
-				render :pdf => 'reports/report'
+			format.html do
+				render :html => '/reports/index'
 			end
+			# format.pdf do
+			# 	render :pdf => 'reports/report'
+			# end
 		end
 	end
 
