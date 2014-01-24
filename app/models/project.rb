@@ -1104,4 +1104,96 @@ SQL
       errors.add(:clusters, "can't be blank")
     end
   end  
+
+  def self.report(params = {})
+    start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
+    end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year'])
+    countries = donors = sectors = organizations = []
+    countries = params[:country] if params[:country]
+    donors = params[:donor] if params[:donor]
+    sectors = params[:sector] if params[:sector]
+    organizations = params[:organization] if params[:organization]
+
+    @data = {}
+
+    @projects_start = Project.start_date_lte(end_date)
+    @projects_end = Project.end_date_gte(start_date)
+
+
+    if params[:country_include] === "include"
+      @projects_start = @projects_start.countries_name_in(countries) if ( params[:country] && !params[:country].include?('All') )
+      @projects_end = @projects_end.countries_name_in(countries)  if ( params[:country] && !params[:country].include?('All') )
+    else
+      @projects_start = @projects_start.countries_name_not_in(countries) if ( params[:country] && !params[:country].include?('All') )
+      @projects_end = @projects_end.countries_name_not_in(countries)  if ( params[:country] && !params[:country].include?('All') )
+    end
+
+    if params[:organization_include] === "include"
+      @projects_start = @projects_start.primary_organization_name_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+      @projects_end = @projects_end.primary_organization_name_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+    else
+      @projects_start = @projects_start.primary_organization_name_not_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+      @projects_end = @projects_end.primary_organization_name_not_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+    end
+
+    if params[:donor_include] === "include"
+      @projects_start = @projects_start.donors_name_in(donors) if ( params[:donor] && !params[:donor].include?('All') )
+      @projects_end = @projects_end.donors_name_in(donors)  if ( params[:donor] && !params[:donor].include?('All') )
+    else
+      @projects_start = @projects_start.donors_name_not_in(donors) if ( params[:donor] && !params[:donor].include?('All') )
+      @projects_end = @projects_end.donors_name_not_in(donors)  if ( params[:donor] && !params[:donor].include?('All') )
+    end
+
+    if params[:sectors_include] === "include"
+      @projects_start = @projects_start.sectors_name_in(sectors) if ( params[:sector] && !params[:sector].include?('All') )
+      @projects_end = @projects_end.sectors_name_in(sectors)  if ( params[:sector] && !params[:sector].include?('All') )
+    else
+      @projects_start = @projects_start.sectors_name_not_in(sectors) if ( params[:sector] && !params[:sector].include?('All') )
+      @projects_end = @projects_end.sectors_name_not_in(sectors)  if ( params[:sector] && !params[:sector].include?('All') )
+    end
+
+    @donors = {}
+    @organizations = {}
+    @countries = {}
+    
+    @projects = (@projects_start + @projects_end).uniq 
+
+    # debugger
+    @projects.each do |project|
+      if @organizations.key?(project.primary_organization.name)
+        @organizations[project.primary_organization.name][:people] += project.estimated_people_reached.to_i
+      else  
+        @organizations[project.primary_organization.name] = {:budget => 0, :people => project.estimated_people_reached.to_i }
+      end
+      project.donations.each do |donation|
+        # Donors data table
+        if @donors.key?(donation.donor.name)
+          @donors[donation.donor.name][:budget] += donation.amount if donation.amount != nil
+        else
+          @donors[donation.donor.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
+        end
+        # Organizations data table
+        if @organizations.key?(project.primary_organization.name)
+          @organizations[project.primary_organization.name][:budget] += donation.amount.to_i if donation.amount != nil
+        end
+        # Countries data
+        project.countries.each do |country|
+          if @countries.key?(country.name)
+            @countries[country.name][:budget] += donation.amount.to_i if donation.amount != nil
+          else
+            @countries[country.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
+          end
+        end
+      end
+    end
+
+    # debugger
+    @data[:projects] = @projects
+    @data[:donors] = @donors
+    @data[:organizations] = @organizations
+    @data[:countries] = @countries
+    # @projects
+    @data
+  end
+
 end
