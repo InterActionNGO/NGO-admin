@@ -20,6 +20,15 @@
 		<% end %>
 	</ul>
 <% end if %>
+
+<% if @data[:organizations] %>
+	<h1>DONORS</h1>
+	<ul>
+		<% @data[:organizations].each do|dn| %>
+			<li><%= dn %></li>
+		<% end %>
+	</ul>
+<% end if %>
 </body>
 </html>
 
