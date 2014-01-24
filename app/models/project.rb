@@ -1157,37 +1157,58 @@ SQL
     @countries = {}
     
     @projects = (@projects_start + @projects_end).uniq 
-
+    projects_ids = []
     # debugger
     @projects.each do |project|
-      if @organizations.key?(project.primary_organization.name)
-        @organizations[project.primary_organization.name][:people] += project.estimated_people_reached.to_i
+      sql = """SELECT o.id, o.name FROM organizations as o JOIN projects as p ON p.primary_organization_id = o.id WHERE p.id = #{project.id}"""
+      result = ActiveRecord::Base.connection.execute(sql)
+      organization = {:id => result.getvalue(0,0), :name => result.getvalue(0,1)}
+      # debugger
+      if @organizations.key?(organization[:id])
+        @organizations[organization[:id]][:people] += project.estimated_people_reached.to_i
       else  
-        @organizations[project.primary_organization.name] = {:budget => 0, :people => project.estimated_people_reached.to_i }
+        @organizations[organization[:ide]] = {:budget => 0, :people => project.estimated_people_reached.to_i, :name => organization[:name] }
       end
-      project.donations.each do |donation|
-        # Donors data table
-        if @donors.key?(donation.donor.name)
-          @donors[donation.donor.name][:budget] += donation.amount if donation.amount != nil
-        else
-          @donors[donation.donor.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
-        end
-        # Organizations data table
-        if @organizations.key?(project.primary_organization.name)
-          @organizations[project.primary_organization.name][:budget] += donation.amount.to_i if donation.amount != nil
-        end
-        # Countries data
-        project.countries.each do |country|
-          if @countries.key?(country.name)
-            @countries[country.name][:budget] += donation.amount.to_i if donation.amount != nil
-          else
-            @countries[country.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
-          end
-        end
-      end
-    end
 
+      projects_ids << project.id
+    #   project.donations.each do |donation|
+    #     # Donors data table
+    #     if @donors.key?(donation.donor.name)
+    #       @donors[donation.donor.name][:budget] += donation.amount if donation.amount != nil
+    #     else
+    #       @donors[donation.donor.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
+    #     end
+    #     # Organizations data table
+    #     if @organizations.key?(project.primary_organization.name)
+    #       @organizations[project.primary_organization.name][:budget] += donation.amount.to_i if donation.amount != nil
+    #     end
+    #     # Countries data
+    #     # project.countries.each do |country|
+    #     #   if @countries.key?(country.name)
+    #     #     @countries[country.name][:budget] += donation.amount.to_i if donation.amount != nil
+    #     #   else
+    #     #     @countries[country.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
+    #     #   end
+    #     # end
+    #   end
+    end
+    projects = projects_ids.map { |elem| elem.to_s }.join(",")
     # debugger
+    sql = """SELECT d.name, SUM(dn.amount) as sum, pr.primary_organization_id, pr.estimated_people_reached FROM donors as d JOIN donations as dn  
+            ON dn.donor_id = d.id JOIN projects as pr ON dn.project_id = pr.id 
+            WHERE pr.id IN (#{projects}) GROUP BY d.name, pr.primary_organization_id, pr.estimated_people_reached ORDER BY sum DESC LIMIT 20"""
+    result = ActiveRecord::Base.connection.execute(sql)
+    result.each do |r|
+      # p r
+      # debugger
+      @organizations[r[:primary_organization_id]][:budget] += r[:sum].to_i
+      if(@donors.key?(r["name"]))
+        @donors[r["name"]][:budget] += r[:sum].to_i
+      else
+        @donors[r["name"]] = {:budget => 0, :people => 0, :name => r["name"]}
+      end
+    end  
+
     @data[:projects] = @projects
     @data[:donors] = @donors
     @data[:organizations] = @organizations
