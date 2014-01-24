@@ -67,6 +67,8 @@ class ApplicationController < ActionController::Base
         return true if %w(sessions passwords).include?(controller_name)
         # If root path, just go out
         return false if controller_name == 'sites' && params[:site_id].blank?
+        # Reports page
+        return false if controller_name == "reports"
         # If the controller is not in the namespace /admin,
         # and the host is the main_site_host, it should be a Site
         # in draft mode.
