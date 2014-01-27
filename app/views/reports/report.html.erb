@@ -22,14 +22,14 @@
 <% if @data[:countries] %>
 <h1>Countries</h1>
 <ul>
-	<% @data[:countires].each do|cn| %>
+	<% @data[:countries].each do|cn| %>
 		<li><%= cn[1][:name] %>  ||  Budget: <%= cn[1][:budget] %>  ||  People: <%= cn[1][:people] %> </li>
 	<% end %> 
 </ul>
 <% end if %>
 
-<h3>Projects list</h3>
 <% if@data[:projects] %>
+	<h1>Projects list</h1>
 	<ul>
 	<% @data[:projects].each do |p| %>
 		<li><%= p.name %> | <%= p.start_date %> | <%= p.end_date %></li>	

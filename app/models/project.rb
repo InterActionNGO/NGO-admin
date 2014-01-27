@@ -1217,6 +1217,13 @@ SQL
     #   end   
     # end
 
+# SELECT sectors.name, dn.amount, projects.estimated_people_reached FROM sectors 
+# LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id 
+# JOIN projects ON projects.id = projects_sectors.project_id
+# JOIN donations as dn ON dn.project_id = projects.id
+# GROUP BY dn.amount, projects.estimated_people_reached, sectors.id
+
+
     @data[:projects] = @projects
     @data[:donors] = @donors
     @data[:organizations] = @organizations
