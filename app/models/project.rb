@@ -1155,44 +1155,58 @@ SQL
     @donors = {}
     @organizations = {}
     @countries = {}
+    projects_ids = []
     
     @projects = (@projects_start + @projects_end).uniq 
-
-    # debugger
+    
     @projects.each do |project|
-      if @organizations.key?(project.primary_organization.name)
-        @organizations[project.primary_organization.name][:people] += project.estimated_people_reached.to_i
-      else  
-        @organizations[project.primary_organization.name] = {:budget => 0, :people => project.estimated_people_reached.to_i }
+      # sql = """SELECT o.id, o.name FROM organizations as o JOIN projects as p ON p.primary_organization_id = o.id WHERE p.id = #{project.id}"""
+      # result = ActiveRecord::Base.connection.execute(sql)
+      projects_ids << project.id
+    end
+    projects = projects_ids.map { |elem| elem.to_s }.join(",")
+    sql = """SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people, o.name as orgName
+            FROM donors as d JOIN donations as dn ON dn.donor_id = d.id 
+            JOIN projects as pr ON dn.project_id = pr.id 
+            JOIN organizations as o ON o.id = pr.primary_organization_id
+            WHERE pr.id IN (#{projects}) AND dn.amount > 0 GROUP BY d.name, pr.estimated_people_reached, o.name, dn.amount ORDER BY dn.amount DESC LIMIT 20"""
+    result = ActiveRecord::Base.connection.execute(sql)
+    result.each do |r|
+      if(@donors.key?(r['donorname']))
+        @donors[r['donorname']][:budget] += r[:sum].to_i
+        @donors[r['donorname']][:people] += r[:people].to_i
+      else
+        @donors[r['donorname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['donorname']}
       end
-      project.donations.each do |donation|
-        # Donors data table
-        if @donors.key?(donation.donor.name)
-          @donors[donation.donor.name][:budget] += donation.amount if donation.amount != nil
-        else
-          @donors[donation.donor.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
-        end
-        # Organizations data table
-        if @organizations.key?(project.primary_organization.name)
-          @organizations[project.primary_organization.name][:budget] += donation.amount.to_i if donation.amount != nil
-        end
-        # Countries data
-        project.countries.each do |country|
-          if @countries.key?(country.name)
-            @countries[country.name][:budget] += donation.amount.to_i if donation.amount != nil
-          else
-            @countries[country.name] = {:budget => donation.amount.to_i, :people => project.estimated_people_reached.to_i }
-          end
-        end
+
+      if(@organizations.key?(r['orgname']))
+        @organizations[r['orgname']][:budget] += r[:sum].to_i
+        @organizations[r['orgname']][:people] += r[:people].to_i
+      else
+        @organizations[r['orgname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['orgname']}
+      end
+    end  
+
+    sql = """ SELECT countries.name, SUM(donations.amount) as sum, projects.estimated_people_reached as people FROM
+              countries JOIN countries_projects ON countries.id = countries_projects.country_id
+              JOIN projects ON countries_projects.project_id = projects.id
+              JOIN donations ON projects.id = donations.project_id
+              WHERE projects.id IN (#{projects}) AND donations.amount > 0 GROUP BY countries.name, projects.estimated_people_reached ORDER BY SUM DESC LIMIT 20; """
+
+    result = ActiveRecord::Base.connection.execute(sql)
+    result.each do |r|
+      if(@countries.key?(r['name']))
+        @countries[r['name']][:budget] = r['sum'].to_i
+        @countries[r['name']][:people] = r['people'].to_i
+      else
+        @countries[r['name']] = {:name => r['name'], :people => r['people'].to_i, :amount => r['sum'].to_i}
       end
     end
 
-    # debugger
     @data[:projects] = @projects
     @data[:donors] = @donors
     @data[:organizations] = @organizations
     @data[:countries] = @countries
-    # @projects
     @data
   end
 
