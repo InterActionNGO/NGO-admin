@@ -1155,13 +1155,12 @@ SQL
     @donors = {}
     @organizations = {}
     @countries = {}
+    @sectors = {}
     projects_ids = []
     
     @projects = (@projects_start + @projects_end).uniq 
     
     @projects.each do |project|
-      # sql = """SELECT o.id, o.name FROM organizations as o JOIN projects as p ON p.primary_organization_id = o.id WHERE p.id = #{project.id}"""
-      # result = ActiveRecord::Base.connection.execute(sql)
       projects_ids << project.id
     end
     projects = projects_ids.map { |elem| elem.to_s }.join(",")
@@ -1203,10 +1202,26 @@ SQL
       end
     end
 
+    # sql = """ SELECT sectors.name as name, SUM(dn.amount) as sum, projects.estimated_people_reached as people
+    #           FROM sectors JOIN projects_sectors as ps ON sectors.id = ps.sector_id
+    #           JOIN projects ON projects.id IN (#{projects})
+    #           JOIN donations as dn ON dn.project_id IN (#{projects}) GROUP BY sectors.name, projects.estimated_people_reached """
+    # result = ActiveRecord::Base.connection.execute(sql)
+
+    # result.each do |r|
+    #   if(@sectors.key?(r['name']))
+    #     @sectors[r['name']][:budget] = r['sum'].to_i
+    #     @sectors[r['name']][:people] = r['people'].to_i
+    #   else
+    #     @sectors[r['name']] = {:name => r['name'], :people => r['people'].to_i, :amount => r['sum'].to_i}
+    #   end   
+    # end
+
     @data[:projects] = @projects
     @data[:donors] = @donors
     @data[:organizations] = @organizations
     @data[:countries] = @countries
+    # @data[:sectors] = @sectors
     @data
   end
 

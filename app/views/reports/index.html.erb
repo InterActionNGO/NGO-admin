@@ -15,7 +15,7 @@
         <%= form_tag(report_generate_path, :method => :get, :class => :search) do %>
           <label>SEARCH BY TEXT</label>
           <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place,..." name="q" class="main_search"/>
-          <input type="submit" value="" />
+          <input type="submit" value="Enviar" />
           <hr>
           <ul class="combo_search_select clearfix">
             <li class="comboselect">
@@ -24,14 +24,14 @@
                 options_for_select([['All','All']] + Organization.get_select_values.collect{ |o| [o.name, o.name] }, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :organizacion_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
-            <hr>
+<!--             <hr>
             <li class="comboselect">
               <label>Layer</label>
               <%= select_tag :layer,
                 options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.title] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
                 <%= select_tag :layer_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
                 <%= text_field_tag (:layer_unit) %>
-            </li> 
+            </li>  -->
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
