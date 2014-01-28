@@ -28,6 +28,15 @@
 </ul>
 <% end if %>
 
+<% if @data[:sectors] %>
+<h1>Sectors</h1>
+<ul>
+	<% @data[:sectors].each do|sc| %>
+		<li><%= sc[1][:name] %>  ||  Budget: <%= sc[1][:budget] %>  ||  People: <%= sc[1][:people] %> </li>
+	<% end %> 
+</ul>
+<% end if %>
+
 <% if@data[:projects] %>
 	<h1>Projects list</h1>
 	<ul>

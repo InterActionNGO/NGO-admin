@@ -1191,44 +1191,38 @@ SQL
               JOIN projects ON countries_projects.project_id = projects.id
               JOIN donations ON projects.id = donations.project_id
               WHERE projects.id IN (#{projects}) AND donations.amount > 0 GROUP BY countries.name, projects.estimated_people_reached ORDER BY SUM DESC LIMIT 20; """
-
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(@countries.key?(r['name']))
         @countries[r['name']][:budget] = r['sum'].to_i
         @countries[r['name']][:people] = r['people'].to_i
       else
-        @countries[r['name']] = {:name => r['name'], :people => r['people'].to_i, :amount => r['sum'].to_i}
+        @countries[r['name']] = {:name => r['name'], :people => r['people'].to_i, :budget => r['sum'].to_i}
       end
     end
 
-    # sql = """ SELECT sectors.name as name, SUM(dn.amount) as sum, projects.estimated_people_reached as people
-    #           FROM sectors JOIN projects_sectors as ps ON sectors.id = ps.sector_id
-    #           JOIN projects ON projects.id IN (#{projects})
-    #           JOIN donations as dn ON dn.project_id IN (#{projects}) GROUP BY sectors.name, projects.estimated_people_reached """
-    # result = ActiveRecord::Base.connection.execute(sql)
-
-    # result.each do |r|
-    #   if(@sectors.key?(r['name']))
-    #     @sectors[r['name']][:budget] = r['sum'].to_i
-    #     @sectors[r['name']][:people] = r['people'].to_i
-    #   else
-    #     @sectors[r['name']] = {:name => r['name'], :people => r['people'].to_i, :amount => r['sum'].to_i}
-    #   end   
-    # end
-
-# SELECT sectors.name, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors 
-# LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id 
-# JOIN projects ON projects.id = projects_sectors.project_id
-# JOIN donations as dn ON dn.project_id = projects.id
-# GROUP BY sectors.name, sectors.id
-
+    sql = """ SELECT sectors.name, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors 
+              LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id 
+              JOIN projects ON projects.id = projects_sectors.project_id
+              JOIN donations as dn ON dn.project_id = projects.id
+              WHERE projects.id IN (#{projects})
+              GROUP BY sectors.name, sectors.id 
+              ORDER BY sum DESC """
+    result = ActiveRecord::Base.connection.execute(sql)
+    result.each do |r|
+      if(@sectors.key?(r['name']))
+        @sectors[r['name']][:budget] = r['sum'].to_i
+        @sectors[r['name']][:people] = r['people'].to_i
+      else
+        @sectors[r['name']] = {:name => r['name'], :people => r['people'].to_i, :budget => r['sum'].to_i}
+      end   
+    end
 
     @data[:projects] = @projects
     @data[:donors] = @donors
     @data[:organizations] = @organizations
     @data[:countries] = @countries
-    # @data[:sectors] = @sectors
+    @data[:sectors] = @sectors
     @data
   end
 
