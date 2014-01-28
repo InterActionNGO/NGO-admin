@@ -3,7 +3,7 @@ a {
 }
 
 div {
-  &.main_head div {
+  &.main_head div, &.main_header div {
     &.left {
       h1 {
         text-shadow: 0 1px #1E3218;
@@ -14,10 +14,10 @@ div {
     }
     &.float_head {
       background: url('/images/sites/search/head_mask.png') repeat 0 0 #518842 !important;
-      h2 {
-        color: #1e3218 !important;
-        text-shadow: none;
-      }
+      // h2 {
+      //   color: #1e3218 !important;
+      //   text-shadow: none;
+      // }
     }
   }
   &#left_column div {
