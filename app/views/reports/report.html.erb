@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
 <body>
+<h1>Totals</h1>
+<ul>
+	<li> Estimated people reached: <%= number_with_delimiter(@data[:totals][:people]) %> </li>
+	<li> Budget: <%= number_with_delimiter(@data[:totals][:budget]) %> </li>
+	<li> Projects number: <%= number_with_delimiter(@data[:totals][:projects]) %> </li>
+	<li> Organizations number: <%= number_with_delimiter(@data[:totals][:donors]) %> </li>
+</ul>
+
 <% if @data[:donors] %>
 <h1>DONORS</h1>
 <ul>
 	<% @data[:donors].each do|dn| %>
-		<li><%= dn[1][:name] %>  ||  Budget: <%= dn[1][:budget] %>  ||  People: <%= dn[1][:people] %> </li>
+		<li><%= dn[1][:name] %>  ||  Budget: <%= number_with_delimiter(dn[1][:budget]) %>  ||  People: <%= number_with_delimiter(dn[1][:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -14,7 +22,7 @@
 <h1>ORGANIZATIONS</h1>
 <ul>
 	<% @data[:organizations].each do|org| %>
-		<li><%= org[1][:name] %>  ||  Budget: <%= org[1][:budget] %>  ||  People: <%= org[1][:people] %> </li>
+		<li><%= org[1][:name] %>  ||  Budget: <%= number_with_delimiter(org[1][:budget]) %>  ||  People: <%= number_with_delimiter(org[1][:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -23,7 +31,7 @@
 <h1>Countries</h1>
 <ul>
 	<% @data[:countries].each do|cn| %>
-		<li><%= cn[1][:name] %>  ||  Budget: <%= cn[1][:budget] %>  ||  People: <%= cn[1][:people] %> </li>
+		<li><%= cn[1][:name] %>  ||  Budget: <%= number_with_delimiter(cn[1][:budget]) %>  ||  People: <%= number_with_delimiter(cn[1][:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -32,7 +40,7 @@
 <h1>Sectors</h1>
 <ul>
 	<% @data[:sectors].each do|sc| %>
-		<li><%= sc[1][:name] %>  ||  Budget: <%= sc[1][:budget] %>  ||  People: <%= sc[1][:people] %> </li>
+		<li><%= sc[1][:name] %>  ||  Budget: <%= number_with_delimiter(sc[1][:budget]) %>  ||  People: <%= number_with_delimiter(sc[1][:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
