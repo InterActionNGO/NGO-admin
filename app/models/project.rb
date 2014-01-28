@@ -1217,11 +1217,11 @@ SQL
     #   end   
     # end
 
-# SELECT sectors.name, dn.amount, projects.estimated_people_reached FROM sectors 
+# SELECT sectors.name, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors 
 # LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id 
 # JOIN projects ON projects.id = projects_sectors.project_id
 # JOIN donations as dn ON dn.project_id = projects.id
-# GROUP BY dn.amount, projects.estimated_people_reached, sectors.id
+# GROUP BY sectors.name, sectors.id
 
 
     @data[:projects] = @projects
