@@ -1156,19 +1156,24 @@ SQL
     @organizations = {}
     @countries = {}
     @sectors = {}
+    @totals = {}
     projects_ids = []
-    
+
     @projects = (@projects_start + @projects_end).uniq 
+
     
     @projects.each do |project|
       projects_ids << project.id
     end
+
     projects = projects_ids.map { |elem| elem.to_s }.join(",")
+
     sql = """SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people, o.name as orgName
             FROM donors as d JOIN donations as dn ON dn.donor_id = d.id 
             JOIN projects as pr ON dn.project_id = pr.id 
             JOIN organizations as o ON o.id = pr.primary_organization_id
             WHERE pr.id IN (#{projects}) AND dn.amount > 0 GROUP BY d.name, pr.estimated_people_reached, o.name, dn.amount ORDER BY dn.amount DESC LIMIT 20"""
+
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(@donors.key?(r['donorname']))
@@ -1194,14 +1199,14 @@ SQL
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(@countries.key?(r['name']))
-        @countries[r['name']][:budget] = r['sum'].to_i
-        @countries[r['name']][:people] = r['people'].to_i
+        @countries[r['name']][:budget] += r['sum'].to_i
+        @countries[r['name']][:people] += r['people'].to_i
       else
         @countries[r['name']] = {:name => r['name'], :people => r['people'].to_i, :budget => r['sum'].to_i}
       end
     end
 
-    sql = """ SELECT sectors.name, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors 
+    sql = """ SELECT sectors.name, sectors.id as id, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors 
               LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id 
               JOIN projects ON projects.id = projects_sectors.project_id
               JOIN donations as dn ON dn.project_id = projects.id
@@ -1209,20 +1214,29 @@ SQL
               GROUP BY sectors.name, sectors.id 
               ORDER BY sum DESC """
     result = ActiveRecord::Base.connection.execute(sql)
+
     result.each do |r|
-      if(@sectors.key?(r['name']))
-        @sectors[r['name']][:budget] = r['sum'].to_i
-        @sectors[r['name']][:people] = r['people'].to_i
+      if(@sectors.key?(r['id'].to_i))
+        @sectors[r['id'].to_i][:budget] += r['sum'].to_i
+        @sectors[r['id'].to_i][:people] += r['people'].to_i
       else
-        @sectors[r['name']] = {:name => r['name'], :people => r['people'].to_i, :budget => r['sum'].to_i}
+        @sectors[r['id'].to_i] = {:name => r['name'], :people => r['people'].to_i, :budget => r['sum'].to_i}
       end   
     end
+
+    sql = """ SELECT SUM(donations.amount) as sum, COUNT(donations.donor_id) as donors FROM donations WHERE project_id IN (#{projects}) """
+    result = ActiveRecord::Base.connection.execute(sql)
+    @totals[:budget] = result.getvalue(0,0).to_i
+    @totals[:donors] = result.getvalue(0,1).to_i
+    @totals[:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
+    @totals[:projects] = @projects.to_a.length
 
     @data[:projects] = @projects
     @data[:donors] = @donors
     @data[:organizations] = @organizations
     @data[:countries] = @countries
     @data[:sectors] = @sectors
+    @data[:totals] = @totals
     @data
   end
 
