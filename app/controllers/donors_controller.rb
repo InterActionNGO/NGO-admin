@@ -110,9 +110,7 @@ class DonorsController < ApplicationController
       else
         sql="select c.id,count(distinct ps.project_id) as count,c.name,c.center_lon as lon,
                     c.center_lat as lat,c.name,
-                    CASE WHEN count(distinct ps.project_id) > 1 THEN
-                        c.id
-                    ELSE
+                    CASE WHEN count(distinct ps.project_id) < 1 THEN
                         '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                     END as url,
                     c.iso2_code as code,
