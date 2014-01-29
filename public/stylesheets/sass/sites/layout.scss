@@ -834,7 +834,7 @@ div {
     height: 465px;
     background: #99B3CA;
     border-bottom: 2px solid white;
-    // border-top: 2px solid white;
+    border-top: 2px solid white;
     &.home {
       border-top: none;
     }
@@ -1315,6 +1315,9 @@ div {
                 padding: 0;
               }
             }
+            .none_available {
+              font-style: italic;
+            }
           }
         }
       }
@@ -1678,9 +1681,9 @@ div {
       padding: 20px 0 0 0;
       a {
         display: inline;
-        height: 15px;
+        height: 26px;
         margin: 0 0 0 0;
-        font: bold 13px "Open Sans Bold";
+        font: bold 13px/23px "Open Sans Bold";
         background: url('/images/sites/search/pagination.png') no-repeat 0 0;
         text-align: center;
         &:hover {
@@ -1690,11 +1693,11 @@ div {
         &#previous {
           float: left;
           margin-left: 34px;
-          padding: 5px 18px;
+          padding: 0 18px;
         }
         &#next {
           float: right;
-          padding: 5px 30px;
+          padding: 0 30px;
         }
       }
     }
@@ -3884,8 +3887,8 @@ div {
     z-index: 9999;
     h1 {
       font:bold 15px "Open Sans Bold";
-      font-size:38px;
-      line-height: 36px;
+      font-size:25px;
+      line-height: 1;
       text-transform:uppercase;
       position:relative;
       width:200px;
@@ -3896,6 +3899,16 @@ div {
     }
     h3 {
       color: #333;
+    }
+
+    &.home {
+      .site_brand {
+        min-height: 155px;
+      }
+      h1 {
+        font-size:38px;
+        line-height: 36px;
+      }
     }
   }
   .site_brand {
