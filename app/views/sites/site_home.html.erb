@@ -1,9 +1,8 @@
-<div class="main_head">
+<!-- <div class="main_head">
   <div class="inner_main_head">
     <div class="left home">
-      <h1><%= @site.name %></h1>
-      <% unless @site.short_description.nil? %><h3><%= @site.short_description %></h3><%end%>
       <div class="float_head home">
+        InterAction
         <h1><%= @site.name %></h1>
         <% unless @site.short_description.nil? %><h3><%= @site.short_description %></h3><%end%>
       </div>
@@ -14,14 +13,39 @@
           <p class="fund_label"><%= @site.partners.first.label %></p>
         </div>
       <% end -%>
-
-
     </div>
+
+    <div class="right home">
+      <% unless @site.short_description.nil? %><p><%= anglo(@site.long_description) %> <a href="<%= page_path(Page.about(@site)) %>">Learn more</a></p><%end%>
+    </div>
+  </div>
+</div> -->
+
+<div class="main_header">
+  <div class="inner_main_head clearfix">
+    <div class="left home">
+      <div class="float_head home">
+        <div class="site_brand">
+          <h2>InterAction's</h2>
+          <h1><%= @site.name %></h1>
+          <% unless @site.short_description.nil? %><h3><%= @site.short_description %></h3><%end%>
+        </div>
+
+        <% if @site.partners.present? %>
+          <div class="fund">
+            <div class="fund_logo"><%= link_to image_tag(@site.partners.first.logo.url(:original)), @site.partners.first.url, :target => '_blank' %></div>
+            <p class="fund_label"><%= @site.partners.first.label %></p>
+          </div>
+        <% end -%>
+      </div>
+    </div>
+
     <div class="right home">
       <% unless @site.short_description.nil? %><p><%= anglo(@site.long_description) %> <a href="<%= page_path(Page.about(@site)) %>">Learn more</a></p><%end%>
     </div>
   </div>
 </div>
+
 
 <% cache("#{@site.id}/home/menu") do %>
   <%= render :partial => 'shared/menu'  %>
