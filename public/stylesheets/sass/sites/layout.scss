@@ -83,11 +83,12 @@ div {
     padding: 35px 0 0 0;
     margin: 0 0 0 10px;
     h1 {
-      display: inline-block;
+      display: block;
       text-indent: -99999px;
-      background: url('/images/ngoaidmap_logo.png');
-      width: 184px;
-      height: 40px;
+      background: url('/images/assets/ngoaidmap-logo.png');
+      width: 99px;
+      height: 68px;
+      margin-top: -18px;
       a {
         color: #4A4A4A;
       }
@@ -833,7 +834,7 @@ div {
     height: 465px;
     background: #99B3CA;
     border-bottom: 2px solid white;
-    border-top: 2px solid white;
+    // border-top: 2px solid white;
     &.home {
       border-top: none;
     }
@@ -3482,18 +3483,18 @@ div {
   &#footer_pages a.logo {
     float:right;
     display:block;
-    width:67px;
-    height:43px;
-    margin:0;
-    background:url('/images/sites/common/logo_interaction.png') no-repeat 0 0;
+    width:65px;
+    height:42px;
+    margin:5px 0 0 0;
+    background:url('/images/assets/interaction-grayscale-logo.png') no-repeat 0 0;
   }
   &#footer_pages a.logo_ngoaidmap {
     float:right;
     display:block;
-    width:130px;
-    height:43px;
-    margin:10px 20px 0 0;
-    background:url('/images/sites/common/logo_ngoaidmap.png') no-repeat 0 0;
+    width:60px;
+    height:41px;
+    margin:5px 20px 0 0;
+    background:url('/images/assets/ngoaidmap-grayscale-logo.png') no-repeat 0 0;
   }
 
   &.dark_footer#footer_pages div.left {
@@ -3856,3 +3857,79 @@ div {
 /*FOOTER ERRORS*/
 
 /* FOOTER OTHER */
+
+
+.main_header {
+  height: 130px;
+  display: block;
+  .inner_main_head {
+    width: 942px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .left {
+    background: url('/images/sites/common/mesh.png') repeat 0 0;
+    height: 130px;
+    position: absolute;
+    width: 312px;
+  }
+  .right {
+    padding: 20px 0 20px 338px;
+  }
+  .float_head {
+    position: absolute;
+    left: 5px;
+    color: white;
+    width: 302px;
+    z-index: 9999;
+    h1 {
+      font:bold 15px "Open Sans Bold";
+      font-size:38px;
+      line-height: 36px;
+      text-transform:uppercase;
+      position:relative;
+      width:200px;
+    }
+    h2, h3 {
+      width: 100%;
+      font: bold 16px "Open Sans Bold";
+    }
+    h3 {
+      color: #333;
+    }
+  }
+  .site_brand {
+    padding: 20px 30px;
+    min-height: 90px;
+  }
+  .fund {
+    height: 45px;
+    background: #ffffff;
+    position: relative;
+    p.fund_label {
+      display: inline-block;
+      float: right;
+      padding: 13px 5px 0 0;
+      text-align: right;
+      font: bold 13px "Open Sans Bold";
+      color: #666666;
+      vertical-align: middle;
+    }
+    div.fund_logo {
+      float: right;
+      display: inline-block;
+      margin: 0 10px 0 0;
+      vertical-align: middle;
+    }
+  }
+}
+
+.clearfix {
+  &:after, &:before {
+    display: table;
+    content: " ";
+  }
+  &:after {
+    clear: both;
+  }
+}
