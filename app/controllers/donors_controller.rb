@@ -78,7 +78,7 @@ class DonorsController < ApplicationController
                   INNER JOIN projects_sites AS ps ON pr.project_id=ps.project_id AND ps.site_id=#{@site.id}
                   INNER JOIN projects AS p ON pr.project_id=p.id AND (p.end_date is NULL OR p.end_date > now())
                   INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.first}
-                  INNER JOIN donarions on donations.project_id = p.id
+                  INNER JOIN donations on donations.project_id = p.id
                   #{category_join}
                   WHERE dn.donor_id = #{params[:id].sanitize_sql!.to_i}
                   GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
@@ -101,8 +101,9 @@ class DonorsController < ApplicationController
               INNER JOIN projects_sites AS ps ON pr.project_id=ps.project_id AND ps.site_id=#{@site.id}
               INNER JOIN projects AS p ON pr.project_id=p.id AND (p.end_date is NULL OR p.end_date > now())
               INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.shift} AND r.id IN (#{@filter_by_location.join(',')})
+              INNER JOIN donations on donations.project_id = p.id
               #{category_join}
-              WHERE p.primary_organization_id = #{params[:id].sanitize_sql!.to_i}
+              WHERE dn.donor_id = #{params[:id].sanitize_sql!.to_i}
               GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
             SQL
         end
@@ -117,7 +118,7 @@ class DonorsController < ApplicationController
                     c.iso2_code as code,
                     (select count(*) from data_denormalization where countries_ids && ('{'||c.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
               from ((((
-                projects as p inner join organizations as o on o.id=p.primary_organization_id and o.id=#{params[:id].sanitize_sql!.to_i})
+                projects as p inner join donations as dn on dn.project_id = p.id and dn.donor_id=#{params[:id].sanitize_sql!.to_i})
                 inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{@site.id}) inner join countries_projects as cp on cp.project_id=p.id)
                 inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
                 inner join countries as c on cp.country_id=c.id)
