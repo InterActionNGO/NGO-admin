@@ -38,7 +38,6 @@ class DonorsController < ApplicationController
     end
 
     if @site.geographic_context_country_id
-      puts 1
       location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
 
 
@@ -61,7 +60,6 @@ class DonorsController < ApplicationController
             group by r.id,r.path,lon,lat,r.name,r.code"
     else
       if @filter_by_location
-        puts 2
         sql = if @filter_by_location.size == 1
                 <<-SQL
                   SELECT r.id,
@@ -80,12 +78,12 @@ class DonorsController < ApplicationController
                   INNER JOIN projects_sites AS ps ON pr.project_id=ps.project_id AND ps.site_id=#{@site.id}
                   INNER JOIN projects AS p ON pr.project_id=p.id AND (p.end_date is NULL OR p.end_date > now())
                   INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.first}
+                  INNER JOIN donarions on donations.project_id = p.id
                   #{category_join}
-                  WHERE p.primary_organization_id = #{params[:id].sanitize_sql!.to_i}
+                  WHERE dn.donor_id = #{params[:id].sanitize_sql!.to_i}
                   GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
                 SQL
         else
-          puts 3
             <<-SQL
               SELECT r.id,
                      count(ps.project_id) AS count,
@@ -109,7 +107,6 @@ class DonorsController < ApplicationController
             SQL
         end
       else
-        puts 4
         sql="select c.id,count(distinct ps.project_id) as count,c.name,c.center_lon as lon,
                     c.center_lat as lat,c.name,
                     CASE WHEN count(distinct ps.project_id) > 1 THEN
@@ -144,7 +141,7 @@ class DonorsController < ApplicationController
       @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['total_in_region'], :url => r['url']}
     end
     @map_data = @map_data.to_json
-    debugger
+
     respond_to do |format|
       format.html
       format.js do
