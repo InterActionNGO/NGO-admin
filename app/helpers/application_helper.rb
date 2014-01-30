@@ -132,11 +132,11 @@ HTML
     values.compact!
     max_value = values.max
     lis       = []
-
     projects[0..2].each_with_index do |geo_entries, index|
       geo = geo_entries.first
       count  = geo_entries.last
       lis << (content_tag :li,  :class => "pos#{index}" do
+        # debugger
         case controller_name
         when 'organizations'
           raw("#{link_to geo.name, organization_path(@organization, @carry_on_filters.merge(:location_id => geo.to_param))} - #{count}")
@@ -153,10 +153,29 @@ HTML
         end
       end)
     end
-
     lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if projects.count > 3
 
     ul    = content_tag :ul, raw(lis), :class => 'chart'
+    chart = image_tag "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00", :class => 'pie_chart'
+    [ul, chart]
+  end
+
+  def projects_by_organization(collection = nil)
+    organizations =collection
+    counts    = organizations.map{ |o| o.count}
+    values    = counts.slice!(0, 3) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
+    values.compact!
+    max_value = values.max  
+    lis = []
+
+    organizations[0..2].each do |o, index|
+      # lis << (content_tag :li, :class => "pos#{index}", raw("#{link_to o['name'], organization_path(o)} - #{o['count']}"))
+      # lis << (content_tag :li, :class => "pos#{index}" "#{o['name']} - #{o['count']}")
+      debugger
+      lis << "<li class =pos#{index}> #{o[:name]} - #{o[:count]}</li>"
+    end
+    lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 3
+    ul    = content_tag :ul, raw(lis), :class => 'chart' 
     chart = image_tag "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00", :class => 'pie_chart'
     [ul, chart]
   end
