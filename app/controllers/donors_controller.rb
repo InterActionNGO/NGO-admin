@@ -162,7 +162,7 @@ class DonorsController < ApplicationController
     end
 
     @organizations.each do |o|
-      @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i }
+      @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i, :id => o[1][:id].to_i }
     end
     @organizations = @organizations_data.sort_by { |d| d[:count] }.reverse
     @organizations_data = @organizations.to_json
