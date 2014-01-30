@@ -44,11 +44,10 @@
     </div>
 
   </div>
-
-
 </div>
 
 <script>
+
   <% if @site.overview_map_lat && @site.overview_map_lon %>
   var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
   <% else %>
@@ -59,8 +58,7 @@
   var chf = "<%=@overview_map_chf%>";
   var chld = "<%=@chld%>";
   var chd = "<%=@chd%>";
-  var map_data = <%=raw(@map_data)%>;
-  var max_count = <%=@map_data_max_count%>;
+  var map_data = <%= @map_data.to_s.html_safe %>;
   var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
   var theme = "<%=@site.theme_id%>";
   var kind = 'org.';

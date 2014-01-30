@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212163356) do
+ActiveRecord::Schema.define(:version => 20140109150408) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -173,10 +173,11 @@ ActiveRecord::Schema.define(:version => 20131212163356) do
     t.datetime "date"
     t.float    "min"
     t.float    "max"
-    t.integer  "units"
+    t.string   "units"
     t.boolean  "status"
     t.string   "cartodb_table"
     t.text     "sql"
+    t.string   "long_title"
   end
 
   create_table "media_resources", :force => true do |t|
