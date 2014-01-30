@@ -113,7 +113,7 @@ div {
       padding: 0;
       li {
         float: left;
-        margin: 0 32px 0 0;
+        margin: 0 20px 0 0;
         &.last {
           margin: 0;
         }
@@ -409,7 +409,7 @@ div {
       li {
         float: left;
         width: auto;
-        margin: 0 23px 0 0;
+        margin: 0 15px 0 0;
         position: relative;
         &#cluster_option.clicked ul.suboptions {
           position: absolute;
