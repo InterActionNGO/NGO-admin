@@ -36,6 +36,11 @@
           <% else %>
             <%= raw(projects_by_location(@site)) %>
           <% end %>
+        </div>        
+
+        <div class="block statistics less">
+          <h3>ORGANIZATIONS</h3>
+            <%= raw(projects_by_organization(@organizations)) %>
         </div>
 
         <div class="block statistics">
@@ -97,6 +102,7 @@
   var chld = "<%=@chld%>";
   var chd = "<%=@chd%>";
   var map_data = <%= @map_data.to_s.html_safe %>;
+  var organization_data = <%= @organizations_data.to_s.html_safe %>;
   var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
   var theme = "<%=@site.theme_id%>";
   var kind = 'org.';

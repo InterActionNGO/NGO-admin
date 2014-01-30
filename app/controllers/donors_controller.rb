@@ -11,8 +11,17 @@ class DonorsController < ApplicationController
                                            :page => params[:page],
                                            :order => 'created_at DESC',
                                            :start_in_page => params[:start_in_page]
+    @organizations = {}
+    @projects.each do |pr|
+      if @organizations.key?(pr['organization_id'])
+        @organizations[pr['organization_id']][:count] += 1
+      else
+        @organizations[pr['organization_id']] = {:count => 1, :name => pr['organization_name'], :id => pr['organization_id'] }
+      end
+    end
 
     @map_data = []
+    @organizations_data = []
 
     @filter_by_category = if params[:category_id].present?
                             params[:category_id].to_i
@@ -148,12 +157,16 @@ class DonorsController < ApplicationController
     #   r['url'] = uri.to_s
     #   r
     # end.to_json
-    
     result.each do |r|
       @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['total_in_region'], :url => r['url']}
     end
-    @map_data = @map_data.to_json
 
+    @organizations.each do |o|
+      @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i }
+    end
+    @organizations = @organizations_data.sort_by { |d| d[:count] }.reverse
+    @organizations_data = @organizations.to_json
+    @map_data = @map_data.to_json
     respond_to do |format|
       format.html
       format.js do
