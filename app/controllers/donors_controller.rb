@@ -80,7 +80,7 @@ class DonorsController < ApplicationController
             JOIN projects_regions as pr ON pr.project_id = projects.id
             JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
             WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
-            GROUP BY r.id, r.path, r.name, lon, lat """
+            GROUP BY r.id, r.path, r.code, r.name, lon, lat """
     else
       if @filter_by_location
         sql = if @filter_by_location.size == 1
