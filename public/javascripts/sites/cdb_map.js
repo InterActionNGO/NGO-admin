@@ -196,6 +196,7 @@ var global_index = 10;
     var diameter = 0;
 
     // If region exist, reject a country object
+    console.log(map_data);
     _.each(map_data, function(d) {
       if (d.type === 'region') {
         map_data = _.reject(map_data, function(d) {
