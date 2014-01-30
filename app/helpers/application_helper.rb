@@ -168,9 +168,7 @@ HTML
     lis = []
 
     organizations[0..2].each do |o, index|
-      # lis << (content_tag :li, :class => "pos#{index}", raw("#{link_to o['name'], organization_path(o)} - #{o['count']}"))
-      # lis << (content_tag :li, :class => "pos#{index}" "#{o['name']} - #{o['count']}")
-      lis << "<li class =pos#{index}> #{o[:name]} - #{o[:count]}</li>"
+      lis << "<li class =pos#{index}> <a href=/organizations/#{o[:id]} >#{o[:name]}</a> - #{o[:count]}</li>"
     end
     lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 3
     ul    = content_tag :ul, raw(lis), :class => 'chart' 
