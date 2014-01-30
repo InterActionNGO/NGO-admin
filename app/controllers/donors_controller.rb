@@ -41,23 +41,37 @@ class DonorsController < ApplicationController
       location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
 
 
-      sql="select r.id,count(distinct ps.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
-                  CASE WHEN count(distinct ps.project_id) > 1 THEN
-                      r.path
-                  ELSE
-                      '/projects/'||(array_to_string(array_agg(ps.project_id),''))
-                  END as url
+      # sql="select r.id,count(distinct ps.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
+      #             CASE WHEN count(distinct ps.project_id) > 1 THEN
+      #                 r.path
+      #             ELSE
+      #                 '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+      #             END as url
 
-                  ,r.code,
-                  (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
-            from ((((
-              projects as p inner join donations as dn on dn.project_id = p.id and dn.donor_id=#{params[:id].sanitize_sql!.to_i})
-              inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{@site.id})
-              inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
-              inner join projects_regions as pr on pr.project_id=p.id)
-              inner join regions as r on pr.region_id=r.id and r.level=#{@site.level_for_region} #{location_filter})
-              #{category_join}
-            group by r.id,r.path,lon,lat,r.name,r.code"
+      #             ,r.code,
+      #             (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
+      #       from ((((
+      #         projects as p inner join donations as dn on dn.donor_id=#{params[:id].sanitize_sql!.to_i} and dn.project_id = p.id )
+      #         inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{@site.id})
+      #         inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
+      #         inner join projects_regions as pr on pr.project_id=p.id)
+      #         inner join regions as r on pr.region_id=r.id and r.level=#{@site.level_for_region} #{location_filter})
+      #         #{category_join}
+      #       group by r.id,r.path,lon,lat,r.name,r.code"
+      sql = """ SELECT r.id, count(distinct projects_sites.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
+            CASE WHEN count(distinct projects_sites.project_id) > 1 THEN
+                r.path
+            ELSE
+                '/projects/'||(array_to_string(array_agg(projects_sites.project_id),''))
+            END as url
+            ,r.code,
+            (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=1) as total_in_region
+            FROM donations as dn JOIN projects ON dn.project_id = projects.id AND (projects.end_date IS NULL OR projects.end_date > NOW())
+            JOIN projects_sites ON  projects_sites.project_id = projects.id 
+            JOIN projects_regions as pr ON pr.project_id = projects.id
+            JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
+            WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
+            GROUP BY r.id, r.name, lon, lat"""
     else
       if @filter_by_location
         sql = if @filter_by_location.size == 1
@@ -110,9 +124,7 @@ class DonorsController < ApplicationController
       else
         sql="select c.id,count(distinct ps.project_id) as count,c.name,c.center_lon as lon,
                     c.center_lat as lat,c.name,
-                    CASE WHEN count(distinct ps.project_id) > 1 THEN
-                        c.id
-                    ELSE
+                    CASE WHEN count(distinct ps.project_id) < 1 THEN
                         '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                     END as url,
                     c.iso2_code as code,
@@ -138,7 +150,6 @@ class DonorsController < ApplicationController
     # end.to_json
     
     result.each do |r|
-      # debugger
       @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['total_in_region'], :url => r['url']}
     end
     @map_data = @map_data.to_json
