@@ -113,7 +113,7 @@
     </label>
     <span class="textarea <%= 'error' if !@project.errors[:description].empty? && action_name != 'new' %>">
         <div class="wrapper">
-            <%= f.text_area :description,:class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}" %>
+            <%= f.text_area :description, :maxlength => 150, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}" %>
         </div>
     </span>
   </div>
