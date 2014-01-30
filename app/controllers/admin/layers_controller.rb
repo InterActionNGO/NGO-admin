@@ -12,7 +12,6 @@ class Admin::LayersController < ApplicationController
 
   def create
     @layer = Layer.new(params[:layer])
-    debugger
     @layer.date = Date.today
     # @layer.status = true;
     if @layer.save
