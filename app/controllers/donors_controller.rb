@@ -38,6 +38,11 @@ class DonorsController < ApplicationController
                           else
                             nil
                           end
+
+    @carry_on_filters = {}
+    @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
+    @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
+
     if @filter_by_category.present?
       if @site.navigate_by_cluster?
         category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{@filter_by_category}"
@@ -76,7 +81,7 @@ class DonorsController < ApplicationController
             ,r.code,
             (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=1) as total_in_region
             FROM donations as dn JOIN projects ON dn.project_id = projects.id AND (projects.end_date IS NULL OR projects.end_date > NOW())
-            JOIN projects_sites ON  projects_sites.project_id = projects.id 
+            JOIN projects_sites ON  projects_sites.project_id = projects.id
             JOIN projects_regions as pr ON pr.project_id = projects.id
             JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
             WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
