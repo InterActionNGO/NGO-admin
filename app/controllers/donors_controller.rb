@@ -43,6 +43,8 @@ class DonorsController < ApplicationController
     @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
     @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
 
+    options_export = {:donor_id => params[:id]}
+    
     if @filter_by_category.present?
       if @site.navigate_by_cluster?
         category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{@filter_by_category}"
@@ -155,6 +157,25 @@ class DonorsController < ApplicationController
           page << "IOM.ajax_pagination();"
           page << "resizeColumn();"
         end
+      format.csv do
+        send_data Project.to_csv(@site, options_export),
+          :type => 'text/plain; charset=utf-8; application/download',
+          :disposition => "attachment; filename=#{@site.name}_projects.csv"
+      end
+      format.xls do
+        send_data Project.to_excel(@site, options_export),
+          :type        => 'application/vnd.ms-excel',
+          :disposition => "attachment; filename=#{@site.name}_projects.xls"
+      end
+      format.kml do
+        @projects_for_kml = Project.to_kml(@site, options_export)
+
+        render :site_home
+      end
+      format.xml do
+        @rss_items = Project.custom_find @site, :start_in_page => 0, :random => false, :per_page => 1000
+        render :site_home
+      end
       end
     end
   end
