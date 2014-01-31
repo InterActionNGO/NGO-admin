@@ -62,6 +62,30 @@
           </ul>
         </div>
 
+        <% unless @donor.resources.empty? %>
+          <div class="block resources">
+            <h3>ADDITIONAL RESOURCES</h3>
+
+            <% @donor.resources.each do |resource| %>
+              <ul>
+                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
+
+        <% unless @donor.media.empty? %>
+          <div class="block resources">
+            <h3>ADDITIONAL RESOURCES</h3>
+
+            <% @donor.media.each do |media| %>
+              <ul>
+                <li><a href="<%= media.url %>" target="_blank"><%= media.title %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
+
         <div class="block">
           <h3>CONTACT INFORMATION</h3>
           <% if @donor.contact_person_name != '' %>
