@@ -29,6 +29,17 @@
           <h2>OVERVIEW</h2>
         </div>
 
+        <div class="block box_info">
+          <div class="projects_account">
+            <label>PROJECTS</label>
+            <h2><%= @projects.total_entries %></h2>
+          </div>
+          <div class="orgs_account">
+            <label>ORGANIZATIONS</label>
+            <h2><%= @organizations.length %></h2>
+          </div>
+        </div>
+
         <div class="block statistics less">
           <h3>PROJECT LOCATIONS</h3>
           <% if @site.navigate_by_country? %>
@@ -37,6 +48,7 @@
             <%= raw(projects_by_location(@site)) %>
           <% end %>
         </div>
+
 
         <div class="block statistics less">
           <h3>DONORS BY ORGANIZATIONS</h3>
