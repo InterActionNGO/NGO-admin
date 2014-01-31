@@ -3,6 +3,8 @@
     <div class="left <%= (action_name == 'home') ? 'home' : '' %>">
       <h1><%= link_to(@site.name,root_path) %></h1>
       <ul class="menu">
+          <li><a href="">DONORS</a></li>
+
           <% if @site.cluster %>
             <li><a class="main_option" href="<%= cluster_path(@site.cluster) %>" class="geneva"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
           <% elsif @site.sector %>
