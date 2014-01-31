@@ -10,6 +10,7 @@ if ($.browser.msie) {
   $('div#header ul.menu li#country_option a:eq(0)').css('width','70px');
   $('div#header ul.menu li#region_option a:eq(0)').css('width','65px');
   $('div#header ul.menu li#organization_option a:eq(0)').css('width','110px');
+  $('div#header ul.menu li#donor_option a:eq(0)').css('width','110px');
 }
 
 
@@ -58,6 +59,10 @@ $(document).ready( function() {
     $('#ngos_search').val('');
     if(document.getElementById('orgs_list')) {
       $('#ngos_search').liveUpdate('orgs_list');
+    }
+    $('#dgos_search').val('');
+    if(document.getElementById('donors_list')) {
+      $('#dgos_search').liveUpdate('donors_list');
     }
 
     // CUSTOM SCROLLBARS
