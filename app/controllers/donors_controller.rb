@@ -38,6 +38,13 @@ class DonorsController < ApplicationController
                           else
                             nil
                           end
+
+    @carry_on_filters = {}
+    @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
+    @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
+
+    options_export = {:donor_id => params[:id]}
+    
     if @filter_by_category.present?
       if @site.navigate_by_cluster?
         category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{@filter_by_category}"
@@ -48,25 +55,6 @@ class DonorsController < ApplicationController
 
     if @site.geographic_context_country_id
       location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
-
-
-      # sql="select r.id,count(distinct ps.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
-      #             CASE WHEN count(distinct ps.project_id) > 1 THEN
-      #                 r.path
-      #             ELSE
-      #                 '/projects/'||(array_to_string(array_agg(ps.project_id),''))
-      #             END as url
-
-      #             ,r.code,
-      #             (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
-      #       from ((((
-      #         projects as p inner join donations as dn on dn.donor_id=#{params[:id].sanitize_sql!.to_i} and dn.project_id = p.id )
-      #         inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{@site.id})
-      #         inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
-      #         inner join projects_regions as pr on pr.project_id=p.id)
-      #         inner join regions as r on pr.region_id=r.id and r.level=#{@site.level_for_region} #{location_filter})
-      #         #{category_join}
-      #       group by r.id,r.path,lon,lat,r.name,r.code"
       sql = """ SELECT r.id, count(distinct projects_sites.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
             CASE WHEN count(distinct projects_sites.project_id) > 1 THEN
                 r.path
@@ -76,7 +64,7 @@ class DonorsController < ApplicationController
             ,r.code,
             (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=1) as total_in_region
             FROM donations as dn JOIN projects ON dn.project_id = projects.id AND (projects.end_date IS NULL OR projects.end_date > NOW())
-            JOIN projects_sites ON  projects_sites.project_id = projects.id 
+            JOIN projects_sites ON  projects_sites.project_id = projects.id
             JOIN projects_regions as pr ON pr.project_id = projects.id
             JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
             WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
@@ -149,14 +137,7 @@ class DonorsController < ApplicationController
 
     end
     result=ActiveRecord::Base.connection.execute(sql)
-    # @map_data = result.map do |r|
-    #   uri = URI.parse(r['url'])
-    #   params = Hash[uri.query.split('&').map{|p| p.split('=')}] rescue {}
-    #   params['force_site_id'] = @site.id unless @site.published?
-    #   uri.query = params.to_a.map{|p| p.join('=')}.join('&')
-    #   r['url'] = uri.to_s
-    #   r
-    # end.to_json
+    @count = result.count
     result.each do |r|
       @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['total_in_region'], :url => r['url']}
     end
@@ -176,6 +157,25 @@ class DonorsController < ApplicationController
           page << "IOM.ajax_pagination();"
           page << "resizeColumn();"
         end
+      format.csv do
+        send_data Project.to_csv(@site, options_export),
+          :type => 'text/plain; charset=utf-8; application/download',
+          :disposition => "attachment; filename=#{@site.name}_projects.csv"
+      end
+      format.xls do
+        send_data Project.to_excel(@site, options_export),
+          :type        => 'application/vnd.ms-excel',
+          :disposition => "attachment; filename=#{@site.name}_projects.xls"
+      end
+      format.kml do
+        @projects_for_kml = Project.to_kml(@site, options_export)
+
+        render :site_home
+      end
+      format.xml do
+        @rss_items = Project.custom_find @site, :start_in_page => 0, :random => false, :per_page => 1000
+        render :site_home
+      end
       end
     end
   end

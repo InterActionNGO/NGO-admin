@@ -608,7 +608,7 @@ div {
             }
           }
         }
-        &#organization_option.clicked {
+        &#organization_option.clicked, &#donor_option.clicked {
           div {
             &.header_title {
               position: absolute;
@@ -701,7 +701,7 @@ div {
                 }
               }
             }
-            &#orgs_list {
+            &#orgs_list, &#donors_list {
               position: relative;
               float: left;
               overflow-y: scroll;
@@ -1358,6 +1358,23 @@ div {
           height: 109px;
           margin: 0 0 0 23px;
         }
+        &.donors_account {
+          float: left;
+          width: 100px;
+          height: 110px;
+          text-align: center;
+          border-right: 1px solid #DEDEDE;
+          &:last-child {
+            border-right: 0;
+          }
+        }
+      }
+    }
+    &.box_info.donors {
+      padding: 0;
+      width: 302px;
+      label {
+        font-size: 11px;
       }
     }
     &.green {
