@@ -3,8 +3,21 @@
     <div class="left <%= (action_name == 'home') ? 'home' : '' %>">
       <h1><%= link_to(@site.name,root_path) %></h1>
       <ul class="menu">
-          <li><a href="">DONORS</a></li>
-
+          <li id="donor_option">
+              <a class="geneva main_option with_suboptions">DONORS<span class="with_suboptions"></span></a>
+              <div class="header_title"><a>DONORS<span class="with_suboptions"></span></a></div>
+              <div class="suboptions_body">
+                <span class="suboptions_body_top"></span>
+                <div class="wrapper">
+                  <ul id="donors_list" class="content scroll_pane">
+                      <p class="no_founded">No organizations found</p>
+                      <% @site.donors_select.each do |donor| %>
+                        <li><a href="<%= donor_path(donor) %>"><%= donor.name %></a></li>
+                      <% end %>
+                  </ul>
+                </div>
+              </div>
+            </li>
           <% if @site.cluster %>
             <li><a class="main_option" href="<%= cluster_path(@site.cluster) %>" class="geneva"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
           <% elsif @site.sector %>

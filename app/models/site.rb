@@ -601,6 +601,13 @@ SQL
     )
   end
 
+  def donors_select
+    Donor.find_by_sql " SELECT distinct d.id as id , d.name as name
+      FROM projects_sites AS ps JOIN projects as p ON ps.project_id = p.id AND ps.site_id = #{self.id} AND p.end_date > NOW()
+      JOIN donations as dn ON dn.project_id = p.id
+      JOIN donors as d on d.id = dn.donor_id "
+  end
+
   def regions
     if geographic_context_country_id.blank? && geographic_context_region_id.blank?
       []
