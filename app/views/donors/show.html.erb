@@ -74,6 +74,30 @@
           </ul>
         </div>
 
+        <% unless @donor.resources.empty? %>
+          <div class="block resources">
+            <h3>ADDITIONAL RESOURCES</h3>
+
+            <% @donor.resources.each do |resource| %>
+              <ul>
+                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
+
+        <% unless @donor.media.empty? %>
+          <div class="block resources">
+            <h3>ADDITIONAL RESOURCES</h3>
+
+            <% @donor.media.each do |media| %>
+              <ul>
+                <li><a href="<%= media.url %>" target="_blank"><%= media.title %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
+
         <div class="block">
           <h3>CONTACT INFORMATION</h3>
           <% if @donor.contact_person_name != '' %>
@@ -91,6 +115,16 @@
     <div class="right" id="projects_div">
       <h3>
         Funding <%= pluralize(@donor.donated_projects_count(@site), 'project', 'projects') %>
+
+        <ul class="download">
+          <li><%= link_to 'CSV', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :csv)) : donor_path(@data, @carry_on_filters.merge(:format => :csv)) %></li>
+          <li>|</li>
+          <li><%= link_to 'EXCEL', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :xls)) : donor_path(@data, @carry_on_filters.merge(:format => :xls)) %></li>
+          <li>|</li>
+          <li><%= link_to 'KML', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :kml)) : donor_path(@data, @carry_on_filters.merge(:format => :kml)) %></li>
+          <li>·</li>
+          <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
+        </ul>
       </h3>
 
       <div id="projects">
