@@ -3,21 +3,7 @@
     <div class="left <%= (action_name == 'home') ? 'home' : '' %>">
       <h1><%= link_to(@site.name,root_path) %></h1>
       <ul class="menu">
-          <li id="donor_option">
-              <a class="geneva main_option with_suboptions">DONORS<span class="with_suboptions"></span></a>
-              <div class="header_title"><a>DONORS<span class="with_suboptions"></span></a></div>
-              <div class="suboptions_body">
-                <span class="suboptions_body_top"></span>
-                <div class="wrapper">
-                  <ul id="donors_list" class="content scroll_pane">
-                      <p class="no_founded">No organizations found</p>
-                      <% @site.donors_select.each do |donor| %>
-                        <li><a href="<%= donor_path(donor) %>"><%= donor.name %></a></li>
-                      <% end %>
-                  </ul>
-                </div>
-              </div>
-            </li>
+
           <% if @site.cluster %>
             <li><a class="main_option" href="<%= cluster_path(@site.cluster) %>" class="geneva"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
           <% elsif @site.sector %>
@@ -80,29 +66,51 @@
           <% end %>
 
           <li id="organization_option">
-              <a class="geneva main_option with_suboptions">ORGANIZATIONS<span class="with_suboptions"></span></a>
-              <div class="header_title"><a>ORGANIZATIONS<span class="with_suboptions"></span></a></div>
-              <div class="suboptions_body">
-                <span class="suboptions_body_top"></span>
-                <form method="get">
-                  <input id="ngos_search" type="text" value="" name="ngos_search"/>
-                </form>
-                <div class="wrapper">
-                  <ul id="orgs_list" class="content scroll_pane">
-                      <p class="no_founded">No organizations found</p>
-                      <% @site.organizations_select.each do |organization| %>
-                        <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
-                      <% end %>
-                  </ul>
-                </div>
+            <a class="geneva main_option with_suboptions">ORGANIZATIONS<span class="with_suboptions"></span></a>
+            <div class="header_title"><a>ORGANIZATIONS<span class="with_suboptions"></span></a></div>
+            <div class="suboptions_body">
+              <span class="suboptions_body_top"></span>
+              <form method="get">
+                <input id="ngos_search" type="text" value="" name="ngos_search"/>
+              </form>
+              <div class="wrapper">
+                <ul id="orgs_list" class="content scroll_pane">
+                    <p class="no_founded">No organizations found</p>
+                    <% @site.organizations_select.each do |organization| %>
+                      <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
+                    <% end %>
+                </ul>
               </div>
-            </li>
-            <% @site.pages.highlighted.each do |page| %>
-              <li><a href="<%= page_path(page) %>" class="geneva main_option"><%= page.title.upcase %></a></li>
-            <% end %>
-            <% if @site.show_blog? %>
-              <li><a href="<%= @site.blog_url %>" class="geneva main_option" rel="nofollow">BLOG</a></li>
-            <% end %>
+            </div>
+          </li>
+
+
+          <li id="donor_option">
+            <a class="geneva main_option with_suboptions">DONORS<span class="with_suboptions"></span></a>
+            <div class="header_title"><a>DONORS<span class="with_suboptions"></span></a></div>
+            <div class="suboptions_body">
+              <span class="suboptions_body_top"></span>
+              <form method="get">
+                <input id="ngos_search" type="text" value="" name="ngos_search"/>
+              </form>
+              <div class="wrapper">
+                <ul id="orgs_list" class="content scroll_pane">
+                    <p class="no_founded">No donors found</p>
+                    <% @site.donors_select.each do |donor| %>
+                      <li><a href="<%= donor_path(donor) %>"><%= donor.name %></a></li>
+                    <% end %>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <% @site.pages.highlighted.each do |page| %>
+            <li><a href="<%= page_path(page) %>" class="geneva main_option"><%= page.title.upcase %></a></li>
+          <% end %>
+          <% if @site.show_blog? %>
+            <li><a href="<%= @site.blog_url %>" class="geneva main_option" rel="nofollow">BLOG</a></li>
+          <% end %>
+
       </ul>
     </div>
 
