@@ -38,6 +38,10 @@
             <label>ORGANIZATIONS</label>
             <h2><%= @organizations.length %></h2>
           </div>
+          <div class="orgs_account">
+            <label>REGIONS</label>
+            <h2><%= @count %></h2>
+          </div>
         </div>
 
         <div class="block statistics less">
@@ -86,13 +90,13 @@
           </div>
         <% end %>
 
-        <% unless @donor.media.empty? %>
+        <% unless @donor.media_resources.empty? %>
           <div class="block resources">
             <h3>ADDITIONAL RESOURCES</h3>
 
-            <% @donor.media.each do |media| %>
+            <% @donor.media_resources.each do |media| %>
               <ul>
-                <li><a href="<%= media.url %>" target="_blank"><%= media.title %></a></li>
+                <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
               </ul>
             <%end%>
           </div>
