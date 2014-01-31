@@ -39,7 +39,13 @@
             <h2><%= @organizations.length %></h2>
           </div>
           <div class="donors_account">
-            <label>REGIONS</label>
+            <label>
+              <% if @site.navigate_by_level2 or @site.navigate_by_level3 %>
+               REGIONS
+               <% else %>
+               COUNTRIES
+               <% end %>
+            </label>
             <h2><%= @count %></h2>
           </div>
         </div>
@@ -78,29 +84,32 @@
           </ul>
         </div>
 
-        <% unless @donor.resources.empty? %>
-          <div class="block resources">
-            <h3>ADDITIONAL RESOURCES</h3>
+        <div class="block resources">
+          <h3>ADDITIONAL RESOURCES</h3>
+            <% if @donor.resources.empty? %>
+              <p>No data available</p>
+            <% else %>
+              <% @donor.resources.each do |resource| %>
+                <ul>
+                  <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
+                </ul>
+              <%end%>
+            <% end %>
+        </div>
+        
 
-            <% @donor.resources.each do |resource| %>
-              <ul>
-                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
-              </ul>
-            <%end%>
-          </div>
-        <% end %>
-
-        <% unless @donor.media_resources.empty? %>
-          <div class="block resources">
-            <h3>ADDITIONAL RESOURCES</h3>
-
-            <% @donor.media_resources.each do |media| %>
-              <ul>
-                <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
-              </ul>
-            <%end%>
-          </div>
-        <% end %>
+        <div class="block resources">
+          <h3>ADDITIONAL RESOURCES</h3>
+          <% if @donor.media_resources.empty? %>
+            <p>No data available</p>
+          <% else %>
+              <% @donor.media_resources.each do |media| %>
+                <ul>
+                  <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
+                </ul>
+              <%end%>
+          <% end %>
+        </div>
 
         <div class="block">
           <h3>CONTACT INFORMATION</h3>
