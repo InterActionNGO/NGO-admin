@@ -608,7 +608,7 @@ div {
             }
           }
         }
-        &#organization_option.clicked {
+        &#organization_option.clicked, &#donor_option.clicked {
           div {
             &.header_title {
               position: absolute;
@@ -701,7 +701,7 @@ div {
                 }
               }
             }
-            &#orgs_list {
+            &#orgs_list, &#donors_list {
               position: relative;
               float: left;
               overflow-y: scroll;
