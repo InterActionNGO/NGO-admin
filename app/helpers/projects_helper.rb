@@ -1,5 +1,11 @@
 module ProjectsHelper
 
+  String.class_eval do
+    def indefinitize
+      %w(a e i o u).include?(downcase.first) ? "an #{self}" : "a #{self}"
+    end
+  end
+
   def subtitle(project, site)
     clusters_sectors = if site.navigate_by_sector?
       sectors_to_sentence(project)
@@ -28,7 +34,7 @@ module ProjectsHelper
     clusters = project['clusters'].split('|').reject{|c| c.blank?}
     clusters_ids = project['cluster_ids'].delete('{}').split(',')
     if clusters.size == 1
-      "A #{link_to clusters.first, cluster_path(clusters_ids.first), :title => clusters.first} project"
+      "A #{link_to clusters.first.indefinitize.capitalize, cluster_path(clusters_ids.first), :title => clusters.first} project"
     else
       "A project from #{pluralize(clusters.size, 'different clusters')}"
     end
@@ -39,7 +45,7 @@ module ProjectsHelper
     sectors = project['sectors'].split('|').reject{|s| s.blank?}
     sectors_ids = project['sector_ids'].delete('{}').split(',')
     if sectors.size == 1
-      "A #{link_to sectors.first, sector_path(sectors_ids.first), :title => sectors.first} project"
+      "#{link_to sectors.first.indefinitize.capitalize, sector_path(sectors_ids.first), :title => sectors.first} project"
     else
       "A project from #{pluralize(sectors.size, 'different sectors')}"
     end
