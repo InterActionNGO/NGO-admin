@@ -44,7 +44,11 @@ class DonorsController < ApplicationController
     @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
     @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
 
-
+    @donor_projects_by_location = if @site.navigate_by_country?
+      @donor.projects_countries(@site, @filter_by_category)
+    else
+      @donor.projects_regions(@site, @filter_by_category)
+    end
     # options_export = {:donor_id => params[:id]}
 
     options_export = {

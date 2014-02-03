@@ -95,7 +95,7 @@ class Donor < ActiveRecord::Base
 
   # Array of arrays
   # [[region, count], [region, count]]
-  def projects_regions(site)
+  def projects_regions(site, category_id = nil)
     Region.find_by_sql(
 <<-SQL
   select r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id,count(ps.*) as count from regions as r
@@ -113,7 +113,7 @@ SQL
 
   # Array of arrays
   # [[country, count], [country, count]]
-  def projects_countries(site)
+  def projects_countries(site, category_id = nil)
     Country.find_by_sql(
 <<-SQL
   select c.id,c.name,count(ps.*) as count from countries as c
