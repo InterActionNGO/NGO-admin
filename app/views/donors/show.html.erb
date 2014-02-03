@@ -40,10 +40,10 @@
           </div>
           <div class="donors_account">
             <label>
-              <% if @site.navigate_by_level2 or @site.navigate_by_level3 %>
-               REGIONS
+              <% if @site.navigate_by_country %>
+                COUNTRIES
                <% else %>
-               COUNTRIES
+                REGIONS
                <% end %>
             </label>
             <h2><%= @count %></h2>
