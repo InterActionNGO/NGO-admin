@@ -142,6 +142,31 @@ SQL
     update_attribute(:site_specific_information, atts)
   end
 
+  def projects_sectors(site_id)
+    sql="select s.id,s.name,count(ps.*) as count from sectors as s
+    inner join projects_sectors as cp on s.id=cp.sector_id
+    inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{site_id}
+    inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
+    inner join donations as d on ps.project_id = d.project.id and d.donor_id = #{self.id}
+    group by s.id,s.name order by count DESC limit 20"
+    Sector.find_by_sql(sql).map do |s|
+      [s,s.count.to_i]
+    end
+  end
+
+  # def donor_projects_sectors_or_clusters(site)
+  #   if site.navigate_by_sector?
+  #     categories = projects_sectors
+  #   elsif navigate_by_cluster?
+  #     categories = projects_clusters
+  #   end
+
+  #   categories.sort!{|x, y| x.first.class.name <=> y.first.class.name}
+  #   categories
+  # end
+
+
+
   private
 
     def clean_html
