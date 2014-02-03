@@ -43,7 +43,6 @@ class DonorsController < ApplicationController
     @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
     @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
 
-    debugger
 
     options_export = {:donor_id => params[:id]}
 
@@ -56,7 +55,6 @@ class DonorsController < ApplicationController
     }
     
     respond_to do |format|
-      debugger
       format.html do 
 
         if @filter_by_category.present?
@@ -150,8 +148,6 @@ class DonorsController < ApplicationController
           end
 
         end
-        puts sql
-        debugger
         result=ActiveRecord::Base.connection.execute(sql)
         @count = result.count
         result.each do |r|
@@ -183,7 +179,6 @@ class DonorsController < ApplicationController
           :disposition => "attachment; filename=#{@donor.name}_projects.xls"
       end
       format.kml do
-        debugger
         @projects_for_kml = Project.to_kml(@site, projects_custom_find_options)
       end
       end
