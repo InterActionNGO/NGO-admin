@@ -149,7 +149,9 @@ class DonorsController < ApplicationController
     @organizations = @organizations_data.sort_by { |d| d[:count] }.reverse
     @organizations_data = @organizations.to_json
     @map_data = @map_data.to_json
+
     respond_to do |format|
+      debugger
       format.html
       format.js do
         render :update do |page|
@@ -159,6 +161,7 @@ class DonorsController < ApplicationController
           page << "resizeColumn();"
         end
       format.csv do
+        debugger
         send_data Project.to_csv(@site, options_export),
           :type => 'text/plain; charset=utf-8; application/download',
           :disposition => "attachment; filename=#{@site.name}_projects.csv"
