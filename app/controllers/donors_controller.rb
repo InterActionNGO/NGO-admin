@@ -140,11 +140,7 @@ class DonorsController < ApplicationController
     result=ActiveRecord::Base.connection.execute(sql)
     @count = result.count
     result.each do |r|
-      if @site.navigate_by_country
-        @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url']}
-      else
-        @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['total_in_region'], :url => r['url']}
-      end
+      @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
     end
 
     @organizations.each do |o|
