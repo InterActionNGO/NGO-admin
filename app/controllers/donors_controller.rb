@@ -52,11 +52,12 @@ class DonorsController < ApplicationController
     # options_export = {:donor_id => params[:id]}
 
     options_export = {
-      :donor_id      => @donor.id,
+      :donor      => @donor.id,
       :per_page      => 10,
       :page          => params[:page],
       :order         => 'created_at DESC',
       :start_in_page => params[:start_in_page]
+
     }
     
     respond_to do |format|
@@ -184,7 +185,7 @@ class DonorsController < ApplicationController
           :disposition => "attachment; filename=#{@donor.name}_projects.xls"
       end
       format.kml do
-        @projects_for_kml = Project.to_kml(@site, projects_custom_find_options)
+        @projects_for_kml = Project.to_kml(@site, options_export)
       end
     end
   end
