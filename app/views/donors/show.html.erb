@@ -64,7 +64,7 @@
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
           <ul class="statistics_list">
-          <% @site.projects_sectors_or_clusters.each do |category, count| %>
+          <% @donor.projects_sectors_or_clusters(@site).each do |category, count| %>
             <% unless category.name.eql?('N/A') %>
               <li>
                 <div class="tooltip">
