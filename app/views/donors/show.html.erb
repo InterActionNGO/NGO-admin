@@ -50,14 +50,10 @@
           </div>
         </div>
 
-        <div class="block statistics less">
-          <h3>PROJECT LOCATIONS</h3>
-          <% if @site.navigate_by_country? %>
-            <%= raw(projects_by_location(@site)) %>
-          <% else %>
-            <%= raw(projects_by_location(@site)) %>
-          <% end %>
-        </div>
+          <div class="block statistics less">
+            <h3>PROJECT LOCATIONS</h3>
+            <%= raw(projects_by_location(@site, @donor_projects_by_location)) %>
+          </div>
 
 
         <div class="block statistics less">
@@ -99,7 +95,7 @@
         
 
         <div class="block resources">
-          <h3>ADDITIONAL RESOURCES</h3>
+          <h3>MEDIA RESOURCES</h3>
           <% if @donor.media_resources.empty? %>
             <p>No data available</p>
           <% else %>
@@ -130,11 +126,11 @@
         Funding <%= pluralize(@donor.donated_projects_count(@site), 'project', 'projects') %>
 
         <ul class="download">
-          <li><%= link_to 'CSV', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :csv)) : donor_path(@data, @carry_on_filters.merge(:format => :csv)) %></li>
+          <li><%= link_to 'CSV', donor_path(@donor, @carry_on_filters.merge(:format => :csv)) %></li>
           <li>|</li>
-          <li><%= link_to 'EXCEL', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :xls)) : donor_path(@data, @carry_on_filters.merge(:format => :xls)) %></li>
+          <li><%= link_to 'EXCEL',donor_path(@donor, @carry_on_filters.merge(:format => :xls)) %></li>
           <li>|</li>
-          <li><%= link_to 'KML', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :kml)) : donor_path(@data, @carry_on_filters.merge(:format => :kml)) %></li>
+          <li><%= link_to 'KML', donor_path(@donor, @carry_on_filters.merge(:format => :kml)) %></li>
           <li>·</li>
           <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
         </ul>
@@ -164,7 +160,7 @@
   var organization_data = <%= @organizations_data.to_s.html_safe %>;
   var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
   var theme = "<%=@site.theme_id%>";
-  var kind = 'org.';
+  var kind = 'donor';
   var stylez = <%=raw @site.map_styles  %>
 </script>
 
