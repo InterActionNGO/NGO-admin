@@ -257,7 +257,9 @@ class Project < ActiveRecord::Base
     end
 
     where = "WHERE #{where.join(' AND ')}" if where.present?
-
+    
+    donor_repor = ''
+    donor_report = "INNER JOIN donations as dn ON dn.project_id = p.id AND dn.donor_id = #{options[:donor]}" if options[:donor]
 
     sql = <<-SQL
         WITH r AS (
@@ -339,6 +341,7 @@ class Project < ActiveRecord::Base
         LEFT OUTER JOIN projects_regions pr    ON  pr.project_id = p.id
         LEFT OUTER JOIN projects_sectors ps2   ON  ps2.project_id = p.id
         LEFT OUTER JOIN clusters_projects clpr ON  clpr.project_id = p.id
+        #{donor_report}
         #{where}
         GROUP BY
         p.id,
@@ -404,6 +407,7 @@ class Project < ActiveRecord::Base
         csv << line
       end
     end
+    debugger
     csv_data
   end
 
