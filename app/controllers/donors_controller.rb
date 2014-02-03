@@ -1,5 +1,6 @@
 class DonorsController < ApplicationController
 
+  respond_to :html, :kml, :js, :xls, :csv
   layout 'site_layout'
 
   def show
@@ -44,10 +45,10 @@ class DonorsController < ApplicationController
     @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
 
 
-    options_export = {:donor_id => params[:id]}
+    # options_export = {:donor_id => params[:id]}
 
     options_export = {
-      :donor_id  => @donor.id,
+      :donor_id      => @donor.id,
       :per_page      => 10,
       :page          => params[:page],
       :order         => 'created_at DESC',
@@ -56,7 +57,6 @@ class DonorsController < ApplicationController
     
     respond_to do |format|
       format.html do 
-
         if @filter_by_category.present?
           if @site.navigate_by_cluster?
             category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{@filter_by_category}"
@@ -168,6 +168,7 @@ class DonorsController < ApplicationController
           page << "IOM.ajax_pagination();"
           page << "resizeColumn();"
         end
+      end
       format.csv do
         send_data Project.to_csv(@site, options_export),
           :type => 'text/plain; charset=utf-8; application/download',
@@ -180,7 +181,6 @@ class DonorsController < ApplicationController
       end
       format.kml do
         @projects_for_kml = Project.to_kml(@site, projects_custom_find_options)
-      end
       end
     end
   end
