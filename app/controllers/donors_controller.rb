@@ -1,9 +1,15 @@
 class DonorsController < ApplicationController
 
   respond_to :html, :kml, :js, :xls, :csv
-  layout 'site_layout'
+  # layout 'site_layout'
 
   def show
+
+    if params[:embed].present?
+      'map_layout'
+    else
+      'site_layout'
+    end
     @donor = Donor.find(params[:id])
     @donor.attributes = @donor.attributes_for_site(@site)
 
