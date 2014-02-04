@@ -13,7 +13,7 @@
 <h1>DONORS</h1>
 <ul>
 	<% @data[:donors].take(20).each do|dn| %>
-		<li><%= dn[1][:name] %>  ||  Budget: <%= number_with_delimiter(dn[1][:budget]) %>  ||  People: <%= number_with_delimiter(dn[1][:people]) %> </li>
+		<li><%= dn[:name] %>  ||  Budget: <%= number_with_delimiter(dn[:budget]) %>  ||  People: <%= number_with_delimiter(dn[:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -22,7 +22,7 @@
 <h1>ORGANIZATIONS</h1>
 <ul>
 	<% @data[:organizations].take(20).each do|org| %>
-		<li><%= org[1][:name] %>  ||  Budget: <%= number_with_delimiter(org[1][:budget]) %>  ||  People: <%= number_with_delimiter(org[1][:people]) %> </li>
+		<li><%= org[:name] %>  ||  Budget: <%= number_with_delimiter(org[:budget]) %>  ||  People: <%= number_with_delimiter(org[:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
