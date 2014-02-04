@@ -31,7 +31,7 @@
 <h1>Countries</h1>
 <ul>
 	<% @data[:countries].take(20).each do|cn| %>
-		<li><%= cn[1][:name] %>  ||  Budget: <%= number_with_delimiter(cn[1][:budget]) %>  ||  People: <%= number_with_delimiter(cn[1][:people]) %> </li>
+		<li><%= cn[:name] %>  ||  Budget: <%= number_with_delimiter(cn[:budget]) %>  ||  People: <%= number_with_delimiter(cn[:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -40,7 +40,7 @@
 <h1>Sectors</h1>
 <ul>
 	<% @data[:sectors].each do|sc| %>
-		<li><%= sc[1][:name] %>  ||  Budget: <%= number_with_delimiter(sc[1][:budget]) %>  ||  People: <%= number_with_delimiter(sc[1][:people]) %> </li>
+		<li><%= sc[:name] %>  ||  Budget: <%= number_with_delimiter(sc[:budget]) %>  ||  People: <%= number_with_delimiter(sc[:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
