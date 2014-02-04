@@ -1153,10 +1153,9 @@ SQL
 
     @data = {}
     @totals = {}
-    projects_ids = []
+    projects_ids = [0]
 
     @projects = (@projects_start + @projects_end).uniq 
-
     @projects.each do |project|
       projects_ids << project.id
     end
@@ -1174,12 +1173,14 @@ SQL
     sql = """ SELECT COUNT(DISTINCT donations.donor_id) as donors FROM donations WHERE project_id IN (#{projects}) """
     result = ActiveRecord::Base.connection.execute(sql)
     @data[:totals][:budget] = 0
-    @data[:organizations].each { |val| @data[:totals][:budget] += val[:budget]}
+    # @data[:organizations].each { |val| @data[:totals][:budget] += val[:budget]}
+    @data[:projects].each { |val| @data[:totals][:budget] += val[:budget].to_i}
     @data[:totals][:donors] = result.getvalue(0,0).to_i
     @data[:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
     @data[:totals][:projects] = @projects.to_a.length
     @data[:organizations] = @data[:organizations].take(20)
     @data
+    # @data_json = @data.to_json
   end
 
   def self.report_donors(projects, limit = 20)
@@ -1188,8 +1189,8 @@ SQL
           FROM donors as d JOIN donations as dn ON dn.donor_id = d.id 
           JOIN projects as pr ON dn.project_id = pr.id 
           WHERE pr.id IN (#{projects}) 
-          GROUP BY d.name, pr.estimated_people_reached, dn.amount ORDER BY dn.amount DESC """
-
+          GROUP BY d.name, pr.estimated_people_reached, dn.amount 
+          ORDER BY dn.amount DESC """
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(donors.key?(r['donorname']))
@@ -1208,7 +1209,8 @@ SQL
           FROM organizations as o JOIN projects AS p ON p.primary_organization_id = o.id 
           JOIN donations as dn ON dn.project_id = p.id
           WHERE p.id IN (#{projects}) 
-          GROUP BY o.name, dn.amount, people ORDER BY dn.amount DESC """
+          GROUP BY o.name, dn.amount, people 
+          ORDER BY dn.amount DESC """
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(organizations.key?(r['orgname']))
@@ -1223,11 +1225,13 @@ SQL
 
   def self.report_countries(projects, limit = 20)
     countries = {}
-    sql = """ SELECT countries.name, SUM(donations.amount) as sum, projects.estimated_people_reached as people FROM
+    sql = """ SELECT countries.name, projects.budget as sum, projects.estimated_people_reached as people FROM
           countries JOIN countries_projects ON countries.id = countries_projects.country_id
           JOIN projects ON countries_projects.project_id = projects.id
           JOIN donations ON projects.id = donations.project_id
-          WHERE projects.id IN (#{projects}) GROUP BY countries.name, projects.estimated_people_reached ORDER BY SUM DESC"""
+          WHERE projects.id IN (#{projects}) 
+          GROUP BY countries.name, projects.budget, projects.estimated_people_reached 
+          ORDER BY SUM DESC"""
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(countries.key?(r['name']))
