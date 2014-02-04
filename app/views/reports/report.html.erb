@@ -12,8 +12,8 @@
 <% if @data[:donors] %>
 <h1>DONORS</h1>
 <ul>
-	<% @data[:donors].each do|dn| %>
-		<li><%= dn[1][:name] %>  ||  Budget: <%= number_with_delimiter(dn[1][:budget]) %>  ||  People: <%= number_with_delimiter(dn[1][:people]) %> </li>
+	<% @data[:donors].take(20).each do|dn| %>
+		<li><%= dn[:name] %>  ||  Budget: <%= number_with_delimiter(dn[:budget]) %>  ||  People: <%= number_with_delimiter(dn[:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -21,8 +21,8 @@
 <% if @data[:organizations] %>
 <h1>ORGANIZATIONS</h1>
 <ul>
-	<% @data[:organizations].each do|org| %>
-		<li><%= org[1][:name] %>  ||  Budget: <%= number_with_delimiter(org[1][:budget]) %>  ||  People: <%= number_with_delimiter(org[1][:people]) %> </li>
+	<% @data[:organizations].take(20).each do|org| %>
+		<li><%= org[:name] %>  ||  Budget: <%= number_with_delimiter(org[:budget]) %>  ||  People: <%= number_with_delimiter(org[:people]) %> </li>
 	<% end %> 
 </ul>
 <% end if %>
@@ -30,7 +30,7 @@
 <% if @data[:countries] %>
 <h1>Countries</h1>
 <ul>
-	<% @data[:countries].each do|cn| %>
+	<% @data[:countries].take(20).each do|cn| %>
 		<li><%= cn[1][:name] %>  ||  Budget: <%= number_with_delimiter(cn[1][:budget]) %>  ||  People: <%= number_with_delimiter(cn[1][:people]) %> </li>
 	<% end %> 
 </ul>
