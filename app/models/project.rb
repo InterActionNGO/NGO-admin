@@ -407,7 +407,6 @@ class Project < ActiveRecord::Base
         csv << line
       end
     end
-    debugger
     csv_data
   end
 
