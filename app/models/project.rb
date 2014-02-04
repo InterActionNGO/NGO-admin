@@ -257,7 +257,9 @@ class Project < ActiveRecord::Base
     end
 
     where = "WHERE #{where.join(' AND ')}" if where.present?
-
+    
+    donor_repor = ''
+    donor_report = "INNER JOIN donations as dn ON dn.project_id = p.id AND dn.donor_id = #{options[:donor]}" if options[:donor]
 
     sql = <<-SQL
         WITH r AS (
@@ -339,6 +341,7 @@ class Project < ActiveRecord::Base
         LEFT OUTER JOIN projects_regions pr    ON  pr.project_id = p.id
         LEFT OUTER JOIN projects_sectors ps2   ON  ps2.project_id = p.id
         LEFT OUTER JOIN clusters_projects clpr ON  clpr.project_id = p.id
+        #{donor_report}
         #{where}
         GROUP BY
         p.id,
@@ -404,6 +407,7 @@ class Project < ActiveRecord::Base
         csv << line
       end
     end
+    debugger
     csv_data
   end
 
@@ -1165,17 +1169,16 @@ SQL
     @data[:organizations] = Project.report_organizations(projects)
     @data[:countries] = Project.report_countries(projects)
     @data[:sectors] = Project.report_sectors(projects)
-    @data[:totals] = @totals
+    @data[:totals] = {}
     
     # Totals
-    sql = """ SELECT SUM(donations.amount) as sum, COUNT(donations.donor_id) as donors FROM donations WHERE project_id IN (#{projects}) """
+    sql = """ SELECT COUNT(DISTINCT donations.donor_id) as donors FROM donations WHERE project_id IN (#{projects}) """
     result = ActiveRecord::Base.connection.execute(sql)
-    @totals[:budget] = 0
-    @data[:organizations].each { |val| @totals[:budget] += val[:budget]}
-    @totals[:donors] = result.getvalue(0,1).to_i
-    @totals[:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
-    @totals[:projects] = @projects.to_a.length
-    
+    @data[:totals][:budget] = 0
+    @data[:organizations].each { |val| @data[:totals][:budget] += val[:budget]}
+    @data[:totals][:donors] = result.getvalue(0,0).to_i
+    @data[:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
+    @data[:totals][:projects] = @projects.to_a.length
     @data[:organizations] = @data[:organizations].take(20)
     @data
   end
