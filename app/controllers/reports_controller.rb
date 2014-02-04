@@ -12,6 +12,7 @@ class ReportsController < ApplicationController
 
 	def report
 		@data = Project.report(params)
+		@data_json = @data.to_json
 
 		respond_to do |format|
 			format.html do
