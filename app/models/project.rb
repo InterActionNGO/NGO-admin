@@ -1168,29 +1168,6 @@ SQL
 
     projects = projects_ids.map { |elem| elem.to_s }.join(",")
 
-    # Donors & Organizations
-    # sql = """SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people, o.name as orgName
-    #         FROM donors as d JOIN donations as dn ON dn.donor_id = d.id 
-    #         JOIN projects as pr ON dn.project_id = pr.id 
-    #         JOIN organizations as o ON o.id = pr.primary_organization_id
-    #         WHERE pr.id IN (#{projects}) GROUP BY d.name, pr.estimated_people_reached, o.name, dn.amount ORDER BY dn.amount DESC LIMIT 20"""
-
-    # result = ActiveRecord::Base.connection.execute(sql)
-    # result.each do |r|
-    #   if(@donors.key?(r['donorname']))
-    #     @donors[r['donorname']][:budget] += r[:sum].to_i
-    #     @donors[r['donorname']][:people] += r[:people].to_i
-    #   else
-    #     @donors[r['donorname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['donorname']}
-    #   end
-
-    #   if(@organizations.key?(r['orgname']))
-    #     @organizations[r['orgname']][:budget] += r[:sum].to_i
-    #     @organizations[r['orgname']][:people] += r[:people].to_i
-    #   else
-    #     @organizations[r['orgname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['orgname']}
-    #   end
-    # end  
     # Donors
     sql = """SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people
             FROM donors as d JOIN donations as dn ON dn.donor_id = d.id 
@@ -1207,9 +1184,10 @@ SQL
         @donors[r['donorname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['donorname']}
       end
     end
+    @donors = @donors.values.sort_by { |v| v[:budget]}.reverse.take(20)
 
     # Organizations
-    sql = """ SELECT o.name as orgName, SUM(dn.amount) as sum, p.estimated_people_reached as people
+    sql = """ SELECT o.name as orgName, SUM(p.budget) as sum, p.estimated_people_reached as people
               FROM organizations as o JOIN projects AS p ON p.primary_organization_id = o.id 
               JOIN donations as dn ON dn.project_id = p.id
               WHERE p.id IN (#{projects}) 
@@ -1223,6 +1201,7 @@ SQL
         @organizations[r['orgname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['orgname']}
       end
     end  
+    @organizations = @organizations.values.sort_by { |v| v[:budget]}.reverse
 
     # Countries
     sql = """ SELECT countries.name, SUM(donations.amount) as sum, projects.estimated_people_reached as people FROM
@@ -1262,15 +1241,16 @@ SQL
     # Totals
     sql = """ SELECT SUM(donations.amount) as sum, COUNT(donations.donor_id) as donors FROM donations WHERE project_id IN (#{projects}) """
     result = ActiveRecord::Base.connection.execute(sql)
-    @totals[:budget] = result.getvalue(0,0).to_i
+    @totals[:budget] = 0
+    @organizations.each { |val| @totals[:budget] += val[:budget]}
     @totals[:donors] = result.getvalue(0,1).to_i
     @totals[:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
     @totals[:projects] = @projects.to_a.length
 
     @data[:projects] = @projects
-    @data[:donors] = @donors
-    @data[:organizations] = @organizations
-    @data[:countries] = @countries
+    @data[:donors] = @donors.take(20)
+    @data[:organizations] = @organizations.take(20)
+    @data[:countries] = @countries.take(20)
     @data[:sectors] = @sectors
     @data[:totals] = @totals
     @data
