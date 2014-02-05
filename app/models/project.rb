@@ -1108,6 +1108,13 @@ SQL
     end
   end  
 
+  def update_data_denormalization
+    sql = """UPDATE data_denormalization 
+            SET project_name = '#{self.name}'
+            WHERE project_id = #{self.id}"""
+    ActiveRecord::Base.connection.execute(sql)
+  end
+
   def self.report(params = {})
     start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
     end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year'])
