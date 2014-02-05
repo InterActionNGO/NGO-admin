@@ -51,6 +51,7 @@ class Admin::OrganizationsController < ApplicationController
     @organization.updated_by = current_user
     if @organization.save
       flash[:notice] = 'Organization updated successfully.'
+      @organization.update_data_denormalization
       if params[:site_id]
         redirect_to organization_site_specific_information_admin_organization_path(@organization, @site), :flash => {:success => 'Organization has been updated successfully'}
       else

@@ -315,4 +315,11 @@ SQL
 
   end
 
+  def update_data_denormalization
+    sql = """UPDATE data_denormalization 
+            SET organization_name = '#{self.name}'
+            WHERE organization_id = #{self.id}"""
+    ActiveRecord::Base.connection.execute(sql)
+  end
+
 end
