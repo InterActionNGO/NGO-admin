@@ -1,7 +1,7 @@
 class DonorsController < ApplicationController
 
   respond_to :html, :kml, :js, :xls, :csv
-  # layout 'site_layout'
+  layout 'site_layout'
 
   def show
 
@@ -65,9 +65,9 @@ class DonorsController < ApplicationController
       :start_in_page => params[:start_in_page]
 
     }
-    
+
     respond_to do |format|
-      format.html do 
+      format.html do
         if @filter_by_category.present?
           if @site.navigate_by_cluster?
             category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{@filter_by_category}"
