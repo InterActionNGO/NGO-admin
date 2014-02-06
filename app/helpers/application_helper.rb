@@ -176,6 +176,32 @@ HTML
     [ul, chart]
   end
 
+  def projects_by_sectors(sectors, count)
+    colors_values = {
+      "Agriculture" => "FFC6A5",
+      "Communications" => "FFFF42",
+      "Disaster Management" => "DEF3BD",
+      "Economic Recovery and Development" => "00A5C6",
+      "Education" => "DEBDDE",
+      "Environment" => "DEBDCC",
+      "Food Aid" => "DEA5DE",
+      "Health" => "CCCDDE",
+      "Human Rights Democracy and Governance" => "AC848E",
+      "Peace and Security" => "DEBFFA",
+      "Protection" => "D7777E",
+      "Shelter and Housing" => "343536",
+      "Water Sanitation and Hygiene" => "DEB123",
+      "Other" => "ACDA52"
+    }
+    colors = []
+    sectors.each do |sector|
+      colors << colors_values[sector]
+    end
+    # url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=x,x&chds=0,10&chxl=0:|#{sectors.join("|")}&chco=#{colors.join("|")}"
+    url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=y&chxr=0,0,#{count.max}&chds=0,10&chco=#{colors.join("|")}&chds=0,#{count.max}"
+    chart = image_tag url, :class => 'pie_chart'
+  end
+
   def anglo(text)
     return "" if text.blank?
     raw(text.gsub(/(\d+\.[\d+\.?\d+]+)/) do |n|

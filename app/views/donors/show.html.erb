@@ -59,7 +59,12 @@
         <div class="block statistics less">
           <h3>DONORS BY ORGANIZATIONS</h3>
             <%= raw(projects_by_organization(@organizations)) %>
-        </div>
+        </div>   
+
+        <div class="block statistics less">
+          <h3>PROJECTS BY SECTOR</h3>
+            <%= raw(projects_by_sectors(@projects_sectors[:sectors], @projects_sectors[:count])) %>
+        </div>        
 
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
