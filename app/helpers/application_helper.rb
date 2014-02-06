@@ -161,7 +161,7 @@ HTML
 
   def projects_by_organization(collection = nil)
     organizations =collection
-    counts    = organizations.map{ |o| o.count}
+    counts    = organizations.map{ |o| o[:count]}
     values    = counts.slice!(0, 3) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
     values.compact!
     max_value = values.max  
@@ -172,6 +172,7 @@ HTML
     end
     lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 3
     ul    = content_tag :ul, raw(lis), :class => 'chart' 
+    url = "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00"
     chart = image_tag "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00", :class => 'pie_chart'
     [ul, chart]
   end
