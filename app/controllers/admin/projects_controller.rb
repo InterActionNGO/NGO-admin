@@ -9,7 +9,7 @@ class Admin::ProjectsController < Admin::AdminController
 
     if params[:q]
       q = "%#{params[:q].sanitize_sql!}%"
-      projects = find_projects(["name ilike ? OR description ilike ?", q, q])
+      projects = find_projects(["name ilike ? OR description ilike ? OR intervention_id ilike ?", q, q, q])
       from = ["projects"]
       unless params[:status].blank?
         if params[:status] == 'active'
@@ -46,6 +46,12 @@ class Admin::ProjectsController < Admin::AdminController
           @conditions[site.name] = {'site' => params[:site]}
           from << 'projects_sites'
           projects = projects.from(from.join(',')).where("projects_sites.site_id = #{site.id} AND projects_sites.project_id = projects.id")
+        end
+      end      
+      unless params[:organization].blank? || params[:organization] == '0'
+        if org = Organization.find(params[:organization])
+          @conditions[org.name] = {'organization' => params[:organization]}
+          projects = projects.where("primary_organization_id = #{params[:organization]}")
         end
       end
       @projects = projects.paginate :per_page => 20, :order => 'name asc', :page => params[:page]
