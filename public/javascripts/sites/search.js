@@ -37,13 +37,15 @@ $(document).ready(function() {
     $(element).data('data_class', $.trim($(element).closest('div.block').attr('class').replace('block', '')));
     $(element)
     .after(
-      $('<div/>').css({
+      $('<div/>').addClass('autocomplete-arrow').css({
         'position': 'absolute',
         'bottom': 0,
         'right': 12,
         'width': 20,
         'height': 20,
         'cursor': 'pointer'
+      }).bind('click', function(e) {
+        $(e.currentTarget).closest('.block').find('input').trigger('focus.autocomplete');
       })
     )
     .autocomplete({

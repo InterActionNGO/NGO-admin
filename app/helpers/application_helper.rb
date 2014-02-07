@@ -161,7 +161,7 @@ HTML
 
   def projects_by_organization(collection = nil)
     organizations =collection
-    counts    = organizations.map{ |o| o.count}
+    counts    = organizations.map{ |o| o[:count]}
     values    = counts.slice!(0, 3) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
     values.compact!
     max_value = values.max  
@@ -172,8 +172,35 @@ HTML
     end
     lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 3
     ul    = content_tag :ul, raw(lis), :class => 'chart' 
+    url = "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00"
     chart = image_tag "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00", :class => 'pie_chart'
     [ul, chart]
+  end
+
+  def projects_by_sectors(sectors, count)
+    colors_values = {
+      "Agriculture" => "FFC6A5",
+      "Communications" => "FFFF42",
+      "Disaster Management" => "DEF3BD",
+      "Economic Recovery and Development" => "00A5C6",
+      "Education" => "DEBDDE",
+      "Environment" => "DEBDCC",
+      "Food Aid" => "DEA5DE",
+      "Health" => "CCCDDE",
+      "Human Rights Democracy and Governance" => "AC848E",
+      "Peace and Security" => "DEBFFA",
+      "Protection" => "D7777E",
+      "Shelter and Housing" => "343536",
+      "Water Sanitation and Hygiene" => "DEB123",
+      "Other" => "ACDA52"
+    }
+    colors = []
+    sectors.each do |sector|
+      colors << colors_values[sector]
+    end
+    # url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=x,x&chds=0,10&chxl=0:|#{sectors.join("|")}&chco=#{colors.join("|")}"
+    url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=y&chxr=0,0,#{count.max}&chds=0,10&chco=#{colors.join("|")}&chds=0,#{count.max}"
+    chart = image_tag url, :class => 'pie_chart'
   end
 
   def anglo(text)
