@@ -53,7 +53,7 @@ var global_index = 10;
   };
 
   cartodbOptions = {
-    user_name: 'simbiotica',
+    user_name: 'ngoaidmap',
     type: 'cartodb',
     cartodb_logo: false,
     legends: false,
