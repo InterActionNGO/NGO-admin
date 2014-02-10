@@ -177,31 +177,49 @@ HTML
     [ul, chart]
   end
 
-  def projects_by_sectors(sectors, count)
-    colors_values = {
-      "Agriculture" => "FFC6A5",
-      "Communications" => "FFFF42",
-      "Disaster Management" => "DEF3BD",
-      "Economic Recovery and Development" => "00A5C6",
-      "Education" => "DEBDDE",
-      "Environment" => "DEBDCC",
-      "Food Aid" => "DEA5DE",
-      "Health" => "CCCDDE",
-      "Human Rights Democracy and Governance" => "AC848E",
-      "Peace and Security" => "DEBFFA",
-      "Protection" => "D7777E",
-      "Shelter and Housing" => "343536",
-      "Water Sanitation and Hygiene" => "DEB123",
-      "Other" => "ACDA52"
-    }
-    colors = []
-    sectors.each do |sector|
-      colors << colors_values[sector]
+  def donors_projects_by_organization(collection = nil)
+    organizations =collection.sort_by(&:count).reverse
+    counts    = organizations.map{ |o| o[:count]}
+    values    = counts.slice!(0, 3) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
+    values.compact!
+    max_value = values.max  
+    colors = ['333333', '565656', '727272', 'ADADAD']
+    lis = []
+
+    organizations[0..2].each_with_index do |o, index|
+      lis << "<li class =pos#{index}> <a href=/organizations/#{o[:id]} >#{o[:name]}</a> - #{o[:count]}</li>"
     end
-    # url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=x,x&chds=0,10&chxl=0:|#{sectors.join("|")}&chco=#{colors.join("|")}"
-    url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=y&chxr=0,0,#{count.max}&chds=0,10&chco=#{colors.join("|")}&chds=0,#{count.max}"
-    chart = image_tag url, :class => 'pie_chart'
+    lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 3
+    ul    = content_tag :ul, raw(lis), :class => 'chart' 
+    chart = image_tag "http://chart.apis.google.com/chart?cht=bvs&chs=120x120&chd=t:#{values.join(",")}&chxt=y&chxr=0,0,#{max_value}&chco=#{colors.join("|")}&chds=0,10&chds=0,#{max_value}", :class => 'pie_chart'
+    [ul, chart]
   end
+
+  # def projects_by_sectors(sectors, count)
+  #   colors_values = {
+  #     "Agriculture" => "FFC6A5",
+  #     "Communications" => "FFFF42",
+  #     "Disaster Management" => "DEF3BD",
+  #     "Economic Recovery and Development" => "00A5C6",
+  #     "Education" => "DEBDDE",
+  #     "Environment" => "DEBDCC",
+  #     "Food Aid" => "DEA5DE",
+  #     "Health" => "CCCDDE",
+  #     "Human Rights Democracy and Governance" => "AC848E",
+  #     "Peace and Security" => "DEBFFA",
+  #     "Protection" => "D7777E",
+  #     "Shelter and Housing" => "343536",
+  #     "Water Sanitation and Hygiene" => "DEB123",
+  #     "Other" => "ACDA52"
+  #   }
+  #   colors = []
+  #   sectors.each do |sector|
+  #     colors << colors_values[sector]
+  #   end
+  #   # url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=x,x&chds=0,10&chxl=0:|#{sectors.join("|")}&chco=#{colors.join("|")}"
+  #   url = "http://chart.apis.google.com/chart?cht=bvs&chs=240x120&chd=t:#{count.join(",")}&chxt=y&chxr=0,0,#{count.max}&chds=0,10&chco=#{colors.join("|")}&chds=0,#{count.max}"
+  #   chart = image_tag url, :class => 'pie_chart'
+  # end
 
   def anglo(text)
     return "" if text.blank?

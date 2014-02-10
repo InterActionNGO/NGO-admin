@@ -55,12 +55,6 @@
             <%= raw(projects_by_location(@site, @donor_projects_by_location)) %>
           </div>
 
-
-        <div class="block statistics less">
-          <h3>DONORS BY ORGANIZATIONS</h3>
-            <%= raw(projects_by_organization(@organizations)) %>
-        </div>   
-
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
           <ul class="statistics_list">
@@ -80,32 +74,33 @@
           </ul>
         </div>
 
-        <div class="block resources">
-          <h3>ADDITIONAL RESOURCES</h3>
-            <% if @donor.resources.empty? %>
-              <p>No data available</p>
-            <% else %>
-              <% @donor.resources.each do |resource| %>
-                <ul>
-                  <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
-                </ul>
-              <%end%>
-            <% end %>
-        </div>
+        <div class="block statistics less">
+          <h3>PROJECTS BY ORGANIZATIONS</h3>
+            <%= raw(donors_projects_by_organization(@organizations)) %>
+        </div>   
+
+        <% if !@donor.resources.empty? %>
+          <div class="block resources">
+            <h3>ADDITIONAL RESOURCES</h3>
+            <% @donor.resources.each do |resource| %>
+              <ul>
+                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
 
 
-        <div class="block resources">
-          <h3>MEDIA RESOURCES</h3>
-          <% if @donor.media_resources.empty? %>
-            <p>No data available</p>
-          <% else %>
-              <% @donor.media_resources.each do |media| %>
-                <ul>
-                  <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
-                </ul>
-              <%end%>
-          <% end %>
-        </div>
+        <% if !@donor.media_resources.empty? %>
+          <div class="block resources">
+            <h3>MEDIA RESOURCES</h3>
+            <% @donor.media_resources.each do |media| %>
+              <ul>
+                <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
 
         <div class="block">
           <h3>CONTACT INFORMATION</h3>
@@ -134,6 +129,7 @@
           <li>·</li>
           <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
         </ul>
+        <p>This projects show only a portion of activities supported by this donor globally</p>
       </h3>
 
       <div id="projects">

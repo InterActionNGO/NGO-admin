@@ -137,6 +137,11 @@
               </ul>
               <input type="text" id="autocomplete_donors" class="autocomplete" value="<%= @filtered_donors.any?? "Add a donor" : "All donors" %>" />
               <%= hidden_field_tag('donors_ids', @filtered_donors.map(&:id).join(','), :class => 'donors ids') %>
+          </div>    
+
+          <div class="block active">
+            <h2>Project status</h2>
+              <%= select_tag :status, options_for_select(['Any', 'Active', 'Inactive'], params[:status]), :class => :"chzn-select" %>
           </div>
 
           <div class="block">
