@@ -79,24 +79,23 @@
             <%= raw(donors_projects_by_organization(@organizations)) %>
         </div>   
 
-        <% if !@donor.resources.empty? %>
-          <div class="block resources">
-            <h3>ADDITIONAL RESOURCES</h3>
-            <% @donor.resources.each do |resource| %>
-              <ul>
-                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
-              </ul>
-            <%end%>
-          </div>
-        <% end %>
-
-
         <% if !@donor.media_resources.empty? %>
           <div class="block resources">
             <h3>MEDIA RESOURCES</h3>
             <% @donor.media_resources.each do |media| %>
               <ul>
                 <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
+        
+        <% if !@donor.resources.empty? %>
+          <div class="block resources">
+            <h3>ADDITIONAL RESOURCES</h3>
+            <% @donor.resources.each do |resource| %>
+              <ul>
+                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
               </ul>
             <%end%>
           </div>
