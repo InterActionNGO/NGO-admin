@@ -3,7 +3,7 @@ class SearchController < ApplicationController
   layout 'site_layout'
 
   def index
-    where  = ["(end_date is null OR end_date > now())","site_id=#{@site.id}"]
+    where  = ["site_id=#{@site.id}"]
     limit = 20
     @current_page = params[:page] ? params[:page].to_i : 1
     @clusters = @regions = @filtered_regions = @filtered_sectors = @filtered_clusters = @filtered_organizations = @filtered_donors = []
@@ -37,6 +37,15 @@ class SearchController < ApplicationController
       @filtered_donors = Donor.find_by_sql("select d.id, d.name as title from donors as d where d.id in (#{params[:donors_ids].sanitize_sql!})")
       filtered_donors_where = "where d.id not in (#{params[:donors_ids].sanitize_sql!})"
       where << params[:donors_ids].split(',').map{|donor_id| "donors_ids && ('{'||#{donor_id.sanitize_sql!}||'}')::integer[]"}.join(' OR ')
+    end
+
+    if params[:status].present? and params[:status] != 'Any'
+      case params[:status]
+        when 'Active' 
+          then where << "(end_date is null OR end_date > now())"
+        when 'Inactive' 
+          then where << "end_date < now()"
+      end
     end
 
     if params[:date]
