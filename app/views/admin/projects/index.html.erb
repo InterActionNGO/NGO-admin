@@ -5,7 +5,7 @@
       <div class="content padding">
         <%= form_tag(admin_projects_path, :method => :get, :class => :search) do %>
           <label>SEARCH BY TEXT</label>
-          <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place, organization intervention ID.." name="q" class="main_search"/>
+          <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, description, organization intervention ID.." name="q" class="main_search"/>
           <input type="submit" value="" />
           <ul class="combos">
             <li class="comboselect status">
