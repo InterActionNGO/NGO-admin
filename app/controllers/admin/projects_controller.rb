@@ -9,7 +9,7 @@ class Admin::ProjectsController < Admin::AdminController
 
     if params[:q]
       q = "%#{params[:q].sanitize_sql!}%"
-      projects = find_projects(["name ilike ? OR description ilike ? OR intervention_id ilike ?", q, q, q])
+      projects = find_projects(["name ilike ? OR description ilike ? OR intervention_id ilike ? OR organization_id ilike ?", q, q, q, q])
       from = ["projects"]
       unless params[:status].blank?
         if params[:status] == 'active'

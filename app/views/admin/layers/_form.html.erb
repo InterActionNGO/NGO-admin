@@ -26,14 +26,6 @@
   </div>  
   <div class="field">
     <span class="chars">
-      <label>SQL <strong>*</strong></label>
-    </span>
-    <span class="textarea <%= 'error' if !@layer.errors[:sql].empty? && action_name != 'new' %>">
-      <%= f.text_area :sql %>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
       <label>DESCRIPTION </label>
     </span>
     <span class="textarea <%= 'error' if !@layer.errors[:description].empty? && action_name != 'new' %>">
