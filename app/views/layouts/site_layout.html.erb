@@ -30,6 +30,9 @@
   <% end %>
 </head>
 <body>
+  <script>
+    var empty_layer = false;
+  </script>
 
   <% unless action_name == 'home' && controller_name == 'sites' %>
     <% cache("#{@site.id}/home/menu") do %>
