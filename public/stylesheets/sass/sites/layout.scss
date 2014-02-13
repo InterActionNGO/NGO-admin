@@ -463,6 +463,7 @@ div {
         }
         div.header_title {
           display: none;
+          z-index: 1;
           a {
             display: none;
           }
@@ -475,6 +476,7 @@ div {
           width: 94px;
           height: 35px;
           display: inline;
+          z-index: 1;
         }
         &.clicked div.header_title a {
           float: left;
@@ -729,6 +731,11 @@ div {
             }
           }
         }
+        &#donor_option.clicked {
+          div.header_title {
+            background: url('/images/sites/common/menu/country_head_clicked.png') no-repeat 0 0;
+          }
+        }
         &.clicked ul.suboptions {
           display: inline;
         }
@@ -953,6 +960,25 @@ div.cartodb-popup p {
   padding: 0;
 }
 
+div.cartodb-popup div.cartodb-popup-content .icon-info {
+  background: #555;
+  color: #eee;
+  display: inline-block;
+  float: right;
+  font-family: serif;
+  font-style: italic;
+  height: 14px;
+  line-height: 14px;
+  padding: 0;
+  text-transform: none;
+  text-align: center;
+  width: 14px;
+  @include border-radius(100%);
+  &:hover {
+    background-color: #333;
+  }
+}
+
 #overlay {
   background: rgba(0, 0, 0, .6);
   display: none;
@@ -971,6 +997,10 @@ div.cartodb-popup p {
     top: 20%;
     width: 600px;
     @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
+
+    p {
+      margin: 1em 0 0 0;
+    }
   }
   .close-overlay {
     display: block;
@@ -2373,6 +2403,9 @@ div.statistics {
     margin: 0 0 0 -10px;
     height: 125px;
     /*hack for google maps chart api image*/
+    &.pie_chart_bars {
+      margin-top: 10px;
+    }
   }
   ul.chart {
     float: right;
@@ -2404,6 +2437,16 @@ div.statistics {
       }
       &.pos3 {
         background: url('/images/sites/icons/chart_pos3.png') no-repeat 0 4px !important;
+      }
+    }
+
+    &.chart-bars {
+      float: none;
+      width: auto !important;
+      margin: 0 0 10px 0 !important;
+
+      li {
+        width: auto;
       }
     }
   }
@@ -3962,4 +4005,8 @@ div {
   &:after {
     clear: both;
   }
+}
+
+.is-hidden {
+  display: none !important;
 }
