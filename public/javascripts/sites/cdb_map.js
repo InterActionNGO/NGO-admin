@@ -1,6 +1,9 @@
 var global_index = 10;
 
 (function() {
+  var $overlay;
+  var $contentOverlay;
+
   /**
    * @constructor
    * @implements {google.maps.MapType}
@@ -26,9 +29,7 @@ var global_index = 10;
 
   var emptyMapType = new EmptyMapType();
 
-  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, infowindowHtml, layerActive;
-
-  infowindowHtml = '<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p><strong>Value</strong>: {{content.data.data}}</p><p><strong>Year</strong>: {{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>';
+  var latlng, zoom, mapOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, layerActive;
 
   if (map_type === 'overview_map' || map_type === 'project_map') {
     latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -134,18 +135,37 @@ var global_index = 10;
         legends: [choroplethLegend]
       });
 
+      var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="#Overlay%1$s"><span class="icon-info">i</span></a>', $el.data('layer'));
+      var infowindowHtml = sprintf('<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p>%s<p><p><strong>Value</strong>: {{content.data.data}}</p><p><strong>Year</strong>: {{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml);
+
       currentLayer.createSubLayer({
         sql: 'SELECT '+currentTable+'.country_name, '+currentTable+'.code, '+currentTable+'.year,'+currentTable+'.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM '+currentTable+' join ne_10m_admin_0_countries on '+currentTable+'.code=ne_10m_admin_0_countries.adm0_a3',
-        cartocss: currentCSS
+        cartocss: currentCSS,
+        interaction: 'country_name, data, year',
       });
 
       var sublayer = currentLayer.getSubLayer(0);
 
       sublayer.setInteraction(true);
 
-      cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
+      var infowindow = cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
         infowindowTemplate: infowindowHtml,
         cursorInteraction: true
+      });
+
+      infowindow.model.on('change:visibility', function(model) {
+        if (model.get('visibility')) {
+          console.log($('.infowindow-pop'));
+          $('.infowindow-pop').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var overlayHtml = $($(e.currentTarget).data('overlay')).html();
+
+            $contentOverlay.html(overlayHtml);
+            $overlay.fadeIn('fast');
+          });
+        }
       });
 
       layerActive = true;
@@ -167,8 +187,8 @@ var global_index = 10;
 
   function onWindowLoad() {
 
-    var $overlay = $('#overlay');
-    var $contentOverlay = $('#contentOverlay');
+    $overlay = $('#overlay');
+    $contentOverlay = $('#contentOverlay');
 
     $layerSelector = $('#layerSelector');
     $mapTypeSelector = $('#mapTypeSelector');
