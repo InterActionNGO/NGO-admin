@@ -191,7 +191,9 @@ var global_index = 10;
 
   function onWindowLoad() {
 
-    console.log(window.sessionStorage);
+    if (empty_layer) {
+      window.sessionStorage.setItem('layer', '');
+    }
 
     $overlay = $('#overlay');
     $contentOverlay = $('#contentOverlay');
