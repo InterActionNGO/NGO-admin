@@ -88,6 +88,7 @@ var global_index = 10;
     //var currentSQL = $el.data('sql');
     var currentMin = $el.data('min');
     var currentMax = $el.data('max');
+    var currentUnits = $el.data('units');
     var currentDiff = currentMax + currentMin;
 
     $legendWrapper.html('');
@@ -128,7 +129,7 @@ var global_index = 10;
         currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
       });
 
-      var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + '%', right: currentMax + '%'}));
+      var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + currentUnits, right: currentMax + currentUnits}));
       var stackedLegend = new cdb.geo.ui.Legend.Stacked({
         legends: [choroplethLegend]
       });
@@ -196,7 +197,6 @@ var global_index = 10;
     var diameter = 0;
 
     // If region exist, reject a country object
-    console.log(map_data);
     _.each(map_data, function(d) {
       if (d.type === 'region') {
         map_data = _.reject(map_data, function(d) {
@@ -307,7 +307,10 @@ var global_index = 10;
     $layerSelector.find('.icon-info').click(function(e) {
       e.preventDefault();
       e.stopPropagation();
-      $contentOverlay.html('<h2>Lorem ipsum</h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, officia, numquam, odio, doloribus molestias velit aspernatur corrupti dicta cupiditate vitae reiciendis veniam iusto minima enim ad obcaecati facere. Commodi, fugit.</p>');
+
+      var overlayHtml = $($(e.currentTarget).closest('a').data('overlay')).html();
+
+      $contentOverlay.html(overlayHtml);
       $overlay.fadeIn('fast');
     });
 
