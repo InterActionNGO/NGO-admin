@@ -42,6 +42,9 @@ class Admin::LayersController < ApplicationController
 
   def destroy
     @layer = Layer.find(params[:id])
+    sl = SiteLayer.where(:layer_id => @layer.id)
+    sql = """ DELETE FROM site_layers WHERE layer_id = #{@layer.id} """
+    ActiveRecord::Base.connection.execute(sql)
     @layer.destroy
     redirect_to admin_layers_path, :flash => {:success => 'Layer has been deleted successfully'}
   end
