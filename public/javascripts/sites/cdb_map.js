@@ -155,7 +155,6 @@ var global_index = 10;
 
       infowindow.model.on('change:visibility', function(model) {
         if (model.get('visibility')) {
-          console.log($('.infowindow-pop'));
           $('.infowindow-pop').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
