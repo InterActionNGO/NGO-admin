@@ -58,7 +58,10 @@ var global_index = 10;
     type: 'cartodb',
     cartodb_logo: false,
     legends: false,
-    sublayers: []
+    sublayers: [{
+      sql: 'SELECT * from ne_10m_admin_0_countries',
+      cartocss: '#table{}'
+    }]
   };
 
   legends = {
@@ -94,9 +97,10 @@ var global_index = 10;
 
     $legendWrapper.html('');
 
-    if (currentLayer.layers.length > 0) {
+    if ($el.data('layer') === 'none') {
       var sublayer = currentLayer.getSubLayer(0);
-      sublayer.remove();
+      sublayer.setSQL('SELECT * from ne_10m_admin_0_countries');
+      sublayer.setCartoCSS('#table{}');
     }
 
     if (window.sessionStorage) {
@@ -138,13 +142,13 @@ var global_index = 10;
       var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="#Overlay%1$s"><span class="icon-info">i</span></a>', $el.data('layer'));
       var infowindowHtml = sprintf('<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p>%s<p><p><strong>Value</strong>: {{content.data.data}}</p><p><strong>Year</strong>: {{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml);
 
-      currentLayer.createSubLayer({
+      var sublayer = currentLayer.getSubLayer(0);
+
+      sublayer.set({
         sql: 'SELECT '+currentTable+'.country_name, '+currentTable+'.code, '+currentTable+'.year,'+currentTable+'.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM '+currentTable+' join ne_10m_admin_0_countries on '+currentTable+'.code=ne_10m_admin_0_countries.adm0_a3',
         cartocss: currentCSS,
         interaction: 'country_name, data, year',
       });
-
-      var sublayer = currentLayer.getSubLayer(0);
 
       sublayer.setInteraction(true);
 
