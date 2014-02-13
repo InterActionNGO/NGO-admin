@@ -187,7 +187,9 @@
         <div class="wrapper">
           <ul class="options scroll_pane">
             <% LayerStyle.all.each do |ls| %>
-              <li><a href="#<%= ls.id %>" id="<%= ls.id %>"><%= ls.name %></a></li>
+              <li>
+                <a href="#<%= ls.id %>" id="<%= ls.id %>"><%= image_tag("/images/assets/#{ls.name}.png") %><br> <%= ls.title %></a>
+              </li>
             <% end %>
           </ul>
         </div>
