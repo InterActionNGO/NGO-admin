@@ -85,7 +85,7 @@ var global_index = 10;
     var $emptyLayer = $('#emptyLayer');
 
     var currentTable = $el.data('table');
-    var currentSQL = $el.data('sql');
+    //var currentSQL = $el.data('sql');
     var currentMin = $el.data('min');
     var currentMax = $el.data('max');
     var currentDiff = currentMax + currentMin;
@@ -103,7 +103,7 @@ var global_index = 10;
 
     layerActive = false;
 
-    if (currentSQL) {
+    if (currentTable) {
 
       var currentLegend;
 
@@ -134,7 +134,7 @@ var global_index = 10;
       });
 
       currentLayer.createSubLayer({
-        sql: currentSQL,
+        sql: 'SELECT '+currentTable+'.country_name, '+currentTable+'.code, '+currentTable+'.year,'+currentTable+'.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM '+currentTable+' join ne_10m_admin_0_countries on '+currentTable+'.code=ne_10m_admin_0_countries.adm0_a3',
         cartocss: currentCSS
       });
 
