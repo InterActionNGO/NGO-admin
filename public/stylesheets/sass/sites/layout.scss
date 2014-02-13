@@ -971,6 +971,10 @@ div.cartodb-popup p {
     top: 20%;
     width: 600px;
     @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
+
+    p {
+      margin: 1em 0 0 0;
+    }
   }
   .close-overlay {
     display: block;
@@ -3962,4 +3966,8 @@ div {
   &:after {
     clear: both;
   }
+}
+
+.is-hidden {
+  display: none !important;
 }
