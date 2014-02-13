@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140109151033) do
+ActiveRecord::Schema.define(:version => 20140213155722) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -162,8 +162,8 @@ ActiveRecord::Schema.define(:version => 20140109151033) do
   add_index "donors", ["name"], :name => "index_donors_on_name"
 
   create_table "layer_styles", :force => true do |t|
+    t.string "title"
     t.string "name"
-    t.string "thumbnail"
   end
 
   create_table "layers", :force => true do |t|
