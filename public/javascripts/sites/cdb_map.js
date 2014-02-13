@@ -93,6 +93,7 @@ var global_index = 10;
     var currentMin = $el.data('min');
     var currentMax = $el.data('max');
     var currentUnits = $el.data('units');
+    var layerStyle = $el.data('style');
     var currentDiff = currentMax + currentMin;
 
     $legendWrapper.html('');
@@ -113,14 +114,14 @@ var global_index = 10;
 
       var currentLegend;
 
-      switch (theme) {
-        case '1':
+      switch (layerStyle) {
+        case 'yellow-to-red':
           currentLegend = legends.red;
           break;
-        case '2':
+        case 'light-to-green':
           currentLegend = legends.green;
           break;
-        case '3':
+        case 'yellow-to-blue':
           currentLegend = legends.blue;
           break;
         default:
@@ -189,6 +190,10 @@ var global_index = 10;
   }
 
   function onWindowLoad() {
+
+    if (empty_layer) {
+      window.sessionStorage.setItem('layer', '');
+    }
 
     $overlay = $('#overlay');
     $contentOverlay = $('#contentOverlay');

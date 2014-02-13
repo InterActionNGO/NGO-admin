@@ -163,7 +163,7 @@
     <h3>Site layers</h3>
     <ul class="combo_list" id="sites_layer_list">
     <% @site.site_layers.each do |sl| %>
-      <li><h5><%= sl.layer.title %> > <%= sl.layer_style.name%> <a class="close" href="#"></a></h5>
+      <li><h5><%= sl.layer.title %> > <%= sl.layer_style.title %> <a class="close" href="#"></a></h5>
       <input type="hidden" name="site[layers_ids][]" value="<%= sl.layer.id %>#<%= sl.layer_style.id %>">
       </li>
     <% end %>
@@ -187,7 +187,9 @@
         <div class="wrapper">
           <ul class="options scroll_pane">
             <% LayerStyle.all.each do |ls| %>
-              <li><a href="#<%= ls.id %>" id="<%= ls.id %>"><%= ls.name %></a></li>
+              <li>
+                <a href="#<%= ls.id %>" id="<%= ls.id %>"><%= image_tag("/images/assets/#{ls.name}.png") %><br> <%= ls.title %></a>
+              </li>
             <% end %>
           </ul>
         </div>
