@@ -12,6 +12,9 @@ class GeoregionController < ApplicationController
     raise NotFound unless $1.size == ids.size
 
     geo_ids = ids.split('/')
+    @empty_layer = false
+    @empty_layer = true if geo_ids.count > 1
+
 
     @breadcrumb = []
 
