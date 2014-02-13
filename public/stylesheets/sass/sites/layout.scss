@@ -953,6 +953,25 @@ div.cartodb-popup p {
   padding: 0;
 }
 
+div.cartodb-popup div.cartodb-popup-content .icon-info {
+  background: #555;
+  color: #eee;
+  display: inline-block;
+  float: right;
+  font-family: serif;
+  font-style: italic;
+  height: 14px;
+  line-height: 14px;
+  padding: 0;
+  text-transform: none;
+  text-align: center;
+  width: 14px;
+  @include border-radius(100%);
+  &:hover {
+    background-color: #333;
+  }
+}
+
 #overlay {
   background: rgba(0, 0, 0, .6);
   display: none;
