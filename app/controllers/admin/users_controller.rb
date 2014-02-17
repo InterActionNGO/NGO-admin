@@ -58,6 +58,28 @@ class Admin::UsersController < Admin::AdminController
     redirect_to :admin_users
   end
 
+  def disable
+    @user = User.find(params[:user_id])
+    respond_to do |format|
+      if @user.update_attributes(:remember_token => nil, :disabled => true)
+        format.html { redirect_to admin_users_path, :flash => {:success => 'User has been successfully disabled'} }
+      else
+        format.html { render :action => "edit" }
+      end
+    end
+  end
+
+  def enable
+    @user = User.find(params[:user_id])
+    respond_to do |format|
+      if @user.update_attributes(:disabled => false)
+        format.html { redirect_to admin_users_path, :flash => {:success => 'User has been successfully enabled'} }
+      else
+        format.html { render :action => "edit" }
+      end
+    end
+  end
+
   private
 
   def get_user
