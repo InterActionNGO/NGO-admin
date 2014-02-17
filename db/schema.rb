@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
   create_table "countries", :force => true do |t|
     t.string        "name"
     t.string        "code"
-    t.multi_polygon "the_geom",         :limit => nil, :srid => 4326
     t.string        "wiki_url"
     t.text          "wiki_description"
     t.string        "iso2_code"
@@ -50,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.float         "center_lat"
     t.float         "center_lon"
     t.text          "the_geom_geojson"
+    t.multi_polygon "the_geom",         :limit => nil, :srid => 4326
   end
 
   add_index "countries", ["the_geom"], :name => "index_countries_on_the_geom", :spatial => true
@@ -70,14 +70,14 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.string   "organization_name",   :limit => 2000
     t.date     "end_date"
     t.text     "regions"
-    t.string   "regions_ids",         :limit => nil
+    t.string   "regions_ids"
     t.text     "countries"
-    t.string   "countries_ids",       :limit => nil
+    t.string   "countries_ids"
     t.text     "sectors"
-    t.string   "sector_ids",          :limit => nil
+    t.string   "sector_ids"
     t.text     "clusters"
-    t.string   "cluster_ids",         :limit => nil
-    t.string   "donors_ids",          :limit => nil
+    t.string   "cluster_ids"
+    t.string   "donors_ids"
     t.boolean  "is_active"
     t.integer  "site_id"
     t.datetime "created_at"
@@ -376,7 +376,6 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "the_geom",                                :limit => nil,  :srid => 4326
     t.text     "activities"
     t.string   "intervention_id"
     t.text     "additional_information"
@@ -390,6 +389,7 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.text     "project_needs"
     t.text     "idprefugee_camp"
     t.string   "organization_id"
+    t.geometry "the_geom",                                :limit => nil,  :srid => 4326
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
@@ -441,7 +441,6 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.integer  "level"
     t.integer  "country_id"
     t.integer  "parent_region_id"
-    t.geometry "the_geom",         :limit => nil, :srid => 4326
     t.integer  "gadm_id"
     t.string   "wiki_url"
     t.text     "wiki_description"
@@ -451,6 +450,7 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.text     "the_geom_geojson"
     t.text     "ia_name"
     t.string   "path"
+    t.geometry "the_geom",         :limit => nil, :srid => 4326
   end
 
   add_index "regions", ["country_id"], :name => "index_regions_on_country_id"
@@ -515,7 +515,6 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.string   "project_context_tags"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "geographic_context_geometry",     :limit => nil,                    :srid => 4326
     t.string   "project_context_tags_ids"
     t.boolean  "status",                                         :default => false
     t.float    "visits",                                         :default => 0.0
@@ -533,6 +532,7 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.float    "overview_map_lon"
     t.integer  "overview_map_zoom"
     t.text     "internal_description"
+    t.geometry "geographic_context_geometry",     :limit => nil,                    :srid => 4326
   end
 
   add_index "sites", ["geographic_context_geometry"], :name => "index_sites_on_geographic_context_geometry", :spatial => true
