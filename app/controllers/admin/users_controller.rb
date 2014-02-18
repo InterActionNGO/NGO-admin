@@ -63,9 +63,9 @@ class Admin::UsersController < Admin::AdminController
     @user.disable
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_users_path, :flash => {:success => 'User has been successfully disabled'} }
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:notice => 'User has been noticefully disabled'} }
       else
-        format.html { render :action => "edit" }
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:error => 'An error occurred. Please try again later'} }
       end
     end
   end
@@ -75,9 +75,9 @@ class Admin::UsersController < Admin::AdminController
     @user.enable
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_users_path, :flash => {:success => 'User has been successfully enabled'} }
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:notice => 'User has been successfully enabled'} }
       else
-        format.html { render :action => "edit" }
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:error => 'An error occurred. Please try again later'} }
       end
     end
   end
