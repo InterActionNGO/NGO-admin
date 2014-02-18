@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     logout_keeping_session!
 
     user = User.authenticate(params[:email], params[:password])
-    if user && user.not_blocked? && user.enabled?
+    if user && user.enabled?
       user.update_last_login
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")

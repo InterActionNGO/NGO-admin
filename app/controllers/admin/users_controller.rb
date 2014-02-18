@@ -60,8 +60,9 @@ class Admin::UsersController < Admin::AdminController
 
   def disable
     @user = User.find(params[:user_id])
+    @user.disable
     respond_to do |format|
-      if @user.update_attributes(:remember_token => nil, :disabled => true)
+      if @user.save
         format.html { redirect_to admin_users_path, :flash => {:success => 'User has been successfully disabled'} }
       else
         format.html { render :action => "edit" }
@@ -71,8 +72,9 @@ class Admin::UsersController < Admin::AdminController
 
   def enable
     @user = User.find(params[:user_id])
+    @user.enable
     respond_to do |format|
-      if @user.update_attributes(:disabled => false)
+      if @user.save
         format.html { redirect_to admin_users_path, :flash => {:success => 'User has been successfully enabled'} }
       else
         format.html { render :action => "edit" }

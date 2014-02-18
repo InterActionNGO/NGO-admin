@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :email, :name, :password, :password_confirmation, :description, :organization_id, :site_id, :role, :disabled, :remember_token
+  attr_accessible :email, :name, :password, :password_confirmation, :description, :organization_id, :site_id, :role, :remember_token, :blocked
 
   before_create :update_last_login
 
@@ -84,12 +84,17 @@ class User < ActiveRecord::Base
   end
   alias administrator? admin?
 
-  def not_blocked?
+  def enabled?
     !self.blocked?
   end
 
-  def enabled?
-    !self.disabled?
+  def enable
+    self.blocked = false
+  end
+
+  def disable
+    self.remember_token = nil
+    self.blocked = true
   end
 
   def to_s
