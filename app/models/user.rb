@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
   def handle_login_fails!
     self.login_fails ||= 0
     self.login_fails += 1
-    self.disable unless self.login_fails < 2
+    self.disable unless self.login_fails < 10
     self.save
   end
 
