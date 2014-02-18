@@ -4,9 +4,6 @@
     </div>
     <div class="med">
       <div class="left">
-        <% flash.each do |name, msg| %>
-          <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
-        <% end %>
         <h2 class="museo_sans">Platform Users</h2>
 
         <%= form_for [:admin, @user], :url => admin_users_path, :html => {:method => :get, :class => 'users_list_filter', :id => 'users_list_filter'} do |f| %>
