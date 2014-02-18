@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213155722) do
+ActiveRecord::Schema.define(:version => 20140218173336) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -578,6 +578,8 @@ ActiveRecord::Schema.define(:version => 20140213155722) do
     t.datetime "password_reset_sent_at"
     t.datetime "last_login"
     t.boolean  "six_months_since_last_login_alert_sent",                :default => false
+    t.boolean  "disabled",                                              :default => false
+    t.integer  "login_fails",                                           :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

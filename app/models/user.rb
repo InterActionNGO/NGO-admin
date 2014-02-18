@@ -46,7 +46,13 @@ class User < ActiveRecord::Base
   def self.authenticate(email, password)
     return nil if email.blank? || password.blank?
     u = find_by_email(email.downcase.strip) # need to get the salt
-    u && u.authenticated?(password.strip) ? u : nil
+    if u && u.authenticated?(password.strip) 
+      u.reset_login_fails!
+      u
+    else
+      u.handle_login_fails!
+      nil
+    end
   end
 
   def self.admin
@@ -90,11 +96,24 @@ class User < ActiveRecord::Base
 
   def enable
     self.blocked = false
+    self.reset_login_fails!
   end
 
   def disable
     self.remember_token = nil
     self.blocked = true
+  end
+
+  def handle_login_fails!
+    self.login_fails ||= 0
+    self.login_fails += 1
+    self.disable unless self.login_fails < 10
+    self.save
+  end
+
+  def reset_login_fails!
+    self.login_fails = 0
+    self.save
   end
 
   def to_s
