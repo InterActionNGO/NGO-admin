@@ -11,3 +11,4 @@ install/
 config/app_config.yml
 public/stylesheets/**/*.css
 public/vendor
+update/
