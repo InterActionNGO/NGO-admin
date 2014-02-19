@@ -1390,12 +1390,18 @@ div {
         }
         &.donors_account {
           float: left;
-          width: 100px;
+          width: 150px;
           height: 110px;
           text-align: center;
           border-right: 1px solid #DEDEDE;
           &:last-child {
             border-right: 0;
+          }
+          label, h2 {
+            float: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
           }
         }
       }
