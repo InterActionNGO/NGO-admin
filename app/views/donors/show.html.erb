@@ -35,10 +35,6 @@
             <h2><%= @projects.total_entries %></h2>
           </div>
           <div class="donors_account">
-            <label>ORGANIZATIONS</label>
-            <h2><%= @organizations.length %></h2>
-          </div>
-          <div class="donors_account">
             <label>
               <% if @site.navigate_by_country %>
                 COUNTRIES
@@ -75,9 +71,9 @@
         </div>
 
         <div class="block statistics less">
-          <h3>PROJECTS BY ORGANIZATIONS</h3>
+          <h3>Affiliated Organizations</h3>
             <%= raw(donors_projects_by_organization(@organizations)) %>
-        </div>   
+        </div>
 
         <% if !@donor.media_resources.empty? %>
           <div class="block resources">
@@ -89,7 +85,7 @@
             <%end%>
           </div>
         <% end %>
-        
+
         <% if !@donor.resources.empty? %>
           <div class="block resources">
             <h3>ADDITIONAL RESOURCES</h3>
@@ -128,8 +124,9 @@
           <li>·</li>
           <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
         </ul>
-        <p>This projects show only a portion of activities supported by this donor globally</p>
       </h3>
+
+      <p class="disclaimer"><sup>*</sup>This projects show only a portion of activities supported by this donor globally.</p>
 
       <div id="projects">
         <%= render :partial => 'donors/projects' %>
