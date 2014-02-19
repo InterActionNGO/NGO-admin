@@ -733,7 +733,11 @@ div {
         }
         &#donor_option.clicked {
           div.header_title {
-            background: url('/images/sites/common/menu/country_head_clicked.png') no-repeat 0 0;
+            background-image: url('/images/assets/donors_head_clicked.png');
+            width: 90px;
+          }
+          div.suboptions_body {
+            background-image: url('/images/assets/donors_body_clicked.png');
           }
         }
         &.clicked ul.suboptions {
