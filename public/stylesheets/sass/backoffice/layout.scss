@@ -7518,3 +7518,26 @@ div.med div.changes_list div.change {
     }
   }
 }
+
+div.disable_user{
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+  h5{
+    font: normal 17px "Museo Sans",Arial;
+    color: #333333;
+    letter-spacing: -1px;
+  }
+  p{
+    margin: 5px 0 0 0;
+    width: 100%;
+    font: normal 13px Arial;
+    color: #666666;
+  }
+  a{
+    margin: 17px 0 0 0;
+    font: normal 15px Arial;
+    color: #D8393D;
+    text-decoration: underline;
+  }
+}

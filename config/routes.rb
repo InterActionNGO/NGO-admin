@@ -60,7 +60,10 @@ Iom::Application.routes.draw do
     # match '/report' => 'reports#index', :as => :report_index
     # match '/report_generate' => 'reports#report', :as => :report_generate
     resources :settings, :only => [:edit, :update]
-    resources :users
+    resources :users do
+      put 'disable', :action => 'disable'
+      put 'enable', :action => 'enable'
+    end
     resources :tags, :only => [:index]
     resources :regions, :only => [:index]
     resources :organizations do

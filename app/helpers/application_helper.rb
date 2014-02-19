@@ -112,6 +112,19 @@ HTML
     end
   end
 
+  def cluster_sector_width_donors(count, max = 203)
+    if max > 203
+      max = 203
+    end
+    if count >= max
+      203
+    elsif count < 0
+      0
+    else
+      count * 203 / max
+    end
+  end
+
   def url(site)
     if site.url =~ /^http/
       site.url
@@ -192,7 +205,6 @@ HTML
     lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 3
     ul    = content_tag :ul, raw(lis), :class => 'chart chart-bars'
     chart = image_tag "http://chart.apis.google.com/chart?cht=bvs&chs=120x120&chd=t:#{values.join(",")}&chxt=y&chxr=0,0,#{max_value}&chco=#{colors.join("|")}&chds=0,10&chds=0,#{max_value}", :class => 'pie_chart pie_chart_bars'
-    [chart, ul]
   end
 
   # def projects_by_sectors(sectors, count)

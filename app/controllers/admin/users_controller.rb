@@ -58,6 +58,30 @@ class Admin::UsersController < Admin::AdminController
     redirect_to :admin_users
   end
 
+  def disable
+    @user = User.find(params[:user_id])
+    @user.disable
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:notice => 'User has been noticefully disabled'} }
+      else
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:error => 'An error occurred. Please try again later'} }
+      end
+    end
+  end
+
+  def enable
+    @user = User.find(params[:user_id])
+    @user.enable
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:notice => 'User has been successfully enabled'} }
+      else
+        format.html { redirect_to edit_admin_user_path(@user), :flash => {:error => 'An error occurred. Please try again later'} }
+      end
+    end
+  end
+
   private
 
   def get_user
