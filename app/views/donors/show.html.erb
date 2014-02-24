@@ -81,7 +81,7 @@
           </ul>
         </div>
 
-        <% if @donor.contact_person_name != '' %>
+        <% if @contact_data[:show] %>
           <div class="block">
             <h3>CONTACT INFORMATION</h3>
 
@@ -167,7 +167,7 @@
   var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
   var theme = "<%=@site.theme_id%>";
   var kind = 'donor';
-  var stylez = <%=raw @site.map_styles  %>
+  var stylez = <%=raw @site.map_styles  %>;
 </script>
 
 <%=raw(javascript_include_merged(:organizations_show)) %>
