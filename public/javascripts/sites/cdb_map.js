@@ -84,6 +84,8 @@ var global_index = 10;
 
   bounds = new google.maps.LatLngBounds();
 
+  var sublayer;
+
   function onSelectLayer(e) {
     var $el = $(e.currentTarget);
     var $emptyLayer = $('#emptyLayer');
@@ -141,21 +143,23 @@ var global_index = 10;
       });
 
       var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="#Overlay%1$s"><span class="icon-info">i</span></a>', $el.data('layer'));
-      var infowindowHtml = sprintf('<div class="cartodb-popup"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p>%s<p><p>{{content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml);
+      var infowindowHtml = sprintf('<div class="cartodb-popup dark"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p>%s<p><p>{{content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml);
 
-      var sublayer = currentLayer.getSubLayer(0);
+      sublayer = currentLayer.getSubLayer(0);
 
-      sublayer.set({
+      if (sublayer) {
+        sublayer.remove();
+      }
+
+      sublayer = currentLayer.createSubLayer({
         sql: 'SELECT '+currentTable+'.country_name, '+currentTable+'.code, '+currentTable+'.year,'+currentTable+'.data, ne_10m_admin_0_countries.the_geom, ne_10m_admin_0_countries.the_geom_webmercator FROM '+currentTable+' join ne_10m_admin_0_countries on '+currentTable+'.code=ne_10m_admin_0_countries.adm0_a3',
         cartocss: currentCSS,
         interaction: 'country_name, data, year',
       });
 
-      sublayer.setInteraction(true);
-
       var infowindow = cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
         infowindowTemplate: infowindowHtml,
-        cursorInteraction: true
+        cursorInteraction: false
       });
 
       infowindow.model.on('change:visibility', function(model) {
@@ -171,6 +175,8 @@ var global_index = 10;
           });
         }
       });
+
+      sublayer.setInteraction(true);
 
       layerActive = true;
 
