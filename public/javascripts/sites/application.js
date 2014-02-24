@@ -62,13 +62,12 @@ $(document).ready( function() {
     }
     $('#dgos_search').val('');
     if(document.getElementById('donors_list')) {
-      //$('#dgos_search').liveUpdate('donors_list');
+      $('#dgos_search').liveUpdate('donors_list');
     }
 
     // CUSTOM SCROLLBARS
     if ($('.scroll_pane').length > 0){
-        $('.scroll_pane').jScrollPane({
-                           autoReinitialise:false });
+        $('.scroll_pane').jScrollPane({ autoReinitialise:false });
     }
 
     if ($('span.input_search input').val() == '') {
@@ -122,9 +121,9 @@ $(document).ready( function() {
           }
 
           // if there are some input text
-          if ($(this).parent().find('input#dgos_search').length > 0){
-              $(this).parent().find('input#dgos_search').focus();
-          }
+          // if ($(this).parent().find('input#dgos_search').length > 0){
+          //     $(this).parent().find('input#dgos_search').focus();
+          // }
 
           $(document).click(function(event) {
             if ((!$(event.target).closest('ul.suboptions li a').length)&&(!$(event.target).closest('ul.scroll_pane').length)&&(!$(event.target).closest('input#ngos_search').length)) {
@@ -151,6 +150,7 @@ function resetCombo(elementToUpdate){
         if (element.attr('id') == $('ul#regions').attr('id')){
             var maxHeight = element.css('max-height');
             element.css('height',maxHeight);
+            console.log(element);
         }
         var api = element.data('jsp');
         if (api != undefined) api.reinitialise();
