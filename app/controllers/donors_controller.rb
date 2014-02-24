@@ -27,6 +27,9 @@ class DonorsController < ApplicationController
       end
     end
 
+
+    @organizations = @organizations.sort_by { |k, v| v[:name] }
+    debugger
     @map_data = []
     @organizations_data = []
 
@@ -165,11 +168,11 @@ class DonorsController < ApplicationController
           @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
         end
 
-        @organizations.each do |o|
-          @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i, :id => o[1][:id].to_i }
-        end
-        @organizations = @organizations_data.sort_by { |d| d[:count] }.reverse
-        @organizations_data = @organizations.to_json
+        # @organizations.reverse.each do |o|
+        #   @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i, :id => o[1][:id].to_i }
+        # end
+        # @organizations = @organizations_data.sort_by { |d| d[:count] }.reverse
+        # @organizations_data = @organizations.to_json
 
         # Get count projects grouped by sector
         # @projects_sectors = {}

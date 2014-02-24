@@ -48,7 +48,13 @@
 
         <div class="block statistics less">
           <h3>Affiliated Organizations</h3>
-            <%= raw(donors_projects_by_organization(@organizations)) %>
+            <% if @organizations %>
+            <ul class="chart chart-bars">
+              <% @organizations.each do |o| %>
+                <li><a href="/organizations/<%= o[1][:id] %>"><%= o[1][:name] %></a></li>
+              <% end %>
+            </ul>
+            <% end %>
         </div>
 
         <div class="block statistics less">
@@ -148,7 +154,7 @@
   var chld = "<%=@chld%>";
   var chd = "<%=@chd%>";
   var map_data = <%= @map_data.to_s.html_safe %>;
-  var organization_data = <%= @organizations_data.to_s.html_safe %>;
+  // var organization_data = <%= @organizations_data.to_s.html_safe %>;
   var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
   var theme = "<%=@site.theme_id%>";
   var kind = 'donor';
