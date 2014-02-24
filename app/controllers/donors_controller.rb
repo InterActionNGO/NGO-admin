@@ -1,15 +1,15 @@
 class DonorsController < ApplicationController
 
   respond_to :html, :kml, :js, :xls, :csv
-  layout 'site_layout'
+  layout :sites_layout
 
   def show
 
-    if params[:embed].present?
-      'map_layout'
-    else
-      'site_layout'
-    end
+    # if params[:embed].present?
+    #   'map_layout'
+    # else
+    #   'site_layout'
+    # end
     @donor = Donor.find(params[:id])
     @donor.attributes = @donor.attributes_for_site(@site)
 
@@ -29,7 +29,6 @@ class DonorsController < ApplicationController
 
 
     @organizations = @organizations.sort_by { |k, v| v[:name] }
-    debugger
     @map_data = []
     @organizations_data = []
 
@@ -168,6 +167,9 @@ class DonorsController < ApplicationController
           @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
         end
 
+        @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number, 
+          :show => (@donor.contact_person_name || @donor.contact_email || @donor.contact_phone_number )? true : false }
+
         # @organizations.reverse.each do |o|
         #   @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i, :id => o[1][:id].to_i }
         # end
@@ -192,6 +194,11 @@ class DonorsController < ApplicationController
         #   @projects_sectors[:sectors] << r["name"]
         #   @projects_sectors[:count] << r["value"]
         # end
+        # @map_data_max_count = @map_data.max_by { |k| k[:count] }
+        @map_data_max_count = 0
+        @map_data.each do |md|
+          @map_data_max_count = md[:count].to_i if @map_data_max_count < md[:count].to_i
+        end
         @map_data = @map_data.to_json
 
       end
