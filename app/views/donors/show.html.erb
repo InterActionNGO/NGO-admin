@@ -48,7 +48,13 @@
 
         <div class="block statistics less">
           <h3>Affiliated Organizations</h3>
-            <%= raw(donors_projects_by_organization(@organizations)) %>
+            <% if @organizations %>
+            <ul class="chart chart-bars">
+              <% @organizations.each do |o| %>
+                <li><a href="/organizations/<%= o[1][:id] %>"><%= o[1][:name] %></a></li>
+              <% end %>
+            </ul>
+            <% end %>
         </div>
 
         <div class="block statistics less">
@@ -125,6 +131,15 @@
         </ul>
       </h3>
 
+      <div id="popup" class="embed_map">
+          <a class="close top" href="#"></a>
+          <h5>Embed this map</h5>
+          <p>Copy this code and paste it in your HTML page for embedding the map.</p>
+          <textarea><iframe src="<%= url_with_embed_param %>" frameborder="0" width="600" height="600"></iframe></textarea>
+          <a href="#" class="close button">Close</a>
+        </div>
+      <div class="popup_background"></div>        
+
       <p class="disclaimer"><sup>*</sup>This projects show only a portion of activities supported by this donor globally.</p>
 
       <div id="projects">
@@ -148,7 +163,7 @@
   var chld = "<%=@chld%>";
   var chd = "<%=@chd%>";
   var map_data = <%= @map_data.to_s.html_safe %>;
-  var organization_data = <%= @organizations_data.to_s.html_safe %>;
+  // var organization_data = <%= @organizations_data.to_s.html_safe %>;
   var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
   var theme = "<%=@site.theme_id%>";
   var kind = 'donor';

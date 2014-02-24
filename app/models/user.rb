@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   def self.authenticate(email, password)
     return nil if email.blank? || password.blank?
     u = find_by_email(email.downcase.strip) # need to get the salt
-    if u && u.authenticated?(password.strip) 
+    if u && u.authenticated?(password.strip)
       u.reset_login_fails!
       u
     else
