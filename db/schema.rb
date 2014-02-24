@@ -40,16 +40,19 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
   add_index "clusters_projects", ["project_id"], :name => "index_clusters_projects_on_project_id"
 
   create_table "countries", :force => true do |t|
-    t.string "name"
-    t.string "code"
-    t.string "wiki_url"
-    t.text   "wiki_description"
-    t.string "iso2_code"
-    t.string "iso3_code"
-    t.float  "center_lat"
-    t.float  "center_lon"
-    t.text   "the_geom_geojson"
+    t.string        "name"
+    t.string        "code"
+    t.multi_polygon "the_geom",         :limit => nil, :srid => 4326
+    t.string        "wiki_url"
+    t.text          "wiki_description"
+    t.string        "iso2_code"
+    t.string        "iso3_code"
+    t.float         "center_lat"
+    t.float         "center_lon"
+    t.text          "the_geom_geojson"
   end
+
+  add_index "countries", ["the_geom"], :name => "index_countries_on_the_geom", :spatial => true
 
   create_table "countries_projects", :id => false, :force => true do |t|
     t.integer "country_id", :null => false
@@ -373,6 +376,7 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.geometry "the_geom",                                :limit => nil,  :srid => 4326
     t.text     "activities"
     t.string   "intervention_id"
     t.text     "additional_information"
@@ -391,6 +395,7 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
   add_index "projects", ["name"], :name => "index_projects_on_name"
   add_index "projects", ["primary_organization_id"], :name => "index_projects_on_primary_organization_id"
+  add_index "projects", ["the_geom"], :name => "index_projects_on_the_geom", :spatial => true
 
   create_table "projects_regions", :id => false, :force => true do |t|
     t.integer "region_id"
@@ -432,24 +437,26 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
   add_index "projects_tags", ["tag_id"], :name => "index_projects_tags_on_tag_id"
 
   create_table "regions", :force => true do |t|
-    t.string  "name"
-    t.integer "level"
-    t.integer "country_id"
-    t.integer "parent_region_id"
-    t.integer "gadm_id"
-    t.string  "wiki_url"
-    t.text    "wiki_description"
-    t.string  "code"
-    t.float   "center_lat"
-    t.float   "center_lon"
-    t.text    "the_geom_geojson"
-    t.text    "ia_name"
-    t.string  "path"
+    t.string   "name"
+    t.integer  "level"
+    t.integer  "country_id"
+    t.integer  "parent_region_id"
+    t.geometry "the_geom",         :limit => nil, :srid => 4326
+    t.integer  "gadm_id"
+    t.string   "wiki_url"
+    t.text     "wiki_description"
+    t.string   "code"
+    t.float    "center_lat"
+    t.float    "center_lon"
+    t.text     "the_geom_geojson"
+    t.text     "ia_name"
+    t.string   "path"
   end
 
   add_index "regions", ["country_id"], :name => "index_regions_on_country_id"
   add_index "regions", ["level"], :name => "index_regions_on_level"
   add_index "regions", ["parent_region_id"], :name => "index_regions_on_parent_region_id"
+  add_index "regions", ["the_geom"], :name => "index_regions_on_the_geom", :spatial => true
 
   create_table "resources", :force => true do |t|
     t.string   "title"
@@ -498,8 +505,8 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
     t.string   "blog_url"
     t.string   "word_for_clusters"
     t.string   "word_for_regions"
-    t.boolean  "show_global_donations_raises",    :default => false
-    t.integer  "project_classification",          :default => 0
+    t.boolean  "show_global_donations_raises",                   :default => false
+    t.integer  "project_classification",                         :default => 0
     t.integer  "geographic_context_country_id"
     t.integer  "geographic_context_region_id"
     t.integer  "project_context_cluster_id"
@@ -508,18 +515,19 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
     t.string   "project_context_tags"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.geometry "geographic_context_geometry",     :limit => nil,                    :srid => 4326
     t.string   "project_context_tags_ids"
-    t.boolean  "status",                          :default => false
-    t.float    "visits",                          :default => 0.0
-    t.float    "visits_last_week",                :default => 0.0
+    t.boolean  "status",                                         :default => false
+    t.float    "visits",                                         :default => 0.0
+    t.float    "visits_last_week",                               :default => 0.0
     t.string   "aid_map_image_file_name"
     t.string   "aid_map_image_content_type"
     t.integer  "aid_map_image_file_size"
     t.datetime "aid_map_image_updated_at"
-    t.boolean  "navigate_by_country",             :default => false
-    t.boolean  "navigate_by_level1",              :default => false
-    t.boolean  "navigate_by_level2",              :default => false
-    t.boolean  "navigate_by_level3",              :default => false
+    t.boolean  "navigate_by_country",                            :default => false
+    t.boolean  "navigate_by_level1",                             :default => false
+    t.boolean  "navigate_by_level2",                             :default => false
+    t.boolean  "navigate_by_level3",                             :default => false
     t.text     "map_styles"
     t.float    "overview_map_lat"
     t.float    "overview_map_lon"
@@ -527,6 +535,7 @@ ActiveRecord::Schema.define(:version => 20140219164037) do
     t.text     "internal_description"
   end
 
+  add_index "sites", ["geographic_context_geometry"], :name => "index_sites_on_geographic_context_geometry", :spatial => true
   add_index "sites", ["name"], :name => "index_sites_on_name"
   add_index "sites", ["status"], :name => "index_sites_on_status"
   add_index "sites", ["url"], :name => "index_sites_on_url"
