@@ -142,7 +142,7 @@ var global_index = 10;
         legends: [choroplethLegend]
       });
 
-      var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="#Overlay%1$s"><span class="icon-info">i</span></a>', $('#' + $el.attr('id')).data('overlay'));
+      var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="%2$s"><span class="icon-info">i</span></a>', $el.data('layer'), $('#' + $el.attr('id')).data('overlay'));
       var infowindowHtml = sprintf('<div class="cartodb-popup dark"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p>%s<p><p>{{content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml);
 
       sublayer = currentLayer.getSubLayer(0);
