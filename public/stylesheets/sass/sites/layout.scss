@@ -963,8 +963,22 @@ div.cartodb-popup p {
   margin: 5px 0;
   padding: 0;
   &.data-year {
-    color:#b5b4b4;
+    color:rgb(102, 102, 102);
   }
+}
+
+div.cartodb-popup-content {
+  h2 {
+    font-weight: bold;
+    font-style: normal;
+    font-variant: normal;
+    line-height: normal;
+    font-family: 'PT Sans';
+  }
+  p {
+    font: normal 13px Arial;
+  }
+
 }
 
 div.cartodb-popup div.cartodb-popup-content .icon-info {
@@ -999,24 +1013,33 @@ div.cartodb-popup div.cartodb-popup-content .icon-info {
   z-index: 10000;
   .content-overlay {
     background: #252523;
-    color:#b5b4b4;
+    color:#b4b4b4;
     left: 50%;
     margin-left: -325px;
     padding: 50px;
     position: absolute;
     top: 20%;
     width: 600px;
-    border: 3px solid rgba(150, 150, 150, .4);
+    border: 3px solid rgb(150, 150, 150);
+    border-opacity:0.7;
     @include border-radius(10px);
     @include box-shadow(0 0 20px rgba(0, 0, 0, .5));
+    h2 {
+      font-weight: bold;
+      font-style: normal;
+      font-variant: normal;
+      line-height: normal;
+      font-family: 'PT Sans';
+    }
 
     p {
       margin: 1em 0 0 0;
+      font: normal 13px Arial;
     }
   }
   .close-overlay {
     display: block;
-    color:#b5b4b4;
+    // color:#b4b4b4;
     font-family: Menlo, Monaco;
     font-size: 21px;
     line-height: 1;
