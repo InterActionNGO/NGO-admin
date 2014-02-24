@@ -62,7 +62,7 @@ $(document).ready( function() {
     }
     $('#dgos_search').val('');
     if(document.getElementById('donors_list')) {
-      $('#dgos_search').liveUpdate('donors_list');
+      //$('#dgos_search').liveUpdate('donors_list');
     }
 
     // CUSTOM SCROLLBARS
@@ -121,13 +121,17 @@ $(document).ready( function() {
               $(this).parent().find('input#ngos_search').focus();
           }
 
+          // if there are some input text
+          if ($(this).parent().find('input#dgos_search').length > 0){
+              $(this).parent().find('input#dgos_search').focus();
+          }
+
           $(document).click(function(event) {
-                if ((!$(event.target).closest('ul.suboptions li a').length)&&(!$(event.target).closest('ul.scroll_pane').length)&&(!$(event.target).closest('input#ngos_search').length))
-                {
-                  $('ul.menu li.clicked').removeClass('clicked');
-                  $('ul.menu li a.displayed').removeClass('displayed');
-                };
-              });
+            if ((!$(event.target).closest('ul.suboptions li a').length)&&(!$(event.target).closest('ul.scroll_pane').length)&&(!$(event.target).closest('input#ngos_search').length)) {
+              $('ul.menu li.clicked').removeClass('clicked');
+              $('ul.menu li a.displayed').removeClass('displayed');
+            };
+          });
       }
       else {
           $('ul.menu li a.displayed').removeClass('displayed');
