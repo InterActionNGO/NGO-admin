@@ -190,24 +190,24 @@ HTML
     [ul, chart]
   end
 
-  def donors_projects_by_organization(collection = nil)
-    organizations = collection.sort_by{ |o| o[:name].downcase }
-    #organizations =collection.sort_by(&:count).reverse
-    counts    = organizations.map{ |o| o[:count]}
-    values = counts
-    values    = counts.slice!(0, 9) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
-    values.compact!
-    max_value = values.max
-    colors = ['333333', '565656', '727272', 'ADADAD', '333333', '565656', '727272', 'ADADAD', '727272', 'ADADAD']
-    lis = []
-    organizations[0..8].each_with_index do |o, index|
-      lis << "<li class =pos#{index}> <a href=/organizations/#{o[:id]} >#{o[:name]}</a> - #{o[:count]}</li>"
-    end
-    lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 9
-    ul    = content_tag :ul, raw(lis), :class => 'chart chart-bars'
-    chart = image_tag "http://chart.apis.google.com/chart?cht=bvs&chs=203x120&chd=t:#{values.join(",")}&chxt=y&chxr=0,0,#{max_value}&chco=#{colors.join("|")}&chds=0,10&chds=0,#{max_value}", :class => 'pie_chart pie_chart_bars'
-    [ul, chart]
-  end
+  # def donors_projects_by_organization(collection = nil)
+  #   organizations = collection.sort_by{ |o| o[:name].downcase }
+  #   #organizations =collection.sort_by(&:count).reverse
+  #   counts    = organizations.map{ |o| o[:count]}
+  #   # values = counts
+  #   # values    = counts.slice!(0, 9) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
+  #   # values.compact!
+  #   # max_value = values.max
+  #   # colors = ['333333', '565656', '727272', 'ADADAD', '333333', '565656', '727272', 'ADADAD', '727272', 'ADADAD']
+  #   lis = []
+  #   organizations.each_with_index do |o, index|
+  #     lis << "<li class =pos#{index}> <a href=/organizations/#{o[:id]} >#{o[:name]}</a></li>"
+  #   end
+  #   lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if organizations.count > 9
+  #   ul    = content_tag :ul, raw(lis), :class => 'chart chart-bars'
+  #   # chart = image_tag "http://chart.apis.google.com/chart?cht=bvs&chs=203x120&chd=t:#{values.join(",")}&chxt=y&chxr=0,0,#{max_value}&chco=#{colors.join("|")}&chds=0,10&chds=0,#{max_value}", :class => 'pie_chart pie_chart_bars'
+  #   [ul]
+  # end
 
   # def projects_by_sectors(sectors, count)
   #   colors_values = {
