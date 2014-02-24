@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
   end
 
   def reset_login_fails!
-    #self.login_fails = 0
+    self.login_fails = 0
     self.save
   end
 
