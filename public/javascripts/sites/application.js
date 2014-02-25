@@ -29,31 +29,10 @@ $(document).ready( function() {
 
     $("a#see_all").click(function(ev){ev.preventDefault(); ev.stopPropagation();});
 
-
-    // if ($.browser.msie) {
-    //   var zIndexNumber = 1000;
-    //   $('div,ul').each(function() {
-    //     $(this).css('zIndex', zIndexNumber);
-    //     zIndexNumber -= 10;
-    //   });
-    //
-    //   $('div.loader_gallery').css('zIndex',1000);
-    //   $('div#header').css('zIndex',1000);
-    //   $('div#float_head').css('zIndex',100);
-    //   $('div#map').css('zIndex',0);
-    //   $('div#small_map').css('zIndex',0);
-    //   $('div.inner_header').css('zIndex',1000);
-    //   $('ul.menu').css('zIndex',1000);
-    //   $('ul.suboptions').css('zIndex',1000);
-    //   $('ul.ui-autocomplete').css('zIndex',1000);
-    //
-    // }
-
     // TODO: update scrollbar to content
     if ($('.scroll_pane_auto').length > 0){
         $('.scroll_pane_auto').jScrollPane({autoReinitialise:true });
     }
-
 
     // LIVE SEARCH IN ORGANIZATIONS
     $('#ngos_search').val('');
@@ -121,12 +100,12 @@ $(document).ready( function() {
           }
 
           // if there are some input text
-          // if ($(this).parent().find('input#dgos_search').length > 0){
-          //     $(this).parent().find('input#dgos_search').focus();
-          // }
+          if ($(this).parent().find('input#dgos_search').length > 0){
+              $(this).parent().find('input#dgos_search').focus();
+          }
 
           $(document).click(function(event) {
-            if ((!$(event.target).closest('ul.suboptions li a').length)&&(!$(event.target).closest('ul.scroll_pane').length)&&(!$(event.target).closest('input#ngos_search').length)) {
+            if ((!$(event.target).closest('ul.suboptions li a').length)&&(!$(event.target).closest('ul.scroll_pane').length)&&(!$(event.target).closest('input#ngos_search').length) && (!$(event.target).closest('input#dgos_search').length)) {
               $('ul.menu li.clicked').removeClass('clicked');
               $('ul.menu li a.displayed').removeClass('displayed');
             };

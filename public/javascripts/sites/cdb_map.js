@@ -157,6 +157,8 @@ var global_index = 10;
         interaction: 'country_name, data, year',
       });
 
+      $('.infowindow-pop').unbind('click');
+
       var infowindow = cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
         infowindowTemplate: infowindowHtml,
         cursorInteraction: false
