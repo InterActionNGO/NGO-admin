@@ -522,8 +522,8 @@ SQL
         end
       end
 
-      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id] > 0
-      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id] > 0
+      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id]
+      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
 
       sql="select * from data_denormalization where #{where.join(' and ')}"
     elsif options[:donor_id]      
