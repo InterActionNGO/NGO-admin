@@ -40,8 +40,8 @@ $(document).ready( function() {
       $('#ngos_search').liveUpdate('orgs_list');
     }
     $('#dgos_search').val('');
-    if(document.getElementById('donors_list')) {
-      $('#dgos_search').liveUpdate('donors_list');
+    if(document.getElementById('donors_list_menu')) {
+      $('#dgos_search').liveUpdate('donors_list_menu');
     }
 
     // CUSTOM SCROLLBARS
