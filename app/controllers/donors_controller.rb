@@ -101,6 +101,7 @@ class DonorsController < ApplicationController
     end
 
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
+    carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
 
     respond_to do |format|
       format.html do
@@ -116,9 +117,9 @@ class DonorsController < ApplicationController
           location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
           sql = """ SELECT r.id, count(distinct projects_sites.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
                 CASE WHEN count(distinct projects_sites.project_id) > 1 THEN
-                    r.path
+                    '#{carry_on_url}'||r.path
                 ELSE
-                    '/projects/'||(array_to_string(array_agg(projects_sites.project_id),''))
+                    '/projects/'||(array_to_string(array_agg(distinct projects_sites.project_id),''))
                 END as url
                 ,r.code,
                 (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
@@ -141,7 +142,7 @@ class DonorsController < ApplicationController
                              CASE WHEN count(ps.project_id) > 1 THEN
                                r.path
                              ELSE
-                               '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                               '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                              END AS url,
                              r.code
                       FROM projects_regions AS pr
@@ -162,9 +163,9 @@ class DonorsController < ApplicationController
                          r.center_lat AS lat,
                          r.name,
                          CASE WHEN count(ps.project_id) > 1 THEN
-                           r.path
+                           '#{carry_on_url}'||r.path
                          ELSE
-                           '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                           '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                          END AS url,
                          r.code
                   FROM projects_regions AS pr
@@ -180,8 +181,10 @@ class DonorsController < ApplicationController
           else
             sql="select c.id,count(distinct ps.project_id) as count,c.name,c.center_lon as lon,
                         c.center_lat as lat,c.name,
-                        CASE WHEN count(distinct ps.project_id) < 1 THEN
-                            '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                        CASE WHEN count(distinct ps.project_id) > 1 THEN
+                          '#{carry_on_url}'||c.id
+                        ELSE
+                          '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                         END as url,
                         c.iso2_code as code,
                         (select count(*) from data_denormalization where countries_ids && ('{'||c.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
@@ -196,6 +199,7 @@ class DonorsController < ApplicationController
           end
 
         end
+        
         result=ActiveRecord::Base.connection.execute(sql)
         @count = result.count
         result.each do |r|
