@@ -58,7 +58,7 @@ class ProjectsSynchronization < ActiveRecord::Base
 
   def process_projects_file_data
     setup_book unless persisted?
-
+    puts "Inside model"
     @line   = 1
     projects_file_data.each do |row_hash|
       @line += 1
@@ -72,7 +72,6 @@ class ProjectsSynchronization < ActiveRecord::Base
       project.updated_by  = user
 
       process_project_validations(row_hash, project)
-
     end
   rescue Ole::Storage::FormatError
     self.projects_errors << 'Invalid File. File must be an Excel 97-2003 file'
