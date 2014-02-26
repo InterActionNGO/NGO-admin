@@ -10,12 +10,12 @@
     </div>
 
     <div class="right">
+      <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
     </div>
   </div>
 </div>
 
 <%= render :partial => 'partials/map' %>
-
 
 <div id="layout">
   <div id="left_column">
@@ -138,7 +138,7 @@
           <textarea><iframe src="<%= url_with_embed_param %>" frameborder="0" width="600" height="600"></iframe></textarea>
           <a href="#" class="close button">Close</a>
         </div>
-      <div class="popup_background"></div>        
+      <div class="popup_background"></div>
 
       <p class="disclaimer"><sup>*</sup>This projects show only a portion of activities supported by this donor globally.</p>
 
