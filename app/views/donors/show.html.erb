@@ -10,12 +10,12 @@
     </div>
 
     <div class="right">
+      <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
     </div>
   </div>
 </div>
 
 <%= render :partial => 'partials/map' %>
-
 
 <div id="layout">
   <div id="left_column">
@@ -51,7 +51,7 @@
             <% if @organizations %>
             <ul class="chart chart-bars">
               <% @organizations.each do |o| %>
-                <li><a href="/organizations/<%= o[1][:id] %>"><%= o[1][:name] %></a></li>
+                <li><a href="/donors/<%= @donor.id %>?organization_id=<%= o[1][:id] %>"><%= o[1][:name] %></a></li>
               <% end %>
             </ul>
             <% end %>
@@ -74,7 +74,9 @@
                   </span>
                   <span class="bottom_tooltip"></span>
                 </div>
-                <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>"><span class="aller" style="width:<%= cluster_sector_width_donors(count, @site.projects_sectors_or_clusters.map{|e| e.last}.max) %>px"><%= count %></span></a>
+                <!-- <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>"><span class="aller" style="width:<%= cluster_sector_width_donors(count, @site.projects_sectors_or_clusters.map{|e| e.last}.max) %>px"><%= count %></span></a> -->
+                <a class="<%= category.css_class %> icon_statistics" href="<%= donor_path(@donor, @carry_on_filters.merge(:category_id => category.id)) %>"><span class="aller" style="width:<%= cluster_sector_width(count, 
+                    @donor_projects_clusters_sectors.map{|e| e.last}.max) %>px"><%= count %></span></a>
               </li>
             <% end %>
           <% end %>
@@ -118,7 +120,7 @@
     <!-- RIGHT PART -->
     <div class="right" id="projects_div">
       <h3>
-        Funding <%= pluralize(@donor.donated_projects_count(@site), 'project', 'projects') %>
+        Funding <%= pluralize(@projects_count, 'project', 'projects') %>
 
         <ul class="download">
           <li><%= link_to 'CSV', donor_path(@donor, @carry_on_filters.merge(:format => :csv)) %></li>
@@ -138,7 +140,7 @@
           <textarea><iframe src="<%= url_with_embed_param %>" frameborder="0" width="600" height="600"></iframe></textarea>
           <a href="#" class="close button">Close</a>
         </div>
-      <div class="popup_background"></div>        
+      <div class="popup_background"></div>
 
       <p class="disclaimer"><sup>*</sup>This projects show only a portion of activities supported by this donor globally.</p>
 
@@ -168,6 +170,7 @@
   var theme = "<%=@site.theme_id%>";
   var kind = 'donor';
   var stylez = <%=raw @site.map_styles  %>;
+  max_count = <%= @map_data_max_count %> ;
 </script>
 
 <%=raw(javascript_include_merged(:organizations_show)) %>

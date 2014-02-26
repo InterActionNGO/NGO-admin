@@ -1,11 +1,11 @@
-  
+
     /* MENU HACK POSITIONING*/
     $('div#header div.left').width(810);
-    
-    
+
+
 
     $(document).ready( function() {
-      
+
       //See more in the clusters
       if ($('ul#donors_list').length>0) {
         var list_height = $('ul#donors_list').height();
@@ -17,18 +17,18 @@
         $('ul#donors_list').css('overflow','hidden');
         $('ul#donors_list').height($('ul#donors_list').height());
       }
-      
+
       /* TOP DESCRIPTION HACK */
       if ($('div.inner_main_head div.right').height()>$('div.inner_main_head div.left').height()) {
         $('div.inner_main_head div.left').height($('div.inner_main_head div.right').height());
         $('div.inner_main_head div.float_head').height($('div.inner_main_head div.right').height());
       }
-      
+
       // If right part is bigger than float left
       setTimeout(function(){resizeColumn()},50);
     });
-    
-    
+
+
     function resizeColumn() {
       if (($('div#left_column div.float_left').height()-40) < $('div#left_column div.right').height()) {
         var offset =  $('div#left_column div.right').height() - $('div#left_column div.float_left').height() + 70;
@@ -47,7 +47,7 @@
         $('div#left_column div.left').height($('div#left_column div.outer_float').height());
       }
     }
-    
+
     function growList(list_height) {
       $('ul#donors_list li.out').css('display','block');
       $('ul#donors_list').animate({height: list_height+'px'},200,function(ev){
