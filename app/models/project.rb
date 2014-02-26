@@ -522,12 +522,25 @@ SQL
         end
       end
 
-      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id]
-      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
+      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id] > 0
+      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id] > 0
 
       sql="select * from data_denormalization where #{where.join(' and ')}"
-    elsif options[:donor_id]
-      sql="select * from data_denormalization where donors_ids && '{#{options[:donor_id]}}' and site_id=#{site.id} and (end_date is null OR end_date > now())"
+    elsif options[:donor_id]      
+      where = []
+      where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id]
+      where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
+      where << "donors_ids && '{#{options[:donor_id]}}' "
+      if options[:organization_filter]        
+        where << "site_id=#{site.id} and (end_date is null OR end_date > now()) and organization_id = #{options[:organization_filter]}"
+      else
+        where <<" site_id=#{site.id} and (end_date is null OR end_date > now())"
+      end
+      if options[:category_id]
+        where << "sector_ids && '{#{options[:category_id]}}'"
+      end
+      where << "donors_ids && '{#{options[:donor_id]}}' and site_id=#{site.id} and (end_date is null OR end_date > now())"
+      sql="select * from data_denormalization where #{where.join(' and ')}"
     else
       sql="select * from data_denormalization where site_id=#{site.id} and (end_date is null OR end_date > now())"
     end
@@ -586,6 +599,8 @@ SQL
     WillPaginate::RandomCollection.create(page, options[:per_page], total_entries, page - 1) do |pager|
       pager.replace(result)
     end
+
+
   end
 
   def self.custom_fields

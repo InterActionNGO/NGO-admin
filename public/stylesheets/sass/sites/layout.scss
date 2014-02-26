@@ -703,7 +703,7 @@ div {
                 }
               }
             }
-            &#orgs_list, &#donors_list {
+            &#orgs_list, &#donors_list_menu {
               position: relative;
               float: left;
               overflow-y: scroll;
@@ -2496,6 +2496,7 @@ div.statistics {
 
       li {
         width: auto;
+        float: none;
       }
     }
   }

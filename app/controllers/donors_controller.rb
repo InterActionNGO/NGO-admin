@@ -4,34 +4,9 @@ class DonorsController < ApplicationController
   layout :sites_layout
 
   def show
-
-    # if params[:embed].present?
-    #   'map_layout'
-    # else
-    #   'site_layout'
-    # end
     @donor = Donor.find(params[:id])
     @donor.attributes = @donor.attributes_for_site(@site)
-
-    @projects = Project.custom_find @site, :donor_id => @donor.id,
-                                           :per_page => 10,
-                                           :page => params[:page],
-                                           :order => 'created_at DESC',
-                                           :start_in_page => params[:start_in_page]
-    @organizations = {}
-    @projects.each do |pr|
-      if @organizations.key?(pr['organization_id'])
-        @organizations[pr['organization_id']][:count] += 1
-      else
-        @organizations[pr['organization_id']] = {:count => 1, :name => pr['organization_name'], :id => pr['organization_id'] }
-      end
-    end
-
-
-    @organizations = @organizations.sort_by { |k, v| v[:name] }
-    @map_data = []
-    @organizations_data = []
-
+    
     @filter_by_category = if params[:category_id].present?
                             params[:category_id].to_i
                           else
@@ -47,6 +22,12 @@ class DonorsController < ApplicationController
                           else
                             nil
                           end
+    organization_condition = if params[:organization_id].present?
+                                # params[:organization_id].to_i
+                                "WHERE prj.primary_organization_id=#{params[:organization_id].to_i}"
+                              else
+                                nil
+                              end
 
     @carry_on_filters = {}
     @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
@@ -58,6 +39,52 @@ class DonorsController < ApplicationController
       @donor.projects_regions(@site, @filter_by_category)
     end
     # options_export = {:donor_id => params[:id]}
+    if @filter_by_location
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+    end
+    # if params[:embed].present?
+    #   'map_layout'
+    # else
+    #   'site_layout'
+    # end
+    projects_options = {
+      :donor_id => @donor.id,
+      :per_page => 10,
+      :page => params[:page],
+      :order => 'created_at DESC',
+      :start_in_page => params[:start_in_page],
+      :organization_filter => params[:organization_id],  
+      :category_id => params[:category_id]    
+    }
+    if @filter_by_location.present?
+      if @filter_by_location.size > 1
+        projects_options[:organization_region_id] = @filter_by_location.last
+      else
+        projects_options[:organization_country_id] = @filter_by_location.first
+      end
+    end
+    @projects = Project.custom_find @site, projects_options
+    @organizations = {}
+    @projects.each do |pr|
+      if @organizations.key?(pr['organization_id'])
+        @organizations[pr['organization_id']][:count] += 1
+      else
+        @organizations[pr['organization_id']] = {:count => 1, :name => pr['organization_name'], :id => pr['organization_id'] }
+      end
+    end
+
+
+    @organizations = @organizations.sort_by { |k, v| v[:name] }
+    @map_data = []
+    @organizations_data = []
+
+
+
 
     options_export = {
       :donor      => @donor.id,
@@ -65,8 +92,15 @@ class DonorsController < ApplicationController
       :page          => params[:page],
       :order         => 'created_at DESC',
       :start_in_page => params[:start_in_page]
-
     }
+
+    if params[:location_id]
+      @projects_count = @projects.count
+    else
+      @projects_count = @donor.donated_projects_count(@site, params)
+    end
+
+    @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
 
     respond_to do |format|
       format.html do
@@ -116,7 +150,7 @@ class DonorsController < ApplicationController
                       INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.first}
                       INNER JOIN donations on donations.project_id = p.id
                       #{category_join}
-                      WHERE dn.donor_id = #{params[:id].sanitize_sql!.to_i}
+                      WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                       GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
                     SQL
             else
@@ -139,7 +173,7 @@ class DonorsController < ApplicationController
                   INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.shift} AND r.id IN (#{@filter_by_location.join(',')})
                   INNER JOIN donations on donations.project_id = p.id
                   #{category_join}
-                  WHERE dn.donor_id = #{params[:id].sanitize_sql!.to_i}
+                  WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                   GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
                 SQL
             end
@@ -157,6 +191,7 @@ class DonorsController < ApplicationController
                     inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
                     inner join countries as c on cp.country_id=c.id)
                     #{category_join}
+                    #{organization_condition}
                   group by c.id,c.name,lon,lat,c.name,c.iso2_code"
           end
 
