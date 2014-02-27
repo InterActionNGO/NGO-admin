@@ -38,7 +38,7 @@ class DonorsController < ApplicationController
     else
       @donor.projects_regions(@site, @filter_by_category)
     end
-    # options_export = {:donor_id => params[:id]}
+    
     if @filter_by_location
       @location_name = if @filter_by_location.size == 1
         "#{Country.where(:id => @filter_by_location.first).first.name}"
@@ -47,11 +47,7 @@ class DonorsController < ApplicationController
         "#{region.country.name}/#{region.name}" rescue ''
       end
     end
-    # if params[:embed].present?
-    #   'map_layout'
-    # else
-    #   'site_layout'
-    # end
+
     projects_options = {
       :donor_id => @donor.id,
       :per_page => 10,
@@ -78,13 +74,9 @@ class DonorsController < ApplicationController
       end
     end
 
-
     @organizations = @organizations.sort_by { |k, v| v[:name] }
     @map_data = []
     @organizations_data = []
-
-
-
 
     options_export = {
       :donor      => @donor.id,
@@ -112,7 +104,6 @@ class DonorsController < ApplicationController
             category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{@filter_by_category}"
           end
         end
-debugger
         if @site.geographic_context_country_id
           location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
           sql = """ SELECT r.id, count(distinct projects_sites.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
@@ -134,17 +125,16 @@ debugger
             sql = if @filter_by_location.size == 1
               <<-SQL
                 SELECT r.id,
-                       count(ps.project_id) AS count,
-                       r.name,
-                       r.center_lon AS lon,
-                       r.center_lat AS lat,
-                       r.name,
-                       CASE WHEN count(ps.project_id) > 1 THEN
-                         r.path
-                       ELSE
-                         '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
-                       END AS url,
-                       r.code
+                  count(ps.project_id) AS count,
+                  r.name,
+                  r.center_lon AS lon,
+                  r.center_lat AS lat,
+                  CASE WHEN count(ps.project_id) > 1 THEN
+                   r.path
+                  ELSE
+                   '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
+                  END AS url,
+                  r.code
                 FROM projects_regions AS pr
                 INNER JOIN projects_sites AS ps ON pr.project_id=ps.project_id AND ps.site_id=#{@site.id}
                 INNER JOIN projects AS p ON pr.project_id=p.id AND (p.end_date is NULL OR p.end_date > now())
@@ -153,6 +143,22 @@ debugger
                 #{category_join}
                 WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
+                UNION
+                SELECT c.id,
+                count(distinct ps.project_id) AS count,
+                  c.name as name,
+                  c.center_lon AS lon,
+                  c.center_lat AS lat,
+                  null as url, 
+                  c.code
+                FROM projects AS p
+                INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
+                INNER JOIN donations on donations.project_id = p.id
+                INNER JOIN countries as c ON c.id = #{params[:location_id]}
+                INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
+                #{category_join}
+                WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                GROUP BY c.id,c.name,lon,lat,c.code
               SQL
             else
                 <<-SQL
@@ -205,58 +211,9 @@ debugger
           @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
         end
 
-        if @count == 0
-          sql = "
-            SELECT c.id,
-               count(distinct ps.project_id) AS count,
-               c.name as name,
-               c.center_lon AS lon,
-               c.center_lat AS lat,
-               c.code
-              FROM projects AS p
-              INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
-              INNER JOIN donations on donations.project_id = p.id
-              INNER JOIN countries as c ON c.id = #{params[:location_id]}
-              INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
-              #{category_join}
-              WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
-              GROUP BY c.id,c.name,lon,lat,c.code"
-              debugger
-        result=ActiveRecord::Base.connection.execute(sql)
-        @count = result.count
-        result.each do |r|
-          @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :total_in_region => r['total_in_region']}
-        end
-        end
-
         @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number, 
           :show => (@donor.contact_person_name || @donor.contact_email || @donor.contact_phone_number )? true : false }
 
-        # @organizations.reverse.each do |o|
-        #   @organizations_data << {:name => o[1][:name], :count => o[1][:count].to_i, :id => o[1][:id].to_i }
-        # end
-        # @organizations = @organizations_data.sort_by { |d| d[:count] }.reverse
-        # @organizations_data = @organizations.to_json
-
-        # Get count projects grouped by sector
-        # @projects_sectors = {}
-        # @projects_sectors[:sectors] = []
-        # @projects_sectors[:count] = []
-        # sql = """ SELECT sec.name as name, COUNT(distinct(prj.id)) as value
-        #           FROM projects as p inner join donations as dn on dn.project_id = p.id and dn.donor_id=#{params[:id].sanitize_sql!.to_i}
-        #           inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{@site.id}
-        #           inner join countries_projects as cp on cp.project_id=p.id
-        #           inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
-        #           inner join projects_sectors as prjs ON prjs.project_id = prj.id 
-        #           inner join sectors as sec ON sec.id = prjs.sector_id
-        #         group by sec.name """
-        # p sql
-        # result = ActiveRecord::Base.connection.execute(sql)
-        # result.each do |r|
-        #   @projects_sectors[:sectors] << r["name"]
-        #   @projects_sectors[:count] << r["value"]
-        # end
-        # @map_data_max_count = @map_data.max_by { |k| k[:count] }
         @map_data_max_count = 0
         @map_data.each do |md|
           @map_data_max_count = md[:count].to_i if @map_data_max_count < md[:count].to_i
