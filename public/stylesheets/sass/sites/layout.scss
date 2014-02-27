@@ -914,7 +914,6 @@ div {
       color: #eee;
       display: block;
       padding: 3px 10px;
-      text-transform: uppercase;
     }
     li {
       position: relative;
@@ -938,6 +937,9 @@ div {
       li:hover {
         background: #666;
       }
+      li li {
+        padding-right: 25px;
+      }
     }
     .icon-info {
       background: #555;
@@ -948,8 +950,11 @@ div {
       height: 14px;
       line-height: 14px;
       padding: 0;
+      position: absolute;
       text-transform: none;
       text-align: center;
+      top: 3px;
+      right: 5px;
       width: 14px;
       @include border-radius(100%);
       &:hover {
@@ -981,22 +986,39 @@ div.cartodb-popup-content {
 
 }
 
-div.cartodb-popup div.cartodb-popup-content .icon-info {
-  background: #555;
-  color: #eee;
-  display: inline-block;
-  float: right;
-  font-family: serif;
-  font-style: italic;
-  height: 14px;
-  line-height: 14px;
-  padding: 0;
-  text-transform: none;
-  text-align: center;
-  width: 14px;
-  @include border-radius(100%);
-  &:hover {
-    background-color: #333;
+
+
+div.cartodb-popup div.cartodb-popup-content {
+  .infowindow-layer {
+    padding-right: 20px;
+    position: relative;
+    width: 170px;
+  }
+
+  .infowindow-pop {
+    display: block;
+    right: 0;
+    position: absolute;
+    top: 2px;
+  }
+
+  .icon-info {
+    background: #555;
+    color: #eee;
+    display: inline-block;
+    font-family: serif;
+    font-style: italic;
+    height: 14px;
+    line-height: 14px;
+    padding: 0;
+
+    text-transform: none;
+    text-align: center;
+    width: 14px;
+    @include border-radius(100%);
+    &:hover {
+      background-color: #333;
+    }
   }
 }
 
