@@ -9,7 +9,8 @@
               <ul class="selector-options">
                 <li><a href="#" data-layer="none">None</a></li>
                 <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-                  <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>" data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+                  <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
+                    data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
                 <% end %>
               </ul>
             </li>
@@ -47,7 +48,7 @@
 <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
   <div class="is-hidden" id="Overlay<%= sl.layer.id %>">
     <h2><%= sl.layer.long_title %></h2>
-    <p><%= sl.layer.description %></p>
-    <p><%= sl.layer.credits %></p>
+    <p><%= sl.layer.description.html_safe %></p>
+    <p><%= sl.layer.credits.html_safe %></p>
   </div>
 <% end %>
