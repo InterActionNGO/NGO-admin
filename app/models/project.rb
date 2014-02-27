@@ -819,6 +819,13 @@ SQL
     generate_intervention_id if Project.where('intervention_id = ? AND id <> ?', intervention_id, id).count > 0
   end
 
+  def update_data_denormalization
+    sql = """UPDATE data_denormalization 
+            SET project_name = '#{self.name}'
+            WHERE project_id = #{self.id}"""
+    ActiveRecord::Base.connection.execute(sql)
+  end
+
   ##############################
   # PROJECT SYNCHRONIZATION
 
@@ -1122,13 +1129,6 @@ SQL
       errors.add(:clusters, "can't be blank")
     end
   end  
-
-  def update_data_denormalization
-    sql = """UPDATE data_denormalization 
-            SET project_name = '#{self.name}'
-            WHERE project_id = #{self.id}"""
-    ActiveRecord::Base.connection.execute(sql)
-  end
 
   def self.report(params = {})
     start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
