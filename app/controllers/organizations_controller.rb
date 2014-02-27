@@ -107,7 +107,6 @@ class OrganizationsController < ApplicationController
                       ELSE
                           '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                       END as url
-
                       ,r.code,
                       (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
                 from ((((
@@ -124,17 +123,17 @@ class OrganizationsController < ApplicationController
             sql = if @filter_by_location.size == 1
                     <<-SQL
                       SELECT r.id,
-                             count(ps.project_id) AS count,
-                             r.name,
-                             r.center_lon AS lon,
-                             r.center_lat AS lat,
-                             r.name,
-                             CASE WHEN count(ps.project_id) > 1 THEN
-                               '#{carry_on_url}'||r.path
-                             ELSE
-                               '/projects/'||(array_to_string(array_agg(ps.project_id),''))
-                             END AS url,
-                             r.code
+                        count(ps.project_id) AS count,
+                        r.name,
+                        r.center_lon AS lon,
+                        r.center_lat AS lat,
+                        r.name,
+                        CASE WHEN count(ps.project_id) > 1 THEN
+                          '#{carry_on_url}'||r.path
+                        ELSE
+                          '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                        END AS url,
+                        r.code
                       FROM projects_regions AS pr
                       INNER JOIN projects_sites AS ps ON pr.project_id=ps.project_id AND ps.site_id=#{@site.id}
                       INNER JOIN projects AS p ON pr.project_id=p.id AND (p.end_date is NULL OR p.end_date > now())
@@ -142,6 +141,22 @@ class OrganizationsController < ApplicationController
                       #{category_join}
                       WHERE p.primary_organization_id = #{params[:id].sanitize_sql!.to_i}
                       GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
+                      UNION
+                      SELECT c.id,
+                        count(distinct ps.project_id) AS count,
+                        c.name as name,
+                        c.center_lon AS lon,
+                        c.center_lat AS lat,
+                        null as url, 
+                        c.code
+                      FROM projects AS p
+                      INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
+                      INNER JOIN donations on donations.project_id = p.id
+                      INNER JOIN countries as c ON c.id = #{params[:location_id]}
+                      INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
+                      #{category_join}
+                      WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                      GROUP BY c.id,c.name,lon,lat,c.code
                     SQL
             else
                 <<-SQL
@@ -172,7 +187,7 @@ class OrganizationsController < ApplicationController
                         CASE WHEN count(distinct ps.project_id) > 1 THEN
                             '#{carry_on_url}'||c.id
                         ELSE
-                            '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                            '/projects/'||ps.project_id
                         END as url,
                         c.iso2_code as code,
                         (select count(*) from data_denormalization where countries_ids && ('{'||c.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
@@ -182,7 +197,7 @@ class OrganizationsController < ApplicationController
                     inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
                     inner join countries as c on cp.country_id=c.id)
                     #{category_join}
-                  group by c.id,c.name,lon,lat,c.name,c.iso2_code"
+                  group by c.id,c.name,lon,lat,c.name,c.iso2_code,ps.project_id"
           end
 
         end
@@ -196,6 +211,7 @@ class OrganizationsController < ApplicationController
           r['url'] = uri.to_s
           r
         end.to_json
+
         @overview_map_chco = @site.theme.data[:overview_map_chco]
         @overview_map_chf = @site.theme.data[:overview_map_chf]
         @overview_map_marker_source = @site.theme.data[:overview_map_marker_source]
