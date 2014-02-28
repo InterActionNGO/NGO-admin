@@ -143,7 +143,7 @@ var global_index = 10;
       });
 
       var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="%2$s"><span class="icon-info">i</span></a>', $el.data('layer'), $el.data('overlay'));
-      var infowindowHtml = sprintf('<div class="cartodb-popup dark"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p class="infowindow-layer">%s<p><p>{{#content.data.data}}{{content.data.data}} %s{{/content.data.data}}{{^content.data.data}}No data{{/content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml, $el.data('units'));
+      var infowindowHtml = sprintf('<div class="cartodb-popup dark"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p class="infowindow-layer">%s<p><p><span class="infowindow-data">{{#content.data.data}}{{content.data.data}}</span>%s{{/content.data.data}}{{^content.data.data}}No data{{/content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml, $el.data('units'));
 
       sublayer = currentLayer.getSubLayer(0);
 
@@ -166,6 +166,12 @@ var global_index = 10;
 
       infowindow.model.on('change:visibility', function(model) {
         if (model.get('visibility')) {
+          var d = $('.infowindow-data');
+
+          if (d.text() !== 'No data') {
+            d.text(Number(d.text()).toFixed(1));
+          }
+
           $('.infowindow-pop').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
