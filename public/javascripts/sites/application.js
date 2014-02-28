@@ -25,10 +25,14 @@ function projectClustersWidth() {
   for (var i = 0, len = $items.length; i < len; i++) {
     var item = $($items[i]);
     var value = item.attr('data-value');
-    var itemWidth = (value/max) * (w-22);
+    var itemWidth = (value/max) * (w - 22);
 
-    if (itemWidth > 0) {
+    console.log(itemWidth);
+
+    if (itemWidth - 30 > 0) {
       item.find('.aller').css('width', itemWidth + 'px');
+    } else {
+      item.find('.aller').css('width', itemWidth + 10 + 'px');
     }
   }
 }
