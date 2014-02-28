@@ -127,7 +127,6 @@ class OrganizationsController < ApplicationController
                         r.name,
                         r.center_lon AS lon,
                         r.center_lat AS lat,
-                        r.name,
                         CASE WHEN count(ps.project_id) > 1 THEN
                           '#{carry_on_url}'||r.path
                         ELSE
