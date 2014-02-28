@@ -27,8 +27,6 @@ function projectClustersWidth() {
     var value = item.attr('data-value');
     var itemWidth = (value/max) * (w - 22);
 
-    console.log(itemWidth);
-
     if (itemWidth - 30 > 0) {
       item.find('.aller').css('width', itemWidth + 'px');
     } else {
