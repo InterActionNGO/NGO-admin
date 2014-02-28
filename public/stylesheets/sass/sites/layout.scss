@@ -867,7 +867,7 @@ div {
     width: 932px;
   }
   .control-navbar, .control-zoom {
-    top: 10px;
+    top: 20px;
     position: absolute;
     z-index: 100;
   }
@@ -3996,7 +3996,7 @@ div {
 
 
 .main_header {
-  height: 130px;
+  min-height: 130px;
   display: block;
   .inner_main_head {
     width: 942px;
