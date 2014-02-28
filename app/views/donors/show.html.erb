@@ -117,6 +117,7 @@
           </div>
         <%end%>
 
+        <!--
         <% if !@donor.media_resources.empty? %>
           <div class="block resources">
             <h3>MEDIA RESOURCES</h3>
@@ -138,6 +139,7 @@
             <%end%>
           </div>
         <% end %>
+        -->
 
         <%= render :partial=>"shared/sharing"%>
 
@@ -169,7 +171,7 @@
         </div>
       <div class="popup_background"></div>
 
-      <p class="disclaimer"><sup>*</sup>The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities.</p>
+      <p class="disclaimer">The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities.</p>
 
       <div id="projects">
         <%= render :partial => 'donors/projects' %>
