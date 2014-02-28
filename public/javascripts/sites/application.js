@@ -14,8 +14,32 @@ if ($.browser.msie) {
 }
 
 
+// 28-02-2014
+function projectClustersWidth() {
+  var $el = $('#clustersWidth'),
+    $items = $el.find('a'),
+    w = $el.width(),
+    values = [],
+    max = $($items[0]).data('value');
+
+  for (var i = 0, len = $items.length; i < len; i++) {
+    var item = $($items[i]);
+    var value = item.attr('data-value');
+    var itemWidth = (value/max) * (w - 22);
+
+    if (itemWidth - 30 > 0) {
+      item.find('.aller').css('width', itemWidth + 'px');
+    } else {
+      item.find('.aller').css('width', itemWidth + 10 + 'px');
+    }
+  }
+}
+
+
 
 $(document).ready( function() {
+
+    projectClustersWidth();
 
     //See all tooltip
     $("a#see_all").hover(function(){
