@@ -64,7 +64,7 @@
 
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
-          <ul class="statistics_list">
+          <ul class="statistics_list" id="clustersWidth">
           <% @donor.projects_sectors_or_clusters(@site, @filter_by_location).each do |category, count| %>
             <% unless category.name.eql?('N/A') %>
               <li>
@@ -74,9 +74,7 @@
                   </span>
                   <span class="bottom_tooltip"></span>
                 </div>
-                <!-- <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>"><span class="aller" style="width:<%= cluster_sector_width_donors(count, @site.projects_sectors_or_clusters.map{|e| e.last}.max) %>px"><%= count %></span></a> -->
-                <a class="<%= category.css_class %> icon_statistics" href="<%= donor_path(@donor, @carry_on_filters.merge(:category_id => category.id)) %>"><span class="aller" style="width:<%= cluster_sector_width(count,
-                    @donor_projects_clusters_sectors.map{|e| e.last}.max) %>px"><%= count %></span></a>
+                <a class="<%= category.css_class %> icon_statistics" href="<%= donor_path(@donor, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
               </li>
             <% end %>
           <% end %>
