@@ -168,7 +168,9 @@ var global_index = 10;
         if (model.get('visibility')) {
           var d = $('.infowindow-data');
 
-          d.text(Number(d.text()).toFixed(1));
+          if (d.text() !== 'No data') {
+            d.text(Number(d.text()).toFixed(1));
+          }
 
           $('.infowindow-pop').click(function(e) {
             e.preventDefault();
