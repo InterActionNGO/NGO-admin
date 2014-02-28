@@ -51,7 +51,7 @@
             <% if @organizations %>
             <ul class="chart chart-bars">
               <% @organizations.each do |o| %>
-                <li><a href="/donors/<%= @donor.id %>?organization_id=<%= o[1][:id] %>"><%= o[1][:name] %></a></li>
+                <li><a href="<%= donor_path(@donor, @carry_on_filters.merge(:organization_id => o[1][:id])) %>"><%= o[1][:name] %></a></li>
               <% end %>
             </ul>
             <% end %>
@@ -65,7 +65,7 @@
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
           <ul class="statistics_list" id="clustersWidth">
-          <% @donor.projects_sectors_or_clusters(@site).each do |category, count| %>
+          <% @donor.projects_sectors_or_clusters(@site, @filter_by_location).each do |category, count| %>
             <% unless category.name.eql?('N/A') %>
               <li>
                 <div class="tooltip">

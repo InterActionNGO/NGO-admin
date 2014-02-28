@@ -90,13 +90,26 @@ class Donor < ActiveRecord::Base
 
   # Array of arrays
   # [[category, count], [category, count]]
-  def projects_sectors_or_clusters(site)
+  def projects_sectors_or_clusters(site, location_id = nil, organization_id = nil)
+    if location_id.present?
+      if site.navigate_by_country
+        location_join = "inner join countries_projects cp on cp.project_id = p.id and cp.country_id = #{location_id.first}"
+      else
+        location_join = "inner join projects_regions as pr on pr.project_id = p.id and pr.region_id = #{location_id.last}"
+      end
+    end
+
+    if organization_id.present? && organization_id > 0
+      organization_condition = "and p.primary_organization_id=#{organization_id}"
+    end
+
     if site.navigate_by_sector?
       sql="select s.id,s.name,count(ps.*) as count from sectors as s
       inner join projects_sectors as ps on s.id=ps.sector_id
       inner join projects_sites as psi on ps.project_id=psi.project_id and psi.site_id=#{site.id}
-      inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
+      inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now()) #{organization_condition}
       inner join donations as d on psi.project_id=d.project_id and d.donor_id=#{self.id}
+      #{location_join}
       group by s.id,s.name order by count DESC"
       Sector.find_by_sql(sql).map do |s|
         [s,s.count.to_i]
@@ -105,8 +118,9 @@ class Donor < ActiveRecord::Base
       sql="select c.id,c.name,count(ps.*) as count from clusters as c
       inner join clusters_projects as cp on c.id=cp.cluster_id
       inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{site.id}
-      inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
+      inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now()) #{organization_condition}
       inner join donations as d on ps.project_id=d.project_id and d.donor_id=#{self.id}
+      #{location_join}
       group by c.id,c.name order by count DESC"
       Cluster.find_by_sql(sql).map do |c|
         [c,c.count.to_i]
@@ -116,16 +130,68 @@ class Donor < ActiveRecord::Base
 
   # Array of arrays
   # [[region, count], [region, count]]
-  def projects_regions(site, category_id = nil)
+#   def projects_regions(site, category_id = nil)
+#     Region.find_by_sql(
+# <<-SQL
+#   select r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id,count(ps.*) as count from regions as r
+#     inner join projects_regions as pr on r.id=pr.region_id
+#     inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{site.id}
+#     inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
+#     inner join donations as d on ps.project_id=d.project_id and d.donor_id=#{self.id}
+#     where r.level=#{site.level_for_region}
+#     group by r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id order by count DESC
+# SQL
+#     ).map do |r|
+#       [r, r.count.to_i]
+#     end
+#   end
+
+#   # Array of arrays
+#   # [[country, count], [country, count]]
+#   def projects_countries(site, category_id = nil)
+#     Country.find_by_sql(
+# <<-SQL
+#   select c.id,c.name,count(ps.*) as count from countries as c
+#     inner join countries_projects as pr on c.id=pr.country_id
+#     inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{site.id}
+#     inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
+#     inner join donations as d on ps.project_id=d.project_id and d.donor_id=#{self.id}
+#     group by c.id,c.name order by count DESC
+# SQL
+#     ).map do |r|
+#       [r, r.count.to_i]
+#     end
+#   end
+ # Array of arrays
+  # [[region, count], [region, count]]
+  def projects_regions(site, category_id = nil, organization_id = nil, location_id = nil)
+    if category_id.present? && category_id.to_i > 0
+      if site.navigate_by_cluster?
+        category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{category_id}"
+      else
+        category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{category_id}"
+      end
+    end
+
+    if organization_id.present? && organization_id.to_i > 0
+      organization_filter = "and p.primary_organization_id = #{organization_id}"
+    end
+
+    if location_id.present? 
+      location_filter = "and r.id IN (#{location_id})"
+    end
+
     Region.find_by_sql(
 <<-SQL
-  select r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id,count(ps.*) as count from regions as r
-    inner join projects_regions as pr on r.id=pr.region_id
-    inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{site.id}
-    inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
-    inner join donations as d on ps.project_id=d.project_id and d.donor_id=#{self.id}
-    where r.level=#{site.level_for_region}
-    group by r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id order by count DESC
+select r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id,count(ps.*) as count from regions as r
+  inner join projects_regions as pr on r.id=pr.region_id #{location_filter}
+  inner join projects as p on p.id=pr.project_id and (p.end_date is null OR p.end_date > now()) #{organization_filter}
+  inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{site.id}
+  inner join donations as dn on dn.project_id = p.id
+  #{category_join}
+  where dn.donor_id = #{self.id}
+        and r.level=#{site.level_for_region}
+  group by r.id,r.name,r.level,r.parent_region_id, r.path, r.country_id order by count DESC
 SQL
     ).map do |r|
       [r, r.count.to_i]
@@ -134,15 +200,33 @@ SQL
 
   # Array of arrays
   # [[country, count], [country, count]]
-  def projects_countries(site, category_id = nil)
+  def projects_countries(site, category_id = nil, organization_id = nil, location_id = nil)
+    if category_id.present? && category_id.to_i > 0
+      if site.navigate_by_cluster?
+        category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{category_id}"
+      else
+        category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{category_id}"
+      end
+    end
+
+    if organization_id.present? && organization_id.to_i > 0
+      organization_filter = "and p.primary_organization_id = #{organization_id}"
+    end
+
+    if location_id.present? 
+      location_filter = "and c.id IN (#{location_id})"
+    end
+
     Country.find_by_sql(
 <<-SQL
-  select c.id,c.name,count(ps.*) as count from countries as c
-    inner join countries_projects as pr on c.id=pr.country_id
-    inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{site.id}
-    inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
-    inner join donations as d on ps.project_id=d.project_id and d.donor_id=#{self.id}
-    group by c.id,c.name order by count DESC
+select c.id,c.name,count(ps.*) as count from countries as c
+  inner join countries_projects as pr on c.id=pr.country_id #{location_filter}
+  inner join projects as p on p.id=pr.project_id and (p.end_date is null OR p.end_date > now()) #{organization_filter}
+  inner join projects_sites as ps on p.id=ps.project_id and ps.site_id=#{site.id}
+  inner join donations as dn on dn.project_id = p.id
+  #{category_join}
+  where dn.donor_id = #{self.id}
+  group by c.id, c.name order by count DESC
 SQL
     ).map do |r|
       [r, r.count.to_i]
@@ -219,11 +303,15 @@ def projects_clusters_sectors(site, location_id = nil)
   end
 
   private
-
-    def clean_html
-      %W{ name description website twitter facebook contact_person_name contact_company contact_person_position contact_email contact_phone_number }.each do |att|
-        eval("self.#{att} = Sanitize.clean(self.#{att}.gsub(/\r/,'')) unless self.#{att}.blank?")
-      end
+  
+  def filter_by_category_valid?
+    @filter_by_category.present? && @filter_by_category.to_i > 0
+  end
+  
+  def clean_html
+    %W{ name description website twitter facebook contact_person_name contact_company contact_person_position contact_email contact_phone_number }.each do |att|
+      eval("self.#{att} = Sanitize.clean(self.#{att}.gsub(/\r/,'')) unless self.#{att}.blank?")
     end
+  end
 
 end
