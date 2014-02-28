@@ -29,23 +29,54 @@ class DonorsController < ApplicationController
                                 nil
                               end
 
+    @filter_by_organization = if params[:organization_id].present?
+                                params[:organization_id]
+                              else
+                                nil
+                              end
+
     @carry_on_filters = {}
     @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
     @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
+    @carry_on_filters[:organization_id] = params[:organization_id] if params[:organization_id].present?
 
     @donor_projects_by_location = if @site.navigate_by_country?
-      @donor.projects_countries(@site, @filter_by_category)
+      @donor.projects_countries(@site, @filter_by_category, @filter_by_organization, @filter_by_location)
     else
-      @donor.projects_regions(@site, @filter_by_category)
+      @donor.projects_regions(@site, @filter_by_category, @filter_by_organization, @filter_by_location)
     end
     
-    if @filter_by_location
+    # if @filter_by_location
+    #   @location_name = if @filter_by_location.size == 1
+    #     "#{Country.where(:id => @filter_by_location.first).first.name}"
+    #   else
+    #     region = Region.where(:id => @filter_by_location.last).first
+    #     "#{region.country.name}/#{region.name}" rescue ''
+    #   end
+    # end
+
+    @filter_name = ''
+
+    if @filter_by_category && @filter_by_location
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
       @location_name = if @filter_by_location.size == 1
         "#{Country.where(:id => @filter_by_location.first).first.name}"
       else
         region = Region.where(:id => @filter_by_location.last).first
         "#{region.country.name}/#{region.name}" rescue ''
       end
+      @filter_name =  "#{@category_name} projects in #{@location_name}"
+    elsif @filter_by_location
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name = "projects in #{@location_name}"
+    # elsif @donor.filter_by_category_valid?
+    #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
+    #   @filter_name =  "#{@category_name} projects"
     end
 
     projects_options = {
