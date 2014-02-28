@@ -75,7 +75,7 @@
                   <span class="bottom_tooltip"></span>
                 </div>
                 <!-- <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>"><span class="aller" style="width:<%= cluster_sector_width_donors(count, @site.projects_sectors_or_clusters.map{|e| e.last}.max) %>px"><%= count %></span></a> -->
-                <a class="<%= category.css_class %> icon_statistics" href="<%= donor_path(@donor, @carry_on_filters.merge(:category_id => category.id)) %>"><span class="aller" style="width:<%= cluster_sector_width(count, 
+                <a class="<%= category.css_class %> icon_statistics" href="<%= donor_path(@donor, @carry_on_filters.merge(:category_id => category.id)) %>"><span class="aller" style="width:<%= cluster_sector_width(count,
                     @donor_projects_clusters_sectors.map{|e| e.last}.max) %>px"><%= count %></span></a>
               </li>
             <% end %>
@@ -142,7 +142,7 @@
         </div>
       <div class="popup_background"></div>
 
-      <p class="disclaimer"><sup>*</sup>This projects show only a portion of activities supported by this donor globally.</p>
+      <p class="disclaimer"><sup>*</sup>The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities.</p>
 
       <div id="projects">
         <%= render :partial => 'donors/projects' %>
