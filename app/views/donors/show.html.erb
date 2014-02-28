@@ -92,6 +92,32 @@
           </div>
         <% end %>
 
+        <% unless @donor.twitter.nil? && @donor.facebook.nil? && @donor.website.nil? %>
+          <div class="block">
+            <% if @donor.logo? %>
+             <% if @donor.website? %>
+                <a href="<%= @donor.website %>"><%= image_tag(@donor.logo.url(:small), :class=>'logo') %></a>
+             <%else%>
+                <%= image_tag(@donor.logo.url(:small), :class=>'logo') %>
+             <%end%>
+            <%end%>
+            <% if @donor.twitter? || @donor.facebook? %>
+            <p class="social">
+              <% if @donor.twitter? %>
+                <%= link_to("follow us", "http://twitter.com/#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %>
+              <% end %>
+              <% if @donor.twitter? &&  @donor.facebook? %> / <% end %>
+              <% if @donor.facebook? %>
+                <%= link_to("visit our page", "http://facebook.com/#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %>
+                <% end %>
+            </p>
+            <% end %>
+            <% if @donor.website? %>
+              <p class="website"><%= link_to(truncate(@donor.website, :length=>41), @donor.website, :rel => 'nofollow', :target => '_blank') %></p>
+            <% end %>
+          </div>
+        <%end%>
+
         <% if !@donor.media_resources.empty? %>
           <div class="block resources">
             <h3>MEDIA RESOURCES</h3>
@@ -113,6 +139,8 @@
             <%end%>
           </div>
         <% end %>
+
+        <%= render :partial=>"shared/sharing"%>
 
       </div>
     </div>
