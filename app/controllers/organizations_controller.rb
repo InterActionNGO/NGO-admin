@@ -146,7 +146,7 @@ class OrganizationsController < ApplicationController
                         c.name as name,
                         c.center_lon AS lon,
                         c.center_lat AS lat,
-                        null as url, 
+                        null as url,
                         c.code
                       FROM projects AS p
                       INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())

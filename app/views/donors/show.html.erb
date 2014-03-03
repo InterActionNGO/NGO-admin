@@ -6,6 +6,7 @@
           <h3>DONOR</h3>
           <h1><%= @donor.name.html_safe %></h1>
         </div>
+        <%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , organization_path(@donor), :class => 'filter' if @filter_name.present? %>
       </div>
     </div>
 
@@ -149,7 +150,7 @@
     <!-- RIGHT PART -->
     <div class="right" id="projects_div">
       <h3>
-        Funding <%= pluralize(@projects_count, 'project', 'projects') %>
+        <%= donors_list_subtitle %>
 
         <ul class="download">
           <li><%= link_to 'CSV', donor_path(@donor, @carry_on_filters.merge(:format => :csv)) %></li>
