@@ -9,7 +9,7 @@
               <ul class="selector-options">
                 <li><a href="#" data-layer="none">None</a></li>
                 <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-                  <li><a href="#" id="CBLayer<%= sl.layer.title %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
+                  <li><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
                     data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
                 <% end %>
               </ul>
