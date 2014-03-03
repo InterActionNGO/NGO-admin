@@ -47,22 +47,27 @@
           </div>
         </div>
 
-        <div class="block statistics less">
-          <h3>Affiliated Organizations</h3>
-            <% if @organizations %>
-            <ul class="chart chart-bars">
-              <% @organizations.each do |o| %>
-                <li><a href="<%= donor_path(@donor, @carry_on_filters.merge(:organization_id => o[1][:id])) %>"><%= o[1][:name] %></a></li>
+        <% unless @filter_by_organization.present? || @donor_projects_by_location.empty? %>
+          <div class="block statistics less">
+            <h3>Affiliated Organizations</h3>
+              <% if @organizations %>
+              <ul class="chart chart-bars">
+                <% @organizations.each do |o| %>
+                  <li><a href="<%= donor_path(@donor, @carry_on_filters.merge(:organization_id => o[1][:id])) %>"><%= o[1][:name] %></a></li>
+                <% end %>
+              </ul>
               <% end %>
-            </ul>
-            <% end %>
-        </div>
+          </div>
+        <% end %>
 
-        <div class="block statistics less">
-          <h3>PROJECT LOCATIONS</h3>
-          <%= raw(projects_by_location(@site, @donor_projects_by_location)) %>
-        </div>
+        <% unless @filter_by_location.present? || @donor_projects_by_location.empty? %>
+          <div class="block statistics less">
+            <h3>PROJECT LOCATIONS</h3>
+            <%= raw(projects_by_location(@site, @donor_projects_by_location)) %>
+          </div>
+        <% end %>
 
+        <% unless @site.nil? || @filter_by_category.present? || @donor_projects_clusters_sectors.empty? %>
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
           <ul class="statistics_list" id="clustersWidth">
@@ -81,12 +86,11 @@
           <% end %>
           </ul>
         </div>
+        <% end %>
 
         <% if @contact_data[:show] %>
           <div class="block">
             <h3>CONTACT INFORMATION</h3>
-            <script>console.log(<%= @contact_data[:show] %>);</script>
-
             <p><strong><%= @donor.contact_person_name %></strong><br/><%= @donor.contact_person_position %></p>
             <p><%= @donor.contact_phone_number %><br/><% unless (@donor.contact_email.nil?)||(@donor.contact_email.empty?) %><%= link_to(@donor.contact_email, "mailto:#{@donor.contact_email}") %><%end%></p>
           </div>
