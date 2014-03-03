@@ -1,5 +1,7 @@
 class DonorsController < ApplicationController
 
+  include DonorsHelper
+
   respond_to :html, :kml, :js, :xls, :csv
   layout :sites_layout
 
@@ -78,6 +80,8 @@ class DonorsController < ApplicationController
     #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
     #   @filter_name =  "#{@category_name} projects"
     end
+
+    puts @filter_name
 
     projects_options = {
       :donor_id => @donor.id,
