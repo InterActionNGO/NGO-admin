@@ -4034,6 +4034,25 @@ div {
       color: #333;
     }
 
+    .filter {
+      padding: 0 30px 20px 30px;
+      margin-top: -10px;
+      display: block;
+      width: 239px;
+      font: bold 13px "Open Sans Bold";
+      color: white;
+      font-weight: normal;
+      text-transform: uppercase;
+
+      a {
+        color: white;
+      }
+
+      img {
+        margin: 2px 5px;
+      }
+    }
+
     &.home {
       .site_brand {
         min-height: 155px;
