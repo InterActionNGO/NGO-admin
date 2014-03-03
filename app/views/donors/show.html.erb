@@ -128,7 +128,7 @@
             <h3>MEDIA RESOURCES</h3>
             <% @donor.media_resources.each do |media| %>
               <ul>
-                <li><a href="<%= media.is_a_video? ? media.video_url : media.picture.url(:original) %>" target="_blank"><%= media.caption.present? ? media.caption : media.picture_file_name %></a></li>
+                <li><a href="<%= media.is_a_video? ? media.video_url : media.picture.url(:original) %>" target="_blank"><%= media.caption.present? ? media.caption : media.picture_file_name.present? ? media.picture_file_name : media.video_url %></a></li>
               </ul>
             <%end%>
           </div>
