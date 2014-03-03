@@ -1,12 +1,14 @@
 class DonorsController < ApplicationController
 
+  include DonorsHelper
+
   respond_to :html, :kml, :js, :xls, :csv
   layout :sites_layout
 
   def show
     @donor = Donor.find(params[:id])
     @donor.attributes = @donor.attributes_for_site(@site)
-    
+
     @filter_by_category = if params[:category_id].present?
                             params[:category_id].to_i
                           else
@@ -45,7 +47,7 @@ class DonorsController < ApplicationController
     else
       @donor.projects_regions(@site, @filter_by_category, @filter_by_organization, @filter_by_location)
     end
-    
+
     # if @filter_by_location
     #   @location_name = if @filter_by_location.size == 1
     #     "#{Country.where(:id => @filter_by_location.first).first.name}"
@@ -79,14 +81,16 @@ class DonorsController < ApplicationController
     #   @filter_name =  "#{@category_name} projects"
     end
 
+    puts @filter_name
+
     projects_options = {
       :donor_id => @donor.id,
       :per_page => 10,
       :page => params[:page],
       :order => 'created_at DESC',
       :start_in_page => params[:start_in_page],
-      :organization_filter => params[:organization_id],  
-      :category_id => params[:category_id]    
+      :organization_filter => params[:organization_id],
+      :category_id => params[:category_id]
     }
     if @filter_by_location.present?
       if @filter_by_location.size > 1
@@ -124,6 +128,7 @@ class DonorsController < ApplicationController
     end
 
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
+
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
 
     respond_to do |format|
@@ -161,7 +166,7 @@ class DonorsController < ApplicationController
                   r.center_lon AS lon,
                   r.center_lat AS lat,
                   CASE WHEN count(ps.project_id) > 1 THEN
-                   r.path
+                   '#{carry_on_url}'||r.path
                   ELSE
                    '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                   END AS url,
@@ -180,7 +185,7 @@ class DonorsController < ApplicationController
                   c.name as name,
                   c.center_lon AS lon,
                   c.center_lat AS lat,
-                  null as url, 
+                  null as url,
                   c.code
                 FROM projects AS p
                 INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
@@ -235,14 +240,14 @@ class DonorsController < ApplicationController
                   group by c.id,c.name,lon,lat,c.name,c.iso2_code"
           end
         end
-        
+
         result=ActiveRecord::Base.connection.execute(sql)
         @count = result.count
         result.each do |r|
           @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
         end
 
-        @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number, 
+        @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number,
           :show => (@donor.contact_person_name.length>0 || @donor.contact_email.length>0 || @donor.contact_phone_number.length>0 )? true : false }
 
         @map_data_max_count = 0
