@@ -96,7 +96,7 @@
           </div>
         <% end %>
 
-        <% unless @donor.twitter.nil? && @donor.facebook.nil? && @donor.website.nil? %>
+        <% unless @donor.twitter.blank? && @donor.facebook.blank? && @donor.website.blank? %>
           <div class="block">
             <% if @donor.logo? %>
              <% if @donor.website? %>
