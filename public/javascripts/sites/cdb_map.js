@@ -374,7 +374,7 @@ var global_index = 10;
     var hH = $('.float_head').height();
 
     if (hH > 170) {
-      $('#controlZoom').css('top', hH - 150);
+      $('#controlZoom').css('top', hH - 110);
     }
 
     $('#zoomOut').click(function(e) {
