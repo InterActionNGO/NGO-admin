@@ -122,13 +122,13 @@
           </div>
         <%end%>
 
-        <!--
+        
         <% if !@donor.media_resources.empty? %>
           <div class="block resources">
             <h3>MEDIA RESOURCES</h3>
             <% @donor.media_resources.each do |media| %>
               <ul>
-                <li><a href="<%= media.picture_file_name %>" target="_blank"><%= media.picture_file_name %></a></li>
+                <li><a href="<%= media.picture.url(:original) %>" target="_blank"><%= media.caption.present? ? media.caption : media.picture_file_name %></a></li>
               </ul>
             <%end%>
           </div>
@@ -144,7 +144,7 @@
             <%end%>
           </div>
         <% end %>
-        -->
+        
 
         <%= render :partial=>"shared/sharing"%>
 
