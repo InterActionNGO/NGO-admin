@@ -1,7 +1,7 @@
 module DonorsHelper
 
   def donors_list_subtitle
-    by = "BY #{@donor.name}"
+    by = "FUNDED BY #{@donor.name}"
 
     if @filter_by_location && @filter_by_category
       pluralize(@projects_count, "#{@category_name} PROJECT", "#{@category_name} PROJECTS") + ' ' + by + " in #{@location_name}"
