@@ -248,7 +248,7 @@ class DonorsController < ApplicationController
         end
 
         @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number,
-          :show => (@donor.contact_person_name.length>0 || @donor.contact_email.length>0 || @donor.contact_phone_number.length>0 )? true : false }
+          :show => (@donor.contact_person_name.present?   || @donor.contact_email.present?  || @donor.contact_phone_number.present?  )? true : false }
 
         @map_data_max_count = 0
         @map_data.each do |md|

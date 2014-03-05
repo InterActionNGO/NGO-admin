@@ -29,6 +29,30 @@ module ProjectsHelper
     end
   end
 
+  def subtitle_donors_page(project, site, donor_lnk)
+    clusters_sectors = if site.navigate_by_sector?
+      sectors_to_sentence(project)
+    else
+      clusters_to_sentence(project)
+    end
+    place        = project_regions_and_countries(project)
+    #organization = "by #{link_to project['organization_name'], organization_path(project['organization_id'])}"
+    organization = "by #{ link_to project['organization_name'],  donor_lnk.html_safe}"
+
+    case controller_name
+    when 'sites'
+      raw("#{clusters_sectors} #{place} #{organization}")
+    when 'organizations'
+      raw("#{clusters_sectors} #{place}")
+    when 'clusters_sectors'
+      raw("#{place} #{organization}")
+    when 'georegion'
+      raw("#{clusters_sectors} #{organization}")
+    when 'donors'
+      raw("#{clusters_sectors} #{place} #{organization}")
+    end
+  end
+
   def clusters_to_sentence(project)
     return "" if project['clusters'].nil? || project['cluster_ids'].nil?
     clusters = project['clusters'].split('|').reject{|c| c.blank?}
