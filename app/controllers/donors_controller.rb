@@ -5,6 +5,7 @@ class DonorsController < ApplicationController
   respond_to :html, :kml, :js, :xls, :csv
   layout :sites_layout
 
+
   def show
     @donor = Donor.find(params[:id])
     @donor.attributes = @donor.attributes_for_site(@site)
@@ -92,6 +93,7 @@ class DonorsController < ApplicationController
       :organization_filter => params[:organization_id],
       :category_id => params[:category_id]
     }
+
     if @filter_by_location.present?
       if @filter_by_location.size > 1
         projects_options[:organization_region_id] = @filter_by_location.last
@@ -110,8 +112,30 @@ class DonorsController < ApplicationController
     end
 
     @organizations = @organizations.sort_by { |k, v| v[:name] }
+
+    ################### Needs refactor ######################
+      pageless_options = {
+        :donor_id => @donor.id,
+        :per_page => Project.all.size,
+        :order => 'created_at DESC',
+        :organization_filter => params[:organization_id],
+        :category_id => params[:category_id]
+      }
+      @projects_all = Project.custom_find @site, pageless_options
+      @pageless_organizations= {}
+      @projects_all.each do |pr|
+        if @pageless_organizations.key?(pr['organization_id'])
+          @pageless_organizations[pr['organization_id']][:count] += 1
+        else
+          @pageless_organizations[pr['organization_id']] = {:count => 1, :name => pr['organization_name'], :id => pr['organization_id'] }
+        end
+      end
+      @pageless_organizations = @pageless_organizations.sort_by { |k, v| v[:name] }
+    ################### Needs refactor end ######################
+
     @map_data = []
     @organizations_data = []
+
 
     options_export = {
       :donor      => @donor.id,
