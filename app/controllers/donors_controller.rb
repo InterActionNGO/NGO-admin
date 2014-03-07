@@ -5,6 +5,7 @@ class DonorsController < ApplicationController
   respond_to :html, :kml, :js, :xls, :csv
   layout :sites_layout
 
+
   def show
     @donor = Donor.find(params[:id])
     @donor.attributes = @donor.attributes_for_site(@site)
@@ -92,6 +93,7 @@ class DonorsController < ApplicationController
       :organization_filter => params[:organization_id],
       :category_id => params[:category_id]
     }
+
     if @filter_by_location.present?
       if @filter_by_location.size > 1
         projects_options[:organization_region_id] = @filter_by_location.last
@@ -110,8 +112,30 @@ class DonorsController < ApplicationController
     end
 
     @organizations = @organizations.sort_by { |k, v| v[:name] }
+
+    ################### Needs refactor ######################
+      pageless_options = {
+        :donor_id => @donor.id,
+        :per_page => Project.all.size,
+        :order => 'created_at DESC',
+        :organization_filter => params[:organization_id],
+        :category_id => params[:category_id]
+      }
+      @projects_all = Project.custom_find @site, pageless_options
+      @pageless_organizations= {}
+      @projects_all.each do |pr|
+        if @pageless_organizations.key?(pr['organization_id'])
+          @pageless_organizations[pr['organization_id']][:count] += 1
+        else
+          @pageless_organizations[pr['organization_id']] = {:count => 1, :name => pr['organization_name'], :id => pr['organization_id'] }
+        end
+      end
+      @pageless_organizations = @pageless_organizations.sort_by { |k, v| v[:name] }
+    ################### Needs refactor end ######################
+
     @map_data = []
     @organizations_data = []
+
 
     options_export = {
       :donor      => @donor.id,
@@ -248,7 +272,7 @@ class DonorsController < ApplicationController
         end
 
         @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number,
-          :show => (@donor.contact_person_name.length>0 || @donor.contact_email.length>0 || @donor.contact_phone_number.length>0 )? true : false }
+          :show => (@donor.contact_person_name.present?   || @donor.contact_email.present?  || @donor.contact_phone_number.present?  )? true : false }
 
         @map_data_max_count = 0
         @map_data.each do |md|
