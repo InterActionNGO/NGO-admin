@@ -50,9 +50,9 @@
         <% unless @filter_by_organization.present? || @donor_projects_by_location.empty? %>
           <div class="block statistics less">
             <h3>Affiliated Organizations</h3>
-              <% if @organizations %>
+              <% if @pageless_organizations %>
               <ul class="chart chart-bars">
-                <% @organizations.each do |o| %>
+                <% @pageless_organizations.each do |o| %>
                   <li><a href="<%= donor_path(@donor, @carry_on_filters.merge(:organization_id => o[1][:id])) %>"><%= o[1][:name] %></a></li>
                 <% end %>
               </ul>
@@ -176,7 +176,7 @@
         </div>
       <div class="popup_background"></div>
 
-      <p class="disclaimer">The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities.</p>
+      <p class="disclaimer"><%= params[:organization_id] ? "In some cases, this organization may be sub-recipient (rather than a direct recipient) of this donor's funding." : "The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities." %> </p>
 
       <div id="projects">
         <%= render :partial => 'donors/projects' %>
