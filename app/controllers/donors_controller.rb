@@ -147,6 +147,8 @@ class DonorsController < ApplicationController
 
     if params[:location_id]
       @projects_count = @projects.count
+    elsif params[:category_id]
+      @projects_count = @projects.total_entries
     else
       @projects_count = @donor.donated_projects_count(@site, params)
     end
