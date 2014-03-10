@@ -80,6 +80,8 @@ class DonorsController < ApplicationController
     # elsif @donor.filter_by_category_valid?
     #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
     #   @filter_name =  "#{@category_name} projects"
+    elsif @filter_by_category
+      @filter_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
     end
 
     puts @filter_name
