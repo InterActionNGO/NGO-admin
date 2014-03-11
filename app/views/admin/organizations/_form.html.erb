@@ -12,7 +12,8 @@
 
   <div class="field">
     <%= f.label :description, raw("Description<strong>*</strong>") %>
-    <%= f.text_area :description, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" %>
+    <div class="charNum-helper">characters left: <span id="charNum"></span></div>
+    <%= f.text_area :description, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}", :id => "textCounter" %>
   </div>
 
   <% if current_user.admin? %>
