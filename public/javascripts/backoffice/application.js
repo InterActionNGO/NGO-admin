@@ -168,33 +168,33 @@ $(document).ready(function(ev){
 
     });
 
-		$('a.show_password_link').click(function(evt){
+    $('a.show_password_link').click(function(evt){
       evt.preventDefault();
-			if ($(this).text() == "show values") {
-				$("input#organization_user_attributes_password").get(0).setAttribute('type','text')
-				$("input#organization_user_attributes_password_confirmation").get(0).setAttribute('type','text')
-				$(this).text("hide values");
-			} else {
-				$("input#organization_user_attributes_password").get(0).setAttribute('type','password')
-				$("input#organization_user_attributes_password_confirmation").get(0).setAttribute('type','password')
-				$(this).text("show values");
-			}
+      if ($(this).text() == "show values") {
+        $("input#organization_user_attributes_password").get(0).setAttribute('type','text')
+        $("input#organization_user_attributes_password_confirmation").get(0).setAttribute('type','text')
+        $(this).text("hide values");
+      } else {
+        $("input#organization_user_attributes_password").get(0).setAttribute('type','password')
+        $("input#organization_user_attributes_password_confirmation").get(0).setAttribute('type','password')
+        $(this).text("show values");
+      }
     });
 
-		$('.block_user').click(function(evt){
+    $('.block_user').click(function(evt){
       evt.preventDefault();
-			$(this).toggleClass('selected');
-			if ($(this).hasClass('selected')){
-				$(this).next('input[type=hidden]').val(true);
-			} else {
-				$(this).next('input[type=hidden]').val(false);
-			}
-		});
+      $(this).toggleClass('selected');
+      if ($(this).hasClass('selected')){
+        $(this).next('input[type=hidden]').val(true);
+      } else {
+        $(this).next('input[type=hidden]').val(false);
+      }
+    });
 
     $('#reset_password').click(function(evt){
       evt.preventDefault();
       var new_password = password();
-			$('a.show_password_link').text("hide values");
+      $('a.show_password_link').text("hide values");
       $('div.admin .password').each(function(index, item){
         item.setAttribute('type', 'text');
         $(item).val(new_password);
@@ -388,3 +388,17 @@ $(document).ready(function(ev){
       var d = max - min + 1; // distribution range
       return Math.floor(Math.random() * d + min);
   };
+
+
+// Count remaining characters in text-field
+
+$('#textCounter').keyup( function (e) {
+    var val = e.target;
+    var len = val.value.length;
+
+    if (len > 800) {
+      val.value = val.value.substring(0, 800);
+    } else {
+      $('#charNum').text(800 - len);
+    }
+  });
