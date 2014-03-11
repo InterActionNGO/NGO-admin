@@ -207,6 +207,7 @@ class DonorsController < ApplicationController
                 #{category_join}
                 WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
+              
                 UNION
                 SELECT c.id,
                 count(distinct ps.project_id) AS count,
@@ -223,6 +224,7 @@ class DonorsController < ApplicationController
                 #{category_join}
                 WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY c.id,c.name,lon,lat,c.code
+              
               SQL
             else
                 <<-SQL
@@ -272,9 +274,14 @@ class DonorsController < ApplicationController
         result=ActiveRecord::Base.connection.execute(sql)
         @count = result.count
         result.each do |r|
-          @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
+          if @count > 1 && params[:location_id]
+            if r['code'].nil?
+              @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
+            end
+          else
+              @map_data << {:name => r['name'], :lon => r['lon'], :lat => r['lat'], :count => r['count'], :url => r['url'], :total_in_region => r['total_in_region']}
+          end
         end
-
         @contact_data = {:name => @donor.contact_person_name, :position => @donor.contact_person_position, :email => @donor.contact_email, :phone_number => @donor.contact_phone_number,
           :show => (@donor.contact_person_name.present?   || @donor.contact_email.present?  || @donor.contact_phone_number.present?  )? true : false }
 
