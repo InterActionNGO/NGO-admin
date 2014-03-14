@@ -29,23 +29,25 @@
         <div class="head">
           <h2>OVERVIEW</h2>
         </div>
-
-        <div class="block box_info donors">
-          <div class="donors_account">
-            <label>PROJECTS</label>
-            <h2><%= @projects.total_entries %></h2>
+        
+        <% unless @filter_by_location.present? %>
+          <div class="block box_info donors">
+            <div class="donors_account">
+              <label>PROJECTS</label>
+              <h2><%= @projects.total_entries %></h2>
+            </div>
+            <div class="donors_account">
+              <label>
+                <% if @site.navigate_by_country %>
+                  COUNTRIES
+                 <% else %>
+                  REGIONS
+                 <% end %>
+              </label>
+              <h2><%= @count %></h2>
+            </div>
           </div>
-          <div class="donors_account">
-            <label>
-              <% if @site.navigate_by_country %>
-                COUNTRIES
-               <% else %>
-                REGIONS
-               <% end %>
-            </label>
-            <h2><%= @count %></h2>
-          </div>
-        </div>
+        <% end %>
 
         <% unless @filter_by_organization.present? || @donor_projects_by_location.empty? %>
           <div class="block statistics less">
