@@ -29,23 +29,25 @@
         <div class="head">
           <h2>OVERVIEW</h2>
         </div>
-
-        <div class="block box_info donors">
-          <div class="donors_account">
-            <label>PROJECTS</label>
-            <h2><%= @projects.total_entries %></h2>
+        
+        <% unless @filter_by_location.present? %>
+          <div class="block box_info donors">
+            <div class="donors_account">
+              <label>PROJECTS</label>
+              <h2><%= @projects.total_entries %></h2>
+            </div>
+            <div class="donors_account">
+              <label>
+                <% if @site.navigate_by_country %>
+                  COUNTRIES
+                 <% else %>
+                  REGIONS
+                 <% end %>
+              </label>
+              <h2><%= @count %></h2>
+            </div>
           </div>
-          <div class="donors_account">
-            <label>
-              <% if @site.navigate_by_country %>
-                COUNTRIES
-               <% else %>
-                REGIONS
-               <% end %>
-            </label>
-            <h2><%= @count %></h2>
-          </div>
-        </div>
+        <% end %>
 
         <% unless @filter_by_organization.present? || @donor_projects_by_location.empty? %>
           <div class="block statistics less">
@@ -71,7 +73,7 @@
         <div class="block statistics">
           <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
           <ul class="statistics_list" id="clustersWidth">
-          <% @donor.projects_sectors_or_clusters(@site, @filter_by_location).each do |category, count| %>
+          <% @donor.projects_sectors_or_clusters(@site, @filter_by_location, @filter_by_organization, params[:location_id] && params[:location_id].to_s.match(/\//) ? true : false ).each do |category, count| %>
             <% unless category.name.eql?('N/A') %>
               <li>
                 <div class="tooltip">
