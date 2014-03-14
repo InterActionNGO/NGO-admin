@@ -33,7 +33,7 @@ class DonorsController < ApplicationController
                               end
 
     @filter_by_organization = if params[:organization_id].present?
-                                params[:organization_id]
+                                params[:organization_id].to_i
                               else
                                 nil
                               end
@@ -114,6 +114,7 @@ class DonorsController < ApplicationController
     end
 
     @organizations = @organizations.sort_by { |k, v| v[:name] }
+    @organization = Organization.find(params[:organization_id]) if params[:organization_id]
 
     ################### Organizations all, not per page ######################
       pageless_options = {
