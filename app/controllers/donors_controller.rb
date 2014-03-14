@@ -33,7 +33,7 @@ class DonorsController < ApplicationController
                               end
 
     @filter_by_organization = if params[:organization_id].present?
-                                params[:organization_id]
+                                params[:organization_id].to_i
                               else
                                 nil
                               end
