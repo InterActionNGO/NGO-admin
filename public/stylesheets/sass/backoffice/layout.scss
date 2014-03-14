@@ -1341,6 +1341,13 @@ div {
             width: 419px;
             margin: 0;
           }
+          .charNum-helper {
+            position: absolute;
+            right: -145px;
+            margin: 18px 0 0 1px;
+            color: #999999;
+          }
+
         }
         a.preview {
           float: left;
@@ -6212,7 +6219,7 @@ span.chars {
     margin: 20px 10px 0 0;
     width: auto;
     font: normal 13px Arial !important;
-    color: #999999;
+    color: #999999 !important;
     &.html {
       position: absolute;
       top: 30px;
@@ -6230,6 +6237,10 @@ span.chars {
     &.few {
       color: #FF9900;
     }
+  }
+  .chars-counter {
+    position: absolute;
+    right: -150px;
   }
 }
 
