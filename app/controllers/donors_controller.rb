@@ -115,6 +115,8 @@ class DonorsController < ApplicationController
 
     @organizations = @organizations.sort_by { |k, v| v[:name] }
 
+    @organization = Organization.find(params[:organization_id]) if params[:organization_id]
+
     ################### Needs refactor ######################
       pageless_options = {
         :donor_id => @donor.id,
