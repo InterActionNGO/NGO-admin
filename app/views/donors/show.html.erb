@@ -49,7 +49,7 @@
           </div>
         <% end %>
 
-        <% unless @filter_by_organization.present? || @donor_projects_by_location.empty? %>
+        <% unless @filter_by_organization.present? %>
           <div class="block statistics less">
             <h3>Affiliated Organizations</h3>
               <% if @pageless_organizations %>

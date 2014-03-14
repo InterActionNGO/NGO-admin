@@ -116,7 +116,8 @@ class DonorsController < ApplicationController
     @organizations = @organizations.sort_by { |k, v| v[:name] }
     @organization = Organization.find(params[:organization_id]) if params[:organization_id]
 
-    ################### Organizations all, not per page ######################
+    ################### Pageless organizations ######################
+
       pageless_options = {
         :donor_id => @donor.id,
         :per_page => Project.all.size,
@@ -141,7 +142,9 @@ class DonorsController < ApplicationController
         end
       end
       @pageless_organizations = @pageless_organizations.sort_by { |k, v| v[:name] }
-    ################### Organizations all, not per page end ######################
+
+    ################### Pageless organizations end ######################
+
 
     @map_data = []
     @organizations_data = []
@@ -166,7 +169,7 @@ class DonorsController < ApplicationController
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
 
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
-
+    organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id]}" if params[:organization_id]
     respond_to do |format|
       format.html do
         if @filter_by_category.present?
@@ -213,7 +216,7 @@ class DonorsController < ApplicationController
                 INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.first}
                 INNER JOIN donations on donations.project_id = p.id
                 #{category_join}
-                WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i} #{organization_location_condition}
                 GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
               
                 UNION
@@ -254,7 +257,7 @@ class DonorsController < ApplicationController
                   INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.shift} AND r.id IN (#{@filter_by_location.join(',')})
                   INNER JOIN donations on donations.project_id = p.id
                   #{category_join}
-                  WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                  WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i} 
                   GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
                 SQL
             end
