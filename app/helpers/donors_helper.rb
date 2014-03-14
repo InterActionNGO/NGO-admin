@@ -10,6 +10,8 @@ module DonorsHelper
       pluralize(@projects_count, "PROJECT", "PROJECTS") + ' ' + by + " in #{@location_name}"
     elsif @filter_by_category
       pluralize(@projects_count, "#{@filter_name} PROJECT", "#{@filter_name} PROJECTS") + ' ' + by
+    elsif @filter_by_organization
+      pluralize(@projects_count, "PROJECT", "PROJECTS") + ' ' + by + " implemented  by #{@organization.name}" 
     else
       pluralize(@projects_count, "PROJECT", "PROJECTS") + ' ' + by
     end
