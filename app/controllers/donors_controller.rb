@@ -125,6 +125,13 @@ class DonorsController < ApplicationController
         :organization_filter => params[:organization_id],
         :category_id => params[:category_id]
       }
+      if @filter_by_location.present?
+        if @filter_by_location.size > 1
+          pageless_options[:organization_region_id] = @filter_by_location.last
+        else
+          pageless_options[:organization_country_id] = @filter_by_location.first
+        end
+      end
       @projects_all = Project.custom_find @site, pageless_options
       @pageless_organizations= {}
       @projects_all.each do |pr|
