@@ -117,7 +117,7 @@ class DonorsController < ApplicationController
 
     @organization = Organization.find(params[:organization_id]) if params[:organization_id]
 
-    ################### Needs refactor ######################
+    ################### Pageless organizations ######################
       pageless_options = {
         :donor_id => @donor.id,
         :per_page => Project.all.size,
@@ -142,7 +142,7 @@ class DonorsController < ApplicationController
         end
       end
       @pageless_organizations = @pageless_organizations.sort_by { |k, v| v[:name] }
-    ################### Needs refactor end ######################
+    ################### Pageless organizations end ######################
 
     @map_data = []
     @organizations_data = []
