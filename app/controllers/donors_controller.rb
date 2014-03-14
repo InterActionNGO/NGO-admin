@@ -160,7 +160,7 @@ class DonorsController < ApplicationController
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
 
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
-
+    organization_condition = "AND p.primary_organization_id = #{params[:organization_id]}"
     respond_to do |format|
       format.html do
         if @filter_by_category.present?
@@ -207,7 +207,7 @@ class DonorsController < ApplicationController
                 INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.first}
                 INNER JOIN donations on donations.project_id = p.id
                 #{category_join}
-                WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i} #{organization_condition if params[:organization_id] }
                 GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
               
                 UNION
