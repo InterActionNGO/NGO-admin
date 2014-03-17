@@ -212,8 +212,22 @@ class Project < ActiveRecord::Base
         region_id,
       SQL
     end
-    if options[:region]
+    if options[:category] && options[:from_donors]
+      if site.navigate_by_cluster?
+        where << "clpr.cluster_id = #{options[:category]}"
+      else
+        where << "ps2.sector_id = #{options[:category]}"
+      end
+      if options[:organization] && options[:from_donors]
+        where << "p.primary_organization_id = #{options[:organization]}"
+        where << "site_id = #{site.id}" if site
+      end
+    elsif options[:region]
       where << "pr.region_id = #{options[:region]} and site_id=#{site.id}"
+      if options[:organization] && options[:from_donors]
+        where << "p.primary_organization_id = #{options[:organization]}"
+        where << "site_id = #{site.id}" if site
+      end
       if options[:region_category_id]
         if site.navigate_by_cluster?
           where << "clpr.cluster_id = #{options[:region_category_id]}"
@@ -223,6 +237,10 @@ class Project < ActiveRecord::Base
       end
     elsif options[:country]
       where << "cp.country_id = #{options[:country]} and site_id = #{site.id}"
+      if options[:organization] && options[:from_donors]
+        where << "p.primary_organization_id = #{options[:organization]}"
+        where << "site_id = #{site.id}" if site
+      end
       if options[:country_category_id]
         if site.navigate_by_cluster?
           where << "clpr.cluster_id = #{options[:country_category_id]}"

@@ -157,6 +157,7 @@ class DonorsController < ApplicationController
       :order         => 'created_at DESC',
       :start_in_page => params[:start_in_page]
     }
+   
 
     if params[:location_id]
       @projects_count = @projects.count
@@ -167,6 +168,20 @@ class DonorsController < ApplicationController
     end
 
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
+
+    if @filter_by_location.present?
+      if @filter_by_location.size > 1
+        options_export[:region] = @filter_by_location.last
+        options_export[:region_category_id] = params[:category_id] if params[:category_id].present?
+      else
+        options_export[:country] = @filter_by_location.first
+        options_export[:country_category_id] = params[:category_id] if params[:category_id].present?
+      end
+    end
+    options_export[:organization] = params[:organization_id] if params[:organization_id].present?
+    options_export[:category] = params[:category_id] if params[:category_id].present? && !@filter_by_location.present?
+    options_export[:from_donors] = true
+
 
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
     carry_on_url_2 = donor_path(@donor, @carry_on_filters)
