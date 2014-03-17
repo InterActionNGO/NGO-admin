@@ -259,7 +259,7 @@ class DonorsController < ApplicationController
                   INNER JOIN regions AS r ON pr.region_id=r.id AND r.level=#{@site.levels_for_region.min} AND r.country_id=#{@filter_by_location.shift} AND r.id IN (#{@filter_by_location.join(',')})
                   INNER JOIN donations on donations.project_id = p.id
                   #{category_join}
-                  WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i} 
+                  WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i} #{organization_location_condition}
                   GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
                 SQL
             end
