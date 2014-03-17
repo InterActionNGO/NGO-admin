@@ -169,7 +169,9 @@ class DonorsController < ApplicationController
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
 
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
-    organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id]}" if params[:organization_id]
+    carry_on_url_2 = donor_path(@donor, @carry_on_filters)
+
+    organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
     respond_to do |format|
       format.html do
         if @filter_by_category.present?
@@ -183,7 +185,7 @@ class DonorsController < ApplicationController
           location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
           sql = """ SELECT r.id, count(distinct projects_sites.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
                 CASE WHEN count(distinct projects_sites.project_id) > 1 THEN
-                    '#{carry_on_url}'||r.path
+                    '#{carry_on_url_2}'|| '&location_id=' || r.path
                 ELSE
                     '/projects/'||(array_to_string(array_agg(distinct projects_sites.project_id),''))
                 END as url
@@ -193,7 +195,7 @@ class DonorsController < ApplicationController
                 JOIN projects_sites ON  projects_sites.project_id = projects.id
                 JOIN projects_regions as pr ON pr.project_id = projects.id
                 JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
-                WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
+                WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i} 
                 GROUP BY r.id, r.path, r.code, r.name, lon, lat """
         else
           if @filter_by_location
@@ -205,7 +207,7 @@ class DonorsController < ApplicationController
                   r.center_lon AS lon,
                   r.center_lat AS lat,
                   CASE WHEN count(ps.project_id) > 1 THEN
-                   '#{carry_on_url}'||r.path
+                   '#{carry_on_url_2}' || '&location_id=' || r.path
                   ELSE
                    '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                   END AS url,
@@ -232,7 +234,7 @@ class DonorsController < ApplicationController
                 INNER JOIN donations on donations.project_id = p.id
                 INNER JOIN countries as c ON c.id = #{params[:location_id]}
                 INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
-                #{category_join}
+                #{category_join} #{organization_location_condition}
                 WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY c.id,c.name,lon,lat,c.code
               
@@ -246,7 +248,7 @@ class DonorsController < ApplicationController
                          r.center_lat AS lat,
                          r.name,
                          CASE WHEN count(ps.project_id) > 1 THEN
-                           '#{carry_on_url}'||r.path
+                           '#{carry_on_url_2}'|| '&location_id=' || r.path
                          ELSE
                            '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                          END AS url,
@@ -265,7 +267,7 @@ class DonorsController < ApplicationController
             sql="select c.id,count(distinct ps.project_id) as count,c.name,c.center_lon as lon,
                         c.center_lat as lat,c.name,
                         CASE WHEN count(distinct ps.project_id) > 1 THEN
-                          '#{carry_on_url}'||c.id
+                          '#{carry_on_url_2}' || '&location_id=' || c.id
                         ELSE
                           '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                         END as url,
