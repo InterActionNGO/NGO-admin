@@ -60,6 +60,9 @@ class DonorsController < ApplicationController
 
     @filter_name = ''
 
+    if @filter_by_category 
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
+    end
     if @filter_by_category && @filter_by_location
       @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
       @location_name = if @filter_by_location.size == 1
