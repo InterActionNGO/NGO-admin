@@ -185,7 +185,11 @@ class DonorsController < ApplicationController
 
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
     carry_on_url_2 = donor_path(@donor, @carry_on_filters)
-
+    if @carry_on_filters.length == 0
+      location_url_param = '?location_id='
+    else
+      location_url_param = '&location_id='
+    end
     organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
     respond_to do |format|
       format.html do
@@ -200,7 +204,7 @@ class DonorsController < ApplicationController
           location_filter = "and r.id = #{@filter_by_location.last}" if @filter_by_location
           sql = """ SELECT r.id, count(distinct projects_sites.project_id) as count,r.name,r.center_lon as lon,r.center_lat as lat,
                 CASE WHEN count(distinct projects_sites.project_id) > 1 THEN
-                    '#{carry_on_url_2}'|| '&location_id=' || r.path
+                    '#{carry_on_url_2}'|| '#{location_url_param}' || r.path
                 ELSE
                     '/projects/'||(array_to_string(array_agg(distinct projects_sites.project_id),''))
                 END as url
@@ -222,7 +226,7 @@ class DonorsController < ApplicationController
                   r.center_lon AS lon,
                   r.center_lat AS lat,
                   CASE WHEN count(ps.project_id) > 1 THEN
-                   '#{carry_on_url_2}' || '&location_id=' || r.path
+                   '#{carry_on_url_2}' || '#{location_url_param}' || r.path
                   ELSE
                    '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                   END AS url,
@@ -263,7 +267,7 @@ class DonorsController < ApplicationController
                          r.center_lat AS lat,
                          r.name,
                          CASE WHEN count(ps.project_id) > 1 THEN
-                           '#{carry_on_url_2}'|| '&location_id=' || r.path
+                           '#{carry_on_url_2}'|| '#{location_url_param}' || r.path
                          ELSE
                            '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                          END AS url,
@@ -282,7 +286,7 @@ class DonorsController < ApplicationController
             sql="select c.id,count(distinct ps.project_id) as count,c.name,c.center_lon as lon,
                         c.center_lat as lat,c.name,
                         CASE WHEN count(distinct ps.project_id) > 1 THEN
-                          '#{carry_on_url_2}' || '&location_id=' || c.id
+                          '#{carry_on_url_2}' || '#{location_url_param}' || c.id
                         ELSE
                           '/projects/'||(array_to_string(array_agg(distinct ps.project_id),''))
                         END as url,
