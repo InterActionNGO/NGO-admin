@@ -184,11 +184,15 @@ class DonorsController < ApplicationController
 
 
     carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
-    carry_on_url_2 = donor_path(@donor, @carry_on_filters)
-    if @carry_on_filters.length == 0
-      location_url_param = '?location_id='
+    if params[:location_id]
+      carry_on_url_2 = donor_path(@donor, @carry_on_filters.except!(:location_id))
     else
-      location_url_param = '&location_id='
+      carry_on_url_2 = donor_path(@donor, @carry_on_filters)
+    end
+    if @carry_on_filters.length == 0
+      location_url_param = '?location_id[]='
+    else
+      location_url_param = '&location_id[]='
     end
     organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
     respond_to do |format|
