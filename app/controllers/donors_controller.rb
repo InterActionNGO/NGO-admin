@@ -186,9 +186,9 @@ class DonorsController < ApplicationController
     options_export[:from_donors] = true
 
     if (@carry_on_filters.length == 0) || (@carry_on_filters.length == 1 && params[:location_id])
-      location_url_param = '?location_id[]='
+      location_url_param = '?location_id='
     else
-      location_url_param = '&location_id[]='
+      location_url_param = '&location_id='
     end
 
     #carry_on_url = donor_path(@donor, @carry_on_filters.merge(:location_id => ''))
