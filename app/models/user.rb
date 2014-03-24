@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   validates :name, :presence   => true
   validates :email, :presence   => true,
                     :uniqueness => true,
-                    :format     => { :with => Authentication.email_regex, :message => Authentication.bad_email_message },
+                    :format     => { :with => /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}$/i, :message => Authentication.bad_email_message },
                     :length     => { :within => 6..100 }
   validates :password, :confirmation => true
 
