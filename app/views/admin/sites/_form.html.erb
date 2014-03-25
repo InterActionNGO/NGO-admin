@@ -18,16 +18,21 @@
       <%= f.text_area :short_description , :onkeyup=>"limitChars('site_short_description', 56, 'chars_left')" %>
     </span>
   </div>
+
+
   <div class="field">
     <span class="chars">
       <label>LONG DESCRIPTION <strong>*</strong></label>
       <% long_description =  f.object.long_description || '' %>
       <p id="chars_left_long"><%= 730 - long_description.length %> chars left</p>
     </span>
+
     <span class="textarea <%= 'error' if !@site.errors[:long_description].empty? && action_name != 'new' %>">
       <%= f.text_area :long_description , :onkeyup=>"limitChars('site_long_description', 730, 'chars_left_long')" %>
     </span>
   </div>
+
+
   <div class="field">
     <span class="chars">
       <label>INTERNAL DESCRIPTION</label>

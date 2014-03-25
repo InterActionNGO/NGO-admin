@@ -6212,7 +6212,7 @@ span.chars {
     margin: 20px 10px 0 0;
     width: auto;
     font: normal 13px Arial !important;
-    color: #999999;
+    color: #999999 !important;
     &.html {
       position: absolute;
       top: 30px;
@@ -6230,6 +6230,10 @@ span.chars {
     &.few {
       color: #FF9900;
     }
+  }
+  .chars-counter {
+    position: absolute;
+    right: -150px;
   }
 }
 
