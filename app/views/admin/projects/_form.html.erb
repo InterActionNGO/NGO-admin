@@ -92,79 +92,91 @@
     </span>
   </div>
   <div class="field">
-    <label>
-      DESCRIPTION  <strong>*</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Project description</h3>
-            <span class="scroll">
-            <p>Brief description of the project (at least 150 words), including if possible, goals and/or objectives</p>
-            </span>
+    <span class="chars">
+      <label>
+        DESCRIPTION  <strong>*</strong>
+        <!-- FIELD DESCRIPTION -->
+        <div class="field_info">
+          <span class="info">i</span>
+          <div class="field_text">
+            <div class="top">
+              <a href="#close">x</a>
+            </div>
+            <div class="bottom">
+              <h3>Project description</h3>
+              <span class="scroll">
+              <p>Brief description of the project (at least 150 words), including if possible, goals and/or objectives</p>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-    </label>
+        <!-- END FIELD DESCRIPTION -->
+      </label>
+      <% description = f.object.description || '' %>
+      <p id="chars_left_description"><%= 150 - description.length %> chars left</p>
+    </span>
+
     <span class="textarea <%= 'error' if !@project.errors[:description].empty? && action_name != 'new' %>">
         <div class="wrapper">
-            <%= f.text_area :description,:class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}" %>
+            <%= f.text_area :description, :maxlength => 150, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 150, 'chars_left_description')" %>
         </div>
+    </span>
+
+  </div>
+  <div class="field">
+    <span class="chars">
+      <label>ACTIVITIES
+        <strong>&nbsp;</strong>
+        <!-- FIELD DESCRIPTION -->
+        <div class="field_info">
+          <span class="info">i</span>
+          <div class="field_text">
+            <div class="top">
+              <a href="#close">x</a>
+            </div>
+            <div class="bottom">
+              <h3>Project activities</h3>
+              <span class="scroll">
+              <p>Description of project activities.</p>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- END FIELD DESCRIPTION -->
+      </label>
+      <% activities = f.object.activities || '' %>
+      <p id="chars_left_activities"><%= 150 - activities.length %> chars left</p>
+    </span>
+    <span class="textarea">
+      <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 150, 'chars_left_activities')"%>
     </span>
   </div>
   <div class="field">
-    <label>ACTIVITIES
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Project activities</h3>
-            <span class="scroll">
-            <p>Description of project activities.</p>
-            </span>
+    <span class="chars">
+      <label>ADDITIONAL INFORMATION
+        <strong>&nbsp;</strong>
+        <!-- FIELD DESCRIPTION -->
+        <div class="field_info">
+          <span class="info">i</span>
+          <div class="field_text">
+            <div class="top">
+              <a href="#close">x</a>
+            </div>
+            <div class="bottom">
+              <h3>Additional information</h3>
+              <span class="scroll">
+              <p>Optional field that can be used to provide additional information on the project, such as progress to date, results data, etc.</p>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
-    <span class="textarea">
-      <%= f.text_area :activities %>
+        <!-- END FIELD DESCRIPTION -->
+      </label>
+      <% additional_information = f.object.additional_information || '' %>
+      <p id="chars_left_aditional_info"><%= 150 - additional_information.length %> chars left</p>
     </span>
-  </div>
-  <div class="field">
-    <label>ADDITIONAL INFORMATION
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Additional information</h3>
-            <span class="scroll">
-            <p>Optional field that can be used to provide additional information on the project, such as progress to date, results data, etc.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
     <span class="textarea">
-      <%= f.text_area :additional_information %>
+      <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 150, 'chars_left_aditional_info')" %>
     </span>
   </div>
   <div class="field">
@@ -323,28 +335,31 @@
     </div>
   </div>
   <div id="cross_cutting" class="field">
-    <label>CROSS-CUTTING ISSUES
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Cross-cutting issues</h3>
-            <span class="scroll">
-            <p>Issues that cut across more than one sector, or that should not be managed as a sector, such as gender or the environment. Separate multiple entries with a comma.</p>
-            </span>
+    <span class="chars">
+      <label>CROSS-CUTTING ISSUES
+        <strong>&nbsp;</strong>
+        <!-- FIELD DESCRIPTION -->
+        <div class="field_info">
+          <span class="info">i</span>
+          <div class="field_text">
+            <div class="top">
+              <a href="#close">x</a>
+            </div>
+            <div class="bottom">
+              <h3>Cross-cutting issues</h3>
+              <span class="scroll">
+              <p>Issues that cut across more than one sector, or that should not be managed as a sector, such as gender or the environment. Separate multiple entries with a comma.</p>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
+        <!-- END FIELD DESCRIPTION -->
+      </label>
+      <% cross_cutting_issues = f.object.cross_cutting_issues || '' %>
+      <p id="chars_left_cross_cutting_issues"><%= 150 - cross_cutting_issues.length %> chars left</p>
+    </span>
     <span class="textarea">
-      <%= f.text_area :cross_cutting_issues %>
+      <%= f.text_area :cross_cutting_issues, :onkeyup=>"limitChars('project_cross_cutting_issues', 150, 'chars_left_cross_cutting_issues')" %>
     </span>
   </div>
 
@@ -605,15 +620,26 @@
     </div>
   </div>
   <div id="verbatim_location" class="field">
-    <label>VERBATIM LOCATION</label>
+    <span class="chars">
+      <label>VERBATIM LOCATION</label>
+      <% verbatim_location = f.object.verbatim_location || '' %>
+      <p id="chars_left_location"><%= 150 - verbatim_location.length %> chars left</p>
+    </span>
+
     <span class="textarea">
-      <%= f.text_area :verbatim_location %>
+      <%= f.text_area :verbatim_location, :onkeyup=>"limitChars('project_verbatim_location', 150, 'chars_left_location')" %>
     </span>
   </div>
+
   <div id="idprefugee_camp" class="field">
-    <label>IDP/REFUGEE CAMP</label>
+    <span class="chars">
+      <label>IDP/REFUGEE CAMP</label>
+      <% idprefugee_camp = f.object.idprefugee_camp || '' %>
+      <p id="chars_left_camp"><%= 150 - idprefugee_camp.length %> chars left</p>
+    </span>
+
     <span class="textarea">
-      <%= f.text_area :idprefugee_camp %>
+      <%= f.text_area :idprefugee_camp, :onkeyup=>"limitChars('project_idprefugee_camp', 150, 'chars_left_camp')" %>
     </span>
   </div>
 
