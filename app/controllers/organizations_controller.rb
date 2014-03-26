@@ -186,7 +186,7 @@ class OrganizationsController < ApplicationController
                         CASE WHEN count(distinct ps.project_id) > 1 THEN
                             '#{carry_on_url}'||c.id
                         ELSE
-                            '/projects/'||ps.project_id
+                            '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                         END as url,
                         c.iso2_code as code,
                         (select count(*) from data_denormalization where countries_ids && ('{'||c.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
@@ -196,7 +196,7 @@ class OrganizationsController < ApplicationController
                     inner join projects as prj on ps.project_id=prj.id and (prj.end_date is null OR prj.end_date > now())
                     inner join countries as c on cp.country_id=c.id)
                     #{category_join}
-                  group by c.id,c.name,lon,lat,c.name,c.iso2_code,ps.project_id"
+                  group by c.id,c.name,lon,lat,c.name,c.iso2_code"
           end
 
         end
