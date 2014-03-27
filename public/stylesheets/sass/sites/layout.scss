@@ -782,6 +782,10 @@ div {
             z-index: 10;
           }
         }
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
     div.right {
@@ -798,7 +802,7 @@ div {
         float: right;
         span.input_search {
           float: left;
-          width: 111px;
+          width: 91px;
           height: 20px;
           background: url('/images/sites/common/input_search_bkg.png') no-repeat 0 0;
           position: relative;
