@@ -406,6 +406,7 @@ div {
       margin: 4px 0 0;
       width: auto;
       height: 25px;
+      min-width: 475px;
       li {
         float: left;
         width: auto;
@@ -746,10 +747,10 @@ div {
         a {
           float: left;
           width: auto;
-          font: normal 13px "Geneva";
+          font: normal 12px "Geneva";
           color: #C2C1C1;
           text-decoration: none;
-          margin: 8px 0 0 0;
+          margin: 9px 0 0 0;
           line-height: 15px;
           &:hover {
             cursor: pointer;
