@@ -2,13 +2,13 @@
 javascripts:
 - base:
   - jquery.min
+  - plugins/sprintf
   - jquery.ui.core
   - jquery.ui.widget
   - jquery.ui.position
   - plugins/jquery.mousewheel
   - plugins/jquery.jscrollpane
   - plugins/quicksilver
-  - plugins/sprintf
 - base_2:
   - plugins/jquery.livesearch
   - rails
