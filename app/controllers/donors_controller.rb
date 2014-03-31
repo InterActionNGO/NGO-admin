@@ -206,8 +206,10 @@ class DonorsController < ApplicationController
         if @filter_by_category.present?
           if @site.navigate_by_cluster?
             category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{@filter_by_category}"
+            category_join = "inner join clusters_projects as cp on cp.project_id = projects.id and cp.cluster_id = #{@filter_by_category}"
           else
-            category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{@filter_by_category}"
+            projects_category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{@filter_by_category}"
+            projects_category_join = "inner join projects_sectors as pse on pse.project_id = projects.id and pse.sector_id = #{@filter_by_category}"
           end
         end
         if @site.geographic_context_country_id
@@ -224,6 +226,7 @@ class DonorsController < ApplicationController
                 JOIN projects_sites ON  projects_sites.project_id = projects.id
                 JOIN projects_regions as pr ON pr.project_id = projects.id
                 JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
+                #{projects_category_join}
                 WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY r.id, r.path, r.code, r.name, lon, lat """
         else
