@@ -200,6 +200,7 @@ class DonorsController < ApplicationController
     end
     
     organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
+    projects_organization_condition = "AND projects.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
     respond_to do |format|
       format.html do
         if @filter_by_category.present?
@@ -219,11 +220,11 @@ class DonorsController < ApplicationController
                 END as url
                 ,r.code,
                 (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
-                FROM donations as dn JOIN projects ON dn.project_id = projects.id AND (projects.end_date IS NULL OR projects.end_date > NOW())
+                FROM donations as dn JOIN projects ON dn.project_id = projects.id AND (projects.end_date IS NULL OR projects.end_date > NOW()) #{projects_organization_condition}
                 JOIN projects_sites ON  projects_sites.project_id = projects.id
                 JOIN projects_regions as pr ON pr.project_id = projects.id
                 JOIN regions as r on r.id = pr.region_id and r.level=#{@site.level_for_region} #{location_filter}
-                WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i} 
+                WHERE projects_sites.site_id = #{@site.id} AND dn.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY r.id, r.path, r.code, r.name, lon, lat """
         else
           if @filter_by_location
