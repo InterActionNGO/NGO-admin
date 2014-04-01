@@ -113,12 +113,12 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% description = f.object.description || '' %>
-      <p id="chars_left_description"><%= 150 - description.length %> chars left</p>
+      <p id="chars_left_description"><%= 2000 - description.length %> chars left</p>
     </span>
 
     <span class="textarea <%= 'error' if !@project.errors[:description].empty? && action_name != 'new' %>">
         <div class="wrapper">
-            <%= f.text_area :description, :maxlength => 150, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 150, 'chars_left_description')" %>
+            <%= f.text_area :description, :maxlength => 2000, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 2000, 'chars_left_description')" %>
         </div>
     </span>
 
@@ -145,10 +145,10 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% activities = f.object.activities || '' %>
-      <p id="chars_left_activities"><%= 150 - activities.length %> chars left</p>
+      <p id="chars_left_activities"><%= 2000 - activities.length %> chars left</p>
     </span>
     <span class="textarea">
-      <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 150, 'chars_left_activities')"%>
+      <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 2000, 'chars_left_activities')"%>
     </span>
   </div>
   <div class="field">
@@ -173,10 +173,10 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% additional_information = f.object.additional_information || '' %>
-      <p id="chars_left_aditional_info"><%= 150 - additional_information.length %> chars left</p>
+      <p id="chars_left_aditional_info"><%= 2000 - additional_information.length %> chars left</p>
     </span>
     <span class="textarea">
-      <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 150, 'chars_left_aditional_info')" %>
+      <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 2000, 'chars_left_aditional_info')" %>
     </span>
   </div>
   <div class="field">
