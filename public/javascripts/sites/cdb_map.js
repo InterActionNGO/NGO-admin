@@ -130,12 +130,16 @@ var global_index = 10;
           currentLegend = legends.red;
       }
 
+      console.log(layerStyle);
+
       var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
       var c_len = currentLegend.colors.length;
 
       _.each(currentLegend.colors, function(c, i) {
         currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
       });
+
+      console.log(currentCSS);
 
       var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {title: $el.data('layer'), left: currentMin + currentUnits, right: currentMax + currentUnits}));
       var stackedLegend = new cdb.geo.ui.Legend.Stacked({
