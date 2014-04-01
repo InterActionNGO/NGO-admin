@@ -356,10 +356,10 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% cross_cutting_issues = f.object.cross_cutting_issues || '' %>
-      <p id="chars_left_cross_cutting_issues"><%= 150 - cross_cutting_issues.length %> chars left</p>
+      <p id="chars_left_cross_cutting_issues"><%= 2000 - cross_cutting_issues.length %> chars left</p>
     </span>
     <span class="textarea">
-      <%= f.text_area :cross_cutting_issues, :onkeyup=>"limitChars('project_cross_cutting_issues', 150, 'chars_left_cross_cutting_issues')" %>
+      <%= f.text_area :cross_cutting_issues, :onkeyup=>"limitChars('project_cross_cutting_issues', 2000, 'chars_left_cross_cutting_issues')" %>
     </span>
   </div>
 
@@ -623,11 +623,11 @@
     <span class="chars">
       <label>VERBATIM LOCATION</label>
       <% verbatim_location = f.object.verbatim_location || '' %>
-      <p id="chars_left_location"><%= 150 - verbatim_location.length %> chars left</p>
+      <p id="chars_left_location"><%= 2000 - verbatim_location.length %> chars left</p>
     </span>
 
     <span class="textarea">
-      <%= f.text_area :verbatim_location, :onkeyup=>"limitChars('project_verbatim_location', 150, 'chars_left_location')" %>
+      <%= f.text_area :verbatim_location, :onkeyup=>"limitChars('project_verbatim_location', 2000, 'chars_left_location')" %>
     </span>
   </div>
 
