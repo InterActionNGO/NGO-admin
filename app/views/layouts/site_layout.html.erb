@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= title %></title>
+  <title><%= CGI.unescapeHTML(title) %></title>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLF_4Hka9T0of09Z0eGPmExn-tG2ZIveU&sensor=false"></script>
   <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
   <%=raw(javascript_include_merged(:base)) %>

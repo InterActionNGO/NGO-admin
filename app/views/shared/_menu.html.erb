@@ -97,7 +97,7 @@
                 <ul id="donors_list_menu" class="content scroll_pane">
                     <p class="no_founded">No donors found</p>
                     <% @site.donors_select.each do |donor| %>
-                      <li><a href="<%= donor_path(donor) %>"><%= donor.name %></a></li>
+                      <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
                     <% end %>
                 </ul>
               </div>
