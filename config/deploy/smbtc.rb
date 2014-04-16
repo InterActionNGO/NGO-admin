@@ -1,8 +1,8 @@
 set :default_stage, "smbtc"
 
-role :app, smbtc
-role :web, smbtc
-role :db,  smbtc, :primary => true
+role :app, linode_smbtc
+role :web, linode_smbtc
+role :db,  linode_smbtc, :primary => true
 
 set :branch, "staging"
 

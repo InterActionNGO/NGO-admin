@@ -17,17 +17,17 @@ set :application, 'iom'
 set :scm, :git
 # set :git_enable_submodules, 1
 set :git_shallow_clone, 1
-set :scm_user, 'ngo'
+set :scm_user, 'ubuntu'
 set :repository, "git://github.com/simbiotica/iom.git"
 ssh_options[:forward_agent] = true
 set :keep_releases, 5
 
 set :linode_staging, '178.79.131.104'
 set :linode_production, '173.255.238.86'
-set :smbtc, '66.228.36.71'
-set :user,  'ngo'
+set :linode_smbtc, '66.228.36.71'
+set :user,  'ubuntu'
 
-set :deploy_to, "/home/ngo/www/#{application}"
+set :deploy_to, "/home/ubuntu/www/#{application}"
 
 after  "deploy:update_code", :symlinks, :run_migrations, :asset_packages, :set_staging_flag
 after "deploy:update", "deploy:cleanup"
