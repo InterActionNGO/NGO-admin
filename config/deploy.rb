@@ -24,6 +24,7 @@ set :keep_releases, 5
 
 set :linode_staging, '178.79.131.104'
 set :linode_production, '173.255.238.86'
+set :smbtc, '66.228.36.71'
 set :user,  'ubuntu'
 
 set :deploy_to, "/home/ubuntu/www/#{application}"
