@@ -1147,7 +1147,7 @@ SQL
   end
 
   def remove_from_country(region)
-    ActiveRecord::Base.connection.execute("DELETE from  where project_id=#{self.id} AND country_id=#{region.country_id}")
+    ActiveRecord::Base.connection.execute("DELETE from countries_projects where project_id=#{self.id} AND country_id=#{region.country_id}")
   end
 
   def presence_of_clusters_and_sectors
