@@ -12,3 +12,4 @@ config/app_config.yml
 public/stylesheets/**/*.css
 public/vendor
 update/
+app/views_old
