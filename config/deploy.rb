@@ -1,9 +1,8 @@
 require 'capistrano/ext/multistage'
 require 'config/boot'
-#require "rvm/capistrano"
 require "bundler/capistrano"
 
-#set :rvm_type, :system
+
 set :stages, %w(staging production smbtc)
 
 APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
