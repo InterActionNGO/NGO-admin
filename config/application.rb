@@ -15,6 +15,10 @@ module Iom
     config.filter_parameters += [:password]
 
     config.autoload_paths += %W(#{Rails.root}/app/controllers/sweepers)
+
+    config.action_controller.asset_path = proc { |asset_path|
+      "/dist#{asset_path}"
+    }
   end
 
   class InvalidOffset < Exception; end;
