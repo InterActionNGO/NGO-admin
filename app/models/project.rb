@@ -1023,33 +1023,45 @@ SQL
     end if new_record?
 
 
+    ####
+    # COUNTRIES AND REGIONS PARSING/VALIDATION 
     if @location_sync
       self.countries.clear
       self.regions.clear
 
       if @location_sync.present? && (locations = @location_sync.text2array)
         locations.each do |location|
+          
           country_name, *regions = location.split('>')
+
+          all_regions_exist = true
 
           if country_name
             country = Country.where('lower(trim(name)) = lower(trim(?))', country_name).first
             if country.blank?
+              # If country doesn't exits, goes to next location on the cell
               self.sync_errors << "Country #{country_name} doesn't exist on row #@sync_line"
+              errors.add(:country,  "#{country_name} doesn't exist")
             else
-              self.countries << country unless self.countries.include?(country)
-            end
-          end
-
-          if regions.present?
-            regions.each_with_index do |region_name, level|
-              level += 1
-
-              region = Region.where('lower(trim(name)) = lower(trim(?))', region_name).first
-              if region.blank?
-                self.sync_errors << "#{level.ordinalize} Admin level #{region_name} doesn't exist on row #@sync_line"
-                next
+              # IF country exits, checks for its children regions
+              if regions.present?
+                regions.each_with_index do |region_name, level|
+                  level += 1
+                  # Check that exists the region, with this level for this country
+                  region = Region.where('lower(trim(name)) = lower(trim(?)) AND level=? AND country_id=?', region_name,level,country.id).first
+                  if region.blank?
+                    self.sync_errors << "#{level.ordinalize} Admin level #{region_name} doesn't exist on row #@sync_line"
+                    errors.add(:region,  "#{region_name} doesn't exist with level #{level} for country #{country_name}")
+                    all_regions_exist = false
+                    break #
+                  end
+                    self.regions << region unless self.regions.include?(region)
+                end
               end
-              self.regions << region unless self.regions.include?(region)
+              # After check presence of the regions, add then the country
+              if all_regions_exist
+                self.countries << country unless self.countries.include?(country)
+              end
             end
           end
         end
@@ -1135,7 +1147,7 @@ SQL
   end
 
   def remove_from_country(region)
-    ActiveRecord::Base.connection.execute("DELETE from countries_projects where project_id=#{self.id} AND country_id=#{region.country_id}")
+    ActiveRecord::Base.connection.execute("DELETE from  where project_id=#{self.id} AND country_id=#{region.country_id}")
   end
 
   def presence_of_clusters_and_sectors
