@@ -12,4 +12,12 @@ config/app_config.yml
 public/stylesheets/**/*.css
 public/vendor
 update/
+
+# front-end
+*.log
+.sass-cache
+public/dist
+public/app/stylesheets/*.css
+node_modules
+
 app/views_old
