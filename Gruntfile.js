@@ -16,7 +16,8 @@ module.exports = function(grunt) {
       all: [
         '<%= root.dist %>/javascripts',
         '<%= root.dist %>/stylesheets',
-        '<%= root.dist %>/images'
+        '<%= root.dist %>/images',
+        '<%= root.dist %>/fonts'
       ]
     },
 
