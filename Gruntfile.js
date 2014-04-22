@@ -86,16 +86,6 @@ module.exports = function(grunt) {
       }
     },
 
-    cssmin: {
-      dist: {
-        files: {
-          '<%= root.dist %>/stylesheets/main.css': [
-            '<%= root.tmp %>/stylesheets/{,*/}*.css'
-          ]
-        }
-      }
-    },
-
     imagemin: {
       dist: {
         files: [{
@@ -137,8 +127,7 @@ module.exports = function(grunt) {
     'uglify',
     'copy',
     'imagemin',
-    'compass:dist',
-    'cssmin'
+    'compass:dist'
   ]);
 
 };
