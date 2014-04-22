@@ -9,6 +9,16 @@ public/system
 bin/
 install/
 config/app_config.yml
-public/stylesheets/**/*.css
-public/vendor
 update/
+
+# front-end
+*.log
+.sass-cache
+node_modules
+public/fonts
+public/stylesheets
+public/javascripts
+public/images
+app/assets/vendor
+
+app/views_old

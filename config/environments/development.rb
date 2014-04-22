@@ -27,4 +27,3 @@ Iom::Application.configure do
 
   config.action_controller.cache_store = :memory_store
 end
-

@@ -62,6 +62,7 @@ task :asset_packages, :roles => [:app] do
  run <<-CMD
    export RAILS_ENV=production &&
    cd #{release_path} &&
-   bundle exec rake sass:update asset:packager:build_all
+   bower install &&
+   grunt build
  CMD
 end
