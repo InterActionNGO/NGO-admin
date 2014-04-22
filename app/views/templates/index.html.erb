@@ -2,35 +2,15 @@
 
 </section>
 
-<div class="row">
-  <div class="grid-17">
-    <nav class="categories-selector">
-      <ul>
-        <li><a href="#">sector</a></li>
-        <li><a href="#">organization</a></li>
-        <li><a href="#">donor</a></li>
-        <li><a href="#">country</a></li>
-        <li><a href="#">region</a></li>
-        <li><a href="#">search</a></li>
-      </ul>
-    </nav>
-    <a href="http://www.fedex.com/"><img src="" alt="FedEx logo"></a>
-  </div>
-</div>
+<%= render 'partials/categories_selector' %>
 
 <aside>
   <div class="row">
     <div class="grid-4">
 
-      <div class="projects mod-info">
-        <h3>projects</h3>
-        <span>23</span>
-      </div>
+      <%= render 'projects' %>
 
-      <div class="organizations mod-info">
-        <h3>organizations</h3>
-        <span>5</span>
-      </div>
+      <%= render 'organizations' %>
 
       <div class="countries mod-info">
         <h3>countries</h3>
@@ -207,28 +187,38 @@
 </aside>
 
 <section class="content">
-  <h2>Featured Projects</h2>
+  <div class="row">
+    <div class="grid-12 offset-1">
+      <h2 class="section-title">Featured Projects</h2>
 
-  <div class="mod-downloads">
-    <ul>
-      <li><a href="#" class="csv">csv</a></li>
-      <li><a href="#" class="xls">xls</a></li>
-      <li><a href="#" class="kml">kml</a></li>
-      <li><a href="#" class="embebed">Embebed this map</a></li>
-    </ul>
-  </div>
+      <div class="mod-downloads">
+        <span>Download this list: </span>
+        <ul>
+          <li><a href="#" class="csv">csv</a></li>
+          <li><a href="#" class="xls">xls</a></li>
+          <li><a href="#" class="kml">kml</a></li>
+          <li><a href="#" class="embebed">Embebed this map</a></li>
+        </ul>
+      </div>
 
-  <div class="articles-list">
+      <div class="articles-list">
+        <ul>
+          <li>
+            <article class="mod-article">
+              <title><a href="#">Aid for Cuban Medical Students</a></title>
+              <footer>
+                <span>in <a href="#">Cuba</a> by <a href="#Global Links"></a></span>
+              </footer>
+              <body>
+                <p>Global Links has been providing doctor’s kits – loaded with equipment for primary care to students at the Latin...</p>
+                <a class="go-to-section" href="#">Learn more</a>
+              </body>
+            </article>
+          </li>
+        </ul>
+      </div>
 
-    <article class="mod-article">
-      <title><a href="#">Aid for Cuban Medical Students</a></title>
-      <footer>
-        <span>in <a href="#">Cuba</a> by <a href="#Global Links"></a></span>
-      </footer>
-      <p>Global Links has been providing doctor’s kits – loaded with equipment for primary care to students at the Latin...</p>
-      <a class="go-to-section" href="#">Learn more</a>
-    </article>
-
+    </div>
   </div>
 </section> <!-- content -->
 
