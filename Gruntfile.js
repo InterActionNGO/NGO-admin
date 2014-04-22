@@ -62,9 +62,9 @@ module.exports = function(grunt) {
         sassDir: '<%= root.app %>/stylesheets',
         cssDir: '<%= root.tmp %>/stylesheets',
         generatedImagesDir: '<%= root.tmp %>/images/sprite',
-        fontsDir: '<%= root.dist %>/fonts',
-        imagesDir: '<%= root.dist %>/images',
-        relativeAssets: false,
+        fontsDir: '<%= root.app %>/fonts',
+        imagesDir: '<%= root.app %>/images',
+        relativeAssets: true,
         assetCacheBuster: true
       },
       dist: {
@@ -73,6 +73,7 @@ module.exports = function(grunt) {
           httpImagesPath: '/dist/images',
           httpGeneratedImagesPath: '/dist/images/sprite',
           httpFontsPath: '/dist/fonts',
+          relativeAssets: false,
           environment: 'production'
         }
       },
