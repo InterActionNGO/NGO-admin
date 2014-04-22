@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>NGO Aid Map</title>
-    <%= stylesheet_link_tag "main" %>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
     <%= csrf_meta_tag %>
   </head>
   <body>
@@ -13,6 +13,6 @@
 
     <%= render 'layouts/footer' %>
 
-    <script src="/app/vendor/requirejs/require.js" data-main="/app/javascripts/main.js"></script>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js", "../vendor/requirejs/require", "main" %>
   </body>
 </html>
