@@ -8,16 +8,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     root: {
-      app: 'app/assets',
-      dist: 'public/'
+      app: 'public/app',
+      tmp: 'public/.tmp',
+      dist: 'public/dist'
     },
 
     clean: {
       all: [
-        '<%= root.dist %>/javascripts',
-        '<%= root.dist %>/stylesheets',
-        '<%= root.dist %>/images',
-        '<%= root.dist %>/fonts'
+        '<%= root.tmp %>',
+        '<%= root.dist %>'
       ]
     },
 
@@ -44,7 +43,7 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      app: {
+      all: {
         files: [{
           expand: true,
           dot: true,
@@ -55,25 +54,14 @@ module.exports = function(grunt) {
             'images/**/*'
           ]
         }]
-      },
-      dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= root.app %>',
-          dest: '<%= root.dist %>',
-          src: [
-            'fonts/**/*'
-          ]
-        }]
       }
     },
 
     compass: {
       options: {
         sassDir: '<%= root.app %>/stylesheets',
-        cssDir: '<%= root.dist %>/stylesheets',
-        generatedImagesDir: '<%= root.dist %>/images/sprite',
+        cssDir: '<%= root.tmp %>/stylesheets',
+        generatedImagesDir: '<%= root.tmp %>/images/sprite',
         fontsDir: '<%= root.dist %>/fonts',
         imagesDir: '<%= root.dist %>/images',
         relativeAssets: false,
@@ -102,7 +90,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           '<%= root.dist %>/stylesheets/main.css': [
-            '<%= root.dist %>/stylesheets/{,*/}*.css'
+            '<%= root.tmp %>/stylesheets/{,*/}*.css'
           ]
         }
       }
@@ -132,12 +120,6 @@ module.exports = function(grunt) {
       scripts: {
         files: '<%= jshint.all %>',
         tasks: ['jshint']
-      },
-      images: {
-        files: [
-          '<%= root.app %>/images/{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif}'
-        ],
-        tasks: ['copy:app']
       }
     }
 
@@ -145,7 +127,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'clean',
-    'copy:app',
     'jshint',
     'compass:app'
   ]);
@@ -154,7 +135,7 @@ module.exports = function(grunt) {
     'clean',
     'jshint',
     'uglify',
-    'copy:dist',
+    'copy',
     'imagemin',
     'compass:dist',
     'cssmin'

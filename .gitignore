@@ -15,10 +15,8 @@ update/
 *.log
 .sass-cache
 node_modules
-public/fonts
-public/stylesheets
-public/javascripts
-public/images
-app/assets/vendor
+public/.tmp
+public/dist
+public/app/vendor
 
 app/views_old
