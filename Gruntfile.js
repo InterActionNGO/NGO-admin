@@ -8,13 +8,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     root: {
-      app: 'public/app',
-      dist: 'public/dist'
+      app: 'app/assets',
+      dist: 'public/'
     },
 
     clean: {
       all: [
-        '<%= root.dist %>'
+        '<%= root.dist %>/javascripts',
+        '<%= root.dist %>/stylesheets',
+        '<%= root.dist %>/images'
       ]
     },
 
@@ -41,14 +43,26 @@ module.exports = function(grunt) {
     },
 
     copy: {
+      app: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= root.app %>',
+          dest: '<%= root.dist %>',
+          src: [
+            'fonts/**/*',
+            'images/**/*'
+          ]
+        }]
+      },
       dist: {
         files: [{
           expand: true,
           dot: true,
           cwd: '<%= root.app %>',
-          dest: '<%= root.app %>',
+          dest: '<%= root.dist %>',
           src: [
-            '<%= root.app %>/fonts'
+            'fonts/**/*'
           ]
         }]
       }
@@ -57,10 +71,10 @@ module.exports = function(grunt) {
     compass: {
       options: {
         sassDir: '<%= root.app %>/stylesheets',
-        cssDir: '<%= root.app %>/stylesheets',
-        generatedImagesDir: '<%= root.app %>/images/sprite',
-        fontsDir: '<%= root.app %>/fonts',
-        imagesDir: '<%= root.app %>/images',
+        cssDir: '<%= root.dist %>/stylesheets',
+        generatedImagesDir: '<%= root.dist %>/images/sprite',
+        fontsDir: '<%= root.dist %>/fonts',
+        imagesDir: '<%= root.dist %>/images',
         relativeAssets: false,
         assetCacheBuster: true
       },
@@ -87,8 +101,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           '<%= root.dist %>/stylesheets/main.css': [
-            '<%= root.app %>/vendor/cartodb/themes/css/cartodb.css',
-            '<%= root.app %>/stylesheets/{,*/}*.css'
+            '<%= root.dist %>/stylesheets/{,*/}*.css'
           ]
         }
       }
@@ -99,13 +112,8 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= root.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
+          src: '{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif}',
           dest: '<%= root.dist %>/images'
-        }, {
-          expand: true,
-          cwd: '<%= root.app %>/vendor/cartodb/themes/img',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= root.dist %>/img'
         }]
       }
     },
@@ -123,6 +131,12 @@ module.exports = function(grunt) {
       scripts: {
         files: '<%= jshint.all %>',
         tasks: ['jshint']
+      },
+      images: {
+        files: [
+          '<%= root.app %>/images/{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif}'
+        ],
+        tasks: ['copy:app']
       }
     }
 
@@ -130,6 +144,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'clean',
+    'copy:app',
     'jshint',
     'compass:app'
   ]);
@@ -138,7 +153,7 @@ module.exports = function(grunt) {
     'clean',
     'jshint',
     'uglify',
-    'copy',
+    'copy:dist',
     'imagemin',
     'compass:dist',
     'cssmin'
