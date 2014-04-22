@@ -15,7 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "cartodb": "https://github.com/CartoDB/cartodb.js.git#master",
     "requirejs": "~2.1.11"
   }
 }

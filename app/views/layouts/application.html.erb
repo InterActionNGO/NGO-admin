@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>NGO Aid Map</title>
-  <%= stylesheet_link_tag "main", media: "all" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>NGO Aid Map</title>
+    <!-- build:css(public) /stylesheets/main.css -->
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <!-- endbuild -->
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= render '/layouts/header' %>
 
-<%= render '/layouts/header' %>
+    <%= yield %>
 
-<%= yield %>
+    <%= render '/layouts/footer' %>
 
-<%= render '/layouts/footer' %>
-
-<%= javascript_include_tag "main" %>
-</body>
+    <!-- build:js(public) /javascripts/main.js -->
+    <script src="/javascripts/main.js"></script>
+    <!-- endbuild -->
+  </body>
 </html>
