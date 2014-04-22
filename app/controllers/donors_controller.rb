@@ -336,7 +336,7 @@ class DonorsController < ApplicationController
         end
         @map_data = @map_data.to_json
 
-        render 'templates/show'
+        render 'templates/index', :items => result
       end
       format.js do
         render :update do |page|
