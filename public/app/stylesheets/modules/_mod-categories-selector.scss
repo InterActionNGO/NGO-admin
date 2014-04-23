@@ -1,12 +1,12 @@
 .mod-categories-selector {
   nav {
     float: left;
-    width: 75%;
+    position: relative;
+    width: 80%;
     margin-top: 7px;
-    padding: 5px 10px;
+    padding: .5% 1%;
     background-color: $color-0;
     border-radius: 20px;
-    overflow: hidden;
   }
   li {
     float: left;
@@ -14,18 +14,41 @@
     font-size: 14px;
     text-transform: uppercase;
     line-height: 0px;
+    &:hover .mod-categories-child { display: block; }
+    &:hover a{
+      color: $color-0;
+      font-family: "Helvetica Neue bold"
+    }
   }
   a {
-    padding: 12px 15px;
+    padding: 14px 15px;
     margin: 0 1%;
-    border-radius: 10px;
-    &:hover { color: $color-0;}
   }
-  .sector:hover { background-color: $color-2;}
-  .organization:hover { background-color: $color-6;}
-  .donor:hover { background-color: $color-7;}
-  .country:hover { background-color: $color-8;}
-  .region:hover { background-color: $color-9;}
+  .sector:hover {
+    background-color: $color-2;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .organizations:hover {
+    background-color: $color-6;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .donors:hover {
+    background-color: $color-7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .countries:hover {
+    background-color: $color-8;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .regions:hover {
+    background-color: $color-9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
   .search {
     width: 190px;
     padding-bottom: 3%;
@@ -41,3 +64,8 @@
     padding:0;
   }
 }
+
+
+
+
+
