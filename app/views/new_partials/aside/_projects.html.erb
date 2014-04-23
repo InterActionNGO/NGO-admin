@@ -1,0 +1,8 @@
+<div class="projects mod-info">
+  <h3>Projects</h3>
+  <% if @projects.total_entries %>
+  <span><%= @projects.total_entries %></span>
+  <% else %>
+    <span><%= @site.total_projects %></span>
+  <% end %>
+</div>

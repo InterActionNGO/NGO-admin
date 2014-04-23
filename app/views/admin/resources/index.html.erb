@@ -1,0 +1,76 @@
+<div class="main_layout">
+  <div class="block first resources">
+    <div class="top"></div>
+    <div class="med">
+      <div class="left">
+        <h2 class="museo_sans"><%= @element.name.html_safe %></h2>
+        <% unless @project.nil?  %>
+        <p class="by">by <%= link_to(@project.primary_organization.name, edit_admin_organization_path(@project.primary_organization)) %> /
+          <%= @project.countries.first.name %>
+        </p>
+        <%end%>
+        <p class="resources_account"><%= pluralize(@element.resources.count, 'resource', 'resources') %></p>
+
+        <% unless @element.is_a?(Organization) %>
+          <ul>
+            <% unless @element.resources.empty? %>
+              <% @element.resources.each do |resource| %>
+              <li>
+                <h3><%= link_to(resource.title, resource.url) %></h3>
+                <%= link_to("Delete", '#', :destroy_url => eval("admin_#{@element.class.name.singularize.downcase}_resource_path(@element, resource)"), :att_name=>"resource", :class => 'delete') %>
+              </li>
+              <% end -%>
+            <% end -%>
+          </ul>
+        <% else %>
+          <ul class="ngo">
+            <% unless @element.resources.empty? %>
+              <% @element.resources.each do |resource| %>
+              <li class="ngo">
+                <div class="head">
+                  <h3><%= link_to(resource.title, resource.url) %></h3>
+                  <%= link_to("Delete", '#', :destroy_url => eval("admin_#{@element.class.name.singularize.downcase}_resource_path(@element, resource)"), :att_name=>"resource",:class => 'delete') %>
+                </div>
+                <% if Site.count > 0 %>
+                  <%= form_for([:admin, @element, resource]) do |f| %>
+                    <div class="body">
+                      <h4 class="museo_sans">PUBLISH IN...</h4>
+                      <% Site.all.each do |site| %>
+                        <input type="checkbox" name="resource[sites_ids][]" id="site_<%= site.id %>" value="<%= site.id %>" <%= 'checked="checked"' if resource.sites_ids.include?(site.id.to_s) %> /><label class="site" for="site_<%= site.id %>"><%= site.name %></label>
+                      <% end %>
+                    <%= f.submit 'Update', :class=>'update' %>
+                    </div>
+                  <% end %>
+                <% end %>
+                <div class="down"></bottom>
+              </li>
+              <% end -%>
+            <% end -%>
+          </ul>
+        <% end %>
+
+        <%= form_for([:admin, @element, @resource]) do |f| %>
+          <h4 class="museo_sans">Add new resources<h4>
+          <div class="field">
+            <label>TITLE <strong>*</strong></label>
+            <%= f.text_field :title, :class=>"title" %>
+          </div>
+          <div class="field">
+            <label>URL <strong>*</strong></label>
+            <%= f.text_field :url %>
+          </div>
+          <div class="field">
+            <%= f.submit 'add resource', :class=>'add' %>
+          </div>
+        <% end -%>
+
+      </div>
+      <div class="right menu">
+        <%= render :partial => "admin/#{@element.class.table_name}/sidebar" %>
+      </div>
+    </div>
+    <div class="bottom"></div>
+  </div>
+</div>
+
+<script src="/javascripts/backoffice/application.js" type="text/javascript" charset="utf-8"></script>
