@@ -1,0 +1,31 @@
+<ul>
+
+  <li <%= selected_if(controller_name == 'settings') %>>
+    <div class="bottom_selected">
+      <%= link_to('Platform Settings', edit_admin_setting_path(Settings.first)) %>
+    </div>
+  </li>
+
+  <li <%= selected_if(controller_name == 'users') %>>
+    <div class="bottom_selected">
+      <%= link_to('Users', admin_users_path) %>
+    </div>
+  </li>
+
+</ul>
+
+<% if current_user.admin? && action_name == 'edit' -%>
+  <% if @user.enabled? %>
+    <div class="disable_user">
+      <h5 class="museo_sans">DISABLE THIS USER</h5>
+      <p>Clicking the link below will disable this user</p>
+      <%= link_to("Disable this user", admin_user_disable_path(@user.id), :method => :put) %>
+    </div>
+  <% else %>
+    <div class="disable_user">
+      <h5 class="museo_sans">THIS USER IS DISABLED</h5>
+      <p>Clicking the link below will enable this user</p>
+      <%= link_to("Enable this user", admin_user_enable_path(@user.id), :method => :put) %>
+    </div>
+  <% end %>
+<% end -%>
