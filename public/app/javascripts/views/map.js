@@ -1,6 +1,7 @@
+/*global google,map_type,map_data:true,map_center,sprintf,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
-define([], function() {
+define(function() {
 
   function old() {
 
@@ -29,7 +30,6 @@ define([], function() {
     IOMMarker.prototype.draw = function() {
 
       var me = this;
-      var num = 0;
 
       var div = this.div_;
       if (!div) {
@@ -168,16 +168,16 @@ define([], function() {
 
           div.appendChild(hidden_div);
 
-          google.maps.event.addDomListener(div, 'mouseover', function(ev) {
+          google.maps.event.addDomListener(div, 'mouseover', function() {
             $(this).css('zIndex', global_index++);
             $(this).children('div').show();
           });
 
-          google.maps.event.addDomListener(div, 'mouseout', function(ev) {
+          google.maps.event.addDomListener(div, 'mouseout', function() {
             $(this).children('div').hide();
           });
         } else {
-          google.maps.event.addDomListener(div, 'mouseover', function(ev) {
+          google.maps.event.addDomListener(div, 'mouseover', function() {
             $(this).css('zIndex', global_index++);
           });
         }
@@ -283,7 +283,7 @@ define([], function() {
 
     var emptyMapType = new EmptyMapType();
 
-    var latlng, zoom, mapOptions, cartodbOptions, map, vizjson, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
+    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
 
     if (map_type === 'overview_map' || map_type === 'project_map') {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -355,7 +355,7 @@ define([], function() {
       $legendWrapper.html('');
 
       if ($el.data('layer') === 'none') {
-        var sublayer = currentLayer.getSubLayer(0);
+        sublayer = currentLayer.getSubLayer(0);
         sublayer.setSQL('SELECT * from ne_10m_admin_0_countries');
         sublayer.setCartoCSS('#table{}');
       }
@@ -428,12 +428,6 @@ define([], function() {
 
         infowindow.model.on('change:visibility', function(model) {
           if (model.get('visibility')) {
-            var d = $('.infowindow-data');
-
-            // if (d.text() !== 'No data') {
-            //   d.text(Number(d.text()).toFixed(1));
-            // }
-
             $('.infowindow-pop').click(function(e) {
               e.preventDefault();
               e.stopPropagation();
@@ -466,6 +460,7 @@ define([], function() {
     }
 
     function onWindowLoad() {
+      var range;
 
       if (empty_layer) {
         window.sessionStorage.setItem('layer', '');
@@ -492,11 +487,13 @@ define([], function() {
       map.mapTypes.set('EMPTY', emptyMapType);
 
       google.maps.event.addListener(map, 'zoom_changed', function() {
-        if (map.getZoom() > 12) map.setZoom(12);
+        if (map.getZoom() > 12) {
+          map.setZoom(12);
+        }
       });
 
       if (map_type !== 'administrative_map') {
-        var range = max_count / 5;
+        range = max_count / 5;
       }
       var diameter = 0;
 
@@ -580,7 +577,8 @@ define([], function() {
           diameter = 72;
           image_source = '/app/images/themes/' + theme + '/project_marker.png';
         }
-        var marker_ = new IOMMarker(map_data[i], diameter, image_source, map);
+
+        new IOMMarker(map_data[i], diameter, image_source, map);
 
         if (map_type !== 'overview_map') {
           bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
