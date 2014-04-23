@@ -1,5 +1,7 @@
 .mod-categories-selector {
-  ul {
+  nav {
+    float: left;
+    width: 75%;
     margin-top: 7px;
     padding: 5px 10px;
     background-color: $color-0;
@@ -26,10 +28,16 @@
   .region:hover { background-color: $color-9;}
   .search {
     width: 190px;
-    padding-bottom: 3px;
-    border-bottom: 1px solid $color-3;
+    padding-bottom: 3%;
+    padding-left: 0;
+    border-bottom: 2px solid $color-4;
+    border-radius: 0;
     &:hover {
       color: $color-3;
     }
+  }
+  .fedex-logo {
+    float: right;
+    padding:0;
   }
 }
