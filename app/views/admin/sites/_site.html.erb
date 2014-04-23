@@ -1,0 +1,39 @@
+<div class="block first">
+  <div class="top"></div>
+  <div class="med information">
+    <h2 class="museo_sans"><%= link_to(site.name, edit_admin_site_path(site)) %></h2>
+    <ul>
+      <li>
+        <label>PROJECTS INCLUDED</label>
+        <p class="museo_sans"><%= site.total_projects %></p>
+      </li>
+      <li>
+        <label>ORGANIZATIONS COMMITTED</label>
+        <p class="museo_sans"><%= site.organizations.size %></p>
+      </li>
+    </ul>
+    <div class="info">
+      <div class="left">
+        <% if site.geographic_context_country_id? %>
+          <p>Limited to <strong><%= site.geographic_context_country.name %> country</strong></p>
+        <% elsif site.geographic_context_region_id? %>
+          <p>Limited to <strong><%= site.region.name %> region</strong></p>
+        <% end %>
+        <% if site.published? %>
+        <p>Available <%= link_to('here', url(site)) %></p>
+        <% else %>
+        <p>Browse the private version <%= link_to('here', root_path(:force_site_id => site.id)) %></p>
+        <% end %>
+      </div>
+      <p></p>
+    </div>
+  </div>
+  <div class="bottom_grey">
+    <div id="site_<%= site.id %>">
+      <%= link_to((site.published? ? 'Published' : 'Not published'), toggle_status_admin_site_path(site), :method => :post,:remote => true,:class => (site.published? ? 'published' : 'not_published')) %>
+    </div>
+    <a href="<%= edit_admin_site_path(site) %>">Manage this site</a>
+  </div>
+</div>
+
+
