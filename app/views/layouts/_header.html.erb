@@ -1,7 +1,7 @@
 <header class="mod-header">
   <div class="row">
     <div class="grid-17">
-    	<a class="logo" ref="#"><%= image_tag "images/aid-map-logo.png" %></a>
+    	<a href="#" class="aid-map-logo"><%= image_tag "aid-map-logo.png", :alt  => "interaction aid map logo" %></a>
     	<nav>
     		<ul>
     			<li><a href="/" class="home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
@@ -9,9 +9,9 @@
     			<li><a href="/news" class="news <%= if action_name == 'news' then 'active' else 'inactive' end %>">news</a></li>
     			<li><a href="/contact" class="contact <%= if action_name == 'contact' then 'active' else 'inactive' end %>">contact us</a></li>
     			<li><a href="/access" class="access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
-    			<li><a href="http://www.interaction.org/" class="interaction"><img src="" alt="interaction logo"></a></li>
     		</ul>
     	</nav>
+      <a href="http://www.interaction.org/" class="interaction-logo"><%= image_tag "interaction-logo.png" , :alt  => "interaction logo" %></a>
     </div>
   </div>
 </header>
