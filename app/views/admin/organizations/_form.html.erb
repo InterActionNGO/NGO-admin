@@ -1,0 +1,239 @@
+<%= form_for(@organization, :url => (@organization.new_record? ? admin_organizations_path : admin_organization_path(@organization)), :html => { :multipart => true }) do |f| %>
+
+  <% if flash[:error] -%>
+  <div class="form_error"><%= flash[:error] %></div>
+  <% end -%>
+
+  <div class="field">
+    <label>NAME  <strong>*</strong></label>
+    <%= f.text_field :name, :class=>"long #{'error' if !@organization.errors[:name].empty? && action_name != 'new'}" %>
+    <%= errors_for @organization, :name %>
+  </div>
+
+  <div class="field">
+    <span class="chars">
+      <%= f.label :description, raw("Description<strong>*</strong>") %>
+      <% description = f.object.description || '' %>
+      <p id="chars_left_long" class="chars-counter"><%= 800 - description.length %>  chars left</p>
+    </span>
+
+    <span class="textarea">
+      <%= f.text_area :description, :maxlength => 800, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 800, 'chars_left_long')"%>
+    </span>
+  </div>
+
+  <% if current_user.admin? %>
+  <div class="field">
+    <label>Organization ID  <strong>*</strong></label>
+    <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}" %>
+    <%= errors_for @organization, :organization_id %>
+  </div>
+  <% end %>
+
+  <%= f.label :logo %>
+  <div class="image_container">
+    <% if @organization.logo_file_name? %>
+      <%= image_tag(@organization.logo.url(:small)) %>
+    <% end -%>
+    <div class="field">
+      <p>JPG, PNG and GIF supported</p>
+      <div id="bttn_upload">
+        <a class="upload_bttn"></a>
+        <div id="wrapper_input">
+          <%= f.file_field :logo %>
+        </div>
+      </div>
+      <% if @organization.logo_file_name? %>
+      <p class="remove_link"> or <%= link_to('remove', destroy_logo_admin_organization_path(@organization), :method => :put, :class => 'remove') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="short_field">
+    <%= f.label :website %>
+    <%= f.text_field :website, :class=>"short website" %>
+  </div>
+  <a href="<%= @organization.website %>" class="preview no_margin" id="website" target="_blank">preview the link</a>
+
+  <div class="short_field">
+    <%= f.label :national_staff %>
+    <%= f.text_field :national_staff, :value => number_with_precision(f.object.national_staff, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ','), :class => 'short' %>
+  </div>
+
+  <div class="short_field last">
+    <%= f.label :international_staff %>
+    <%= f.text_field :international_staff, :class=>"short" %>
+  </div>
+
+  <div class="common">
+    <h3>SOCIAL LINK</h3>
+    <div class="short_field">
+      <%= f.label :twitter %>
+      <%= f.text_field :twitter, :class=>"short twitter" %>
+    </div>
+    <a href="<%= @organization.twitter %>" class="preview no_margin" id="twitter" target="_blank">preview the link</a>
+
+    <div class="field">
+      <%= f.label :facebook %>
+      <%= f.text_field :facebook, :class=>"long facebook" %>
+    </div>
+    <a href="<%= @organization.facebook %>" class="preview" id="facebook" target="_blank">preview the link</a>
+  </div>
+
+  <div class="common">
+    <h3>CONTACT INFORMATION</h3>
+    <div class="short_field">
+      <%= f.label :contact_name %>
+      <%= f.text_field :contact_name, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :contact_position %>
+      <%= f.text_field :contact_position, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_email %>
+      <%= f.text_field :contact_email, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :contact_phone_number %>
+      <%= f.text_field :contact_phone_number, :class=>"short" %>
+    </div>
+
+    <div class="long_field">
+      <%= f.label :hq_address %>
+      <%= f.text_field :hq_address, :class=>"address" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_city %>
+      <%= f.text_field :contact_city, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :contact_zip %>
+      <%= f.text_field :contact_zip, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_state %>
+      <%= f.text_field :contact_state, :class=>"short" %>
+    </div>
+
+  </div>
+
+  <div class="common">
+    <h3>DATA CONTACT INFORMATION</h3>
+    <div class="short_field">
+      <%= f.label :main_data_contact_name, 'DATA CONTACT NAME' %>
+      <%= f.text_field :main_data_contact_name, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :main_data_contact_position, 'DATA CONTACT POSITION' %>
+      <%= f.text_field :main_data_contact_position, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :main_data_contact_email, 'DATA CONTACT EMAIL' %>
+      <%= f.text_field :main_data_contact_email, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :main_data_contact_phone_number, 'DATA CONTACT PHONE NUMBER' %>
+      <%= f.text_field :main_data_contact_phone_number, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :main_data_contact_city, 'DATA CONTACT CITY' %>
+      <%= f.text_field :main_data_contact_city, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :main_data_contact_zip, 'DATA CONTACT ZIP' %>
+      <%= f.text_field :main_data_contact_zip, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :main_data_contact_state, 'DATA CONTACT STATE' %>
+      <%= f.text_field :main_data_contact_state, :class=>"short" %>
+    </div>
+
+  </div>
+
+  <div class="common">
+    <h3>MEDIA CONTACT INFORMATION</h3>
+    <div class="short_field">
+      <%= f.label :media_contact_name %>
+      <%= f.text_field :media_contact_name, :class=>"short" %>
+    </div>
+    <div class="short_field last">
+      <%= f.label :media_contact_position %>
+      <%= f.text_field :media_contact_position, :class=>"short" %>
+    </div>
+    <div class="short_field">
+      <%= f.label :media_contact_email %>
+      <%= f.text_field :media_contact_email, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :media_contact_phone_number %>
+      <%= f.text_field :media_contact_phone_number, :class=>"short" %>
+    </div>
+  </div>
+
+  <div class="common">
+    <h3>DONATION INFORMATION</h3>
+    <div class="long_field">
+      <%= f.label :donation_address %>
+      <%= f.text_field :donation_address, :class=>"address" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :city %>
+      <%= f.text_field :city, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :state %>
+      <%= f.text_field :state, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :donation_country %>
+      <%= f.text_field :donation_country, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :donation_phone_number %>
+      <%= f.text_field :donation_phone_number, :class=>"short" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :donation_website %>
+      <%= f.text_field :donation_website, :class=>"long" %>
+    </div>
+    <a href="<%= @organization.donation_website %>" class="preview" id="donation_website" target="_blank">preview the link</a>
+  </div>
+
+  <% if action_name == 'specific_information' %>
+    <%= hidden_field_tag :site_id, params[:site_id] %>
+  <% end %>
+  <div class="submit floating">
+    <%= f.submit 'Save', :class => "#{'error' if @organization.invalid? && action_name != 'new'}" %>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){
+      floatingSubmit($('form .submit'), $('div.main_layout div.block div.med div.right div.export_import'))
+    });
+  </script>
+
+<% end -%>
