@@ -300,6 +300,7 @@ define(function() {
     mapOptions = {
       zoom: zoom,
       center: latlng,
+      scrollwheel: false,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
