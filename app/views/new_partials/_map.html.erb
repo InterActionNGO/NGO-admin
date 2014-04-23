@@ -1,4 +1,4 @@
-<div class="map-wrapper">
+<section class="mod-map" id="mapView">
 
   <div class="controls">
     <div class="control-navbar">
@@ -43,12 +43,5 @@
   <div id="map"></div>
 
   <div id="legendWrapper"></div>
-</div>
 
-<% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-  <div class="is-hidden" id="Overlay<%= sl.layer.id %>">
-    <h2><%= sl.layer.long_title %></h2>
-    <p><%= sl.layer.description.html_safe %></p>
-    <p><%= sl.layer.credits.html_safe %></p>
-  </div>
-<% end %>
+</section>

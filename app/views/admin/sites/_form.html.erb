@@ -1,0 +1,175 @@
+<%= form_for(@site, :url => (@site.new_record? ? admin_sites_path : admin_site_path(@site))) do |f| %>
+
+  <div class="field">
+    <label class="first">SITE NAME <strong>*</strong></label>
+    <span class="input_large <%= 'error' if !@site.errors[:name].empty? && action_name != 'new' %>">
+      <%= f.text_field :name, :class=>"long #{'error' if !@site.errors[:name].empty? && action_name != 'new'}" %>
+      <%= errors_for @site, :name %>
+    </span>
+  </div>
+  <div class="field">
+    <span class="chars">
+      <label>SHORT DESCRIPTION <strong>*</strong></label>
+      <% short_description = f.object.short_description || '' %>
+      <p id="chars_left"><%= 56 - short_description.length %> chars left</p>
+    </span>
+
+    <span class="textarea_little <%= 'error' if !@site.errors[:short_description].empty? && action_name != 'new' %>">
+      <%= f.text_area :short_description , :onkeyup=>"limitChars('site_short_description', 56, 'chars_left')" %>
+    </span>
+  </div>
+
+
+  <div class="field">
+    <span class="chars">
+      <label>LONG DESCRIPTION <strong>*</strong></label>
+      <% long_description =  f.object.long_description || '' %>
+      <p id="chars_left_long"><%= 730 - long_description.length %> chars left</p>
+    </span>
+
+    <span class="textarea <%= 'error' if !@site.errors[:long_description].empty? && action_name != 'new' %>">
+      <%= f.text_area :long_description , :onkeyup=>"limitChars('site_long_description', 730, 'chars_left_long')" %>
+    </span>
+  </div>
+
+
+  <div class="field">
+    <span class="chars">
+      <label>INTERNAL DESCRIPTION</label>
+      <% internal_description =  f.object.internal_description || '' %>
+      <p id="chars_left_internal"><%= 250 - internal_description.length %> chars left</p>
+    </span>
+    <span class="textarea <%= 'error' if !@site.errors[:internal_description].empty? && action_name != 'new' %>">
+      <%= f.text_area :internal_description , :onkeyup=>"limitChars('site_internal_description', 250, 'chars_left_internal')" %>
+    </span>
+  </div>
+  <h3 class="section museo_sans">GEOGRAPHIC CONTEXT</h3>
+
+  <div class="field">
+  <label>SITE GEOGRAPHICAL CONTEXT</label>
+  <ul class="geographic_options">
+  <li id="gc_worldwide" class="<%= selected_if_worldwide(@site) %> option">
+    <a class="combo limited">Worldwide, not limited</a>
+  </li>
+  <li id="gc_limited_region" class="<%= selected_if_field_present(@site, :geographic_context_country_id) %> option">
+    <a class="limited combo">Limited to a country and region</a>
+    <div class="content">
+      <%= f.select :geographic_context_country_id, Country.get_select_values.collect{ |c| [c.name, c.id] }, {:prompt => 'Select a country'}, {:id => 'gc_limited_country_section'}%>
+      <div id="regions">
+      </div>
+    </div>
+  </li>
+  <li id="gc_limited_bbox" class="<%= selected_if_field_present(@site, :geographic_boundary_box) %> option">
+    <a class="limited combo">Limited by a boundary box</a>
+    <%= f.hidden_field :geographic_boundary_box %>
+    <div class="content">
+      <div id="map_bbox"></div>
+    </div>
+  </li>
+  </ul>
+  </div>  <!-- field -->
+  <h3 class="section museo_sans">PROJECT FILTERING</h3>
+
+  <div class="field">
+  <label>PROJECT TYPOLOGY</label>
+
+  <ul class="project_tipo_options">
+    <li id="include_sector_cluster" class="<%= 'selected' if @site.project_context_cluster_id? %>">
+      <a class="check">Include only projects from a particular cluster or sector</a>
+      <div class="content">
+        <span class="select_combo_typology"><p class="cluster_sector">Select a cluster or a sector</p>
+          <div class="values">
+            <%= f.hidden_field :project_context_cluster_id  %>
+            <div class="wrapper">
+              <ul class="clusters_or_sectors scroll_pane">
+                <li class="section"><p>CLUSTERS</p></li>
+                <% Cluster.get_select_values.each do |cluster| %>
+                  <li><a class="cluster_value" id="cluster_<%= cluster.id %>"><%= truncate(cluster.name, :length => 30)  %></a></li>
+                <%end -%>
+                <%= f.hidden_field :project_context_sector_id  %>
+                <li class="section"><p>SECTORS</p></li>
+                <% Sector.get_select_values.each do |sector| %>
+                  <li><a class="sector_value" id="sector_<%= sector.id %>"><%= truncate(sector.name, :length => 30)  %></a></li>
+                <%end -%>
+              </ul>
+            </div>
+          </div>
+        </span>
+      </div>
+    </li>
+    <li id="include_ngo" class="<%= 'selected' if @site.project_context_organization_id? %>">
+      <a class="check">Include only projects from a particular NGO</a>
+      <div class="content">
+        <span class="select_combo_typology"><p class="ngo">Select an NGO</p>
+          <div class="values">
+            <div class="wrapper">
+              <ul class="organizations scroll_pane">
+                <%= f.hidden_field :project_context_organization_id  %>
+                <% Organization.get_select_values.each do |organization| %>
+                  <li><a class="organization" id="orgs_<%= organization.id %>"><%= truncate(organization.name, :length => 31) %></a></li>
+                <%end -%>
+              </ul>
+            </div>
+          </div>
+        </span>
+      </div>
+    </li>
+    <li id="include_tags" class="<%= 'selected' if @site.project_context_tags? %>">
+      <a class="check">Include only matching some tags</a>
+      <div class="content">
+        <span class="tags_site">
+          <%= f.text_field :project_context_tags, {:id => 'pc_tags_section'} %>
+
+        </span>
+      </div>
+    </li>
+  </ul>
+  </div> <!-- field -->
+  <h3 class="section museo_sans">CONTACT INFORMATION</h3>
+    <div class="two_columns">
+      <div class="left_column">
+        <div class="field">
+          <label>CONTACT EMAIL <strong>*</strong></label>
+          <span class="input_short">
+            <%= f.text_field :contact_email %>
+          </span>
+        </div> <!-- field -->
+      </div>
+      <div class="right_column">
+        <div class="field">
+          <p class="title">CONTACT PERSON / ORGANIZATION <strong>*</strong></p>
+          <span class="input_short">
+            <%= f.text_field :contact_person %>
+          </span>
+        </div> <!-- field -->
+      </div>
+    </div>
+
+  <h3 class="section museo_sans">TECHNICAL CONFIGURATION</h3>
+
+  <div class="field">
+    <label>SITE URL <strong>*</strong></label>
+    <span class="input_url">
+      <%= f.text_field :subdomain, :class=>"long #{'error' if !@site.errors[:subdomain].empty? && action_name != 'new'}" %>
+      <%= errors_for @site, :subdomain %>
+      <p class="url">.ngoaidmap.org</p>
+    </span>
+  </div>
+  <div class="field">
+    <label>GOOGLE ANALYTICS ID</label>
+    <span class="input_short">
+          <%= f.text_field :google_analytics_id %>
+      </span>
+   </div>
+
+   <div class="submit floating">
+    <%= f.submit 'Save changes', :class => "#{'error' if @site.invalid? && action_name != 'new'}" %>
+   </div>
+
+<%end%>
+
+  <script src="/javascripts/plugins/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/plugins/jquery.jscrollpane.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/plugins/jquery.stylish-select.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script src="/javascripts/backoffice/site_map.js" type="text/javascript" charset="utf-8"></script>

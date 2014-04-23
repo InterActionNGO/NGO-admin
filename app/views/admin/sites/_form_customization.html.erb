@@ -1,0 +1,257 @@
+<%= form_for(@site, :url => admin_site_path(@site), :html => { :multipart => true }) do |f| %>
+
+  <div class="common">
+    <h3>SITE CUSTOMIZATION</h3>
+
+	<!--
+    <%= f.label :logo %>
+    <div class="image_container">
+      <% if @site.logo_file_name? %>
+        <%= image_tag(@site.logo.url(:small)) %>
+      <% end -%>
+      <div class="field">
+        <p>JPG, PNG and GIF supported</p>
+        <div id="bttn_upload">
+          <a class="upload_bttn"></a>
+          <div id="wrapper_input">
+            <%= f.file_field :logo %>
+          </div>
+        </div>
+        <% if @site.logo_file_name? %>
+          <p class="remove_link"> or <%= link_to('remove', destroy_logo_admin_site_path(@site), :method => :put, :class => 'remove') %></p>
+         <% else %>
+            <p class="message remove_link">Select a file from your computer</p>
+        <%end%>
+      </div>
+    </div>
+	-->
+
+    <%= f.label :theme %>
+    <ul class="themes">
+      <% Theme.all.each_with_index do |theme, i| %>
+      <li rel="<%= theme.id %>" class="<%='selected' if theme == @site.theme %> <%= 'last' if i == Theme.count - 1 %>">
+        <img src="<%= theme.thumbnail_path %>" width="157" height="135" alt="<%= theme.name %>">
+        <a class="preview" href="<%= url(@site) %>?theme_id=<%= theme.id %>">PREVIEW</a>
+        <span class="ready"></span>
+      </li>
+      <% end %>
+    </ul>
+
+    <%= f.label "SITE IMAGE FOR NGO AID MAP SITE" %>
+
+    <div class="image_container">
+      <% if @site.aid_map_image_file_name? %>
+        <%= image_tag(@site.aid_map_image.url(:small)) %>
+      <% end -%>
+      <div class="field">
+        <p>JPG, PNG and GIF supported</p>
+        <div id="bttn_upload">
+          <a class="upload_bttn"></a>
+          <div id="wrapper_input">
+            <%= f.file_field :aid_map_image %>
+          </div>
+        </div>
+        <% if @site.aid_map_image_file_name? %>
+          <p class="remove_link"> or <%= link_to('remove', destroy_aid_map_image_admin_site_path(@site), :method => :put, :class => 'remove') %></p>
+         <% else %>
+          <p class="message remove_link">Select a file from your computer</p>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="common">
+    <h3>Partners</h3>
+    <label>PARTNERS LIST</label>
+    <% unless @site.partners.empty? %>
+      <% @site.partners.each do |partner| %>
+        <div class="partner">
+          <%= image_tag(partner.logo.url(:small)) %>
+          <p><%= partner.name %></p>
+          <p class="bottom"><%= link_to(partner.url, partner.url) %></p>
+          <%= link_to('Delete', '#delete', :class => "delete", :destroy_url=>admin_site_partner_path(@site, partner), :att_name => "partner") %>
+        </div>
+      <% end -%>
+    <% end -%>
+
+    <span class="add_partner"><p>Add / edit the partners of the site</p><%= link_to('Add a partner', '#', :class => 'manage_partners') %></span>
+  </div>
+
+  <div class="common">
+    <h3>Map configuration</h3>
+    <p class="map">SITE VIEW PORT  Pan and zoom the map for selecting the preferred position</p>
+    <div class="outer_map">
+      <div id="map"></div>
+      <a href="#zoom_in" id="zoomIn" onclick="zoomIn()"></a>
+      <a href="#zoom_out" id="zoomOut" onclick="zoomOut()"></a>
+    </div>
+    <%= f.hidden_field :overview_map_lat %>
+    <%= f.hidden_field :overview_map_lon %>
+    <%= f.hidden_field :overview_map_zoom %>
+  </div>
+
+
+  <div class="common">
+    <h3>Site navigation</h3>
+    <label>Projects classification</label>
+    <%= f.hidden_field :project_classification %>
+    <div id="classification_option" class="field">
+      <span>
+        <a id="0" class="combo <%= 'clicked' if @site.navigate_by_cluster? %>">Cluster</a>
+      </span>
+      <span>
+      <a id="1" class="combo <%= 'clicked' if @site.navigate_by_sector? %>">Sector</a>
+      </span>
+    </div>
+  </div>
+
+  <div class="common">
+    <h3>Fields & sections visibility</h3>
+    <label>Configurable fields & sections</label>
+
+    <div class="field">
+      <span class="blog">
+        <%= f.check_box :show_blog %><p>Show blog</p>
+        <div id="tumbler_id" style="<%= (@site.blog_url.blank? ? 'display:none' : 'display:block') %>">
+          <%= f.text_field :blog_url, :value => @site.blog_url.blank? ? "Please write Tumblr url" : @site.blog_url, :id => "tumblr" %>
+        </div>
+      </span>
+      <span>
+        <%= f.check_box :show_global_donations_raises %><p>Show global donations raises</p>
+      </span>
+    </div>
+  </div>
+
+  <div class="common">
+    <h3>NAMING</h3>
+    <div class="field">
+      <%= f.label :word_for_clusters, "Word for clusters / sectors" %>
+      <%= f.text_field :word_for_clusters, :class=>"short" %>
+    </div>
+    <div class="field">
+      <%= f.label :word_for_regions %>
+      <%= f.text_field :word_for_regions, :class=>"short" %>
+    </div>
+  </div>
+
+  <div class="common">
+    <h3>GEOGRAPHIC NAVIGATION</h3>
+    <div class="field">
+      <span>
+        <%= f.check_box :navigate_by_country %><p>Navigate by country</p>
+      </span>
+    </div>
+    <div class="field">
+      <span>
+        <%= f.check_box :navigate_by_level1 %><p>Navigate by regions of level 1</p>
+      </span>
+    </div>
+    <div class="field">
+      <span>
+        <%= f.check_box :navigate_by_level2 %><p>Navigate by regions of level 2</p>
+      </span>
+    </div>
+    <div class="field">
+      <span>
+        <%= f.check_box :navigate_by_level3 %><p>Navigate by regions of level 3</p>
+      </span>
+    </div>
+  </div>
+
+  <div class="common">
+    <h3>Site layers</h3>
+    <ul class="combo_list" id="sites_layer_list">
+    <% @site.site_layers.each do |sl| %>
+      <li><h5><%= sl.layer.title %> > <%= sl.layer_style.title %> <a class="close" href="#"></a></h5>
+      <input type="hidden" name="site[layers_ids][]" value="<%= sl.layer.id %>#<%= sl.layer_style.id %>">
+      </li>
+    <% end %>
+    </ul>
+
+    <label>Layer and layer style</label>
+
+    <div class="combo_select">
+      <span class="combo_select_options">
+        <p class="combo_value">Layer</p>
+        <div class="wrapper">
+          <ul class="options scroll_pane">
+            <% Layer.where({:status => true}).each do |l| %>
+              <li><a href="#<%= l.id %>" id="<%= l.id %>"><%= l.title %></a></li>
+            <% end %>
+          </ul>
+        </div>
+      </span>
+      <span class="combo_select_options">
+        <p class="combo_value">Layer style</p>
+        <div class="wrapper">
+          <ul class="options scroll_pane">
+            <% LayerStyle.all.each do |ls| %>
+              <li>
+                <a href="#<%= ls.id %>" id="<%= ls.id %>"><%= image_tag("/images/assets/#{ls.name}.png") %><br> <%= ls.title %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </span>
+      <a id="add_site_layer_style" class="add_btn museo_sans shadow_green">add layer</a>
+    </div>
+
+  </div>
+
+  <%= f.hidden_field :theme_id, :value => Theme.first.id %>
+  <input type="hidden" name="customization" value="true" />
+
+  <div class="submit floating">
+    <%= f.submit 'Save' %>
+  </div>
+
+<% end -%>
+
+
+
+<div id="manage_partners" class="<%= @partner ? 'show' : '' %>">
+  <a class="close">Close</a>
+  <% unless @partner %>
+  <h3 class="museo_sans">New partner</h3>
+  <% else %>
+  <h3 class="museo_sans">Edit partner</h3>
+  <% end -%>
+
+  <%= form_for([:admin, @site, (@partner || @site.partners.new)], :html => { :multipart => true }) do |f| %>
+
+    <div class="short_field">
+      <%= f.label :name, 'Partner name' %>
+      <%= f.text_field :name, :class=> "short #{'error' if @partner && @partner.errors.on(:name)}" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :url, 'Partner URL' %>
+      <%= f.text_field :url, :class=>"short #{'error' if @partner && @partner.errors.on(:url)}" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :label, 'Text for label' %>
+      <%= f.text_field :label, :class=>"short #{'error' if @partner && @partner.errors.on(:label)}" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :logo %>
+      <div class="image_container">
+        <p>JPG, PNG and GIF supported, max size 70x45 pixels</p>
+        <%= f.file_field :logo, :class => "#{'error' if @partner && @partner.errors.on(:label)}" %>
+      </div>
+    </div>
+
+
+
+    <div class="field">
+      <%= f.submit 'Add partner', :class=>"partner" %>
+    </div>
+
+  <% end -%>
+</div>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3"></script>
+<script src="/javascripts/backoffice/customize.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/backoffice/smbtc-customize.js" type="text/javascript" charset="utf-8"></script>

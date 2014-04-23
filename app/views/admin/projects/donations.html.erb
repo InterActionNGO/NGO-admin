@@ -1,0 +1,87 @@
+<div class="main_layout">
+  <div class="block first donations_project">
+    <div class="top"></div>
+    <div class="med">
+      <div class="left">
+        <h2><%= @project.name %></h2>
+        <p class="by">by <%= link_to(@project.primary_organization.name, edit_admin_organization_path(@project.primary_organization)) %> /
+          <%= @project.countries.select(Country.custom_fields).first.try(:name) %>
+        </p>
+
+        <% unless @project.donations.empty? %>
+        <ul class="donations">
+          <% total_account = 0 %>
+          <% @project.donations.each do |donation| %>
+          <li>
+            <div class="name_box">
+              <h3>
+                <%= link_to(truncate(donation.donor.name, :length => 44).html_safe, edit_admin_donor_path(donation.donor)) %>
+              </h3>
+            </div>
+            <div class="date_box">
+              <%if donation.date.present? %>
+                <p><%= donation.date.strftime("%m/%d/%Y") %></p>
+              <%end%>
+            </div>
+            <div class="amount_box">
+              <p>$ <%= (donation.amount.nil?)? '0' : number_with_precision(donation.amount, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %></p>
+              <%= link_to('', '#', :destroy_url => admin_project_donation_path(@project, donation), :att_name => 'donor', :no_subtitle => true, :class => 'delete') %>
+            </div>
+            <%if (!donation.amount.nil?) %>
+              <%= total_account += donation.amount %>
+            <%end%>
+          </li>
+          <% end -%>
+      </ul>
+      <h4 class="total museo_sans">TOTAL DONATED:</h4><span class="total_account">$</span><p class="amount"><%= number_with_precision(total_account, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %></p>
+        <% end -%>
+    <%= form_for([:admin, @project, (@donation || @project.donations.new)]) do |f| %>
+      <h4 class="museo_sans shadow_white">Add a new donation</h4>
+
+        <div id="donor_name" class="field">
+          <%= f.hidden_field :donor_id %>
+          <%= f.label :donor_id, raw('DONOR NAME <strong>*</strong>') %>
+          <span id="donor_name_input">
+            <%= f.fields_for :donor, f.object.build_donor do |donor_fields| %>
+              <%= donor_fields.text_field :name, :id => :autocomplete_donor_name %>
+            <% end -%>
+            <div class="spinner"></div>
+          </span>
+        </div>
+
+        <div id="donation_date" class="field comboselect date">
+          <%= f.label :date, 'DONATION DATE' %>
+
+          <span class="combo_date"><p><%= l @project.date_provided, :format => '%m/%d/%Y' rescue '' %></p>
+          <div class="select_dates">
+            <p id="month" class="title">MONTH</p>
+            <p id="day" class="title">DAY</p>
+            <p id="year" class="title">YEAR</p>
+
+            <%= f.date_select :date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+          </div>
+          </span>
+        </div>
+
+        <div id="donation_amount" class="field">
+          <%= f.label :amount, 'AMOUNT' %>
+        <span>
+            <%= f.text_field :amount  %>
+        </span>
+        </div>
+          <%= f.submit 'Add donation' %>
+      <% end -%>
+      </div>
+      <div class="right menu">
+      <%= render 'admin/projects/sidebar' %>
+      </div>
+    </div>
+    <div class="bottom"></div>
+  </div>
+</div>
+
+<script src="/javascripts/plugins/jquery.stylish-select.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/plugins/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/plugins/jquery.jscrollpane.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/backoffice/project.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/backoffice/application.js" type="text/javascript" charset="utf-8"></script>
