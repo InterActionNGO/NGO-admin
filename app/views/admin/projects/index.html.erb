@@ -33,7 +33,7 @@
               <%= select_tag :site,
                 options_for_select([['Any site',0]] + Site.get_select_values.collect { |c| [c.name.capitalize.strip, c.id] }, params[:site]), :class => :"chzn-sites-select" %>
 
-            </li>            
+            </li>
             <li class="comboselect">
               <label>ORGANIZATION</label>
 
@@ -143,13 +143,9 @@
   </a>
 </div>
 </div>
-<script src="/javascripts/plugins/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/plugins/jquery.jscrollpane.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/backoffice/project.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/backoffice/application.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/backoffice/projects.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/plugins/chosen/chosen.jquery.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/plugins/fineuploader-3.3.0.js" type="text/javascript" charset="utf-8"></script>
+
+<%= javascript_include_tag "backoffice/application.js", "backoffice/projects.js" %>
+
 <script type="text/javascript">
   $(".chzn-select").chosen();
   $(".chzn-sectors-select").chosen({hide_search:true});
