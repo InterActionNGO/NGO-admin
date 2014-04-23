@@ -26,10 +26,10 @@
 
   "predef": [
     "define",
-    "describe",
-    "it",
     "cartodb",
     "cdb",
-    "L"
+    "L",
+    "Backbone",
+    "_"
   ]
 }
