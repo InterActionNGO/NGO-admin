@@ -1,5 +1,13 @@
 .mod-info {
+  border-bottom: 3px solid $color-4;
+  padding: 20px 0;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
   h3 {
     font-size: 15px;
+    text-transform: uppercase;
   }
 }

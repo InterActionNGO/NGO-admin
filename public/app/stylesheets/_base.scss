@@ -4,7 +4,11 @@ body {
   font-family: "Helvetica Neue";
   font-size: 13px;
   color: $color-2;
-   -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-weight: bold;
 }
 
 ul, li, ol {
