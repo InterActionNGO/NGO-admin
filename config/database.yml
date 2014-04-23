@@ -23,6 +23,14 @@ staging:
   username: postgres
   password:
 
+smbtc:
+  adapter: postgresql
+  template: template_postgis
+  encoding: unicode
+  database: iom_production
+  username: postgres
+  password:
+
 production:
   adapter: postgresql
   template: template_postgis
