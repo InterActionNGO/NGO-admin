@@ -13,8 +13,6 @@ ul, li, ol {
   padding: 0;
 }
 
-section { padding: $section-padding;}
-
 img {
   display: block;
   max-width: 100%;
@@ -33,7 +31,6 @@ p { line-height: 1.5em;}
 /*********************************************************************************************/
 a {
   display: block;
-  color: $color-2;
   text-decoration: none;
 }
 /*********************************************************************************************/
