@@ -1,3 +1,47 @@
 .mod-categories-child {
   display: none;
+  position: absolute;
+  background-color: $color-0;
+  width: 250px;
+  height: 350px;
+  z-index: 100;
+  overflow: scroll;
+  top: -350px;
+
+  li { line-height: 14px;}
+  a {
+    font-family: "Helvetica Neue bold";
+    font-size: 16px;
+    text-transform: none;
+  }
+}
+.sector-child {
+  border-bottom: 5px solid $color-2;
+  a { color: $color-2;
+  &:hover { color: $color-2;}
+  }
+}
+.organizations-child {
+  border-bottom: 5px solid $color-6;
+  a { color: $color-6;
+  &:hover { color: $color-6;}
+  }
+}
+.donors-child {
+  border-bottom: 5px solid $color-7;
+  a { color: $color-7;
+  &:hover { color: $color-7}
+  }
+}
+.countries-child {
+  border-bottom: 5px solid $color-8;
+  a { color: $color-8;
+  &:hover { color: $color-8;}
+  }
+}
+.regions-child {
+  border-bottom: 5px solid $color-9;
+  a { color: $color-9;
+  &:hover { color: $color-9;}
+  }
 }
