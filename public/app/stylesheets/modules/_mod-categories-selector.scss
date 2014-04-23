@@ -1,12 +1,12 @@
 .mod-categories-selector {
   nav {
     float: left;
+    position: relative;
     width: 80%;
     margin-top: 7px;
     padding: .5% 1%;
     background-color: $color-0;
     border-radius: 20px;
-    overflow: hidden;
   }
   li {
     float: left;
@@ -14,18 +14,39 @@
     font-size: 14px;
     text-transform: uppercase;
     line-height: 0px;
+    &:hover .mod-categories-child { display: block; }
   }
   a {
-    padding: 12px 15px;
+    padding: 14px 15px;
     margin: 0 1%;
     border-radius: 10px;
     &:hover { color: $color-0;}
   }
-  .sector:hover { background-color: $color-2;}
-  .organization:hover { background-color: $color-6;}
-  .donor:hover { background-color: $color-7;}
-  .country:hover { background-color: $color-8;}
-  .region:hover { background-color: $color-9;}
+  .sector:hover {
+    background-color: $color-2;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .organizations:hover {
+    background-color: $color-6;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .donors:hover {
+    background-color: $color-7;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .countries:hover {
+    background-color: $color-8;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .regions:hover {
+    background-color: $color-9;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
   .search {
     width: 190px;
     padding-bottom: 3%;
@@ -41,3 +62,8 @@
     padding:0;
   }
 }
+
+
+
+
+
