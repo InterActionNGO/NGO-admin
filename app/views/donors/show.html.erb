@@ -3,7 +3,7 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside class="layout-sidebar">
+  <aside>
     <div class="grid-4">
       <% unless @filter_by_location.present? %>
         <%= render 'new_partials/aside/projects' %>
@@ -70,6 +70,5 @@
       <%= render 'new_partials/downloads' %>
 
       <%= render 'new_partials/index_projects' %>
-
-  </section> <!-- content -->
+  </section>
 </div>

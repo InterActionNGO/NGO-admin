@@ -3,7 +3,7 @@ class DonorsController < ApplicationController
   include DonorsHelper
 
   respond_to :html, :kml, :js, :xls, :csv
-  #layout :sites_layout
+  layout :sites_layout
 
 
   def show
@@ -335,8 +335,6 @@ class DonorsController < ApplicationController
           @map_data_max_count = md[:count].to_i if @map_data_max_count < md[:count].to_i
         end
         @map_data = @map_data.to_json
-
-        render 'templates/index'
       end
       format.js do
         render :update do |page|
