@@ -43,7 +43,18 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      all: {
+      app: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= root.app %>',
+          dest: '<%= root.tmp %>',
+          src: [
+            'stylesheets/backoffice/**/*'
+          ]
+        }]
+      },
+      dist: {
         files: [{
           expand: true,
           dot: true,
@@ -51,7 +62,8 @@ module.exports = function(grunt) {
           dest: '<%= root.dist %>',
           src: [
             'fonts/**/*',
-            'images/**/*'
+            'images/**/*',
+            'stylesheets/backoffice/**/*'
           ]
         }]
       }
@@ -118,7 +130,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'clean',
-    'jshint',
+    'copy:app',
     'compass:app'
   ]);
 
@@ -126,7 +138,7 @@ module.exports = function(grunt) {
     'clean',
     'jshint',
     'uglify',
-    'copy',
+    'copy:dist',
     'imagemin',
     'compass:dist'
   ]);
