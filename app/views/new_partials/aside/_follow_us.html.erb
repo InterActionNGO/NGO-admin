@@ -1,11 +1,13 @@
 <div class="follow-us mod-info">
-  <h3>follow us</h3>
+  <h3>Follow us</h3>
   <div class="mod-follow-us">
     <ul>
-      <li><a href="#" class="twitter"></a></li>
-      <li><a href="#" class="facebook"></a></li>
-      <li><a href="#" class="goggle"></a></li>
-      <li><a href="#" class="linkedin"></a></li>
+      <% if @donor.twitter? %>
+        <%= link_to("follow us", "http://twitter.com/#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %>
+      <% end %>
+      <% if @donor.facebook? %>
+        <%= link_to("visit our page", "http://facebook.com/#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %>
+      <% end %>
     </ul>
   </div>
 </div>
