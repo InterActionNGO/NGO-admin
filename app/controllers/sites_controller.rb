@@ -3,6 +3,9 @@ class SitesController < ApplicationController
   layout :sites_layout
 
   def home
+
+    @site = Site.find_by_name("generic")
+
     if @site
       site_home
     else
