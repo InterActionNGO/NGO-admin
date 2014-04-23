@@ -14,10 +14,12 @@
     font-size: 14px;
     text-transform: uppercase;
     line-height: 0px;
-    &:hover .mod-categories-child { display: block; }
-    &:hover a{
+    padding: 14px 15px;
+    margin: 0 1%;
+    &:hover {
       color: $color-0;
-      font-family: "Helvetica Neue bold"
+      font-family: "Helvetica Neue bold";
+      .mod-categories-child { display: block; }
     }
   }
   a {
