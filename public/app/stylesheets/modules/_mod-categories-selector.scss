@@ -1,0 +1,35 @@
+.mod-categories-selector {
+  ul {
+    margin-top: 7px;
+    padding: 5px 10px;
+    background-color: $color-0;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  li {
+    float: left;
+    font-family: "Helvetica Neue light";
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 0px;
+  }
+  a {
+    padding: 12px 15px;
+    margin: 0 1%;
+    border-radius: 10px;
+    &:hover { color: $color-0;}
+  }
+  .sector:hover { background-color: $color-2;}
+  .organization:hover { background-color: $color-6;}
+  .donor:hover { background-color: $color-7;}
+  .country:hover { background-color: $color-8;}
+  .region:hover { background-color: $color-9;}
+  .search {
+    width: 190px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid $color-3;
+    &:hover {
+      color: $color-3;
+    }
+  }
+}
