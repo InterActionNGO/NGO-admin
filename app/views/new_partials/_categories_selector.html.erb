@@ -1,64 +1,64 @@
 <section class="categories-selector">
   <div class="row">
     <div class="grid-17">
+      <div class="mod-categories-selector">
+        <nav >
+          <ul>
 
-      <nav class="mod-categories-selector">
-        <ul>
+            <% if @site.cluster %>
+              <li class="sector"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
+            <% elsif @site.sector %>
+              <li class="sector"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
+            <% else %>
+              <li id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
+                <a href="#"><%= @site.word_for_cluster_sector.upcase %></a>
+                <ul class="mod-categories-child sector-child">
+                  <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
+                    <li>
+                      <a href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
+                        <% if category.name.size>25 %>
+                          <%= category.name[0..22] + '...' %>
+                        <% else %>
+                          <%= category.name %>
+                        <% end %>
+                      </a>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+            <% end %>
 
-          <% if @site.cluster %>
-            <li><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
-          <% elsif @site.sector %>
-            <li><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
-          <% else %>
-            <li id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
-              <a href="#"><%= @site.word_for_cluster_sector.upcase %></a>
-              <ul class="mod-categories-child">
-                <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
-                  <li>
-                    <a href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
-                      <% if category.name.size>25 %>
-                        <%= category.name[0..22] + '...' %>
-                      <% else %>
-                        <%= category.name %>
-                      <% end %>
-                    </a>
-                  </li>
+            <li class="organizations">
+              <a href="#">Organizations</a>
+              <ul class="mod-categories-child organizations-child">
+                <% @site.organizations_select.each do |organization| %>
+                  <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
                 <% end %>
               </ul>
             </li>
-          <% end %>
 
-          <li>
-            <a href="#">Organizations</a>
-            <ul class="mod-categories-child">
-              <% @site.organizations_select.each do |organization| %>
-                <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
-              <% end %>
-            </ul>
-          </li>
-
-          <li>
-            <a href="#">Donors</a>
-            <ul class="mod-categories-child">
-              <% @site.donors_select.each do |donor| %>
-                <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
-              <% end %>
-            </ul>
-          </li>
+            <li class="donors">
+              <a href="#">Donors</a>
+              <ul class="mod-categories-child donors-child">
+                <% @site.donors_select.each do |donor| %>
+                  <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
+                <% end %>
+              </ul>
+            </li>
 
           <% if @site.navigate_by == :country %>
-            <li>
+            <li class="countries">
               <a href="#">Countries</a>
-              <ul class="mod-categories-child">
+              <ul class="mod-categories-child countries-child">
                 <% @site.countries_select.each do |country| %>
                   <li><%= link_to(country.name, location_path(:ids => country)) %></li>
                 <% end %>
               </ul>
             </li>
           <% else %>
-            <li>
+            <li class="regions">
               <a href="#">Regions</a>
-              <ul class="mod-categories-child">
+              <ul class="mod-categories-child regions-child">
                 <% @site.regions_select.each do |region| %>
                   <li><%= link_to(region.name, location_path(:ids => region)) %></li>
                 <% end %>
@@ -75,7 +75,8 @@
 
         </ul>
       </nav>
-      <a href="http://www.fedex.com/"><img src="" alt="FedEx logo"></a>
+      <a href="http://www.fedex.com/"><%= image_tag "fedex-logo.png" , :alt  => "fedex logo" %></a>
     </div>
+
   </div>
 </section>
