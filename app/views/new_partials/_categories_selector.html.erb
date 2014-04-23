@@ -46,13 +46,36 @@
             </ul>
           </li>
 
-          <li><a href="#" class="country">country</a></li>
-          <li><a href="#" class="region">region</a></li>
-          <li><a href="#" class="search">search</a></li>
+          <% if @site.navigate_by == :country %>
+            <li>
+              <a href="#">Countries</a>
+              <ul class="mod-categories-child">
+                <% @site.countries_select.each do |country| %>
+                  <li><%= link_to(country.name, location_path(:ids => country)) %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% else %>
+            <li>
+              <a href="#">Regions</a>
+              <ul class="mod-categories-child">
+                <% @site.regions_select.each do |region| %>
+                  <li><%= link_to(region.name, location_path(:ids => region)) %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+
+          <li>
+            <%= form_tag(search_path, :method => :get) do %>
+              <%= text_field_tag :q, params[:q], :value=>'' %>
+              <input type="submit" value="">
+            <% end %>
+          </li>
+
         </ul>
       </nav>
       <a href="http://www.fedex.com/"><img src="" alt="FedEx logo"></a>
->>>>>>> 86e4310ad2186b9f564850b062c48fcc826cd10a
     </div>
   </div>
 </section>
