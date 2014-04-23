@@ -5,9 +5,9 @@
         <li>
           <article class="mod-index-item">
             <h2><%= link_to(truncate(project['project_name'], :length=>65), project_path(project['project_id'])) %></h2>
-            <p>
+            <span>
               <%= subtitle_donors_page(project, @site, donor_path( params[:id], @carry_on_filters.merge(:organization_id => project["organization_id"].to_i) ) ) %>
-            </p>
+            </span>
             <p>
               <%= anglo(truncate(project['project_description'], :length => 175, :omission => "... <a href=\"#{project_path(project['project_id'])}\" class=\"learn_more\">Learn more</a>")) %>
             </p>
