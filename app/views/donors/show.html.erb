@@ -65,7 +65,7 @@
 
   <section class="content">
     <div class="grid-12 offset-1">
-      <h2 class="section-title">Featured Projects</h2>
+      <h2 class="section-title"><%= @donor.name.html_safe %></h2>
 
       <%= render 'new_partials/downloads' %>
 
