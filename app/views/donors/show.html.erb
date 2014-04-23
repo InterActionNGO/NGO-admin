@@ -9,10 +9,6 @@
         <%= render 'new_partials/aside/projects' %>
       <% end %>
 
-      <% unless @filter_by_organization.present? %>
-        <%= render 'new_partials/aside/organizations' %>
-      <% end %>
-
       <% if @site.navigate_by_country %>
         <%= render 'new_partials/aside/countries' %>
       <% else %>
@@ -27,39 +23,17 @@
         <%= render 'new_partials/aside/project_locations' %>
       <% end %>
 
-      <%# render 'partials/aside/follow_us' %>
+      <% unless @site.nil? || @filter_by_category.present? || @donor_projects_clusters_sectors.empty? %>
+        <%= render 'new_partials/aside/project_sectors' %>
+      <% end %>
 
-      <%# render 'partials/aside/project_sectors' %>
+      <% if @contact_data[:show] %>
+        <%= render 'new_partials/aside/contact_info' %>
+      <% end %>
 
-      <%# render 'partials/aside/some_organizations' %>
-
-      <%# render 'partials/aside/donors_in_this_country' %>
-      <%# render 'partials/aside/organizations_in_this_country' %>
-
-      <%# render 'partials/aside/location' %>
-
-      <%# render 'partials/aside/reporting_organization' %>
-
-      <%# render 'partials/aside/project_time_line' %>
-
-      <%# render 'partials/aside/proyect_budget' %>
-
-      <%# render 'partials/aside/donors' %>
-
-      <%# render 'partials/aside/prime_awardee' %>
-
-      <%# render 'partials/aside/local_partners' %>
-
-      <%# render 'partials/aside/people_reached' %>
-
-      <%# render 'partials/aside/target_groups' %>
-
-      <%# render 'partials/aside/contact_info' %>
-
-      <%# render 'partials/aside/proyect_website' %>
-
-      <%# render 'partials/aside/export_data' %>
-
+      <% unless @donor.twitter.blank? && @donor.facebook.blank? && @donor.website.blank? %>
+        <%= render 'new_partials/aside/follow_us' %>
+      <%end%>
     </div>
   </aside>
 
