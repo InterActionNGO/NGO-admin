@@ -346,12 +346,12 @@ define(function() {
 
     var latlng, zoom, mapOptions, cartodbOptions, map, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
 
-    if (map_type === 'overview_map' || map_type === 'project_map') {
+    if (map_type === 'project_map') {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
       zoom = map_zoom;
     } else {
       latlng = new google.maps.LatLng(0, 0);
-      zoom = 1;
+      zoom = 3;
     }
 
     $layerSelector = $('#layerSelector');
