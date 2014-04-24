@@ -1,11 +1,13 @@
 'use strict';
 
 define([
+  'views/clusters',
   'views/map'
-], function(MapView) {
+], function(ClustersView, MapView) {
 
   var app = {}, Router;
 
+  new ClustersView();
   app.map = new MapView();
 
   Router = Backbone.Router.extend({

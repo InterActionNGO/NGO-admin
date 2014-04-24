@@ -1,0 +1,28 @@
+.mod-downloads {
+  padding-bottom: 30px;
+  font-family: "Helvetica Neue bold";
+  font-size: 16px;
+  span {
+    display: inline-block;
+    color: $color-5;
+  }
+  ul {
+    display: inline-block;
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+  }
+  li {
+    float: left;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 15px;
+    padding-bottom: 5px;
+    margin-right: 10px;
+    background-color: $color-4;
+  }
+  .embebed {
+    font-family: "Helvetica Neue";
+    text-transform: none;
+  }
+}
