@@ -1,7 +1,6 @@
 .mod-header {
   font-size: 14px;
   position: relative;
-  border-bottom: $border-bottom-color-1;
   .aid-map-logo {
     float: left;
     padding-top: 1.5%;
@@ -17,9 +16,7 @@
     padding: 5px 15px;
     border-radius: 10px;
     text-transform: uppercase;
-  }
-  a {
-    &:hover { color: $color-0;}
+    &:hover a { color: $color-0;}
   }
   .interaction-logo {
     float: right;
