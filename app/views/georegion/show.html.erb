@@ -1,14 +1,33 @@
+<% content_for :js_vars do %>
+  <script>
+    <% if @overview_map_bbox %>
+      var bbox = <%=raw(@overview_map_bbox.to_json)%>;
+    <% end %>
+    var chco = "<%=@georegion_map_chco%>";
+    var chf = "<%=@georegion_map_chf%>";
+    var chld = "<%=@chld%>";
+    var chd = "<%=@chd%>";
+    var marker_source = "<%=@georegion_map_marker_source%>";
+    <% if @area.is_a?(Country) && @site.navigate_by_regions? %>
+      var map_type = "administrative_map";
+    <% else %>
+      var map_type = "georegion";
+    <% end  %>
+    var last_level = "<%= @area.is_a?(Country) && @site.navigate_by_regions? ? "false" : "true" %>";
+    var show_regions_with_one_project = "<%= @area.is_a?(Country) && @site.navigate_by_regions? ? "true" : "false" %>";
+    var map_data = <%=raw(@map_data)%>;
+    var max_count = <%=@map_data_max_count%>;
+    var area_stroke_color = "<%=@georegion_map_stroke_color%>";
+    var area_fill_color = "<%=@georegion_map_fill_color%>";
+    var theme = <%=@site.theme_id%>;
+    var stylez = <%=raw @site.map_styles  %>;
+    var empty_layer = <%= @empty_layer %>;
+  </script>
+<% end %>
+
 <%= render 'new_partials/map' %>
 
 <%= render 'new_partials/categories_selector' %>
-
-<script>
-  <% if @area.is_a?(Country) && @site.navigate_by_regions? %>
-    map_type = 'administrative_map';
-  <% else %>
-    map_type = 'georegion';
-  <% end  %>
-</script>
 
 <div class="row">
   <aside>
