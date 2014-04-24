@@ -30,7 +30,7 @@
     <ul class="themes">
       <% Theme.all.each_with_index do |theme, i| %>
       <li rel="<%= theme.id %>" class="<%='selected' if theme == @site.theme %> <%= 'last' if i == Theme.count - 1 %>">
-        <img src="<%= theme.thumbnail_path %>" width="157" height="135" alt="<%= theme.name %>">
+        <img src="/app<%= theme.thumbnail_path %>" width="157" height="135" alt="<%= theme.name %>">
         <a class="preview" href="<%= url(@site) %>?theme_id=<%= theme.id %>">PREVIEW</a>
         <span class="ready"></span>
       </li>
@@ -188,7 +188,7 @@
           <ul class="options scroll_pane">
             <% LayerStyle.all.each do |ls| %>
               <li>
-                <a href="#<%= ls.id %>" id="<%= ls.id %>"><%= image_tag("images/assets/#{ls.name}.png") %><br> <%= ls.title %></a>
+                <a href="#<%= ls.id %>" id="<%= ls.id %>"><%= image_tag("sources/#{ls.name}.png") %><br> <%= ls.title %></a>
               </li>
             <% end %>
           </ul>
