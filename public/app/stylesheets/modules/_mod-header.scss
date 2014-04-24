@@ -13,11 +13,11 @@
   }
   li {
     float: left;
+    padding: 5px 15px;
+    border-radius: 10px;
     text-transform: uppercase;
   }
   a {
-    padding: 5px 15px;
-    border-radius: 10px;
     &:hover { color: $color-0;}
   }
   .interaction-logo {
