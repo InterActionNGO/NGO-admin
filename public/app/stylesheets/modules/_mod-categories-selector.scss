@@ -1,0 +1,79 @@
+.mod-categories-selector {
+  nav {
+    float: left;
+    position: relative;
+    width: 80%;
+    margin-top: 7px;
+    padding: .5% 1%;
+    background-color: $color-0;
+    border-radius: 20px;
+  }
+  li {
+    float: left;
+    position: relative;
+    font-family: "Helvetica Neue light";
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 0px;
+    padding: 14px 23px;
+    margin: 0 1%;
+    &:hover {
+      color: $color-0;
+      .mod-categories-child { display: block; }
+    }
+  }
+  .sector:hover {
+    background-color: $color-2;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .organizations:hover {
+    background-color: $color-6;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .donors:hover {
+    background-color: $color-7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .countries:hover {
+    background-color: $color-8;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .regions:hover {
+    background-color: $color-9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .search {
+
+    padding: 0;
+    border-bottom: 2px solid $color-4;
+    border-radius: 0;
+    &:hover {
+      color: $color-3;
+    }
+    input {
+      padding: 0;
+      border: none;
+    }
+    input[type="submit"] {
+      width: 30px;
+      height: 17px;
+      border: none;
+      background: image-url('icon-search.png') no-repeat center;
+      background-color: white;
+    }
+  }
+  .fedex-logo {
+    float: right;
+    padding:0;
+  }
+}
+
+
+
+
+

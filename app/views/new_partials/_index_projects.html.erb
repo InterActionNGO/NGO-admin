@@ -1,13 +1,11 @@
 <div class="articles-list">
   <% unless @projects.empty? %>
     <ul>
-      <% @projects.each_with_index do |project,index| %>
+      <% @projects.each do |project| %>
         <li>
           <article class="mod-index-item">
-            <h2><%= link_to(truncate(project['project_name'], :length=>65), project_path(project['project_id'])) %></h2>
-            <p>
-              <%= subtitle_donors_page(project, @site, donor_path( params[:id], @carry_on_filters.merge(:organization_id => project["organization_id"].to_i) ) ) %>
-            </p>
+            <h2><a href="<%= project_path(project['project_id']) %>"><%= truncate(project['project_name'], :length=>60) %></a></h2>
+            <span><%= subtitle(project, @site) %></span>
             <p>
               <%= anglo(truncate(project['project_description'], :length => 175, :omission => "... <a href=\"#{project_path(project['project_id'])}\" class=\"learn_more\">Learn more</a>")) %>
             </p>
@@ -19,7 +17,7 @@
     <ul>
       <li>
         <article class="mod-index-item">
-          <p class="no_results">No projects were found for this donor</p>
+          <p class="no_results">No projects were found for this organizaton</p>
         </article>
       </li>
     </ul>
