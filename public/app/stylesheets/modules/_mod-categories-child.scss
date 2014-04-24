@@ -1,14 +1,20 @@
 .mod-categories-child {
   display: none;
   position: absolute;
-  background-color: $color-0;
+  left: 0;
+  top: -375px;
+  z-index: 100;
   width: 250px;
   height: 350px;
-  z-index: 100;
+  padding: 10px 0;
+  background-color: $color-0;
   overflow: scroll;
-  top: -350px;
 
-  li { line-height: 14px;}
+  li {
+    float: none;
+    padding: 0 23px;
+    line-height: 30px;
+  }
   a {
     font-family: "Helvetica Neue bold";
     font-size: 16px;

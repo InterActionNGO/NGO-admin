@@ -10,8 +10,8 @@
             <% elsif @site.sector %>
               <li class="sector"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
             <% else %>
-              <li id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
-                <a href="#"><%= @site.word_for_cluster_sector.upcase %></a>
+              <li class="sector" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
+                <%= @site.word_for_cluster_sector.upcase %>
                 <ul class="mod-categories-child sector-child">
                   <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
                     <li>
@@ -68,7 +68,7 @@
 
           <li class="search">
             <%= form_tag(search_path, :method => :get) do %>
-              <%= text_field_tag :q, params[:q], :value=>'' %>
+              <%= text_field_tag :q, params[:q], :value=>''%>
               <input type="submit" value="">
             <% end %>
           </li>

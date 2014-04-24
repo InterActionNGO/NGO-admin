@@ -1,6 +1,7 @@
 .mod-info {
   border-bottom: 3px solid $color-4;
-  padding: 20px 0;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 
   &:last-child {
     border-bottom: 0;
@@ -16,6 +17,7 @@
     font-family: "Helvetica Neue light"
   }
   a {
+    display: inline-block;
     margin-bottom: 20px;
     font-family: "Helvetica Neue";
     font-size: 16px;

@@ -10,21 +10,17 @@
   }
   li {
     float: left;
+    position: relative;
     font-family: "Helvetica Neue light";
     font-size: 14px;
     text-transform: uppercase;
     line-height: 0px;
-    padding: 14px 15px;
+    padding: 14px 23px;
     margin: 0 1%;
     &:hover {
       color: $color-0;
-      font-family: "Helvetica Neue bold";
       .mod-categories-child { display: block; }
     }
-  }
-  a {
-    padding: 14px 15px;
-    margin: 0 1%;
   }
   .sector:hover {
     background-color: $color-2;
@@ -52,13 +48,23 @@
     border-bottom-right-radius: 10px;
   }
   .search {
-    width: 190px;
-    padding-bottom: 3%;
-    padding-left: 0;
+
+    padding: 0;
     border-bottom: 2px solid $color-4;
     border-radius: 0;
     &:hover {
       color: $color-3;
+    }
+    input {
+      padding: 0;
+      border: none;
+    }
+    input[type="submit"] {
+      width: 30px;
+      height: 17px;
+      border: none;
+      background: image-url('icon-search.png') no-repeat center;
+      background-color: white;
     }
   }
   .fedex-logo {
