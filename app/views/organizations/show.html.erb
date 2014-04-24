@@ -55,10 +55,10 @@
           <div class="mod-follow-us">
             <ul>
               <% if @organization.twitter? %>
-                <%= link_to("follow us", "http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %>
+                <%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %>
               <% end %>
               <% if @organization.facebook? %>
-                <%= link_to("visit our page", "http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %>
+                <%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %>
               <% end %>
             </ul>
           </div>
