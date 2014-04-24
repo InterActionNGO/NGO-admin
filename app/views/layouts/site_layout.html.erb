@@ -4,25 +4,32 @@
     <meta charset="utf-8">
     <title><%= CGI.unescapeHTML(title) %> · NGO Aid Map</title>
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
+    <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
     <%= csrf_meta_tag %>
-    <script type="text/javascript">
-      <% if @site.overview_map_lat && @site.overview_map_lon %>
-      var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-      <% else %>
-      var map_center = [];
-      <% end %>
-      var map_zoom = <%= @site.overview_map_zoom %>;
-      var chco = "<%=@overview_map_chco%>";
-      var chf = "<%=@overview_map_chf%>";
-      var chld = "<%=@chld%>";
-      var chd = "<%=@chd%>";
-      var map_data = <%=raw(@map_data)%>;
-      var max_count = <%=@map_data_max_count%>;
-      var map_type = 'overview_map';
-      var theme = "<%=@site.theme_id%>";
-      var stylez = <%=raw @site.map_styles  %>
-      var empty_layer = false;
-    </script>
+
+    <% unless content_for?(:js_vars) %>
+      <script>
+        <% if @site.overview_map_lat && @site.overview_map_lon %>
+        var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
+        <% else %>
+        var map_center = [];
+        <% end %>
+        var map_zoom = <%= @site.overview_map_zoom %>;
+        var chco = "<%=@overview_map_chco%>";
+        var chf = "<%=@overview_map_chf%>";
+        var chld = "<%=@chld%>";
+        var chd = "<%=@chd%>";
+        var map_data = <%=raw(@map_data)%>;
+        var max_count = <%=@map_data_max_count%>;
+        var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
+        var theme = "<%=@site.theme_id%>";
+        var kind = 'org.';
+        var stylez = <%=raw @site.map_styles  %>
+        var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
+      </script>
+    <% else %>
+      <%= yield :js_vars %>
+    <% end %>
   </head>
   <body>
     <%= render 'layouts/header' %>

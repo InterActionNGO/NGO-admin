@@ -5,7 +5,7 @@ development:
   host: localhost
   database: iom_development
   username: postgres
-  password: simbiotic4
+  password:
 
 test:
   adapter: postgresql

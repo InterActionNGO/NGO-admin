@@ -1,13 +1,34 @@
 .mod-header {
+  font-size: 14px;
+  position: relative;
+  border-bottom: $border-bottom-color-1;
+  .aid-map-logo {
+    float: left;
+    padding-top: 1.5%;
+  }
   ul {
-    float: right;
-    width: 75%;
+    position: absolute;
+    top: 50px;
+    right: 150px;
+    width: 50%;
   }
   li {
     float: left;
-    padding: 0 1%;
-    border-radius: 5px;
+    padding: 5px 15px;
+    border-radius: 10px;
     text-transform: uppercase;
-
   }
+  a {
+    &:hover { color: $color-0;}
+  }
+  .interaction-logo {
+    float: right;
+    padding-top: 2%;
+  }
+  .home:hover { background-color: $color-3;}
+  .about:hover { background-color: $color-8;}
+  .news:hover { background-color: $color-7;}
+  .contact:hover { background-color: $color-1;}
+  .access:hover { color: $color-00;}
 }
+
