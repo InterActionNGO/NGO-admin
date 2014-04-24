@@ -659,6 +659,8 @@ define(function() {
     el: '#mapView',
 
     initialize: function() {
+      var h = $(window).height() -175;
+      this.$el.height(h);
       old();
     }
 
