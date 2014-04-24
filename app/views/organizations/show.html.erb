@@ -45,25 +45,17 @@
             <% unless (@organization.contact_email.nil?)||(@organization.contact_email.empty?) %>
               <p><%= link_to(@organization.contact_email, "mailto:#{@organization.contact_email}") %></p>
             <%end%>
+            <% if @organization.twitter? %>
+              <p><%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %></p>
+            <% end %>
+            <% if @organization.twitter? %>
+              <p><%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %></p>
+            <% end %>
           </div>
         </div>
       <% end %>
 
-      <% unless @organization.twitter.nil? &&  @organization.facebook.nil? %>
-        <div class="follow-us mod-info">
-          <h3>Follow us</h3>
-          <div class="mod-follow-us">
-            <ul>
-              <% if @organization.twitter? %>
-                <%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %>
-              <% end %>
-              <% if @organization.facebook? %>
-                <%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <%end%>
+      <%= render 'new_partials/aside/follow_us' %>
 
     </div>
   </aside>
