@@ -50,8 +50,8 @@ input[type="text"], textarea {
 /*FONT FACE*/
 @font-face {
   font-family: 'Museo Sans';
-  src: url("/fonts/museosans_500-webfont.eot");
-  src: local("☺"), url("/fonts/museosans_500-webfont.woff") format("woff"), url("/fonts/museosans_500-webfont.ttf") format("truetype"), url("/fonts/museosans_500-webfont.svg#webfontX97tj7j1") format("svg");
+  src: url("/app/fonts/museosans_500-webfont.eot");
+  src: local("☺"), url("/app/fonts/museosans_500-webfont.woff") format("woff"), url("/app/fonts/museosans_500-webfont.ttf") format("truetype"), url("/app/fonts/museosans_500-webfont.svg#webfontX97tj7j1") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -80,7 +80,7 @@ div.field {
     line-height: 85px;
     color: #333333; }
   .flash .notice {
-    background: url("/images/backoffice/backgrounds/flash_notice.png") no-repeat scroll top left;
+    background: url("/app/images/backoffice/backgrounds/flash_notice.png") no-repeat scroll top left;
     text-align: center; }
     .flash .notice a {
       color: #E93E3F;
@@ -97,7 +97,7 @@ span.field_error {
     float: right;
     width: 14px;
     height: 14px;
-    background: url("/images/backoffice/icons/error.png") no-repeat scroll top left; }
+    background: url("/app/images/backoffice/icons/error.png") no-repeat scroll top left; }
     span.field_error a.error:hover {
       cursor: pointer; }
   span.field_error div.error_msg {
@@ -112,14 +112,14 @@ span.field_error {
       float: left;
       padding: 0 0 0 27px;
       height: 31px;
-      background: url("/images/backoffice/common/left_error.png") no-repeat scroll top left; }
+      background: url("/app/images/backoffice/common/left_error.png") no-repeat scroll top left; }
       span.field_error div.error_msg p span {
         position: relative;
         float: left !important;
         height: 15px;
         padding: 8px 15px 8px 2px;
         display: block;
-        background: url("/images/backoffice/common/right_error.png") no-repeat right 0;
+        background: url("/app/images/backoffice/common/right_error.png") no-repeat right 0;
         font: normal 13px Arial;
         color: #333333; }
 span.simple_field_error {
@@ -132,7 +132,7 @@ span.simple_field_error {
     float: right;
     width: 34px;
     height: 32px;
-    background: url("/images/backoffice/icons/simple_error.png") no-repeat scroll top left; }
+    background: url("/app/images/backoffice/icons/simple_error.png") no-repeat scroll top left; }
     span.simple_field_error a.simple_error:hover {
       cursor: pointer; }
   span.simple_field_error div.error_msg {
@@ -146,14 +146,14 @@ span.simple_field_error {
       float: left;
       padding: 0 0 0 27px;
       height: 31px;
-      background: url("/images/backoffice/common/left_error.png") no-repeat scroll top left; }
+      background: url("/app/images/backoffice/common/left_error.png") no-repeat scroll top left; }
       span.simple_field_error div.error_msg p span {
         position: relative;
         float: left !important;
         height: 15px;
         padding: 8px 15px 8px 2px;
         display: block;
-        background: url("/images/backoffice/common/right_error.png") no-repeat right 0;
+        background: url("/app/images/backoffice/common/right_error.png") no-repeat right 0;
         font: normal 13px Arial;
         color: #333333; }
 
@@ -162,7 +162,7 @@ div.main_layout {
   margin: 0 auto;
   width: 942px; }
   div.main_layout p.link_to_back {
-    background: url("/images/backoffice/common/red_arrow.png") no-repeat 0 3px;
+    background: url("/app/images/backoffice/common/red_arrow.png") no-repeat 0 3px;
     width: auto;
     height: auto;
     position: absolute;
@@ -184,13 +184,13 @@ div.main_layout {
       float: left;
       width: 942px;
       height: 15px;
-      background: url("/images/backoffice/backgrounds/top_long.png") no-repeat center 0;
+      background: url("/app/images/backoffice/backgrounds/top_long.png") no-repeat center 0;
       position: relative; }
     div.main_layout div.block div.med {
       float: left;
       width: 880px;
       padding: 16px 31px 28px;
-      background: url("/images/backoffice/backgrounds/mid_long.png") repeat-y center 0; }
+      background: url("/app/images/backoffice/backgrounds/mid_long.png") repeat-y center 0; }
 div.med div.header {
   width: 100%;
   overflow: hidden;
@@ -260,11 +260,11 @@ div.med .info_list p {
 
 /*ngo dashboard*/
 .grey div.bottom_white {
-  background: url("/images/backoffice/backgrounds/bottom_grey_long.png") repeat-y center bottom; }
+  background: url("/app/images/backoffice/backgrounds/bottom_grey_long.png") repeat-y center bottom; }
 .grey div.top {
-  background: url("/images/backoffice/backgrounds/top_grey_long.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_grey_long.png") no-repeat center 0 !important; }
 .grey div.med {
-  background: url("/images/backoffice/backgrounds/med_grey_long.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/med_grey_long.png") repeat-y center 0 !important; }
 
 /*add new site,donor,...*/
 div.add_new {
@@ -273,14 +273,14 @@ div.add_new {
   height: 98px;
   padding: 5px;
   margin: 20px 0 0 5px;
-  background: url("/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0; }
+  background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0; }
   div.add_new a {
     float: left;
     width: 922px;
     height: 70px;
     padding: 28px 0 0 0;
     margin: 0px;
-    background: url("/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;
+    background: url("/app/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;
     text-align: center;
     font: normal 27px "Museo Sans",Arial;
     color: white; }
@@ -309,7 +309,7 @@ div.block div.med div.right {
         float: left;
         width: auto;
         padding: 15px 14px 15px 0;
-        background: url("/images/backoffice/common/selected_li.png") no-repeat right 0;
+        background: url("/app/images/backoffice/common/selected_li.png") no-repeat right 0;
         font: bold 15px Arial;
         color: #333333; }
       div.block div.med div.right ul li.disabled {
@@ -325,13 +325,13 @@ div.block div.med div.right {
         float: left;
         margin: 2px 0 0 7px;
         padding: 0 0 0 5px;
-        background: url("/images/backoffice/common/amount_left.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/common/amount_left.png") no-repeat 0 0; }
         div.block div.med div.right ul li p span {
           float: left;
           padding: 1px 7px 1px 2px;
           height: 12px;
           line-height: 12px;
-          background: url("/images/backoffice/common/amount_right.png") no-repeat right 0;
+          background: url("/app/images/backoffice/common/amount_right.png") no-repeat right 0;
           font: bold 11px Arial;
           color: white; }
       div.block div.med div.right ul li.selected a {
@@ -344,7 +344,7 @@ div.block div.med div.right {
         padding: 0 12px 13px 0;
         margin: 0;
         padding: 0;
-        background: url("/images/backoffice/backgrounds/menu_bottom.png") no-repeat right bottom; }
+        background: url("/app/images/backoffice/backgrounds/menu_bottom.png") no-repeat right bottom; }
         div.block div.med div.right ul li.selected div.bottom_selected ul {
           float: left;
           width: auto !important;
@@ -380,12 +380,12 @@ div.block div.med div.right {
         width: auto;
         margin: 10px 0 0 0;
         padding: 15px 0 0 0;
-        background: url("/images/backoffice/donors/menu_top.png") no-repeat right 0; }
+        background: url("/app/images/backoffice/donors/menu_top.png") no-repeat right 0; }
         div.block div.med div.right ul li.list_selected div.bottom_selected {
           float: left;
           width: auto;
           padding: 0 14px 15px 0;
-          background: url("/images/backoffice/donors/menu_bottom.png") no-repeat right bottom; }
+          background: url("/app/images/backoffice/donors/menu_bottom.png") no-repeat right bottom; }
           div.block div.med div.right ul li.list_selected div.bottom_selected a.basic {
             width: 100%;
             color: #E93E3F;
@@ -405,7 +405,7 @@ div.block div.med div.right {
                 float: left;
                 width: auto;
                 padding: 0 0 0 6px;
-                background: url("/images/backoffice/icons/grey_square.jpg") no-repeat 0 7px !important;
+                background: url("/app/images/backoffice/icons/grey_square.jpg") no-repeat 0 7px !important;
                 font: normal 13px Arial;
                 color: #333333; }
                 div.block div.med div.right ul li.list_selected div.bottom_selected span.list p a:hover {
@@ -419,12 +419,12 @@ div.block div.med div.right {
         width: auto;
         margin: 10px 0 0 0;
         padding: 15px 0 0 0;
-        background: url("/images/backoffice/donors/menu_top.png") no-repeat right 0; }
+        background: url("/app/images/backoffice/donors/menu_top.png") no-repeat right 0; }
         div.block div.med div.right ul li.sublist_selected div.bottom_selected {
           float: left;
           width: auto;
           padding: 0 14px 15px 0;
-          background: url("/images/backoffice/donors/menu_bottom.png") no-repeat right bottom; }
+          background: url("/app/images/backoffice/donors/menu_bottom.png") no-repeat right bottom; }
           div.block div.med div.right ul li.sublist_selected div.bottom_selected a.basic {
             color: #E93E3F;
             padding: 0 0 0 20px; }
@@ -444,7 +444,7 @@ div.block div.med div.right {
                 width: auto;
                 margin: 5px 0 0 20px;
                 padding: 0 0 0 6px;
-                background: url("/images/backoffice/icons/red_square.jpg") no-repeat 0 7px !important;
+                background: url("/app/images/backoffice/icons/red_square.jpg") no-repeat 0 7px !important;
                 font: normal 13px Arial;
                 color: #E93E3F; }
               div.block div.med div.right ul li.sublist_selected div.bottom_selected span.list p.sublist {
@@ -455,7 +455,7 @@ div.block div.med div.right {
                 float: left;
                 width: auto;
                 padding: 0 0 0 6px;
-                background: url("/images/backoffice/icons/grey_square.jpg") no-repeat 0 7px !important;
+                background: url("/app/images/backoffice/icons/grey_square.jpg") no-repeat 0 7px !important;
                 font: normal 13px Arial;
                 color: #333333; }
                 div.block div.med div.right ul li.sublist_selected div.bottom_selected span.list p a:hover {
@@ -546,7 +546,7 @@ div#header {
   float: left;
   width: 100%;
   height: 120px;
-  background: url("/images/backoffice/common/header_bkg.jpg") repeat-x 0 0; }
+  background: url("/app/images/backoffice/common/header_bkg.jpg") repeat-x 0 0; }
   div#header div.inner_header {
     margin: 0 auto;
     width: 932px; }
@@ -584,7 +584,7 @@ div#header {
             *display: inline;
             height: 42px;
             padding: 0 1.5px 0 4px;
-            background: url("/images/backoffice/common/header_tab_left.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/common/header_tab_left.png") no-repeat 0 0; }
             div#header div.inner_header div.bottom ul.main_menu li a:focus {
               outline: none; }
           div#header div.inner_header div.bottom ul.main_menu li span {
@@ -594,7 +594,7 @@ div#header {
             *display: inline;
             height: 32px;
             padding: 10px 22px 0 18px;
-            background: url("/images/backoffice/common/header_tab_right.png") no-repeat right 0;
+            background: url("/app/images/backoffice/common/header_tab_right.png") no-repeat right 0;
             font: normal 17px "Museo Sans", Arial;
             color: #DEE1E4;
             vertical-align: top; }
@@ -618,7 +618,7 @@ div#header {
           float: left;
           width: auto;
           padding: 0 11px;
-          background: url("/images/backoffice/common/footer_list_separator.png") no-repeat right -2px; }
+          background: url("/app/images/backoffice/common/footer_list_separator.png") no-repeat right -2px; }
           div#header div.inner_header div.bottom ul.admin li a {
             font: normal 13px "Museo Sans", "Arial";
             color: #DEE1E4;
@@ -637,7 +637,7 @@ div.login {
   float: left;
   width: 100%;
   height: 100%;
-  background: url("/images/backoffice/login/login_bkg.png") repeat-x 0 bottom #373737; }
+  background: url("/app/images/backoffice/login/login_bkg.png") repeat-x 0 bottom #373737; }
   div.login div.main {
     position: absolute;
     top: 118px;
@@ -661,7 +661,7 @@ div.login {
       width: 100%;
       height: 10px;
       margin: 20px 0 0 0;
-      background: url("/images/backoffice/login/top_login.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/login/top_login.png") no-repeat 0 0; }
     div.login div.main div.med_data {
       float: left;
       width: 324px;
@@ -681,7 +681,7 @@ div.login {
         line-height: 13px;
         padding: 7px;
         margin: 5px 0 0 0;
-        background: url("/images/backoffice/login/text_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/login/text_bkg.png") no-repeat 0 0;
         border: none;
         font: normal 15px Arial;
         color: #333333; }
@@ -695,7 +695,7 @@ div.login {
         height: 33px;
         margin: 20px 0 0 1px;
         padding: 19px 0 0 65px;
-        background: url("/images/backoffice/login/error_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/login/error_bkg.png") no-repeat 0 0;
         font: normal 13px Arial;
         color: white; }
         div.login div.main div.med_data p.error.margin {
@@ -708,14 +708,14 @@ div.login {
       float: left;
       width: 400px;
       height: 76px;
-      background: url("/images/backoffice/login/bottom_login.png") no-repeat scroll top left; }
+      background: url("/app/images/backoffice/login/bottom_login.png") no-repeat scroll top left; }
       div.login div.main div.bottom_data input {
         float: left;
         width: 98px;
         height: 32px;
         padding: 0;
         margin: 22px 0 0 39px;
-        background: url("/images/backoffice/login/submit_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/login/submit_bkg.png") no-repeat 0 0;
         border: none;
         text-align: center;
         font: normal 19px "Museo Sans","Arial";
@@ -746,7 +746,7 @@ div.one {
   height: 143px;
   margin: 20px 10px 0 0;
   padding: 30px 0 0 0;
-  background: url("/images/backoffice/dashboard/one_top.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/dashboard/one_top.png") no-repeat 0 0; }
   div.one.last {
     margin: 20px 0 0 0; }
   div.one p {
@@ -836,17 +836,17 @@ div.med div.form_error {
   padding: 20px 20px 20px 60px;
   font: normal 13px Arial;
   color: #FFFFFF;
-  background: url("/images/backoffice/common/form_error_bkg.png"); }
+  background: url("/app/images/backoffice/common/form_error_bkg.png"); }
 div.bottom_grey {
   float: left;
   width: 942px;
   height: 64px;
-  background: url("/images/backoffice/backgrounds/bottom_grey_long.png") no-repeat center 0; }
+  background: url("/app/images/backoffice/backgrounds/bottom_grey_long.png") no-repeat center 0; }
 div.bottom_white {
   float: left;
   width: 942px;
   height: 13px;
-  background: url("/images/backoffice/backgrounds/bottom_white_long.png") no-repeat center bottom; }
+  background: url("/app/images/backoffice/backgrounds/bottom_white_long.png") no-repeat center bottom; }
 div.bottom_grey a {
   float: right;
   width: auto;
@@ -891,14 +891,14 @@ div.right.tips {
     height: 71px;
     padding: 20px 20px 20px 33px;
     margin: 0 0 0 14px;
-    background: url("/images/backoffice/common/big_bubble.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/common/big_bubble.png") no-repeat 0 0; }
   div.right.tips div.small_bubble {
     float: left;
     width: 220px;
     height: 50px;
     padding: 20px 20px 20px 33px;
     margin: 133px 0 0 14px;
-    background: url("/images/backoffice/common/small_bubble.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/common/small_bubble.png") no-repeat 0 0; }
   div.right.tips div h3 {
     float: left;
     width: 100%;
@@ -913,12 +913,12 @@ div.right.tips {
 div.block.edit div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.edit div.med {
   float: left;
   width: 874px;
   padding: 16px 33px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.edit div.med div.left {
     float: left;
     width: 572px;
@@ -929,7 +929,7 @@ div.block.edit div.med {
       height: 60px;
       margin: 5px 0 0 0;
       padding: 10px;
-      background: url("/images/backoffice/donors/image_bkg.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/donors/image_bkg.png") no-repeat 0 0; }
       div.block.edit div.med div.left div.image_container p {
         float: left;
         font: normal 15px Arial;
@@ -962,7 +962,7 @@ div.block.edit div.med {
         left: 0px;
         width: 102px;
         height: 26px;
-        background: url("/images/backoffice/ngos/upload_bttn.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/ngos/upload_bttn.png") no-repeat 0 0; }
         div.block.edit div.med div.left div.image_container a.upload_bttn:hover {
           background-position: 0 -26px; }
       div.block.edit div.med div.left div.image_container img {
@@ -993,7 +993,7 @@ div.block.edit div.med {
       min-height: 204px;
       margin: 5px 0 0 0;
       padding: 5px 8px;
-      background: url("/images/backoffice/donors/textarea_bkg.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/donors/textarea_bkg.png") no-repeat 0 0;
       border: none;
       font: normal 15px Arial;
       color: #333333; }
@@ -1039,7 +1039,7 @@ div.block.edit div.med {
         font: normal 15px Arial;
         color: #333333;
         border: none;
-        background: url("/images/backoffice/donors/short_input.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/donors/short_input.png") no-repeat 0 0; }
         div.block.edit div.med div.left div.short_field input[type="text"].short.error {
           background-position: 0 -34px; }
     div.block.edit div.med div.left div.field {
@@ -1067,7 +1067,7 @@ div.field input[type="text"], div.field input[type="password"], div.field input[
   font: normal 15px Arial;
   color: #333333;
   border: none;
-  background: url("/images/backoffice/donors/long_input.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/donors/long_input.png") no-repeat 0 0; }
 div.comboselect .chzn-container {
   float: none;
   margin: 5px 0 0 0; }
@@ -1086,11 +1086,11 @@ div.block.edit div.med div.left div span a.combo {
   float: left;
   font: normal 15px Arial;
   color: #333333;
-  background: url("/images/backoffice/pages/option_bkg.png") no-repeat 0 4px;
+  background: url("/app/images/backoffice/pages/option_bkg.png") no-repeat 0 4px;
   padding: 0 0 0 15px;
   margin: 0 0 0 13px; }
   div.block.edit div.med div.left div span a.combo.clicked {
-    background: url("/images/backoffice/pages/option_bkg_selected.png") no-repeat 0 4px; }
+    background: url("/app/images/backoffice/pages/option_bkg_selected.png") no-repeat 0 4px; }
   div.block.edit div.med div.left div span a.combo:hover {
     cursor: pointer; }
 div.block.edit div.med div.left div.field input[type="text"].short, div.block.edit div.med div.left div input[type="password"].short {
@@ -1102,7 +1102,7 @@ div.block.edit div.med div.left div.field input[type="text"].short, div.block.ed
   font: normal 15px Arial;
   color: #333333;
   border: none;
-  background: url("/images/backoffice/donors/short_input.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/donors/short_input.png") no-repeat 0 0; }
 div.block.edit div.med div.left div.long_field {
   float: left;
   width: 100%; }
@@ -1115,15 +1115,15 @@ div.block.edit div.med div.left div.long_field {
     font: normal 15px Arial;
     color: #333333;
     border: none;
-    background: url("/images/backoffice/donors/input_address.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/donors/input_address.png") no-repeat 0 0; }
 div.block.edit div.med div.left div.short_field input[type="text"].twitter {
   width: 234px;
   padding: 8px 8px 8px 30px;
-  background: url("/images/backoffice/donors/twitter_bkg.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/donors/twitter_bkg.png") no-repeat 0 0; }
 div.block.edit div.med div.left div.field input[type="text"].facebook {
   width: 381px;
   padding: 8px 8px 8px 30px;
-  background: url("/images/backoffice/donors/facebook_input.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/donors/facebook_input.png") no-repeat 0 0; }
 div.block.edit div.med div.left div.long_field a.check.show_password {
   display: none; }
 div.block.edit div.med div.left div.long_field a#reset_password {
@@ -1134,7 +1134,7 @@ div.block.edit div.med div.left div.field a.check, div.block.edit div.med div.le
   font: normal 15px Arial;
   color: #333333;
   text-decoration: none;
-  background: url("/images/backoffice/sites/project_tipo_check.png") no-repeat 0 4px;
+  background: url("/app/images/backoffice/sites/project_tipo_check.png") no-repeat 0 4px;
   padding: 0 0 0 15px;
   margin: 15px 0;
   height: 14px; }
@@ -1144,9 +1144,9 @@ div.block.edit div.med div.left div.field div.options {
     clear: left;
     margin: 9px 0; }
 div.block.edit div.med div.left div.field a.check.selected {
-  background: url("/images/backoffice/sites/project_tipo_checked.png") no-repeat 0 4px; }
+  background: url("/app/images/backoffice/sites/project_tipo_checked.png") no-repeat 0 4px; }
 div.block.edit div.med div.left div.long_field a.check.selected {
-  background: url("/images/backoffice/sites/project_tipo_checked.png") no-repeat 0 4px; }
+  background: url("/app/images/backoffice/sites/project_tipo_checked.png") no-repeat 0 4px; }
 div.block.edit div.med div.left div.final {
   float: left;
   width: 100%; }
@@ -1159,15 +1159,15 @@ div.block.edit div.med div.left input[type="submit"], div.block.edit div.med div
   font-size: 0;
   display: block;
   line-height: 0;
-  background: url("/images/backoffice/donors/save_changes.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/donors/save_changes.png") no-repeat 0 0;
   border: none; }
 div.block.edit div.med div.left input[type="submit"]:hover {
   background-position: 0 -32px;
   cursor: pointer; }
 div.block.edit div.med div.left input[type="submit"].error {
-  background: url("/images/backoffice/donors/save_changes.png") no-repeat 0 -64px; }
+  background: url("/app/images/backoffice/donors/save_changes.png") no-repeat 0 -64px; }
   div.block.edit div.med div.left input[type="submit"].error:hover {
-    background: url("/images/backoffice/donors/save_changes.png") no-repeat 0 -96px;
+    background: url("/app/images/backoffice/donors/save_changes.png") no-repeat 0 -96px;
     cursor: pointer; }
 div.block.edit div.med div.left div.short_field input.error, div.block.edit div.med div.left div.field input.error {
   width: 379px;
@@ -1184,7 +1184,7 @@ div.block.edit div.med div.left span.field_error {
     float: right;
     width: 14px;
     height: 14px;
-    background: url("/images/backoffice/icons/error.png") no-repeat scroll top left; }
+    background: url("/app/images/backoffice/icons/error.png") no-repeat scroll top left; }
     div.block.edit div.med div.left span.field_error a.error:hover {
       cursor: pointer; }
   div.block.edit div.med div.left span.field_error div.error_msg {
@@ -1199,7 +1199,7 @@ div.block.edit div.med div.left span.field_error {
       width: auto;
       height: 31px;
       padding: 0 0 0 27px;
-      background: url("/images/backoffice/common/left_error.png") no-repeat scroll top left; }
+      background: url("/app/images/backoffice/common/left_error.png") no-repeat scroll top left; }
       div.block.edit div.med div.left span.field_error div.error_msg p span {
         position: relative;
         float: left !important;
@@ -1207,23 +1207,23 @@ div.block.edit div.med div.left span.field_error {
         padding: 8px 10px 8px 2px;
         margin: 0 !important;
         display: block;
-        background: url("/images/backoffice/common/right_error.png") no-repeat right 0;
+        background: url("/app/images/backoffice/common/right_error.png") no-repeat right 0;
         font: normal 13px Arial;
         color: #333333; }
 div.block.edit div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.block.donor_funded div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.donor_funded div.med {
   float: left;
   width: 880px;
   padding: 16px 31px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.donor_funded div.med div.left {
     float: left;
     width: 572px; }
@@ -1264,9 +1264,9 @@ div.block.donor_funded div.med {
             text-align: left;
             padding: 5px 0 0 13px; }
             div.block.donor_funded div.med div.left ul li span p.active {
-              background: url("/images/backoffice/icons/color_circles.png") no-repeat 0 -13px; }
+              background: url("/app/images/backoffice/icons/color_circles.png") no-repeat 0 -13px; }
             div.block.donor_funded div.med div.left ul li span p.closed {
-              background: url("/images/backoffice/icons/color_circles.png") no-repeat 0 9px; }
+              background: url("/app/images/backoffice/icons/color_circles.png") no-repeat 0 9px; }
         div.block.donor_funded div.med div.left ul li p {
           float: left;
           width: 148px;
@@ -1288,7 +1288,7 @@ div.block.donor_funded div.bottom_projects_org {
   float: left;
   height: 61px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_paginate.png") no-repeat left bottom !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_paginate.png") no-repeat left bottom !important; }
   div.block.donor_funded div.bottom_projects_org div.pagination {
     float: left;
     width: auto;
@@ -1297,7 +1297,7 @@ div.block.donor_funded div.bottom_projects_org {
     div.block.donor_funded div.bottom_projects_org div.pagination em {
       float: left;
       padding: 20px 10px 7px;
-      background: url("/images/backoffice/donors/page_selected.jpg") no-repeat center bottom;
+      background: url("/app/images/backoffice/donors/page_selected.jpg") no-repeat center bottom;
       font: normal 15px "Museo Sans",Arial;
       color: #333333; }
     div.block.donor_funded div.bottom_projects_org div.pagination a {
@@ -1324,10 +1324,10 @@ div.two_donors {
   height: 100px;
   margin: 20px 10px 0 0;
   padding: 40px 30px 0;
-  background: url("/images/backoffice/donors/two_donors.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/donors/two_donors.png") no-repeat 0 0; }
   div.two_donors.big {
     height: 140px;
-    background: url("/images/backoffice/donors/two_donors_big.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/donors/two_donors_big.png") no-repeat 0 0; }
   div.two_donors label {
     float: left;
     margin: 0 0 0 3px;
@@ -1346,14 +1346,14 @@ div.two_donors {
     font: normal 17px Arial;
     color: #CCCCCC;
     border: none;
-    background: url("/images/backoffice/donors/input_bkg.jpg") no-repeat 0 0; }
+    background: url("/app/images/backoffice/donors/input_bkg.jpg") no-repeat 0 0; }
   div.two_donors input[type="submit"] {
     position: absolute;
     width: 15px;
     height: 15px;
     right: 20px;
     top: 28px;
-    background: url("/images/backoffice/donors/lens.jpg") no-repeat 0 0;
+    background: url("/app/images/backoffice/donors/lens.jpg") no-repeat 0 0;
     border: none; }
     div.two_donors input[type="submit"]:hover {
       background-position: 0 -15px;
@@ -1364,9 +1364,9 @@ div.one_donor {
   height: 180px;
   margin: 20px 0 0 0;
   padding: 0;
-  background: url("/images/backoffice/donors/one_donor.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/donors/one_donor.png") no-repeat 0 0; }
   div.one_donor.big {
-    background: url("/images/backoffice/donors/one_donor_big.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/donors/one_donor_big.png") no-repeat 0 0; }
   div.one_donor div.center {
     float: left;
     width: 100%;
@@ -1389,7 +1389,7 @@ div.one_donor {
     height: 28px;
     margin: 7px 0 0 46px;
     padding: 4px 0 0 40px;
-    background: url("/images/backoffice/donors/add_donor.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/donors/add_donor.png") no-repeat 0 0;
     font: normal 19px "Museo Sans",Arial;
     color: white;
     text-shadow: 0 1px #5C7C31; }
@@ -1401,7 +1401,7 @@ div.one_donor {
       height: 26px;
       margin: 3px 0 0 46px;
       padding: 6px 0 0 27px;
-      background: url("/images/backoffice/projects/import_csv_bttn.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/import_csv_bttn.png") no-repeat 0 0;
       font: normal 19px "Museo Sans",Arial;
       color: white;
       text-shadow: 0 1px #000000; }
@@ -1411,7 +1411,7 @@ div.med.offices_list h2 a.remove, div.med.donors_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
   border-bottom: 1px dotted #EB4142;
-  background: url("/images/backoffice/icons/red_x.png") no-repeat right 17px; }
+  background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
 div.med.offices_list h2 a.remove:hover, div.med.donors_list h2 a.remove:hover {
   border-bottom: 1px solid #EB4142;
   text-decoration: none; }
@@ -1498,7 +1498,7 @@ div.bottom_grey div.pagination {
   div.bottom_grey div.pagination em {
     float: left;
     padding: 20px 10px 7px;
-    background: url("/images/backoffice/donors/page_selected.jpg") no-repeat center bottom;
+    background: url("/app/images/backoffice/donors/page_selected.jpg") no-repeat center bottom;
     font: normal 15px "Museo Sans",Arial;
     color: #333333; }
   div.bottom_grey div.pagination a {
@@ -1525,7 +1525,7 @@ div.block.edit div.med div.left div.specific_edit {
   height: 312px;
   margin: 30px 0 0 0;
   padding: 20px;
-  background: url("/images/backoffice/ngos/edit_specific_bkg.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/ngos/edit_specific_bkg.png") no-repeat 0 0; }
   div.block.edit div.med div.left div.specific_edit span {
     float: left;
     width: 100%; }
@@ -1538,7 +1538,7 @@ div.block.edit div.med div.left div.specific_edit {
     padding: 2px 24px 0 0;
     font: normal 13px Arial;
     color: #333333;
-    background: url("/images/backoffice/ngos/paylock.png") no-repeat right -21px; }
+    background: url("/app/images/backoffice/ngos/paylock.png") no-repeat right -21px; }
     div.block.edit div.med div.left div.specific_edit p.paylock.open {
       background-position: right -21px; }
     div.block.edit div.med div.left div.specific_edit p.paylock.close {
@@ -1569,7 +1569,7 @@ div.block.edit div.med div.left div.specific_edit {
     color: #333333; }
   div.block.edit div.med div.left div.specific_edit div.short_field input[type="text"] {
     width: 236px;
-    background: url("/images/backoffice/ngos/med_input.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/ngos/med_input.png") no-repeat 0 0; }
   div.block.edit div.med div.left div.specific_edit div.tiny_field input[type="text"] {
     float: left;
     width: 93px;
@@ -1579,13 +1579,13 @@ div.block.edit div.med div.left div.specific_edit {
     font: normal 15px Arial;
     color: #333333;
     border: none;
-    background: url("/images/backoffice/ngos/small_input.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/ngos/small_input.png") no-repeat 0 0; }
   div.block.edit div.med div.left div.specific_edit div.field input[type="text"] {
     width: 381px;
-    background: url("/images/backoffice/ngos/long_input.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/ngos/long_input.png") no-repeat 0 0; }
     div.block.edit div.med div.left div.specific_edit div.field input[type="text"].short {
       width: 236px;
-      background: url("/images/backoffice/ngos/med_input.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/ngos/med_input.png") no-repeat 0 0; }
   div.block.edit div.med div.left div.specific_edit.disabled {
     height: auto;
     padding: 0;
@@ -1596,13 +1596,13 @@ div.block.edit div.med div.left div.specific_edit {
       float: left;
       width: 566px;
       height: 20px;
-      background: url("/images/backoffice/ngos/top_specific_edit.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/top_specific_edit.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.disabled div.med {
       float: left;
       width: 526px;
       height: auto;
       padding: 0 20px;
-      background: url("/images/backoffice/ngos/med_specific_edit_disabled.png") repeat-y 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/med_specific_edit_disabled.png") repeat-y 0 0 !important; }
       div.block.edit div.med div.left div.specific_edit.disabled div.med input {
         background-position: 0 -34px !important;
         color: #CBCCC6; }
@@ -1612,7 +1612,7 @@ div.block.edit div.med div.left div.specific_edit {
       float: left;
       width: 566px;
       height: 20px;
-      background: url("/images/backoffice/ngos/bottom_specific_edit.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/bottom_specific_edit.png") no-repeat 0 0 !important; }
   div.block.edit div.med div.left div.specific_edit.closed {
     height: auto;
     padding: 0;
@@ -1623,13 +1623,13 @@ div.block.edit div.med div.left div.specific_edit {
       float: left;
       width: 566px;
       height: 20px;
-      background: url("/images/backoffice/ngos/top_specific_edit.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/top_specific_edit.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.closed div.med {
       float: left;
       width: 526px;
       height: auto;
       padding: 0 20px;
-      background: url("/images/backoffice/ngos/med_specific_edit_disabled.png") repeat-y 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/med_specific_edit_disabled.png") repeat-y 0 0 !important; }
       div.block.edit div.med div.left div.specific_edit.closed div.med input {
         background-position: 0 -34px !important;
         color: #CBCCC6; }
@@ -1638,36 +1638,36 @@ div.block.edit div.med div.left div.specific_edit {
     div.block.edit div.med div.left div.specific_edit.closed input.twitter {
       width: 214px;
       padding: 8px 8px 8px 30px;
-      background: url("/images/backoffice/ngos/twitter_input.png") no-repeat 0 -34px !important; }
+      background: url("/app/images/backoffice/ngos/twitter_input.png") no-repeat 0 -34px !important; }
     div.block.edit div.med div.left div.specific_edit.closed input.facebook {
       width: 359px !important;
       padding: 8px 8px 8px 30px;
-      background: url("/images/backoffice/ngos/facebook_input.png") no-repeat 0 -34px !important; }
+      background: url("/app/images/backoffice/ngos/facebook_input.png") no-repeat 0 -34px !important; }
     div.block.edit div.med div.left div.specific_edit.closed input.people {
       width: 200px !important;
       padding: 8px 44px 8px 8px;
-      background: url("/images/backoffice/ngos/people_input.png") no-repeat 0 -34px !important; }
+      background: url("/app/images/backoffice/ngos/people_input.png") no-repeat 0 -34px !important; }
     div.block.edit div.med div.left div.specific_edit.closed input.budget {
       width: 214px !important;
       padding: 8px 30px 8px 8px;
-      background: url("/images/backoffice/ngos/budget_input.png") no-repeat 0 -34px !important; }
+      background: url("/app/images/backoffice/ngos/budget_input.png") no-repeat 0 -34px !important; }
     div.block.edit div.med div.left div.specific_edit.closed div.bottom {
       float: left;
       width: 566px;
       height: 20px;
-      background: url("/images/backoffice/ngos/bottom_specific_edit.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/bottom_specific_edit.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.closed textarea {
       max-width: 508px !important;
       min-width: 508px !important;
       max-height: 198px !important;
       min-height: 198px !important;
       padding: 8px;
-      background: url("/images/backoffice/ngos/textarea_bkg.png") no-repeat 0 -214px !important;
+      background: url("/app/images/backoffice/ngos/textarea_bkg.png") no-repeat 0 -214px !important;
       color: #CCCCCC; }
     div.block.edit div.med div.left div.specific_edit.closed div.image_container {
       width: 506px;
       height: 62px;
-      background: url("/images/backoffice/ngos/logo_bkg.png") no-repeat 0 -82px; }
+      background: url("/app/images/backoffice/ngos/logo_bkg.png") no-repeat 0 -82px; }
   div.block.edit div.med div.left div.specific_edit.enabled {
     height: auto;
     padding: 0;
@@ -1680,13 +1680,13 @@ div.block.edit div.med div.left div.specific_edit {
       float: left;
       width: 566px;
       height: 20px;
-      background: url("/images/backoffice/ngos/top_specific_edit.png") no-repeat 0 -20px !important; }
+      background: url("/app/images/backoffice/ngos/top_specific_edit.png") no-repeat 0 -20px !important; }
     div.block.edit div.med div.left div.specific_edit.enabled div.med {
       float: left;
       width: 526px;
       height: auto;
       padding: 0 20px;
-      background: url("/images/backoffice/ngos/med_specific_edit_enabled.png") repeat-y 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/med_specific_edit_enabled.png") repeat-y 0 0 !important; }
       div.block.edit div.med div.left div.specific_edit.enabled div.med input {
         background-position: 0 0;
         color: #333333; }
@@ -1695,36 +1695,36 @@ div.block.edit div.med div.left div.specific_edit {
     div.block.edit div.med div.left div.specific_edit.enabled input.twitter {
       width: 214px;
       padding: 8px 8px 8px 30px;
-      background: url("/images/backoffice/ngos/twitter_input.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/twitter_input.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.enabled input.facebook {
       width: 359px !important;
       padding: 8px 8px 8px 30px;
-      background: url("/images/backoffice/ngos/facebook_input.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/facebook_input.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.enabled input.people {
       width: 200px !important;
       padding: 8px 44px 8px 8px;
-      background: url("/images/backoffice/ngos/people_input.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/people_input.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.enabled input.budget {
       width: 214px !important;
       padding: 8px 30px 8px 8px;
-      background: url("/images/backoffice/ngos/budget_input.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/ngos/budget_input.png") no-repeat 0 0 !important; }
     div.block.edit div.med div.left div.specific_edit.enabled div.bottom {
       float: left;
       width: 566px;
       height: 20px;
-      background: url("/images/backoffice/ngos/bottom_specific_edit.png") no-repeat 0 -20px !important; }
+      background: url("/app/images/backoffice/ngos/bottom_specific_edit.png") no-repeat 0 -20px !important; }
     div.block.edit div.med div.left div.specific_edit.enabled textarea {
       max-width: 508px !important;
       min-width: 508px !important;
       max-height: 198px !important;
       min-height: 198px !important;
       padding: 8px;
-      background: url("/images/backoffice/ngos/textarea_bkg.png") no-repeat 0 0 !important;
+      background: url("/app/images/backoffice/ngos/textarea_bkg.png") no-repeat 0 0 !important;
       color: #333333; }
     div.block.edit div.med div.left div.specific_edit.enabled div.image_container {
       width: 506px;
       height: 62px;
-      background: url("/images/backoffice/ngos/logo_bkg.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/ngos/logo_bkg.png") no-repeat 0 0; }
 div.block.edit div.med div.left ul.themes {
   float: left;
   width: 100%;
@@ -1736,7 +1736,7 @@ div.block.edit div.med div.left ul.themes {
     height: 136px;
     padding: 10px;
     margin: 0 15px 0 0;
-    background: url("/images/backoffice/sites/theme_bkg.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/sites/theme_bkg.png") no-repeat 0 0; }
     div.block.edit div.med div.left ul.themes li:hover {
       background-position: 0 -156px;
       cursor: pointer; }
@@ -1752,7 +1752,7 @@ div.block.edit div.med div.left ul.themes {
       width: 93px;
       height: 24px;
       text-indent: -9999px;
-      background: url("/images/backoffice/sites/preview_site.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/sites/preview_site.png") no-repeat 0 0; }
     div.block.edit div.med div.left ul.themes li.selected a.preview {
       display: block; }
       div.block.edit div.med div.left ul.themes li.selected a.preview:hover {
@@ -1763,14 +1763,14 @@ div.block.edit div.med div.left ul.themes {
       left: 61px;
       width: 54px;
       height: 54px;
-      background: url("/images/backoffice/sites/ready.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/sites/ready.png") no-repeat 0 0; }
 div.block.edit div.med div.left div.partner {
   position: relative;
   float: left;
   width: 396px;
   padding: 10px;
   margin: 10px 0 0 0;
-  background: url("/images/backoffice/sites/partner_bkg.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/sites/partner_bkg.png") no-repeat 0 0; }
   div.block.edit div.med div.left div.partner img {
     float: left;
     margin: 0 15px 0 0; }
@@ -1799,7 +1799,7 @@ div.block.edit div.med div.left div.partner {
     top: 30px;
     width: 15px;
     height: 16px;
-    background: url("/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
     text-indent: -9999px;
     font-size: 0;
     display: block;
@@ -1810,7 +1810,7 @@ div.block.edit div.med div.left span.add_partner {
   float: left;
   width: 565px;
   height: 53px;
-  background: url("/images/backoffice/sites/add_partner_bkg.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/sites/add_partner_bkg.png") no-repeat 0 0; }
   div.block.edit div.med div.left span.add_partner p {
     float: left;
     margin: 17px 0 0 15px;
@@ -1823,7 +1823,7 @@ div.block.edit div.med div.left span.add_partner {
     margin: 11px 15px 0 0;
     padding: 0;
     text-indent: -9999px;
-    background: url("/images/backoffice/sites/add_partner_button.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/sites/add_partner_button.png") no-repeat 0 0; }
     div.block.edit div.med div.left span.add_partner a:hover {
       background-position: 0 -32px;
       cursor: pointer; }
@@ -1836,7 +1836,7 @@ div.block.edit div.med div.left div.outer_map {
   height: 293px;
   margin: 10px 0 0 0;
   padding: 2px !important;
-  background: url("/images/backoffice/sites/back_map.jpg") no-repeat 0 0; }
+  background: url("/app/images/backoffice/sites/back_map.jpg") no-repeat 0 0; }
   div.block.edit div.med div.left div.outer_map div#map {
     float: left;
     width: 100%;
@@ -1847,7 +1847,7 @@ div.block.edit div.med div.left div.outer_map {
     height: 25px;
     left: 10px;
     top: 10px;
-    background: url("/images/sites/maps/zoom_in.png") no-repeat 0 0;
+    background: url("/app/images/sites/maps/zoom_in.png") no-repeat 0 0;
     z-index: 100; }
     div.block.edit div.med div.left div.outer_map a#zoomIn:hover {
       background-position: 0 -25px; }
@@ -1857,7 +1857,7 @@ div.block.edit div.med div.left div.outer_map {
     height: 25px;
     left: 40px;
     top: 10px;
-    background: url("/images/sites/maps/zoom_out.png") no-repeat 0 0;
+    background: url("/app/images/sites/maps/zoom_out.png") no-repeat 0 0;
     z-index: 100; }
     div.block.edit div.med div.left div.outer_map a#zoomOut:hover {
       background-position: 0 -25px; }
@@ -1878,12 +1878,12 @@ div.block.edit div.med div.left form ul.list_combo_content {
     width: 419px;
     height: 4px;
     margin: 0;
-    background: url("/images/backoffice/projects/top_content_combo_large.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/top_content_combo_large.png") no-repeat 0 0;
     padding: 0; }
   div.block.edit div.med div.left form ul.list_combo_content li.element {
     float: left;
     margin: 0;
-    background: url("/images/backoffice/projects/repeat_content_combo_large.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/repeat_content_combo_large.png") no-repeat 0 0;
     width: 407px;
     height: 22px;
     padding: 5px 0 0 12px;
@@ -1902,20 +1902,20 @@ div.block.edit div.med div.left form ul.list_combo_content {
       width: auto; }
     div.block.edit div.med div.left form ul.list_combo_content li.element:hover {
       cursor: pointer;
-      background: url("/images/backoffice/projects/repeat_content_combo_large_hover.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/repeat_content_combo_large_hover.png") no-repeat 0 0; }
   div.block.edit div.med div.left form ul.list_combo_content li.last {
     float: left;
     width: 419px;
     height: 7px;
     margin: 0;
-    background: url("/images/backoffice/projects/bottom_content_combo_large.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/bottom_content_combo_large.png") no-repeat 0 0;
     padding: 0; }
     div.block.edit div.med div.left form ul.list_combo_content li.last:hover {
-      background: url("/images/backoffice/projects/bottom_content_combo_large.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/bottom_content_combo_large.png") no-repeat 0 0; }
 div.block.edit div.med div.left form span.combo_large {
   float: left;
   margin: 5px 0 0 0;
-  background: url("/images/backoffice/projects/large_combo_head.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/large_combo_head.png") no-repeat 0 0;
   width: 410px;
   height: 24px;
   font: normal 13px Arial;
@@ -1933,7 +1933,7 @@ div.block.edit div.med div.left form span.combo_large {
     div.block.edit div.med div.left form span.combo_large a.organization:hover {
       cursor: pointer; }
   div.block.edit div.med div.left form span.combo_large.displayed {
-    background: url("/images/backoffice/projects/large_combo_head_displayed2.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/projects/large_combo_head_displayed2.png") no-repeat 0 0; }
 div.block.edit div.med div.left form span.blog {
   float: left;
   height: auto;
@@ -1942,7 +1942,7 @@ div.block.edit div.med div.left form span.blog {
     float: left;
     width: 569px;
     height: 82px;
-    background: url("/images/backoffice/sites/blog_bkg.png") no-repeat center 0; }
+    background: url("/app/images/backoffice/sites/blog_bkg.png") no-repeat center 0; }
   div.block.edit div.med div.left form span.blog input[type="checkbox"] {
     margin: 13px 0 0 10px;
     display: block !important;
@@ -1963,7 +1963,7 @@ div#manage_partners {
   width: 372px;
   height: 409px;
   padding: 20px 25px;
-  background: url("/images/backoffice/sites/add_partner_window.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/sites/add_partner_window.png") no-repeat 0 0;
   z-index: 1000; }
   div#manage_partners a.close {
     position: absolute;
@@ -1971,7 +1971,7 @@ div#manage_partners {
     top: 18px;
     width: 12px;
     height: 12px;
-    background: url("/images/backoffice/icons/close_window.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/icons/close_window.png") no-repeat 0 0;
     text-indent: -9999px; }
     div#manage_partners a.close:hover {
       cursor: pointer;
@@ -2011,7 +2011,7 @@ div#manage_partners {
     height: 32px;
     margin: 25px 0 0 0;
     text-indent: -9999px;
-    background: url("/images/backoffice/sites/add_partner_button.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/sites/add_partner_button.png") no-repeat 0 0; }
     div#manage_partners input[type="submit"]:hover {
       background-position: 0 -32px; }
 div.long_search {
@@ -2023,12 +2023,12 @@ div.long_search {
     float: left;
     width: 942px;
     height: 9px;
-    background: url("/images/backoffice/backgrounds/top_long.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/backgrounds/top_long.png") no-repeat 0 0; }
   div.long_search div.content {
     float: left;
     width: 882px;
     height: auto;
-    background: url("/images/backoffice/backgrounds/mid_long.png") repeat-y 0;
+    background: url("/app/images/backoffice/backgrounds/mid_long.png") repeat-y 0;
     padding: 15px 30px 10px; }
     div.long_search div.content.padding {
       padding: 25px 30px 25px !important; }
@@ -2038,7 +2038,7 @@ div.long_search span.bottom {
   float: left;
   width: 942px;
   height: 13px;
-  background: url("/images/backoffice/backgrounds/bottom_white_long.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/backgrounds/bottom_white_long.png") no-repeat 0 0; }
 div.long_search ul.combos {
   float: left;
   width: 800px;
@@ -2057,7 +2057,7 @@ div.long_search ul.combos {
     div.long_search ul.combos li.comboselect span.combo {
       float: left;
       margin: 6px 0 0 0;
-      background: url("/images/backoffice/projects/single_combo_head.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/single_combo_head.png") no-repeat 0 0;
       font: normal 13px Arial;
       color: #333333;
       text-decoration: none;
@@ -2072,7 +2072,7 @@ div.long_search ul.combos {
       div.long_search ul.combos li.comboselect span.combo ul.elements {
         display: none; }
       div.long_search ul.combos li.comboselect span.combo.clicked {
-        background: url("/images/backoffice/projects/combos/index_search_head.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/combos/index_search_head.png") no-repeat 0 0;
         width: 135px;
         position: relative; }
         div.long_search ul.combos li.comboselect span.combo.clicked div.elements_content {
@@ -2080,7 +2080,7 @@ div.long_search ul.combos {
           top: 31px;
           left: 0;
           display: inline;
-          background: url("/images/backoffice/projects/combos/body_combo_search.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/combos/body_combo_search.png") no-repeat 0 0;
           width: 148px;
           height: 198px;
           z-index: 50; }
@@ -2114,27 +2114,27 @@ div.long_search ul.combos {
           float: left;
           width: 120px;
           height: auto;
-          background: url("/images/backoffice/projects/combos/index_search_content.png") repeat-y 0;
+          background: url("/app/images/backoffice/projects/combos/index_search_content.png") repeat-y 0;
           padding: 5px 5px 5px 12px;
           margin: 0 0 0 1px; }
           div.long_search ul.combos li.comboselect span.combo.clicked ul.elements.short li:hover {
             float: left;
             width: 264px;
-            background: url("/images/backoffice/projects/combos/index_search_content_hover.png") repeat-y 0; }
+            background: url("/app/images/backoffice/projects/combos/index_search_content_hover.png") repeat-y 0; }
           div.long_search ul.combos li.comboselect span.combo.clicked ul.elements.short li.first {
             float: left;
             width: 135px;
             height: 6px;
-            background: url("/images/backoffice/projects/combos/index_search_content_first.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/projects/combos/index_search_content_first.png") no-repeat 0 0;
             margin: 0 0 0 0 1px;
             padding: 0; }
           div.long_search ul.combos li.comboselect span.combo.clicked ul.elements.short li.last {
             float: left;
             width: 135px;
             height: 6px;
-            background: url("/images/backoffice/projects/combos/index_search_bottom.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/projects/combos/index_search_bottom.png") no-repeat 0 0; }
             div.long_search ul.combos li.comboselect span.combo.clicked ul.elements.short li.last:hover {
-              background: url("/images/backoffice/projects/combos/index_search_bottom.png") no-repeat 0 0; }
+              background: url("/app/images/backoffice/projects/combos/index_search_bottom.png") no-repeat 0 0; }
       div.long_search ul.combos li.comboselect span.combo:hover {
         cursor: pointer; }
     div.long_search ul.combos li.comboselect label {
@@ -2177,7 +2177,7 @@ div.long_search input[type="text"].main_search {
   font: normal 17px Arial;
   color: #333;
   border: none;
-  background: url("/images/backoffice/projects/long_search.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/long_search.png") no-repeat 0 0;
   line-height: 27px; }
 div.long_search input[type="submit"] {
   position: absolute;
@@ -2185,7 +2185,7 @@ div.long_search input[type="submit"] {
   height: 41px;
   right: 5px;
   top: 17px;
-  background: url("/images/backoffice/common/search.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/common/search.png") no-repeat 0 0;
   border: none; }
   div.long_search input[type="submit"]:hover {
     background-position: 0 -41px;
@@ -2200,18 +2200,18 @@ div.one_project {
     float: left;
     width: 288px;
     height: 8px;
-    background: url("/images/backoffice/backgrounds/one_box_top.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/backgrounds/one_box_top.png") no-repeat 0 0; }
   div.one_project div.content {
     float: left;
     width: 288px;
     height: auto;
     padding: 0 0 26px;
-    background: url("/images/backoffice/backgrounds/one_box_content.png") repeat-y 0; }
+    background: url("/app/images/backoffice/backgrounds/one_box_content.png") repeat-y 0; }
   div.one_project span.bottom {
     float: left;
     width: 288px;
     height: 15px;
-    background: url("/images/backoffice/backgrounds/one_box_bottom.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/backgrounds/one_box_bottom.png") no-repeat 0 0; }
   div.one_project div.center {
     float: left;
     width: 100%;
@@ -2235,7 +2235,7 @@ a.add_project {
   height: 26px;
   margin: 0 10px 0 0;
   padding: 6px 0 0 0;
-  background: url("/images/backoffice/projects/green_new.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/green_new.png") no-repeat 0 0;
   font: normal 19px "Museo Sans",Arial;
   color: white;
   text-shadow: 0 1px #5C7C31;
@@ -2248,7 +2248,7 @@ a.import_csv {
   height: 26px;
   margin: 0;
   padding: 6px 0 0 0;
-  background: url("/images/backoffice/projects/import_csv_bttn.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/import_csv_bttn.png") no-repeat 0 0;
   font: normal 19px "Museo Sans",Arial;
   color: white;
   text-shadow: 0 1px #000000;
@@ -2260,7 +2260,7 @@ div.med.projects_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
   border-bottom: 1px dotted #EB4142;
-  background: url("/images/backoffice/icons/red_x.png") no-repeat right 17px; }
+  background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
   div.med.projects_list h2 a.remove:hover {
     border-bottom: 1px solid #EB4142;
     text-decoration: none; }
@@ -2301,9 +2301,9 @@ div.med .projects_list ul li div.project_name a.project_status {
   color: #666666;
   padding: 0 0 0 12px; }
   div.med .projects_list ul li div.project_name a.project_status.active {
-    background: url("/images/backoffice/projects/active_icon.png") no-repeat 0 3px; }
+    background: url("/app/images/backoffice/projects/active_icon.png") no-repeat 0 3px; }
   div.med .projects_list ul li div.project_name a.project_status.closed {
-    background: url("/images/backoffice/projects/closed_icon.png") no-repeat 0 3px; }
+    background: url("/app/images/backoffice/projects/closed_icon.png") no-repeat 0 3px; }
 div.med .projects_list ul li div.box {
   float: left;
   height: 50px;
@@ -2373,9 +2373,9 @@ div.med .projects_list table {
       color: #666666;
       padding: 0 4px 0 12px; }
       div.med .projects_list table tr a.project_status.active {
-        background: url("/images/backoffice/projects/active_icon.png") no-repeat 0 4px; }
+        background: url("/app/images/backoffice/projects/active_icon.png") no-repeat 0 4px; }
       div.med .projects_list table tr a.project_status.closed {
-        background: url("/images/backoffice/projects/closed_icon.png") no-repeat 0 3px; }
+        background: url("/app/images/backoffice/projects/closed_icon.png") no-repeat 0 3px; }
 div.med.projects_list ul li p {
   float: left;
   width: 100%;
@@ -2405,12 +2405,12 @@ div.med.projects_list ul li p {
 div.block.project_info div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.project_info div.med {
   float: left;
   width: 880px;
   padding: 16px 31px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.project_info div.med div.left {
     float: left;
     width: 572px;
@@ -2463,13 +2463,13 @@ div.block.project_info div.med div.left form p.title {
 div.block.project_info div.med div.left form span.input_large {
   float: left;
   margin: 5px 0 0 0;
-  background: url("/images/backoffice/projects/input_project_large.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/input_project_large.png") no-repeat 0 0;
   width: 419px;
   height: 34px;
   position: relative;
   z-index: 5; }
   div.block.project_info div.med div.left form span.input_large.active {
-    background: url("/images/backoffice/projects/large_combo_head_displayed.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/projects/large_combo_head_displayed.png") no-repeat 0 0; }
 div.block.project_info div.med div.left form span.error {
   background-position: 0 -34px; }
 
@@ -2484,7 +2484,7 @@ ul.ui-autocomplete.project_tags {
   ul.ui-autocomplete.project_tags li.ui-menu-item {
     float: right;
     margin: 0;
-    background: url("/images/backoffice/projects/repeat_content_tags.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/repeat_content_tags.png") no-repeat 0 0;
     width: 413px;
     height: 22px;
     font: normal 15px Arial;
@@ -2493,13 +2493,13 @@ ul.ui-autocomplete.project_tags {
     position: relative; }
     ul.ui-autocomplete.project_tags li.ui-menu-item:hover {
       cursor: pointer;
-      background: url("/images/backoffice/projects/repeat_content_tags_hover.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/repeat_content_tags_hover.png") no-repeat 0 0; }
     ul.ui-autocomplete.project_tags li.ui-menu-item.last {
       float: right;
       width: 425px;
       height: 7px;
       margin: 0;
-      background: url("/images/backoffice/projects/bottom_content_tags.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/bottom_content_tags.png") no-repeat 0 0;
       padding: 0; }
     ul.ui-autocomplete.project_tags li.ui-menu-item a {
       font: normal 15px Arial;
@@ -2521,7 +2521,7 @@ ul.ui-autocomplete.donor_names {
   ul.ui-autocomplete.donor_names li.ui-menu-item {
     float: right;
     margin: 0;
-    background: url("/images/backoffice/projects/donations/repeat_content_tags.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/donations/repeat_content_tags.png") no-repeat 0 0;
     width: 257px;
     height: 17px;
     font: normal 15px Arial;
@@ -2530,13 +2530,13 @@ ul.ui-autocomplete.donor_names {
     position: relative; }
     ul.ui-autocomplete.donor_names li.ui-menu-item:hover {
       cursor: pointer;
-      background: url("/images/backoffice/projects/donations/repeat_content_tags_hover.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/donations/repeat_content_tags_hover.png") no-repeat 0 0; }
     ul.ui-autocomplete.donor_names li.ui-menu-item.last {
       float: right;
       width: 289px;
       height: 7px;
       margin: 0;
-      background: url("/images/backoffice/projects/donations/bottom_content_tags.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/donations/bottom_content_tags.png") no-repeat 0 0;
       padding: 0; }
     ul.ui-autocomplete.donor_names li.ui-menu-item a {
       font: normal 13px Arial;
@@ -2551,7 +2551,7 @@ ul.ui-autocomplete.site_tags {
   ul.ui-autocomplete.site_tags li.ui-menu-item {
     float: right;
     margin: 0;
-    background: url("/images/backoffice/sites/repeat_content_tags.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/sites/repeat_content_tags.png") no-repeat 0 0;
     width: 497px;
     height: 22px;
     font: normal 15px Arial;
@@ -2560,13 +2560,13 @@ ul.ui-autocomplete.site_tags {
     position: relative; }
     ul.ui-autocomplete.site_tags li.ui-menu-item:hover {
       cursor: pointer;
-      background: url("/images/backoffice/sites/repeat_content_tags_hover.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/sites/repeat_content_tags_hover.png") no-repeat 0 0; }
     ul.ui-autocomplete.site_tags li.ui-menu-item.last {
       float: right;
       width: 509px;
       height: 7px;
       margin: 0;
-      background: url("/images/backoffice/sites/bottom_content_tags.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/sites/bottom_content_tags.png") no-repeat 0 0;
       padding: 0; }
     ul.ui-autocomplete.site_tags li.ui-menu-item a {
       font: normal 13px Arial;
@@ -2592,11 +2592,11 @@ div.block.project_info div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.block.project_info div.med div.left form span.textarea {
   float: left;
   margin: 5px 0 0 0;
-  background: url("/images/backoffice/projects/input_project_multiple.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/input_project_multiple.png") no-repeat 0 0;
   width: 564px;
   height: 214px;
   position: relative; }
@@ -2631,7 +2631,7 @@ div.block.project_info div.med div.left form ul.list_combo_content {
   display: none;
   left: 0;
   z-index: 10;
-  background: url("/images/backoffice/projects/combos/body_combo_orgs.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/combos/body_combo_orgs.png") no-repeat 0 0;
   overflow-x: hidden;
   overflow-y: auto; }
   div.block.project_info div.med div.left form ul.list_combo_content li.element {
@@ -2658,7 +2658,7 @@ div.block.project_info div.med div.left form ul.list_combo_content {
 div.block.project_info div.med div.left form span.combo_large {
   float: left;
   margin: 5px 0 0 0;
-  background: url("/images/backoffice/projects/large_combo_head.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/large_combo_head.png") no-repeat 0 0;
   width: 410px;
   height: 24px;
   font: normal 13px Arial;
@@ -2678,7 +2678,7 @@ div.block.project_info div.med div.left form span.combo_large {
     div.block.project_info div.med div.left form span.combo_large a.organization:hover {
       cursor: pointer; }
   div.block.project_info div.med div.left form span.combo_large.displayed {
-    background: url("/images/backoffice/projects/large_combo_head_displayed2.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/projects/large_combo_head_displayed2.png") no-repeat 0 0; }
   div.block.project_info div.med div.left form span.combo_large:hover {
     cursor: pointer; }
 div.block.project_info div.med div.left form h3.section {
@@ -2698,7 +2698,7 @@ div.block.project_info div.med div.left form ul.dates {
     height: auto; }
     div.block.project_info div.med div.left form ul.dates li.date span.combo_date {
       float: left;
-      background: url("/images/backoffice/projects/date/bkg_calendar.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/date/bkg_calendar.png") no-repeat 0 0;
       width: 122px;
       height: 26px;
       font: normal 15px Arial;
@@ -2707,27 +2707,27 @@ div.block.project_info div.med div.left form ul.dates {
       padding: 8px 0 0 8px;
       position: relative; }
       div.block.project_info div.med div.left form ul.dates li.date span.combo_date.error {
-        background: url("/images/backoffice/projects/date/bkg_calendar_error.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/projects/date/bkg_calendar_error.png") no-repeat 0 0; }
       div.block.project_info div.med div.left form ul.dates li.date span.combo_date:hover {
         cursor: pointer; }
       div.block.project_info div.med div.left form ul.dates li.date span.combo_date div.select_dates {
         display: none; }
       div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked {
-        background: url("/images/backoffice/projects/date/bkg_header_clicked_date.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/projects/date/bkg_header_clicked_date.png") no-repeat 0 0; }
         div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked.error {
-          background: url("/images/backoffice/projects/date/bkg_header_clicked_date_error.png") no-repeat 0 0; }
+          background: url("/app/images/backoffice/projects/date/bkg_header_clicked_date_error.png") no-repeat 0 0; }
         div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked div.select_dates {
           position: absolute;
           top: 30px;
           left: 0;
-          background: url("/images/backoffice/projects/date/bkg_date_content.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/date/bkg_date_content.png") no-repeat 0 0;
           width: 335px;
           height: 68px;
           z-index: 20;
           display: inline;
           padding-left: 5px; }
           div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked div.select_dates.end_date {
-            background: url("/images/backoffice/projects/date/bkg_date_content_right.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/projects/date/bkg_date_content_right.png") no-repeat 0 0;
             position: absolute;
             top: 30px;
             left: -142px; }
@@ -2773,21 +2773,21 @@ div.block.project_info div.med div.left form ul.dates {
             div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked div.select_dates a.month_combo {
               float: left;
               margin: 2px 0 0 0;
-              background: url("/images/backoffice/projects/date/month_combo.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/projects/date/month_combo.png") no-repeat 0 0;
               width: 123px;
               height: 23px;
               padding: 9px 0 0 10px; }
             div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked div.select_dates a.day_combo {
               float: left;
               margin: 2px 0 0 0;
-              background: url("/images/backoffice/projects/date/day_combo.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/projects/date/day_combo.png") no-repeat 0 0;
               width: 54px;
               height: 23px;
               padding: 9px 0 0 10px; }
             div.block.project_info div.med div.left form ul.dates li.date span.combo_date.clicked div.select_dates a.year_combo {
               float: left;
               margin: 2px 0 0 0;
-              background: url("/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
               width: 68px;
               height: 23px;
               padding: 9px 0 0 10px; }
@@ -2800,7 +2800,7 @@ div.block.project_info div.med div.left form ul.clusters {
     float: left;
     width: 262px;
     height: 24px;
-    background: url("/images/backoffice/projects/bkg_cluster.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/bkg_cluster.png") no-repeat 0 0;
     font: normal 13px Arial;
     color: #333333;
     padding: 6px 0 0 10px;
@@ -2811,7 +2811,7 @@ div.block.project_info div.med div.left form ul.clusters {
     div.block.project_info div.med div.left form ul.clusters li a.close {
       float: right;
       margin: 1px 5px 0 0;
-      background: url("/images/backoffice/projects/close_cluster_bttn.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/close_cluster_bttn.png") no-repeat 0 0;
       width: 16px;
       height: 16px;
       padding: 0; }
@@ -2826,7 +2826,7 @@ div.block.project_info div.med div.left form ul.sectors {
     float: left;
     width: 262px;
     height: 24px;
-    background: url("/images/backoffice/projects/bkg_cluster.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/bkg_cluster.png") no-repeat 0 0;
     font: normal 13px Arial;
     color: #333333;
     padding: 6px 0 0 10px;
@@ -2837,7 +2837,7 @@ div.block.project_info div.med div.left form ul.sectors {
     div.block.project_info div.med div.left form ul.sectors li a.close {
       float: right;
       margin: 1px 5px 0 0;
-      background: url("/images/backoffice/projects/close_cluster_bttn.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/close_cluster_bttn.png") no-repeat 0 0;
       width: 16px;
       height: 16px; }
       div.block.project_info div.med div.left form ul.sectors li a.close:hover {
@@ -2851,7 +2851,7 @@ div.block.project_info div.med div.left form ul.ubications {
     float: left;
     width: 490px;
     height: 24px;
-    background: url("/images/backoffice/projects/bkg_cluster2.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/bkg_cluster2.png") no-repeat 0 0;
     font: normal 13px Arial;
     color: #333333;
     padding: 6px 0 0 10px;
@@ -2862,7 +2862,7 @@ div.block.project_info div.med div.left form ul.ubications {
     div.block.project_info div.med div.left form ul.ubications li a.close {
       float: right;
       margin: 1px 5px 0 0;
-      background: url("/images/backoffice/projects/close_cluster_bttn.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/close_cluster_bttn.png") no-repeat 0 0;
       width: 16px;
       height: 16px; }
       div.block.project_info div.med div.left form ul.ubications li a.close:hover {
@@ -2870,13 +2870,13 @@ div.block.project_info div.med div.left form ul.ubications {
 div.block.project_info div.med div.left form div.cluster_options {
   float: left;
   margin: 10px 0 0 0;
-  background: url("/images/backoffice/projects/bkg_cluster_options.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/bkg_cluster_options.png") no-repeat 0 0;
   width: 411px;
   height: 50px; }
   div.block.project_info div.med div.left form div.cluster_options span.combo_cluster_options {
     float: left;
     margin: 10px 0 0 10px;
-    background: url("/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
     width: 254px;
     height: 24px;
     padding: 8px 0 0 10px; }
@@ -2886,7 +2886,7 @@ div.block.project_info div.med div.left form div.cluster_options {
     div.block.project_info div.med div.left form div.cluster_options span.combo_cluster_options ul.options {
       display: none; }
     div.block.project_info div.med div.left form div.cluster_options span.combo_cluster_options.clicked {
-      background: url("/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
       div.block.project_info div.med div.left form div.cluster_options span.combo_cluster_options.clicked ul.options {
         position: absolute;
         top: 32px;
@@ -2895,7 +2895,7 @@ div.block.project_info div.med div.left form div.cluster_options {
         height: 197px;
         display: inline;
         z-index: 100;
-        background: url("/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
         overflow-x: hidden;
         overflow-y: auto; }
         div.block.project_info div.med div.left form div.cluster_options span.combo_cluster_options.clicked ul.options li {
@@ -2915,7 +2915,7 @@ div.block.project_info div.med div.left form div.cluster_options {
   div.block.project_info div.med div.left form div.cluster_options a.add_cluster {
     float: left;
     margin: 10px 0 0 9px;
-    background: url("/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
     width: 118px;
     height: 25px;
     font: 500 15px "Museo Sans",Arial;
@@ -2930,17 +2930,17 @@ div.block.project_info div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.block.project_info div.med div.left form div.sector_options {
   float: left;
   margin: 10px 0 0 0;
-  background: url("/images/backoffice/projects/bkg_cluster_options.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/bkg_cluster_options.png") no-repeat 0 0;
   width: 411px;
   height: 50px; }
   div.block.project_info div.med div.left form div.sector_options span.combo_sector_options {
     float: left;
     margin: 10px 0 0 10px;
-    background: url("/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
     width: 254px;
     height: 24px;
     padding: 8px 0 0 10px; }
@@ -2950,7 +2950,7 @@ div.block.project_info div.med div.left form div.sector_options {
     div.block.project_info div.med div.left form div.sector_options span.combo_sector_options ul.options {
       display: none; }
     div.block.project_info div.med div.left form div.sector_options span.combo_sector_options.clicked {
-      background: url("/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
       div.block.project_info div.med div.left form div.sector_options span.combo_sector_options.clicked ul.options {
         position: absolute;
         top: 32px;
@@ -2959,7 +2959,7 @@ div.block.project_info div.med div.left form div.sector_options {
         height: 197px;
         display: inline;
         z-index: 20;
-        background: url("/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
         overflow-x: hidden;
         overflow-y: auto; }
         div.block.project_info div.med div.left form div.sector_options span.combo_sector_options.clicked ul.options li {
@@ -2979,7 +2979,7 @@ div.block.project_info div.med div.left form div.sector_options {
   div.block.project_info div.med div.left form div.sector_options a.add_sector {
     float: left;
     margin: 10px 0 0 9px;
-    background: url("/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
     width: 118px;
     height: 25px;
     font: 500 15px "Museo Sans",Arial;
@@ -2994,19 +2994,19 @@ div.block.project_info div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.block.project_info div.med div.left form div.location_options.region_block {
   position: relative; }
 div.block.project_info div.med div.left form div.location_options.empty {
   float: left;
   margin: 10px 0 0 0;
-  background: url("/images/backoffice/projects/bkg_cluster_options.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/bkg_cluster_options.png") no-repeat 0 0;
   width: 411px;
   height: 50px; }
   div.block.project_info div.med div.left form div.location_options.empty.error {
     width: 412px;
     height: 51px;
-    background: url("/images/backoffice/projects/bkg_cluster_options_error.png"); }
+    background: url("/app/images/backoffice/projects/bkg_cluster_options_error.png"); }
   div.block.project_info div.med div.left form div.location_options.empty p.msg {
     float: left;
     margin: 18px 0 0 12px;
@@ -3018,7 +3018,7 @@ div.block.project_info div.med div.left form div.location_options.empty {
   div.block.project_info div.med div.left form div.location_options.empty a.add_location {
     float: right;
     margin: 10px 10px 0 0;
-    background: url("/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
     width: 118px;
     height: 25px;
     font: 500 15px "Museo Sans",Arial;
@@ -3032,7 +3032,7 @@ div.block.project_info div.med div.left form div.location_options.empty {
   div.block.project_info div.med div.left form div.location_options.empty.error a.add_location {
     width: 119px;
     height: 26px;
-    background: url("/images/backoffice/projects/add_cluster_bttn_error.png") no-repeat 0 -2px; }
+    background: url("/app/images/backoffice/projects/add_cluster_bttn_error.png") no-repeat 0 -2px; }
     div.block.project_info div.med div.left form div.location_options.empty.error a.add_location:hover {
       cursor: pointer;
       background-position: 0 -37px; }
@@ -3041,7 +3041,7 @@ div.block.project_info div.med div.left form span.input_short {
   margin: 5px 0 0 0;
   width: 272px;
   height: 34px;
-  background: url("/images/backoffice/projects/bkg_input_short.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/projects/bkg_input_short.png") no-repeat 0 0; }
   div.block.project_info div.med div.left form span.input_short p.msg {
     float: right;
     margin: 8px 8px 0 0;
@@ -3064,12 +3064,12 @@ div.region_window {
     float: left;
     width: 330px;
     padding: 14px 14px 0;
-    background: url("/images/backoffice/projects/top_region_window.png") no-repeat 0 0 !important; }
+    background: url("/app/images/backoffice/projects/top_region_window.png") no-repeat 0 0 !important; }
   div.region_window div.bottom_region {
     float: left;
     width: 330px;
     padding: 0 14px 40px;
-    background: url("/images/backoffice/projects/bottom_region_window.png") no-repeat 0 bottom !important; }
+    background: url("/app/images/backoffice/projects/bottom_region_window.png") no-repeat 0 bottom !important; }
   div.region_window div h3 {
     float: left;
     width: 100%;
@@ -3082,7 +3082,7 @@ div.region_window {
     top: 18px;
     width: 12px;
     height: 12px;
-    background: url("/images/backoffice/icons/close_window.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/icons/close_window.png") no-repeat 0 0;
     text-indent: -9999px; }
     div.region_window div a.close:hover {
       cursor: pointer;
@@ -3102,7 +3102,7 @@ div.region_window {
     position: relative;
     float: left;
     margin: 10px 0 0 3px;
-    background: url("/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
     width: 254px;
     height: 24px;
     padding: 8px 0 0 10px; }
@@ -3114,7 +3114,7 @@ div.region_window {
     div.region_window span.region_combo ul.options {
       display: none; }
     div.region_window span.region_combo.clicked {
-      background: url("/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
       div.region_window span.region_combo.clicked ul.options {
         position: absolute;
         top: 32px;
@@ -3123,7 +3123,7 @@ div.region_window {
         height: 197px;
         display: inline;
         z-index: 100;
-        background: url("/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
         overflow-x: hidden;
         overflow-y: auto; }
         div.region_window span.region_combo.clicked ul.options li {
@@ -3165,7 +3165,7 @@ div.field_info {
     font-size: 0;
     line-height: 0;
     overflow: hidden;
-    background: url("/images/backoffice/icons/field_info.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/icons/field_info.png") no-repeat 0 0; }
     div.field_info span.info:hover {
       background-position: 0 -18px;
       cursor: pointer; }
@@ -3182,13 +3182,13 @@ div.field_info {
       padding: 0 20px 0 !important;
       margin: 0;
       height: 5px;
-      background: url("/images/backoffice/projects/field_info.png") no-repeat 0 0 !important; }
+      background: url("/app/images/backoffice/projects/field_info.png") no-repeat 0 0 !important; }
     div.field_info div.field_text div.bottom {
       float: left;
       width: 289px;
       height: auto;
       padding: 0 20px 40px;
-      background: url("/images/backoffice/projects/field_info.png") no-repeat right bottom !important; }
+      background: url("/app/images/backoffice/projects/field_info.png") no-repeat right bottom !important; }
       div.field_info div.field_text div.bottom span.scroll {
         float: left;
         width: 100%;
@@ -3241,7 +3241,7 @@ div.block.project_info div.med div.left form div.two_columns {
     height: 90px;
     z-index: 0; }
 div.block.project_info div.med div.left form input[type="submit"] {
-  background: url("/images/backoffice/projects/save_changes_bttn.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/save_changes_bttn.png") no-repeat 0 0;
   font: 500 19px "Museo Sans",Arial;
   color: #FFFFFF;
   text-shadow: 0 1px #6E8C30;
@@ -3267,7 +3267,7 @@ div.map_window {
   width: 386px;
   height: 296px;
   padding: 14px;
-  background: url("/images/backoffice/projects/add_position_bkg.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/projects/add_position_bkg.png") no-repeat 0 0; }
   div.map_window h3 {
     float: left;
     width: 100%;
@@ -3279,7 +3279,7 @@ div.map_window {
     top: 18px;
     width: 12px;
     height: 12px;
-    background: url("/images/backoffice/icons/close_window.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/icons/close_window.png") no-repeat 0 0;
     text-indent: -9999px; }
     div.map_window a.close:hover {
       cursor: pointer;
@@ -3311,14 +3311,14 @@ div.map_window {
         height: 18px !important;
         margin: 0 !important;
         padding: 8px !important;
-        background: url("/images/backoffice/projects/geolocate_textinput_bkg.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/projects/geolocate_textinput_bkg.png") no-repeat 0 0; }
       div.map_window div.outer_map form.geocoder input[type="submit"] {
         position: relative;
         float: left !important;
         width: 32px !important;
         height: 34px !important;
         margin: 0 !important;
-        background: url("/images/backoffice/projects/geolocate_submit_bkg.png") no-repeat 0 0 !important;
+        background: url("/app/images/backoffice/projects/geolocate_submit_bkg.png") no-repeat 0 0 !important;
         text-indent: -9999px; }
         div.map_window div.outer_map form.geocoder input[type="submit"]:hover {
           background-position: 0 -34px; }
@@ -3333,7 +3333,7 @@ div.map_window {
     width: 118px;
     height: 32px;
     margin: 9px 0 0 0;
-    background: url("/images/backoffice/projects/save_position.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/projects/save_position.png") no-repeat 0 0;
     text-indent: -9999px; }
     div.map_window a.save:hover {
       background-position: 0 -32px;
@@ -3345,7 +3345,7 @@ div.block div.med div.left form .submit.floating {
   margin-left: 156px;
   height: 55px;
   width: 175px;
-  background: url("/images/backoffice/common/submit_tab.png") no-repeat scroll right 0 transparent; }
+  background: url("/app/images/backoffice/common/submit_tab.png") no-repeat scroll right 0 transparent; }
   div.block div.med div.left form .submit.floating input {
     display: block;
     width: 163px !important;
@@ -3353,12 +3353,12 @@ div.block div.med div.left form .submit.floating {
 div.block.donations_project div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.donations_project div.med {
   float: left;
   width: 880px;
   padding: 16px 31px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.donations_project div.med div.left {
     float: left;
     width: 572px;
@@ -3406,7 +3406,7 @@ div.block.donations_project div.med {
             top: 28px;
             width: 15px;
             height: 16px;
-            background: url("/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
             text-indent: -9999px;
             font-size: 0;
             display: block;
@@ -3451,7 +3451,7 @@ div.block.donations_project div.med {
       height: 185px;
       padding: 0;
       margin: 50px 0 0 2px;
-      background: url("/images/backoffice/projects/bkg_add_donation_form.png") no-repeat center center; }
+      background: url("/app/images/backoffice/projects/bkg_add_donation_form.png") no-repeat center center; }
       div.block.donations_project div.med div.left form div#donor_name {
         float: left;
         width: 280px;
@@ -3459,7 +3459,7 @@ div.block.donations_project div.med {
         margin: 0 10px 0 15px; }
         div.block.donations_project div.med div.left form div#donor_name span {
           float: left;
-          background: url("/images/backoffice/projects/input_donor_name.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/input_donor_name.png") no-repeat 0 0;
           width: 272px;
           height: 32px;
           position: relative;
@@ -3467,7 +3467,7 @@ div.block.donations_project div.med {
           div.block.donations_project div.med div.left form div#donor_name span.error {
             background-position: 0 -32px; }
           div.block.donations_project div.med div.left form div#donor_name span.active {
-            background: url("/images/backoffice/projects/input_donation_name_active.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/projects/input_donation_name_active.png") no-repeat 0 0;
             height: 33px; }
           div.block.donations_project div.med div.left form div#donor_name span input[type="text"] {
             border: none;
@@ -3482,7 +3482,7 @@ div.block.donations_project div.med {
             position: absolute;
             top: 8px;
             right: 8px;
-            background: url("/images/backoffice/projects/donors_spinner.gif") no-repeat 0 0;
+            background: url("/app/images/backoffice/projects/donors_spinner.gif") no-repeat 0 0;
             width: 16px;
             height: 16px; }
       div.block.donations_project div.med div.left form div#donation_date {
@@ -3491,7 +3491,7 @@ div.block.donations_project div.med {
         height: 64px; }
         div.block.donations_project div.med div.left form div#donation_date span.combo_date {
           float: left;
-          background: url("/images/backoffice/projects/date/bkg_calendar.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/date/bkg_calendar.png") no-repeat 0 0;
           width: 122px;
           height: 32px;
           font: normal 15px Arial;
@@ -3500,27 +3500,27 @@ div.block.donations_project div.med {
           padding: 8px 0 0 8px;
           position: relative; }
           div.block.donations_project div.med div.left form div#donation_date span.combo_date.error {
-            background: url("/images/backoffice/projects/date/bkg_calendar_error.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/projects/date/bkg_calendar_error.png") no-repeat 0 0; }
           div.block.donations_project div.med div.left form div#donation_date span.combo_date:hover {
             cursor: pointer; }
           div.block.donations_project div.med div.left form div#donation_date span.combo_date div.select_dates {
             display: none; }
           div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked {
-            background: url("/images/backoffice/projects/date/bkg_header_clicked_date.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/projects/date/bkg_header_clicked_date.png") no-repeat 0 0; }
             div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked.error {
-              background: url("/images/backoffice/projects/date/bkg_header_clicked_date_error.png") no-repeat 0 0; }
+              background: url("/app/images/backoffice/projects/date/bkg_header_clicked_date_error.png") no-repeat 0 0; }
             div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked div.select_dates {
               position: absolute;
               top: 30px;
               left: 0;
-              background: url("/images/backoffice/projects/date/bkg_date_content.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/projects/date/bkg_date_content.png") no-repeat 0 0;
               width: 335px;
               height: 68px;
               z-index: 20;
               display: inline;
               padding-left: 5px; }
               div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked div.select_dates.end_date {
-                background: url("/images/backoffice/projects/date/bkg_date_content_right.png") no-repeat 0 0;
+                background: url("/app/images/backoffice/projects/date/bkg_date_content_right.png") no-repeat 0 0;
                 position: absolute;
                 top: 30px;
                 left: -142px; }
@@ -3566,21 +3566,21 @@ div.block.donations_project div.med {
                 div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked div.select_dates a.month_combo {
                   float: left;
                   margin: 2px 0 0 0;
-                  background: url("/images/backoffice/projects/date/month_combo.png") no-repeat 0 0;
+                  background: url("/app/images/backoffice/projects/date/month_combo.png") no-repeat 0 0;
                   width: 123px;
                   height: 23px;
                   padding: 9px 0 0 10px; }
                 div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked div.select_dates a.day_combo {
                   float: left;
                   margin: 2px 0 0 0;
-                  background: url("/images/backoffice/projects/date/day_combo.png") no-repeat 0 0;
+                  background: url("/app/images/backoffice/projects/date/day_combo.png") no-repeat 0 0;
                   width: 54px;
                   height: 23px;
                   padding: 9px 0 0 10px; }
                 div.block.donations_project div.med div.left form div#donation_date span.combo_date.clicked div.select_dates a.year_combo {
                   float: left;
                   margin: 2px 0 0 0;
-                  background: url("/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
+                  background: url("/app/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
                   width: 68px;
                   height: 23px;
                   padding: 9px 0 0 10px; }
@@ -3593,7 +3593,7 @@ div.block.donations_project div.med {
           float: left;
           width: 92px;
           height: 32px;
-          background: url("/images/backoffice/projects/amount_donation_input.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/amount_donation_input.png") no-repeat 0 0;
           position: relative;
           margin: 3px 0 0 8px; }
           div.block.donations_project div.med div.left form div#donation_amount span input[type="text"] {
@@ -3623,7 +3623,7 @@ div.block.donations_project div.med {
         float: right;
         width: 128px;
         height: 32px;
-        background: url("/images/backoffice/projects/add_donation_bttn.png") no-repeat 0 0 !important;
+        background: url("/app/images/backoffice/projects/add_donation_bttn.png") no-repeat 0 0 !important;
         border: none;
         text-indent: -9999px;
         font-size: 0;
@@ -3638,12 +3638,12 @@ div.block.donations_project div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.med.ngos_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
   border-bottom: 1px dotted #EB4142;
-  background: url("/images/backoffice/icons/red_x.png") no-repeat right 17px; }
+  background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
   div.med.ngos_list h2 a.remove:hover {
     border-bottom: 1px solid #EB4142;
     text-decoration: none; }
@@ -3715,12 +3715,12 @@ div.med.ngos_list div.no_results {
 div.block.resources div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.resources div.med {
   float: left;
   width: 880px;
   padding: 16px 31px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.resources div.med div.left {
     float: left;
     width: 572px; }
@@ -3760,7 +3760,7 @@ div.block.resources div.med {
           top: 25px;
           width: 15px;
           height: 16px;
-          background: url("/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
           text-indent: -9999px;
           font-size: 0;
           display: block;
@@ -3787,7 +3787,7 @@ div.block.resources div.med {
           width: 535px;
           height: 42px;
           padding: 15px;
-          background: url("/images/backoffice/resources/header_resources.png") no-repeat 0 0; }
+          background: url("/app/images/backoffice/resources/header_resources.png") no-repeat 0 0; }
           div.block.resources div.med div.left ul li.ngo div.head h3 {
             margin: 0; }
           div.block.resources div.med div.left ul li.ngo div.head a.delete {
@@ -3797,7 +3797,7 @@ div.block.resources div.med {
           float: left;
           width: 535px;
           padding: 15px 15px 0;
-          background: url("/images/backoffice/resources/resources_med.png") repeat-y 0 0; }
+          background: url("/app/images/backoffice/resources/resources_med.png") repeat-y 0 0; }
           div.block.resources div.med div.left ul li.ngo div.body h4 {
             float: left;
             width: 100%;
@@ -3812,14 +3812,14 @@ div.block.resources div.med {
           float: left;
           width: 565px;
           height: 15px;
-          background: url("/images/backoffice/resources/resources_bottom.png") no-repeat 0 0; }
+          background: url("/app/images/backoffice/resources/resources_bottom.png") no-repeat 0 0; }
     div.block.resources div.med div.left form {
       float: left;
       width: 527px;
       height: 209px;
       padding: 21px;
       margin: 20px 0 0 2px;
-      background: url("/images/backoffice/common/green_form_bkg.png") no-repeat center center; }
+      background: url("/app/images/backoffice/common/green_form_bkg.png") no-repeat center center; }
       div.block.resources div.med div.left form h4 {
         font: normal 21px "Museo Sans",Arial;
         color: #333333;
@@ -3843,19 +3843,19 @@ div.block.resources div.med {
         margin: 5px 0 0 0;
         font: normal 13px Arial;
         color: #666666;
-        background: url("/images/backoffice/resources/url_input_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/resources/url_input_bkg.png") no-repeat 0 0;
         border: none; }
         div.block.resources div.med div.left form input[type="text"].title {
           float: left;
           width: 319px;
           height: 22px;
-          background: url("/images/backoffice/resources/title_input_bkg.png") no-repeat 0 0; }
+          background: url("/app/images/backoffice/resources/title_input_bkg.png") no-repeat 0 0; }
       div.block.resources div.med div.left form input[type="submit"].add {
         float: right;
         width: 130px;
         height: 32px;
         margin: 15px 3px 0 0;
-        background: url("/images/backoffice/resources/add_input_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/resources/add_input_bkg.png") no-repeat 0 0;
         border: none;
         text-indent: -9999px;
         font-size: 0;
@@ -3868,7 +3868,7 @@ div.block.resources div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.block.resources div.med div.left form input[type="checkbox"] {
   float: left;
   width: 10px;
@@ -3886,7 +3886,7 @@ div.block.resources div.med div.left form input[type="submit"].update {
   line-height: 0;
   font: normal 14px Arial;
   color: #666666;
-  background: url("/images/backoffice/ngos/save_changes.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/ngos/save_changes.png") no-repeat 0 0;
   width: 106px;
   height: 28px; }
   div.block.resources div.med div.left form input[type="submit"].update:hover {
@@ -3895,12 +3895,12 @@ div.block.resources div.med div.left form input[type="submit"].update {
 div.block.media div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.media div.med {
   float: left;
   width: 880px;
   padding: 16px 31px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.media div.med div.left {
     float: left;
     width: 572px; }
@@ -3916,7 +3916,7 @@ div.block.media div.med {
         height: 14px;
         margin: 30px 0 0 0;
         padding: 9px 0 11px 35px;
-        background: url("/images/backoffice/media/error_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/media/error_bkg.png") no-repeat 0 0;
         font: normal 14px Arial;
         color: white; }
     div.block.media div.med div.left ul {
@@ -3933,14 +3933,14 @@ div.block.media div.med {
           float: left;
           width: 566px;
           height: 10px;
-          background: url("/images/backoffice/backgrounds/top_media.png") no-repeat 0 0; }
+          background: url("/app/images/backoffice/backgrounds/top_media.png") no-repeat 0 0; }
         div.block.media div.med div.left ul li div.med_media {
           position: relative;
           float: left;
           width: 549px;
           height: auto;
           padding: 0 9px;
-          background: url("/images/backoffice/backgrounds/med_media.png") repeat-y 0 0; }
+          background: url("/app/images/backoffice/backgrounds/med_media.png") repeat-y 0 0; }
           div.block.media div.med div.left ul li div.med_media:hover span.over {
             display: block; }
           div.block.media div.med div.left ul li div.med_media img {
@@ -3957,13 +3957,13 @@ div.block.media div.med {
             z-index: 10000;
             width: 208px;
             height: 74px;
-            background: url("/images/backoffice/media/over_bkg.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/media/over_bkg.png") no-repeat 0 0; }
             div.block.media div.med div.left ul li div.med_media span.over a.up {
               float: left;
               width: 24px;
               height: 27px;
               margin: 24px 0 0 45px;
-              background: url("/images/backoffice/media/up.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/media/up.png") no-repeat 0 0;
               text-indent: -9999px;
               font-size: 0;
               display: block;
@@ -3973,7 +3973,7 @@ div.block.media div.med {
               width: 24px;
               height: 27px;
               margin: 24px 0 0 20px;
-              background: url("/images/backoffice/media/down.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/media/down.png") no-repeat 0 0;
               text-indent: -9999px;
               font-size: 0;
               display: block;
@@ -3985,7 +3985,7 @@ div.block.media div.med {
               width: 28px;
               height: 30px;
               margin: 22px 0 0 20px;
-              background: url("/images/backoffice/media/delete.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/media/delete.png") no-repeat 0 0;
               text-indent: -9999px;
               font-size: 0;
               display: block;
@@ -4015,7 +4015,7 @@ div.block.media div.med {
                 width: 469px;
                 height: 16px;
                 padding: 8px 70px 8px 8px;
-                background: url("/images/backoffice/media/caption_input_bkg.png") no-repeat 0 0;
+                background: url("/app/images/backoffice/media/caption_input_bkg.png") no-repeat 0 0;
                 border: none;
                 font: normal 13px Arial;
                 color: #333333; }
@@ -4025,7 +4025,7 @@ div.block.media div.med {
                 height: 26px;
                 right: 3px;
                 top: 3px;
-                background: url("/images/backoffice/media/caption_input.png") no-repeat 0 0;
+                background: url("/app/images/backoffice/media/caption_input.png") no-repeat 0 0;
                 border: none;
                 text-indent: -9999px; }
                 div.block.media div.med div.left ul li div.med_media div.caption form input[type="submit"]:hover {
@@ -4035,14 +4035,14 @@ div.block.media div.med {
           float: left;
           width: 566px;
           height: 10px;
-          background: url("/images/backoffice/backgrounds/bottom_media.png") repeat-y 0 0; }
+          background: url("/app/images/backoffice/backgrounds/bottom_media.png") repeat-y 0 0; }
     div.block.media div.med div.left div.add_media {
       float: left;
       margin: 20px 0 0 0;
       width: 526px;
       height: 66px;
       padding: 20px;
-      background: url("/images/backoffice/media/add_bkg.png") no-repeat center center; }
+      background: url("/app/images/backoffice/media/add_bkg.png") no-repeat center center; }
       div.block.media div.med div.left div.add_media h3 {
         float: left;
         width: auto;
@@ -4080,13 +4080,13 @@ div.block.media div.med {
             font: normal 15px Arial;
             color: #333333;
             border: none;
-            background: url("/images/backoffice/media/video_input.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/media/video_input.png") no-repeat 0 0; }
           div.block.media div.med div.left div.add_media form input[type="submit"] {
             float: right;
             width: 56px;
             height: 26px;
             margin: 3px 0 0 0;
-            background: url("/images/backoffice/media/save.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/media/save.png") no-repeat 0 0;
             border: none;
             text-indent: -9999px;
             font-size: 0;
@@ -4102,7 +4102,7 @@ div.block.media div.med {
       width: 56px;
       height: 26px;
       margin: 3px 0 0 0;
-      background: url("/images/backoffice/media/save.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/media/save.png") no-repeat 0 0;
       border: none;
       text-indent: -9999px;
       font-size: 0;
@@ -4115,7 +4115,7 @@ div.block.media div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 div.steps_create_project {
   float: left;
   width: 932px;
@@ -4126,13 +4126,13 @@ div.steps_create_project {
     float: left;
     width: 932px;
     height: 7px;
-    background: url("/images/backoffice/sites/bkg_top_msg.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/sites/bkg_top_msg.png") no-repeat 0 0;
     margin: 0; }
   div.steps_create_project div.middle {
     float: left;
     width: 932px;
     height: auto;
-    background: url("/images/backoffice/sites/bkg_middle_msg.png") repeat-y 0;
+    background: url("/app/images/backoffice/sites/bkg_middle_msg.png") repeat-y 0;
     margin: 0; }
     div.steps_create_project div.middle h1 {
       float: left;
@@ -4153,7 +4153,7 @@ div.steps_create_project {
           float: left;
           width: 29px;
           height: 24px;
-          background: url("/images/backoffice/sites/circle_step.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/sites/circle_step.png") no-repeat 0 0;
           font: 500 15px "Museo Sans",Arial;
           color: white;
           text-align: center;
@@ -4175,17 +4175,17 @@ div.steps_create_project {
     float: left;
     width: 932px;
     height: 7px;
-    background: url("/images/backoffice/sites/bkg_bottom_msg.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/sites/bkg_bottom_msg.png") no-repeat 0 0;
     margin: 0; }
 div.block.site_info div.top {
   float: left;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important; }
 div.block.site_info div.med {
   float: left;
   width: 880px;
   padding: 16px 31px 28px;
-  background: url("/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important; }
   div.block.site_info div.med div.left {
     float: left;
     width: 572px;
@@ -4238,12 +4238,12 @@ div.block.site_info div.med {
       div.block.site_info div.med div.left form span.input_large {
         float: left;
         margin: 5px 0 0 0;
-        background: url("/images/backoffice/projects/input_project_large.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/input_project_large.png") no-repeat 0 0;
         width: 419px;
         height: 34px;
         position: relative; }
         div.block.site_info div.med div.left form span.input_large.active {
-          background: url("/images/backoffice/projects/large_combo_head_displayed.png") no-repeat 0 0; }
+          background: url("/app/images/backoffice/projects/large_combo_head_displayed.png") no-repeat 0 0; }
       div.block.site_info div.med div.left form input[type="text"] {
         position: absolute;
         top: 6px;
@@ -4257,7 +4257,7 @@ div.block.site_info div.med {
       div.block.site_info div.med div.left form span.textarea {
         float: left;
         margin: 5px 0 0 0;
-        background: url("/images/backoffice/projects/input_project_multiple.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/input_project_multiple.png") no-repeat 0 0;
         width: 564px;
         height: 214px;
         position: relative; }
@@ -4276,7 +4276,7 @@ div.block.site_info div.med {
       div.block.site_info div.med div.left form span.textarea_little {
         float: left;
         margin: 5px 0 0 0;
-        background: url("/images/backoffice/sites/little_descript.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/sites/little_descript.png") no-repeat 0 0;
         width: 564px;
         height: 34px;
         position: relative; }
@@ -4297,7 +4297,7 @@ div.block.site_info div.med {
       div.block.site_info div.med div.left form span.textarea_short {
         float: left;
         margin: 5px 0 0 0;
-        background: url("/images/backoffice/sites/short_descript.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/sites/short_descript.png") no-repeat 0 0;
         min-width: 564px;
         min-height: 114px;
         max-width: 564px;
@@ -4337,13 +4337,13 @@ div.block.site_info div.med {
           font: normal 15px Arial;
           color: #333333;
           text-decoration: none;
-          background: url("/images/backoffice/sites/option_bkg.png") no-repeat 0 4px;
+          background: url("/app/images/backoffice/sites/option_bkg.png") no-repeat 0 4px;
           padding: 0 0 0 15px;
           height: 14px; }
           div.block.site_info div.med div.left form ul.geographic_options li a.combo:hover {
             cursor: pointer; }
         div.block.site_info div.med div.left form ul.geographic_options li.selected a.combo {
-          background: url("/images/backoffice/sites/option_bkg_selected.png") no-repeat 0 4px; }
+          background: url("/app/images/backoffice/sites/option_bkg_selected.png") no-repeat 0 4px; }
         div.block.site_info div.med div.left form ul.geographic_options li div.content {
           display: none;
           width: 100%; }
@@ -4354,13 +4354,13 @@ div.block.site_info div.med {
         div.block.site_info div.med div.left form ul.geographic_options li.selected#gc_worldwide {
           margin: 7px 0 0 12px; }
         div.block.site_info div.med div.left form ul.geographic_options li.selected#gc_limited_country {
-          background: url("/images/backoffice/sites/bkg_limited_country.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/sites/bkg_limited_country.png") no-repeat 0 0;
           width: 544px;
           height: 65px;
           padding: 10px 13px; }
         div.block.site_info div.med div.left form ul.geographic_options li.selected span.select_country_combo {
           float: left;
-          background: url("/images/backoffice/sites/select_country_combo.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/sites/select_country_combo.png") no-repeat 0 0;
           width: 240px;
           height: 32px;
           margin: 12px 0 0 12px; }
@@ -4369,7 +4369,7 @@ div.block.site_info div.med {
           div.block.site_info div.med div.left form ul.geographic_options li.selected span.select_country_combo:hover {
             cursor: pointer; }
           div.block.site_info div.med div.left form ul.geographic_options li.selected span.select_country_combo.clicked {
-            background: url("/images/backoffice/sites/select_country_combo_head.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/sites/select_country_combo_head.png") no-repeat 0 0;
             height: 32px;
             position: relative; }
             div.block.site_info div.med div.left form ul.geographic_options li.selected span.select_country_combo.clicked div.values {
@@ -4378,7 +4378,7 @@ div.block.site_info div.med {
               height: 202px;
               top: 32px;
               left: 0;
-              background: url("/images/backoffice/sites/select_country_combo_body.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/sites/select_country_combo_body.png") no-repeat 0 0;
               z-index: 30;
               display: inline; }
           div.block.site_info div.med div.left form ul.geographic_options li.selected span.select_country_combo ul {
@@ -4414,12 +4414,12 @@ div.block.site_info div.med {
           font: normal 13px Arial;
           color: #999999; }
         div.block.site_info div.med div.left form ul.geographic_options li.selected#gc_limited_region {
-          background: url("/images/backoffice/sites/bkg_limited_country.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/sites/bkg_limited_country.png") no-repeat 0 0;
           width: 544px;
           height: 65px;
           padding: 10px 13px; }
         div.block.site_info div.med div.left form ul.geographic_options li.selected#gc_limited_bbox {
-          background: url("/images/backoffice/sites/bkg_limited_bbox.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/sites/bkg_limited_bbox.png") no-repeat 0 0;
           width: 539px;
           height: 176px;
           padding: 13px; }
@@ -4445,7 +4445,7 @@ div.block.site_info div.med {
           width: 600px; }
           div.block.site_info div.med div.left form ul.project_tipo_options li.selected {
             margin: 10px 0 0 0;
-            background: url("/images/backoffice/sites/bkg_limited_country.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/sites/bkg_limited_country.png") no-repeat 0 0;
             width: 544px;
             height: 65px;
             padding: 10px 13px; }
@@ -4454,13 +4454,13 @@ div.block.site_info div.med {
             font: normal 15px Arial;
             color: #333333;
             text-decoration: none;
-            background: url("/images/backoffice/sites/project_tipo_check.png") no-repeat 0 4px;
+            background: url("/app/images/backoffice/sites/project_tipo_check.png") no-repeat 0 4px;
             padding: 0 0 0 15px;
             height: 14px; }
             div.block.site_info div.med div.left form ul.project_tipo_options li a.check:hover {
               cursor: pointer; }
           div.block.site_info div.med div.left form ul.project_tipo_options li.selected a.check {
-            background: url("/images/backoffice/sites/project_tipo_checked.png") no-repeat 0 4px; }
+            background: url("/app/images/backoffice/sites/project_tipo_checked.png") no-repeat 0 4px; }
           div.block.site_info div.med div.left form ul.project_tipo_options li.selected div.content {
             display: inline; }
           div.block.site_info div.med div.left form ul.project_tipo_options li div.content {
@@ -4468,7 +4468,7 @@ div.block.site_info div.med {
             width: 100%; }
           div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.select_combo_typology {
             float: left;
-            background: url("/images/backoffice/sites/select_country_combo.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/sites/select_country_combo.png") no-repeat 0 0;
             width: 240px;
             height: 32px;
             margin: 12px 0 0 12px; }
@@ -4477,7 +4477,7 @@ div.block.site_info div.med {
             div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.select_combo_typology:hover {
               cursor: pointer; }
             div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.select_combo_typology.clicked {
-              background: url("/images/backoffice/sites/select_country_combo_head.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/sites/select_country_combo_head.png") no-repeat 0 0;
               height: 32px;
               position: relative; }
               div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.select_combo_typology.clicked div.values {
@@ -4486,7 +4486,7 @@ div.block.site_info div.med {
                 height: 202px;
                 top: 32px;
                 left: 0;
-                background: url("/images/backoffice/sites/select_country_combo_body.png") no-repeat 0 0;
+                background: url("/app/images/backoffice/sites/select_country_combo_body.png") no-repeat 0 0;
                 z-index: 30;
                 display: inline; }
             div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.select_combo_typology ul {
@@ -4523,7 +4523,7 @@ div.block.site_info div.med {
                   float: left;
                   font: normal 13px Arial;
                   color: #666666;
-                  background: url("/images/backoffice/sites/bkg_li_subelement.png") no-repeat 0 5px;
+                  background: url("/app/images/backoffice/sites/bkg_li_subelement.png") no-repeat 0 5px;
                   padding: 0 0 0 10px;
                   margin: 4px 9px; }
                   div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.select_combo_typology.clicked div.values ul li a.organization {
@@ -4539,10 +4539,10 @@ div.block.site_info div.med {
             margin: 10px 0 0 12px;
             width: 509px;
             height: 34px;
-            background: url("/images/backoffice/sites/bkg_tags_site.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/sites/bkg_tags_site.png") no-repeat 0 0;
             position: relative; }
             div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.tags_site.active {
-              background: url("/images/backoffice/sites/bkg_tags_site_active.png") no-repeat 0 0;
+              background: url("/app/images/backoffice/sites/bkg_tags_site_active.png") no-repeat 0 0;
               height: 33px; }
             div.block.site_info div.med div.left form ul.project_tipo_options li.selected span.tags_site input[type="text"] {
               position: absolute;
@@ -4568,7 +4568,7 @@ div.block.site_info div.med {
         margin: 5px 0 0 0;
         width: 272px;
         height: 34px;
-        background: url("/images/backoffice/projects/bkg_input_short.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/bkg_input_short.png") no-repeat 0 0;
         position: relative; }
         div.block.site_info div.med div.left form span.input_short input[type="text"] {
           position: absolute;
@@ -4582,7 +4582,7 @@ div.block.site_info div.med {
         margin: 5px 0 0 0;
         width: 273px;
         height: 34px;
-        background: url("/images/backoffice/sites/site_url_input.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/sites/site_url_input.png") no-repeat 0 0;
         position: relative; }
         div.block.site_info div.med div.left form span.input_url input[type="text"] {
           position: absolute;
@@ -4599,7 +4599,7 @@ div.block.site_info div.med {
           font: normal 15px Arial;
           color: #333333; }
       div.block.site_info div.med div.left form input[type="submit"] {
-        background: url("/images/backoffice/projects/save_changes_bttn.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/save_changes_bttn.png") no-repeat 0 0;
         font: 500 19px "Museo Sans",Arial;
         color: #FFFFFF;
         text-shadow: 0 1px #6E8C30;
@@ -4621,7 +4621,7 @@ div.block.site_info div.bottom {
   float: left;
   height: 15px;
   width: 100%;
-  background: url("/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+  background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
 
 /*CLUSTERS*/
 /*SECTORS*/
@@ -4650,10 +4650,10 @@ ul.pages {
       height: 42px;
       padding: 15px; }
       ul.pages li div.head.more {
-        background: url("/images/backoffice/resources/header_resources.png") no-repeat 0 0 !important;
+        background: url("/app/images/backoffice/resources/header_resources.png") no-repeat 0 0 !important;
         margin: 20px 0 0 0; }
       ul.pages li div.head.one {
-        background: url("/images/backoffice/pages/one_page_list.png") no-repeat 0 0 !important; }
+        background: url("/app/images/backoffice/pages/one_page_list.png") no-repeat 0 0 !important; }
         ul.pages li div.head.one h3 {
           margin: 12px 0 0 0;
           font: bold 17px Arial !important; }
@@ -4672,7 +4672,7 @@ ul.pages {
         top: 28px;
         width: 15px;
         height: 16px;
-        background: url("/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/icons/close_bkg.png") no-repeat 0 0;
         text-indent: -9999px;
         font-size: 0;
         display: block;
@@ -4683,7 +4683,7 @@ ul.pages {
       float: left;
       width: 535px;
       padding: 15px 15px 0;
-      background: url("/images/backoffice/resources/resources_med.png") repeat-y 0 0; }
+      background: url("/app/images/backoffice/resources/resources_med.png") repeat-y 0 0; }
       ul.pages li div.body span {
         float: left;
         width: 100%;
@@ -4700,7 +4700,7 @@ ul.pages {
             width: 14px;
             height: 14px;
             margin: 2px 0 0 7px;
-            background: url("/images/backoffice/icons/tiny_close.png") no-repeat 0 0;
+            background: url("/app/images/backoffice/icons/tiny_close.png") no-repeat 0 0;
             text-indent: -9999px; }
             ul.pages li div.body span a.delete:hover {
               background-position: 0 -14px; }
@@ -4708,7 +4708,7 @@ ul.pages {
       float: left;
       width: 565px;
       height: 15px;
-      background: url("/images/backoffice/resources/resources_bottom.png") no-repeat 0 bottom; }
+      background: url("/app/images/backoffice/resources/resources_bottom.png") no-repeat 0 bottom; }
 
 span.chars {
   position: relative;
@@ -4742,7 +4742,7 @@ select#page_parent_id {
 span#parent_page {
   float: left;
   margin: 10px 0 0 0;
-  background: url("/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/combos/combo_add_cluster.png") no-repeat 0 0;
   width: 254px;
   height: 24px;
   padding: 8px 0 0 10px;
@@ -4753,7 +4753,7 @@ span#parent_page {
   span#parent_page ul.options {
     display: none; }
   span#parent_page.clicked {
-    background: url("/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/projects/combos/combo_add_cluster_clicked.png") no-repeat 0 0; }
     span#parent_page.clicked ul.options {
       position: absolute;
       top: 32px;
@@ -4765,17 +4765,17 @@ span#parent_page {
       span#parent_page.clicked ul.options li {
         float: left;
         margin: 0;
-        background: url("/images/backoffice/projects/combos/combo_add_cluster_lielement.png") repeat-y 0;
+        background: url("/app/images/backoffice/projects/combos/combo_add_cluster_lielement.png") repeat-y 0;
         width: 242px;
         height: auto;
         padding: 4px 11px; }
         span#parent_page.clicked ul.options li.last {
-          background: url("/images/backoffice/projects/combos/combo_add_cluster_lielement_last.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/combos/combo_add_cluster_lielement_last.png") no-repeat 0 0;
           height: 6px; }
           span#parent_page.clicked ul.options li.last:hover {
-            background: url("/images/backoffice/projects/combos/combo_add_cluster_lielement_last.png") no-repeat 0 0; }
+            background: url("/app/images/backoffice/projects/combos/combo_add_cluster_lielement_last.png") no-repeat 0 0; }
         span#parent_page.clicked ul.options li:hover {
-          background: url("/images/backoffice/projects/combos/combo_add_cluster_lielement_hover.png") repeat-y 0; }
+          background: url("/app/images/backoffice/projects/combos/combo_add_cluster_lielement_hover.png") repeat-y 0; }
         span#parent_page.clicked ul.options li a {
           font: normal 13px Arial;
           color: #666666;
@@ -4791,7 +4791,7 @@ textarea.huge {
   min-height: 687px !important;
   margin: 5px 0 0 0;
   padding: 5px 8px;
-  background: url("/images/backoffice/pages/textarea_bkg.jpg") no-repeat 0 0 !important;
+  background: url("/app/images/backoffice/pages/textarea_bkg.jpg") no-repeat 0 0 !important;
   border: none;
   font: normal 15px Arial;
   color: #333333; }
@@ -4808,7 +4808,7 @@ div#modal_window {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("/images/backoffice/common/modal_bkg.png") repeat 0 0;
+  background: url("/app/images/backoffice/common/modal_bkg.png") repeat 0 0;
   z-index: 10; }
   div#modal_window div.alert {
     position: absolute;
@@ -4818,7 +4818,7 @@ div#modal_window {
     height: 88px;
     padding: 22px;
     margin: -66px 0 0 -247px;
-    background: url("/images/backoffice/common/alert_bkg.png") no-repeat 0 0 !important; }
+    background: url("/app/images/backoffice/common/alert_bkg.png") no-repeat 0 0 !important; }
     div#modal_window div.alert h4 {
       float: left;
       width: 100%;
@@ -4853,11 +4853,11 @@ div#modal_window {
     div#modal_window div.alert ul#errors_csv {
       display: none; }
     div#modal_window div.alert span a.button.remove {
-      background: url("/images/backoffice/common/delete_button.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/common/delete_button.png") no-repeat 0 0;
       width: 63px;
       height: 26px; }
     div#modal_window div.alert.import_csv {
-      background: url("/images/backoffice/common/alert_csv_bkg.png") no-repeat 0 0 !important;
+      background: url("/app/images/backoffice/common/alert_csv_bkg.png") no-repeat 0 0 !important;
       width: 450px;
       height: 46px; }
       div#modal_window div.alert.import_csv.ok p {
@@ -4872,7 +4872,7 @@ div#modal_window {
         float: left;
         width: 63px;
         height: 26px;
-        background: url("/images/backoffice/common/ok_button.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/common/ok_button.png") no-repeat 0 0;
         text-indent: -9999px;
         font-size: 0;
         display: block;
@@ -4885,11 +4885,11 @@ div#modal_window {
           div#modal_window div.alert.import_csv span a.cancel.ok.error:hover {
             background-position: 0 -78px; }
       div#modal_window div.alert.import_csv.ok {
-        background: url("/images/backoffice/common/alert_csv_ok_bkg.png") no-repeat 0 0 !important;
+        background: url("/app/images/backoffice/common/alert_csv_ok_bkg.png") no-repeat 0 0 !important;
         width: 450px;
         height: 96px; }
       div#modal_window div.alert.import_csv.error {
-        background: url("/images/backoffice/common/alert_csv_error_bkg.png") no-repeat 0 0 !important;
+        background: url("/app/images/backoffice/common/alert_csv_error_bkg.png") no-repeat 0 0 !important;
         width: 450px;
         height: 340px;
         top: 30%;
@@ -4905,7 +4905,7 @@ div#modal_window {
           div#modal_window div.alert.import_csv.error ul#errors_csv li {
             float: left;
             margin: 7px 0 0 0;
-            background: url("/images/backoffice/common/li_style.png") no-repeat 0 7px;
+            background: url("/app/images/backoffice/common/li_style.png") no-repeat 0 7px;
             padding: 0 0 0 7px;
             font: normal 15px Arial;
             color: #666666;
@@ -4915,7 +4915,7 @@ div#footer {
   width: 100%;
   height: 120px;
   margin: 40px 0 0 0;
-  background: url("/images/backoffice/common/header_bkg.jpg") repeat-x 0 0; }
+  background: url("/app/images/backoffice/common/header_bkg.jpg") repeat-x 0 0; }
   div#footer div.inner_footer {
     margin: 0 auto;
     width: 932px; }
@@ -4929,7 +4929,7 @@ div#footer {
         float: left;
         width: auto;
         padding: 0 13px;
-        background: url("/images/backoffice/common/footer_list_separator.png") no-repeat right -2px; }
+        background: url("/app/images/backoffice/common/footer_list_separator.png") no-repeat right -2px; }
         div#footer div.inner_footer ul li.last {
           padding: 0 0 0 10px;
           background: none; }
@@ -4969,7 +4969,7 @@ ul.newList {
     top: 22px;
     left: 0;
     float: left;
-    background: url("/images/backoffice/common/dates/body_month.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/common/dates/body_month.png") no-repeat 0 0;
     height: 198px;
     overflow-x: hidden;
     width: 148px;
@@ -4982,7 +4982,7 @@ ul.newList {
     top: 22px;
     left: 0;
     float: left;
-    background: url("/images/backoffice/common/dates/body_day.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/common/dates/body_day.png") no-repeat 0 0;
     height: 198px;
     overflow-x: hidden;
     width: 80px;
@@ -4995,7 +4995,7 @@ ul.newList {
     top: 22px;
     left: 0;
     float: left;
-    background: url("/images/backoffice/common/dates/body_year.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/common/dates/body_year.png") no-repeat 0 0;
     height: 198px;
     overflow-x: hidden;
     width: 94px;
@@ -5010,7 +5010,7 @@ ul.newList {
   height: 29px;
   padding: 3px 0 0 6px;
   float: left;
-  background: url("/images/backoffice/common/dates/head_month.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/common/dates/head_month.png") no-repeat 0 0;
   margin: 2px 0 0 7px; }
   .newListSelected:focus {
     outline: none; }
@@ -5020,21 +5020,21 @@ ul.newList {
     height: 30px;
     padding: 3px 0 0 6px;
     float: left;
-    backgroundPosition: url("/images/backoffice/common/dates/head_month.png") no-repeat 0 0; }
+    backgroundPosition: url("/app/images/backoffice/common/dates/head_month.png") no-repeat 0 0; }
   .newListSelected.day {
     width: 59px;
     color: #000;
     height: 30px;
     padding: 3px 0 0 6px;
     float: left;
-    background: url("/images/backoffice/common/dates/head_day.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/common/dates/head_day.png") no-repeat 0 0; }
   .newListSelected.year {
     width: 78px;
     color: #000;
     height: 30px;
     padding: 3px 0 0 6px;
     float: left;
-    background: url("/images/backoffice/common/dates/head_year.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/common/dates/head_year.png") no-repeat 0 0; }
   .newListSelected.month {
     text-transform: uppercase; }
     .newListSelected.month .selectedTxt {
@@ -5045,7 +5045,7 @@ ul.newList {
     height: 29px;
     padding: 3px 0 0 6px;
     float: left;
-    background: url("/images/backoffice/sites/combo/country_head.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/sites/combo/country_head.png") no-repeat 0 0;
     margin: 10px 0 0 13px; }
     .newListSelected.country .selectedTxt {
       width: 225px;
@@ -5058,7 +5058,7 @@ ul.newList {
 
 /* country combo */
 div.newList_content.country {
-  background: url("/images/backoffice/sites/combo/country_body.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/sites/combo/country_body.png") no-repeat 0 0;
   height: 205px;
   width: 237px;
   top: 32px !important;
@@ -5086,7 +5086,7 @@ ul.newList.country {
   height: 29px;
   padding: 3px 0 0 6px;
   float: left;
-  background: url("/images/backoffice/projects/combos/country_head.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/combos/country_head.png") no-repeat 0 0;
   margin: 6px 0 0 1px; }
   .newListSelected.country_index .selectedTxt {
     width: 134px;
@@ -5098,7 +5098,7 @@ ul.newList.country {
     line-height: 21px; }
 
 div.newList_content.country_index {
-  background: url("/images/backoffice/projects/combos/country_body.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/combos/country_body.png") no-repeat 0 0;
   height: 201px;
   width: 134px;
   top: 32px !important;
@@ -5191,7 +5191,7 @@ div.jHtmlArea {
     margin: 10px 1px 10px;
     padding: 1px;
     float: left;
-    background: white url("/images/backoffice/pages/jHtmlArea_Toolbar_Group_BG.png") repeat-x; }
+    background: white url("/app/images/backoffice/pages/jHtmlArea_Toolbar_Group_BG.png") repeat-x; }
     div.jHtmlArea .ToolBar ul li {
       list-style-type: none;
       float: left;
@@ -5200,13 +5200,13 @@ div.jHtmlArea {
       margin: 1px; }
       div.jHtmlArea .ToolBar ul li:hover {
         border: solid 1px #ccc;
-        background: #dddddd url("/images/backoffice/pages/jHtmlArea_Toolbar_Group__Btn_Select_BG.png");
+        background: #dddddd url("/app/images/backoffice/pages/jHtmlArea_Toolbar_Group__Btn_Select_BG.png");
         padding: 0; }
       div.jHtmlArea .ToolBar ul li a {
         display: block;
         width: 16px;
         height: 16px;
-        background: url("/images/backoffice/pages/jHtmlArea.png") no-repeat -16px -500px;
+        background: url("/app/images/backoffice/pages/jHtmlArea.png") no-repeat -16px -500px;
         border: none;
         cursor: pointer;
         padding: 0px; }
@@ -5293,7 +5293,7 @@ div.jHtmlArea {
         background-position: -80px -32px; }
 div.block.activity span.combo_date {
   float: left;
-  background: url("/images/backoffice/projects/date/bkg_calendar.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/projects/date/bkg_calendar.png") no-repeat 0 0;
   width: 121px;
   height: 24px;
   font: normal 15px Arial;
@@ -5306,19 +5306,19 @@ div.block.activity span.combo_date {
   div.block.activity span.combo_date div.select_dates {
     display: none; }
   div.block.activity span.combo_date.clicked {
-    background: url("/images/backoffice/projects/date/bkg_header_clicked_date.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/projects/date/bkg_header_clicked_date.png") no-repeat 0 0; }
     div.block.activity span.combo_date.clicked div.select_dates {
       position: absolute;
       top: 30px;
       left: 0;
-      background: url("/images/backoffice/projects/date/bkg_date_content.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/projects/date/bkg_date_content.png") no-repeat 0 0;
       width: 335px;
       height: 68px;
       z-index: 20;
       display: inline;
       padding-left: 5px; }
       div.block.activity span.combo_date.clicked div.select_dates.end_date {
-        background: url("/images/backoffice/projects/date/bkg_date_content_right.png") no-repeat 0 0;
+        background: url("/app/images/backoffice/projects/date/bkg_date_content_right.png") no-repeat 0 0;
         position: absolute;
         top: 30px;
         left: -142px; }
@@ -5364,21 +5364,21 @@ div.block.activity span.combo_date {
         div.block.activity span.combo_date.clicked div.select_dates a.month_combo {
           float: left;
           margin: 2px 0 0 0;
-          background: url("/images/backoffice/projects/date/month_combo.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/date/month_combo.png") no-repeat 0 0;
           width: 123px;
           height: 23px;
           padding: 9px 0 0 10px; }
         div.block.activity span.combo_date.clicked div.select_dates a.day_combo {
           float: left;
           margin: 2px 0 0 0;
-          background: url("/images/backoffice/projects/date/day_combo.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/date/day_combo.png") no-repeat 0 0;
           width: 54px;
           height: 23px;
           padding: 9px 0 0 10px; }
         div.block.activity span.combo_date.clicked div.select_dates a.year_combo {
           float: left;
           margin: 2px 0 0 0;
-          background: url("/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
+          background: url("/app/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
           width: 68px;
           height: 23px;
           padding: 9px 0 0 10px; }
@@ -5411,7 +5411,7 @@ div.med div.changes_list {
     width: 874px;
     margin-bottom: 19px; }
     div.med div.changes_list div.change .border_top {
-      background: url("/images/backoffice/activity/blue_rounded_wide_top.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/activity/blue_rounded_wide_top.png") no-repeat 0 0;
       height: 5px;
       width: 874px; }
     div.med div.changes_list div.change .summary {
@@ -5452,7 +5452,7 @@ div.med div.changes_list {
         width: 13px;
         height: 9px;
         border: 0;
-        background: url("/images/backoffice/activity/check.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/activity/check.png") no-repeat 0 0; }
     div.med div.changes_list div.change .summary .date_time {
       display: inline-block;
       zoom: 1;
@@ -5516,9 +5516,9 @@ div.med div.changes_list {
         left: 50%;
         margin-top: -3px;
         margin-left: 1px;
-        background: url("/images/backoffice/activity/arrow_down.png") no-repeat 0 0; }
+        background: url("/app/images/backoffice/activity/arrow_down.png") no-repeat 0 0; }
     div.med div.changes_list div.change.open .summary .more .arrow {
-      background: url("/images/backoffice/activity/arrow_up.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/activity/arrow_up.png") no-repeat 0 0; }
     div.med div.changes_list div.change .detail {
       display: none;
       border-top: 1px solid #cccccc;
@@ -5549,11 +5549,11 @@ div.med div.changes_list {
           color: black;
           line-height: 1.3; }
     div.med div.changes_list div.change .border_bottom {
-      background: url("/images/backoffice/activity/blue_rounded_wide_bottom.png") no-repeat 0 0;
+      background: url("/app/images/backoffice/activity/blue_rounded_wide_bottom.png") no-repeat 0 0;
       height: 5px;
       width: 874px; }
     div.med div.changes_list div.change.open .border_bottom {
-      background: url("/images/backoffice/activity/light_blue_rounded_wide_bottom.png") no-repeat 0 0; }
+      background: url("/app/images/backoffice/activity/light_blue_rounded_wide_bottom.png") no-repeat 0 0; }
     div.med div.changes_list div.change .detail ul li .separator {
       background-color: #dde1e2;
       height: 1px;
@@ -5566,25 +5566,25 @@ div.med div.changes_list {
   .project_info div.med div.changes_list div.change .summary .title_by {
     width: 289px; }
   .project_info div.med div.changes_list div.change .border_top {
-    background: url("/images/backoffice/activity/blue_rounded_narrow_top.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/activity/blue_rounded_narrow_top.png") no-repeat 0 0; }
   .project_info div.med div.changes_list div.change .border_bottom {
-    background: url("/images/backoffice/activity/blue_rounded_narrow_bottom.png") no-repeat 0 0;
+    background: url("/app/images/backoffice/activity/blue_rounded_narrow_bottom.png") no-repeat 0 0;
     height: 5px;
     width: 874px; }
   .project_info div.med div.changes_list div.change.open .border_bottom {
-    background: url("/images/backoffice/activity/light_blue_rounded_narrow_bottom.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/activity/light_blue_rounded_narrow_bottom.png") no-repeat 0 0; }
   .project_info div.med div.changes_list div.change .detail ul li .value {
     width: 369px; }
 
 div.med div.changes_list div.change.checked .border_top {
-  background: url("/images/backoffice/activity/light_blue_rounded_wide_top.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/activity/light_blue_rounded_wide_top.png") no-repeat 0 0; }
 div.med div.changes_list div.change.checked .border_bottom {
-  background: url("/images/backoffice/activity/light_blue_rounded_wide_bottom.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/activity/light_blue_rounded_wide_bottom.png") no-repeat 0 0; }
 
 .project_info div.med div.changes_list div.change.checked .border_top {
-  background: url("/images/backoffice/activity/light_blue_rounded_narrow_top.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/activity/light_blue_rounded_narrow_top.png") no-repeat 0 0; }
 .project_info div.med div.changes_list div.change.checked .border_bottom {
-  background: url("/images/backoffice/activity/light_blue_rounded_narrow_bottom.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/activity/light_blue_rounded_narrow_bottom.png") no-repeat 0 0; }
 
 div.med div.changes_list div.change.checked .summary {
   background-color: #F8FAFB; }
@@ -5609,9 +5609,9 @@ div.med div.changes_list div.change.checked .summary {
     div.med div.changes_list div.change.checked .summary .title_by form {
       color: rgba(0, 0, 0, 0.5); }
   div.med div.changes_list div.change.checked .summary .more .arrow {
-    background: url("/images/backoffice/activity/light_arrow_down.png") no-repeat 0 0; }
+    background: url("/app/images/backoffice/activity/light_arrow_down.png") no-repeat 0 0; }
 div.med div.changes_list div.change.open.checked .summary .more .arrow {
-  background: url("/images/backoffice/activity/light_arrow_up.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/activity/light_arrow_up.png") no-repeat 0 0; }
 div.med div.changes_list div.change.checked .detail {
   border-color: rgba(204, 204, 204, 0.5);
   background-color: rgba(239, 246, 248, 0.5); }
@@ -5632,18 +5632,18 @@ div.med div.changes_list div.change.checked .detail {
   width: 105px;
   height: 36px;
   margin: 0 0 0 15px;
-  background: url("/images/backoffice/users/new_user.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/users/new_user.png") no-repeat 0 0; }
 .users div.block.edit div.med div.left .export_users {
   float: left;
   width: 131px;
   height: 36px;
   margin: 0 0 0 15px;
-  background: url("/images/backoffice/users/export_users.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/users/export_users.png") no-repeat 0 0; }
 .users div.block.edit div.med div.left .remove {
   float: none;
   width: 17px;
   height: 16px;
-  background: url("/images/backoffice/users/remove_user.png") no-repeat 0 0; }
+  background: url("/app/images/backoffice/users/remove_user.png") no-repeat 0 0; }
 .users div.block.edit div.med div.left h2 {
   padding-bottom: 20px; }
 .users div.block.edit div.med div.left #users_list_filter {
@@ -5657,7 +5657,7 @@ div.med div.changes_list div.change.checked .detail {
   float: left;
   width: 534px;
   height: 56px;
-  background: url("/images/backoffice/users/user_item_bkg.png") no-repeat 0 0;
+  background: url("/app/images/backoffice/users/user_item_bkg.png") no-repeat 0 0;
   margin-bottom: 20px;
   padding: 15px;
   color: #999999; }
