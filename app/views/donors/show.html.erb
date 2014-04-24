@@ -31,9 +31,8 @@
         <%= render 'new_partials/aside/contact_info' %>
       <% end %>
 
-      <% unless @donor.twitter.blank? && @donor.facebook.blank? && @donor.website.blank? %>
-        <%= render 'new_partials/aside/follow_us' %>
-      <%end%>
+      <%= render 'new_partials/aside/follow_us' %>
+
     </div>
   </aside>
 
