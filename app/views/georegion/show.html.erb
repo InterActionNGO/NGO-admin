@@ -13,9 +13,35 @@
 <div class="row">
   <aside>
     <div class="grid-4">
+      <%= render 'new_partials/aside/location' %>
+
       <% unless @filter_by_location.present? %>
         <%= render 'new_partials/aside/projects' %>
       <% end %>
+
+      <% if @filter_by_category.blank? && @area.projects_clusters_sectors(@site).size > 0 %>
+        <div class="project-sectors mod-info">
+          <h3>Project sectors</h3>
+          <div class="mod-project-sectors">
+            <ul id="clustersView">
+              <% @area.projects_clusters_sectors(@site)[0..3].each do |category,count| %>
+                <li>
+                  <div class="tooltip">
+                    <span class="body_tooltip">
+                      <label><%= category.name %></label>
+                    </span>
+                    <span class="bottom_tooltip"></span>
+                  </div>
+                  <a class="<%= category.css_class %> icon_statistics" href="<%= location_path(@area, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
+
     </div>
   </aside>
 
