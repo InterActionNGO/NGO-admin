@@ -9,5 +9,7 @@ require.config({
 require([
   'router'
 ], function(Router) {
+
   new Router();
+
 });

@@ -1,0 +1,45 @@
+.mod-footer {
+  position: relative;
+  padding: 2% 0;
+  ul {
+    width: 100%;
+  }
+  li {
+    float: left;
+    width: 20%;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    &:first-child { text-align: left;}
+    &:last-child { text-align: right;}
+  }
+  .aid-map-logo {
+    float: left;
+    margin-right: 20px;
+  }
+  .interaction-logo {
+    float: left;
+  }
+  .signature {
+    float: right;
+    text-align: right;
+    margin-top: 22px;
+    color: $color-5;
+  }
+  .claim {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .link-to-simbiotica {
+    display: inline-block;
+    color: $color-5;
+  }
+}
+.mod-footer-bottom {
+  position: relative;
+  margin-top: 100px;
+}
+
+
+
