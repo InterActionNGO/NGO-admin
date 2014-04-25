@@ -1,7 +1,12 @@
 .mod-content-article {
   font-family: "Helvetica Neue";
   font-size: 16px;
-  .section-title { padding-bottom: 50px;}
+  .section-title {
+    padding-bottom: 50px;
+
+    .about & { color: $color-8;}
+    .news  & { color: $color-7;}
+  }
   .subsection {
     padding-bottom: 50px;
   }
@@ -9,14 +14,14 @@
     font-family: "Helvetica Neue light";
     font-weight: normal;
     font-size: 36px;
-    color: $dominant-color;
+    .about & { @include theme-color-8; color: $primary-color;}
+    .news  & { @include theme-color-7; color: $primary-color;}
   }
   p { padding-bottom: 20px;}
   a {
     display: inline-block;
     color: $color-2;
   }
-
   li {
     list-style: disc;
     line-height: 25px;
@@ -26,5 +31,6 @@
     padding-left: 30px;
     list-style: disc;
   }
+
 }
 

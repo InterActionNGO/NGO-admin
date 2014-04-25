@@ -31,11 +31,8 @@ $color-7: $yellow;
 $color-8: $green;
 $color-9: $turquoise;
 
-$dominant-color: $color-3;
+$primary-color: null;
 
-.about   { $dominant-color: $color-8;}
-.news    { $dominant-color: $color-7;}
-.contact { $dominant-color: $color-9;}
 
 // Separations
 $section-padding: 3em 0;
