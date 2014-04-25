@@ -13,19 +13,22 @@
   }
   li {
     float: left;
-    padding: 5px 15px;
-    border-radius: 10px;
     text-transform: uppercase;
+    a{
+      padding: 5px 15px;
+      border-radius: 10px;
+    }
     &:hover a { color: $color-0;}
+    &:last-child:hover a { color: $color-3;}
   }
   .interaction-logo {
     float: right;
     padding-top: 2%;
   }
-  .home:hover { background-color: $color-3;}
-  .about:hover { background-color: $color-8;}
-  .news:hover { background-color: $color-7;}
-  .contact:hover { background-color: $color-1;}
-  .access:hover { color: $color-00;}
+  .home:hover a{ background-color: $color-3;}
+  .about:hover a{ background-color: $color-8;}
+  .news:hover a{ background-color: $color-7;}
+  .contact:hover a{ background-color: $color-1;}
+  .access:hover a{ color: $color-00;}
 }
 
