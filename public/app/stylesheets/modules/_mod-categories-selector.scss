@@ -19,6 +19,7 @@
     margin: 0 1%;
     &:hover {
       color: $color-0;
+      cursor: default;
       .mod-categories-child { display: block; }
     }
   }

@@ -95,6 +95,15 @@
   &:last-child:after { content: '.';}
 }
 
+@mixin theme-color-7 {
+  $primary-color: $color-7;
+}
+@mixin theme-color-8 {
+  $primary-color: $color-8;
+}
+@mixin theme-color-9 {
+  $primary-color: $color-9;
+}
 
 
 

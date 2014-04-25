@@ -1,6 +1,43 @@
 .mod-map {
+  border-top: $border-bottom-color-1;
   height: 700px;
   position: relative;
+
+  .controls {
+    position: relative;
+    z-index: 100;
+    .control-zoom {
+      position: absolute;
+      top: 17px;
+      right: 170px;
+
+      width: 90px;
+      height: 40px;
+      border: $border-bottom-color-1;
+      border-radius: 40px;
+    }
+    .zoom-in, .zoom-out {
+      position: absolute;
+      top: 0;
+      width: 42px;
+      height: 30px;
+      padding-top: 10px;
+      text-align: center;
+      font-weight: bold;
+      background-color: $color-0;
+      font-size: 20px;
+    }
+    .zoom-in {
+      border-right: $border-bottom-color-1;
+      border-top-left-radius: 40px;
+      border-bottom-left-radius: 40px;
+    }
+    .zoom-out {
+      right: 0;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+    }
+  }
 }
 
 #map {
@@ -9,3 +46,4 @@
   width: 100%;
   height: 100%;
 }
+
