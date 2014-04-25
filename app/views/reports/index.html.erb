@@ -1,3 +1,21 @@
+<script>
+
+  $('form').on('submit', function(e){
+     e.preventDefault();
+     alert("Hi");
+     $.ajax({
+        type     : "POST",
+        cache    : false,
+        url      : $(this).attr('action'),
+        data     : $(this).serialize(),
+        success  : function(data) {
+            $("#results").empty().append(data);
+        }
+    });
+  });
+
+</script>
+
 <div id="layout">
   <div id="pages">
     <div id="relative_content" class="left">
@@ -12,16 +30,16 @@
     <div class="long_search">
       <span class="top"></span>
       <div class="content padding">
-        <%= form_tag(report_generate_path, :method => :get, :class => :search) do %>
+        <%= form_tag(report_generate_path(:format=>:json), :method => :get, :class => :search) do %>
           <label>SEARCH BY TEXT</label>
           <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place,..." name="q" class="main_search"/>
           <input type="submit" value="Enviar" />
           <hr>
           <ul class="combo_search_select clearfix">
             <li class="comboselect">
-              <label>Organization</label>
+              <label>Organization</label>@
               <%= select_tag :organization,
-                options_for_select([['All','All']] + Organization.get_select_values.collect{ |o| [o.name, o.name] }, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
 <!--             <hr>
@@ -35,7 +53,7 @@
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
-                options_for_select([['All','All']] + Country.get_select_values.collect{ |c| [c.name, c.name] }, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
 
             </li>
@@ -43,14 +61,14 @@
             <li class="comboselect">
               <label>SECTOR</label>
               <%= select_tag :sector,
-                options_for_select([['Any sector','All']] + Sector.get_select_values.collect { |c| [c.name, c.name] }, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
                 <%= select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
             <hr>
             <li class="comboselect">
               <label>DONOR</label>
               <%= select_tag :donor,
-                options_for_select([['Any donor','All']] + Donor.get_select_values.collect{ |d| [d.name, d.name] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
+                options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
                 <%= select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
 
@@ -58,7 +76,7 @@
             <li class="comboselect date">
               <label>Start date</label>
               <div class="select_date">
-                <%= select_date Date.new(2005, 1, 1), :prefix => :start_date %>
+                <%= select_date @date_start, :prefix => :start_date %>
                 <!-- <%= select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
               </div>
             </li>
@@ -66,7 +84,7 @@
             <li class="comboselect date">
               <label>End date</label>
               <div class="select_date">
-                <%= select_date Date.today, :prefix => :end_date %>
+                <%= select_date @date_end, :prefix => :end_date %>
                 <!-- <%= select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
               </div>
             </li>
@@ -79,11 +97,14 @@
   </div>
 </div>
 
-<script src="/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
+<div class="block" id="results">
+
+</div>
+<script src="/app/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
 
       </div>
     </div>
   </div>
 </div>
 
-<script src="/javascripts/sites/pages.js" type="text/javascript" charset="utf-8"></script>
+<script src="/app/javascripts/sites/pages.js" type="text/javascript" charset="utf-8"></script>

@@ -275,7 +275,7 @@ class Project < ActiveRecord::Base
     end
 
     where = "WHERE #{where.join(' AND ')}" if where.present?
-    
+
     donor_repor = ''
     donor_report = "INNER JOIN donations as dn ON dn.project_id = p.id AND dn.donor_id = #{options[:donor]}" if options[:donor]
 
@@ -401,7 +401,7 @@ class Project < ActiveRecord::Base
   def self.to_csv(site, options = {})
     projects = self.list_for_export(site, options)
     csv_headers = self.export_headers(options[:headers_options])
-    
+
     csv_data = FasterCSV.generate(:col_sep => ',') do |csv|
       csv << csv_headers
       projects.each do |project|
@@ -544,12 +544,12 @@ SQL
       where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
 
       sql="select * from data_denormalization where #{where.join(' and ')}"
-    elsif options[:donor_id]      
+    elsif options[:donor_id]
       where = []
       where << "regions_ids && '{#{options[:organization_region_id]}}'::integer[]" if options[:organization_region_id]
       where << "countries_ids && '{#{options[:organization_country_id]}}'::integer[]" if options[:organization_country_id]
       where << "donors_ids && '{#{options[:donor_id]}}' "
-      if options[:organization_filter]        
+      if options[:organization_filter]
         where << "site_id=#{site.id} and (end_date is null OR end_date > now()) and organization_id = #{options[:organization_filter]}"
       else
         where <<" site_id=#{site.id} and (end_date is null OR end_date > now())"
@@ -838,7 +838,7 @@ SQL
   end
 
   def update_data_denormalization
-    sql = """UPDATE data_denormalization 
+    sql = """UPDATE data_denormalization
             SET project_name = '#{self.name}'
             WHERE project_id = #{self.id}"""
     ActiveRecord::Base.connection.execute(sql)
@@ -1024,14 +1024,14 @@ SQL
 
 
     ####
-    # COUNTRIES AND REGIONS PARSING/VALIDATION 
+    # COUNTRIES AND REGIONS PARSING/VALIDATION
     if @location_sync
       self.countries.clear
       self.regions.clear
 
       if @location_sync.present? && (locations = @location_sync.text2array)
         locations.each do |location|
-          
+
           country_name, *regions = location.split('>')
 
           all_regions_exist = true
@@ -1158,9 +1158,10 @@ SQL
     if clusters_ids.blank? && clusters.empty?
       errors.add(:clusters, "can't be blank")
     end
-  end  
+  end
 
   def self.report(params = {})
+    # FORM Params
     start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
     end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year'])
     countries = params[:country] if params[:country]
@@ -1168,81 +1169,91 @@ SQL
     sectors = params[:sector] if params[:sector]
     organizations = params[:organization] if params[:organization]
 
-    @projects_start = Project.start_date_lte(end_date)
-    @projects_end = Project.end_date_gte(start_date)
+    # Data filtering
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select([:id, :estimated_people_reached])
+    pp @projects
 
-    if params[:country_include] === "include"
-      @projects_start = @projects_start.countries_name_in(countries) if ( params[:country] && !params[:country].include?('All') )
-      @projects_end = @projects_end.countries_name_in(countries)  if ( params[:country] && !params[:country].include?('All') )
-    else
-      @projects_start = @projects_start.countries_name_not_in(countries) if ( params[:country] && !params[:country].include?('All') )
-      @projects_end = @projects_end.countries_name_not_in(countries)  if ( params[:country] && !params[:country].include?('All') )
+    # COUNTRIES (if not All of them selected)
+    if ( params[:country] && !params[:country].include?('All') )
+      if params[:country_include] === "include"
+        @projects = @projects.countries_name_in(countries)
+      else
+        @projects = @projects.countries_name_not_in(countries)
+      end
     end
 
-    if params[:organization_include] === "include"
-      @projects_start = @projects_start.primary_organization_name_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
-      @projects_end = @projects_end.primary_organization_name_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
-    else
-      @projects_start = @projects_start.primary_organization_name_not_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
-      @projects_end = @projects_end.primary_organization_name_not_in(organizations) if ( params[:organization] && !params[:organization].include?('All') )
+    # ORGANIZATIONS (if not All of them selected)
+    if ( params[:organization] && !params[:organization].include?('All') )
+      if params[:organization_include] === "include"
+        @projects = @projects.primary_organization_name_in(organizations)
+      else
+        @projects = @projects.primary_organization_name_not_in(organizations)
+      end
     end
 
-    if params[:donor_include] === "include"
-      @projects_start = @projects_start.donors_name_in(donors) if ( params[:donor] && !params[:donor].include?('All') )
-      @projects_end = @projects_end.donors_name_in(donors)  if ( params[:donor] && !params[:donor].include?('All') )
-    else
-      @projects_start = @projects_start.donors_name_not_in(donors) if ( params[:donor] && !params[:donor].include?('All') )
-      @projects_end = @projects_end.donors_name_not_in(donors)  if ( params[:donor] && !params[:donor].include?('All') )
+    # DONORS (if not All of them selected)
+    if ( params[:donor] && !params[:donor].include?('All') )
+      if params[:donor_include] === "include"
+        @projects = @projects.donors_name_in(donors)
+      else
+        @projects = @projects.donors_name_not_in(donors)
+      end
     end
 
-    if params[:sectors_include] === "include"
-      @projects_start = @projects_start.sectors_name_in(sectors) if ( params[:sector] && !params[:sector].include?('All') )
-      @projects_end = @projects_end.sectors_name_in(sectors)  if ( params[:sector] && !params[:sector].include?('All') )
-    else
-      @projects_start = @projects_start.sectors_name_not_in(sectors) if ( params[:sector] && !params[:sector].include?('All') )
-      @projects_end = @projects_end.sectors_name_not_in(sectors)  if ( params[:sector] && !params[:sector].include?('All') )
+    #SECTORS (if not All of them selected)
+    if ( params[:sector] && !params[:sector].include?('All') )
+      if params[:sectors_include] === "include"
+        @projects = @projects.sectors_name_in(sectors)
+      else
+        @projects = @projects.sectors_name_not_in(sectors)
+      end
     end
 
-    @data = {}
-    @totals = {}
+    @data ||= {}
+    @totals ||= {}
     projects_ids = [0]
 
-    @projects = (@projects_start + @projects_end).uniq 
-    @projects.each do |project|
-      projects_ids << project.id
-    end
+    projects_str = @projects.map { |elem| elem.id }.join(',')
+    @data[:results] = {}
+    #@data[:results][:projects] = @projects
+    @data[:results][:projects] = projects_str
+    @data[:results][:donors] = Project.report_donors(projects_str)
+    @data[:results][:organizations] = Project.report_organizations(projects_str)
+    @data[:results][:countries] = Project.report_countries(projects_str)
+    @data[:results][:sectors] = Project.report_sectors(projects_str)
+    @data[:results][:totals] = {}
 
-    projects = projects_ids.map { |elem| elem.to_s }.join(",")
-
-    @data[:projects] = @projects
-    @data[:donors] = Project.report_donors(projects)
-    @data[:organizations] = Project.report_organizations(projects)
-    @data[:countries] = Project.report_countries(projects)
-    @data[:sectors] = Project.report_sectors(projects)
-    @data[:totals] = {}
-    
     # Totals
-    sql = """ SELECT COUNT(DISTINCT donations.donor_id) as donors FROM donations WHERE project_id IN (#{projects}) """
+    sql = <<-SQL
+        SELECT COUNT(DISTINCT donations.donor_id) as donors
+        FROM donations
+        WHERE project_id IN (#{projects_str})
+    SQL
     result = ActiveRecord::Base.connection.execute(sql)
-    @data[:totals][:budget] = 0
-    # @data[:organizations].each { |val| @data[:totals][:budget] += val[:budget]}
-    @data[:projects].each { |val| @data[:totals][:budget] += val[:budget].to_i}
-    @data[:totals][:donors] = result.getvalue(0,0).to_i
-    @data[:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
-    @data[:totals][:projects] = @projects.to_a.length
-    @data[:organizations] = @data[:organizations].take(20)
+    @data[:results][:totals][:budget] = 0
+    @data[:results][:organizations].each { |val| @data[:results][:totals][:budget] += val[:budget]}
+    @data[:results][:projects].each { |val| @data[:results][:totals][:budget] += val[:budget].to_i}
+    @data[:results][:totals][:donors] = result.getvalue(0,0).to_i
+
+    @data[:results][:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
+
+    @data[:results][:totals][:projects] = @projects.to_a.length
+    @data[:results][:organizations] = @data[:results][:organizations].take(20)
+
     @data
-    # @data_json = @data.to_json
+
   end
 
   def self.report_donors(projects, limit = 20)
     donors = {}
-    sql = """SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people
-          FROM donors as d JOIN donations as dn ON dn.donor_id = d.id 
-          JOIN projects as pr ON dn.project_id = pr.id 
-          WHERE pr.id IN (#{projects}) 
-          GROUP BY d.name, pr.estimated_people_reached, dn.amount 
-          ORDER BY dn.amount DESC """
+    sql = <<-SQL
+      SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people
+      FROM donors as d JOIN donations as dn ON dn.donor_id = d.id
+      JOIN projects as pr ON dn.project_id = pr.id
+      WHERE pr.id IN (#{projects})
+      GROUP BY d.name, pr.estimated_people_reached, dn.amount
+      ORDER BY dn.amount DESC
+      SQL
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(donors.key?(r['donorname']))
@@ -1258,10 +1269,10 @@ SQL
   def self.report_organizations(projects)
     organizations = {}
     sql = """ SELECT o.name as orgName, SUM(p.budget) as sum, p.estimated_people_reached as people
-          FROM organizations as o JOIN projects AS p ON p.primary_organization_id = o.id 
+          FROM organizations as o JOIN projects AS p ON p.primary_organization_id = o.id
           JOIN donations as dn ON dn.project_id = p.id
-          WHERE p.id IN (#{projects}) 
-          GROUP BY o.name, dn.amount, people 
+          WHERE p.id IN (#{projects})
+          GROUP BY o.name, dn.amount, people
           ORDER BY dn.amount DESC """
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
@@ -1271,19 +1282,21 @@ SQL
       else
         organizations[r['orgname']] = {:budget => r['sum'].to_i, :people => r['people'].to_i, :name => r['orgname']}
       end
-    end  
-    organizations.values.sort_by { |v| v[:budget]}.reverse   
+    end
+    organizations.values.sort_by { |v| v[:budget]}.reverse
   end
 
   def self.report_countries(projects, limit = 20)
     countries = {}
-    sql = """ SELECT countries.name, projects.budget as sum, projects.estimated_people_reached as people FROM
+    sql = <<-SQL
+      SELECT countries.name, projects.budget as sum, projects.estimated_people_reached as people FROM
           countries JOIN countries_projects ON countries.id = countries_projects.country_id
           JOIN projects ON countries_projects.project_id = projects.id
           JOIN donations ON projects.id = donations.project_id
-          WHERE projects.id IN (#{projects}) 
-          GROUP BY countries.name, projects.budget, projects.estimated_people_reached 
-          ORDER BY SUM DESC"""
+          WHERE projects.id IN (#{projects})
+          GROUP BY countries.name, projects.budget, projects.estimated_people_reached
+          ORDER BY SUM DESC
+      SQL
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
       if(countries.key?(r['name']))
@@ -1298,12 +1311,12 @@ SQL
 
   def self.report_sectors(projects)
     sectors = {}
-    sql = """ SELECT sectors.name, sectors.id as id, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors 
-        LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id 
+    sql = """ SELECT sectors.name, sectors.id as id, SUM(dn.amount) as sum, SUM(projects.estimated_people_reached) as people FROM sectors
+        LEFT JOIN projects_sectors ON sectors.id = projects_sectors.sector_id
         JOIN projects ON projects.id = projects_sectors.project_id
         JOIN donations as dn ON dn.project_id = projects.id
         WHERE projects.id IN (#{projects})
-        GROUP BY sectors.name, sectors.id 
+        GROUP BY sectors.name, sectors.id
         ORDER BY sum DESC """
     result = ActiveRecord::Base.connection.execute(sql)
     result.each do |r|
@@ -1312,7 +1325,7 @@ SQL
         sectors[r['id'].to_i][:people] += r['people'].to_i
       else
         sectors[r['id'].to_i] = {:name => r['name'], :people => r['people'].to_i, :budget => r['sum'].to_i}
-      end   
+      end
     end
     sectors.values.sort_by { |v| v[:budget]}.reverse
   end

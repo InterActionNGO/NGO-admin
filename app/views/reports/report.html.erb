@@ -1,63 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body>
-<script type="text/javascript">
-	var a = 1;
-	var data = <%= @data_json.to_s.html_safe %>;
-</script>
 <h1>Totals</h1>
 <ul>
-	<li> Estimated people reached: <%= number_with_delimiter(@data[:totals][:people]) %> </li>
-	<li> Budget: <%= number_with_delimiter(@data[:totals][:budget]) %> </li>
-	<li> Projects number: <%= number_with_delimiter(@data[:totals][:projects]) %> </li>
-	<li> Donors number: <%= number_with_delimiter(@data[:totals][:donors]) %> </li>
+
 </ul>
-
-<% if @data[:donors] %>
-	<h1>DONORS</h1>
-	<ul>
-		<% @data[:donors].take(20).each do|dn| %>
-			<li><%= dn[:name] %>  ||  Donated: <%= number_with_delimiter(dn[:budget]) %>  ||  People: <%= number_with_delimiter(dn[:people]) %> </li>
-		<% end %> 
-	</ul>
-<% end if %>
-
-<% if @data[:organizations] %>
-	<h1>ORGANIZATIONS</h1>
-	<ul>
-		<% @data[:organizations].take(20).each do|org| %>
-			<li><%= org[:name] %>  ||  Budget: <%= number_with_delimiter(org[:budget]) %>  ||  People: <%= number_with_delimiter(org[:people]) %> </li>
-		<% end %> 
-	</ul>
-<% end if %>
-
-<% if @data[:countries] %>
-	<h1>Countries</h1>
-	<ul>
-		<% @data[:countries].take(20).each do|cn| %>
-			<li><%= cn[:name] %>  ||  Budget: <%= number_with_delimiter(cn[:budget]) %>  ||  People: <%= number_with_delimiter(cn[:people]) %> </li>
-		<% end %> 
-	</ul>
-<% end if %>
-
-<% if @data[:sectors] %>
-	<h1>Sectors</h1>
-	<ul>
-		<% @data[:sectors].each do|sc| %>
-			<li><%= sc[:name] %>  ||  Budget: <%= number_with_delimiter(sc[:budget]) %>  ||  People: <%= number_with_delimiter(sc[:people]) %> </li>
-		<% end %> 
-	</ul>
-<% end if %>
-
-<% if @data[:projects] %>
-	<h1>Projects list</h1>
-	<ul>
-	<% @data[:projects].each do |p| %>
-		<li><%= p.name %> | <%= p.start_date %> | <%= p.end_date %></li>	
-	<% end %>
-	</ul>
-<% end if %>
-</body>
+<%= @data %></body>
 </html>
 
 
