@@ -31,13 +31,13 @@
         <%= render 'new_partials/aside/contact_info' %>
       <% end %>
 
-      <%= render 'new_partials/aside/follow_us' %>
-
     </div>
   </aside>
 
   <section class="content">
     <div class="grid-12 offset-1">
+      <%= render 'new_partials/aside/follow_us' %>
+
       <h1 class="section-title"><%= @donor.name.html_safe %></h1>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => donor_path(@donor, @carry_on_filters.merge(:format => :csv)), :xls_path => donor_path(@donor, @carry_on_filters.merge(:format => :xls)), :kml_path => donor_path(@donor, @carry_on_filters.merge(:format => :kml)) } %>
