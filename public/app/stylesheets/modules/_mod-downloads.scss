@@ -1,6 +1,6 @@
 .mod-downloads {
   padding-bottom: 30px;
-  font-family: "Helvetica Neue bold";
+  font-weight: bold;
   font-size: 16px;
   span {
     display: inline-block;
@@ -22,7 +22,7 @@
     background-color: $color-4;
   }
   .embebed {
-    font-family: "Helvetica Neue";
+    font-weight: normal;
     text-transform: none;
   }
 }
