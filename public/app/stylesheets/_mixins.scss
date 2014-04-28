@@ -105,6 +105,18 @@
   $primary-color: $color-9;
 }
 
+@mixin negative-radius-upper($background-color, $height) {
+  background: $background-color;
+  background: linear-gradient(315deg, transparent $height, $background-color 0) bottom right;
+  background-image: radial-gradient(circle at 100% 100%, transparent $height, $background-color $height+2px);
+}
+
+@mixin negative-radius-downer($background-color, $height) {
+  background: $background-color;
+  background: linear-gradient(45deg, transparent $height, $background-color 0) top right;
+  background-image: radial-gradient(circle at 100% 0%, transparent $height, $background-color $height+2px);
+}
+
 
 
 

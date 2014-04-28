@@ -35,13 +35,13 @@
 
   .control-navbar {
     float: left;
-
     font-family: "Helvetica Neue light";
     font-size: 14px;
     text-transform: uppercase;
     cursor: pointer;
   }
   .selector {
+    position: relative;
     width: 105px;
     height: 30px;
     padding-top: 14px;
@@ -56,6 +56,11 @@
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;;
     &:hover {
+      &:after {
+        @include after ('', block, absolute, auto, 0px, 30px, 30px);
+        left: 108px;
+        @include negative-radius-downer ($color-1, 30px);
+      }
       border-bottom-right-radius: 0;
       .selector-options {
         left: 0px;
@@ -93,7 +98,6 @@
     text-transform: none;
     position: relative;
     top: 15px;
-    //left: -5px;
     width: 210px;
     li {
 

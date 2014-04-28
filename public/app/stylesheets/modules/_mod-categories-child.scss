@@ -2,17 +2,17 @@
   display: none;
   position: absolute;
   left: 0;
-  top: -375px;
+  top: -360px;
   z-index: 100;
   width: 250px;
   height: 350px;
-  padding: 10px 0;
   background-color: $color-0;
   overflow: scroll;
 
   li {
     float: none;
     line-height: 15px;
+    margin: 0;
   }
   a {
     font-family: "Helvetica Neue bold";
@@ -21,32 +21,47 @@
   }
 }
 .sector-child {
-  border-bottom: 5px solid $color-2;
+  border-bottom: 10px solid $color-2;
   a { color: $color-2;
-  &:hover { color: $color-2;}
+    &:hover { color: $color-2;}
+  }
+  li {
+    &:hover, &.active { background-color: rgba($color-2, 0.3)}
   }
 }
 .organizations-child {
-  border-bottom: 5px solid $color-6;
+  border-bottom: 10px solid $color-6;
   a { color: $color-6;
-  &:hover { color: $color-6;}
+    &:hover { color: $color-6;}
+  }
+  li {
+    &:hover, &.active { background-color: rgba($color-6, 0.3)}
   }
 }
 .donors-child {
-  border-bottom: 5px solid $color-7;
+  border-bottom: 10px solid $color-7;
   a { color: $color-7;
-  &:hover { color: $color-7}
+    &:hover { color: $color-7}
+  }
+  li {
+    &:hover, &.active { background-color: rgba($color-7, 0.3)}
   }
 }
 .countries-child {
-  border-bottom: 5px solid $color-8;
+  border-bottom: 10px solid $color-8;
   a { color: $color-8;
-  &:hover { color: $color-8;}
+    &:hover { color: $color-8;}
+  }
+  li {
+    &:hover, &.active { background-color: rgba($color-8, 0.3)}
   }
 }
 .regions-child {
-  border-bottom: 5px solid $color-9;
+  border-bottom: 10px solid $color-9;
   a { color: $color-9;
-  &:hover { color: $color-9;}
+    &:hover { color: $color-9;}
+  }
+  li {
+    &:hover, &.active { background-color: rgba($color-9, 0.3)}
   }
 }

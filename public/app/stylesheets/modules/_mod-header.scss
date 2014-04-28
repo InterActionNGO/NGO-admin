@@ -5,21 +5,26 @@
     float: left;
     padding-top: 10px;
   }
-  ul {
+  .menu {
     margin-top: 50px;
   }
-  li {
+  .menu-item {
     float: left;
     text-transform: uppercase;
-    &:hover {
-      .submenu {
-        display: block;
-
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    a {
+      padding: 5px 15px;
+      &.active {
+        border-radius: 10px;
       }
     }
-    a{
-      padding: 5px 15px;
-      border-radius: 10px;
+    &:hover {
+      a { }
+      .submenu {
+        display: block;
+        border-radius-bottom: 0;
+      }
     }
     &:last-child:hover a { color: $color-3;}
   }
@@ -34,10 +39,7 @@
     margin-top: 0;
     background-color: $color-0;
     border-top: 5px solid $color-3;
-    li { float: none;}
-    &:hover {
-      border-radius-bottom: 0;
-    }
+    .submenu-item { float: none;}
     a {
       text-transform: none;
       padding-top: 15px;
@@ -54,7 +56,9 @@
     }
   }
   .about {
-    &:hover a.index-item{ background-color: rgba($color-8, .3);
+    &:hover a.index-item{
+      background-color: rgba($color-8, .3);
+      // @include negative-radius(rgba($color-8, .3), 58px);
       .submenu a { background-color: rgba($color-8, .3)}
     }
     &.active {
