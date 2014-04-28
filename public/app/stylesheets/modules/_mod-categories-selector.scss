@@ -25,6 +25,12 @@
     &.active {
       color: $color-0;
     }
+    li {
+      padding: 0;
+      a {
+        padding: 15px 23px;
+      }
+    }
   }
   .sector {
     &:hover, &.active {
