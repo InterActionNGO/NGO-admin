@@ -1,183 +1,64 @@
-<!-- <div class="main_head">
-  <div class="inner_main_head">
-    <div class="left home">
-      <div class="float_head home">
-        InterAction
-        <h1><%= @site.name %></h1>
-        <% unless @site.short_description.nil? %><h3><%= @site.short_description %></h3><%end%>
-      </div>
+<%= render 'new_partials/map' %>
 
-      <% if @site.partners.present? %>
-        <div class="fund">
-          <div class="fund_logo"><%= link_to image_tag(@site.partners.first.logo.url(:original)), @site.partners.first.url, :target => '_blank' %></div>
-          <p class="fund_label"><%= @site.partners.first.label %></p>
-        </div>
-      <% end -%>
-    </div>
+<%= render 'new_partials/categories_selector' %>
 
-    <div class="right home">
-      <% unless @site.short_description.nil? %><p><%= anglo(@site.long_description) %> <a href="<%= page_path(Page.about(@site)) %>">Learn more</a></p><%end%>
-    </div>
-  </div>
-</div> -->
+<div class="row">
+  <aside>
+    <div class="grid-4">
 
-<div class="main_header">
-  <div class="inner_main_head clearfix">
-    <div class="left home">
-      <div class="float_head home">
-        <div class="site_brand">
-          <h2>InterAction's</h2>
-          <h1><%= @site.name %></h1>
-          <% unless @site.short_description.nil? %><h3><%= @site.short_description %></h3><%end%>
-        </div>
+      <%= render 'new_partials/aside/projects' %>
 
-        <% if @site.partners.present? %>
-          <div class="fund">
-            <div class="fund_logo"><%= link_to image_tag(@site.partners.first.logo.url(:original)), @site.partners.first.url, :target => '_blank' %></div>
-            <p class="fund_label"><%= @site.partners.first.label %></p>
-          </div>
-        <% end -%>
-      </div>
-    </div>
-
-    <div class="right home">
-      <% unless @site.short_description.nil? %><p><%= anglo(@site.long_description) %> <a href="<%= page_path(Page.about(@site)) %>">Learn more</a></p><%end%>
-    </div>
-  </div>
-</div>
-
-
-<% cache("#{@site.id}/home/menu") do %>
-  <%= render :partial => 'shared/menu'  %>
-<% end %>
-
-<%#
-<div id="map" class="home"></div>
-<a href="#zoom_in" id="zoomIn" onclick="zoomIn()"></a>
-<a href="#zoom_out" id="zoomOut" onclick="zoomOut()"></a>
-<div class="map_style">
-  <p>PLAIN</p>
-  <ul>
-    <li><a id="plain_map" href="#plain">PLAIN</a></li>
-    <li><a id="satellite_map" href="#satellite">SATELLITE</a></li>
-  </ul>
-</div>
-%>
-<%= render :partial => 'partials/map' %>
-
-<div id="layout">
-<div id="left_column">
-
-  <!-- LEFT PART -->
-  <div class="left"></div> <!-- H"J"ACK -->
-  <div class="outer_float">
-    <div class="float_left">
-      <div class="block box_info">
-        <div class="projects_account">
-          <label>PROJECTS</label>
-          <h2><%= @site.total_projects %></h2>
-        </div>
-        <div class="orgs_account">
-          <label>ORGANIZATIONS</label>
-          <h2><%= @site.organizations_count %></h2>
-        </div>
-      </div>
+      <%= render 'new_partials/aside/organizations' %>
 
       <% cache("#{@site.id}/home/projects_by_cluster_sector") do %>
-      <div class="block statistics">
-        <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
-        <ul class="statistics_list" id="clustersWidth">
-        <% @site.projects_sectors_or_clusters.each do |category, count| %>
-          <% unless category.name.eql?('N/A') %>
-            <li>
-              <div class="tooltip">
-                <span class="body_tooltip">
-                  <label><%= category.name %></label>
-                </span>
-                <span class="bottom_tooltip"></span>
-              </div>
-              <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
-            </li>
-          <% end %>
-        <% end %>
-        </ul>
-      </div>
+        <div class="project-sectors mod-info">
+          <h3>Project sectors</h3>
+          <div class="mod-project-sectors">
+            <ul id="clustersView">
+              <% @site.projects_sectors_or_clusters.each do |category, count| %>
+                <% unless category.name.eql?('N/A') %>
+                  <li>
+                    <div class="tooltip">
+                      <span class="body_tooltip">
+                        <label><%= category.name %></label>
+                      </span>
+                      <span class="bottom_tooltip"></span>
+                    </div>
+                    <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
       <% end %>
 
       <% cache("#{@site.id}/home/projects_by_location") do %>
-      <div class="block statistics less">
-        <h3>PROJECT LOCATIONS</h3>
-        <%= raw(projects_by_location(@site)) %>
-      </div>
+        <%= render 'new_partials/aside/project_locations' %>
       <% end %>
 
       <% cache("#{@site.id}/home/organizations") do %>
-      <div id="most_active_orgs" class="block">
-        <h3>Some Organizations</h3>
-        <ul>
-          <% @site.projects_organizations[0...9].each do |organization, count| %>
-          <li><%= link_to organization.name, organization_path(organization) %> - <%= pluralize(count, 'project') %></li>
-          <% end  -%>
-        </ul>
-      </div>
+        <div class="affiliated-organizations mod-info">
+          <div class="mod-affiliated-organizations" >
+            <h3>Some organizations</h3>
+            <% @site.projects_organizations[0...9].each do |organization, count| %>
+              <li><%= link_to organization.name, organization_path(organization) %> - <%= pluralize(count, 'project') %></li>
+            <% end %>
+          </div>
+        </div>
       <% end %>
 
-      <%= render :partial=>"shared/sharing"%>
+    </div>
+  </aside>
+
+  <section class="content">
+    <div class="grid-12 offset-1">
+      <h1 class="section-title"><%= @site.name %></h1>
+
+      <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => "#{url(@site)}/.csv", :xls_path => "#{url(@site)}/.xls", :kml_path => "#{url(@site)}/.xml" } %>
+
+      <%= render "new_partials/index_projects" %>
 
     </div>
-    <!-- div.float_left -->
-  </div>
-  <!-- <div class="outer_float"> -->
-
-  <!-- RIGHT PART -->
-  <div class="right">
-    <h3 class="withlogo">
-      <%= site_project_count %>
-      <ul class="download">
-        <li><%= link_to 'CSV', "#{url(@site)}/.csv" %></li>
-        <li>|</li>
-        <li><%= link_to 'EXCEL', "#{url(@site)}/.xls" %></li>
-        <li>|</li>
-        <li><%= link_to 'KML', "#{url(@site)}/.kml" %></li>
-        <li>|</li>
-        <li><%= link_to 'RSS', "#{url(@site)}/.xml" %></li>
-        <li>·</li>
-        <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
-      </ul>
-    </h3>
-
-    <div id="popup" class="embed_map">
-      <a class="close top" href="#"></a>
-      <h5>Embed this map</h5>
-      <p>Copy this code and paste it in your HTML page for embedding the map.</p>
-      <textarea><iframe src="<%= url_with_embed_param %>" frameborder="0" width="600" height="600"></iframe></textarea>
-      <a href="#" class="close button">Close</a>
-    </div>
-    <div class="popup_background"></div>
-
-    <div id="projects">
-      <%= render 'projects/projects' %>
-    </div>
-  </div>
+  </section>
 </div>
-
-<script type="text/javascript">
-  <% if @site.overview_map_lat && @site.overview_map_lon %>
-  var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-  <% else %>
-  var map_center = [];
-  <% end %>
-  var map_zoom = <%= @site.overview_map_zoom %>;
-  var chco = "<%=@overview_map_chco%>";
-  var chf = "<%=@overview_map_chf%>";
-  var chld = "<%=@chld%>";
-  var chd = "<%=@chd%>";
-  var map_data = <%=raw(@map_data)%>;
-  var max_count = <%=@map_data_max_count%>;
-  var map_type = 'overview_map';
-  var theme = "<%=@site.theme_id%>";
-  var stylez = <%=raw @site.map_styles  %>
-</script>
-
-
-<%=raw(javascript_include_merged(:sites_home)) %>

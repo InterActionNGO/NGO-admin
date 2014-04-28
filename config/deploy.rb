@@ -2,7 +2,8 @@ require 'capistrano/ext/multistage'
 require 'config/boot'
 require "bundler/capistrano"
 
-set :stages, %w(staging production)
+
+set :stages, %w(staging production smbtc)
 
 APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
 
@@ -24,6 +25,7 @@ set :keep_releases, 5
 
 set :linode_staging, '178.79.131.104'
 set :linode_production, '173.255.238.86'
+set :linode_smbtc, '66.228.36.71'
 set :user,  'ubuntu'
 
 set :deploy_to, "/home/ubuntu/www/#{application}"
@@ -62,6 +64,7 @@ task :asset_packages, :roles => [:app] do
  run <<-CMD
    export RAILS_ENV=production &&
    cd #{release_path} &&
-   bundle exec rake sass:update asset:packager:build_all
+   bower install &&
+   grunt build
  CMD
 end

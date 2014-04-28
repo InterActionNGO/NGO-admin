@@ -1,0 +1,63 @@
+<section class="mod-map" id="mapView">
+
+  <div class="row">
+    <div class="grid-17">
+      <div class="mod-map-controls">
+
+        <div class="control-navbar">
+          <% if SiteLayer.where({:site_id => @site.id}).length >= 1 %>
+            <div class="selector" id="layerSelector">
+              <ul>
+                <li><span class="current-selector">Layer</span>
+                  <ul class="selector-options">
+                    <li><a href="#" data-layer="none">None</a></li>
+                    <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+                      <li><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
+                        data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+                    <% end %>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="selector" id="mapTypeSelector">
+            <ul>
+              <li>
+                <span class="current-selector">Roadmap</span>
+                <ul class="selector-options">
+                  <li class="hide" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
+                  <li><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
+                  <li><a href="#" id="terrainLayer" data-type="TERRAIN">Terrain</a></li>
+                  <li><a href="#" id="hybridLayer" data-type="HYBRID">Hybrid</a></li>
+                  <li><a href="#" id="satelliteLayer" data-type="SATELLITE">Satellite</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div> <!-- control-navbar -->
+
+        <div class="control-zoom" id="controlZoom">
+          <a href="#zoom-in" class="zoom-in" id="zoomIn">+</a>
+          <a href="#zoom-in" class="zoom-out" id="zoomOut">-</a>
+        </div>
+
+      </div> <!-- controls -->
+
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <div id="legendWrapper"></div>
+
+</section>
+
+<% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+  <div class="is-hidden" id="Overlay<%= sl.layer.id %>">
+    <h2><%= sl.layer.long_title %></h2>
+    <p><%= sl.layer.description.html_safe %></p>
+    <p><%= sl.layer.credits.html_safe %></p>
+  </div>
+<% end %>

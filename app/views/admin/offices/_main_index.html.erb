@@ -72,10 +72,7 @@
   </div>
 </div>
 
-<script src="/javascripts/backoffice/application.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/plugins/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/plugins/jquery.jscrollpane.js" type="text/javascript" charset="utf-8"></script>
-<script src="/javascripts/plugins/chosen/chosen.jquery.js" type="text/javascript" charset="utf-8"></script>
+<%= javascript_include_tag "backoffice/application.js" %>
 <script type="text/javascript">
   $(function(){
     $(".chzn-select").chosen({widths: {filter_donor_id_chzn: 160}});

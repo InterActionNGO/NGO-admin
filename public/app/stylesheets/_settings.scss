@@ -1,0 +1,42 @@
+@include font-face("Helvetica Neue", font-files("helvetica/helvetica-medium.woff", "helvetica/helvetica-medium.ttf", "helvetica/helvetica-medium.svg"), "helvetica-medium.eot", normal, normal);
+@include font-face("Helvetica Neue bold", font-files("helvetica/helvetica-bold.woff", "helvetica/helvetica-bold.ttf", "helvetica/helvetica-bold.svg"), "helvetica-bold.eot", bold, normal);
+@include font-face("Helvetica Neue light", font-files("helvetica/helvetica-light.woff", "helvetica/helvetica-light.ttf", "helvetica/helvetica-light.svg"), "helvetica-light.eot", lighter, normal);
+
+
+// Colors
+$white: #FFF;
+$black: #000;
+$blue: #016D90;
+$orange: #C45017;
+$purple: #492E45;
+$yellow: #D7A900;
+$green: #8E921B;
+$turquoise: #5A9198;
+$light-grey:#EDEDED;
+$grey: #989898;
+$dark-grey: #444444;
+
+
+$color-0: $white;
+$color-00: $black;
+
+$color-1: $blue;
+$color-2: $orange;
+$color-3: $dark-grey;
+$color-4: $light-grey;
+$color-5: $grey;
+
+$color-6: $purple;
+$color-7: $yellow;
+$color-8: $green;
+$color-9: $turquoise;
+
+$primary-color: null;
+
+
+// Separations
+$section-padding: 3em 0;
+
+@media screen and (max-width: 768px) {
+
+}

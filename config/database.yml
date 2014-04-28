@@ -5,7 +5,7 @@ development:
   host: localhost
   database: iom_development
   username: postgres
-  password: simbiotic4
+  password:
 
 test:
   adapter: postgresql
@@ -16,6 +16,14 @@ test:
   password:
 
 staging:
+  adapter: postgresql
+  template: template_postgis
+  encoding: unicode
+  database: iom_production
+  username: postgres
+  password:
+
+smbtc:
   adapter: postgresql
   template: template_postgis
   encoding: unicode
