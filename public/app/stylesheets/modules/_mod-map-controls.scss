@@ -35,7 +35,7 @@
 
   .control-navbar {
     float: left;
-    font-family: "Helvetica Neue light";
+    font-weight: lighter;
     font-size: 14px;
     text-transform: uppercase;
     cursor: pointer;
@@ -43,9 +43,8 @@
   .selector {
     position: relative;
     width: 105px;
-    height: 30px;
-    padding-top: 14px;
-    li { text-align: left;}
+    height: 40px;
+    li { text-align: left; position: relative;}
   }
   .selector:last-child {
     display: block;
@@ -62,6 +61,7 @@
         @include negative-radius-downer ($color-1, 30px);
       }
       border-bottom-right-radius: 0;
+      border-top-right-radius: 30px;
       .selector-options {
         left: 0px;
       }
@@ -76,6 +76,7 @@
     border-bottom-left-radius: 40px;
     &:hover {
       border-bottom-left-radius: 0;
+      border-top-left-radius: 30px;
       .selector-options {
         left: -5px;
       }
@@ -89,6 +90,7 @@
   .current-selector {
     text-align: center;
     display: block;
+    line-height: 40px;
   }
   .selector-options {
     display: none;
@@ -97,7 +99,6 @@
     border-color: $color-1;
     text-transform: none;
     position: relative;
-    top: 15px;
     width: 210px;
     li {
 
