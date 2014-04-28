@@ -11,16 +11,24 @@
   .menu-item {
     float: left;
     text-transform: uppercase;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    a {
+    .index-item {
+      position: relative;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       padding: 5px 15px;
+      &:hover {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
       &.active {
         border-radius: 10px;
+        &:hover {
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
       }
     }
     &:hover {
-      a { }
       .submenu {
         display: block;
         border-radius-bottom: 0;
@@ -38,7 +46,6 @@
     z-index: 100;
     margin-top: 0;
     background-color: $color-0;
-    border-top: 5px solid $color-3;
     .submenu-item { float: none;}
     a {
       text-transform: none;
@@ -47,8 +54,16 @@
   }
 
   .home {
-    &:hover a.index-item{ background-color: rgba($color-3, .3);
-      .submenu a { background-color: rgba($color-3, .3)}
+    &:hover .index-item{
+      background-color: rgba($color-3, .3);
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($color-3, .3), 12px);
+      }
+      .submenu {
+        border-top: 5px solid $color-3;
+        a { background-color: rgba($color-3, .3)}
+      }
     }
     &.active {
       background-color: $color-3;
@@ -56,10 +71,16 @@
     }
   }
   .about {
-    &:hover a.index-item{
+    &:hover .index-item{
       background-color: rgba($color-8, .3);
-      // @include negative-radius(rgba($color-8, .3), 58px);
-      .submenu a { background-color: rgba($color-8, .3)}
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($color-8, .3), 12px);
+      }
+      .submenu {
+        border-top: 5px solid $color-8;
+        a { background-color: rgba($color-8, .3)}
+      }
     }
     &.active {
       background-color: $color-8;
@@ -67,8 +88,16 @@
     }
   }
   .data {
-    &:hover a.index-item{ background-color: rgba($color-7, .3);
-      .submenu a { background-color: rgba($color-7, .3)}
+    &:hover .index-item{
+      background-color: rgba($color-7, .3);
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($color-7, .3), 12px);
+      }
+      .submenu {
+        border-top: 5px solid $color-7;
+        a { background-color: rgba($color-7, .3)}
+      }
     }
     &.active {
       background-color: $color-7;
@@ -76,8 +105,16 @@
     }
   }
   .contact {
-    &:hover a.index-item{ background-color: rgba($color-1, .3);
-      .submenu a { background-color: rgba($color-1, .3)}
+    &:hover .index-item{
+      background-color: rgba($color-1, .3);
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($color-1, .3), 12px);
+      }
+      .submenu {
+        border-top: 5px solid $color-1;
+        a { background-color: rgba($color-1, .3)}
+      }
     }
     &.active {
       background-color: $color-1;
@@ -85,7 +122,7 @@
     }
   }
   .access {
-    &:hover a.index-item{ color: rgba($color-00, .3);
+    &:hover .index-item{ color: rgba($color-00, .3);
     }
     &.active { }
   }
