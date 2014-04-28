@@ -1,66 +1,57 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title><%= CGI.unescapeHTML(title) %></title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLF_4Hka9T0of09Z0eGPmExn-tG2ZIveU&sensor=false"></script>
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-  <%=raw(javascript_include_merged(:base)) %>
-  <%=raw(javascript_include_merged(:base_2)) %>
-  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
-  <%=raw(stylesheet_link_merged(:base)) %>
-  <%=stylesheet_link_tag @site.theme.css_file if @site.theme %>
-  <%=auto_discovery_link_tag(:rss, "#{url(@site)}/.xml", {:title => @site.name}) %>
-  <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png" />
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= CGI.unescapeHTML(title) %> · NGO Aid Map</title>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
+    <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
+    <%= csrf_meta_tag %>
 
-
-
-  <% if Rails.env.production? %>
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-  </script>
-  <% end %>
-</head>
-<body>
-  <script>
-    var empty_layer = false;
-  </script>
-
-  <% unless action_name == 'home' && controller_name == 'sites' %>
-    <% cache("#{@site.id}/home/menu") do %>
-      <%= render :partial => 'shared/menu' %>
-    <% end %>
-  <% end %>
-
-  <div id="outer_layout">
-
-    <%= yield %> <!-- Main layout has to content <div id="layout"> -->
-
-    </div>
-
-    <% if controller_name == 'sites' && action_name == 'home'%>
-      <%= render :partial => 'shared/footer_home' %>
+    <% unless content_for?(:js_vars) %>
+      <script>
+        <% if @site.overview_map_lat && @site.overview_map_lon %>
+        var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
+        <% else %>
+        var map_center = [];
+        <% end %>
+        var map_zoom = <%= @site.overview_map_zoom %>;
+        var chco = "<%=@overview_map_chco%>";
+        var chf = "<%=@overview_map_chf%>";
+        var chld = "<%=@chld%>";
+        var chd = "<%=@chd%>";
+        var map_data = <%=raw(@map_data)%>;
+        var max_count = <%=@map_data_max_count%>;
+        var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
+        var theme = "<%=@site.theme_id%>";
+        var kind = 'org.';
+        var stylez = <%=raw @site.map_styles  %>
+        var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
+      </script>
     <% else %>
-      <%= render :partial => 'shared/footer_general' %>
+      <%= yield :js_vars %>
     <% end %>
+  </head>
+  <body>
+    <%= render 'layouts/header' %>
 
-  </div>
+    <%= yield %>
 
-  <div id="overlay">
-    <div class="content-overlay">
-      <a href="#close-overlay" class="close-overlay" id="closeOverlay">x</a>
-      <div id="contentOverlay"></div>
-    </div>
-  </div>
+    <%= render 'layouts/footer' %>
 
-  <%= yield :js %>
-</body>
+    <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3", "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js", "../vendor/requirejs/require", "main" %>
+
+    <% if Rails.env.production? %>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+  </body>
 </html>

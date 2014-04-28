@@ -26,5 +26,14 @@ Iom::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.action_controller.cache_store = :memory_store
-end
 
+  # Assets path
+  config.action_controller.asset_path = proc { |asset_path|
+    case asset_path
+    when /^\/(stylesheets)/
+      "/.tmp#{asset_path}"
+    else
+      "/app#{asset_path}"
+    end
+  }
+end
