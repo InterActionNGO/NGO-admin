@@ -20,33 +20,91 @@
     &:hover {
       color: $color-0;
       cursor: default;
-      .mod-categories-child { display: block; }
+      .mod-categories-child { display: block;}
+    }
+    &.active {
+      color: $color-0;
     }
   }
-  .sector:hover {
+  .sector {
+    &:hover, &.active {
     background-color: $color-2;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    }
+    &.active {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-2, 15px);
+    }
   }
-  .organizations:hover {
+  .organizations {
+    &:hover, &.active {
     background-color: $color-6;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    }
+    &.active {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-6, 15px);
+    }
   }
-  .donors:hover {
+  .donors {
+    &:hover, &.active {
     background-color: $color-7;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    }
+    &.active {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-7, 15px);
+    }
   }
-  .countries:hover {
+  .countries {
+    &:hover, &.active {
     background-color: $color-8;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    }
+    &.active {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-8, 15px);
+    }
   }
-  .regions:hover {
+  .regions {
+    &:hover, &.active {
     background-color: $color-9;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    }
+    &.active {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-2, 15px);
+    }
   }
   .search {
 
