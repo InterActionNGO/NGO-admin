@@ -6,6 +6,29 @@
   <aside>
     <div class="grid-4">
 
+      <div class="contact-info mod-info">
+        <h3>Contact information</h3>
+        <div class="mod-contact-info">
+          <h4><%= @project.contact_person %></h4>
+          <p><%= @project.contact_position %></p>
+          <p><%= @project.contact_phone_number %></p>
+          <% unless (@project.contact_email.nil?)||(@project.contact_email.empty?) %>
+            <p><%= link_to(@project.contact_email, "mailto:#{@project.contact_email}") %></p>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="export-data mod-info">
+        <h3>Export data</h3>
+        <ul>
+          <li><%= link_to 'CSV', project_path(@project, :csv), :class => 'csv' %></li>
+          <li><%= link_to 'XLS', project_path(@project, :xls), :class => 'csv' %></li>
+          <li><%= link_to 'KML', project_path(@project, :kml), :class => 'csv' %></li>
+          <li><%= link_to 'Embed this map', '#', :class => 'embebed', :id => 'embed_map' %></li>
+        </ul>
+      </div>
+
+
     </div>
   </aside>
 
@@ -13,9 +36,45 @@
     <div class="grid-12 offset-1">
       <%= render 'new_partials/aside/follow_us' %>
 
-      <h1 class="section-title"><%= @project.name %></h1>
+      <article class="content-article">
+        <h1 class="section-title"><%= @project.name %></h1>
 
-      <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => project_path(@project, :csv), :xls_path => project_path(@project, :xls), :kml_path => project_path(@project, :kml) } %>
+        <% unless @project.description.blank? %>
+          <section>
+            <h2 class="first">PROJECT DESCRIPTION</h2>
+            <%= anglo(simple_format(@project.description)) %>
+          </section>
+        <% end %>
+
+        <% unless @project.media_resources.empty? %>
+          <div class="galleryStyle">
+            <% @project.media_resources.each do |media_resource| %>
+              <% if media_resource.is_a_video? %>
+                <%= image_tag(media_resource.video_thumb.url(:medium), :alt => media_resource.caption, :video_id => media_resource.id) %>
+                <script type="text/javascript">
+                  video_players['<%= media_resource.id %>'] = '<%= raw media_resource.video_embed_html %>';
+                </script>
+              <% else %>
+                <%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption) %>
+              <% end %>
+            <% end %>
+            <div class="mamufas"></div>
+          </div>
+
+          <a href="#view_video" class="video"></a>
+
+          <div class="loader_gallery">
+            <p>Loading videos and images</p>
+            <img src="/images/sites/projects/ajax-loader.gif" title="loader" alt="loader" />
+            <div class="video_player">
+              <a id="back_gallery" href="#back_gallery">Back to gallery</a>
+            </div>
+          </div>
+        <% end %>
+
+        <%= render 'new_partials/more_projects' %>
+
+      </article>
 
     </div>
   </section>
