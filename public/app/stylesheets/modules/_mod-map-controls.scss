@@ -1,0 +1,106 @@
+.mod-map-controls {
+  position: relative;
+  top: 15px;
+  z-index: 100;
+  width: 100%;
+  .control-zoom {
+    float: right;
+    position: relative;
+    width: 90px;
+    height: 40px;
+    border: $border-bottom-color-1;
+    border-radius: 40px;
+  }
+  .zoom-in, .zoom-out {
+    position: absolute;
+    top: 0;
+    width: 42px;
+    height: 30px;
+    padding-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    background-color: $color-0;
+    font-size: 20px;
+  }
+  .zoom-in {
+    border-right: $border-bottom-color-1;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+  }
+  .zoom-out {
+    right: 0;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+
+  .control-navbar {
+    float: left;
+
+    font-family: "Helvetica Neue light";
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .selector {
+    width: 105px;
+    height: 30px;
+    padding-top: 14px;
+    li { text-align: left;}
+  }
+  .selector:last-child {
+    display: block;
+    float: right;
+    border: $border-bottom-color-1;
+    border-left: none;
+    background-color: $color-0;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;;
+    &:hover {
+      border-bottom-right-radius: 0;
+      .selector-options {
+        left: 0px;
+      }
+    }
+  }
+  .selector:first-child {
+    display: block;
+    float: left;
+    border: $border-bottom-color-1;
+    background-color: $color-0;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    &:hover {
+      border-bottom-left-radius: 0;
+      .selector-options {
+        left: -5px;
+      }
+    }
+  }
+  .selector:hover {
+    .selector-options  { display: block;}
+    background-color: $color-1;
+    color: $color-0;
+  }
+  .current-selector {
+    text-align: center;
+    display: block;
+  }
+  .selector-options {
+    display: none;
+    background-color: $color-0;
+    border-top: $border-bottom-color-1;
+    border-color: $color-1;
+    text-transform: none;
+    position: relative;
+    top: 15px;
+    //left: -5px;
+    width: 210px;
+    li {
+
+      position: relative;
+      top: -5px;
+      &:hover { background-color: rgba($color-1, .3);}
+      a { padding: 15px;}
+    }
+  }
+}
