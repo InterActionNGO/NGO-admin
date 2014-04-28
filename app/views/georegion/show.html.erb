@@ -61,13 +61,13 @@
 
       <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
 
-      <%= render 'new_partials/aside/follow_us' %>
-
     </div>
   </aside>
 
   <section class="content">
     <div class="grid-12 offset-1">
+      <%= render 'new_partials/aside/follow_us' %>
+
       <h1 class="section-title"><%= @area.name %></h1>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => location_path(@area, @carry_on_filters.merge(:format => :csv)), :xls_path => location_path(@area, @carry_on_filters.merge(:format => :xls)), :kml_path => location_path(@area, @carry_on_filters.merge(:format => :kml)) } %>
