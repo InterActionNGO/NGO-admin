@@ -1,16 +1,30 @@
 <header class="mod-header">
   <div class="row">
-    <div class="grid-17">
+    <div class="grid-3">
     	<a href="/" class="aid-map-logo"><%= image_tag "aid-map-logo.png", :alt  => "interaction aid map logo" %></a>
+    </div>
+
+    <div class="grid-7 offset-4">
     	<nav>
     		<ul>
-    			<li class="home"><a href="/" class="home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
-    			<li class="about"><a href="/about" class="about <%= if action_name == 'about' then 'active' else 'inactive' end %>">about</a></li>
-    			<li class="news"><a href="/news" class="news <%= if action_name == 'news' then 'active' else 'inactive' end %>">news</a></li>
-    			<li class="contact"><a href="/contact" class="contact <%= if action_name == 'contact' then 'active' else 'inactive' end %>">contact us</a></li>
-    			<li class="access"><a href="/access" class="access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
+    			<li class="home"><a href="/" class="index-item home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
+    			<li class="about">
+            <a href="/about" class="index-item about <%= if action_name == 'about' then 'active' else 'inactive' end %>">about</a>
+            <ul class="submenu">
+              <li><a href="#">Purpose</a></li>
+              <li><a href="#">Getting on the map</a></li>
+              <li><a href="#">staff list</a></li>
+              <li><a href="#">Contact us</a></li>
+              <li><a href="#">Of interest</a></li>
+            </ul>
+          </li>
+    			<li class="data"><a href="/data" class="index-item data <%= if action_name == 'data' then 'active' else 'inactive' end %>">data</a></li>
+    			<li class="access"><a href="/access" class="index-item access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
     		</ul>
     	</nav>
+    </div>
+
+    <div class="grid-3">
       <a href="http://www.interaction.org/" class="interaction-logo"><%= image_tag "interaction-logo.png" , :alt  => "interaction logo" %></a>
     </div>
   </div>
