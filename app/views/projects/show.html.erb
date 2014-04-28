@@ -41,35 +41,40 @@
 
         <% unless @project.description.blank? %>
           <section>
-            <h2 class="first">PROJECT DESCRIPTION</h2>
+            <h2 class="first">Project description</h2>
             <%= anglo(simple_format(@project.description)) %>
           </section>
         <% end %>
 
-        <% unless @project.media_resources.empty? %>
-          <div class="galleryStyle">
-            <% @project.media_resources.each do |media_resource| %>
-              <% if media_resource.is_a_video? %>
-                <%= image_tag(media_resource.video_thumb.url(:medium), :alt => media_resource.caption, :video_id => media_resource.id) %>
-                <script type="text/javascript">
-                  video_players['<%= media_resource.id %>'] = '<%= raw media_resource.video_embed_html %>';
-                </script>
-              <% else %>
-                <%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption) %>
-              <% end %>
-            <% end %>
-            <div class="mamufas"></div>
-          </div>
-
-          <a href="#view_video" class="video"></a>
-
-          <div class="loader_gallery">
-            <p>Loading videos and images</p>
-            <img src="/images/sites/projects/ajax-loader.gif" title="loader" alt="loader" />
-            <div class="video_player">
-              <a id="back_gallery" href="#back_gallery">Back to gallery</a>
-            </div>
-          </div>
+        <% if @project.activities || @project.additional_information || @project.cross_cutting_issues || (@locations.present? && @locations.to_a.join.present?)%>
+          <section>
+            <%unless @project.activities.blank? %>
+              <h2 class="first">Activities</h2>
+              <%= raw(@project.activities) %>
+            <%end%>
+            <%unless @project.additional_information.blank? %>
+              <h3 class="<%= (@project.activities.blank?)? 'first':''%>">Additional information</h3>
+              <%= raw(@project.additional_information) %>
+            <%end%>
+            <%unless @project.cross_cutting_issues.blank? %>
+              <h3 class="<%= (@project.activities.blank? && @project.additional_information.blank?)? 'first':''%>">Cross-cutting issues</h3>
+              <%= raw(@project.cross_cutting_issues) %>
+            <%end%>
+            <%if @locations.present? && @locations.to_a.join.present? %>
+              <h3 class="<%= (@project.activities.blank? && @project.additional_information.blank? && @project.cross_cutting_issues.blank?)? 'first':''%>">
+                <%= @locations.count == 1 ? 'LOCATION' : 'LOCATIONS' %>
+              </h3>
+              <ul>
+                <% @locations.each do |location| %>
+                  <% if @site.navigate_by_country? && location['country_id'].present? %>
+                    <li><%= location['name'] %>, <%= Country.find(location['country_id'], :select => 'name').name %></li>
+                  <% else %>
+                    <li><%= location['name'] %></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            <%end%>
+          </section>
         <% end %>
 
         <%= render 'new_partials/more_projects' %>
