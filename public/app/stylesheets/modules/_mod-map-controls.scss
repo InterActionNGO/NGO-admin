@@ -3,13 +3,12 @@
   top: 15px;
   z-index: 100;
   width: 100%;
+
   .control-zoom {
     float: right;
     position: relative;
     width: 90px;
     height: 40px;
-    border: $border-bottom-color-1;
-    border-radius: 40px;
   }
   .zoom-in, .zoom-out {
     position: absolute;
@@ -23,12 +22,14 @@
     font-size: 20px;
   }
   .zoom-in {
-    border-right: $border-bottom-color-1;
+    border: $border-bottom-color-1;
     border-top-left-radius: 40px;
     border-bottom-left-radius: 40px;
   }
   .zoom-out {
     right: 0;
+    width: 38px;
+    border: $border-bottom-color-1;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
   }
@@ -44,7 +45,16 @@
     position: relative;
     width: 105px;
     height: 40px;
-    li { text-align: left; position: relative;}
+
+    text-align: left;
+    line-height: 40px;
+    .current-selector:hover {
+      height: 30px;
+      margin: 5px;
+      background-color: $color-1;
+      border-radius: 15px;
+      color: $color-0;
+    }
   }
   .selector:last-child {
     display: block;
@@ -90,7 +100,6 @@
   .current-selector {
     text-align: center;
     display: block;
-    line-height: 40px;
   }
   .selector-options {
     display: none;
