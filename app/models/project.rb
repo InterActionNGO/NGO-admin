@@ -1170,8 +1170,8 @@ SQL
     organizations = params[:organization] if params[:organization]
 
     # Data filtering
-    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select([:id, :estimated_people_reached])
-    pp @projects
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select(["projects.id", "projects.estimated_people_reached"])
+
 
     # COUNTRIES (if not All of them selected)
     if ( params[:country] && !params[:country].include?('All') )
@@ -1213,14 +1213,15 @@ SQL
     @totals ||= {}
     projects_ids = [0]
 
-    projects_str = @projects.map { |elem| elem.id }.join(',')
+    projects_str = @projects.map { |elem| elem.id }.join(',') || ""
+
     @data[:results] = {}
-    #@data[:results][:projects] = @projects
     @data[:results][:projects] = projects_str
-    @data[:results][:donors] = Project.report_donors(projects_str)
-    @data[:results][:organizations] = Project.report_organizations(projects_str)
-    @data[:results][:countries] = Project.report_countries(projects_str)
-    @data[:results][:sectors] = Project.report_sectors(projects_str)
+
+    @data[:results][:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
+    @data[:results][:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
+    @data[:results][:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
+    @data[:results][:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
     @data[:results][:totals] = {}
 
     # Totals
@@ -1229,17 +1230,27 @@ SQL
         FROM donations
         WHERE project_id IN (#{projects_str})
     SQL
-    result = ActiveRecord::Base.connection.execute(sql)
-    @data[:results][:totals][:budget] = 0
-    @data[:results][:organizations].each { |val| @data[:results][:totals][:budget] += val[:budget]}
-    @data[:results][:projects].each { |val| @data[:results][:totals][:budget] += val[:budget].to_i}
-    @data[:results][:totals][:donors] = result.getvalue(0,0).to_i
+    if !projects_str.blank?
+      result = ActiveRecord::Base.connection.execute(sql)
+      # TOTAL PEOPLE
+      @data[:results][:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
+      # TOTAL BUDGET
+      @data[:results][:totals][:budget] = 0
+      @data[:results][:organizations].each { |val| @data[:results][:totals][:budget] += val[:budget]}
+      # TOTAL DONORS
+      @data[:results][:totals][:donors] = result.getvalue(0,0).to_i
+      # TOTAL PROJECTS
+      @data[:results][:totals][:projects] = @projects.to_a.length
+      @data[:results][:projects].each { |val| @data[:results][:totals][:budget] += val[:budget].to_i}
 
-    @data[:results][:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
-
-    @data[:results][:totals][:projects] = @projects.to_a.length
-    @data[:results][:organizations] = @data[:results][:organizations].take(20)
-
+      # Reduze organizations to 20
+      @data[:results][:organizations] = @data[:results][:organizations].take(20)
+    else
+      @data[:results][:totals][:people] = 0
+      @data[:results][:totals][:budget] = 0
+      @data[:results][:totals][:donors] = 0
+      @data[:results][:totals][:projects] = 0
+    end
     @data
 
   end

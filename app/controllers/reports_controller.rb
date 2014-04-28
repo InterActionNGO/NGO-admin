@@ -2,7 +2,7 @@ require 'json'
 
 class ReportsController < ApplicationController
 
-  #layout 'report_layout'
+  layout 'report_layout'
 
 	def index
 		respond_to do |format|
@@ -34,5 +34,13 @@ class ReportsController < ApplicationController
 			# end
 		end
 	end
+
+  def filter_by_indicator
+    indicator = params[:indicator_name]
+    operator = params[:operator]
+    value = params[:indicator_value]
+
+  end
+
 
 end
