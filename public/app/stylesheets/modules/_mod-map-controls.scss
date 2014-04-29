@@ -2,62 +2,71 @@
   position: relative;
   top: 15px;
   z-index: 100;
-  width: 100%;
 
+  .control-navbar, .control-zoom {
+    font-weight: lighter;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 40px;
+    border: $border-bottom-color-1;
+  }
   .control-zoom {
     float: right;
     position: relative;
     width: 90px;
     height: 40px;
+    background-color: $color-0;
   }
+
   .zoom-in, .zoom-out {
     position: absolute;
-    top: 0;
-    width: 42px;
+    width: 50%;
     height: 30px;
     padding-top: 10px;
     text-align: center;
     font-weight: bold;
-    background-color: $color-0;
     font-size: 20px;
+    &:hover {
+      background: rgba($color-1, .3);
+    }
+
+  }
+  .zoom-out {
+    right: -1px;
+    border-left: 1px solid rgba($color-1, .3);
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
   }
   .zoom-in {
-    border: $border-bottom-color-1;
     border-top-left-radius: 40px;
     border-bottom-left-radius: 40px;
   }
-  .zoom-out {
-    right: 0;
-    width: 38px;
-    border: $border-bottom-color-1;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-    border-left: 1px solid rgba($color-1, .3);
-  }
-
   .control-navbar {
     float: left;
-    font-weight: lighter;
-    font-size: 14px;
-    text-transform: uppercase;
-    cursor: pointer;
+    background-color: $color-0;
   }
+
   .selector {
     position: relative;
-    width: 105px;
     height: 40px;
     text-align: left;
     line-height: 40px;
     &:hover {
-      .selector-options  { display: block;}
+      .selector-options  {
+        display: block;
+        position: absolute;
+        top: 35px;
+        left: 5px;
+        width: 150px;
+      }
       .current-selector {
         background-color: $color-1;
         border-top-right-radius: 15px;
         border-top-left-radius: 15px;
         color: $color-0;
         &:after {
-          @include after ('', block, absolute, 0, 0px, 15px, 15px);
-          left: 95px;
+          @include after ('', block, absolute, -15px, 0, 15px, 15px);
           z-index: 100;
           @include negative-radius-downer ($color-1, 15px);
         }
@@ -70,30 +79,24 @@
     position: relative;
     height: 30px;
     margin: 5px;
+    padding: 0 15px;
     line-height: 30px;
   }
   .selector:last-child {
     display: block;
     float: right;
-    border: $border-bottom-color-1;
-    border-left: none;
-    background-color: $color-0;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-    &:hover.selector-options {
-      left: 0px;
+    padding-right: 10px;
+    &:hover .selector-options {
+      //left: 0px;
     }
   }
   .selector:first-child {
     display: block;
     float: left;
-    border: $border-bottom-color-1;
-    background-color: $color-0;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
     border-right: none;
-    &:hover.selector-options {
-        left: -5px;
+    padding-left: 10px;
+    &:hover .selector-options {
+        left: 15px;
     }
   }
 
@@ -103,16 +106,11 @@
     border-top: $border-bottom-color-1;
     border-color: $color-1;
     text-transform: none;
-    position: relative;
     z-index: 100;
-    width: 210px;
-    top: -5px;
-    right: -5px;
     li {
       position: relative;
-      top: -5px;
       &:hover { background-color: rgba($color-1, .3);}
-      a { padding-left: 15px;}
+      a { padding-left: 15px; padding-right: 30px;}
     }
   }
 }
