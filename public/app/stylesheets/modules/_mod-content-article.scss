@@ -1,5 +1,5 @@
 .mod-content-article {
-  font-family: "Helvetica Neue";
+  font-weight: lighter;
   font-size: 16px;
   .section-title {
     padding-bottom: 50px;
@@ -11,8 +11,7 @@
     padding-bottom: 50px;
   }
   .subsection-title {
-    font-family: "Helvetica Neue light";
-    font-weight: normal;
+    font-weight: lighter;
     font-size: 36px;
     .about & { @include theme-color-8; color: $primary-color;}
     .news  & { @include theme-color-7; color: $primary-color;}
