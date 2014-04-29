@@ -23,11 +23,14 @@
           <ul id="donors_list">
             <% index = 1 %>
             <% @data.donors(@site).each do |donor| %>
-              <% if index < 12 %>
+              <% if index <= 12 %>
                 <li><%= link_to(donor.name.html_safe, donor_path(donor)) %></li>
                 <% index = index + 1 %>
               <% end %>
             <% end %>
+            <% if @data.donors(@site).length > 12 %>
+                <a href="/donors">See more donors</a>
+              <% end %>
           </ul>
         <% else %>
           <p>The are no donors</p>
