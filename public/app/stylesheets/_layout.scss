@@ -17,10 +17,13 @@
 .categories-selector {
   height: 50px;
   background-color: $color-4;
-  margin-bottom: 60px;
 }
 
-.content { position: relative;}
+.layout-sidebar, .layout-content {
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+.layout-content { position: relative;}
 
 
 

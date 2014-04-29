@@ -30,8 +30,9 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
       <%= render 'new_partials/aside/location' %>
 
       <% unless @filter_by_location.present? %>
@@ -61,11 +62,12 @@
 
       <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
 
-    </div>
-  </aside>
+    </aside>
+  </div>
 
-  <section class="content">
-    <div class="grid-12 offset-1">
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
       <%= render 'new_partials/aside/follow_us' %>
 
       <h1 class="section-title"><%= @area.name %></h1>
@@ -74,6 +76,6 @@
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

@@ -1,41 +1,45 @@
 .mod-pagination {
-	padding: 2em 0 0 0;
-  width: 100%;
+  margin: 30px 0;
   text-align: center;
   color: $color-3;
-	ul {
+  @include clearfix;
+  ul {
     width: auto;
     margin: 0 auto;
     text-align: center;
   }
-	li {
-		display: inline-block;
-		padding: 0 5px;
-	}
-	a {
+  li {
+    display: block;
+    padding: 0 5px;
+  }
+  a {
     color: $color-3;
-		font-weight: bold;
-		font-size: 1.2em;
-	}
-	.active {
-		color:$color-2;
-		text-decoration: underline;
-	}
-	#next, #previous {
-    display: inline-block;
-    width: 50px;
+    font-weight: bold;
+  }
+  .active {
+    color:$color-2;
+    text-decoration: underline;
+  }
+  #next, #previous {
+    display: block;
+    width: auto;
     height: 50px;
+    min-width: 100px;
     line-height: 50px;
     background-color: $color-4;
+    white-space: nowrap;
+    padding: 0 10px;
     &:hover {
       background-color: darken($color-4, 10%);
     }
    }
   #next {
+    float: right;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
   }
   #previous {
+    float: left;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
   }

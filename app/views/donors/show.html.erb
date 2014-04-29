@@ -3,8 +3,9 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
       <% unless @filter_by_location.present? %>
         <%= render 'new_partials/aside/projects' %>
       <% end %>
@@ -31,11 +32,12 @@
         <%= render 'new_partials/aside/contact_info' %>
       <% end %>
 
-    </div>
-  </aside>
+    </aside>
+  </div>
 
-  <section class="content">
-    <div class="grid-12 offset-1">
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
       <%= render 'new_partials/aside/follow_us' %>
 
       <h1 class="section-title"><%= @donor.name.html_safe %></h1>
@@ -75,19 +77,19 @@
           <ul>
             <% if @projects.current_page > 1 -%>
               <li>
-                <%= link_to('<', pagination_link(previous_pagination_params), :id =>'previous') %>
+                <%= link_to('< previous', pagination_link(previous_pagination_params), :id =>'previous') %>
                 <% end -%>
               </li>
 
               <li>
                 <% if @projects.current_page < @projects.total_pages -%>
-                  <%= link_to('>', pagination_link(next_pagination_params), :id =>'next') %>
+                  <%= link_to('next >', pagination_link(next_pagination_params), :id =>'next') %>
                 <% end -%>
               </li>
           </ul>
         <% end %>
       </div>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
