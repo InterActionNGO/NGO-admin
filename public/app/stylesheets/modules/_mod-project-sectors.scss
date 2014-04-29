@@ -20,14 +20,20 @@
   .icon_statistics:before { @include before('', block, absolute, 0, 0, 20px, 20px)}
   .health:before { background: image-url('icon-health.png') no-repeat center;}
   .agriculture:before { background: image-url('icon-agriculture.png') no-repeat center;}
-  .nutrition:before { background: image-url('icon-nutrition.png') no-repeat center;}
-  .education:before { background: image-url('icon-education.png') no-repeat center;}
-  .water_sanitation:before { background: image-url('icon-water.png') no-repeat center;}
+  .communication:before { background: image-url('icon-communication.png') no-repeat center;}
   .early_recovery:before { background: image-url('icon-early_recovery.png') no-repeat center;}
-  .protection:before { background: image-url('icon-protection.png') no-repeat center;}
-  .logistics:before { background: image-url('icon-logistics.png') no-repeat center;}
-  .shelter:before { background: image-url('icon-shelter.png') no-repeat center;}
   .economic_recovery:before { background: image-url('icon-economic_recovery.png') no-repeat center;}
+  .education:before { background: image-url('icon-education.png') no-repeat center;}
+  .emergency:before { background: image-url('icon-emergency.png') no-repeat center;}
+  .environment:before { background: image-url('icon-environment.png') no-repeat center;}
+  .disaster_management:before { background: image-url('icon-other.png') no-repeat center;}
+  .food_aid:before { background: image-url('icon-food-aid.png') no-repeat center;}
   .human_rights:before { background: image-url('icon-human_rights.png') no-repeat center;}
-
+  .logistics:before { background: image-url('icon-logistics.png') no-repeat center;}
+  .nutrition:before { background: image-url('icon-other.png') no-repeat center;}
+  .other:before { background: image-url('icon-other.png') no-repeat center;}
+  .peace_security:before { background: image-url('icon-peace_security.png') no-repeat center;}
+  .protection:before { background: image-url('icon-protection.png') no-repeat center;}
+  .shelter:before { background: image-url('icon-shelter.png') no-repeat center;}
+  .water_sanitation:before { background: image-url('icon-water.png') no-repeat center;}
 }
