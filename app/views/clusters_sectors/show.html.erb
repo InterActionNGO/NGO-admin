@@ -8,6 +8,35 @@
 
       <%= render 'new_partials/aside/projects' %>
 
+      <% unless @filter_by_location.present? || @data.projects_regions(@site).empty?%>
+        <div class="project-locations mod-info">
+          <h3>project locations</h3>
+          <div class="mod-project-locations">
+            <%= raw(projects_by_location(@site, @data.projects_countries(@site))) %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="donors-in-this-country mod-info">
+        <h3>Donors in this <%= @site.word_for_cluster_sector.singularize %></h3>
+        <% unless @data.donors(@site).empty? %>
+          <ul id="donors_list">
+            <% index = 1 %>
+            <% @data.donors(@site).each do |donor| %>
+              <% if index < 12 %>
+                <li><%= link_to(donor.name.html_safe, donor_path(donor)) %></li>
+                <% index = index + 1 %>
+              <% end %>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>The are no donors</p>
+        <% end %>
+      </div>
+
+      <% unless @site.projects_sectors_or_clusters.empty? %>
+      <% end %>
+
     </div>
   </aside>
 
