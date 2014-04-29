@@ -1,5 +1,5 @@
 .mod-downloads {
-  padding-bottom: 30px;
+  padding-bottom: 40px;
   font-weight: bold;
   font-size: 16px;
   span {
@@ -28,14 +28,21 @@
       top: 0;
       border-top: 12px solid $color-0;
     }
+    &:before {
+      @include after('', block, absolute, 0px, auto, 0, 0);
+      top: 12px;
+      border-top: 4px solid darken($color-4, 10%);
+      border-right: 12px solid transparent;
+    }
   }
   .csv:after { border-left: 12px solid $color-7;}
   .xls:after { border-left: 12px solid $color-8;}
-  .kml:after { border-left: 12px solid $color-2;}
+  .kml:after { border-left: 12px solid $color-1;}
 
   .embebed {
     font-weight: normal;
     text-transform: none;
+    &:after { border-left: 12px solid $color-2;}
   }
   aside & {
     ul {
