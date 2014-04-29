@@ -3,8 +3,9 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
       <% unless @filter_by_location.present? %>
         <%= render 'new_partials/aside/projects' %>
       <% end %>
@@ -27,18 +28,23 @@
         <%= render 'new_partials/aside/project_sectors' %>
       <% end %>
 
+      <%= @donor.contact_person_name %>
       <% if @contact_data[:show] %>
         <%= render 'new_partials/aside/contact_info' %>
       <% end %>
 
+    </aside>
+  </div>
+
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
       <%= render 'new_partials/aside/follow_us' %>
 
-    </div>
-  </aside>
-
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @donor.name.html_safe %></h1>
+      <header>
+        <h1 class="section-title"><%= @donor.name.html_safe %></h1>
+        <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => donor_path(@donor, @carry_on_filters.merge(:format => :csv)), :xls_path => donor_path(@donor, @carry_on_filters.merge(:format => :xls)), :kml_path => donor_path(@donor, @carry_on_filters.merge(:format => :kml)) } %>
 
@@ -70,6 +76,24 @@
         <% end %>
       </div>
 
-    </div>
-  </section>
+      <div class="mod-pagination" id="projects_view_more">
+        <% if @projects.total_pages > 1 %>
+          <ul>
+            <% if @projects.current_page > 1 -%>
+              <li>
+                <%= link_to('< previous', pagination_link(previous_pagination_params), :id =>'previous') %>
+                <% end -%>
+              </li>
+
+              <li>
+                <% if @projects.current_page < @projects.total_pages -%>
+                  <%= link_to('next >', pagination_link(next_pagination_params), :id =>'next') %>
+                <% end -%>
+              </li>
+          </ul>
+        <% end %>
+      </div>
+
+    </section>
+  </div>
 </div>
