@@ -39,10 +39,11 @@
     position: absolute;
     right: 10px;
     width: 52px;
-    top: 10px;
+    top: 6px;
   }
   li {
     float: left;
+    &:first-child { margin-right: 5px;}
   }
   a {
     width: 21px;
