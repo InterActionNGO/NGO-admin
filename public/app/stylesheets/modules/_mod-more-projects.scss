@@ -1,0 +1,28 @@
+.mod-more-projects {
+  article {
+    width: 50%;
+    float: left;
+  }
+  img { margin: 0;}
+  ul, li { list-style: none; }
+  .mod-content-article & ul {
+    padding-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .image {
+    float: left;
+    position: relative;
+    width: 35%;
+  }
+  .info {
+    float: right;
+    width: 65%;
+  }
+  .marker {
+    position: absolute;
+    top: 40%;
+    left: 35%;
+  }
+  h3 a { color: $color-1;}
+}
