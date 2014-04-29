@@ -2,7 +2,17 @@
 
 require.config({
 
-  baseUrl: '/app/javascripts'
+  baseUrl: '/app/javascripts',
+
+  paths: {
+    sprintf: '../vendor/sprintf/src/sprintf',
+  },
+
+  shim: {
+    sprintf: {
+      exports: 'sprintf'
+    }
+  }
 
 });
 

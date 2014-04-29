@@ -41,7 +41,10 @@
 
       <%= render 'new_partials/aside/follow_us' %>
 
-      <h1 class="section-title"><%= @donor.name.html_safe %></h1>
+      <header>
+        <h1 class="section-title"><%= @donor.name.html_safe %></h1>
+        <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => donor_path(@donor, @carry_on_filters.merge(:format => :csv)), :xls_path => donor_path(@donor, @carry_on_filters.merge(:format => :xls)), :kml_path => donor_path(@donor, @carry_on_filters.merge(:format => :kml)) } %>
 
