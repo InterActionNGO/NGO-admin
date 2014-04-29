@@ -3,8 +3,8 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
 
       <%= render 'new_partials/aside/projects' %>
 
@@ -48,17 +48,23 @@
         </div>
       <% end %>
 
-    </div>
-  </aside>
+    </aside>
+  </div>
 
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @site.name %></h1>
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
+      <%= render 'new_partials/aside/follow_us' %>
+
+      <header>
+        <h1 class="section-title">All projects</h1>
+        <% unless @site.short_description.nil? %><p><%= anglo(@site.long_description) %> <a href="<%= page_path(Page.about(@site)) %>">Learn more</a></p><%end%>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => "#{url(@site)}/.csv", :xls_path => "#{url(@site)}/.xls", :kml_path => "#{url(@site)}/.xml" } %>
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

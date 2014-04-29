@@ -1,10 +1,55 @@
 .mod-follow-us {
-  a {
-    height: 45px;
-    width: 45px;
+  aside & {
+    li {
+      float: left;
+      margin-right: 16px;
+    }
+    a {
+      height: 45px;
+      width: 45px;
+    }
+    .twitter { background: image-url('twitter.png') no-repeat center;}
+    .facebook { background: image-url('facebook.png') no-repeat center;}
+    .google { background: image-url('google.png') no-repeat center;}
+    .linkedin { background: image-url('linkedin.png') no-repeat center;}
   }
-  .twitter { background: image-url('twitter.png') no-repeat center;}
-  .facebook { background: image-url('facebook.png') no-repeat center;}
-  .google { background: image-url('google.png') no-repeat center;}
-  .linkedin { background: image-url('linkedin.png') no-repeat center;}
+
+}
+.layout-content .mod-info{
+  position: absolute;
+  top: -60px;
+  right: 0;
+  width: 175px;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  border-bottom: none;
+  background-color: $color-7;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  h3 {
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+    left: 15px;
+    width: 100px;
+    color: $color-0;
+  }
+  ul {
+    position: absolute;
+    right: 10px;
+    width: 52px;
+    top: 6px;
+  }
+  li {
+    float: left;
+    &:first-child { margin-right: 5px;}
+  }
+  a {
+    width: 21px;
+    height: 21px;
+    float: right;
+  }
+  .twitter { background: image-url('icon-tw-lt.png') no-repeat center;}
+  .facebook { background: image-url('icon-fb-lt.png') no-repeat center;}
 }

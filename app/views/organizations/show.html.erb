@@ -3,8 +3,8 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
 
       <%= render 'new_partials/aside/projects' %>
 
@@ -55,19 +55,23 @@
         </div>
       <% end %>
 
+    </aside>
+  </div>
+
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
       <%= render 'new_partials/aside/follow_us' %>
 
-    </div>
-  </aside>
-
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @organization.name %></h1>
+      <header>
+        <h1 class="section-title"><%= @organization.name %></h1>
+        <%= simple_format(@organization.description.squish.truncate(800)) if @organization.description.present? %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => organization_path(@organization, @carry_on_filters.merge(:format => :csv)), :xls_path => organization_path(@organization, @carry_on_filters.merge(:format => :xls)), :kml_path => organization_path(@organization, @carry_on_filters.merge(:format => :kml)) } %>
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
