@@ -1,31 +1,152 @@
 .mod-header {
-  font-size: 14px;
   position: relative;
+  font-size: 14px;
+  font-weight: bold;
   .aid-map-logo {
     float: left;
-    padding-top: 1.5%;
+    padding-top: 10px;
   }
-  ul {
-    position: absolute;
-    top: 50px;
-    right: 150px;
-    width: 50%;
+  .menu {
+    margin-top: 50px;
   }
-  li {
+  .menu-item {
     float: left;
-    padding: 5px 15px;
-    border-radius: 10px;
+    width: 20%;
+    text-align: center;
     text-transform: uppercase;
-    &:hover a { color: $color-0;}
+    &.access { width: 40%;}
+    .index-item {
+      position: relative;
+      padding: 5px 15px;
+      &.active {
+        border-radius: 15px;
+      }
+    }
+    &:hover {
+      .submenu {
+        display: block;
+        border-radius-bottom: 0;
+      }
+    }
+    &:last-child:hover a { color: $color-3;}
   }
   .interaction-logo {
     float: right;
-    padding-top: 2%;
+    padding-top: 20px;
   }
-  .home:hover { background-color: $color-3;}
-  .about:hover { background-color: $color-8;}
-  .news:hover { background-color: $color-7;}
-  .contact:hover { background-color: $color-1;}
-  .access:hover { color: $color-00;}
+  .submenu {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    margin-top: 0;
+    background-color: $color-0;
+    .submenu-item {
+      float: none;
+      text-align: left;
+    }
+    a {
+      text-transform: none;
+      padding: 10px 25px;
+    }
+  }
+
+  .home {
+    @include theme-color-3;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      border-bottom-right-radius: 15px;
+      border-bottom-left-radius: 15px;
+      // &:after {
+      //   @include after('', block, absolute, -12px, 0, 12px, 12px);
+      //   @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      // }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+    }
+  }
+  .about {
+    @include theme-color-8;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+      &:hover {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+  }
+  .data {
+    @include theme-color-1;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      border-radius: 15px;
+      // &:after {
+      //   @include after('', block, absolute, -12px, 0, 12px, 12px);
+      //   @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      // }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+    }
+  }
+  .contact {
+    @include theme-color-7;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+    }
+  }
+  .access:hover .index-item{ color: rgba($color-00, .3); }
 }
 

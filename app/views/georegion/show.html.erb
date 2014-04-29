@@ -30,8 +30,9 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
       <%= render 'new_partials/aside/location' %>
 
       <% unless @filter_by_location.present? %>
@@ -61,19 +62,24 @@
 
       <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
 
+    </aside>
+  </div>
+
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
       <%= render 'new_partials/aside/follow_us' %>
 
-    </div>
-  </aside>
-
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @area.name %></h1>
+      <header>
+        <h1 class="section-title"><%= @area.name %></h1>
+        <%= content_tag :p, @area.wiki_description if @area.wiki_description %>
+        <%= content_tag :p, raw("Description provided by Wikipedia #{content_tag(:a, 'Read full article', :href => @area.wiki_url)}"), :class => 'provided' if @area.wiki_url %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => location_path(@area, @carry_on_filters.merge(:format => :csv)), :xls_path => location_path(@area, @carry_on_filters.merge(:format => :xls)), :kml_path => location_path(@area, @carry_on_filters.merge(:format => :kml)) } %>
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

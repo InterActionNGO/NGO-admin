@@ -2,7 +2,7 @@
   padding-bottom: 30px;
   margin-bottom: 30px;
   border-bottom: 2px solid $color-4;
-  font-family: "Helvetica neue";
+  font-weight: lighter;
   font-size: 16px;
   h2 a{
     color: $color-1;
@@ -20,4 +20,6 @@
   }
 }
 
-li:last-child .mod-index-item { border-bottom: none;}
+.articles-list li:last-child .mod-index-item {
+  border-bottom: none;
+}
