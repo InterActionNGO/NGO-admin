@@ -3,8 +3,8 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
 
       <%= render 'new_partials/aside/projects' %>
 
@@ -37,19 +37,20 @@
       <% unless @site.projects_sectors_or_clusters.empty? %>
       <% end %>
 
-    </div>
-  </aside>
+    </aside>
+  </div>
 
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <%= render 'new_partials/aside/follow_us' %>
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
 
-      <h1 class="section-title"><%= @data.name %></h1>
+        <%= render 'new_partials/aside/follow_us' %>
 
-      <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => cluster_path(@data, @carry_on_filters.merge(:format => :csv)), :xls_path => cluster_path(@data, @carry_on_filters.merge(:format => :xls)), :kml_path => cluster_path(@data, @carry_on_filters.merge(:format => :kml)) } %>
+        <h1 class="section-title"><%= @data.name %></h1>
 
-      <%= render "new_partials/index_projects" %>
+        <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => cluster_path(@data, @carry_on_filters.merge(:format => :csv)), :xls_path => cluster_path(@data, @carry_on_filters.merge(:format => :xls)), :kml_path => cluster_path(@data, @carry_on_filters.merge(:format => :kml)) } %>
 
-    </div>
-  </section>
+        <%= render "new_partials/index_projects" %>
+
+    </section>
+  </div>
 </div>
