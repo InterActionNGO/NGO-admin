@@ -1,7 +1,7 @@
 /*global google,map_type,map_data:true,map_center,sprintf,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
-define(function() {
+define(['sprintf'], function(sprintf) {
 
   function old() {
     var styledMapOptions = {name: "labels"};
@@ -446,7 +446,7 @@ define(function() {
             currentLegend = legends.red;
         }
 
-        console.log(layerStyle);
+        //console.log(layerStyle);
 
         var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
         var c_len = currentLegend.colors.length;
@@ -455,7 +455,7 @@ define(function() {
           currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
         });
 
-        console.log(currentCSS);
+        //console.log(currentCSS);
 
         var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
           title: $el.data('layer'),

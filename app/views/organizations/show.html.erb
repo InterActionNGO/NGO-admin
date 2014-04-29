@@ -59,11 +59,14 @@
   </div>
 
   <div class="grid-12 offset-1">
-    <section class="content">
+    <section class="layout-content">
 
       <%= render 'new_partials/aside/follow_us' %>
 
-      <h1 class="section-title"><%= @organization.name %></h1>
+      <header>
+        <h1 class="section-title"><%= @organization.name %></h1>
+        <%= simple_format(@organization.description.squish.truncate(800)) if @organization.description.present? %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => organization_path(@organization, @carry_on_filters.merge(:format => :csv)), :xls_path => organization_path(@organization, @carry_on_filters.merge(:format => :xls)), :kml_path => organization_path(@organization, @carry_on_filters.merge(:format => :kml)) } %>
 
