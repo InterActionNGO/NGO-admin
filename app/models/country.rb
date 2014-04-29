@@ -95,11 +95,6 @@ class Country < ActiveRecord::Base
     scoped.select("id,name").order("name ASC")
   end
 
-  # to get only id and name
-  def self.get_select_values_conditioned
-    scoped.select("id,name").order("name ASC")
-  end
-
   def update_wikipedia_description
     if wiki_url.present?
       require 'open-uri'
