@@ -70,17 +70,21 @@
         <% end %>
       </div>
 
-      <div class="view_more" id="projects_view_more">
+      <div class="mod-pagination" id="projects_view_more">
         <% if @projects.total_pages > 1 %>
+          <ul>
+            <% if @projects.current_page > 1 -%>
+              <li>
+                <%= link_to('<', pagination_link(previous_pagination_params), :id =>'previous') %>
+                <% end -%>
+              </li>
 
-          <% if @projects.current_page > 1 -%>
-            <%= link_to('previous', pagination_link(previous_pagination_params), :id =>'previous') %>
-          <% end -%>
-
-          <% if @projects.current_page < @projects.total_pages -%>
-            <%= link_to('next', pagination_link(next_pagination_params), :id =>'next') %>
-          <% end -%>
-
+              <li>
+                <% if @projects.current_page < @projects.total_pages -%>
+                  <%= link_to('>', pagination_link(next_pagination_params), :id =>'next') %>
+                <% end -%>
+              </li>
+          </ul>
         <% end %>
       </div>
 
