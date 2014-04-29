@@ -3,8 +3,8 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
 
       <div class="contact-info mod-info">
         <h3>Contact information</h3>
@@ -28,12 +28,11 @@
         </ul>
       </div>
 
+    </aside>
+  </div>
 
-    </div>
-  </aside>
-
-  <section class="content">
-    <div class="grid-12 offset-1">
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
       <%= render 'new_partials/aside/follow_us' %>
 
       <article class="content-article">
@@ -79,8 +78,8 @@
 
         <%= render 'new_partials/more_projects' %>
 
-      </article>
+      </div>
+    </article>
 
-    </div>
   </section>
 </div>
