@@ -181,42 +181,31 @@ define(['sprintf'], function(sprintf) {
           hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
           hidden_div.style.width = '175px';
 
-          try {
-            if (kind !== null) {
-              var top_hidden = document.createElement('div');
-              top_hidden.style.border = 'none';
-              top_hidden.style.position = 'relative';
-              top_hidden.style.float = 'left';
-              top_hidden.style.padding = '9px 15px 3px 11px';
-              top_hidden.style.width = '149px';
-              top_hidden.style.height = 'auto';
-              top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-              top_hidden.style.font = 'bold 17px "PT Sans"';
-              top_hidden.style.textAlign = 'center';
-              top_hidden.style.color = 'white';
-              if (kind === 'sector' || kind === 'cluster') {
-                $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind : ' project in this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-              } else {
-                $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects by this ' + kind : ' project by this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-              }
-              hidden_div.appendChild(top_hidden);
+          var top_hidden = document.createElement('div');
+
+          top_hidden.style.border = 'none';
+          top_hidden.style.position = 'relative';
+          top_hidden.style.float = 'left';
+          top_hidden.style.padding = '9px 15px 3px 11px';
+          top_hidden.style.width = '149px';
+          top_hidden.style.height = 'auto';
+          top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
+          top_hidden.style.font = 'bold 17px "PT Sans"';
+          top_hidden.style.textAlign = 'center';
+          top_hidden.style.color = 'white';
+
+          if (kind) {
+            console.log(kind);
+            if (kind === 'sector' || kind === 'cluster') {
+              $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind : ' project in this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
+            } else {
+              $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects by this ' + kind : ' project by this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
             }
-          } catch (e) {
-            var top_hidden = document.createElement('div');
-            top_hidden.style.border = 'none';
-            top_hidden.style.position = 'relative';
-            top_hidden.style.float = 'left';
-            top_hidden.style.padding = '9px 15px 3px 11px';
-            top_hidden.style.width = '149px';
-            top_hidden.style.height = 'auto';
-            top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-            top_hidden.style.font = 'bold 17px "PT Sans"';
-            top_hidden.style.textAlign = 'center';
-            top_hidden.style.color = 'white';
+          } else {
             $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#999999">' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
-            hidden_div.appendChild(top_hidden);
           }
 
+          hidden_div.appendChild(top_hidden);
 
           var bottom_hidden = document.createElement('div');
           bottom_hidden.style.border = 'none';
