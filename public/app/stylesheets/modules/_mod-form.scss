@@ -1,0 +1,14 @@
+.mod-form {
+  padding-bottom: 20px;
+
+  input {
+    padding: 5px 21px;
+    border: 1px solid $color-4;
+    text-transform: uppercase;
+  }
+  input[type="submit"] {
+    background-color: rgba($color-4, .3);
+    text-transform: uppercase;
+    &:hover { background-color: $color-4;}
+  }
+}
