@@ -1,0 +1,37 @@
+.mod-index-item {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid $color-4;
+  font-weight: lighter;
+  font-size: 16px;
+  h2 a{
+    color: $color-1;
+    font-size: 16px;
+    padding-bottom: 10px;
+    &:hover {
+      color: lighten($color-1, 10%);
+      text-decoration: underline;
+    }
+  }
+  span { color: $color-5;}
+  span a {
+    display: inline-block;
+    color: $color-2;
+    &:hover {
+      color: lighten($color-2, 10%);
+      text-decoration: underline;
+    }
+  }
+  .learn_more {
+    display: inline-block;
+    color: $color-1;
+    &:hover {
+      color: lighten($color-1, 10%);
+      text-decoration: underline;
+    }
+  }
+}
+
+.articles-list li:last-child .mod-index-item {
+  border-bottom: none;
+}

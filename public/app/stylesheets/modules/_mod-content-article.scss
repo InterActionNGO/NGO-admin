@@ -1,0 +1,42 @@
+.mod-content-article {
+  font-weight: lighter;
+  font-size: 16px;
+  section { margin-bottom: 40px;}
+  .section-title {
+    padding-bottom: 10px;
+
+    .about & { color: $color-8;}
+    .news  & { color: $color-7;}
+  }
+  .first {
+    margin-bottom: 30px;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+  .subsection-title {
+    font-weight: lighter;
+    font-size: 36px;
+    .about & { @include theme-color-8; color: $primary-color;}
+    .news  & { @include theme-color-7; color: $primary-color;}
+  }
+  p { padding-bottom: 20px;}
+  a {
+    display: inline-block;
+    color: $color-2;
+    &:hover {
+      color: lighten($color-2, 10%);
+      text-decoration: underline;
+    }
+  }
+  li {
+    list-style: disc;
+    line-height: 25px;
+  }
+  ul {
+    padding-bottom: 20px;
+    padding-left: 30px;
+    list-style: disc;
+  }
+  b font { color: $color-2 !important;}
+}
+

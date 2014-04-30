@@ -1,0 +1,45 @@
+@include font-face("Akzidenz", font-files("akzidenz/12_akzidenz_grotesk_roman___05003-webfont.woff", "akzidenz/12_akzidenz_grotesk_roman___05003-webfont.ttf", "akzidenz/12_akzidenz_grotesk_roman___05003-webfont.svg"), "akzidenz/12_akzidenz_grotesk_roman___05003-webfont.eot", normal, normal);
+@include font-face("Akzidenz", font-files("akzidenz/12_akzidenz_grotesk_bold___07003-webfont.woff", "akzidenz/12_akzidenz_grotesk_bold___07003-webfont.ttf", "akzidenz/12_akzidenz_grotesk_bold___07003-webfont.svg"), "akzidenz/12_akzidenz_grotesk_bold___07003-webfont.eot", bold, normal);
+@include font-face("Akzidenz", font-files("akzidenz/12_akzidenz_grotesk_light___02003-webfont.woff", "akzidenz/12_akzidenz_grotesk_light___02003-webfont.ttf", "akzidenz/12_akzidenz_grotesk_light___02003-webfont.svg"), "akzidenz/12_akzidenz_grotesk_light___02003-webfont.eot", lighter, normal);
+
+
+// Typography
+$font-family: "Akzidenz", Helvetica, Arial, sans-serif;
+
+// Colors
+$white: #FFF;
+$black: #000;
+$blue: #016D90;
+$orange: #C65001;
+$purple: #492E45;
+$yellow: #D7A900;
+$green: #8E921B;
+$turquoise: #5A9198;
+$light-grey:#EDEDED;
+$grey: #989898;
+$dark-grey: #444444;
+
+
+$color-0: $white;
+$color-00: $black;
+
+$color-1: $blue;
+$color-2: $orange;
+$color-3: $dark-grey;
+$color-4: $light-grey;
+$color-5: $grey;
+
+$color-6: $purple;
+$color-7: $yellow;
+$color-8: $green;
+$color-9: $turquoise;
+
+$primary-color: null;
+
+
+// Separations
+$section-padding: 3em 0;
+
+@media screen and (max-width: 768px) {
+
+}

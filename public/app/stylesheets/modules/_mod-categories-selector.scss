@@ -1,0 +1,150 @@
+.mod-categories-selector {
+  nav {
+    float: left;
+    position: relative;
+    width: 80%;
+    margin-top: 7px;
+    padding: .5% 1%;
+    background-color: $color-0;
+    border-radius: 20px;
+  }
+  li {
+    float: left;
+    position: relative;
+    font-weight: lighter;
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 0px;
+    padding: 14px 23px;
+    margin-right: 1%;
+    &:hover {
+      color: $color-0;
+      cursor: default;
+      .mod-categories-child { display: block;}
+    }
+    &.active {
+      color: $color-0;
+    }
+    li {
+      padding: 0;
+      a {
+        padding: 5px 20px;
+        font-weight: normal;
+      }
+    }
+  }
+  .sector {
+    &:hover, &.active {
+    background-color: $color-2;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    &.active {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-2, 15px);
+    }
+  }
+  .organizations {
+    &:hover, &.active {
+    background-color: $color-6;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    &.active {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-6, 15px);
+    }
+  }
+  .donors {
+    &:hover, &.active {
+    background-color: $color-7;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    &.active {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-7, 15px);
+    }
+  }
+  .countries {
+    &:hover, &.active {
+    background-color: $color-8;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    &.active {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-8, 15px);
+    }
+  }
+  .regions {
+    &:hover, &.active {
+    background-color: $color-9;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    &.active {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, auto, 15px, 15px);
+      top: 0;
+      @include negative-radius-upper($color-2, 15px);
+    }
+  }
+  .search {
+    padding: 0;
+    border-bottom: 2px solid $color-4;
+    border-radius: 0;
+    form {
+      margin-top: 3px;
+      @include clearfix;
+    }
+    &:hover {
+      color: $color-3;
+    }
+    input {
+      float: left;
+    }
+    input[type="submit"] {
+      width: 30px;
+      height: 17px;
+      border: none;
+      background: image-url('icon-search.png') no-repeat center;
+      background-color: white;
+      cursor: pointer;
+      float: right;
+      margin-top: 2px;
+    }
+  }
+  .fedex-logo {
+    float: right;
+    padding:0;
+  }
+}
+
+
+
+
+

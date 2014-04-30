@@ -1,150 +1,59 @@
+<%= render 'new_partials/map' %>
 
-  <div class="main_head">
-    <div class="inner_main_head">
-      <div class="left">
-        <h2 class="cluster_sector_name"><%= @site.word_for_cluster_sector %></h2>
-        <h1 class="cluster_sector_name"><%= @data.name %></h1>
-        <div class="float_head">
-          <h2 class="cluster_sector_name"><%= @site.word_for_cluster_sector %></h2>
-          <h1 class="cluster_sector_name"><%= @data.name %></h1>
-          <span class="<%= @data.css_class %> icon_watermark"></span>
+<%= render 'new_partials/categories_selector' %>
+
+<div class="row">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
+      <%= render 'new_partials/aside/projects' %>
+
+      <% unless @filter_by_location.present? || @data.projects_regions(@site).empty?%>
+        <div class="project-locations mod-info">
+          <h3>project locations</h3>
+          <div class="mod-project-locations">
+            <%= raw(projects_by_location(@site, @data.projects_countries(@site))) %>
+          </div>
         </div>
-        <% if @site.navigate_by_cluster? %>
-        <%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , cluster_path(@data), :class => 'filter' if @filter_name.present? %>
-        <% else %>
-        <%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , sector_path(@data), :class => 'filter' if @filter_name.present? %>
-        <% end %>
-      </div>
-      <div class="right">
-      </div>
-    </div>
-  </div>
+      <% end %>
 
-  <%#
-  <div id="map"></div>
-  <a href="#zoom_in" id="zoomIn" onclick="zoomIn()"></a>
-  <a href="#zoom_out" id="zoomOut" onclick="zoomOut()"></a>
-  <div class="map_style">
-    <p>PLAIN SMBTC</p>
-    <ul>
-      <li><a id="plain_map" href="#plain">PLAIN</a></li>
-      <li><a id="satellite_map" href="#satellite">SATELLITE</a></li>
-    </ul>
-  </div>
-  %>
-  <%= render :partial => 'partials/map' %>
-
-  <div id="layout">
-    <div id="left_column">
-      <!-- LEFT PART -->
-      <div class="left"></div>
-      <div class="outer_float">
-        <div class="float_left">
-
-          <div class="head">
-            <h2>OVERVIEW</h2>
-          </div>
-          <% unless @filter_by_location.present? || @data.projects_regions(@site).empty?%>
-
-          <div class="block statistics less">
-
-            <h3>PROJECT LOCATIONS</h3>
-            <% if @site.navigate_by_country? %>
-              <%= raw(projects_by_location(@site, @data.projects_countries(@site))) %>
-            <% else %>
-              <%= raw(projects_by_location(@site, @data.projects_regions(@site))) %>
-            <% end %>
-          </div>
-          <% end %>
-          <% unless @data.donors(@site).empty? %>
-
-          <div class="block">
-            <h3>DONORS IN THIS <%= @site.word_for_cluster_sector.singularize %></h3>
-            <ul id="donors_list">
-              <% index = 1 %>
-              <% @data.donors(@site).each do |donor| %>
-                <li class="<%= (index > 10)? "out" : "" %>"><%= link_to(donor.name.html_safe, donor_path(donor)) %></li>
+      <div class="donors-in-this-country mod-info">
+        <h3>Donors in this <%= @site.word_for_cluster_sector.singularize %></h3>
+        <% unless @data.donors(@site).empty? %>
+          <ul id="donors_list">
+            <% index = 1 %>
+            <% @data.donors(@site).each do |donor| %>
+              <% if index <= 12 %>
+                <li><%= link_to(donor.name.html_safe, donor_path(donor)) %></li>
                 <% index = index + 1 %>
               <% end %>
-            </ul>
-            <% if index > 11 %>
-              <a id="show_donor_list">See more donors</a>
             <% end %>
-          </div>
-          <%end%>
-
-          <% unless @site.projects_sectors_or_clusters.empty? %>
-          <div class="block margin">
-            <h3>OTHER <%= @site.word_for_cluster_sector.upcase %></h3>
-            <ul class="clusters">
-            <% @site.projects_sectors_or_clusters.each do |category, count| %>
-              <% next if category == @data %>
-              <%unless category.name.eql?('N/A') %>
-              <li class="<%= category.css_class %> icon_other">
-                <%= link_to(category.name, url_for(category)) %>
-                <p><%= pluralize(count, 'project', 'projects') %></p>
-              </li>
-              <%end%>
-            <% end %>
-            </ul>
-          </div>
-          <% end %>
-
-          <%= render :partial=>"shared/sharing"%>
-
-        </div>
-      </div>
-
-      <!-- RIGHT PART -->
-      <div class="right" id="projects_div">
-        <h3>
-          <%= clusters_sectors_projects_list_subtitle %>
-          <ul class="download">
-            <li><%= link_to 'CSV', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :csv)) : sector_path(@data, @carry_on_filters.merge(:format => :csv)) %></li>
-            <li>|</li>
-            <li><%= link_to 'EXCEL', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :xls)) : sector_path(@data, @carry_on_filters.merge(:format => :xls)) %></li>
-            <li>|</li>
-            <li><%= link_to 'KML', @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :kml)) : sector_path(@data, @carry_on_filters.merge(:format => :kml)) %></li>
-            <li>·</li>
-            <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
+            <% if @data.donors(@site).length > 12 %>
+                <a href="/donors">See more donors</a>
+              <% end %>
           </ul>
-        </h3>
-
-        <div id="popup" class="embed_map">
-          <a class="close top" href="#"></a>
-          <h5>Embed this map</h5>
-          <p>Copy this code and paste it in your HTML page for embedding the map.</p>
-          <textarea><iframe src="<%= url_with_embed_param %>" frameborder="0" width="600" height="600"></iframe></textarea>
-          <a href="#" class="close button">Close</a>
-        </div>
-        <div class="popup_background"></div>
-
-        <div id="projects">
-          <%= render :partial => 'projects/projects' %>
-        </div>
-
+        <% else %>
+          <p>The are no donors</p>
+        <% end %>
       </div>
-    </div>
 
-    <!-- MAP -->
-    <script type="text/javascript">
-      <% if @site.overview_map_lat && @site.overview_map_lon %>
-      var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-      <% else %>
-      var map_center = [];
+      <% unless @site.projects_sectors_or_clusters.empty? %>
       <% end %>
-      var show_regions_with_one_project = "true";
-      var map_zoom = <%= @site.overview_map_zoom %>;
-      var chco = "<%=@overview_map_chco%>";
-      var chf = "<%=@overview_map_chf%>";
-      var chld = "<%=@chld%>";
-      var chd = "<%=@chd%>";
-      var map_data = <%=raw(@map_data)%>;
-      var max_count = <%=@map_data_max_count%>;
-      var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
-      var theme = "<%=@site.theme_id%>";
-      var kind = '<%= @site.word_for_cluster_sector.downcase.chop %>';
-      var stylez = <%=raw @site.map_styles  %>
-    </script>
 
-    <%=raw(javascript_include_merged(:clusters_sectors_show)) %>
+    </aside>
+  </div>
+
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
+        <%= render 'new_partials/aside/follow_us' %>
+
+        <h1 class="section-title"><%= @data.name %></h1>
+
+        <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => cluster_path(@data, @carry_on_filters.merge(:format => :csv)), :xls_path => cluster_path(@data, @carry_on_filters.merge(:format => :xls)), :kml_path => cluster_path(@data, @carry_on_filters.merge(:format => :kml)) } %>
+
+        <%= render "new_partials/index_projects" %>
+
+    </section>
+  </div>
+</div>

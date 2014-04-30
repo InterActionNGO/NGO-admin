@@ -1,0 +1,45 @@
+.mod-map {
+  border-top: $border-bottom-color-1;
+  height: 700px;
+  position: relative;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map-tooltip {
+
+  border: 0;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  display: none;
+  width: 175px;
+}
+
+.map-top-tooltip {
+  border: 0;
+  position: relative;
+  float: left;
+  padding: 9px 15px 3px 11px;
+  width: 149px;
+  height: auto;
+  background: image-url("sites/common/tooltips/body_tooltip.png") no-repeat center top;
+  font: bold 17px "PT Sans";
+  text-align: center;
+  color: white;
+}
+
+.map-bottom-tooltip {
+  border: 0;
+  position: relative;
+  float: left;
+  background: image-url("sites/common/tooltips/bottom_tooltip.png") no-repeat 0 0;
+  width: 175px;
+  height: 14px;
+}
+
