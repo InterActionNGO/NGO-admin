@@ -194,13 +194,8 @@ define(['sprintf'], function(sprintf) {
           top_hidden.style.textAlign = 'center';
           top_hidden.style.color = 'white';
 
-          if (kind) {
-            console.log(kind);
-            if (kind === 'sector' || kind === 'cluster') {
-              $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind : ' project in this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-            } else {
-              $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects by this ' + kind : ' project by this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-            }
+          if (this.total_in_region) {
+            $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
           } else {
             $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#999999">' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
           }
@@ -232,8 +227,6 @@ define(['sprintf'], function(sprintf) {
           });
         }
 
-
-
         google.maps.event.addDomListener(div, 'click', function(ev) {
           try {
             ev.stopPropagation();
@@ -258,7 +251,6 @@ define(['sprintf'], function(sprintf) {
           }
         });
 
-
         google.maps.event.addDomListener(div, 'mousedown', function(ev) {
           try {
             ev.stopPropagation();
@@ -267,11 +259,8 @@ define(['sprintf'], function(sprintf) {
           }
         });
 
-
-
         var panes = this.getPanes();
         panes.floatPane.appendChild(div);
-
 
         if (($(this.div_).children('p').width() + 6) > this.width_) {
           $(this.div_).children('p').css('display', 'none');
@@ -631,19 +620,15 @@ define(['sprintf'], function(sprintf) {
 
         new IOMMarker(map_data[i], diameter, image_source, map);
 
-        if (map_type !== 'overview_map') {
-          bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
-        }
+        bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
       }
 
-      if (map_type !== 'overview_map') {
-        map.fitBounds(bounds);
+      map.fitBounds(bounds);
 
-        if (map_data[0].type === 'country') {
-          setTimeout(function() {
-            map.setZoom(8);
-          }, 1000);
-        }
+      if (map_data[0].type === 'country') {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 1000);
       }
 
       if (map_type === 'project_map') {
