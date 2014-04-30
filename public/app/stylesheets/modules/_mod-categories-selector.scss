@@ -117,6 +117,10 @@
     padding: 0;
     border-bottom: 2px solid $color-4;
     border-radius: 0;
+    form {
+      margin-top: 3px;
+      @include clearfix;
+    }
     &:hover {
       color: $color-3;
     }
@@ -124,7 +128,8 @@
       padding: 0;
       border: none;
       color: $color-5;
-      font-size: 14px
+      font-size: 14px;
+      float: left;
     }
     input[type="submit"] {
       width: 30px;
@@ -132,6 +137,9 @@
       border: none;
       background: image-url('icon-search.png') no-repeat center;
       background-color: white;
+      cursor: pointer;
+      float: right;
+      margin-top: 2px;
     }
   }
   .fedex-logo {
