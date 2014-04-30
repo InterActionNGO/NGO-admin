@@ -23,6 +23,10 @@
   a {
     display: inline-block;
     color: $color-2;
+    &:hover {
+      color: lighten($color-2, 10%);
+      text-decoration: underline;
+    }
   }
   li {
     list-style: disc;

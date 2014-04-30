@@ -23,7 +23,7 @@
         var max_count = <%=@map_data_max_count%>;
         var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
         var theme = "<%= @site.theme_id %>";
-        var kind = 'org.';
+        var kind = window.location.pathname.split('/')[1];
         var stylez = <%=raw @site.map_styles  %>
         var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
       </script>
@@ -53,5 +53,25 @@
         })();
       </script>
     <% end %>
+
+    <!-- START: Feedback -->
+    <a href="#div_3822025" class="nyroModal"  id="link_3822025" style="position:fixed; top:350px; left:0px; z-index:100;">Feedback</a>
+
+    <script src='//questionpro.com/javascript/embedlightbox.js'></script>
+    <script>
+      EMBED_PARAMS = {};
+      EMBED_PARAMS.domain = '//questionpro.com';
+      EMBED_PARAMS.surveyID = 3822025;
+      EMBED_PARAMS.src = '//questionpro.com//a//TakeSurvey?id=' + EMBED_PARAMS.surveyID;
+      EMBED_PARAMS.width = '700px';
+      EMBED_PARAMS.height = null;
+      EMBED_PARAMS.border = 'hidden';
+    </script>
+
+    <div id="div_3822025" style="display:none;overflow-y:hidden;height:auto;">
+      <div id="bl_3822025">Online survey tool <a href="http://questionpro.com">QuestionPro</a></div>
+    </div>
+    <!-- END: Feedback -->
+
   </body>
 </html>
