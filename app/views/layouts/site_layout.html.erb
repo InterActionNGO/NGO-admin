@@ -23,7 +23,7 @@
         var max_count = <%=@map_data_max_count%>;
         var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
         var theme = "<%= @site.theme_id %>";
-        var kind = 'org.';
+        var kind = window.location.pathname.split('/')[1];
         var stylez = <%=raw @site.map_styles  %>
         var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
       </script>
@@ -67,6 +67,10 @@
       EMBED_PARAMS.height = null;
       EMBED_PARAMS.border = 'hidden';
     </script>
+
+    <div id="div_3822025" style="display:none;overflow-y:hidden;height:auto;">
+      <div id="bl_3822025">Online survey tool <a href="http://questionpro.com">QuestionPro</a></div>
+    </div>
     <!-- END: Feedback -->
 
   </body>
