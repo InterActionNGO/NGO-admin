@@ -181,42 +181,26 @@ define(['sprintf'], function(sprintf) {
           hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
           hidden_div.style.width = '175px';
 
-          try {
-            if (kind !== null) {
-              var top_hidden = document.createElement('div');
-              top_hidden.style.border = 'none';
-              top_hidden.style.position = 'relative';
-              top_hidden.style.float = 'left';
-              top_hidden.style.padding = '9px 15px 3px 11px';
-              top_hidden.style.width = '149px';
-              top_hidden.style.height = 'auto';
-              top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-              top_hidden.style.font = 'bold 17px "PT Sans"';
-              top_hidden.style.textAlign = 'center';
-              top_hidden.style.color = 'white';
-              if (kind === 'sector' || kind === 'cluster') {
-                $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind : ' project in this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-              } else {
-                $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects by this ' + kind : ' project by this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-              }
-              hidden_div.appendChild(top_hidden);
-            }
-          } catch (e) {
-            var top_hidden = document.createElement('div');
-            top_hidden.style.border = 'none';
-            top_hidden.style.position = 'relative';
-            top_hidden.style.float = 'left';
-            top_hidden.style.padding = '9px 15px 3px 11px';
-            top_hidden.style.width = '149px';
-            top_hidden.style.height = 'auto';
-            top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-            top_hidden.style.font = 'bold 17px "PT Sans"';
-            top_hidden.style.textAlign = 'center';
-            top_hidden.style.color = 'white';
+          var top_hidden = document.createElement('div');
+
+          top_hidden.style.border = 'none';
+          top_hidden.style.position = 'relative';
+          top_hidden.style.float = 'left';
+          top_hidden.style.padding = '9px 15px 3px 11px';
+          top_hidden.style.width = '149px';
+          top_hidden.style.height = 'auto';
+          top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
+          top_hidden.style.font = 'bold 17px "PT Sans"';
+          top_hidden.style.textAlign = 'center';
+          top_hidden.style.color = 'white';
+
+          if (this.total_in_region) {
+            $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
+          } else {
             $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#999999">' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
-            hidden_div.appendChild(top_hidden);
           }
 
+          hidden_div.appendChild(top_hidden);
 
           var bottom_hidden = document.createElement('div');
           bottom_hidden.style.border = 'none';
@@ -243,8 +227,6 @@ define(['sprintf'], function(sprintf) {
           });
         }
 
-
-
         google.maps.event.addDomListener(div, 'click', function(ev) {
           try {
             ev.stopPropagation();
@@ -269,7 +251,6 @@ define(['sprintf'], function(sprintf) {
           }
         });
 
-
         google.maps.event.addDomListener(div, 'mousedown', function(ev) {
           try {
             ev.stopPropagation();
@@ -278,11 +259,8 @@ define(['sprintf'], function(sprintf) {
           }
         });
 
-
-
         var panes = this.getPanes();
         panes.floatPane.appendChild(div);
-
 
         if (($(this.div_).children('p').width() + 6) > this.width_) {
           $(this.div_).children('p').css('display', 'none');
@@ -642,19 +620,15 @@ define(['sprintf'], function(sprintf) {
 
         new IOMMarker(map_data[i], diameter, image_source, map);
 
-        if (map_type !== 'overview_map') {
-          bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
-        }
+        bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
       }
 
-      if (map_type !== 'overview_map') {
-        map.fitBounds(bounds);
+      map.fitBounds(bounds);
 
-        if (map_data[0].type === 'country') {
-          setTimeout(function() {
-            map.setZoom(8);
-          }, 1000);
-        }
+      if (map_data[0].type === 'country') {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 1000);
       }
 
       if (map_type === 'project_map') {
