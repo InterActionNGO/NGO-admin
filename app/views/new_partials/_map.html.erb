@@ -52,6 +52,8 @@
 
   <div id="legendWrapper"></div>
 
+  <%= render 'new_partials/filtered-categories' %>
+
 </section>
 
 <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
