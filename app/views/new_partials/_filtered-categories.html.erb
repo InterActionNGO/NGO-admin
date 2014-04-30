@@ -1,0 +1,7 @@
+<% if @donor %>
+  <%= link_to raw(donors_list_subtitle(true) + image_tag('sites/icons/carry_on_filter_remove.png')) , donor_path(@donor), :class => 'filter' %>
+<% elsif @site.navigate_by_cluster? %>
+  <%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , cluster_path(@data), :class => 'filter' if @filter_name.present? %>
+<% else %>
+  <%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , sector_path(@data), :class => 'filter' if @filter_name.present? %>
+<% end %>
