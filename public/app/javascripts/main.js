@@ -17,17 +17,23 @@ require.config({
     liveupdate: {
       deps: ['quicksilver'],
       exports: '$'
+    },
+    stylishSelect: {
+      exports: '$'
     }
   }
 
 });
 
 require([
+  'routes',
   'views/clusters',
   'views/map',
   'views/filters',
   'views/menu-fixed'
-], function(ClustersView, MapView, FiltersView, MenuFixedView) {
+], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView) {
+
+  new Routes();
 
   new ClustersView();
   new MapView();
