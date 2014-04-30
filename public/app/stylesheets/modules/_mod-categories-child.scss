@@ -19,6 +19,12 @@
     font-size: 16px;
     text-transform: none;
   }
+  input {
+    width: 100%;
+    margin: 0;
+    padding: 5px 20px;
+    text-transform: uppercase;
+  }
 }
 .sector-child {
   border-bottom: 10px solid $color-2;
@@ -37,6 +43,10 @@
   li {
     &:hover, &.active { background-color: rgba($color-6, 0.3)}
   }
+  input {
+    &[placeholder] { color: $color-6;}
+    background-color: rgba($color-6, 0.3);
+  }
 }
 .donors-child {
   border-bottom: 10px solid $color-7;
@@ -45,6 +55,10 @@
   }
   li {
     &:hover, &.active { background-color: rgba($color-7, 0.3)}
+  }
+  input {
+    color: $color-7;
+    background-color: rgba($color-7, 0.3);
   }
 }
 .countries-child {
@@ -55,6 +69,10 @@
   li {
     &:hover, &.active { background-color: rgba($color-8, 0.3)}
   }
+  input {
+    color: $color-8;
+    background-color: rgba($color-8, 0.3);
+  }
 }
 .regions-child {
   border-bottom: 10px solid $color-9;
@@ -63,5 +81,9 @@
   }
   li {
     &:hover, &.active { background-color: rgba($color-9, 0.3)}
+  }
+  input {
+    color: $color-9;
+    background-color: rgba($color-9, 0.3);
   }
 }

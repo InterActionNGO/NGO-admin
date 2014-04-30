@@ -3,11 +3,11 @@
     <div class="mod-filtered-categories">
       <ul>
         <% if @donor %>
-          <li><%= link_to raw(donors_list_subtitle(true) + image_tag('sites/icons/carry_on_filter_remove.png')) , donor_path(@donor), :class => 'filter' %></li>
+          <li><%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>
         <% elsif @site.navigate_by_cluster? %>
-          <li><%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , cluster_path(@data), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= link_to raw(@filter_name) , cluster_path(@data), :class => 'filter' if @filter_name.present? %></li>
         <% else %>
-          <li><%= link_to raw(@filter_name + image_tag('sites/icons/carry_on_filter_remove.png')) , sector_path(@data), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= link_to raw(@filter_name) , sector_path(@data), :class => 'filter' if @filter_name.present? %></li>
         <% end %>
       </ul>
     </div>
