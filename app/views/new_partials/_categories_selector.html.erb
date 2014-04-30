@@ -68,7 +68,7 @@
 
           <li class="search">
             <%= form_tag(search_path, :method => :get) do %>
-              <%= text_field_tag :q, params[:q], :value=>''%>
+              <%= text_field_tag :q, params[:q], :value=>'SEARCH'%>
               <input type="submit" value="">
             <% end %>
           </li>

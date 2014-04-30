@@ -16,7 +16,7 @@
     text-transform: uppercase;
     line-height: 0px;
     padding: 14px 23px;
-    margin: 0 1%;
+    margin-right: 1%;
     &:hover {
       color: $color-0;
       cursor: default;
@@ -113,7 +113,6 @@
     }
   }
   .search {
-
     padding: 0;
     border-bottom: 2px solid $color-4;
     border-radius: 0;
@@ -123,6 +122,8 @@
     input {
       padding: 0;
       border: none;
+      color: $color-5;
+      font-size: 14px
     }
     input[type="submit"] {
       width: 30px;

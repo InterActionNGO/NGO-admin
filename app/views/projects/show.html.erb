@@ -22,9 +22,8 @@
         <h3>Export data</h3>
         <ul>
           <li><%= link_to 'CSV', project_path(@project, :csv), :class => 'csv' %></li>
-          <li><%= link_to 'XLS', project_path(@project, :xls), :class => 'csv' %></li>
-          <li><%= link_to 'KML', project_path(@project, :kml), :class => 'csv' %></li>
-          <li><%= link_to 'Embed this map', '#', :class => 'embebed', :id => 'embed_map' %></li>
+          <li><%= link_to 'XLS', project_path(@project, :xls), :class => 'xls' %></li>
+          <li><%= link_to 'KML', project_path(@project, :kml), :class => 'kml' %></li>
         </ul>
       </div>
 
@@ -35,7 +34,7 @@
     <section class="layout-content">
       <%= render 'new_partials/aside/follow_us' %>
 
-      <article class="content-article">
+      <article class="mod-content-article">
         <h1 class="section-title"><%= @project.name %></h1>
 
         <% unless @project.description.blank? %>
@@ -49,20 +48,26 @@
           <section>
             <%unless @project.activities.blank? %>
               <h2 class="first">Activities</h2>
-              <%= raw(@project.activities) %>
+              <p> <%= raw(@project.activities) %> </p>
             <%end%>
             <%unless @project.additional_information.blank? %>
               <h3 class="<%= (@project.activities.blank?)? 'first':''%>">Additional information</h3>
-              <%= raw(@project.additional_information) %>
+              <p> <%= raw(@project.additional_information) %> </p>
             <%end%>
+            </section>
+
+            <section>
             <%unless @project.cross_cutting_issues.blank? %>
-              <h3 class="<%= (@project.activities.blank? && @project.additional_information.blank?)? 'first':''%>">Cross-cutting issues</h3>
-              <%= raw(@project.cross_cutting_issues) %>
+              <h2 class="first" class="<%= (@project.activities.blank? && @project.additional_information.blank?)? 'first':''%>">Cross-cutting issues</h2>
+              <p> <%= raw(@project.cross_cutting_issues) %> </p>
             <%end%>
+          </section>
+
+          <section>
             <%if @locations.present? && @locations.to_a.join.present? %>
-              <h3 class="<%= (@project.activities.blank? && @project.additional_information.blank? && @project.cross_cutting_issues.blank?)? 'first':''%>">
+              <h2 class="first" class="<%= (@project.activities.blank? && @project.additional_information.blank? && @project.cross_cutting_issues.blank?)? 'first':''%>">
                 <%= @locations.count == 1 ? 'LOCATION' : 'LOCATIONS' %>
-              </h3>
+              </h2>
               <ul>
                 <% @locations.each do |location| %>
                   <% if @site.navigate_by_country? && location['country_id'].present? %>
