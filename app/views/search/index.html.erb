@@ -6,9 +6,91 @@
 <div class="row">
   <div class="grid-4">
     <aside class="layout-sidebar" id="searchSidebar">
-      <!-- OLD -->
+      <!-- TODO: Sidebar search -->
+        <div class="block region">
+          <h2><%= @site.word_for_regions %></h2>
+          <ul class="filter_list">
+            <% @filtered_regions.each do |filtered_region| %>
+              <li>
+                <%= "#{filtered_region.title}, #{filtered_region.subtitle}" %><%= link_to image_tag('sites/search/autocomplete_x.png', :alt => 'delete'), '#', :class => 'delete', :rel => filtered_region.id %>
+              </li>
+            <% end %>
+          </ul>
+          <input type="text" id="autocomplete_regions" class="autocomplete" value="<%= @filtered_regions.any?? "Add a #{@site.word_for_regions.downcase.singularize}" : "All #{@site.word_for_regions.downcase}" %>" />
+          <%= hidden_field_tag('regions_ids', @filtered_regions.map(&:id).join(','), :class => 'regions ids') %>
+        </div>
 
-      <!-- OLD -->
+        <% if @navigate_by_cluster %>
+          <div class="block cluster">
+            <h2><%= @site.word_for_clusters %></h2>
+            <ul class="filter_list">
+              <% @filtered_clusters.each do |filtered_cluster| %>
+                <li>
+                  <%= filtered_cluster.title %><%= link_to image_tag('sites/search/autocomplete_x.png', :alt => 'delete'), '#', :class => 'delete', :rel => filtered_cluster.id %>
+                </li>
+              <% end %>
+            </ul>
+            <input type="text" id="autocomplete_clusters" class="autocomplete" value="<%= @filtered_clusters.any?? "Add a #{@site.word_for_clusters.singularize}" : "All #{@site.word_for_clusters}" %>" />
+            <%= hidden_field_tag('clusters_ids', @filtered_clusters.map(&:id).join(','), :class => 'clusters ids') %>
+          </div>
+        <% else %>
+          <div class="block sector">
+            <h2><%= @site.word_for_clusters %></h2>
+              <ul class="filter_list">
+                <% @filtered_sectors.each do |filtered_sector| %>
+                  <li>
+                    <%= filtered_sector.title %><%= link_to image_tag('sites/search/autocomplete_x.png', :alt => 'delete'), '#', :class => 'delete', :rel => filtered_sector.id %>
+                  </li>
+                <% end %>
+              </ul>
+              <input type="text" id="autocomplete_sectors" class="autocomplete" value="<%= @filtered_sectors.any?? "Add a #{@site.word_for_clusters.singularize}" : "All #{@site.word_for_clusters}" %>" />
+              <%= hidden_field_tag('sectors_ids', @filtered_sectors.map(&:id).join(','), :class => 'sectors ids') %>
+          </div>
+        <% end %>
+
+        <div class="block organization">
+          <h2>Organization</h2>
+            <ul class="filter_list">
+              <% @filtered_organizations.each do |filtered_organization| %>
+                <li>
+                  <%= filtered_organization.title %><%= link_to image_tag('sites/search/autocomplete_x.png', :alt => 'delete'), '#', :class => 'delete', :rel => filtered_organization.id %>
+                </li>
+              <% end %>
+            </ul>
+            <input type="text" id="autocomplete_organizations" class="autocomplete" value="<%= @filtered_organizations.any?? "Add a organization" : "All organizations" %>" />
+            <%= hidden_field_tag('organizations_ids', @filtered_organizations.map(&:id).join(','), :class => 'organizations ids') %>
+        </div>
+
+        <div class="block donor">
+          <h2>Donor</h2>
+            <ul class="filter_list">
+              <% @filtered_donors.each do |filtered_donor| %>
+                <li>
+                  <%= filtered_donor.title %><%= link_to image_tag('sites/search/autocomplete_x.png', :alt => 'delete'), '#', :class => 'delete', :rel => filtered_donor.id %>
+                </li>
+              <% end %>
+            </ul>
+            <input type="text" id="autocomplete_donors" class="autocomplete" value="<%= @filtered_donors.any?? "Add a donor" : "All donors" %>" />
+            <%= hidden_field_tag('donors_ids', @filtered_donors.map(&:id).join(','), :class => 'donors ids') %>
+        </div>
+
+        <div class="block active">
+          <h2>Project status</h2>
+            <%= select_tag :status, options_for_select(['Any', 'Active', 'Inactive'], params[:status]), :class => :"chzn-select" %>
+        </div>
+
+        <div class="block">
+          <h2>Starting after <%= link_to 'Clear', '#', :class => 'clear_date start_date' if @start_date %></h2>
+            <%= select_year @start_date, :field_name => 'start_year', :prompt => 'Year', :start_year => 1980, :end_year => 2030 %>
+            <%= select_month @start_date, :field_name => 'start_month', :prompt => 'Month' %>
+        </div>
+
+        <div class="block">
+          <h2>Ending before <%= link_to 'Clear', '#', :class => 'clear_date end_date' if @end_date %></h2>
+            <%= select_year @end_date, :field_name => 'end_year', :prompt => 'Year', :start_year => 1980, :end_year => 2030 %>
+            <%= select_month @end_date, :field_name => 'end_month', :prompt => 'Month' %>
+        </div>
+      <!-- TODO -->
     </aside>
   </div>
 
