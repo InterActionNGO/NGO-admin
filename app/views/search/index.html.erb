@@ -20,10 +20,12 @@
       <header>
         <h1 class="section-title">Search projects</h1>
 
-        <form method="get">
-          <%= text_field_tag :q, params[:q], :placeholder => 'Search' %>
-          <%= submit_tag 'Search' %>
-        </form>
+        <div class="mod-form">
+          <form method="get">
+            <%= text_field_tag :q, params[:q], :placeholder => 'Search' %>
+            <%= submit_tag 'Search' %>
+          </form>
+        </div>
 
         <% unless @projects.present? and @projects.any? %>
           <p>No projects were found for <strong>'<%= params[:q] %>'</strong></p>
