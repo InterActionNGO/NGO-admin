@@ -23,6 +23,7 @@
     padding: 15px;
     padding-bottom: 5px;
     background-color: $color-4;
+    &:hover { background-color: darken($color-4, 10%); color: $color-3;}
     &:after {
       @include after('', block, absolute, 0px, auto, 0, 0);
       top: 0;

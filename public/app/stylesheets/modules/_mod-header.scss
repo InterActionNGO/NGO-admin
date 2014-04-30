@@ -11,13 +11,14 @@
   }
   .menu-item {
     float: left;
-    width: 20%;
+    width: 19%;
+    margin: 0 .5%;
     text-align: center;
     text-transform: uppercase;
-    &.access { width: 40%;}
+    &.access { width: 39%;}
     .index-item {
       position: relative;
-      padding: 5px 15px;
+      padding: 5px 1%;
       &.active {
         border-radius: 15px;
       }
@@ -28,7 +29,6 @@
         border-radius-bottom: 0;
       }
     }
-    &:last-child:hover a { color: $color-3;}
   }
   .interaction-logo {
     float: right;
@@ -55,10 +55,6 @@
     &:hover .index-item {
       background-color: rgba($primary-color, .3);
       border-radius: 15px;
-      // &:after {
-      //   @include after('', block, absolute, -12px, 0, 12px, 12px);
-      //   @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      // }
     }
     .submenu {
       border-top: 5px solid rgba($primary-color, .3);;
@@ -100,6 +96,7 @@
       background-color: $primary-color;
       color: $color-0;
       &:hover {
+        color: $color-3;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
       }
@@ -109,11 +106,12 @@
     @include theme-color-1;
     &:hover .index-item {
       background-color: rgba($primary-color, .3);
-      border-radius: 15px;
-      // &:after {
-      //   @include after('', block, absolute, -12px, 0, 12px, 12px);
-      //   @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      // }
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      }
     }
     .submenu {
       border-top: 5px solid rgba($primary-color, .3);;
@@ -123,9 +121,17 @@
         background-color: rgba($primary-color, .3);
       }
     }
+    &:hover .active {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
     &.active {
       background-color: $primary-color;
       color: $color-0;
+      &:hover {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
     }
   }
   .contact {
@@ -150,6 +156,9 @@
       color: $color-0;
     }
   }
-  .access:hover .index-item{ color: rgba($color-00, .3); }
+  .access:hover .index-item { color: rgba($color-3, .3); }
+
 }
+
+.mod-footer .submenu { display: none;}
 

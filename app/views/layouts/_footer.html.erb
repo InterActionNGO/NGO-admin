@@ -3,14 +3,7 @@
   <div class="row">
     <div class="grid-17">
   		<div class="mod-footer-top">
-        <nav>
-          <ul>
-            <li><a href="/" class="home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
-            <li><a href="/about" class="about <%= if action_name == 'about' then 'active' else 'inactive' end %>">about</a></li>
-            <li><a href="/data" class="data <%= if action_name == 'data' then 'active' else 'inactive' end %>">data</a></li>
-            <li><a href="/access" class="access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
-          </ul>
-        </nav>
+        <%= render 'new_partials/principal-menu' %>
   		</div>
     </div>
   </div>
@@ -24,7 +17,7 @@
           <p>1400 16th Street, NW. Suite 210<br> Washington, DC 20036</p>
         </div>
         <div class="signature">
-          <p>Copyrighted by InterAction © 2014<br>Developed by <a href="http://simbiotica.es" target="_blank" class="link-to-simbiotica">Simbiótica</a></p>
+          <p>Copyrighted by <a href="http://www.interaction.org/">InterAction</a> © 2014<br>Developed by <a href="http://simbiotica.es" target="_blank" class="link-to-simbiotica">Simbiótica</a></p>
         </div>
 			</div>
 		</div>
