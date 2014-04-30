@@ -29,6 +29,9 @@ p { line-height: 1.5em;}
 
 button, input {
   font-family: $font-family;
+  &:focus {
+    outline: 0;
+  }
 }
 @media screen and (max-width: 768px) {
   body { font-size: 1em;}
