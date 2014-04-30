@@ -3,7 +3,7 @@ Iom::Application.routes.draw do
   # Home
   root :to => "sites#home"
   # report page
-  match 'analysis' => 'reports#index' , :as => :report_index
+  match 'p/analysis' => 'reports#index' , :as => :report_index
   match 'report_generate' => 'reports#report', :as => :report_generate
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
