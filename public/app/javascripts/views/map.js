@@ -720,6 +720,9 @@ define(['sprintf'], function(sprintf) {
     el: '#mapView',
 
     initialize: function() {
+      if (this.$el.length === 0) {
+        return false;
+      }
       var h = $(window).height() -175;
       this.$el.height(h);
       old();
