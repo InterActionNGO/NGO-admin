@@ -30,7 +30,7 @@
             <li class="organizations">
               Organizations
               <ul class="mod-categories-child organizations-child">
-                <input type="text" class="mod-categories-search">
+                <input type="text" class="mod-categories-search" placeholder="Search Organization">
                 <% @site.organizations_select.each do |organization| %>
                   <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
                 <% end %>
@@ -40,7 +40,7 @@
             <li class="donors">
               Donors
               <ul class="mod-categories-child donors-child">
-                <input type="text" class="mod-categories-search">
+                <input type="text" class="mod-categories-search" placeholder="Search Donor">
                 <% @site.donors_select.each do |donor| %>
                   <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
                 <% end %>
@@ -51,7 +51,7 @@
             <li class="countries">
               Countries
               <ul class="mod-categories-child countries-child">
-                <input type="text" class="mod-categories-search">
+                <input type="text" class="mod-categories-search" placeholder="Search Country">
                 <% @site.countries_select.each do |country| %>
                   <li><%= link_to(country.name, location_path(:ids => country)) %></li>
                 <% end %>
@@ -61,7 +61,7 @@
             <li class="regions">
               Regions
               <ul class="mod-categories-child regions-child">
-                <input type="text" class="mod-categories-search">
+                <input type="text" class="mod-categories-search" placeholder="Search Region">
                 <% @site.regions_select.each do |region| %>
                   <li><%= link_to(region.name, location_path(:ids => region)) %></li>
                 <% end %>
