@@ -54,8 +54,7 @@
     @include theme-color-3;
     &:hover .index-item {
       background-color: rgba($primary-color, .3);
-      border-bottom-right-radius: 15px;
-      border-bottom-left-radius: 15px;
+      border-radius: 15px;
       // &:after {
       //   @include after('', block, absolute, -12px, 0, 12px, 12px);
       //   @include negative-radius-downer(rgba($primary-color, .3), 12px);
@@ -92,6 +91,10 @@
       &:hover {
         background-color: rgba($primary-color, .3);
       }
+    }
+    &:hover .active {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
     }
     &.active {
       background-color: $primary-color;
