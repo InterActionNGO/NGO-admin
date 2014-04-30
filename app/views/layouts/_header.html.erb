@@ -5,23 +5,7 @@
     </div>
 
     <div class="grid-7 offset-4">
-    	<nav>
-    		<ul class="menu">
-    			<li class="menu-item home"><a href="/" class="index-item home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
-    			<li class="menu-item about">
-            <a href="/about" class="index-item about <%= if action_name == 'about' then 'active' else 'inactive' end %>">about</a>
-            <ul class="submenu">
-              <li class="submenu-item"><a href="#">Purpose</a></li>
-              <li class="submenu-item"><a href="#">Getting on the map</a></li>
-              <li class="submenu-item"><a href="#">staff list</a></li>
-              <li class="submenu-item"><a href="#">Contact us</a></li>
-              <li class="submenu-item"><a href="#">Of interest</a></li>
-            </ul>
-          </li>
-    			<li class="menu-item data"><a href="/data" class="index-item data <%= if action_name == 'data' then 'active' else 'inactive' end %>">data</a></li>
-    			<li class="menu-item access"><a href="/admin" class="index-item access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
-    		</ul>
-    	</nav>
+    	<%= render 'new_partials/principal-menu' %>
     </div>
 
     <div class="grid-3">

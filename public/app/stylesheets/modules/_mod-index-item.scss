@@ -8,15 +8,18 @@
     color: $color-1;
     font-size: 16px;
     padding-bottom: 10px;
+    &:hover { color: lighten($color-1, 10%);}
   }
   span { color: $color-5;}
   span a {
     display: inline-block;
     color: $color-2;
+    &:hover { color: lighten($color-2, 10%);}
   }
   .learn_more {
     display: inline-block;
     color: $color-1;
+    &:hover { color: lighten($color-1, 10%);}
   }
 }
 
