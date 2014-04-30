@@ -1,16 +1,18 @@
-/*global google,map_type,map_data:true,map_center,sprintf,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
+/*global google,map_type,map_data:true,map_center,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
 define(['sprintf'], function(sprintf) {
 
   function old() {
-    var styledMapOptions = {name: "labels"};
-
     var MERCATOR_RANGE = 256;
 
     function bound(value, opt_min, opt_max) {
-      if (opt_min != null) value = Math.max(value, opt_min);
-      if (opt_max != null) value = Math.min(value, opt_max);
+      if (opt_min !== null) {
+        value = Math.max(value, opt_min);
+      }
+      if (opt_max !== null) {
+        value = Math.min(value, opt_max);
+      }
       return value;
     }
 
@@ -23,11 +25,10 @@ define(['sprintf'], function(sprintf) {
     }
 
     function MercatorProjection() {
-      this.pixelOrigin_ = new google.maps.Point(
-          MERCATOR_RANGE / 2, MERCATOR_RANGE / 2);
+      this.pixelOrigin_ = new google.maps.Point(MERCATOR_RANGE / 2, MERCATOR_RANGE / 2);
       this.pixelsPerLonDegree_ = MERCATOR_RANGE / 360;
       this.pixelsPerLonRadian_ = MERCATOR_RANGE / (2 * Math.PI);
-    };
+    }
 
     MercatorProjection.prototype.fromLatLngToPoint = function(latLng, opt_point) {
       var me = this;
@@ -58,12 +59,12 @@ define(['sprintf'], function(sprintf) {
       var me = this;
       var coord = me.fromDivPixelToLatLng(pixel, zoom);
 
-      var r= 6378137.0;
-      var x = r* degreesToRadians(coord.lng());
+      var r = 6378137.0;
+      var x = r * degreesToRadians(coord.lng());
       var latRad = degreesToRadians(coord.lat());
-      var y = (r/2) * Math.log((1+Math.sin(latRad))/ (1-Math.sin(latRad)));
+      var y = (r / 2) * Math.log((1 + Math.sin(latRad)) / (1 - Math.sin(latRad)));
 
-      return new google.maps.Point(x,y);
+      return new google.maps.Point(x, y);
     };
 
     function IOMMarker(info, diameter, image, map) {
@@ -677,7 +678,7 @@ define(['sprintf'], function(sprintf) {
       if (this.$el.length === 0) {
         return false;
       }
-      var h = $(window).height() -175;
+      var h = $(window).height() - 175;
       this.$el.height(h);
       old();
     }
