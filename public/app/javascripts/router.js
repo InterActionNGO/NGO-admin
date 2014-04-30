@@ -2,13 +2,15 @@
 
 define([
   'views/clusters',
-  'views/map'
-], function(ClustersView, MapView) {
+  'views/map',
+  'views/filters'
+], function(ClustersView, MapView, FiltersView) {
 
   var Router;
 
   new ClustersView();
   new MapView();
+  new FiltersView();
 
   Router = Backbone.Router.extend({});
 
