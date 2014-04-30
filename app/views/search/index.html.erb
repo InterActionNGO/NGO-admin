@@ -1,11 +1,14 @@
 <% content_for :js_vars do %>
-  <script></script>
+  <script>
+  </script>
 <% end %>
 
 <div class="row">
   <div class="grid-4">
-    <aside class="layout-sidebar">
+    <aside class="layout-sidebar" id="searchSidebar">
+      <!-- OLD -->
 
+      <!-- OLD -->
     </aside>
   </div>
 
@@ -17,8 +20,13 @@
       <header>
         <h1 class="section-title">Search projects</h1>
 
-        <% unless @projects.present? %>
-          <p>No projects were found for '<%= params[:q] %>'</p>
+        <form method="get">
+          <%= text_field_tag :q, params[:q], :placeholder => 'Search' %>
+          <%= submit_tag 'Search' %>
+        </form>
+
+        <% unless @projects.present? and @projects.any? %>
+          <p>No projects were found for <strong>'<%= params[:q] %>'</strong></p>
         <% end %>
       </header>
 
@@ -43,6 +51,8 @@
           </ul>
         </div>
       <% end %>
+
+      <%= render 'search/pagination' %>
 
     </section>
   </div>
