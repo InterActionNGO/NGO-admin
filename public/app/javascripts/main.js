@@ -23,10 +23,16 @@ require.config({
 });
 
 require([
-  'router'
-], function(Router) {
+  'views/clusters',
+  'views/map',
+  'views/filters',
+  'views/menu-fixed'
+], function(ClustersView, MapView, FiltersView, MenuFixedView) {
 
-  new Router();
+  new ClustersView();
+  new MapView();
+  new FiltersView();
+  new MenuFixedView();
 
 });
 

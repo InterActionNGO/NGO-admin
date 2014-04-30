@@ -8,25 +8,27 @@
     <%= csrf_meta_tag %>
 
     <% unless content_for?(:js_vars) %>
-      <script>
-        <% if @site.overview_map_lat && @site.overview_map_lon %>
-        var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-        <% else %>
-        var map_center = [];
-        <% end %>
-        var map_zoom = <%= @site.overview_map_zoom %>;
-        var chco = '<%= @overview_map_chco %>';
-        var chf = '<%= @overview_map_chf %>';
-        var chld = '<%= @chld %>';
-        var chd = '<%= @chd %>';
-        var map_data = <%=raw(@map_data)%>;
-        var max_count = <%=@map_data_max_count%>;
-        var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
-        var theme = "<%= @site.theme_id %>";
-        var kind = window.location.pathname.split('/')[1];
-        var stylez = <%=raw @site.map_styles  %>
-        var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
-      </script>
+      <% if defined?(@map_data) %>
+        <script>
+          <% if @site.overview_map_lat && @site.overview_map_lon %>
+          var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
+          <% else %>
+          var map_center = [];
+          <% end %>
+          var map_zoom = <%= @site.overview_map_zoom %>;
+          var chco = '<%= @overview_map_chco %>';
+          var chf = '<%= @overview_map_chf %>';
+          var chld = '<%= @chld %>';
+          var chd = '<%= @chd %>';
+          var map_data = <%=raw(@map_data)%>;
+          var max_count = <%=@map_data_max_count%>;
+          var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
+          var theme = "<%= @site.theme_id %>";
+          var kind = window.location.pathname.split('/')[1];
+          var stylez = <%=raw @site.map_styles  %>
+          var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
+        </script>
+      <% end %>
     <% else %>
       <%= yield :js_vars %>
     <% end %>
