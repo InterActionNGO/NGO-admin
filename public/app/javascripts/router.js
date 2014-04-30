@@ -10,17 +10,7 @@ define([
   new ClustersView();
   new MapView();
 
-  Router = Backbone.Router.extend({
-
-    routes: {},
-
-    initialize: function() {
-      Backbone.history.start({
-        pushState: true
-      });
-    }
-
-  });
+  Router = Backbone.Router.extend({});
 
   return Router;
 
