@@ -1,7 +1,7 @@
 .mod-info {
   border-bottom: 3px solid $color-4;
   padding-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
   &:last-child {
     border-bottom: 0;
@@ -16,7 +16,10 @@
     font-size: 48px;
     font-weight: lighter;
   }
-  li { margin-bottom: 20px; line-height: 1.2;}
+  li {
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
   a {
     display: inline-block;
     font-size: 16px;
