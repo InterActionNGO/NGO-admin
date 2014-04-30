@@ -7,6 +7,10 @@ define(function() {
     el: '#clustersView',
 
     initialize: function() {
+      if (this.$el.length === 0) {
+        return false;
+      }
+
       var $items = this.$el.find('a'),
       w = this.$el.width(),
       values = [],

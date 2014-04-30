@@ -5,23 +5,19 @@ define([
   'views/map'
 ], function(ClustersView, MapView) {
 
-  var app = {}, Router;
+  var Router;
 
   new ClustersView();
-  app.map = new MapView();
+  new MapView();
 
   Router = Backbone.Router.extend({
 
-    routes: {
-      'donors/:id': 'donors'
-    },
+    routes: {},
 
     initialize: function() {
-      Backbone.history.start({pushState: true});
-    },
-
-    donors: function(id) {
-      console.log('donors ' + id);
+      Backbone.history.start({
+        pushState: true
+      });
     }
 
   });
