@@ -172,6 +172,7 @@ define(['sprintf'], function(sprintf) {
         if (map_type === 'overview_map' || map_type === 'administrative_map') {
 
           var hidden_div = document.createElement('div');
+          hidden_div.className = 'map-tooltip';
           hidden_div.style.border = 'none';
           hidden_div.style.position = 'absolute';
           hidden_div.style.margin = '0px';
@@ -182,17 +183,18 @@ define(['sprintf'], function(sprintf) {
           hidden_div.style.width = '175px';
 
           var top_hidden = document.createElement('div');
+          top_hidden.className = 'map-top-tooltip';
 
-          top_hidden.style.border = 'none';
-          top_hidden.style.position = 'relative';
-          top_hidden.style.float = 'left';
-          top_hidden.style.padding = '9px 15px 3px 11px';
-          top_hidden.style.width = '149px';
-          top_hidden.style.height = 'auto';
-          top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-          top_hidden.style.font = 'bold 17px "PT Sans"';
-          top_hidden.style.textAlign = 'center';
-          top_hidden.style.color = 'white';
+          // top_hidden.style.border = 'none';
+          // top_hidden.style.position = 'relative';
+          // top_hidden.style.float = 'left';
+          // top_hidden.style.padding = '9px 15px 3px 11px';
+          // top_hidden.style.width = '149px';
+          // top_hidden.style.height = 'auto';
+          // top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
+          // top_hidden.style.font = 'bold 17px "PT Sans"';
+          // top_hidden.style.textAlign = 'center';
+          // top_hidden.style.color = 'white';
 
           if (this.total_in_region) {
             $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
@@ -203,12 +205,13 @@ define(['sprintf'], function(sprintf) {
           hidden_div.appendChild(top_hidden);
 
           var bottom_hidden = document.createElement('div');
-          bottom_hidden.style.border = 'none';
-          bottom_hidden.style.position = 'relative';
-          bottom_hidden.style.float = 'left';
-          bottom_hidden.style.background = 'url("/app/images/sites/common/tooltips/bottom_tooltip.png") no-repeat 0 0';
-          bottom_hidden.style.width = '175px';
-          bottom_hidden.style.height = '14px';
+          bottom_hidden.className = 'map-bottom-tooltip';
+          // bottom_hidden.style.border = 'none';
+          // bottom_hidden.style.position = 'relative';
+          // bottom_hidden.style.float = 'left';
+          // bottom_hidden.style.background = 'url("/app/images/sites/common/tooltips/bottom_tooltip.png") no-repeat 0 0';
+          // bottom_hidden.style.width = '175px';
+          // bottom_hidden.style.height = '14px';
           hidden_div.appendChild(bottom_hidden);
 
           div.appendChild(hidden_div);
