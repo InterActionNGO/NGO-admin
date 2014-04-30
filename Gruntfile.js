@@ -64,7 +64,8 @@ module.exports = function(grunt) {
           src: [
             'fonts/**/*',
             'images/**/*',
-            'stylesheets/backoffice/**/*'
+            'stylesheets/backoffice/**/*',
+            'javascripts/backoffice/**/*'
           ]
         }]
       }
