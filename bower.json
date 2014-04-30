@@ -3,15 +3,20 @@
   "version": "2.0.0",
   "homepage": "https://github.com/simbiotica/iom",
   "authors": [
-    "Simbiotica"
+    "Simbiotica <http://simbiotica.es>"
   ],
   "description": "A webapp",
-  "license": "MIT",
+  "license": "ISC",
   "ignore": [
     "**/.*",
     "node_modules",
     "public/vendors",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.11",
+    "sprintf": "*",
+    "select2": "~3.4.6"
+  }
 }

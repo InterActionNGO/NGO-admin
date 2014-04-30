@@ -1,0 +1,141 @@
+@mixin absolute($top: auto, $left: auto, $bottom: auto, $right: auto, $zindex: auto) {
+  bottom: $bottom;
+  left: $left;
+  position: absolute;
+  right: $right;
+  top: $top;
+  z-index: $zindex;
+}
+
+@mixin fixed($top: auto, $left: auto, $bottom: auto, $right: auto, $zindex: auto) {
+  bottom: $bottom;
+  left: $left;
+  position: fixed;
+  right: $right;
+  top: $top;
+  z-index: $zindex;
+}
+
+@mixin clearfix() {
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+      clear: both;
+  }
+}
+
+@mixin grid($column) {
+  width: ((100 / $grid-columns) * $column) - ($grid-gutter-width * 2);
+}
+
+@mixin offset($column) {
+  margin-left: ((100 / $grid-columns) * $column) - ($grid-gutter-width * 2);
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+}
+
+@mixin before($content, $display, $position, $left, $top, $width, $height) {
+  content: $content;
+  display: $display;
+  position: $position;
+  left: $left;
+  top: $top;
+  width: $width;
+  height: $height;
+}
+@mixin after($content, $display, $position, $right, $bottom, $width, $height) {
+  content: $content;
+  display: $display;
+  position: $position;
+  right: $right;
+  bottom: $bottom;
+  width: $width;
+  height: $height;
+}
+
+@mixin btn($bg-color, $font-color) {
+  padding: 7px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-family: "Helvetica Neue";
+  font-size: 14px;
+  text-transform: uppercase;
+  color: $font-color;
+  background-color: $bg-color;
+
+}
+
+@mixin triangle ($width, $color) {
+  width: 0;
+  height: 0;
+  border-left: $width solid transparent;
+  border-right: $width solid transparent;
+  border-top: 2*$width solid $color;
+}
+
+@mixin arrow ($width, $color, $border-width) {
+  content: '';
+  width: $width;
+  height: $width;
+  border-top: $border-width solid $color;
+  border-left:  $border-width solid $color;
+}
+
+@mixin tags($font-size) {
+  color: $color-1;
+  font-size: $font-size;
+  &:after { content: ',';}
+  &:last-child:after { content: '.';}
+}
+
+@mixin theme-color-1 {
+  $primary-color: $color-1;
+}
+@mixin theme-color-3 {
+  $primary-color: $color-3;
+}
+@mixin theme-color-7 {
+  $primary-color: $color-7;
+}
+@mixin theme-color-8 {
+  $primary-color: $color-8;
+}
+@mixin theme-color-9 {
+  $primary-color: $color-9;
+}
+
+@mixin negative-radius-upper($background-color, $height) {
+  background: $background-color;
+  background: linear-gradient(315deg, transparent $height, $background-color 0) bottom right;
+  background-image: radial-gradient(circle at 100% 100%, transparent $height, $background-color $height+2px);
+}
+
+@mixin negative-radius-downer($background-color, $height) {
+  background: $background-color;
+  background: linear-gradient(45deg, transparent $height, $background-color 0) top right;
+  background-image: radial-gradient(circle at 100% 0%, transparent $height, $background-color $height+2px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

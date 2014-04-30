@@ -1,211 +1,99 @@
-<div class="main_header">
-  <div class="inner_main_head clearfix">
-    <div class="left">
-      <div class="float_head">
-        <div class="site_brand">
-          <h3>DONOR</h3>
-          <h1><%= @donor.name.html_safe %></h1>
-        </div>
-        <%= link_to raw(donors_list_subtitle(true) + image_tag('sites/icons/carry_on_filter_remove.png')) , donor_path(@donor), :class => 'filter' %>
-      </div>
-    </div>
+<%= render 'new_partials/map' %>
 
-    <div class="right">
-      <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
-    </div>
+<%= render 'new_partials/categories_selector' %>
+
+<div class="row">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
+      <% unless @filter_by_location.present? %>
+        <%= render 'new_partials/aside/projects' %>
+      <% end %>
+
+      <% if @site.navigate_by_country %>
+        <%= render 'new_partials/aside/countries' %>
+      <% else %>
+        <%= render 'new_partials/aside/regions' %>
+      <% end %>
+
+      <% unless @filter_by_organization.present? %>
+        <%= render 'new_partials/aside/affiliated_organizations' %>
+      <% end %>
+
+      <% unless @filter_by_location.present? || @donor_projects_by_location.empty? %>
+        <%= render 'new_partials/aside/project_locations' %>
+      <% end %>
+
+      <% unless @site.nil? || @filter_by_category.present? || @donor_projects_clusters_sectors.empty? %>
+        <%= render 'new_partials/aside/project_sectors' %>
+      <% end %>
+
+      <%= @donor.contact_person_name %>
+      <% if @contact_data[:show] %>
+        <%= render 'new_partials/aside/contact_info' %>
+      <% end %>
+
+    </aside>
   </div>
-</div>
 
-<%= render :partial => 'partials/map' %>
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
 
-<div id="layout">
-  <div id="left_column">
+      <%= render 'new_partials/aside/follow_us' %>
 
-    <!-- LEFT PART -->
-    <div class="left"></div>
-    <div class="outer_float">
-      <div class="float_left">
+      <header>
+        <h1 class="section-title"><%= @donor.name.html_safe %></h1>
+        <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
+      </header>
 
-        <div class="head">
-          <h2>OVERVIEW</h2>
-        </div>
-        
-        <% unless @filter_by_location.present? %>
-          <div class="block box_info donors">
-            <div class="donors_account">
-              <label>PROJECTS</label>
-              <h2><%= @projects.total_entries %></h2>
-            </div>
-            <div class="donors_account">
-              <label>
-                <% if @site.navigate_by_country %>
-                  COUNTRIES
-                 <% else %>
-                  REGIONS
-                 <% end %>
-              </label>
-              <h2><%= @count %></h2>
-            </div>
-          </div>
-        <% end %>
+      <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => donor_path(@donor, @carry_on_filters.merge(:format => :csv)), :xls_path => donor_path(@donor, @carry_on_filters.merge(:format => :xls)), :kml_path => donor_path(@donor, @carry_on_filters.merge(:format => :kml)) } %>
 
-        <% unless @filter_by_organization.present? %>
-          <div class="block statistics less">
-            <h3>Affiliated Organizations</h3>
-              <% if @pageless_organizations %>
-              <ul class="chart chart-bars">
-                <% @pageless_organizations.each do |o| %>
-                  <li><a href="<%= donor_path(@donor, @carry_on_filters.merge(:organization_id => o[1][:id])) %>"><%= o[1][:name] %></a></li>
-                <% end %>
-              </ul>
-              <% end %>
-          </div>
-        <% end %>
-
-        <% unless @filter_by_location.present? || @donor_projects_by_location.empty? %>
-          <div class="block statistics less">
-            <h3>PROJECT LOCATIONS</h3>
-            <%= raw(projects_by_location(@site, @donor_projects_by_location)) %>
-          </div>
-        <% end %>
-
-        <% unless @site.nil? || @filter_by_category.present? || @donor_projects_clusters_sectors.empty? %>
-        <div class="block statistics">
-          <h3>PROJECT <%= @site.word_for_cluster_sector.upcase %></h3>
-          <ul class="statistics_list" id="clustersWidth">
-          <% @donor.projects_sectors_or_clusters(@site, @filter_by_location, @filter_by_organization, params[:location_id] && params[:location_id].to_s.match(/\//) ? true : false ).each do |category, count| %>
-            <% unless category.name.eql?('N/A') %>
+      <div class="articles-list">
+        <% unless @projects.empty? %>
+          <ul>
+            <% @projects.each_with_index do |project,index| %>
               <li>
-                <div class="tooltip">
-                  <span class="body_tooltip">
-                    <label><%= category.name %></label>
+                <article class="mod-index-item">
+                  <h2><%= link_to(truncate(project['project_name'], :length=>65), project_path(project['project_id'])) %></h2>
+                  <span>
+                    <%= subtitle_donors_page(project, @site, donor_path( params[:id], @carry_on_filters.merge(:organization_id => project["organization_id"].to_i) ) ) %>
                   </span>
-                  <span class="bottom_tooltip"></span>
-                </div>
-                <a class="<%= category.css_class %> icon_statistics" href="<%= donor_path(@donor, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                  <p>
+                    <%= anglo(truncate(project['project_description'], :length => 175, :omission => "... <a href=\"#{project_path(project['project_id'])}\" class=\"learn_more\">Learn more</a>")) %>
+                  </p>
+                </article>
               </li>
             <% end %>
-          <% end %>
           </ul>
-        </div>
+        <% else %>
+          <ul>
+            <li>
+              <article class="mod-index-item">
+                <p class="no_results">No projects were found for this donor</p>
+              </article>
+            </li>
+          </ul>
         <% end %>
-
-        <% if @contact_data[:show] %>
-          <div class="block">
-            <h3>CONTACT INFORMATION</h3>
-            <p><strong><%= @donor.contact_person_name %></strong><br/><%= @donor.contact_person_position %></p>
-            <p><%= @donor.contact_phone_number %><br/><% unless (@donor.contact_email.nil?)||(@donor.contact_email.empty?) %><%= link_to(@donor.contact_email, "mailto:#{@donor.contact_email}") %><%end%></p>
-          </div>
-        <% end %>
-
-        <% unless @donor.twitter.blank? && @donor.facebook.blank? && @donor.website.blank? %>
-          <div class="block">
-            <% if @donor.logo? %>
-             <% if @donor.website? %>
-                <a href="<%= @donor.website %>"><%= image_tag(@donor.logo.url(:small), :class=>'logo') %></a>
-             <%else%>
-                <%= image_tag(@donor.logo.url(:small), :class=>'logo') %>
-             <%end%>
-            <%end%>
-            <% if @donor.twitter? || @donor.facebook? %>
-            <p class="social">
-              <% if @donor.twitter? %>
-                <%= link_to("follow us", "http://twitter.com/#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %>
-              <% end %>
-              <% if @donor.twitter? &&  @donor.facebook? %> / <% end %>
-              <% if @donor.facebook? %>
-                <%= link_to("visit our page", "http://facebook.com/#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %>
-                <% end %>
-            </p>
-            <% end %>
-            <% if @donor.website? %>
-              <p class="website"><%= link_to(truncate(@donor.website, :length=>41), @donor.website, :rel => 'nofollow', :target => '_blank') %></p>
-            <% end %>
-          </div>
-        <%end%>
-
-        
-        <% if !@donor.media_resources.empty? && 0==1 %>
-          <div class="block resources">
-            <h3>MEDIA RESOURCES</h3>
-            <% @donor.media_resources.each do |media| %>
-              <ul>
-                <li><a href="<%= media.is_a_video? ? media.video_url : media.picture.url(:original) %>" target="_blank"><%= media.caption.present? ? media.caption : media.picture_file_name.present? ? media.picture_file_name : media.video_url %></a></li>
-              </ul>
-            <%end%>
-          </div>
-        <% end %>
-
-        <% if !@donor.resources.empty? && 0==1 %>
-          <div class="block resources">
-            <h3>ADDITIONAL RESOURCES</h3>
-            <% @donor.resources.each do |resource| %>
-              <ul>
-                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
-              </ul>
-            <%end%>
-          </div>
-        <% end %>
-        
-
-        <%= render :partial=>"shared/sharing"%>
-
       </div>
-    </div>
 
-    <!-- RIGHT PART -->
-    <div class="right" id="projects_div">
-      <h3>
-        <%= donors_list_subtitle(false) %>
-        <ul class="download">
-          <li><%= link_to 'CSV', donor_path(@donor, @carry_on_filters.merge(:format => :csv)) %></li>
-          <li>|</li>
-          <li><%= link_to 'EXCEL',donor_path(@donor, @carry_on_filters.merge(:format => :xls)) %></li>
-          <li>|</li>
-          <li><%= link_to 'KML', donor_path(@donor, @carry_on_filters.merge(:format => :kml)) %></li>
-          <li>·</li>
-          <li><%= link_to 'Embed this map', '#', :id => 'embed_map' %></li>
-        </ul>
-      </h3>
+      <div class="mod-pagination" id="projects_view_more">
+        <% if @projects.total_pages > 1 %>
+          <ul>
+            <% if @projects.current_page > 1 -%>
+              <li>
+                <%= link_to('< previous', pagination_link(previous_pagination_params), :id =>'previous') %>
+                <% end -%>
+              </li>
 
-      <div id="popup" class="embed_map">
-          <a class="close top" href="#"></a>
-          <h5>Embed this map</h5>
-          <p>Copy this code and paste it in your HTML page for embedding the map.</p>
-          <textarea><iframe src="<%= url_with_embed_param %>" frameborder="0" width="600" height="600"></iframe></textarea>
-          <a href="#" class="close button">Close</a>
-        </div>
-      <div class="popup_background"></div>
-
-      <p class="disclaimer"><%= params[:organization_id] ? "In some cases, this organization may be sub-recipient (rather than a direct recipient) of this donor's funding." : "The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities." %> </p>
-
-      <div id="projects">
-        <%= render :partial => 'donors/projects' %>
+              <li>
+                <% if @projects.current_page < @projects.total_pages -%>
+                  <%= link_to('next >', pagination_link(next_pagination_params), :id =>'next') %>
+                <% end -%>
+              </li>
+          </ul>
+        <% end %>
       </div>
-    </div>
 
+    </section>
   </div>
 </div>
-
-<script>
-
-  <% if @site.overview_map_lat && @site.overview_map_lon %>
-  var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-  <% else %>
-  var map_center = [];
-  <% end %>
-  var map_zoom = <%= @site.overview_map_zoom %>;
-  var chco = "<%=@overview_map_chco%>";
-  var chf = "<%=@overview_map_chf%>";
-  var chld = "<%=@chld%>";
-  var chd = "<%=@chd%>";
-  var map_data = <%= @map_data.to_s.html_safe %>;
-  // var organization_data = <%= @organizations_data.to_s.html_safe %>;
-  var map_type = '<%= @filter_by_location.present?? 'administrative_map' : 'overview_map' %>';
-  var theme = "<%=@site.theme_id%>";
-  var kind = 'donor';
-  var stylez = <%=raw @site.map_styles  %>;
-  max_count = <%= @map_data_max_count %> ;
-</script>
-
-<%=raw(javascript_include_merged(:organizations_show)) %>

@@ -1,0 +1,164 @@
+.mod-header {
+  position: relative;
+  font-size: 14px;
+  font-weight: bold;
+  .aid-map-logo {
+    float: left;
+    padding-top: 10px;
+  }
+  .menu {
+    margin-top: 50px;
+  }
+  .menu-item {
+    float: left;
+    width: 19%;
+    margin: 0 .5%;
+    text-align: center;
+    text-transform: uppercase;
+    &.access { width: 39%;}
+    .index-item {
+      position: relative;
+      padding: 5px 1%;
+      &.active {
+        border-radius: 15px;
+      }
+    }
+    &:hover {
+      .submenu {
+        display: block;
+        border-radius-bottom: 0;
+      }
+    }
+  }
+  .interaction-logo {
+    float: right;
+    padding-top: 20px;
+  }
+  .submenu {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    margin-top: 0;
+    background-color: $color-0;
+    .submenu-item {
+      float: none;
+      text-align: left;
+    }
+    a {
+      text-transform: none;
+      padding: 10px 25px;
+    }
+  }
+
+  .home {
+    @include theme-color-3;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      border-radius: 15px;
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+    }
+  }
+  .about {
+    @include theme-color-8;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &:hover .active {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+      &:hover {
+        color: $color-3;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+  }
+  .data {
+    @include theme-color-1;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &:hover .active {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+      &:hover {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+  }
+  .contact {
+    @include theme-color-7;
+    &:hover .index-item {
+      background-color: rgba($primary-color, .3);
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      }
+    }
+    .submenu {
+      border-top: 5px solid rgba($primary-color, .3);;
+    }
+    .submenu-item { background-color: rgba($primary-color, .1);
+      &:hover {
+        background-color: rgba($primary-color, .3);
+      }
+    }
+    &.active {
+      background-color: $primary-color;
+      color: $color-0;
+    }
+  }
+  .access:hover .index-item { color: rgba($color-3, .3); }
+
+}
+
+.mod-footer .submenu { display: none;}
+
