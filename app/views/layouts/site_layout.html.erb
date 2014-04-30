@@ -23,7 +23,7 @@
         var max_count = <%=@map_data_max_count%>;
         var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
         var theme = "<%= @site.theme_id %>";
-        var kind = 'org.';
+        var kind = window.location.pathname.split('/')[1];
         var stylez = <%=raw @site.map_styles  %>
         var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
       </script>
