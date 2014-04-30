@@ -111,6 +111,23 @@ module.exports = function(grunt) {
       }
     },
 
+    requirejs: {
+      options: {
+        optimize: 'uglify',
+        preserveLicenseComments: false,
+        useStrict: true,
+        wrap: false
+      },
+      dist: {
+        options: {
+          baseUrl: '<%= root.app %>/scripts',
+          include: 'main',
+          out: '<%= root.dist %>/scripts/main.js',
+          mainConfigFile: '<%= root.app %>/scripts/main.js',
+        }
+      }
+    },
+
     watch: {
       options: {
         nospawn: true
