@@ -1,5 +1,12 @@
 .mod-filtered-categories {
-  position: relative;
+  position: absolute;
   z-index: 100;
-
+  bottom: 20px;
+  padding: 5px 20px;
+  border-radius: 15px;
+  background-color: $color-1;
+  font-size: 14px;
+  line-height: 14px;
+  text-transform: lowercase;
+  a { color: $color-0;}
 }
