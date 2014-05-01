@@ -17,9 +17,6 @@ require.config({
     liveupdate: {
       deps: ['quicksilver'],
       exports: '$'
-    },
-    stylishSelect: {
-      exports: '$'
     }
   }
 
@@ -41,5 +38,3 @@ require([
   new MenuFixedView();
 
 });
-
-
