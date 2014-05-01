@@ -49,9 +49,4 @@ Iom::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Assets path
-  config.action_controller.asset_path = proc { |asset_path|
-    "/dist#{asset_path}"
-  }
-
 end
