@@ -83,6 +83,7 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
+          cssDir: '<%= root.dist %>/stylesheets',
           httpStylesheetsPath: '/dist/stylesheets',
           httpImagesPath: '/dist/images',
           httpGeneratedImagesPath: '/dist/images/sprite',
@@ -121,10 +122,10 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
-          baseUrl: '<%= root.app %>/scripts',
+          baseUrl: '<%= root.app %>/javascripts',
           include: 'main',
-          out: '<%= root.dist %>/scripts/main.js',
-          mainConfigFile: '<%= root.app %>/scripts/main.js',
+          out: '<%= root.dist %>/javascripts/main.js',
+          mainConfigFile: '<%= root.app %>/javascripts/main.js',
         }
       }
     },
@@ -160,7 +161,8 @@ module.exports = function(grunt) {
     'uglify',
     'copy:dist',
     'imagemin',
-    'compass:dist'
+    'compass:dist',
+    'requirejs'
   ]);
 
 };
