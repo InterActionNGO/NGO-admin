@@ -7,6 +7,7 @@ class AddStaticPagesForGenericSite < ActiveRecord::Migration
     #Create top things page
     generic_top_site = Page.where(:permalink => "top-things-you-should-know-about-the-data").first.clone
     generic_top_site.created_at = generic_top_site.updated_at = nil
+    generic_top_site.parent_id = nil
     generic_top_site.site_id=generic_site_id
     generic_top_site.save
 
@@ -14,6 +15,7 @@ class AddStaticPagesForGenericSite < ActiveRecord::Migration
     member_guidance = Page.where(:permalink => "member-guidance").first.clone
     member_guidance.title = "Data Guidance"
     member_guidance.permalink = "data-guidance"
+    member_guidance.parent_id = nil
     member_guidance.created_at = member_guidance.updated_at = nil
     member_guidance.site_id=generic_site_id
     member_guidance.save
