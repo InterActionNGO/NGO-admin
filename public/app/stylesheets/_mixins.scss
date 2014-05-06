@@ -60,56 +60,18 @@
   height: $height;
 }
 
-@mixin btn($bg-color, $font-color) {
-  padding: 7px 10px;
-  border-radius: 5px;
-  text-align: center;
-  font-family: "Helvetica Neue";
-  font-size: 14px;
-  text-transform: uppercase;
-  color: $font-color;
-  background-color: $bg-color;
-
+@mixin link-states($primary-color, $display) {
+  display: $display;
+  color: $primary-color;
+  &:hover { text-decoration: underline;}
+  &:visited { color: darken($primary-color, 10%);}
 }
 
-@mixin triangle ($width, $color) {
-  width: 0;
-  height: 0;
-  border-left: $width solid transparent;
-  border-right: $width solid transparent;
-  border-top: 2*$width solid $color;
-}
-
-@mixin arrow ($width, $color, $border-width) {
-  content: '';
-  width: $width;
-  height: $width;
-  border-top: $border-width solid $color;
-  border-left:  $border-width solid $color;
-}
-
-@mixin tags($font-size) {
-  color: $color-1;
-  font-size: $font-size;
-  &:after { content: ',';}
-  &:last-child:after { content: '.';}
-}
-
-@mixin theme-color-1 {
-  $primary-color: $color-1;
-}
-@mixin theme-color-3 {
-  $primary-color: $color-3;
-}
-@mixin theme-color-7 {
-  $primary-color: $color-7;
-}
-@mixin theme-color-8 {
-  $primary-color: $color-8;
-}
-@mixin theme-color-9 {
-  $primary-color: $color-9;
-}
+@mixin theme-color-1 { $primary-color: $color-1;}
+@mixin theme-color-3 { $primary-color: $color-3;}
+@mixin theme-color-7 { $primary-color: $color-7;}
+@mixin theme-color-8 { $primary-color: $color-8;}
+@mixin theme-color-9 { $primary-color: $color-9;}
 
 @mixin negative-radius-upper($background-color, $height) {
   background: linear-gradient(315deg, transparent $height, $background-color 0) bottom right;
@@ -135,6 +97,55 @@
     @include after('', block, absolute, -15px, auto, 15px, 15px);
     top: 0;
     @include negative-radius-upper($primary-color, 15px);
+  }
+}
+
+@mixin categorie-selector-child($primary-color) {
+  border-bottom: 10px solid $primary-color;
+  a { color: $primary-color;
+    &:hover { color: $primary-color;}
+  }
+  li {
+    &:hover, &.active { background-color: rgba($primary-color, 0.1)}
+  }
+  input {
+    color: $primary-color;
+    @include placeholder { color: $primary-color;}
+    background-color: rgba($primary-color, 0.3);
+  }
+}
+
+@mixin drop-down-menu($primary-color){
+  &:hover .index-item {
+    background-color: rgba($primary-color, .3);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    &:after {
+      @include after('', block, absolute, -12px, 0, 12px, 12px);
+      @include negative-radius-downer(rgba($primary-color, .3), 12px);
+    }
+  }
+  .submenu {
+    border-top: 5px solid rgba($primary-color, .3);
+  }
+  .submenu-item { background-color: rgba($primary-color, .1);
+    &:hover {
+      background-color: rgba($primary-color, .3);
+    }
+  }
+  &:hover .active {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  &.active {
+    background-color: $primary-color;
+    color: $color-0;
+    &:hover {
+      color: $color-3;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      a { color: $color-3;}
+    }
   }
 }
 

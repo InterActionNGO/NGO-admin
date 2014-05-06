@@ -20,9 +20,7 @@
     .index-item {
       position: relative;
       padding: 5px 1%;
-      &.active {
-        border-radius: 15px;
-      }
+      &.active { border-radius: 15px;}
     }
     &:hover {
       .submenu {
@@ -73,96 +71,13 @@
   }
   .about {
     @include theme-color-8;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      &:after {
-        @include after('', block, absolute, -12px, 0, 12px, 12px);
-        @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      }
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &:hover .active {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-      &:hover {
-        color: $color-3;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-        a { color: $color-3;}
-      }
-    }
+    @include drop-down-menu($primary-color);
   }
   .data {
     @include theme-color-1;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      &:after {
-        @include after('', block, absolute, -12px, 0, 12px, 12px);
-        @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      }
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &:hover .active {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-      &:hover {
-        color: $color-3;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-        a { color: $color-3;}
-      }
-    }
-  }
-  .contact {
-    @include theme-color-7;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      &:after {
-        @include after('', block, absolute, -12px, 0, 12px, 12px);
-        @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      }
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-    }
+    @include drop-down-menu($primary-color);
   }
   .access:hover .index-item { color: rgba($color-3, .3); }
-
 }
 
 .mod-footer .submenu { display: none;}

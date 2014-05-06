@@ -40,7 +40,6 @@ $grid-gutter-width: 1%;
   .row { width: 100%;}
 }
 @media screen and (max-width: 768px) {
-
   @for $column from 1 through $grid-columns {
   .medium-grid-#{$column} {
   @include grid($column);

@@ -1,5 +1,4 @@
 .mod-map-controls {
-
   .control-navbar, .control-zoom {
     font-weight: lighter;
     font-size: 14px;
@@ -83,9 +82,6 @@
     display: block;
     float: right;
     padding-right: 10px;
-    &:hover .selector-options {
-      //left: 0px;
-    }
   }
   .selector:first-child {
     display: block;

@@ -6,17 +6,21 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <div class="contact-info mod-info">
-        <h3>Contact information</h3>
-        <div class="mod-contact-info">
-          <h4><%= @project.contact_person %></h4>
-          <p><%= @project.contact_position %></p>
-          <p><%= @project.contact_phone_number %></p>
-          <% unless (@project.contact_email.nil?)||(@project.contact_email.empty?) %>
-            <p><%= link_to(@project.contact_email, "mailto:#{@project.contact_email}") %></p>
-          <%end%>
+      <% unless (@project.contact_person.empty? && @project.contact_position && @project.contact_phone_number && @project.contact_email.empty?) %>
+        <div class="contact-info mod-info">
+
+            <h3>Contact information</h3>
+
+            <div class="mod-contact-info">
+              <h4><%= @project.contact_person %></h4>
+              <p><%= @project.contact_position %></p>
+              <p><%= @project.contact_phone_number %></p>
+              <% unless (@project.contact_email.nil?)||(@project.contact_email.empty?) %>
+                <p><%= link_to(@project.contact_email, "mailto:#{@project.contact_email}") %></p>
+              <%end%>
+            </div>
         </div>
-      </div>
+      <% end %>
 
       <div class="mod-downloads mod-info">
         <h3>Export data</h3>
@@ -32,14 +36,13 @@
 
   <div class="grid-12 offset-1">
     <section class="layout-content">
-      <%= render 'new_partials/aside/follow_us' %>
 
       <article class="mod-content-article">
-        <h1 class="section-title"><%= @project.name %></h1>
+        <h1><%= @project.name %></h1>
 
         <% unless @project.description.blank? %>
           <section>
-            <h2 class="first">Project description</h2>
+            <h2>Project description</h2>
             <%= anglo(simple_format(@project.description)) %>
           </section>
         <% end %>
@@ -47,7 +50,7 @@
         <% if @project.activities || @project.additional_information || @project.cross_cutting_issues || (@locations.present? && @locations.to_a.join.present?)%>
           <section>
             <%unless @project.activities.blank? %>
-              <h2 class="first">Activities</h2>
+              <h2>Activities</h2>
               <p> <%= raw(@project.activities) %> </p>
             <%end%>
             <%unless @project.additional_information.blank? %>
@@ -58,15 +61,15 @@
 
             <section>
             <%unless @project.cross_cutting_issues.blank? %>
-              <h2 class="first" class="<%= (@project.activities.blank? && @project.additional_information.blank?)? 'first':''%>">Cross-cutting issues</h2>
+              <h2 class="<%= (@project.activities.blank? && @project.additional_information.blank?)? 'first':''%>">Cross-cutting issues</h2>
               <p> <%= raw(@project.cross_cutting_issues) %> </p>
             <%end%>
           </section>
 
           <section>
             <%if @locations.present? && @locations.to_a.join.present? %>
-              <h2 class="first" class="<%= (@project.activities.blank? && @project.additional_information.blank? && @project.cross_cutting_issues.blank?)? 'first':''%>">
-                <%= @locations.count == 1 ? 'LOCATION' : 'LOCATIONS' %>
+              <h2 class="<%= (@project.activities.blank? && @project.additional_information.blank? && @project.cross_cutting_issues.blank?)? 'first':''%>">
+                <%= @locations.count == 1 ? 'Location' : 'Locations' %>
               </h2>
               <ul>
                 <% @locations.each do |location| %>
