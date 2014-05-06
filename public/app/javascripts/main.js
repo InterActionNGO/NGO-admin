@@ -38,3 +38,19 @@ require([
   new MenuFixedView();
 
 });
+
+
+var newClass;
+var position;
+
+function getClass() {
+  position = window.location.pathname.split("/").length - 1;
+  newClass = window.location.pathname.split("/")[position];
+  addClassToBody();
+}
+function addClassToBody(){
+  $('body').addClass(newClass);
+}
+
+getClass();
+
