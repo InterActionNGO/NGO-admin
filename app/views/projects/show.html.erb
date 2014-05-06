@@ -6,7 +6,7 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <% unless (@project.contact_person.empty? && @project.contact_position && @project.contact_phone_number && @project.contact_email.empty?) %>
+      <% unless (@project.contact_person.empty? && @project.contact_position && @project.contact_phone_number && (@project.contact_email.empty?||@project.contact_email.empty?)) %>
         <div class="contact-info mod-info">
 
             <h3>Contact information</h3>
