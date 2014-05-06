@@ -45,36 +45,34 @@ button, input {
 /******************************************LINKS**********************************************/
 /*********************************************************************************************/
 a {
+  text-decoration: none;
   display: block;
   color: $color-3;
-  text-decoration: none;
 }
 /*********************************************************************************************/
 /******************************************TITLES*********************************************/
 /*********************************************************************************************/
-.title {
-
-}
-.subtitle {
-
-}
-.section-title {
+h1 {
+  margin-bottom: 25px;
   font-size: 48px;
   font-weight: lighter;
-  padding-bottom: 25px;
-}
-.subsection-title {
-
+  .about & { color: $color-8;}
+  .data &  { color: $color-1;}
+  .news  & { color: $color-7;}
 }
 h2 {
-  padding-bottom: 10px;
-
+  margin-bottom: 10px;
+  font-size: 36px;
+  font-weight: lighter;
+  text-transform: capitalize;
   .about & { color: $color-8;}
   .data &  { color: $color-1;}
   .news  & { color: $color-7;}
 }
 h3 {
-
+  margin-bottom: 20px;
+  font-size: 15px;
+  text-transform: uppercase;
 }
 
 /*********************************************************************************************/
