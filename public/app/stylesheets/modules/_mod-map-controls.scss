@@ -1,7 +1,4 @@
 .mod-map-controls {
-  position: relative;
-  top: 15px;
-  z-index: 100;
 
   .control-navbar, .control-zoom {
     font-weight: lighter;
@@ -9,7 +6,7 @@
     text-transform: uppercase;
     cursor: pointer;
     border-radius: 40px;
-    border: $border-bottom-color-1;
+    box-shadow: 0 0 0 5px rgba($color-1 ,0.3);
   }
   .control-zoom {
     float: right;

@@ -112,15 +112,30 @@
 }
 
 @mixin negative-radius-upper($background-color, $height) {
-  background: $background-color;
   background: linear-gradient(315deg, transparent $height, $background-color 0) bottom right;
   background-image: radial-gradient(circle at 100% 100%, transparent $height, $background-color $height+2px);
 }
 
 @mixin negative-radius-downer($background-color, $height) {
-  background: $background-color;
   background: linear-gradient(45deg, transparent $height, $background-color 0) top right;
   background-image: radial-gradient(circle at 100% 0%, transparent $height, $background-color $height+2px);
+}
+
+@mixin categorie-selector($primary-color) {
+  &:hover, &.active {
+    background-color: $primary-color;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  &.active {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  &:hover:after {
+    @include after('', block, absolute, -15px, auto, 15px, 15px);
+    top: 0;
+    @include negative-radius-upper($primary-color, 15px);
+  }
 }
 
 

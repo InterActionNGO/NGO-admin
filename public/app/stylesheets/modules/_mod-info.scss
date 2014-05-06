@@ -2,15 +2,20 @@
   border-bottom: 3px solid $color-4;
   padding-bottom: 20px;
   margin-bottom: 30px;
-
   &:last-child {
     border-bottom: 0;
   }
-
   h3 {
     margin-bottom: 20px;
     font-size: 15px;
     text-transform: uppercase;
+    .mod-header & {
+      float: left;
+      margin-right: 10px;
+      margin-bottom: 0;
+      line-height: 24px;
+    }
+    a { color: $color-3;}
   }
   span {
     font-size: 48px;

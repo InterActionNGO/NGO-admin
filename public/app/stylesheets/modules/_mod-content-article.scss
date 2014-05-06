@@ -6,6 +6,7 @@
     padding-bottom: 10px;
 
     .about & { color: $color-8;}
+    .data &  { color: $color-1;}
     .news  & { color: $color-7;}
   }
   .first {
@@ -19,7 +20,10 @@
     .about & { @include theme-color-8; color: $primary-color;}
     .news  & { @include theme-color-7; color: $primary-color;}
   }
-  p { padding-bottom: 20px;}
+  p {
+    padding-bottom: 20px;
+  }
+
   a {
     display: inline-block;
     color: $color-2;
@@ -31,6 +35,9 @@
   li {
     list-style: disc;
     line-height: 25px;
+    .about-subsections &{
+      list-style: none;
+    }
   }
   ul {
     padding-bottom: 20px;
@@ -38,5 +45,7 @@
     list-style: disc;
   }
   b font { color: $color-2 !important;}
+
+  //a[href="mailto:mappinginfo@interaction.org"] { margin-bottom: 20px;}
 }
 
