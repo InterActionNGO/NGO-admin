@@ -104,14 +104,16 @@
 
   <div class="grid-12 offset-1">
     <section class="layout-content">
-
       <header>
         <h1 class="section-title">Search projects</h1>
-
-        <% unless @projects.present? and @projects.any? %>
+      </header>
+      <div class="mod-search">
+        <% if @projects.present? and @projects.any? %>
+          <p>Showing results for: <strong>'<%= params[:q] %>'</strong></p>
+        <% else %>
           <p>No projects were found for <strong>'<%= params[:q] %>'</strong></p>
         <% end %>
-      </header>
+      </div>
 
       <% if @projects.present? %>
         <div class="articles-list">
