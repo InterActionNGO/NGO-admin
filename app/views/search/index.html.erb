@@ -5,8 +5,16 @@
 
 <div class="row">
   <div class="grid-4">
-    <aside class="layout-sidebar" id="searchSidebar">
+    <aside class="layout-sidebar mod-form" id="searchSidebar">
       <!-- TODO: Sidebar search -->
+
+        <div class="block search">
+          <form method="get">
+            <%= text_field_tag :q, params[:q], :placeholder => 'Search' %>
+            <%= submit_tag '' %>
+          </form>
+        </div>
+
         <div class="block region">
           <h2><%= @site.word_for_regions %></h2>
           <ul class="filter_list">
@@ -16,7 +24,7 @@
               </li>
             <% end %>
           </ul>
-          <input type="text" id="autocomplete_regions" class="autocomplete" value="<%= @filtered_regions.any?? "Add a #{@site.word_for_regions.downcase.singularize}" : "All #{@site.word_for_regions.downcase}" %>" />
+          <input type="text" id="autocomplete_regions" class="autocomplete" placeholder="<%= @filtered_regions.any?? "Add a #{@site.word_for_regions.downcase.singularize}" : "All #{@site.word_for_regions.downcase}" %>" />
           <%= hidden_field_tag('regions_ids', @filtered_regions.map(&:id).join(','), :class => 'regions ids') %>
         </div>
 
@@ -30,7 +38,7 @@
                 </li>
               <% end %>
             </ul>
-            <input type="text" id="autocomplete_clusters" class="autocomplete" value="<%= @filtered_clusters.any?? "Add a #{@site.word_for_clusters.singularize}" : "All #{@site.word_for_clusters}" %>" />
+            <input type="text" id="autocomplete_clusters" class="autocomplete" placeholder="<%= @filtered_clusters.any?? "Add a #{@site.word_for_clusters.singularize}" : "All #{@site.word_for_clusters}" %>" />
             <%= hidden_field_tag('clusters_ids', @filtered_clusters.map(&:id).join(','), :class => 'clusters ids') %>
           </div>
         <% else %>
@@ -43,7 +51,7 @@
                   </li>
                 <% end %>
               </ul>
-              <input type="text" id="autocomplete_sectors" class="autocomplete" value="<%= @filtered_sectors.any?? "Add a #{@site.word_for_clusters.singularize}" : "All #{@site.word_for_clusters}" %>" />
+              <input type="text" id="autocomplete_sectors" class="autocomplete" placeholder="<%= @filtered_sectors.any?? "Add a #{@site.word_for_clusters.singularize}" : "All #{@site.word_for_clusters}" %>" />
               <%= hidden_field_tag('sectors_ids', @filtered_sectors.map(&:id).join(','), :class => 'sectors ids') %>
           </div>
         <% end %>
@@ -57,7 +65,7 @@
                 </li>
               <% end %>
             </ul>
-            <input type="text" id="autocomplete_organizations" class="autocomplete" value="<%= @filtered_organizations.any?? "Add a organization" : "All organizations" %>" />
+            <input type="text" id="autocomplete_organizations" class="autocomplete" placeholder="<%= @filtered_organizations.any?? "Add a organization" : "All organizations" %>" />
             <%= hidden_field_tag('organizations_ids', @filtered_organizations.map(&:id).join(','), :class => 'organizations ids') %>
         </div>
 
@@ -70,7 +78,7 @@
                 </li>
               <% end %>
             </ul>
-            <input type="text" id="autocomplete_donors" class="autocomplete" value="<%= @filtered_donors.any?? "Add a donor" : "All donors" %>" />
+            <input type="text" id="autocomplete_donors" class="autocomplete" placeholder="<%= @filtered_donors.any?? "Add a donor" : "All donors" %>" />
             <%= hidden_field_tag('donors_ids', @filtered_donors.map(&:id).join(','), :class => 'donors ids') %>
         </div>
 
@@ -97,17 +105,8 @@
   <div class="grid-12 offset-1">
     <section class="layout-content">
 
-      <%= render 'new_partials/aside/follow_us' %>
-
       <header>
         <h1 class="section-title">Search projects</h1>
-
-        <div class="mod-form">
-          <form method="get">
-            <%= text_field_tag :q, params[:q], :placeholder => 'Search' %>
-            <%= submit_tag 'Search' %>
-          </form>
-        </div>
 
         <% unless @projects.present? and @projects.any? %>
           <p>No projects were found for <strong>'<%= params[:q] %>'</strong></p>

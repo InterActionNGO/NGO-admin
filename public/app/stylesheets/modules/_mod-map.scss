@@ -1,7 +1,6 @@
 .mod-map {
-  border-top: $border-bottom-color-1;
-  height: 700px;
   position: relative;
+  top: -60px;
 }
 
 #map {
@@ -12,12 +11,11 @@
 }
 
 .map-tooltip {
-
+  display: none;
   border: 0;
   position: absolute;
   margin: 0;
   padding: 0;
-  display: none;
   width: 175px;
 }
 
@@ -26,20 +24,46 @@
   position: relative;
   float: left;
   padding: 9px 15px 3px 11px;
-  width: 149px;
+  width: 150px;
   height: auto;
-  background: image-url("sites/common/tooltips/body_tooltip.png") no-repeat center top;
-  font: bold 17px "PT Sans";
+  font-size: 30px;
+  font-weight:  light;
+  font-family: $font-family;
   text-align: center;
-  color: white;
+  color: $color-1;
+  background-color: $color-0;
+  border: $border-bottom-color-1;
+
+  &:after, &:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: transparent;
+    border-top-color: $color-0;
+    border-width: 22px;
+    margin-left: -22px;
+  }
+  &:before {
+    border-color: transparent;
+    border-top-color: #B3D3DE;
+    border-width: 27px;
+    margin-left: -27px;
+  }
+  .strong {
+    font-weight: bold !important;
+    color: $color-3 !important;
+    font-size: 16px !important;
+    text-transform: uppercase !important;
+  }
 }
 
-.map-bottom-tooltip {
-  border: 0;
-  position: relative;
-  float: left;
-  background: image-url("sites/common/tooltips/bottom_tooltip.png") no-repeat 0 0;
-  width: 175px;
-  height: 14px;
-}
+
 

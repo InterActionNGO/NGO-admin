@@ -1,7 +1,8 @@
 .mod-header {
-  position: relative;
   font-size: 14px;
   font-weight: bold;
+  box-shadow: 0 0 0 5px rgba($color-1, 0.3);
+  margin-bottom: 60px;
   .aid-map-logo {
     float: left;
     padding-top: 10px;
@@ -26,7 +27,6 @@
     &:hover {
       .submenu {
         display: block;
-        border-radius-bottom: 0;
       }
     }
   }
@@ -40,6 +40,8 @@
     z-index: 100;
     margin-top: 0;
     background-color: $color-0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     .submenu-item {
       float: none;
       text-align: left;
@@ -57,7 +59,7 @@
       border-radius: 15px;
     }
     .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
+      border-top: 5px solid rgba($primary-color, .3);
     }
     .submenu-item { background-color: rgba($primary-color, .1);
       &:hover {
@@ -81,7 +83,7 @@
       }
     }
     .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
+      border-top: 5px solid rgba($primary-color, .3);
     }
     .submenu-item { background-color: rgba($primary-color, .1);
       &:hover {
@@ -99,6 +101,7 @@
         color: $color-3;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
+        a { color: $color-3;}
       }
     }
   }
@@ -114,7 +117,7 @@
       }
     }
     .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
+      border-top: 5px solid rgba($primary-color, .3);
     }
     .submenu-item { background-color: rgba($primary-color, .1);
       &:hover {
@@ -129,8 +132,10 @@
       background-color: $primary-color;
       color: $color-0;
       &:hover {
+        color: $color-3;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
+        a { color: $color-3;}
       }
     }
   }
@@ -144,7 +149,7 @@
       }
     }
     .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
+      border-top: 5px solid rgba($primary-color, .3);
     }
     .submenu-item { background-color: rgba($primary-color, .1);
       &:hover {
