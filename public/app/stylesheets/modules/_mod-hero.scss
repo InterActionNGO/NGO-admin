@@ -1,10 +1,12 @@
 .mod-hero {
   height: 340px;
-
-  &.about {
-    background: image-url('hero-about.png') no-repeat center top;
-    background-color: $color-4;
-    @include theme-color-8;
-    border-top: 5px solid $primary-color;
-  }
+  position: relative;
+  top: -60px;
+  background-color: $color-4;
+  .about &,
+  .purpose &,
+  .getting-on-the-map &,
+  .staff-list &,
+  .contact-us &,
+  .of-interest & { background: image-url('hero-about.png') no-repeat center top;}
 }

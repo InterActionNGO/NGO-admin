@@ -1,31 +1,26 @@
 
-<div id="layout">
-  <div id="pages">
-    <div id="relative_content" class="left">
-      <div class="outer_head">
-        <div class="head">
-          <h1>Report</h1>
+<div class="row">
+
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+      <div class="mod-report-filter mod-form">
+
+        <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
+
+        <div class="block search">
+          <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
+          <%= submit_tag '' %>
         </div>
-      </div>
-      <div class="body">
-        <div class="main_layout">
-  <div class="block">
-    <div class="long_search">
-      <span class="top"></span>
-      <div class="content padding">
-        <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get, :class => :search) do %>
-          <label>SEARCH BY TEXT</label>
-          <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, place,..." name="q" class="main_search"/>
-          <input type="submit" value="Enviar"/>
-          <hr>
-          <ul class="combo_search_select clearfix">
+
+          <ul class="combo_search_select">
             <li class="comboselect">
-              <label>Organization</label>@
+              <label>Organization</label>
               <%= select_tag :organization,
                 options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
-            <!--             <hr>
+
+            <!--
             <li class="comboselect">
               <label>Layer</label>
               <%= select_tag :layer,
@@ -33,21 +28,21 @@
                 <%= select_tag :layer_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
                 <%= text_field_tag (:layer_unit) %>
             </li>  -->
+
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
                 options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-
             </li>
-            <hr>
+
             <li class="comboselect">
               <label>SECTOR</label>
               <%= select_tag :sector,
                 options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
                 <%= select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
-            <hr>
+
             <li class="comboselect">
               <label>DONOR</label>
               <%= select_tag :donor,
@@ -55,7 +50,6 @@
                 <%= select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
 
-            <hr>
             <li class="comboselect date">
               <label>Start date</label>
               <div class="select_date">
@@ -63,7 +57,7 @@
                 <!-- <%= select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
               </div>
             </li>
-            <hr>
+
             <li class="comboselect date">
               <label>End date</label>
               <div class="select_date">
@@ -71,20 +65,24 @@
                 <!-- <%= select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
               </div>
             </li>
-
           </ul>
+
         <% end %>
-      </div>
-      <span class="bottom"></span>
-    </div>
+      </div> <!-- mod-report-filter -->
+    </aside>
   </div>
-</div>
+
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
+      <article class="mod-content-article">
+        <h2 class="section-title">Report</h2>
+      </article>
+
+    </section>
+  </div>
+
+</div> <!-- row -->
 
 <script src="/app/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
-
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="/app/javascripts/sites/pages.js" type="text/javascript" charset="utf-8"></script>

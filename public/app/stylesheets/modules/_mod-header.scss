@@ -1,10 +1,24 @@
 .mod-header {
-  position: relative;
   font-size: 14px;
   font-weight: bold;
+  margin-bottom: 60px;
+  box-shadow: 0 0 0 5px rgba($color-1, 0.3);
+
+  .about &,
+  .purpose &,
+  .getting-on-the-map &,
+  .staff-list &,
+  .contact-us &,
+  .of-interest & { box-shadow: 0 0 0 5px $color-8;}
+
+  .data &,
+  .top-things-you-should-know-about-the-data &,
+  .data-guidance &,
+  .analysis & { box-shadow: 0 0 0 5px $color-1;}
+
   .aid-map-logo {
     float: left;
-    padding-top: 10px;
+    padding-top: 20px;
   }
   .menu {
     margin-top: 50px;
@@ -19,14 +33,11 @@
     .index-item {
       position: relative;
       padding: 5px 1%;
-      &.active {
-        border-radius: 15px;
-      }
+      &.active { border-radius: 15px;}
     }
     &:hover {
       .submenu {
         display: block;
-        border-radius-bottom: 0;
       }
     }
   }
@@ -40,6 +51,8 @@
     z-index: 100;
     margin-top: 0;
     background-color: $color-0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     .submenu-item {
       float: none;
       text-align: left;
@@ -57,7 +70,7 @@
       border-radius: 15px;
     }
     .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
+      border-top: 5px solid rgba($primary-color, .3);
     }
     .submenu-item { background-color: rgba($primary-color, .1);
       &:hover {
@@ -71,93 +84,13 @@
   }
   .about {
     @include theme-color-8;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      &:after {
-        @include after('', block, absolute, -12px, 0, 12px, 12px);
-        @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      }
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &:hover .active {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-      &:hover {
-        color: $color-3;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-      }
-    }
+    @include drop-down-menu($primary-color);
   }
   .data {
     @include theme-color-1;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      &:after {
-        @include after('', block, absolute, -12px, 0, 12px, 12px);
-        @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      }
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &:hover .active {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-      &:hover {
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-      }
-    }
-  }
-  .contact {
-    @include theme-color-7;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      &:after {
-        @include after('', block, absolute, -12px, 0, 12px, 12px);
-        @include negative-radius-downer(rgba($primary-color, .3), 12px);
-      }
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);;
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-    }
+    @include drop-down-menu($primary-color);
   }
   .access:hover .index-item { color: rgba($color-3, .3); }
-
 }
 
 .mod-footer .submenu { display: none;}

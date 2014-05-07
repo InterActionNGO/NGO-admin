@@ -39,8 +39,6 @@
   <div class="grid-12 offset-1">
     <section class="layout-content">
 
-      <%= render 'new_partials/aside/follow_us' %>
-
       <header>
         <h1 class="section-title"><%= @donor.name.html_safe %></h1>
         <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>

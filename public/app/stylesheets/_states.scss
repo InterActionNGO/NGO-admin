@@ -5,4 +5,7 @@
 
 .is-fixed {
   position: fixed;
+  .grid-4 & {
+    width: 21.52941%;
+  }
 }

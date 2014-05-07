@@ -20,7 +20,7 @@
     color:$color-2;
     text-decoration: underline;
   }
-  #next, #previous {
+  #next, #previous, .more-projects {
     display: block;
     width: auto;
     height: 50px;
@@ -43,4 +43,10 @@
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
   }
+  .more-projects {
+    width: 10%;
+    margin: 0 auto;
+    border-radius: 20px;
+  }
+
 }

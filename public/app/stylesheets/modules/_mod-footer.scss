@@ -4,16 +4,19 @@
   font-size: 13px;
   margin-top: 80px;
   ul {
-    width: 120%;
-    margin: 0 -10%;
+    width: 110%;
+    margin-left:-10%;
   }
   li {
     float: left;
+    min-width: 6%;
+    margin-left: 10%;
+    margin-right: 10%;
     font-weight: bold;
     font-size: 13px;
     text-transform: uppercase;
     text-align: center;
-    margin: 0 10%;
+    &:last-child { margin-right: 0;}
   }
   .aid-map-logo {
     float: left;
@@ -35,7 +38,6 @@
 
   .address {
     float: left;
-    margin-left: 20px;
     text-align: left;
   }
   .link-to-simbiotica {
