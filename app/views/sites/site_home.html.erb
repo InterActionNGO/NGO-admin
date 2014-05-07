@@ -42,7 +42,7 @@
           <div class="mod-affiliated-organizations" >
             <h3>Some organizations</h3>
             <% @site.projects_organizations[0...9].each do |organization, count| %>
-              <li><%= link_to organization.name, organization_path(organization) %> - <%= pluralize(count, 'project') %></li>
+              <li><%= link_to organization.name, organization_path(organization) %> <%= pluralize(count, 'project') %></li>
             <% end %>
           </div>
         </div>
