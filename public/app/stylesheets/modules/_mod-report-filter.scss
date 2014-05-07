@@ -1,5 +1,11 @@
 .mod-report-filter {
-    .comboselect {
-      width: 100%;
-    }
+  .comboselect {
+    width: 100%;
+  }
+  .applied-filters {
+    width: 90%;
+    padding: 5%;
+    border: 2px solid $color-4;
+  }
+
 }

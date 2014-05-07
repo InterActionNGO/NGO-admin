@@ -132,6 +132,10 @@
     &:hover {
       background-color: rgba($primary-color, .3);
     }
+    &:last-child {
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
   }
   &:hover .active {
     border-bottom-left-radius: 0px;
