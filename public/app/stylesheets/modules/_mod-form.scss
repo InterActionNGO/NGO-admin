@@ -6,13 +6,14 @@
     border-radius: 20px;
     background-color: $color-4;
     overflow: hidden;
-    margin: 10px 0;
+    margin: 10px 0 20px 0;
   }
   h2 {
     font-size: 15px;
     text-transform: uppercase;
     padding-bottom: 5px;
   }
+  h3 { margin-bottom: 5px;}
   input, select {
     width: 90%;
     height: 40px;
@@ -40,7 +41,7 @@
   #date_end_year {
     margin-right: 2%;
   }
-  #q{
+  #q, .main_search{
     float: left;
     width: 85%;
     padding: 0;
