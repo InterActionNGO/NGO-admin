@@ -5,8 +5,8 @@
 
 // Add in the plugin with the following files:
 
-//  <script type="text/javascript" src="jquery.liveupdate/quicksilver.js"></script>                            
-//  <script type="text/javascript" src="jquery.liveupdate/jquery.liveupdate.js"></script>  
+//  <script type="text/javascript" src="jquery.liveupdate/quicksilver.js"></script>
+//  <script type="text/javascript" src="jquery.liveupdate/jquery.liveupdate.js"></script>
 
 // $('#your-input').liveUpdate('#list-id')
 // If you have html or anchors in your list, remember it only strips out the innerHTML of each jquery elem
@@ -16,23 +16,24 @@
 
 jQuery.fn.liveUpdate = function(list){
   list = jQuery(list);
+  var cache;
   if ( list.length ) {
-      cache = list.map(function(){
+    cache = list.map(function(){
         return this.innerHTML.toLowerCase();
       });
-      
+
     this
       .keyup(filter).keyup()
       .parents('form').submit(function(){
         return false;
       });
   }
-    
+
   return this;
-    
+
   function filter(){
     var term = jQuery.trim( jQuery(this).val().toLowerCase() ), scores = [];
-    
+
     if ( !term ) {
       list.show();
     } else {

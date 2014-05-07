@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
       # If the request host isn't the main_site_host, it should be the host from a site
       if request.host != main_site_host
        # unless @site = Site.published.where(:url => request.host).first
-        unless @site = Site.find_by_name("generic")
+        unless @site = Site.find_by_name("global")
           raise ActiveRecord::RecordNotFound
         end
       else
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
         end
       rescue
       ensure
-        render :file => "public/404.html.erb", :status => 404, :layout => false
+        render :file => "errors/404.html.erb", :status => 404, :layout => "layouts/error.html.erb"
       end
     end
 
