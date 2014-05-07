@@ -30,16 +30,12 @@ require([
   'views/menu-fixed'
 ], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView) {
 
-  var $body = $('body');
 
   new Routes();
-
   new ClustersView();
   new MapView();
   new FiltersView();
   new MenuFixedView();
-
-
 
   function addClassToBody(){
     var newClass, position;
@@ -47,15 +43,12 @@ require([
     position = window.location.pathname.split('/').length - 1;
     newClass = window.location.pathname.split('/')[position];
 
-    $body.addClass(newClass);
+    $('body').addClass(newClass);
   }
 
   function goTo(e) {
-    console.log($(e.currentTarget).attr('href'));
     var whereToGo = $($(e.currentTarget).attr('href')).offset().top;
-
-    $body.animate({scrollTop: whereToGo - 60}, 500);
-    console.log(whereToGo);
+    $('body, html').animate({scrollTop: whereToGo - 60}, 500);
     e.preventDefault();
   }
 
