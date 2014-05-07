@@ -2,7 +2,7 @@
   nav {
     float: left;
     position: relative;
-    width: 80%;
+    width: 98%;
     margin-top: 7px;
     padding: .5% 1%;
     background-color: $color-0;
@@ -34,84 +34,19 @@
     }
   }
   .sector {
-    &:hover, &.active {
-    background-color: $color-2;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    }
-    &.active {
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-    &:hover:after {
-      @include after('', block, absolute, -15px, auto, 15px, 15px);
-      top: 0;
-      @include negative-radius-upper($color-2, 15px);
-    }
+    @include categorie-selector($color-2);
   }
   .organizations {
-    &:hover, &.active {
-    background-color: $color-6;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    }
-    &.active {
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-    &:hover:after {
-      @include after('', block, absolute, -15px, auto, 15px, 15px);
-      top: 0;
-      @include negative-radius-upper($color-6, 15px);
-    }
+    @include categorie-selector($color-6);
   }
   .donors {
-    &:hover, &.active {
-    background-color: $color-7;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    }
-    &.active {
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-    &:hover:after {
-      @include after('', block, absolute, -15px, auto, 15px, 15px);
-      top: 0;
-      @include negative-radius-upper($color-7, 15px);
-    }
+    @include categorie-selector($color-7);
   }
   .countries {
-    &:hover, &.active {
-    background-color: $color-8;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    }
-    &.active {
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-    &:hover:after {
-      @include after('', block, absolute, -15px, auto, 15px, 15px);
-      top: 0;
-      @include negative-radius-upper($color-8, 15px);
-    }
+    @include categorie-selector($color-8);
   }
   .regions {
-    &:hover, &.active {
-    background-color: $color-9;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    }
-    &.active {
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-    &:hover:after {
-      @include after('', block, absolute, -15px, auto, 15px, 15px);
-      top: 0;
-      @include negative-radius-upper($color-2, 15px);
-    }
+    @include categorie-selector($color-9);
   }
   .search {
     padding: 0;

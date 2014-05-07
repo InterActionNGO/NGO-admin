@@ -5,30 +5,17 @@
   font-weight: lighter;
   font-size: 16px;
   h2 a{
-    color: $color-1;
     font-size: 16px;
     padding-bottom: 10px;
-    &:hover {
-      color: lighten($color-1, 10%);
-      text-decoration: underline;
-    }
+    font-weight: bold;
+    @include link-states($color-1, block);
   }
   span { color: $color-5;}
   span a {
-    display: inline-block;
-    color: $color-2;
-    &:hover {
-      color: lighten($color-2, 10%);
-      text-decoration: underline;
-    }
+    @include link-states($color-2, inline-block);
   }
   .learn_more {
-    display: inline-block;
-    color: $color-1;
-    &:hover {
-      color: lighten($color-1, 10%);
-      text-decoration: underline;
-    }
+    @include link-states($color-1, inline-block);
   }
 }
 

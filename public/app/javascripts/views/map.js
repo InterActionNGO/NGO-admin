@@ -678,7 +678,7 @@ define(['sprintf'], function(sprintf) {
       if (this.$el.length === 0) {
         return false;
       }
-      var h = $(window).height() - 175;
+      var h = $(window).height() - 204;
       this.$el.height(h);
       old();
     }
