@@ -4,7 +4,7 @@ class SitesController < ApplicationController
 
   def home
 
-    @site = Site.find_by_name("generic")
+    @site = Site.find_by_name("global")
 
     if @site
       site_home
