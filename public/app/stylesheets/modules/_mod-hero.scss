@@ -2,9 +2,11 @@
   height: 340px;
   position: relative;
   top: -60px;
-
-  &.about {
-    background: image-url('hero-about.png') no-repeat center top;
-    background-color: $color-4;
-  }
+  background-color: $color-4;
+  .about &,
+  .purpose &,
+  .getting-on-the-map &,
+  .staff-list &,
+  .contact-us &,
+  .of-interest & { background: image-url('hero-about.png') no-repeat center top;}
 }

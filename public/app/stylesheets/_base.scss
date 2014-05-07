@@ -56,18 +56,35 @@ h1 {
   margin-bottom: 25px;
   font-size: 48px;
   font-weight: lighter;
-  .about & { color: $color-8;}
-  .data &  { color: $color-1;}
-  .news  & { color: $color-7;}
+  .about &,
+  .purpose &,
+  .getting-on-the-map &,
+  .staff-list &,
+  .contact-us &,
+  .of-interest & { color: $color-8;}
+
+  .data &,
+  .top-things-you-should-know-about-the-data &,
+  .data-guidance &,
+  .analysis &  { color: $color-1;}
+
 }
 h2 {
   margin-bottom: 10px;
   font-size: 36px;
   font-weight: lighter;
   text-transform: capitalize;
-  .about & { color: $color-8;}
-  .data &  { color: $color-1;}
-  .news  & { color: $color-7;}
+  .about &,
+  .purpose &,
+  .getting-on-the-map &,
+  .staff-list &,
+  .contact-us &,
+  .of-interest &  { color: $color-8;}
+
+  .data &,
+  .top-things-you-should-know-about-the-data &,
+  .data-guidance &,
+  .analysis &   { color: $color-1;}
 }
 h3 {
   margin-bottom: 20px;
@@ -106,7 +123,6 @@ input {
     color: $color-5;
     font-size: 14px;
   }
-
 
 
 

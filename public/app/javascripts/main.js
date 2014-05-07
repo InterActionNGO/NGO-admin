@@ -30,6 +30,8 @@ require([
   'views/menu-fixed'
 ], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView) {
 
+  var $body = $('body');
+
   new Routes();
 
   new ClustersView();
@@ -37,20 +39,31 @@ require([
   new FiltersView();
   new MenuFixedView();
 
+
+
+  function addClassToBody(){
+    var newClass, position;
+
+    position = window.location.pathname.split('/').length - 1;
+    newClass = window.location.pathname.split('/')[position];
+
+    $body.addClass(newClass);
+  }
+
+  function goTo(e) {
+    console.log($(e.currentTarget).attr('href'));
+    var whereToGo = $($(e.currentTarget).attr('href')).offset().top;
+
+    $body.animate({scrollTop: whereToGo - 60}, 500);
+    console.log(whereToGo);
+    e.preventDefault();
+  }
+
+  $('.click-to-see-btn').on('click', goTo);
+
+
+   addClassToBody();
+
 });
 
-
-var newClass;
-var position;
-
-function getClass() {
-  position = window.location.pathname.split("/").length - 1;
-  newClass = window.location.pathname.split("/")[position];
-  addClassToBody();
-}
-function addClassToBody(){
-  $('body').addClass(newClass);
-}
-
-getClass();
 
