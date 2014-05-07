@@ -1,14 +1,12 @@
 .mod-go-to-projects {
   .click-to-see {
-    position: absolute;
+    float: right;
     border-radius: 40px;
     box-shadow: 0 0 0 5px rgba($color-1 ,0.3);
     font-weight: lighter;
     font-size: 14px;
     text-transform: uppercase;
     cursor: pointer;
-    bottom: 20px;
-    right: 20px;
     width: 250px;
     height: 20px;
     background-color: $color-0;

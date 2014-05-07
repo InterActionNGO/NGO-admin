@@ -14,7 +14,7 @@
 
           <ul class="combo_search_select">
             <li class="comboselect">
-              <label>Organization</label>
+              <label>ORGANIZATION</label>
               <%= select_tag :organization,
                 options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
@@ -51,7 +51,7 @@
             </li>
 
             <li class="comboselect date">
-              <label>Start date</label>
+              <label>START DATE</label>
               <div class="select_date">
                 <%= select_date @date_start, :prefix => :start_date %>
                 <!-- <%= select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
@@ -59,7 +59,7 @@
             </li>
 
             <li class="comboselect date">
-              <label>End date</label>
+              <label>END DATE</label>
               <div class="select_date">
                 <%= select_date @date_end, :prefix => :end_date %>
                 <!-- <%= select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
@@ -76,7 +76,18 @@
     <section class="layout-content">
 
       <article class="mod-content-article">
-        <h2 class="section-title">Report</h2>
+        <h1>Report</h1>
+          <div class="applied-filters">
+            <p>Filters applied:</p>
+            <p><strong>Organizations:</strong>Action Contre la Faim - ACF International, Agency for Technical Cooperation and Development (ACTED), CARE, IFRC/National Societies</p>
+            <p><strong>Donors:</strong>Action Contre la Faim - ACF International, African Rescue Committee, American Red Cross, Ann Ford</p>
+            <p><strong>Countries:</strong>Barbados, Belize, Bolivia, Burkina Faso, Burundi, Central African Rep., Chad</p>
+            <p><strong>From:</strong>1990 - January / To: All years - All months</p>
+          </div>
+
+          <div class="results">
+
+          </div>
       </article>
 
     </section>
