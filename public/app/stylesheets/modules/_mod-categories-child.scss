@@ -8,82 +8,34 @@
   height: 350px;
   background-color: $color-0;
   overflow: scroll;
-
   li {
     float: none;
     line-height: 15px;
     margin: 0;
   }
   a {
-    font-weight: bold;
     font-size: 16px;
     text-transform: none;
   }
   input {
-    width: 100%;
+    width: 90%;
     margin: 0;
-    padding: 5px 20px;
+    padding: 5px 5%;
     text-transform: uppercase;
   }
 }
 .sector-child {
-  border-bottom: 10px solid $color-2;
-  a { color: $color-2;
-    &:hover { color: $color-2;}
-  }
-  li {
-    &:hover, &.active { background-color: rgba($color-2, 0.3)}
-  }
+  @include categorie-selector-child($color-2);
 }
 .organizations-child {
-  border-bottom: 10px solid $color-6;
-  a { color: $color-6;
-    &:hover { color: $color-6;}
-  }
-  li {
-    &:hover, &.active { background-color: rgba($color-6, 0.3)}
-  }
-  input {
-    &[placeholder] { color: $color-6;}
-    background-color: rgba($color-6, 0.3);
-  }
+  @include categorie-selector-child($color-6);
 }
 .donors-child {
-  border-bottom: 10px solid $color-7;
-  a { color: $color-7;
-    &:hover { color: $color-7}
-  }
-  li {
-    &:hover, &.active { background-color: rgba($color-7, 0.3)}
-  }
-  input {
-    color: $color-7;
-    background-color: rgba($color-7, 0.3);
-  }
+  @include categorie-selector-child($color-7);
 }
 .countries-child {
-  border-bottom: 10px solid $color-8;
-  a { color: $color-8;
-    &:hover { color: $color-8;}
-  }
-  li {
-    &:hover, &.active { background-color: rgba($color-8, 0.3)}
-  }
-  input {
-    color: $color-8;
-    background-color: rgba($color-8, 0.3);
-  }
+   @include categorie-selector-child($color-8);
 }
 .regions-child {
-  border-bottom: 10px solid $color-9;
-  a { color: $color-9;
-    &:hover { color: $color-9;}
-  }
-  li {
-    &:hover, &.active { background-color: rgba($color-9, 0.3)}
-  }
-  input {
-    color: $color-9;
-    background-color: rgba($color-9, 0.3);
-  }
+  @include categorie-selector-child($color-9);
 }
