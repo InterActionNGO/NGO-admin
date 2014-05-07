@@ -21,9 +21,13 @@
   li {
     margin-bottom: 3px;
     line-height: 1.2;
+    font-weight: lighter;
   }
   a {
     font-size: 16px;
+    font-weight: lighter;
     @include link-states($color-2, inline-block);
   }
 }
+
+
