@@ -4,10 +4,22 @@ class AddStaticPagesForGenericSite < ActiveRecord::Migration
     generic_site_id = Site.where(:name => "generic").select("id").first.id
     # PAGES FOR "DATA" MENU
 
+    data = Page.new do |p|
+      p.site_id = generic_site_id
+      p.title = "Data"
+      p.permalink = "data"
+      p.published = "TRUE"
+      p.order_index = 1
+    end
+    data.save
+
+    data_parent_id = Page.where(:permalink => "data", :site_id => generic_site_id).first.id
+
     #Create top things page
     generic_top_site = Page.where(:permalink => "top-things-you-should-know-about-the-data").first.clone
     generic_top_site.created_at = generic_top_site.updated_at = nil
     generic_top_site.site_id=generic_site_id
+    generic_top_site.parent_id = data_parent_id
     generic_top_site.save
 
     #Create member guidance page
@@ -16,6 +28,7 @@ class AddStaticPagesForGenericSite < ActiveRecord::Migration
     member_guidance.permalink = "data-guidance"
     member_guidance.created_at = member_guidance.updated_at = nil
     member_guidance.site_id=generic_site_id
+    member_guidance.parent_id = data_parent_id
     member_guidance.save
 
 
@@ -74,6 +87,7 @@ class AddStaticPagesForGenericSite < ActiveRecord::Migration
 
   def self.down
     generic_site_id = Site.where(:name => "generic").select("id").first.id
+    Page.destroy_all(:site_id => generic_site_id, :permalink => "data")
     Page.destroy_all(:site_id => generic_site_id, :permalink => "top-things-you-should-know-about-the-data")
     Page.destroy_all(:site_id => generic_site_id, :permalink => "data-guidance")
     Page.destroy_all(:site_id => generic_site_id, :permalink => "purpose")
@@ -81,5 +95,6 @@ class AddStaticPagesForGenericSite < ActiveRecord::Migration
     Page.destroy_all(:site_id => generic_site_id, :permalink => "staff-list")
     Page.destroy_all(:site_id => generic_site_id, :permalink => "contact-us")
     Page.destroy_all(:site_id => generic_site_id, :permalink => "of-interest")
+    p Page.where(:site_id => generic_site_id)
   end
 end
