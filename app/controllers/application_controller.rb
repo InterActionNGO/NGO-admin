@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
         end
       rescue
       ensure
-        render :file => "public/404.html.erb", :status => 404, :layout => false
+        render :file => "errors/404.html.erb", :status => 404, :layout => "layouts/error.html.erb"
       end
     end
 

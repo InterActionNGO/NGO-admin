@@ -2,24 +2,10 @@
   font-weight: lighter;
   font-size: 16px;
   section { margin-bottom: 40px;}
-  .section-title {
-    padding-bottom: 10px;
+  p {
+    padding-bottom: 20px;
+  }
 
-    .about & { color: $color-8;}
-    .news  & { color: $color-7;}
-  }
-  .first {
-    margin-bottom: 30px;
-    font-size: 15px;
-    text-transform: uppercase;
-  }
-  .subsection-title {
-    font-weight: lighter;
-    font-size: 36px;
-    .about & { @include theme-color-8; color: $primary-color;}
-    .news  & { @include theme-color-7; color: $primary-color;}
-  }
-  p { padding-bottom: 20px;}
   a {
     display: inline-block;
     color: $color-2;
@@ -37,6 +23,9 @@
     padding-left: 30px;
     list-style: disc;
   }
-  b font { color: $color-2 !important;}
+  img {
+     margin-bottom: 40px;
+  }
+
 }
 
