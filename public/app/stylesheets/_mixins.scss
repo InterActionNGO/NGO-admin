@@ -78,19 +78,32 @@
   background-image: radial-gradient(circle at 100% 100%, transparent $height, $background-color $height+2px);
 }
 
-@mixin negative-radius-downer($background-color, $height) {
+@mixin negative-radius-down($background-color, $height) {
   background: linear-gradient(45deg, transparent $height, $background-color 0) top right;
   background-image: radial-gradient(circle at 100% 0%, transparent $height, $background-color $height+2px);
 }
 
 @mixin categorie-selector($primary-color) {
-  .mod-drop-down-menu { border-bottom: 10px solid $primary-color;}
+  .mod-go-up-menu {
+    border-bottom: 10px solid $primary-color;
+  }
+  .mod-drop-down-menu {
+    border-top: 10px solid $primary-color;
+    ul {
+      background-color: rgba($primary-color, .1);
+    }
+  }
+
   &:hover, &.active {
     background-color: $primary-color;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
   &.active {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
   }
@@ -99,6 +112,28 @@
     top: 0;
     @include negative-radius-upper($primary-color, 15px);
   }
+
+  .is-fixed &{
+    &:hover, &.active {
+      background-color: $primary-color;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    &.active {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+    &:hover:after {
+      @include after('', block, absolute, -15px, 0, 15px, 15px);
+      top: auto;
+      @include negative-radius-down($primary-color, 15px);
+    }
+  }
+
   input {
     color: $primary-color;
     @include placeholder { color: $primary-color;}
@@ -113,6 +148,9 @@
   li {
     &:hover, &.active { background-color: rgba($primary-color, 0.1)}
   }
+  input {
+    background-color: rgba($primary-color, .3);
+  }
 }
 
 @mixin drop-down-menu($primary-color){
@@ -122,7 +160,7 @@
     border-top-right-radius: 15px;
     &:after {
       @include after('', block, absolute, -12px, 0, 12px, 12px);
-      @include negative-radius-downer(rgba($primary-color, .3), 12px);
+      @include negative-radius-down(rgba($primary-color, .3), 12px);
     }
   }
   .submenu {
