@@ -27,15 +27,18 @@ require([
   'views/clusters',
   'views/map',
   'views/filters',
-  'views/menu-fixed'
-], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView) {
-
+  'views/menu-fixed',
+  'views/downloads',
+  'views/embed-map'
+], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView, DownloadsView, EmbedMapView) {
 
   new Routes();
   new ClustersView();
   new MapView();
   new FiltersView();
   new MenuFixedView();
+  new DownloadsView();
+  new EmbedMapView();
 
   var goToNormal;
 
