@@ -648,12 +648,6 @@ define(['sprintf'], function(sprintf) {
         }
       });
 
-      var hH = $('.float_head').height();
-
-      if (hH > 170) {
-        $('#controlZoom').css('top', hH - 110);
-      }
-
       $('#zoomOut').click(function(e) {
         e.preventDefault();
         map.setZoom(map.getZoom() - 1);
@@ -679,7 +673,11 @@ define(['sprintf'], function(sprintf) {
         return false;
       }
       var h = $(window).height() - 204;
-      this.$el.height(h);
+
+      this.$el.css({
+        height: h
+      });
+
       old();
     }
 
