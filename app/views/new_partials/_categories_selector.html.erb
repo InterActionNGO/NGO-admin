@@ -1,3 +1,5 @@
+
+
 <section class="categories-selector">
   <div class="row">
     <div class="grid-14">
@@ -15,13 +17,14 @@
                   <ul class="mod-categories-child sector-child">
                     <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
                       <li>
-                        <a href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
+                        <a class="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category)%>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
                           <% if category.name.size>25 %>
                             <%= category.name[0..22] + '...' %>
                           <% else %>
                             <%= category.name %>
                           <% end %>
                         </a>
+                        <span><%= category.projects.size %> projects</span>
                       </li>
                     <% end %>
                   </ul>

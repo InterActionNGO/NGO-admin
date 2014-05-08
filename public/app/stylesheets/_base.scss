@@ -118,11 +118,33 @@ $border-bottom-color-8: 5px solid $color-8;
 /**************************************FORMULARIOS********************************************/
 /*********************************************************************************************/
 input {
-    padding: 0;
-    border: none;
-    color: $color-5;
-    font-size: 14px;
-  }
+  padding: 0;
+  border: none;
+  color: $color-5;
+  font-size: 14px;
+}
+
+/*********************************************************************************************/
+/****************************************ICONS************************************************/
+/*********************************************************************************************/
+.health:before, a[href="/sectors/8"]:before { background: image-url('icon-health.png') no-repeat center;}
+.agriculture:before, a[href="/sectors/1"]:before { background: image-url('icon-agriculture.png') no-repeat center;}
+.communication:before, a[href="/sectors/2"]:before { background: image-url('icon-communication.png') no-repeat center;}
+.early_recovery:before { background: image-url('icon-early_recovery.png') no-repeat center;}
+.economic_recovery:before, a[href="/sectors/4"]:before { background: image-url('icon-economic_recovery.png') no-repeat center;}
+.education:before, a[href="/sectors/5"]:before { background: image-url('icon-education.png') no-repeat center;}
+.emergency:before { background: image-url('icon-emergency.png') no-repeat center;}
+.environment:before, a[href="/sectors/6"]:before { background: image-url('icon-environment.png') no-repeat center;}
+.disaster_management:before, a[href="/sectors/3"]:before { background: image-url('icon-other.png') no-repeat center;}
+.food_aid:before, a[href="/sectors/7"]:before { background: image-url('icon-food-aid.png') no-repeat center;}
+.human_rights:before, a[href="/sectors/9"]:before { background: image-url('icon-human_rights.png') no-repeat center;}
+.logistics:before { background: image-url('icon-logistics.png') no-repeat center;}
+.nutrition:before { background: image-url('icon-other.png') no-repeat center;}
+.other:before,a[href="/sectors/14"]:before { background: image-url('icon-other.png') no-repeat center;}
+.peace_security:before, a[href="/sectors/10"]:before { background: image-url('icon-peace_security.png') no-repeat center;}
+.protection:before, a[href="/sectors/11"]:before { background: image-url('icon-protection.png') no-repeat center;}
+.shelter:before, a[href="/sectors/12"]:before { background: image-url('icon-shelter.png') no-repeat center;}
+.water_sanitation:before, a[href="/sectors/13"]:before { background: image-url('icon-water.png') no-repeat center;}
 
 
 
