@@ -1,6 +1,8 @@
 .mod-map {
   position: relative;
   top: -60px;
+  min-height: 400px;
+  max-height: 650px;
 }
 
 #map {
@@ -23,16 +25,23 @@
   border: 0;
   position: relative;
   float: left;
-  padding: 9px 15px 3px 11px;
+  padding: 10px;
+  margin-bottom: 15px;
+  margin-left: -3px;
   width: 150px;
   height: auto;
-  font-size: 30px;
-  font-weight:  light;
-  font-family: $font-family;
-  text-align: center;
-  color: $color-1;
   background-color: $color-0;
   border: $border-bottom-color-1;
+  text-align: center;
+
+  h3 {
+    font-size: 30px;
+    font-weight:  lighter;
+    font-family: $font-family;
+    color: $color-1;
+    text-transform: none;
+    margin-bottom: 7px;
+  }
 
   &:after, &:before {
     top: 100%;
@@ -57,11 +66,12 @@
     border-width: 27px;
     margin-left: -27px;
   }
-  .strong {
-    font-weight: bold !important;
-    color: $color-3 !important;
-    font-size: 16px !important;
-    text-transform: uppercase !important;
+
+  strong {
+    font-weight: normal;
+    color: $color-3;
+    font-size: 13px;
+    text-transform: uppercase;
   }
 }
 

@@ -27,17 +27,42 @@ require([
   'views/clusters',
   'views/map',
   'views/filters',
-  'views/menu-fixed'
-], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView) {
-
+  'views/menu-fixed',
+  'views/downloads',
+  'views/embed-map'
+], function(Routes, ClustersView, MapView, FiltersView, MenuFixedView, DownloadsView, EmbedMapView) {
 
   new Routes();
   new ClustersView();
   new MapView();
   new FiltersView();
   new MenuFixedView();
+  new DownloadsView();
+  new EmbedMapView();
 
-  function addClassToBody(){
+  // var goToNormal;
+
+  // function fixCategoriesSelector() {
+  //   var categoriesSelector = $('.categories-selector'),
+  //       menu = $('.mod-categories-selector .menu'),
+  //       scrollTop     = $(window).scrollTop(),
+  //       elementOffset = categoriesSelector.offset().top,
+  //       distance      = (elementOffset - scrollTop);
+
+  //   if (distance  === 1 ) {
+  //     goToNormal = scrollTop;
+  //     categoriesSelector.addClass('is-fixed');
+  //     menu.removeClass('mod-go-up-menu');
+  //     menu.addClass('mod-drop-down-menu');
+
+  //   } else if (scrollTop < goToNormal) {
+  //     categoriesSelector.removeClass('is-fixed');
+  //     menu.addClass('mod-go-up-menu');
+  //     menu.removeClass('mod-drop-down-menu');
+  //   }
+  // }
+
+  function addClassToBody() {
     var newClass, position;
 
     position = window.location.pathname.split('/').length - 1;
@@ -47,16 +72,15 @@ require([
   }
 
   function goTo(e) {
-    var whereToGo = $($(e.currentTarget).attr('href')).offset().top;
-    $('body, html').animate({scrollTop: whereToGo - 60}, 500);
+    $('body, html').animate({
+      scrollTop: $('.layout-content').offset().top - 110
+    }, 500);
     e.preventDefault();
   }
 
   $('.click-to-see-btn').on('click', goTo);
 
-
-   addClassToBody();
+  addClassToBody();
+  //window.onscroll = fixCategoriesSelector;
 
 });
-
-
