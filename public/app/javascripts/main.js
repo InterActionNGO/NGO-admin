@@ -37,7 +37,7 @@ require([
   new FiltersView();
   new MenuFixedView();
 
-  function addClassToBody(){
+  function addClassToBody() {
     var newClass, position;
 
     position = window.location.pathname.split('/').length - 1;
@@ -47,16 +47,13 @@ require([
   }
 
   function goTo(e) {
-    var whereToGo = $($(e.currentTarget).attr('href')).offset().top;
-    $('body, html').animate({scrollTop: whereToGo - 60}, 500);
+    $('body, html').animate({
+      scrollTop: $('.layout-content').offset().top - 50
+    }, 500);
     e.preventDefault();
   }
 
   $('.click-to-see-btn').on('click', goTo);
-
-
-   addClassToBody();
+  addClassToBody();
 
 });
-
-
