@@ -40,6 +40,28 @@ require([
   new DownloadsView();
   new EmbedMapView();
 
+  // var goToNormal;
+
+  // function fixCategoriesSelector() {
+  //   var categoriesSelector = $('.categories-selector'),
+  //       menu = $('.mod-categories-selector .menu'),
+  //       scrollTop     = $(window).scrollTop(),
+  //       elementOffset = categoriesSelector.offset().top,
+  //       distance      = (elementOffset - scrollTop);
+
+  //   if (distance  === 1 ) {
+  //     goToNormal = scrollTop;
+  //     categoriesSelector.addClass('is-fixed');
+  //     menu.removeClass('mod-go-up-menu');
+  //     menu.addClass('mod-drop-down-menu');
+
+  //   } else if (scrollTop < goToNormal) {
+  //     categoriesSelector.removeClass('is-fixed');
+  //     menu.addClass('mod-go-up-menu');
+  //     menu.removeClass('mod-drop-down-menu');
+  //   }
+  // }
+
   function addClassToBody() {
     var newClass, position;
 
@@ -51,12 +73,14 @@ require([
 
   function goTo(e) {
     $('body, html').animate({
-      scrollTop: $('.layout-content').offset().top - 50
+      scrollTop: $('.layout-content').offset().top - 110
     }, 500);
     e.preventDefault();
   }
 
   $('.click-to-see-btn').on('click', goTo);
+
   addClassToBody();
+  //window.onscroll = fixCategoriesSelector;
 
 });
