@@ -33,6 +33,17 @@
         <%= render 'new_partials/aside/contact_info' %>
       <% end %>
 
+      <% if !@donor.media_resources.empty? && 0==1 %>
+        <div class="mod-info">
+          <h3>Media resources</h3>
+          <% @donor.media_resources.each do |media| %>
+            <ul>
+              <li><a href="<%= media.is_a_video? ? media.video_url : media.picture.url(:original) %>" target="_blank"><%= media.caption.present? ? media.caption : media.picture_file_name.present? ? media.picture_file_name : media.video_url %></a></li>
+            </ul>
+          <%end%>
+        </div>
+      <% end %>
+
     </aside>
   </div>
 
