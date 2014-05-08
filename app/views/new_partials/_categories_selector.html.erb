@@ -1,5 +1,3 @@
-
-
 <section class="categories-selector">
   <div class="row">
     <div class="grid-14">
@@ -13,7 +11,7 @@
             <% else %>
               <li class="sector" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
                 <%= @site.word_for_cluster_sector.upcase %>
-                <div class="mod-drop-down-menu">
+                <div class="mod-go-up-menu menu">
                   <ul class="mod-categories-child sector-child">
                     <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
                       <li>
@@ -34,7 +32,7 @@
 
             <li class="organizations">
               Organizations
-              <div class="mod-drop-down-menu">
+              <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child organizations-child">
                   <% @site.organizations_select.each do |organization| %>
                     <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
@@ -46,7 +44,7 @@
 
             <li class="donors">
               Donors
-              <div class="mod-drop-down-menu">
+              <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child donors-child">
                   <% @site.donors_select.each do |donor| %>
                     <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
@@ -59,7 +57,7 @@
           <% if @site.navigate_by == :country %>
             <li class="countries">
               Countries
-              <div class="mod-drop-down-menu">
+              <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child countries-child">
                   <% @site.countries_select.each do |country| %>
                     <li><%= link_to(country.name, location_path(:ids => country)) %></li>
@@ -72,7 +70,7 @@
 
             <li class="regions">
               Regions
-              <div class="mod-drop-down-menu">
+              <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child regions-child">
                   <% @site.regions_select.each do |region| %>
                     <li><%= link_to(region.name, location_path(:ids => region)) %></li>
