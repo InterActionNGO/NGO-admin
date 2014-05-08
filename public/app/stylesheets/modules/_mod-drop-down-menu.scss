@@ -1,0 +1,24 @@
+.mod-drop-down-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: -360px;
+  z-index: 100;
+  width: 250px;
+  height: 350px;
+  background-color: $color-0;
+  input {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    margin: 0;
+    padding: 5px 5%;
+    text-transform: uppercase;
+  }
+  .sector & {
+    display: block;
+    width: 480px;
+    height: 280px;
+    padding: 35px;
+  }
+}
