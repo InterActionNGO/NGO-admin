@@ -84,6 +84,7 @@
 }
 
 @mixin categorie-selector($primary-color) {
+  .mod-drop-down-menu { border-bottom: 10px solid $primary-color;}
   &:hover, &.active {
     background-color: $primary-color;
     border-bottom-left-radius: 15px;
@@ -98,20 +99,19 @@
     top: 0;
     @include negative-radius-upper($primary-color, 15px);
   }
+  input {
+    color: $primary-color;
+    @include placeholder { color: $primary-color;}
+    background-color: rgba($primary-color, 0.3);
+  }
 }
 
 @mixin categorie-selector-child($primary-color) {
-  border-bottom: 10px solid $primary-color;
   a { color: $primary-color;
     &:hover { color: $primary-color;}
   }
   li {
     &:hover, &.active { background-color: rgba($primary-color, 0.1)}
-  }
-  input {
-    color: $primary-color;
-    @include placeholder { color: $primary-color;}
-    background-color: rgba($primary-color, 0.3);
   }
 }
 
@@ -151,6 +151,14 @@
       a { color: $color-3;}
     }
   }
+}
+
+@mixin triangle ($width, $color) {
+  width: 0;
+  height: 0;
+  border-left: $width solid transparent;
+  border-right: $width solid transparent;
+  border-top: 2*$width solid $color;
 }
 
 

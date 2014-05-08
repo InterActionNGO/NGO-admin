@@ -1,13 +1,8 @@
 .mod-categories-child {
-  display: none;
   position: absolute;
-  left: 0;
-  top: -360px;
-  z-index: 100;
-  width: 250px;
-  height: 350px;
-  background-color: $color-0;
+  top: 0;
   overflow: scroll;
+  height: 320px;
   li {
     float: none;
     line-height: 15px;
@@ -17,11 +12,14 @@
     font-size: 16px;
     text-transform: none;
   }
-  input {
-    width: 90%;
-    margin: 0;
-    padding: 5px 5%;
-    text-transform: uppercase;
+  .sector & {
+    height: 350px;
+    overflow: none;
+    li {
+      width: 50%;
+      float: left;
+      line-height: 20px;
+    }
   }
 }
 .sector-child {
