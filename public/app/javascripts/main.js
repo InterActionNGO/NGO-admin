@@ -47,9 +47,8 @@ require([
   }
 
   function goTo(e) {
-    var whereToGo = $($(e.currentTarget).attr('href')).offset().top - 60;
     $('body, html').animate({
-      scrollTop: whereToGo
+      scrollTop: $('.layout-content').offset().top - 50
     }, 500);
     e.preventDefault();
   }

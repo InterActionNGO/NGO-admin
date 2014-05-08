@@ -112,7 +112,7 @@ define(['sprintf'], function(sprintf) {
         div.appendChild(marker_image);
 
         try {
-          if (show_regions_with_one_project !== undefined) {
+          if (show_regions_with_one_project) {
             var count = document.createElement('p');
             count.style.position = 'absolute';
             count.style.top = '50%';
@@ -181,16 +181,12 @@ define(['sprintf'], function(sprintf) {
           top_hidden.className = 'map-top-tooltip';
 
           if (this.total_in_region) {
-            $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
+            $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
           } else {
-            $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#999999">' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
+            $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
           }
 
           hidden_div.appendChild(top_hidden);
-
-          var bottom_hidden = document.createElement('div');
-          bottom_hidden.className = 'map-bottom-tooltip';
-          hidden_div.appendChild(bottom_hidden);
 
           div.appendChild(hidden_div);
 
@@ -211,7 +207,7 @@ define(['sprintf'], function(sprintf) {
         google.maps.event.addDomListener(div, 'click', function(ev) {
           try {
             ev.stopPropagation();
-          } catch (e) {
+          } catch(e) {
             event.cancelBubble = true;
           }
 
@@ -226,9 +222,9 @@ define(['sprintf'], function(sprintf) {
               window.location.href = me.url;
             }
           } else {
-            $('html,body').animate({
-              scrollTop: $('#projects_div').offset().top
-            }, 1000);
+            $('html, body').animate({
+              scrollTop: $('.layout-content').offset().top - 50
+            }, 500);
           }
         });
 
@@ -560,7 +556,7 @@ define(['sprintf'], function(sprintf) {
             diameter = 58;
             image_source = '/app/images/themes/' + theme + '/marker_6.png';
           }
-        } else if (map_type !== 'overview_map') {
+        } else if (map_type === 'overview_map') {
           if (map_data[i].count < 25) {
             diameter = 20;
             image_source = '/app/images/themes/' + theme + '/marker_2.png';
@@ -577,7 +573,7 @@ define(['sprintf'], function(sprintf) {
             diameter = 58;
             image_source = '/app/images/themes/' + theme + '/marker_6.png';
           }
-        } else if (map_type !== 'administrative_map') {
+        } else if (map_type === 'administrative_map') {
           if (map_data[i].count < range) {
             diameter = 20;
             image_source = '/app/images/themes/' + theme + '/marker_2.png';
