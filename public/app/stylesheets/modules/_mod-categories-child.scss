@@ -13,7 +13,8 @@
     text-transform: none;
   }
   .sector & {
-    padding: 10px 0 30px 0;
+    overflow: hidden;
+    padding: 10px 0 17px 0;
     li {
       width: 45%;
       float: left;
