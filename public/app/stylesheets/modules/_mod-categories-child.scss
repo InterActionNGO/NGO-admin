@@ -1,13 +1,8 @@
 .mod-categories-child {
-  display: none;
   position: absolute;
-  left: 0;
-  top: -360px;
-  z-index: 100;
-  width: 250px;
-  height: 350px;
-  background-color: $color-0;
+  top:10px;
   overflow: scroll;
+  height: 310px;
   li {
     float: none;
     line-height: 15px;
@@ -17,15 +12,31 @@
     font-size: 16px;
     text-transform: none;
   }
-  input {
-    width: 90%;
-    margin: 0;
-    padding: 5px 5%;
-    text-transform: uppercase;
+  .sector & {
+    padding: 10px 0 30px 0;
+    li {
+      width: 45%;
+      float: left;
+      padding: 8px 0 8px 5%;
+    }
+    a {
+      position: relative;
+      padding: 0 0 0 40px;}
+    a:before {
+      @include before('', block, absolute, 0px, 0px, 30px, 30px);
+      border-radius: 50%;
+      background-color: $color-4;
+    }
+    span {
+      padding-left: 40px;
+      color: $color-5;
+      text-transform: none;
+    }
   }
 }
 .sector-child {
   @include categorie-selector-child($color-2);
+  li:hover { background:none;}
 }
 .organizations-child {
   @include categorie-selector-child($color-6);
