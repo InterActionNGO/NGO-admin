@@ -41,15 +41,22 @@ require([
   new EmbedMapView();
 
   var scrollTop,
-      categoriesSelector = $('.categories-selector'),
-      menu = $('.mod-categories-selector .menu'),
-      elementOffset = categoriesSelector.offset().top;
+    categoriesSelector = $('.categories-selector'),
+    menu = $('.mod-categories-selector .menu'),
+    elementOffset = categoriesSelector.offset().top;
 
+  function sectionTitle() {
+    var $title = $('.section-title');
+
+    if ($title.text().length > 50) {
+      $title.css('font-size', '36px');
+    }
+  }
 
   function fixCategoriesSelector() {
-      scrollTop     = $(window).scrollTop();
+    scrollTop = $(window).scrollTop();
 
-    if (scrollTop > elementOffset ) {
+    if (scrollTop > elementOffset) {
       categoriesSelector.addClass('is-fixed');
       menu.removeClass('mod-go-up-menu');
       menu.addClass('mod-drop-down-menu');
@@ -78,6 +85,7 @@ require([
 
   $('.click-to-see-btn').on('click', goTo);
 
+  sectionTitle();
   addClassToBody();
   window.onscroll = fixCategoriesSelector;
 
