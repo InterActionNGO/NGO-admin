@@ -21,6 +21,9 @@
     padding: 35px 0;
 
   }
+  .sector & {
+    a:before { background-color: $color-0;}
+  }
   .mod-categories-child {
     top: 0;
     height: 323px;
