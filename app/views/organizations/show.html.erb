@@ -62,7 +62,7 @@
     <section class="layout-content" id="content">
 
       <header>
-        <h1 class="section-title"><%= @organization.name %></h1>
+        <h1 class="section-title"><%= projects_list_subtitle %></h1>
         <%= simple_format(@organization.description.squish.truncate(800)) if @organization.description.present? %>
       </header>
 

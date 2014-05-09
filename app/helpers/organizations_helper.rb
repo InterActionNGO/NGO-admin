@@ -1,16 +1,16 @@
 module OrganizationsHelper
 
   def projects_list_subtitle
-    by = "BY #{@organization.name}"
+    by = "by #{@organization.name}"
 
     if @filter_by_location && @filter_by_category
-      pluralize(@organization_projects_count, "#{@category_name} PROJECT", "#{@category_name} PROJECTS") + ' ' + by + " in #{@location_name}"
+      pluralize(@organization_projects_count, "#{@category_name} project", "#{@category_name} projects") + ' ' + by + " in #{@location_name}"
     elsif @filter_by_location
-      pluralize(@organization_projects_count, "PROJECT", "PROJECTS") + ' ' + by + " in #{@location_name}"
+      pluralize(@organization_projects_count, "project", "projects") + ' ' + by + " in #{@location_name}"
     elsif @filter_by_category
-      pluralize(@organization_projects_count, "#{@filter_name} PROJECT", "#{@filter_name} PROJECTS")
+      pluralize(@organization_projects_count, "#{@filter_name} project", "#{@filter_name} projects")
     else
-      pluralize(@organization_projects_count, "PROJECT", "PROJECTS") + ' ' + by
+      pluralize(@organization_projects_count, "project", "projects") + ' ' + by
     end
   end
 
