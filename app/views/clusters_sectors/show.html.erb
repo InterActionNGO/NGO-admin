@@ -46,7 +46,7 @@
   <div class="grid-12 offset-1">
     <section class="layout-content" id="content">
 
-        <h1 class="section-title"><%= @data.name %></h1>
+        <h1 class="section-title"><%= clusters_sectors_projects_list_subtitle %></h1>
 
         <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => cluster_path(@data, @carry_on_filters.merge(:format => :csv)), :xls_path => cluster_path(@data, @carry_on_filters.merge(:format => :xls)), :kml_path => cluster_path(@data, @carry_on_filters.merge(:format => :kml)) } %>
 
