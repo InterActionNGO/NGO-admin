@@ -3,6 +3,8 @@
 
 define(['sprintf'], function(sprintf) {
 
+  sprintf = sprintf.sprintf;
+
   function old() {
     var MERCATOR_RANGE = 256;
 
