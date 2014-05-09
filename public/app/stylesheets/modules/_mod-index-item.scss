@@ -5,10 +5,11 @@
   font-weight: lighter;
   font-size: 16px;
   h2 a{
+    display: inline;
     font-size: 16px;
     padding-bottom: 10px;
     font-weight: bold;
-    @include link-states($color-1, block);
+    @include link-states($color-1, inline);
   }
   span { color: $color-5;}
   span a {
