@@ -199,6 +199,12 @@
   border-top: 2*$width solid $color;
 }
 
+@mixin circle-decoration ($color) {
+  @include before('', inline-block, absolute, 0, 5px, 10px, 10px);
+  background-color: $color;
+  border-radius: 50%;
+}
+
 
 
 
