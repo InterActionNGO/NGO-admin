@@ -3,6 +3,8 @@
 
 define(['sprintf'], function(sprintf) {
 
+  sprintf = sprintf.sprintf;
+
   function old() {
     var MERCATOR_RANGE = 256;
 
@@ -170,38 +172,40 @@ define(['sprintf'], function(sprintf) {
         }
 
         //Marker address
-        if (map_type === 'overview_map' || map_type === 'administrative_map') {
+        if (this.count) {
+          if (map_type === 'overview_map' || map_type === 'administrative_map') {
 
-          var hidden_div = document.createElement('div');
-          hidden_div.className = 'map-tooltip';
-          hidden_div.style.bottom = this.diameter + 4 + 'px';
-          hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
+            var hidden_div = document.createElement('div');
+            hidden_div.className = 'map-tooltip';
+            hidden_div.style.bottom = this.diameter + 4 + 'px';
+            hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
 
-          var top_hidden = document.createElement('div');
-          top_hidden.className = 'map-top-tooltip';
+            var top_hidden = document.createElement('div');
+            top_hidden.className = 'map-top-tooltip';
 
-          if (this.total_in_region) {
-            $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
+            if (this.total_in_region) {
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
+            } else {
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
+            }
+
+            hidden_div.appendChild(top_hidden);
+
+            div.appendChild(hidden_div);
+
+            google.maps.event.addDomListener(div, 'mouseover', function() {
+              $(this).css('zIndex', global_index++);
+              $(this).children('div').show();
+            });
+
+            google.maps.event.addDomListener(div, 'mouseout', function() {
+              $(this).children('div').hide();
+            });
           } else {
-            $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
+            google.maps.event.addDomListener(div, 'mouseover', function() {
+              $(this).css('zIndex', global_index++);
+            });
           }
-
-          hidden_div.appendChild(top_hidden);
-
-          div.appendChild(hidden_div);
-
-          google.maps.event.addDomListener(div, 'mouseover', function() {
-            $(this).css('zIndex', global_index++);
-            $(this).children('div').show();
-          });
-
-          google.maps.event.addDomListener(div, 'mouseout', function() {
-            $(this).children('div').hide();
-          });
-        } else {
-          google.maps.event.addDomListener(div, 'mouseover', function() {
-            $(this).css('zIndex', global_index++);
-          });
         }
 
         google.maps.event.addDomListener(div, 'click', function(ev) {
@@ -318,6 +322,7 @@ define(['sprintf'], function(sprintf) {
       center: latlng,
       scrollwheel: false,
       disableDefaultUI: true,
+      maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
         mapTypeIds: ['EMPTY', google.maps.MapTypeId.ROADMAP]
@@ -401,16 +406,12 @@ define(['sprintf'], function(sprintf) {
             currentLegend = legends.red;
         }
 
-        //console.log(layerStyle);
-
         var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
         var c_len = currentLegend.colors.length;
 
         _.each(currentLegend.colors, function(c, i) {
           currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
         });
-
-        //console.log(currentCSS);
 
         var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
           title: $el.data('layer'),
@@ -468,9 +469,9 @@ define(['sprintf'], function(sprintf) {
         if (window.sessionStorage && window.sessionStorage.getItem('type')) {
           $('#' + window.sessionStorage.getItem('type')).trigger('click');
         }
-        $emptyLayer.removeClass('hide').find('a').trigger('click');
+        $emptyLayer.removeClass('is-hidden').find('a').trigger('click');
       } else {
-        $emptyLayer.addClass('hide').next().find('a').trigger('click');
+        $emptyLayer.addClass('is-hidden').next().find('a').trigger('click');
       }
 
       $layerSelector.find('.current-selector').html($el.html());
@@ -503,11 +504,11 @@ define(['sprintf'], function(sprintf) {
 
       map.mapTypes.set('EMPTY', emptyMapType);
 
-      google.maps.event.addListener(map, 'zoom_changed', function() {
-        if (map.getZoom() > 12) {
-          map.setZoom(12);
-        }
-      });
+      // google.maps.event.addListener(map, 'zoom_changed', function() {
+      //   if (map.getZoom() > 12) {
+      //     map.setZoom(12);
+      //   }
+      // });
 
       if (map_type !== 'administrative_map') {
         range = max_count / 5;
@@ -538,8 +539,7 @@ define(['sprintf'], function(sprintf) {
       for (var i = 0; i < map_data.length; i++) {
         var image_source = '';
 
-        if (document.URL.indexOf('force_site_id=3') >= 0 || document.URL.indexOf('hornofafrica') >= 0) {
-
+        if (document.URL.indexOf('force_site_id=3') >= 0) {
           if (map_data[i].count < 5) {
             diameter = 20;
             image_source = '/app/images/themes/' + theme + '/marker_2.png';
@@ -606,10 +606,6 @@ define(['sprintf'], function(sprintf) {
         setTimeout(function() {
           map.setZoom(8);
         }, 1000);
-      }
-
-      if (map_type === 'project_map') {
-        map.panBy(130, 20);
       }
 
       // Layer selector
