@@ -15,8 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.11",
-    "sprintf": "*",
-    "select2": "~3.4.6"
+    "requirejs": "2.1.11",
+    "sprintf": "1.0.0",
+    "select2": "3.4.6"
   }
 }
