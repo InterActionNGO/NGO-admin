@@ -4,9 +4,7 @@
   padding: 40px 0;
   font-size: 13px;
   margin-top: 80px;
-  background: image-url('footer_background_x2.png') no-repeat 75% 23px;
-  background-size: 25%;
-  background-color: $color-4;
+git add -A
 
   a { display: inline-block;}
 
@@ -29,6 +27,11 @@
     text-align: right;
   }
 
+}
+.mod-footer-top {
+  background: image-url('footer_background_x2.png') no-repeat 75% 23px;
+  background-size: 25%;
+  background-color: $color-4;
 }
 .mod-footer-bottom {
   position: absolute;

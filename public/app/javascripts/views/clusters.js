@@ -1,6 +1,6 @@
 'use strict';
 
-define(function() {
+define(['jqueryui'], function() {
 
   var ClustersView = Backbone.View.extend({
 
@@ -14,6 +14,8 @@ define(function() {
       var $items = this.$el.find('a'),
       w = this.$el.width(),
       max = $($items[0]).data('value');
+
+      $items.tooltip();
 
       for (var i = 0, len = $items.length; i < len; i++) {
         var item = $($items[i]);
