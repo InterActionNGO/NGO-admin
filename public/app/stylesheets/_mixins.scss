@@ -174,13 +174,16 @@
 }
 
 @mixin drop-down-menu($primary-color){
-  &:hover .index-item {
-    background-color: rgba($primary-color, .3);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    &:after {
-      @include after('', block, absolute, -12px, 0, 12px, 12px);
-      @include negative-radius-down(rgba($primary-color, .3), 12px);
+  &:hover {
+    .submenu { display: block;}
+    .index-item {
+      background-color: rgba($primary-color, .3);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-down(rgba($primary-color, .3), 12px);
+      }
     }
   }
   .submenu {

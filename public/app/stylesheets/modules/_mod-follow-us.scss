@@ -24,7 +24,13 @@
       height: 21px;
       float: right;
     }
-    .twitter { background: image-url('icon-tw-lt.png') no-repeat center;}
-    .facebook { background: image-url('icon-fb-lt.png') no-repeat center;}
+    .twitter {
+      background: image-url('icon-tw-lt.png') no-repeat center;
+      &:hover { background: image-url('icon-tw-lt-color.png') no-repeat center;}
+    }
+    .facebook {
+      background: image-url('icon-fb-lt.png') no-repeat center;
+      &:hover { background: image-url('icon-fb-lt-color.png') no-repeat center;}
+    }
   }
 }

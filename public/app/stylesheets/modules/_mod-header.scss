@@ -35,12 +35,8 @@
       padding: 5px 1%;
       &.active { border-radius: 15px;}
     }
-    &:hover {
-      .submenu {
-        display: block;
-      }
-    }
   }
+
   .interaction-logo {
     float: right;
     padding-top: 20px;
@@ -49,7 +45,6 @@
     display: none;
     position: absolute;
     z-index: 100;
-    margin-top: 0;
     background-color: $color-0;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -60,6 +55,7 @@
     a {
       text-transform: none;
       padding: 10px 25px;
+      font-weight: bold;
     }
   }
 
