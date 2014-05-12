@@ -1,48 +1,68 @@
 <section class="mod-map" id="mapView">
 
-  <div class="controls">
-    <div class="control-navbar">
-      <% if SiteLayer.where({:site_id => @site.id}).length >= 1 %>
-        <div class="selector" id="layerSelector">
-          <ul>
-            <li><span class="current-selector">Select a layer</span>
-              <ul class="selector-options">
-                <li><a href="#" data-layer="none">None</a></li>
-                <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-                  <li><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
-                    data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
-                <% end %>
+  <div class="row">
+    <div class="grid-17">
+      <div class="mod-map-controls">
+
+        <div class="control-navbar">
+          <% if SiteLayer.where({:site_id => @site.id}).length >= 1 %>
+            <div class="selector" id="layerSelector">
+              <ul>
+                <li><span class="current-selector">Layer</span>
+                  <ul class="selector-options">
+                    <li><a href="#" data-layer="none">None</a></li>
+                    <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+                      <li><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
+                        data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+                    <% end %>
+                  </ul>
+                </li>
               </ul>
-            </li>
-          </ul>
-        </div>
-      <% end %>
+            </div>
+          <% end %>
 
-      <div class="selector" id="mapTypeSelector">
-        <ul>
-          <li><span class="current-selector">Roadmap</span>
-            <ul class="selector-options">
-              <li class="hide" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
-              <li><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
-              <li><a href="#" id="terrainLayer" data-type="TERRAIN">Terrain</a></li>
-              <li><a href="#" id="hybridLayer" data-type="HYBRID">Hybrid</a></li>
-              <li><a href="#" id="satelliteLayer" data-type="SATELLITE">Satellite</a></li>
+          <div class="selector menu-item" id="mapTypeSelector">
+            <ul>
+              <li>
+                <span class="current-selector">Roadmap</span>
+                <ul class="selector-options submenu">
+                  <li class="is-hidden submenu-item" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
+                  <li class="submenu-item"><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
+                  <li class="submenu-item"><a href="#" id="terrainLayer" data-type="TERRAIN">Terrain</a></li>
+                  <li class="submenu-item"><a href="#" id="hybridLayer" data-type="HYBRID">Hybrid</a></li>
+                  <li class="submenu-item"><a href="#" id="satelliteLayer" data-type="SATELLITE">Satellite</a></li>
+                </ul>
+              </li>
             </ul>
-          </li>
-        </ul>
-      </div>
+          </div>
 
-    </div>
+        </div> <!-- control-navbar -->
 
-    <div class="control-zoom" id="controlZoom">
-      <a href="#zoom-in" class="zoom-in" id="zoomIn">+</a>
-      <a href="#zoom-in" class="zoom-out" id="zoomOut">-</a>
+        <div class="control-zoom" id="controlZoom">
+          <a href="#zoom-in" class="zoom-out" id="zoomOut">-</a>
+          <a href="#zoom-in" class="zoom-in" id="zoomIn">+</a>
+        </div>
+
+      </div> <!-- controls -->
     </div>
   </div>
+
 
   <div id="map"></div>
 
   <div id="legendWrapper"></div>
+
+  <div class="mod-go-to-projects">
+    <div class="row">
+      <div class="grid-17">
+        <div class="click-to-see">
+          <a href="#content" class="click-to-see-btn">Click here to see list of projects</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'new_partials/filtered-categories' %>
 
 </section>
 
@@ -53,3 +73,5 @@
     <p><%= sl.layer.credits.html_safe %></p>
   </div>
 <% end %>
+
+

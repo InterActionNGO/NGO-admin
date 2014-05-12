@@ -7,9 +7,12 @@ define(function() {
     el: '#clustersView',
 
     initialize: function() {
+      if (this.$el.length === 0) {
+        return false;
+      }
+
       var $items = this.$el.find('a'),
       w = this.$el.width(),
-      values = [],
       max = $($items[0]).data('value');
 
       for (var i = 0, len = $items.length; i < len; i++) {

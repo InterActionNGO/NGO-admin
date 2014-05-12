@@ -1,33 +1,29 @@
 <footer class="mod-footer">
 
   <div class="row">
-    <div class="grid-17">
-  		<div class="mod-footer-top">
-        <nav>
-          <ul>
-            <li><a href="/" class="home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
-            <li><a href="/about" class="about <%= if action_name == 'about' then 'active' else 'inactive' end %>">about</a></li>
-            <li><a href="/news" class="news <%= if action_name == 'news' then 'active' else 'inactive' end %>">news</a></li>
-            <li><a href="/contact" class="contact <%= if action_name == 'contact' then 'active' else 'inactive' end %>">contact us</a></li>
-            <li><a href="/access" class="access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
-          </ul>
-        </nav>
-  		</div>
+    <div class="mod-footer-top">
+      <div class="grid-5">
+        <%= image_tag "aid-map-logo-bn.png", :alt  => "interaction aid map logo", :class  => "aid-map-logo" %>
+      </div>
+      <div class="grid-3 offset-1">
+        <%= render 'new_partials/main-menu' %>
+      </div>
     </div>
   </div>
 
-
-
-	<div class="row">
-		<div class="grid-17">
-			<div class="mod-footer-bottom">
-				<%= image_tag "aid-map-logo-bn.png", :alt  => "interaction aid map logo", :class  => "aid-map-logo" %>
-        <%= image_tag "interaction-logo-bn.png", :alt  => "interaction logo", :class  => "interaction-logo" %>
-        <div class="signature">
-          <p class="claim">NGO Aid Map</p>
-          <p>Copyrighted by InterAction @2014 | Developed by <a href="#" class="link-to-simbiotica">Simbiótica</a></p>
+  <div class="mod-footer-bottom">
+    <div class="row">
+      <div class="grid-7">
+        <div class="address">
+          <p>1400 16th Street, NW. Suite 210 Washington, DC 20036</p>
         </div>
-			</div>
+      </div>
+      <div class="grid-7 offset-2">
+        <div class="signature">
+          <p>Copyrighted by <a href="http://www.interaction.org/">InterAction</a> © 2014Developed by <a href="http://simbiotica.es" target="_blank" class="link-to-simbiotica">Simbiótica</a></p>
+        </div>
+      </div>
 		</div>
 	</div>
+
 </footer>

@@ -3,8 +3,8 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
 
       <%= render 'new_partials/aside/projects' %>
 
@@ -35,7 +35,8 @@
         <%= render 'new_partials/aside/project_locations' %>
       <% end %>
 
-      <% unless @organization.contact_name.nil? &&  @organization.contact_position.nil? && @organization.hq_address.nil? && @organization.contact_zip.nil? && @organization.contact_phone_number.nil? %>
+      <% unless ((@organization.contact_phone_number.nil? || @organization.contact_phone_number.empty?) && (@organization.contact_position.nil? || @organization.contact_position.empty?) && (@organization.hq_address.nil? || @organization.hq_address.empty?) && (@organization.contact_zip.nil? || @organization.contact_zip.empty?) && (@organization.contact_phone_number.nil?||@organization.contact_phone_number.empty?)) %>
+
         <div class="contact-info mod-info">
           <h3>Contact information</h3>
           <div class="mod-contact-info">
@@ -55,19 +56,21 @@
         </div>
       <% end %>
 
-      <%= render 'new_partials/aside/follow_us' %>
+    </aside>
+  </div>
 
-    </div>
-  </aside>
+  <div class="grid-12 offset-1">
+    <section class="layout-content" id="content">
 
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @organization.name %></h1>
+      <header>
+        <h1 class="section-title"><%= projects_list_subtitle %></h1>
+        <%= simple_format(@organization.description.squish.truncate(800)) if @organization.description.present? %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => organization_path(@organization, @carry_on_filters.merge(:format => :csv)), :xls_path => organization_path(@organization, @carry_on_filters.merge(:format => :xls)), :kml_path => organization_path(@organization, @carry_on_filters.merge(:format => :kml)) } %>
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

@@ -1,21 +1,24 @@
-@include font-face("Helvetica Neue", font-files("helvetica/helvetica-medium.woff", "helvetica/helvetica-medium.ttf", "helvetica/helvetica-medium.svg"), "helvetica-medium.eot", normal, normal);
-@include font-face("Helvetica Neue bold", font-files("helvetica/helvetica-bold.woff", "helvetica/helvetica-bold.ttf", "helvetica/helvetica-bold.svg"), "helvetica-bold.eot", bold, normal);
-@include font-face("Helvetica Neue light", font-files("helvetica/helvetica-light.woff", "helvetica/helvetica-light.ttf", "helvetica/helvetica-light.svg"), "helvetica-light.eot", lighter, normal);
+@include font-face("Akzidenz", font-files("akzidenz/12_akzidenz_grotesk_roman___05003-webfont.woff", "akzidenz/12_akzidenz_grotesk_roman___05003-webfont.ttf", "akzidenz/12_akzidenz_grotesk_roman___05003-webfont.svg"), "akzidenz/12_akzidenz_grotesk_roman___05003-webfont.eot", normal, normal);
+@include font-face("Akzidenz", font-files("akzidenz/12_akzidenz_grotesk_bold___07003-webfont.woff", "akzidenz/12_akzidenz_grotesk_bold___07003-webfont.ttf", "akzidenz/12_akzidenz_grotesk_bold___07003-webfont.svg"), "akzidenz/12_akzidenz_grotesk_bold___07003-webfont.eot", bold, normal);
+@include font-face("Akzidenz", font-files("akzidenz/12_akzidenz_grotesk_light___02003-webfont.woff", "akzidenz/12_akzidenz_grotesk_light___02003-webfont.ttf", "akzidenz/12_akzidenz_grotesk_light___02003-webfont.svg"), "akzidenz/12_akzidenz_grotesk_light___02003-webfont.eot", lighter, normal);
 
+
+// Typography
+$font-family: "Akzidenz", Helvetica, Arial, sans-serif;
 
 // Colors
 $white: #FFF;
 $black: #000;
 $blue: #016D90;
-$orange: #C45017;
+$orange: #C65001;
 $purple: #492E45;
 $yellow: #D7A900;
 $green: #8E921B;
 $turquoise: #5A9198;
-$light-grey:#EDEDED;
+$light-grey: #EDEDED;
 $grey: #989898;
 $dark-grey: #444444;
-
+$medium-grey: #CCC;
 
 $color-0: $white;
 $color-00: $black;
@@ -25,17 +28,15 @@ $color-2: $orange;
 $color-3: $dark-grey;
 $color-4: $light-grey;
 $color-5: $grey;
+$color-10: $medium-grey;
 
 $color-6: $purple;
 $color-7: $yellow;
 $color-8: $green;
 $color-9: $turquoise;
 
-$dominant-color: $color-3;
+$primary-color: null;
 
-.about   { $dominant-color: $color-8;}
-.news    { $dominant-color: $color-7;}
-.contact { $dominant-color: $color-9;}
 
 // Separations
 $section-padding: 3em 0;

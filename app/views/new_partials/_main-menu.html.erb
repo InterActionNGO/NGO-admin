@@ -1,0 +1,26 @@
+<nav>
+	<ul class="menu">
+		<li class="menu-item home"><a href="/" class="index-item home <%= if action_name == 'home' then 'active' end %>">home</a></li>
+		<li class="menu-item about">
+      <a href="/p/about" class="index-item about <%= if (action_name == 'about') || (action_name == 'pages') then 'active' end %>">about</a>
+      <ul class="submenu">
+        <li class="submenu-item"><a href="/p/purpose">Purpose</a></li>
+        <li class="submenu-item"><a href="/p/getting-on-the-map">Getting on the map</a></li>
+        <li class="submenu-item"><a href="/p/staff-list">Staff list</a></li>
+        <li class="submenu-item"><a href="/p/contact-us">Contact us</a></li>
+        <li class="submenu-item"><a href="/p/of-interest">Of interest</a></li>
+      </ul>
+    </li>
+		<li class="menu-item data">
+      <a href="/p/data" class="index-item data <%= if (action_name == 'data') || (action_name == 'pages') then 'active'end %>">data</a>
+      <ul class="submenu">
+        <li class="submenu-item"><a href="/p/top-things-you-should-know-about-the-data">Top things</a></li>
+        <li class="submenu-item"><a href="/p/data-guidance">Member guidance</a></li>
+        <li class="submenu-item"><a href="/p/analysis">Metrics or Analysis</a></li>
+      </ul>
+    </li>
+		<li class="menu-item access"><a href="/admin" class="index-item access <%= if action_name == 'access' then 'active' end %>">member access</a></li>
+	</ul>
+</nav>
+
+

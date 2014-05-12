@@ -1,16 +1,20 @@
-/*global google,map_type,map_data:true,map_center,sprintf,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
+/*global google,map_type,map_data:true,map_center,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
-define(function() {
+define(['sprintf'], function(sprintf) {
+
+  sprintf = sprintf.sprintf;
 
   function old() {
-    var styledMapOptions = {name: "labels"};
-
     var MERCATOR_RANGE = 256;
 
     function bound(value, opt_min, opt_max) {
-      if (opt_min != null) value = Math.max(value, opt_min);
-      if (opt_max != null) value = Math.min(value, opt_max);
+      if (opt_min !== null) {
+        value = Math.max(value, opt_min);
+      }
+      if (opt_max !== null) {
+        value = Math.min(value, opt_max);
+      }
       return value;
     }
 
@@ -23,11 +27,10 @@ define(function() {
     }
 
     function MercatorProjection() {
-      this.pixelOrigin_ = new google.maps.Point(
-          MERCATOR_RANGE / 2, MERCATOR_RANGE / 2);
+      this.pixelOrigin_ = new google.maps.Point(MERCATOR_RANGE / 2, MERCATOR_RANGE / 2);
       this.pixelsPerLonDegree_ = MERCATOR_RANGE / 360;
       this.pixelsPerLonRadian_ = MERCATOR_RANGE / (2 * Math.PI);
-    };
+    }
 
     MercatorProjection.prototype.fromLatLngToPoint = function(latLng, opt_point) {
       var me = this;
@@ -58,12 +61,12 @@ define(function() {
       var me = this;
       var coord = me.fromDivPixelToLatLng(pixel, zoom);
 
-      var r= 6378137.0;
-      var x = r* degreesToRadians(coord.lng());
+      var r = 6378137.0;
+      var x = r * degreesToRadians(coord.lng());
       var latRad = degreesToRadians(coord.lat());
-      var y = (r/2) * Math.log((1+Math.sin(latRad))/ (1-Math.sin(latRad)));
+      var y = (r / 2) * Math.log((1 + Math.sin(latRad)) / (1 - Math.sin(latRad)));
 
-      return new google.maps.Point(x,y);
+      return new google.maps.Point(x, y);
     };
 
     function IOMMarker(info, diameter, image, map) {
@@ -111,7 +114,7 @@ define(function() {
         div.appendChild(marker_image);
 
         try {
-          if (show_regions_with_one_project !== undefined) {
+          if (show_regions_with_one_project) {
             var count = document.createElement('p');
             count.style.position = 'absolute';
             count.style.top = '50%';
@@ -169,86 +172,46 @@ define(function() {
         }
 
         //Marker address
-        if (map_type === 'overview_map' || map_type === 'administrative_map') {
+        if (this.count) {
+          if (map_type === 'overview_map' || map_type === 'administrative_map') {
 
-          var hidden_div = document.createElement('div');
-          hidden_div.style.border = 'none';
-          hidden_div.style.position = 'absolute';
-          hidden_div.style.margin = '0px';
-          hidden_div.style.padding = '0px';
-          hidden_div.style.display = 'none';
-          hidden_div.style.bottom = this.diameter + 4 + 'px';
-          hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
-          hidden_div.style.width = '175px';
+            var hidden_div = document.createElement('div');
+            hidden_div.className = 'map-tooltip';
+            hidden_div.style.bottom = this.diameter + 4 + 'px';
+            hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
 
-          try {
-            if (kind !== null) {
-              var top_hidden = document.createElement('div');
-              top_hidden.style.border = 'none';
-              top_hidden.style.position = 'relative';
-              top_hidden.style.float = 'left';
-              top_hidden.style.padding = '9px 15px 3px 11px';
-              top_hidden.style.width = '149px';
-              top_hidden.style.height = 'auto';
-              top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-              top_hidden.style.font = 'bold 17px "PT Sans"';
-              top_hidden.style.textAlign = 'center';
-              top_hidden.style.color = 'white';
-              if (kind === 'sector' || kind === 'cluster') {
-                $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects in this ' + kind : ' project in this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-              } else {
-                $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#dddddd">' + this.count + ((this.count > 1) ? ' projects by this ' + kind : ' project by this ' + kind) + '</strong><br/><strong style="font:normal 12px Arial; color:#999999">' + this.total_in_region + ' in total</strong>');
-              }
-              hidden_div.appendChild(top_hidden);
-            }
-          } catch (e) {
             var top_hidden = document.createElement('div');
-            top_hidden.style.border = 'none';
-            top_hidden.style.position = 'relative';
-            top_hidden.style.float = 'left';
-            top_hidden.style.padding = '9px 15px 3px 11px';
-            top_hidden.style.width = '149px';
-            top_hidden.style.height = 'auto';
-            top_hidden.style.background = 'url("/app/images/sites/common/tooltips/body_tooltip.png") no-repeat center top';
-            top_hidden.style.font = 'bold 17px "PT Sans"';
-            top_hidden.style.textAlign = 'center';
-            top_hidden.style.color = 'white';
-            $(top_hidden).html(this.name + '<br/><strong style="font:normal 13px Arial; color:#999999">' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
+            top_hidden.className = 'map-top-tooltip';
+
+            if (this.total_in_region) {
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
+            } else {
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
+            }
+
             hidden_div.appendChild(top_hidden);
+
+            div.appendChild(hidden_div);
+
+            google.maps.event.addDomListener(div, 'mouseover', function() {
+              $(this).css('zIndex', global_index++);
+              $(this).children('div').show();
+            });
+
+            google.maps.event.addDomListener(div, 'mouseout', function() {
+              $(this).children('div').hide();
+            });
+          } else {
+            google.maps.event.addDomListener(div, 'mouseover', function() {
+              $(this).css('zIndex', global_index++);
+            });
           }
-
-
-          var bottom_hidden = document.createElement('div');
-          bottom_hidden.style.border = 'none';
-          bottom_hidden.style.position = 'relative';
-          bottom_hidden.style.float = 'left';
-          bottom_hidden.style.background = 'url("/app/images/sites/common/tooltips/bottom_tooltip.png") no-repeat 0 0';
-          bottom_hidden.style.width = '175px';
-          bottom_hidden.style.height = '14px';
-          hidden_div.appendChild(bottom_hidden);
-
-          div.appendChild(hidden_div);
-
-          google.maps.event.addDomListener(div, 'mouseover', function() {
-            $(this).css('zIndex', global_index++);
-            $(this).children('div').show();
-          });
-
-          google.maps.event.addDomListener(div, 'mouseout', function() {
-            $(this).children('div').hide();
-          });
-        } else {
-          google.maps.event.addDomListener(div, 'mouseover', function() {
-            $(this).css('zIndex', global_index++);
-          });
         }
-
-
 
         google.maps.event.addDomListener(div, 'click', function(ev) {
           try {
             ev.stopPropagation();
-          } catch (e) {
+          } catch(e) {
             event.cancelBubble = true;
           }
 
@@ -263,12 +226,11 @@ define(function() {
               window.location.href = me.url;
             }
           } else {
-            $('html,body').animate({
-              scrollTop: $('#projects_div').offset().top
-            }, 1000);
+            $('html, body').animate({
+              scrollTop: $('.layout-content').offset().top - 50
+            }, 500);
           }
         });
-
 
         google.maps.event.addDomListener(div, 'mousedown', function(ev) {
           try {
@@ -278,11 +240,8 @@ define(function() {
           }
         });
 
-
-
         var panes = this.getPanes();
         panes.floatPane.appendChild(div);
-
 
         if (($(this.div_).children('p').width() + 6) > this.width_) {
           $(this.div_).children('p').css('display', 'none');
@@ -363,6 +322,7 @@ define(function() {
       center: latlng,
       scrollwheel: false,
       disableDefaultUI: true,
+      maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
         mapTypeIds: ['EMPTY', google.maps.MapTypeId.ROADMAP]
@@ -446,16 +406,12 @@ define(function() {
             currentLegend = legends.red;
         }
 
-        console.log(layerStyle);
-
         var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
         var c_len = currentLegend.colors.length;
 
         _.each(currentLegend.colors, function(c, i) {
           currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
         });
-
-        console.log(currentCSS);
 
         var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
           title: $el.data('layer'),
@@ -513,9 +469,9 @@ define(function() {
         if (window.sessionStorage && window.sessionStorage.getItem('type')) {
           $('#' + window.sessionStorage.getItem('type')).trigger('click');
         }
-        $emptyLayer.removeClass('hide').find('a').trigger('click');
+        $emptyLayer.removeClass('is-hidden').find('a').trigger('click');
       } else {
-        $emptyLayer.addClass('hide').next().find('a').trigger('click');
+        $emptyLayer.addClass('is-hidden').next().find('a').trigger('click');
       }
 
       $layerSelector.find('.current-selector').html($el.html());
@@ -548,11 +504,11 @@ define(function() {
 
       map.mapTypes.set('EMPTY', emptyMapType);
 
-      google.maps.event.addListener(map, 'zoom_changed', function() {
-        if (map.getZoom() > 12) {
-          map.setZoom(12);
-        }
-      });
+      // google.maps.event.addListener(map, 'zoom_changed', function() {
+      //   if (map.getZoom() > 12) {
+      //     map.setZoom(12);
+      //   }
+      // });
 
       if (map_type !== 'administrative_map') {
         range = max_count / 5;
@@ -583,8 +539,7 @@ define(function() {
       for (var i = 0; i < map_data.length; i++) {
         var image_source = '';
 
-        if (document.URL.indexOf('force_site_id=3') >= 0 || document.URL.indexOf('hornofafrica') >= 0) {
-
+        if (document.URL.indexOf('force_site_id=3') >= 0) {
           if (map_data[i].count < 5) {
             diameter = 20;
             image_source = '/app/images/themes/' + theme + '/marker_2.png';
@@ -601,7 +556,7 @@ define(function() {
             diameter = 58;
             image_source = '/app/images/themes/' + theme + '/marker_6.png';
           }
-        } else if (map_type !== 'overview_map') {
+        } else if (map_type === 'overview_map') {
           if (map_data[i].count < 25) {
             diameter = 20;
             image_source = '/app/images/themes/' + theme + '/marker_2.png';
@@ -618,7 +573,7 @@ define(function() {
             diameter = 58;
             image_source = '/app/images/themes/' + theme + '/marker_6.png';
           }
-        } else if (map_type !== 'administrative_map') {
+        } else if (map_type === 'administrative_map') {
           if (map_data[i].count < range) {
             diameter = 20;
             image_source = '/app/images/themes/' + theme + '/marker_2.png';
@@ -642,23 +597,15 @@ define(function() {
 
         new IOMMarker(map_data[i], diameter, image_source, map);
 
-        if (map_type !== 'overview_map') {
-          bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
-        }
+        bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
       }
 
-      if (map_type !== 'overview_map') {
-        map.fitBounds(bounds);
+      map.fitBounds(bounds);
 
-        if (map_data[0].type === 'country') {
-          setTimeout(function() {
-            map.setZoom(8);
-          }, 1000);
-        }
-      }
-
-      if (map_type === 'project_map') {
-        map.panBy(130, 20);
+      if (map_data[0].type === 'country') {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 1000);
       }
 
       // Layer selector
@@ -693,12 +640,6 @@ define(function() {
         }
       });
 
-      var hH = $('.float_head').height();
-
-      if (hH > 170) {
-        $('#controlZoom').css('top', hH - 110);
-      }
-
       $('#zoomOut').click(function(e) {
         e.preventDefault();
         map.setZoom(map.getZoom() - 1);
@@ -720,8 +661,15 @@ define(function() {
     el: '#mapView',
 
     initialize: function() {
-      var h = $(window).height() -175;
-      this.$el.height(h);
+      if (this.$el.length === 0) {
+        return false;
+      }
+      var h = $(window).height() - 204;
+
+      this.$el.css({
+        height: h
+      });
+
       old();
     }
 

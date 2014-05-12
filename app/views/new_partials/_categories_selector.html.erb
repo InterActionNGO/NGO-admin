@@ -1,10 +1,9 @@
 <section class="categories-selector">
   <div class="row">
-    <div class="grid-17">
-      <div class="mod-categories-selector">
-        <nav >
+    <div class="grid-14">
+      <div class="mod-categories-selector" id="filtersView">
+        <nav>
           <ul>
-
             <% if @site.cluster %>
               <li class="sector"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
             <% elsif @site.sector %>
@@ -12,69 +11,89 @@
             <% else %>
               <li class="sector" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
                 <%= @site.word_for_cluster_sector.upcase %>
-                <ul class="mod-categories-child sector-child">
-                  <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
-                    <li>
-                      <a href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
-                        <% if category.name.size>25 %>
-                          <%= category.name[0..22] + '...' %>
-                        <% else %>
-                          <%= category.name %>
-                        <% end %>
-                      </a>
-                    </li>
-                  <% end %>
-                </ul>
+                <div class="mod-go-up-menu menu">
+                  <ul class="mod-categories-child sector-child">
+                    <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.each do |category| %>
+                      <li>
+                        <a class="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category)%>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
+                          <% if category.name.size>25 %>
+                            <%= category.name[0..22] + '...' %>
+                          <% else %>
+                            <%= category.name %>
+                          <% end %>
+                        </a>
+                        <span><%= category.projects.size %> projects</span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               </li>
             <% end %>
 
             <li class="organizations">
               Organizations
-              <ul class="mod-categories-child organizations-child">
-                <% @site.organizations_select.each do |organization| %>
-                  <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
-                <% end %>
-              </ul>
+              <div class="mod-go-up-menu menu">
+                <ul class="mod-categories-child organizations-child">
+                  <% @site.organizations_select.each do |organization| %>
+                    <li><a href="<%= organization_path(organization) %>"><%= organization.name %></a></li>
+                  <% end %>
+                </ul>
+                <input type="text" class="mod-categories-search" placeholder="Search Organization">
+              </div>
             </li>
 
             <li class="donors">
               Donors
-              <ul class="mod-categories-child donors-child">
-                <% @site.donors_select.each do |donor| %>
-                  <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
-                <% end %>
-              </ul>
+              <div class="mod-go-up-menu menu">
+                <ul class="mod-categories-child donors-child">
+                  <% @site.donors_select.each do |donor| %>
+                    <li><a href="<%= donor_path(donor) %>"><%= CGI.unescapeHTML(donor.name) %></a></li>
+                  <% end %>
+                </ul>
+                <input type="text" class="mod-categories-search" placeholder="Search Donor">
+              </div>
             </li>
 
           <% if @site.navigate_by == :country %>
             <li class="countries">
               Countries
-              <ul class="mod-categories-child countries-child">
-                <% @site.countries_select.each do |country| %>
-                  <li><%= link_to(country.name, location_path(:ids => country)) %></li>
-                <% end %>
-              </ul>
+              <div class="mod-go-up-menu menu">
+                <ul class="mod-categories-child countries-child">
+                  <% @site.countries_select.each do |country| %>
+                    <li><%= link_to(country.name, location_path(:ids => country)) %></li>
+                  <% end %>
+                </ul>
+                <input type="text" class="mod-categories-search" placeholder="Search Country">
+              </div>
             </li>
           <% else %>
+
             <li class="regions">
               Regions
-              <ul class="mod-categories-child regions-child">
-                <% @site.regions_select.each do |region| %>
-                  <li><%= link_to(region.name, location_path(:ids => region)) %></li>
-                <% end %>
-              </ul>
+              <div class="mod-go-up-menu menu">
+                <ul class="mod-categories-child regions-child">
+                  <% @site.regions_select.each do |region| %>
+                    <li><%= link_to(region.name, location_path(:ids => region)) %></li>
+                  <% end %>
+                </ul>
+                <input type="text" class="mod-categories-search" placeholder="Search Region">
+              </div>
             </li>
           <% end %>
 
           <li class="search">
             <%= form_tag(search_path, :method => :get) do %>
-              <%= text_field_tag :q, params[:q], :value=>''%>
+              <%= text_field_tag :q, params[:q], :placeholder=>'SEARCH'%>
               <input type="submit" value="">
             <% end %>
           </li>
 
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="grid-3">
       <a href="http://www.fedex.com/"><%= image_tag "fedex-logo.png" , :alt  => "fedex logo" %></a>
     </div>
 
