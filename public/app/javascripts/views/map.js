@@ -227,7 +227,7 @@ define(['sprintf'], function(sprintf) {
             }
           } else {
             $('html, body').animate({
-              scrollTop: $('.layout-content').offset().top - 50
+              scrollTop: $('.layout-content').offset().top - 100
             }, 500);
           }
         });
@@ -510,7 +510,7 @@ define(['sprintf'], function(sprintf) {
       //   }
       // });
 
-      if (map_type !== 'administrative_map') {
+      if (map_type === 'administrative_map') {
         range = max_count / 5;
       }
       var diameter = 0;
