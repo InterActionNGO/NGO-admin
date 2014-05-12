@@ -7,7 +7,8 @@ require.config({
   paths: {
     sprintf: '../vendor/sprintf/src/sprintf',
     quicksilver: '../lib/liveupdate/quicksilver',
-    liveupdate: '../lib/liveupdate/jquery.liveupdate'
+    liveupdate: '../lib/liveupdate/jquery.liveupdate',
+    jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom'
   },
 
   shim: {
@@ -16,6 +17,9 @@ require.config({
     },
     liveupdate: {
       deps: ['quicksilver'],
+      exports: '$'
+    },
+    jqueryui: {
       exports: '$'
     }
   }
