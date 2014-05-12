@@ -3,6 +3,33 @@
 
 define(['sprintf'], function(sprintf) {
 
+  var stylesArray = [{
+    'featureType': 'landscape.natural',
+    'elementType': 'geometry',
+    'stylers': [{
+      'saturation': -81
+    }, {
+      'gamma': 1.57
+    }]
+  }, {
+    'featureType': 'water',
+    'elementType': 'geometry',
+    'stylers': [{
+      'color': '#016d90'
+    }, {
+      'saturation': -44
+    }, {
+      'gamma': 2.75
+    }]
+  }, {
+    'featureType': 'road',
+    'stylers': [{
+      'saturation': -100
+    }, {
+      'gamma': 2.19
+    }]
+  }];
+
   sprintf = sprintf.sprintf;
 
   function old() {
@@ -227,7 +254,7 @@ define(['sprintf'], function(sprintf) {
             }
           } else {
             $('html, body').animate({
-              scrollTop: $('.layout-content').offset().top - 50
+              scrollTop: $('.layout-content').offset().top - 100
             }, 500);
           }
         });
@@ -322,6 +349,7 @@ define(['sprintf'], function(sprintf) {
       center: latlng,
       scrollwheel: false,
       disableDefaultUI: true,
+      styles: stylesArray,
       maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
@@ -510,7 +538,7 @@ define(['sprintf'], function(sprintf) {
       //   }
       // });
 
-      if (map_type !== 'administrative_map') {
+      if (map_type === 'administrative_map') {
         range = max_count / 5;
       }
       var diameter = 0;
