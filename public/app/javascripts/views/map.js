@@ -330,7 +330,7 @@ define(['sprintf'], function(sprintf) {
 
     var emptyMapType = new EmptyMapType();
 
-    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
+    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
 
     if (map_type === 'project_map') {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -554,14 +554,14 @@ define(['sprintf'], function(sprintf) {
       });
 
       // Cartodb
-      cartoDBLayer = cartodb.createLayer(map, cartodbOptions);
-
-      cartoDBLayer.on('done', function(layer) {
-        currentLayer = layer;
-        if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
-          $('#' + window.sessionStorage.getItem('layer')).trigger('click');
-        }
-      }).addTo(map);
+      cartodb.createLayer(map, cartodbOptions)
+        .addTo(map)
+        .on('done', function(layer) {
+          currentLayer = layer;
+          if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
+            $('#' + window.sessionStorage.getItem('layer')).trigger('click');
+          }
+        });
 
       // Markers
       for (var i = 0; i < map_data.length; i++) {
@@ -692,13 +692,26 @@ define(['sprintf'], function(sprintf) {
       if (this.$el.length === 0) {
         return false;
       }
-      var h = $(window).height() - 204;
+
+      var self = this;
+
+      this.$w = $(window);
+
+      this.resizeMap();
+
+      this.$w.resize(function() {
+        self.resizeMap();
+      });
+
+      old();
+    },
+
+    resizeMap: function() {
+      var h = this.$w.height() - 204;
 
       this.$el.css({
         height: h
       });
-
-      old();
     }
 
   });
