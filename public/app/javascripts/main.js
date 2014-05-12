@@ -8,7 +8,8 @@ require.config({
     sprintf: '../vendor/sprintf/src/sprintf',
     quicksilver: '../lib/liveupdate/quicksilver',
     liveupdate: '../lib/liveupdate/jquery.liveupdate',
-    jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom'
+    jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
+    select2: '../vendor/select2/select2'
   },
 
   shim: {
@@ -20,6 +21,9 @@ require.config({
       exports: '$'
     },
     jqueryui: {
+      exports: '$'
+    },
+    select2: {
       exports: '$'
     }
   }
