@@ -6,7 +6,11 @@ define(function() {
 
     el: '#searchView',
 
-    initialize: function() {}
+    initialize: function() {
+      if (this.$el.length === 0) {
+        return false;
+      }
+    }
 
   });
 

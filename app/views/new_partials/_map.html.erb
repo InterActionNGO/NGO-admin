@@ -62,7 +62,9 @@
     </div>
   </div>
 
-  <%= render 'new_partials/filtered-categories' %>
+  <% if @filter_name.present? or @donor.present? %>
+    <%= render 'new_partials/filtered-categories' %>
+  <% end %>
 
 </section>
 
