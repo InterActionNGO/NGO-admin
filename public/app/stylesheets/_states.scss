@@ -3,3 +3,9 @@
   visibility: hidden;
 }
 
+.is-fixed {
+  position: fixed;
+  .grid-4 & {
+    width: 13%;
+  }
+}

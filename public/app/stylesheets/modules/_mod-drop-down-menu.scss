@@ -1,0 +1,32 @@
+.mod-drop-down-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 28px;
+  z-index: 100;
+  width: 250px;
+  height: 350px;
+  background-color: $color-0;
+  input {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    margin: 0;
+    padding: 5px 5%;
+    text-transform: uppercase;
+  }
+  .sector & {
+    width: 600px;
+    height: 280px;
+    padding: 35px 0;
+
+  }
+  .sector & {
+    a:before { background-color: $color-0;}
+  }
+  .mod-categories-child {
+    top: 0;
+    height: 323px;
+  }
+}
+

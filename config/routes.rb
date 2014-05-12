@@ -3,7 +3,7 @@ Iom::Application.routes.draw do
   # Home
   root :to => "sites#home"
   # report page
-  match 'reports' => 'reports#index' , :as => :report_index
+  match 'p/analysis' => 'reports#index' , :as => :report_index
   match 'report_generate' => 'reports#report', :as => :report_generate
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
@@ -16,7 +16,7 @@ Iom::Application.routes.draw do
   match 'faq' => 'sites#faq'
   match 'contact' => 'sites#contact'
   match 'explore' => 'sites#explore'
-  
+
   # Session
   resource :session, :only => [:new, :create, :destroy]
   match 'login' => 'sessions#new', :as => :login

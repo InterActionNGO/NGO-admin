@@ -1,23 +1,25 @@
 .mod-index-item {
-  padding-bottom: 30px;
-  margin-bottom: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 2px solid $color-4;
-  font-family: "Helvetica neue";
+  font-weight: lighter;
   font-size: 16px;
   h2 a{
-    color: $color-1;
+    display: inline;
     font-size: 16px;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    @include link-states($color-1, inline);
   }
   span { color: $color-5;}
   span a {
-    display: inline-block;
-    color: $color-2;
+    @include link-states($color-2, inline-block);
   }
   .learn_more {
-    display: inline-block;
-    color: $color-1;
+    @include link-states($color-1, inline-block);
   }
 }
 
-li:last-child .mod-index-item { border-bottom: none;}
+.articles-list li:last-child .mod-index-item {
+  border-bottom: none;
+}

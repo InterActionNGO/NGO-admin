@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'PT Sans Bold';
-  src: url("/fonts/bold-webfont.eot");
-  src: local("☺"), url("/fonts/bold-webfont.woff") format("woff"), url("/fonts/bold-webfont.ttf") format("truetype"), url("/fonts/bold-webfont.svg#webfontsAYHMuxi") format("svg");
+  src: url("/app/fonts/bold-webfont.eot");
+  src: local("☺"), url("/app/fonts/bold-webfont.woff") format("woff"), url("/app/fonts/bold-webfont.ttf") format("truetype"), url("/app/fonts/bold-webfont.svg#webfontsAYHMuxi") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -53,6 +53,6 @@ ul {
   list-style: none; }
   ul li {
     padding: 3px 0 3px 13px;
-    background: url("/images/sites/icons/list_disc.png") no-repeat 0 10px;
+    background: url("/app/images/sites/icons/list_disc.png") no-repeat 0 10px;
     font: normal 13px Arial;
     color: #666666; }

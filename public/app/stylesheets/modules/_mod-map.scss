@@ -1,6 +1,8 @@
 .mod-map {
-  height: 700px;
   position: relative;
+  top: -60px;
+  min-height: 400px;
+  max-height: 650px;
 }
 
 #map {
@@ -9,3 +11,69 @@
   width: 100%;
   height: 100%;
 }
+
+.map-tooltip {
+  display: none;
+  border: 0;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 175px;
+}
+
+.map-top-tooltip {
+  border: 0;
+  position: relative;
+  float: left;
+  padding: 10px;
+  margin-bottom: 15px;
+  margin-left: -3px;
+  width: 150px;
+  height: auto;
+  background-color: $color-0;
+  border: $border-bottom-color-1;
+  text-align: center;
+
+  h3 {
+    font-size: 30px;
+    font-weight:  lighter;
+    font-family: $font-family;
+    color: $color-1;
+    text-transform: none;
+    margin-bottom: 7px;
+  }
+
+  &:after, &:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: transparent;
+    border-top-color: $color-0;
+    border-width: 22px;
+    margin-left: -22px;
+  }
+  &:before {
+    border-color: transparent;
+    border-top-color: #B3D3DE;
+    border-width: 27px;
+    margin-left: -27px;
+  }
+
+  strong {
+    font-weight: normal;
+    color: $color-3;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+}
+
+
+

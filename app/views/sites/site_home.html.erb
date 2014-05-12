@@ -3,8 +3,8 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
 
       <%= render 'new_partials/aside/projects' %>
 
@@ -42,23 +42,26 @@
           <div class="mod-affiliated-organizations" >
             <h3>Some organizations</h3>
             <% @site.projects_organizations[0...9].each do |organization, count| %>
-              <li><%= link_to organization.name, organization_path(organization) %> - <%= pluralize(count, 'project') %></li>
+              <li><%= link_to organization.name, organization_path(organization) %> <%= pluralize(count, 'project') %></li>
             <% end %>
           </div>
         </div>
       <% end %>
 
-    </div>
-  </aside>
+    </aside>
+  </div>
 
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @site.name %></h1>
+  <div class="grid-12 offset-1">
+    <section class="layout-content">
+
+      <header>
+        <h1 class="section-title">All projects</h1>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => "#{url(@site)}/.csv", :xls_path => "#{url(@site)}/.xls", :kml_path => "#{url(@site)}/.xml" } %>
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

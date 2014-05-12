@@ -2,31 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><%= CGI.unescapeHTML(title) %> · NGO Aid Map</title>
+    <title><% unless CGI.unescapeHTML(title) == 'generic' %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
     <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
+    <meta name="viewport" content="width=980px">
     <%= csrf_meta_tag %>
 
     <% unless content_for?(:js_vars) %>
-      <script>
-        <% if @site.overview_map_lat && @site.overview_map_lon %>
-        var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
-        <% else %>
-        var map_center = [];
-        <% end %>
-        var map_zoom = <%= @site.overview_map_zoom %>;
-        var chco = "<%=@overview_map_chco%>";
-        var chf = "<%=@overview_map_chf%>";
-        var chld = "<%=@chld%>";
-        var chd = "<%=@chd%>";
-        var map_data = <%=raw(@map_data)%>;
-        var max_count = <%=@map_data_max_count%>;
-        var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
-        var theme = "<%=@site.theme_id%>";
-        var kind = 'org.';
-        var stylez = <%=raw @site.map_styles  %>
-        var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
-      </script>
+      <% if defined?(@map_data) %>
+        <script>
+          <% if @site.overview_map_lat && @site.overview_map_lon %>
+          var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
+          <% else %>
+          var map_center = [];
+          <% end %>
+          var map_zoom = <%= @site.overview_map_zoom %>;
+          var chco = '<%= @overview_map_chco %>';
+          var chf = '<%= @overview_map_chf %>';
+          var chld = '<%= @chld %>';
+          var chd = '<%= @chd %>';
+          var map_data = <%=raw(@map_data)%>;
+          var max_count = <%=@map_data_max_count%>;
+          var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
+          var theme = "<%= @site.theme_id %>";
+          var kind = window.location.pathname.split('/')[1];
+          var stylez = <%=raw @site.map_styles  %>
+          var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
+        </script>
+      <% end %>
     <% else %>
       <%= yield :js_vars %>
     <% end %>
@@ -37,6 +40,8 @@
     <%= yield %>
 
     <%= render 'layouts/footer' %>
+
+    <%= render 'new_partials/embed_map' %>
 
     <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3", "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js", "../vendor/requirejs/require", "main" %>
 
@@ -53,5 +58,9 @@
         })();
       </script>
     <% end %>
+
+    <!-- START: Feedback -->
+    <a href="http://questionpro.com/a/TakeSurvey?id=3822025" class="nyroModal" target="_blank" style="position:fixed; top:350px; left:0px; z-index:100;">Feedback</a>
+    <!-- END: Feedback -->
   </body>
 </html>

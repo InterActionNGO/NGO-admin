@@ -20,6 +20,7 @@
     var area_stroke_color = "<%=@georegion_map_stroke_color%>";
     var area_fill_color = "<%=@georegion_map_fill_color%>";
     var theme = <%=@site.theme_id%>;
+    var kind = window.location.pathname.split('/')[1];
     var stylez = <%=raw @site.map_styles  %>;
     var empty_layer = <%= @empty_layer %>;
   </script>
@@ -30,8 +31,9 @@
 <%= render 'new_partials/categories_selector' %>
 
 <div class="row">
-  <aside>
-    <div class="grid-4">
+  <div class="grid-4">
+    <aside class="layout-sidebar">
+
       <%= render 'new_partials/aside/location' %>
 
       <% unless @filter_by_location.present? %>
@@ -61,19 +63,22 @@
 
       <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
 
-      <%= render 'new_partials/aside/follow_us' %>
+    </aside>
+  </div>
 
-    </div>
-  </aside>
+  <div class="grid-12 offset-1">
+    <section class="layout-content" id="content">
 
-  <section class="content">
-    <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @area.name %></h1>
+      <header>
+        <h1 class="section-title"><%= georegion_projects_list_subtitle %></h1>
+        <%= content_tag :p, @area.wiki_description if @area.wiki_description %>
+        <%= content_tag :p, raw("Description provided by Wikipedia #{content_tag(:a, 'Read full article', :href => @area.wiki_url)}"), :class => 'provided' if @area.wiki_url %>
+      </header>
 
       <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => location_path(@area, @carry_on_filters.merge(:format => :csv)), :xls_path => location_path(@area, @carry_on_filters.merge(:format => :xls)), :kml_path => location_path(@area, @carry_on_filters.merge(:format => :kml)) } %>
 
       <%= render "new_partials/index_projects" %>
 
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
