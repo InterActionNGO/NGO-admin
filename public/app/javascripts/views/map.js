@@ -360,7 +360,7 @@ define(['sprintf'], function(sprintf) {
     cartodbOptions = {
       user_name: 'ngoaidmap',
       type: 'cartodb',
-      cartodb_logo: false,
+      cartodb_logo: true,
       legends: false,
       sublayers: [{
         sql: 'SELECT * from ne_10m_admin_0_countries',
