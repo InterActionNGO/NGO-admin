@@ -60,10 +60,15 @@ require([
       categoriesSelector.addClass('is-fixed');
       menu.removeClass('mod-go-up-menu');
       menu.addClass('mod-drop-down-menu');
+      $('.layout-sidebar').css({marginTop: 50});
+      $('.layout-content').css({marginTop: 50});
+
     } else {
       categoriesSelector.removeClass('is-fixed');
       menu.addClass('mod-go-up-menu');
       menu.removeClass('mod-drop-down-menu');
+      $('.layout-sidebar').css({marginTop: 0});
+      $('.layout-content').css({marginTop: 0});
     }
   }
 
@@ -78,7 +83,7 @@ require([
 
   function goTo(e) {
     $('body, html').animate({
-      scrollTop: $('.layout-content').offset().top - 110
+      scrollTop: $('.layout-content').offset().top - 109
     }, 500);
     e.preventDefault();
   }
