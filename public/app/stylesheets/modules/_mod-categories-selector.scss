@@ -39,6 +39,17 @@
     float: right;
     padding:0;
   }
+  .search {
+    height: 25px;
+    border-bottom: 2px solid $color-4;
+    input#q {
+      background-color: $color-0;
+      height: 25px;
+    }
+    input[type="submit"] {
+      height: 25px;
+    }
+  }
 }
 .sector {
   @include categorie-selector($color-2);
@@ -55,31 +66,7 @@
 .regions {
   @include categorie-selector($color-9);
 }
-.search {
-  padding: 0;
-  border-bottom: 2px solid $color-4;
-  border-radius: 0;
-  form {
-    margin-top: 3px;
-    @include clearfix;
-  }
-  &:hover {
-    color: $color-3;
-  }
-  input {
-    float: left;
-  }
-  input[type="submit"] {
-    width: 30px;
-    height: 17px;
-    border: none;
-    background: image-url('icon-search.png') no-repeat center;
-    background-color: white;
-    cursor: pointer;
-    float: right;
-    margin-top: 2px;
-  }
-}
+
 
 
 
