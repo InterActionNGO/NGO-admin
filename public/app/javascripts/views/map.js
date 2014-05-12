@@ -3,6 +3,33 @@
 
 define(['sprintf'], function(sprintf) {
 
+  var stylesArray = [{
+    'featureType': 'landscape.natural',
+    'elementType': 'geometry',
+    'stylers': [{
+      'saturation': -81
+    }, {
+      'gamma': 1.57
+    }]
+  }, {
+    'featureType': 'water',
+    'elementType': 'geometry',
+    'stylers': [{
+      'color': '#016d90'
+    }, {
+      'saturation': -44
+    }, {
+      'gamma': 2.75
+    }]
+  }, {
+    'featureType': 'road',
+    'stylers': [{
+      'saturation': -100
+    }, {
+      'gamma': 2.19
+    }]
+  }];
+
   sprintf = sprintf.sprintf;
 
   function old() {
@@ -227,7 +254,7 @@ define(['sprintf'], function(sprintf) {
             }
           } else {
             $('html, body').animate({
-              scrollTop: $('.layout-content').offset().top - 50
+              scrollTop: $('.layout-content').offset().top - 100
             }, 500);
           }
         });
@@ -303,7 +330,7 @@ define(['sprintf'], function(sprintf) {
 
     var emptyMapType = new EmptyMapType();
 
-    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
+    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
 
     if (map_type === 'project_map') {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -322,6 +349,7 @@ define(['sprintf'], function(sprintf) {
       center: latlng,
       scrollwheel: false,
       disableDefaultUI: true,
+      styles: stylesArray,
       maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
@@ -332,7 +360,7 @@ define(['sprintf'], function(sprintf) {
     cartodbOptions = {
       user_name: 'ngoaidmap',
       type: 'cartodb',
-      cartodb_logo: false,
+      cartodb_logo: true,
       legends: false,
       sublayers: [{
         sql: 'SELECT * from ne_10m_admin_0_countries',
@@ -510,7 +538,7 @@ define(['sprintf'], function(sprintf) {
       //   }
       // });
 
-      if (map_type !== 'administrative_map') {
+      if (map_type === 'administrative_map') {
         range = max_count / 5;
       }
       var diameter = 0;
@@ -526,14 +554,14 @@ define(['sprintf'], function(sprintf) {
       });
 
       // Cartodb
-      cartoDBLayer = cartodb.createLayer(map, cartodbOptions);
-
-      cartoDBLayer.on('done', function(layer) {
-        currentLayer = layer;
-        if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
-          $('#' + window.sessionStorage.getItem('layer')).trigger('click');
-        }
-      }).addTo(map);
+      cartodb.createLayer(map, cartodbOptions)
+        .addTo(map)
+        .on('done', function(layer) {
+          currentLayer = layer;
+          if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
+            $('#' + window.sessionStorage.getItem('layer')).trigger('click');
+          }
+        });
 
       // Markers
       for (var i = 0; i < map_data.length; i++) {
@@ -664,13 +692,26 @@ define(['sprintf'], function(sprintf) {
       if (this.$el.length === 0) {
         return false;
       }
-      var h = $(window).height() - 204;
+
+      var self = this;
+
+      this.$w = $(window);
+
+      this.resizeMap();
+
+      this.$w.resize(function() {
+        self.resizeMap();
+      });
+
+      old();
+    },
+
+    resizeMap: function() {
+      var h = this.$w.height() - 204;
 
       this.$el.css({
         height: h
       });
-
-      old();
     }
 
   });
