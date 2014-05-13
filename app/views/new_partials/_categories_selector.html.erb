@@ -81,7 +81,7 @@
             </li>
           <% end %>
 
-          <li class="search">
+          <li class="mod-form search">
             <%= form_tag(search_path, :method => :get) do %>
               <%= text_field_tag :q, params[:q], :placeholder=>'SEARCH'%>
               <input type="submit" value="">
