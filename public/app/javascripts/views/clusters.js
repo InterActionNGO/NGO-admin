@@ -1,6 +1,6 @@
 'use strict';
 
-define(['jqueryui'], function() {
+define(['backbone', 'jqueryui'], function(Backbone) {
 
   var ClustersView = Backbone.View.extend({
 

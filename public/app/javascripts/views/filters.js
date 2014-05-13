@@ -1,6 +1,6 @@
 'use strict';
 
-define(['liveupdate'], function() {
+define(['backbone', 'liveupdate'], function(Backbone) {
 
   var FiltersView = Backbone.View.extend({
 
