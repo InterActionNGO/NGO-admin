@@ -2,18 +2,14 @@
 
 define(function() {
 
-  var EmbedMapView = Backbone.View.extend({
+  var LayerOverlayView = Backbone.View.extend({
 
-    el: '#embedMapView',
+    el: '.layer-overlay',
 
     events: {
       'click': 'hide',
       'click .mod-overlay-close': 'hide',
       'click .mod-overlay-content': 'show'
-    },
-
-    initialize: function() {
-      Backbone.Events.on('embed:show', this.show, this);
     },
 
     show: function() {
@@ -32,6 +28,6 @@ define(function() {
 
   });
 
-  return EmbedMapView;
+  return LayerOverlayView;
 
 });
