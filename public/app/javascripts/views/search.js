@@ -1,6 +1,6 @@
 'use strict';
 
-define(['select2'], function() {
+define(['backbone', 'select2'], function(Backbone) {
 
   var SearchView = Backbone.View.extend({
 

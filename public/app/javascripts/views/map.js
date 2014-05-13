@@ -1,7 +1,7 @@
 /*global google,map_type,map_data:true,map_center,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
-define(['sprintf'], function(sprintf) {
+define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
   var stylesArray = [{
     'featureType': 'landscape.natural',
