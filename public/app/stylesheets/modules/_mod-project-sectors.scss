@@ -19,3 +19,18 @@
   .icon_statistics { position: relative; padding-left: 25px;}
   .icon_statistics:before { @include before('', block, absolute, 0, 0, 20px, 20px)}
 }
+
+.ui-tooltip {
+  padding: 5px 10px;
+  box-shadow: none;
+  border-radius: 15px;
+  color: $color-0;
+  background-color: $color-5;
+  text-transform: uppercase;
+  font-weight: lighter;
+  font-size: 12px;
+  &:after {
+    @include after ('', block, absolute, 50%, -10px, 0, 0);
+    @include triangle (8px, $color-5);
+  }
+}
