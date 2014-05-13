@@ -81,4 +81,16 @@
       font-weight: bold;
     }
   }
+  .icon-info {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    color: $color-0;
+    background-color: $color-5;
+    font-family: 'Times New Roman';
+    font-style: italic;
+    text-align: center;
+  }
 }
