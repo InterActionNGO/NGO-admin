@@ -1,7 +1,34 @@
 /*global google,map_type,map_data:true,map_center,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
-define(['sprintf'], function(sprintf) {
+define(['backbone', 'sprintf'], function(Backbone, sprintf) {
+
+  var stylesArray = [{
+    'featureType': 'landscape.natural',
+    'elementType': 'geometry',
+    'stylers': [{
+      'saturation': -81
+    }, {
+      'gamma': 1.57
+    }]
+  }, {
+    'featureType': 'water',
+    'elementType': 'geometry',
+    'stylers': [{
+      'color': '#016d90'
+    }, {
+      'saturation': -44
+    }, {
+      'gamma': 2.75
+    }]
+  }, {
+    'featureType': 'road',
+    'stylers': [{
+      'saturation': -100
+    }, {
+      'gamma': 2.19
+    }]
+  }];
 
   sprintf = sprintf.sprintf;
 
@@ -227,7 +254,7 @@ define(['sprintf'], function(sprintf) {
             }
           } else {
             $('html, body').animate({
-              scrollTop: $('.layout-content').offset().top - 50
+              scrollTop: $('.layout-content').offset().top - 100
             }, 500);
           }
         });
@@ -276,8 +303,6 @@ define(['sprintf'], function(sprintf) {
 
 
     var global_index = 10;
-    var $overlay;
-    var $contentOverlay;
 
     /**
      * @constructor
@@ -303,7 +328,7 @@ define(['sprintf'], function(sprintf) {
 
     var emptyMapType = new EmptyMapType();
 
-    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, cartoDBLayer, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
+    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
 
     if (map_type === 'project_map') {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -322,6 +347,7 @@ define(['sprintf'], function(sprintf) {
       center: latlng,
       scrollwheel: false,
       disableDefaultUI: true,
+      styles: stylesArray,
       maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
@@ -332,11 +358,11 @@ define(['sprintf'], function(sprintf) {
     cartodbOptions = {
       user_name: 'ngoaidmap',
       type: 'cartodb',
-      cartodb_logo: false,
+      cartodb_logo: true,
       legends: false,
       sublayers: [{
         sql: 'SELECT * from ne_10m_admin_0_countries',
-        cartocss: '#table{}'
+        cartocss: '#ne_10m_admin_0_countries{}'
       }]
     };
 
@@ -376,10 +402,10 @@ define(['sprintf'], function(sprintf) {
 
       $legendWrapper.html('');
 
-      if ($el.data('layer') === 'none') {
+      if ($el.data('layer') === 'none' && currentLayer.getSubLayer(0)) {
         sublayer = currentLayer.getSubLayer(0);
         sublayer.setSQL('SELECT * from ne_10m_admin_0_countries');
-        sublayer.setCartoCSS('#table{}');
+        sublayer.setCartoCSS('#ne_10m_admin_0_countries{}');
       }
 
       if (window.sessionStorage) {
@@ -423,7 +449,7 @@ define(['sprintf'], function(sprintf) {
         });
 
         var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="%2$s"><span class="icon-info">i</span></a>', $el.data('layer'), $el.data('overlay'));
-        var infowindowHtml = sprintf('<div class="cartodb-popup dark"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p class="infowindow-layer">%s<p><p><span class="infowindow-data">{{#content.data.data}}{{content.data.data}}</span>%s{{/content.data.data}}{{^content.data.data}}No data{{/content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml, $el.data('units'));
+        var infowindowHtml = sprintf('<div class="cartodb-popup light"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p class="infowindow-layer">%s<p><p><span class="infowindow-data">{{#content.data.data}}{{content.data.data}}</span>%s{{/content.data.data}}{{^content.data.data}}No data{{/content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml, $el.data('units'));
 
         sublayer = currentLayer.getSubLayer(0);
 
@@ -450,10 +476,7 @@ define(['sprintf'], function(sprintf) {
               e.preventDefault();
               e.stopPropagation();
 
-              var overlayHtml = $($(e.currentTarget).data('overlay')).html();
-
-              $contentOverlay.html(overlayHtml);
-              $overlay.fadeIn('fast');
+              $($(e.currentTarget).data('overlay')).fadeIn();
             });
           }
         });
@@ -484,17 +507,9 @@ define(['sprintf'], function(sprintf) {
         window.sessionStorage.setItem('layer', '');
       }
 
-      $overlay = $('#overlay');
-      $contentOverlay = $('#contentOverlay');
-
       $layerSelector = $('#layerSelector');
       $mapTypeSelector = $('#mapTypeSelector');
       $legendWrapper = $('#legendWrapper');
-
-      $('#closeOverlay').click(function(e) {
-        e.preventDefault();
-        $overlay.fadeOut('fast');
-      });
 
       if ($('#map').length > 0) {
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -504,13 +519,7 @@ define(['sprintf'], function(sprintf) {
 
       map.mapTypes.set('EMPTY', emptyMapType);
 
-      // google.maps.event.addListener(map, 'zoom_changed', function() {
-      //   if (map.getZoom() > 12) {
-      //     map.setZoom(12);
-      //   }
-      // });
-
-      if (map_type !== 'administrative_map') {
+      if (map_type === 'administrative_map') {
         range = max_count / 5;
       }
       var diameter = 0;
@@ -526,14 +535,20 @@ define(['sprintf'], function(sprintf) {
       });
 
       // Cartodb
-      cartoDBLayer = cartodb.createLayer(map, cartodbOptions);
-
-      cartoDBLayer.on('done', function(layer) {
-        currentLayer = layer;
-        if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
-          $('#' + window.sessionStorage.getItem('layer')).trigger('click');
-        }
-      }).addTo(map);
+      cartodb.createLayer(map, cartodbOptions)
+        .addTo(map)
+        .on('done', function(layer) {
+          currentLayer = layer;
+          currentLayer.on('error', function(err) {
+            console.log(err);
+          });
+          if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
+            $('#' + window.sessionStorage.getItem('layer')).trigger('click');
+          }
+        })
+        .on('error', function(err) {
+          console.log(err);
+        });
 
       // Markers
       for (var i = 0; i < map_data.length; i++) {
@@ -619,10 +634,7 @@ define(['sprintf'], function(sprintf) {
         e.preventDefault();
         e.stopPropagation();
 
-        var overlayHtml = $($(e.currentTarget).closest('a').data('overlay')).html();
-
-        $contentOverlay.html(overlayHtml);
-        $overlay.fadeIn('fast');
+        $($(e.currentTarget).parent().data('overlay')).fadeIn();
       });
 
       $mapTypeSelector.find('a').click(function(e) {
@@ -664,13 +676,26 @@ define(['sprintf'], function(sprintf) {
       if (this.$el.length === 0) {
         return false;
       }
-      var h = $(window).height() - 204;
+
+      var self = this;
+
+      this.$w = $(window);
+
+      this.resizeMap();
+
+      this.$w.resize(function() {
+        self.resizeMap();
+      });
+
+      old();
+    },
+
+    resizeMap: function() {
+      var h = this.$w.height() - 204;
 
       this.$el.css({
         height: h
       });
-
-      old();
     }
 
   });

@@ -1,6 +1,6 @@
 'use strict';
 
-define(function() {
+define(['backbone'], function(Backbone) {
 
   var MenuFixedView = Backbone.View.extend({
 

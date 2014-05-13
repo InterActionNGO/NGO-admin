@@ -16,13 +16,7 @@
               <% @organization_projects_clusters_sectors[0...3].each do |category,count| %>
                 <% unless category.name.eql?('N/A') %>
                   <li>
-                    <div class="tooltip">
-                      <span class="body_tooltip">
-                        <label><%= category.name %></label>
-                      </span>
-                      <span class="bottom_tooltip"></span>
-                    </div>
-                    <a class="<%= category.css_class %> icon_statistics" href="<%= organization_path(@organization, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                    <a class="<%= category.css_class %> icon_statistics" title="<%= category.name %>" href="<%= organization_path(@organization, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
                   </li>
                 <% end %>
               <% end %>
@@ -35,24 +29,46 @@
         <%= render 'new_partials/aside/project_locations' %>
       <% end %>
 
-      <% unless ((@organization.contact_phone_number.nil? || @organization.contact_phone_number.empty?) && (@organization.contact_position.nil? || @organization.contact_position.empty?) && (@organization.hq_address.nil? || @organization.hq_address.empty?) && (@organization.contact_zip.nil? || @organization.contact_zip.empty?) && (@organization.contact_phone_number.nil?||@organization.contact_phone_number.empty?)) %>
-
+      <% unless @organization.contact_name.empty? &&  @organization.contact_position.empty? && @organization.contact_phone_number.empty? && @organization.contact_email.empty? %>
         <div class="contact-info mod-info">
           <h3>Contact information</h3>
           <div class="mod-contact-info">
-            <h4><%= @organization.contact_name %></h4>
+            <% if @organization.contact_name? %>
+              <h4><%= @organization.contact_name %></h4>
+            <% end %>
             <p><%= @organization.contact_position %></p>
             <p><%= @organization.contact_phone_number %></p>
-            <% unless (@organization.contact_email.nil?)||(@organization.contact_email.empty?) %>
+            <% unless (@organization.contact_email.nil?) || (@organization.contact_email.empty?) %>
               <p><%= link_to(@organization.contact_email, "mailto:#{@organization.contact_email}") %></p>
-            <%end%>
-            <% if @organization.twitter? %>
-              <p><%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %></p>
-            <% end %>
-            <% if @organization.twitter? %>
-              <p><%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %></p>
             <% end %>
           </div>
+        </div>
+      <% end %>
+
+      <% unless @organization.twitter.nil? &&  @organization.facebook.nil? && @organization.website.nil? %>
+        <div class="follow-us mod-info">
+          <% if @organization.logo? %>
+            <% if @organization.website? %>
+              <a href="<%= @organization.website %>"><%= image_tag(@organization.logo.url(:small)) %></a>
+            <% else %>
+              <%= image_tag(@organization.logo.url(:small)) %>
+            <% end %>
+          <% end %>
+          <% if @organization.twitter? || @organization.facebook? || @organization.website? %>
+            <div class="mod-follow-us">
+              <ul>
+                <% if @organization.twitter? %>
+                  <li><%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %></li>
+                <% end %>
+                <% if @organization.twitter? %>
+                  <li><%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %></li>
+                <% end %>
+                <% if @organization.website? %>
+                  <li><%= link_to(' ', @organization.website, :class => 'email', :target => '_blank') %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
         </div>
       <% end %>
 

@@ -80,7 +80,7 @@ class GeoregionController < ApplicationController
                   '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                   END as url,
                   c.code, 'country' as type
-                  from ((countries_projects as cp inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{@site.id}) inner join projects as p 
+                  from ((countries_projects as cp inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{@site.id}) inner join projects as p
                   on cp.project_id=p.id and (p.end_date is null OR p.end_date > now() AND cp.country_id=#{country.id}) inner join countries as c on cp.country_id=c.id and c.id=#{country.id} )
                   group by c.id,c.name,lon,lat,c.name,c.code
                   "

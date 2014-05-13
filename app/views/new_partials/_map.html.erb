@@ -6,13 +6,13 @@
 
         <div class="control-navbar">
           <% if SiteLayer.where({:site_id => @site.id}).length >= 1 %>
-            <div class="selector" id="layerSelector">
+            <div class="selector menu-item" id="layerSelector">
               <ul>
-                <li><span class="current-selector">Layer</span>
-                  <ul class="selector-options">
-                    <li><a href="#" data-layer="none">None</a></li>
+                <li><span class="current-selector index-item">Layer</span>
+                  <ul class="selector-options submenu">
+                    <li class="submenu-item"><a href="#" data-layer="none">None</a></li>
                     <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-                      <li><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
+                      <li class="submenu-item"><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
                         data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
                     <% end %>
                   </ul>
@@ -24,7 +24,7 @@
           <div class="selector menu-item" id="mapTypeSelector">
             <ul>
               <li>
-                <span class="current-selector">Roadmap</span>
+                <span class="current-selector index-item">Roadmap</span>
                 <ul class="selector-options submenu">
                   <li class="is-hidden submenu-item" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
                   <li class="submenu-item"><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
@@ -62,15 +62,22 @@
     </div>
   </div>
 
-  <%= render 'new_partials/filtered-categories' %>
+  <% if @filter_name.present? or @donor.present? %>
+    <%= render 'new_partials/filtered-categories' %>
+  <% end %>
 
 </section>
 
 <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-  <div class="is-hidden" id="Overlay<%= sl.layer.id %>">
-    <h2><%= sl.layer.long_title %></h2>
-    <p><%= sl.layer.description.html_safe %></p>
-    <p><%= sl.layer.credits.html_safe %></p>
+  <div id="Overlay<%= sl.layer.id %>" class="mod-overlay layer-overlay">
+    <div class="mod-overlay-content">
+      <div class="text">
+        <a class="mod-overlay-close" href="#">x</a>
+        <h2><%= sl.layer.long_title %></h2>
+        <p><%= sl.layer.description.html_safe %></p>
+        <p><%= sl.layer.credits.html_safe %></p>
+      </div>
+    </div>
   </div>
 <% end %>
 

@@ -1,13 +1,15 @@
 'use strict';
 
-define(function() {
+define(['backbone'], function(Backbone) {
 
   var EmbedMapView = Backbone.View.extend({
 
     el: '#embedMapView',
 
     events: {
-      'click .mod-overlay-close': 'hide'
+      'click': 'hide',
+      'click .mod-overlay-close': 'hide',
+      'click .mod-overlay-content': 'show'
     },
 
     initialize: function() {
@@ -15,14 +17,17 @@ define(function() {
     },
 
     show: function() {
-      this.$el.fadeIn();
+      this.$el.stop().fadeIn();
+      return false;
     },
 
     hide: function(e) {
       this.$el.fadeOut();
       if (e.preventDefault) {
         e.preventDefault();
+        e.stopPropagation();
       }
+      return false;
     }
 
   });
