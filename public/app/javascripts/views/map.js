@@ -303,8 +303,6 @@ define(['sprintf'], function(sprintf) {
 
 
     var global_index = 10;
-    var $overlay;
-    var $contentOverlay;
 
     /**
      * @constructor
