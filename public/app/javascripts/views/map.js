@@ -362,7 +362,7 @@ define(['sprintf'], function(sprintf) {
       legends: false,
       sublayers: [{
         sql: 'SELECT * from ne_10m_admin_0_countries',
-        cartocss: '#ne_10m_admin_0_countries{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}'
+        cartocss: '#ne_10m_admin_0_countries{}'
       }]
     };
 
