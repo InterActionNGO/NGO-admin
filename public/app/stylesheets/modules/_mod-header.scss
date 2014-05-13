@@ -29,18 +29,14 @@
     margin: 0 .5%;
     text-align: center;
     text-transform: uppercase;
-    &.access { width: 39%;}
+    &.access { width: 35%;}
     .index-item {
       position: relative;
       padding: 5px 1%;
       &.active { border-radius: 15px;}
     }
-    &:hover {
-      .submenu {
-        display: block;
-      }
-    }
   }
+
   .interaction-logo {
     float: right;
     padding-top: 20px;
@@ -49,7 +45,6 @@
     display: none;
     position: absolute;
     z-index: 100;
-    margin-top: 0;
     background-color: $color-0;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -60,37 +55,14 @@
     a {
       text-transform: none;
       padding: 10px 25px;
+      font-weight: bold;
     }
   }
 
-  .home {
-    @include theme-color-3;
-    &:hover .index-item {
-      background-color: rgba($primary-color, .3);
-      border-radius: 15px;
-    }
-    .submenu {
-      border-top: 5px solid rgba($primary-color, .3);
-    }
-    .submenu-item { background-color: rgba($primary-color, .1);
-      &:hover {
-        background-color: rgba($primary-color, .3);
-      }
-    }
-    &.active {
-      background-color: $primary-color;
-      color: $color-0;
-    }
-  }
-  .about {
-    @include theme-color-8;
-    @include drop-down-menu($primary-color);
-  }
-  .data {
-    @include theme-color-1;
-    @include drop-down-menu($primary-color);
-  }
-  .access:hover .index-item { color: rgba($color-3, .3); }
+  .home { @include menu-item($color-3);}
+  .about { @include drop-down-menu($color-8);}
+  .data { @include drop-down-menu($color-1);}
+  .access { @include menu-item($color-2);}
 }
 
 .mod-footer .submenu { display: none;}

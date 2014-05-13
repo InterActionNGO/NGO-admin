@@ -52,6 +52,8 @@ Iom::Application.configure do
   # Assets path
   config.action_controller.asset_path = proc { |asset_path|
     case asset_path
+    when /^\/(system)/
+      "#{asset_path}"
     when /^\/(stylesheets\/lib)/
       "/app#{asset_path}".sub("/stylesheets", "")
     when /^\/(stylesheets\/vendor)/

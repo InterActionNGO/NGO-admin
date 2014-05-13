@@ -37,8 +37,9 @@ require([
   'views/menu-fixed',
   'views/downloads',
   'views/embed-map',
-  'views/search'
-], function(ClustersView, MapView, FiltersView, MenuFixedView, DownloadsView, EmbedMapView, SearchView) {
+  'views/search',
+  'views/layer-overlay'
+], function(ClustersView, MapView, FiltersView, MenuFixedView, DownloadsView, EmbedMapView, SearchView, LayerOverlayView) {
 
   new ClustersView();
   new MapView();
@@ -47,6 +48,7 @@ require([
   new DownloadsView();
   new EmbedMapView();
   new SearchView();
+  new LayerOverlayView();
 
   var scrollTop,
     categoriesSelector = $('.categories-selector'),

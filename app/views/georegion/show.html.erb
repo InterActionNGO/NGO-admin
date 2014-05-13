@@ -57,6 +57,15 @@
 
       <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
 
+      <div class="mod-info">
+        <h3>Projects in other <%= word_for_geo_context(@area).pluralize %></h3>
+        <ul>
+          <% @area.near(@site, 5).each do |area| %>
+            <li><%= link_to(area.name, location_path(area)) %> - <%= pluralize(area.count, 'project', 'projects') %></li>
+          <% end %>
+        </ul>
+      </div>
+
     </aside>
   </div>
 
