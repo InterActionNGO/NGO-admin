@@ -84,17 +84,18 @@
         </div>
       <% end %>
 
-      <% if @project.implementing_organization? || (@project.partner_organizations? && !@project.partner_organizations.eql?('N/A')) %>
+      <% if @project.implementing_organization? %>
         <div class="mod-info">
-          <% if @project.implementing_organization? %>
-            <h3>International Partners</h3>
-            <p><%= @project.implementing_organization %></p>
-          <% end %>
+          <h3>International Partners</h3>
+          <p><%= @project.implementing_organization %></p>
+        </div>
+      <% end %>
 
-          <% if @project.partner_organizations? && !@project.partner_organizations.eql?('N/A') %>
-            <h3 class="margin">Local Partners</h3>
-            <p><%= @project.partner_organizations %></p>
-          <% end %>
+
+      <% if @project.partner_organizations? && !@project.partner_organizations.eql?('N/A') %>
+        <div class="mod-info">
+          <h3 class="margin">Local Partners</h3>
+          <p><%= @project.partner_organizations %></p>
         </div>
       <% end %>
 
