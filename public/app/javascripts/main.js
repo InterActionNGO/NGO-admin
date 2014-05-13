@@ -5,25 +5,45 @@ require.config({
   baseUrl: '/app/javascripts',
 
   paths: {
+    jquery: '../vendor/jquery/dist/jquery',
+    underscore: '../vendor/underscore/underscore',
+    backbone: '../vendor/backbone/backbone',
     sprintf: '../vendor/sprintf/src/sprintf',
     quicksilver: '../lib/liveupdate/quicksilver',
     liveupdate: '../lib/liveupdate/jquery.liveupdate',
     jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
-    select2: '../vendor/select2/select2'
+    select2: '../vendor/select2/select2',
+    form: '../vendor/jquery-form/jquery.form'
   },
 
   shim: {
+    jquery: {
+      exports: '$'
+    },
+    underscore: {
+      exports: '_'
+    },
+    backbone: {
+      deps: ['jquery', 'underscore'],
+      exports: 'Backbone'
+    },
     sprintf: {
       exports: 'sprintf'
     },
     liveupdate: {
-      deps: ['quicksilver'],
+      deps: ['jquery', 'quicksilver'],
       exports: '$'
     },
     jqueryui: {
+      deps: ['jquery'],
       exports: '$'
     },
     select2: {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    form: {
+      deps: ['jquery'],
       exports: '$'
     }
   }
@@ -31,6 +51,10 @@ require.config({
 });
 
 require([
+  'jquery',
+
+  'models/report',
+
   'views/clusters',
   'views/map',
   'views/filters',
@@ -39,8 +63,22 @@ require([
   'views/embed-map',
   'views/search',
   'views/layer-overlay',
-  'views/timeline'
-], function(ClustersView, MapView, FiltersView, MenuFixedView, DownloadsView, EmbedMapView, SearchView, LayerOverlayView, TimelineView) {
+  'views/timeline',
+  'views/report-form'
+], function($, ReportModel) {
+
+  var ClustersView = arguments[2],
+    MapView = arguments[3],
+    FiltersView = arguments[4],
+    MenuFixedView = arguments[5],
+    DownloadsView = arguments[6],
+    EmbedMapView = arguments[7],
+    SearchView = arguments[8],
+    LayerOverlayView = arguments[9],
+    TimelineView = arguments[10],
+    ReportForm = arguments[11];
+
+  var reportModel = new ReportModel();
 
   new ClustersView();
   new MapView();
@@ -51,6 +89,9 @@ require([
   new SearchView();
   new LayerOverlayView();
   new TimelineView();
+  new ReportForm({
+    model: reportModel
+  });
 
   var scrollTop,
     categoriesSelector = $('.categories-selector'),
@@ -76,12 +117,16 @@ require([
       categoriesSelector.addClass('is-fixed');
       menu.removeClass('mod-go-up-menu');
       menu.addClass('mod-drop-down-menu');
-      $('.layout-sidebar, .layout-content').css({marginTop: 50});
+      $('.layout-sidebar, .layout-content').css({
+        marginTop: 50
+      });
     } else {
       categoriesSelector.removeClass('is-fixed');
       menu.addClass('mod-go-up-menu');
       menu.removeClass('mod-drop-down-menu');
-      $('.layout-sidebar, .layout-content').css({marginTop: 0});
+      $('.layout-sidebar, .layout-content').css({
+        marginTop: 0
+      });
     }
   }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-define(['jqueryui'], function() {
+define(['backbone', 'jqueryui'], function(Backbone) {
 
   var ClustersView = Backbone.View.extend({
 
@@ -17,7 +17,7 @@ define(['jqueryui'], function() {
 
       $items.tooltip({
         position: {
-          at: 'center top',
+          at: 'center+20 top-5',
           my: 'center bottom'
         }
       });

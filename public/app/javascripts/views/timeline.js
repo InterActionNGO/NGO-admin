@@ -1,6 +1,6 @@
 'use strict';
 
-define(function() {
+define(['backbone'], function(Backbone) {
 
   var TimelineView = Backbone.View.extend({
 
