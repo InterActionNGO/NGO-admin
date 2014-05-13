@@ -16,6 +16,7 @@ class ReportsController < ApplicationController
 				@date_end = Date.today
 			end
 		end
+    params[:id] = 'report'
 	end
 
 	def report

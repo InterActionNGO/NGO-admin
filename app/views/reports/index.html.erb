@@ -3,20 +3,19 @@
 
   <div class="grid-4">
     <aside class="layout-sidebar">
-      <div class="mod-report-filter mod-form">
+      <div class="mod-report-filter mod-form" id="reportFormView">
 
         <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
 
-        <div class="block search">
-          <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
-          <%= submit_tag '' %>
-        </div>
+          <div class="block search">
+            <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
+            <%= submit_tag '' %>
+          </div>
 
           <ul class="combo_search_select">
             <li class="comboselect">
               <label>ORGANIZATION</label>
-              <%= select_tag :organization,
-                options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+              <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
 
@@ -93,7 +92,4 @@
     </section>
   </div>
 
-</div> <!-- row -->
-
-<script src="/app/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
-<script src="/app/javascripts/sites/pages.js" type="text/javascript" charset="utf-8"></script>
+</div>

@@ -1,16 +1,9 @@
 .mod-footer {
-  position: relative;
-  height: 180px;
-  padding: 40px 0;
   font-size: 13px;
-  margin-top: 80px;
-  background: image-url('footer_background_x2.png') no-repeat 75% 23px;
-  background-size: 25%;
-  background-color: $color-4;
 
   a { display: inline-block;}
 
-  ul { margin-top: 15px;}
+  ul { margin-top: 40px;}
   li {
     float: none;
     font-weight: bold;
@@ -20,7 +13,7 @@
   }
   .aid-map-logo {
     width: 200px;
-    margin-top: 20px;
+    margin-top: 45px;
   }
   .interaction-logo {
     float: left;
@@ -28,7 +21,11 @@
   .signature {
     text-align: right;
   }
-
+}
+.mod-footer-top {
+  height: 190px;
+  background: image-url('footer_background_x2.png') no-repeat right top;
+  background-size: contain;
 }
 .mod-footer-bottom {
   position: absolute;

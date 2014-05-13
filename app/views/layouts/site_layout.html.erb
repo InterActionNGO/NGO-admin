@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><% unless CGI.unescapeHTML(title) == 'generic' %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
-    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
+    <title><% unless CGI.unescapeHTML(title) == 'global' %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" %>
+    <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/select2/select2.css", "main" %>
     <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
     <meta name="viewport" content="width=980px">
     <%= csrf_meta_tag %>
@@ -43,7 +44,9 @@
 
     <%= render 'new_partials/embed_map' %>
 
-    <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3", "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js", "../vendor/requirejs/require", "main" %>
+    <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
+    <%= javascript_include_tag "../vendor/requirejs/require", "main" %>
 
     <% if Rails.env.production? %>
       <script type="text/javascript">

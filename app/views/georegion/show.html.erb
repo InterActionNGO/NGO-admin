@@ -47,13 +47,7 @@
             <ul id="clustersView">
               <% @area.projects_clusters_sectors(@site)[0..3].each do |category,count| %>
                 <li>
-                  <div class="tooltip">
-                    <span class="body_tooltip">
-                      <label><%= category.name %></label>
-                    </span>
-                    <span class="bottom_tooltip"></span>
-                  </div>
-                  <a class="<%= category.css_class %> icon_statistics" href="<%= location_path(@area, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                  <a class="<%= category.css_class %> icon_statistics" title="<%= category.name %>" href="<%= location_path(@area, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
                 </li>
               <% end %>
             </ul>
@@ -62,6 +56,15 @@
       <% end %>
 
       <%= render 'new_partials/aside/donors', :donors => @area.donors(@site) %>
+
+      <div class="mod-info">
+        <h3>Projects in other <%= word_for_geo_context(@area).pluralize %></h3>
+        <ul>
+          <% @area.near(@site, 5).each do |area| %>
+            <li><%= link_to(area.name, location_path(area)) %> - <%= pluralize(area.count, 'project', 'projects') %></li>
+          <% end %>
+        </ul>
+      </div>
 
     </aside>
   </div>

@@ -9,12 +9,6 @@
       <% unless (@donor.contact_email.nil?)||(@donor.contact_email.empty?) %>
         <p><%= link_to(@donor.contact_email, "mailto:#{@donor.contact_email}") %></p>
       <%end%>
-      <% if @donor.twitter? %>
-        <p><%= link_to(' ' ,"http://twitter.com/#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %></p>
-      <% end %>
-      <% if @donor.twitter? %>
-        <p><%= link_to(' ' ,"http://facebook.com/#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %></p>
-      <% end %>
     </div>
   </div>
 <%end%>

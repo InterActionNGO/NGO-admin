@@ -6,9 +6,10 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <%= render 'new_partials/aside/projects' %>
-
-      <%= render 'new_partials/aside/organizations' %>
+      <div class="mod-highlighted-results">
+        <%= render 'new_partials/aside/projects' %>
+        <%= render 'new_partials/aside/organizations' %>
+      </div>
 
       <% cache("#{@site.id}/home/projects_by_cluster_sector") do %>
         <div class="project-sectors mod-info">
@@ -18,13 +19,7 @@
               <% @site.projects_sectors_or_clusters.each do |category, count| %>
                 <% unless category.name.eql?('N/A') %>
                   <li>
-                    <div class="tooltip">
-                      <span class="body_tooltip">
-                        <label><%= category.name %></label>
-                      </span>
-                      <span class="bottom_tooltip"></span>
-                    </div>
-                    <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                    <a class="<%= category.css_class %> icon_statistics" title="<%= category.name %>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
                   </li>
                 <% end %>
               <% end %>

@@ -12,6 +12,7 @@
     .facebook { background: image-url('facebook.png') no-repeat center;}
     .google { background: image-url('google.png') no-repeat center;}
     .linkedin { background: image-url('linkedin.png') no-repeat center;}
+    .email { background: image-url('email.png') no-repeat center;}
   }
 
   .mod-header & {
@@ -24,7 +25,13 @@
       height: 21px;
       float: right;
     }
-    .twitter { background: image-url('icon-tw-lt.png') no-repeat center;}
-    .facebook { background: image-url('icon-fb-lt.png') no-repeat center;}
+    .twitter {
+      background: image-url('icon-tw-lt.png') no-repeat center;
+      &:hover { background: image-url('icon-tw-lt-color.png') no-repeat center;}
+    }
+    .facebook {
+      background: image-url('icon-fb-lt.png') no-repeat center;
+      &:hover { background: image-url('icon-fb-lt-color.png') no-repeat center;}
+    }
   }
 }
