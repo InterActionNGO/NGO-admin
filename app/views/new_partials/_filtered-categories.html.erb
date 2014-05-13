@@ -3,6 +3,7 @@
   <div class="grid-17">
     <div class="mod-filtered-categories">
       <ul>
+        <li><span class="filter">Filtering by: </span></li>
         <% if @donor %>
           <li><%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>
         <% elsif @site.navigate_by_cluster? %>

@@ -16,13 +16,7 @@
               <% @organization_projects_clusters_sectors[0...3].each do |category,count| %>
                 <% unless category.name.eql?('N/A') %>
                   <li>
-                    <div class="tooltip">
-                      <span class="body_tooltip">
-                        <label><%= category.name %></label>
-                      </span>
-                      <span class="bottom_tooltip"></span>
-                    </div>
-                    <a class="<%= category.css_class %> icon_statistics" href="<%= organization_path(@organization, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                    <a class="<%= category.css_class %> icon_statistics" title="<%= category.name %>" href="<%= organization_path(@organization, @carry_on_filters.merge(:category_id => category.id)) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
                   </li>
                 <% end %>
               <% end %>
