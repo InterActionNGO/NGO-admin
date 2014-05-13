@@ -11,7 +11,18 @@ define(function() {
     },
 
     initialize: function() {
+      var self = this;
+
       Backbone.Events.on('embed:show', this.show, this);
+
+      this.$el.find('.mod-overlay-content')
+        .on('mouseout', function() {
+          self.$el.on('click', function(e) {
+            self.hide(e);
+          });
+        }).on('mouseover', function() {
+          self.$el.off('click');
+        });
     },
 
     show: function() {
