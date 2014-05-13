@@ -463,6 +463,8 @@ define(['sprintf'], function(sprintf) {
           interaction: 'country_name, data, year',
         });
 
+        sublayer.show();
+
         $('.infowindow-pop').unbind('click');
 
         var infowindow = cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
