@@ -362,7 +362,7 @@ define(['sprintf'], function(sprintf) {
       legends: false,
       sublayers: [{
         sql: 'SELECT * from ne_10m_admin_0_countries',
-        cartocss: '#table{}'
+        cartocss: '#ne_10m_admin_0_countries{}'
       }]
     };
 
@@ -402,10 +402,10 @@ define(['sprintf'], function(sprintf) {
 
       $legendWrapper.html('');
 
-      if ($el.data('layer') === 'none') {
+      if ($el.data('layer') === 'none' && currentLayer.getSubLayer(0)) {
         sublayer = currentLayer.getSubLayer(0);
         sublayer.setSQL('SELECT * from ne_10m_admin_0_countries');
-        sublayer.setCartoCSS('#table{}');
+        sublayer.setCartoCSS('#ne_10m_admin_0_countries{}');
       }
 
       if (window.sessionStorage) {
@@ -519,12 +519,6 @@ define(['sprintf'], function(sprintf) {
 
       map.mapTypes.set('EMPTY', emptyMapType);
 
-      // google.maps.event.addListener(map, 'zoom_changed', function() {
-      //   if (map.getZoom() > 12) {
-      //     map.setZoom(12);
-      //   }
-      // });
-
       if (map_type === 'administrative_map') {
         range = max_count / 5;
       }
@@ -545,9 +539,15 @@ define(['sprintf'], function(sprintf) {
         .addTo(map)
         .on('done', function(layer) {
           currentLayer = layer;
+          currentLayer.on('error', function(err) {
+            console.log(err);
+          });
           if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
             $('#' + window.sessionStorage.getItem('layer')).trigger('click');
           }
+        })
+        .on('error', function(err) {
+          console.log(err);
         });
 
       // Markers
