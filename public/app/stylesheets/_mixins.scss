@@ -68,6 +68,7 @@
 }
 
 @mixin theme-color-1 { $primary-color: $color-1;}
+@mixin theme-color-2 { $primary-color: $color-2;}
 @mixin theme-color-3 { $primary-color: $color-3;}
 @mixin theme-color-7 { $primary-color: $color-7;}
 @mixin theme-color-8 { $primary-color: $color-8;}
@@ -153,15 +154,10 @@
   }
 }
 
-@mixin drop-down-menu($primary-color){
+@mixin menu-item($primary-color){
   &:hover .index-item {
     background-color: rgba($primary-color, .3);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    &:after {
-      @include after('', block, absolute, -12px, 0, 12px, 12px);
-      @include negative-radius-down(rgba($primary-color, .3), 12px);
-    }
+    border-radius: 15px;
   }
   .submenu {
     border-top: 5px solid rgba($primary-color, .3);
@@ -169,6 +165,33 @@
   .submenu-item { background-color: rgba($primary-color, .1);
     &:hover {
       background-color: rgba($primary-color, .3);
+    }
+  }
+  &.active {
+    background-color: $primary-color;
+    color: $color-0;
+  }
+}
+
+@mixin drop-down-menu($primary-color){
+  &:hover {
+    .submenu { display: block;}
+    .index-item {
+      background-color: rgba($primary-color, .3);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      &:after {
+        @include after('', block, absolute, -12px, 0, 12px, 12px);
+        @include negative-radius-down(rgba($primary-color, .3), 12px);
+      }
+    }
+  }
+  .submenu {
+    border-top: 5px solid rgba($primary-color, .3);
+  }
+  .submenu-item { background-color: rgba($primary-color, .1);
+    &:hover a{
+      color: $primary-color;
     }
     &:last-child {
       border-bottom-left-radius: 15px;
@@ -197,6 +220,12 @@
   border-left: $width solid transparent;
   border-right: $width solid transparent;
   border-top: 2*$width solid $color;
+}
+
+@mixin circle-decoration ($color) {
+  @include before('', inline-block, absolute, 0, 5px, 10px, 10px);
+  background-color: $color;
+  border-radius: 50%;
 }
 
 
