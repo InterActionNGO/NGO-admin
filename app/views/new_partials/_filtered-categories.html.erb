@@ -1,3 +1,4 @@
+
 <div class="row">
   <div class="grid-17">
     <div class="mod-filtered-categories">
@@ -6,9 +7,9 @@
         <% if @donor %>
           <li><%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>
         <% elsif @site.navigate_by_cluster? %>
-          <li><%= link_to raw(@filter_name) , cluster_path(@data), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= link_to raw(@filter_name) , cluster_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
         <% else %>
-          <li><%= link_to raw(@filter_name) , sector_path(@data), :class => 'filter' if @filter_name.present? %></li>
+            <li><%= link_to raw(@filter_name) , sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
         <% end %>
       </ul>
     </div>
