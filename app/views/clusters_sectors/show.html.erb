@@ -38,6 +38,21 @@
       </div>
 
       <% unless @site.projects_sectors_or_clusters.empty? %>
+        <div class="project-sectors mod-info">
+          <h3>Other sectors</h3>
+          <div class="mod-project-sectors">
+            <ul id="clustersView">
+              <% @site.projects_sectors_or_clusters.each do |category, count| %>
+                <% next if category == @data %>
+                <% unless category.name.eql?('N/A') %>
+                  <li>
+                    <a class="<%= category.css_class %> icon_statistics" title="<%= category.name %>" href="<%= url_for(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
       <% end %>
 
     </aside>

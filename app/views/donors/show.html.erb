@@ -31,6 +31,33 @@
 
       <%= render 'new_partials/aside/contact_info' %>
 
+      <% unless @donor.twitter.blank? && @donor.facebook.blank? && @donor.website.blank? %>
+        <div class="follow-us mod-info">
+          <% if @donor.logo? %>
+            <% if @donor.website? %>
+              <a href="<%= @donor.website %>"><%= image_tag(@donor.logo.url(:small), :class=>'logo') %></a>
+            <% else %>
+              <%= image_tag(@donor.logo.url(:small), :class=>'logo') %>
+            <% end %>
+          <%end%>
+
+          <% if @donor.twitter? || @donor.facebook? || @donor.website? %>
+            <div class="mod-follow-us">
+              <ul>
+                <% if @donor.twitter? %>
+                  <li><%= link_to(' ', "http://twitter.com/#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %></li>
+                <% end %>
+                <% if @donor.facebook? %>
+                  <li><%= link_to(' ', "http://facebook.com/#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %></li>
+                <% end %>
+                <% if @donor.website? %>
+                  <li><%= link_to(' ', @donor.website, :class => 'email', :target => '_blank') %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      <%end%>
 
       <% if !@donor.media_resources.empty? && 0==1 %>
         <div class="mod-info">
