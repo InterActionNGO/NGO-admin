@@ -64,7 +64,6 @@
   display: $display;
   color: $primary-color;
   &:hover { text-decoration: underline;}
-  //&:visited { color: darken($primary-color, 10%);}
 }
 
 @mixin theme-color-1 { $primary-color: $color-1;}
