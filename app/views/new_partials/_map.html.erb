@@ -69,10 +69,15 @@
 </section>
 
 <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
-  <div class="is-hidden" id="Overlay<%= sl.layer.id %>">
-    <h2><%= sl.layer.long_title %></h2>
-    <p><%= sl.layer.description.html_safe %></p>
-    <p><%= sl.layer.credits.html_safe %></p>
+  <div id="Overlay<%= sl.layer.id %>" class="mod-overlay layer-overlay">
+    <div class="mod-overlay-content">
+      <div class="text">
+        <a class="mod-overlay-close" href="#">x</a>
+        <h2><%= sl.layer.long_title %></h2>
+        <p><%= sl.layer.description.html_safe %></p>
+        <p><%= sl.layer.credits.html_safe %></p>
+      </div>
+    </div>
   </div>
 <% end %>
 

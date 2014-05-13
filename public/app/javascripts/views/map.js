@@ -451,7 +451,7 @@ define(['sprintf'], function(sprintf) {
         });
 
         var iconHtml = sprintf('%1$s <a href="#" class="infowindow-pop" data-overlay="%2$s"><span class="icon-info">i</span></a>', $el.data('layer'), $el.data('overlay'));
-        var infowindowHtml = sprintf('<div class="cartodb-popup dark"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p class="infowindow-layer">%s<p><p><span class="infowindow-data">{{#content.data.data}}{{content.data.data}}</span>%s{{/content.data.data}}{{^content.data.data}}No data{{/content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml, $el.data('units'));
+        var infowindowHtml = sprintf('<div class="cartodb-popup light"><a href="#close" class="cartodb-popup-close-button close">x</a><div class="cartodb-popup-content-wrapper"><div class="cartodb-popup-content"><h2>{{content.data.country_name}}</h2><p class="infowindow-layer">%s<p><p><span class="infowindow-data">{{#content.data.data}}{{content.data.data}}</span>%s{{/content.data.data}}{{^content.data.data}}No data{{/content.data.data}}</p><p class="data-year">{{content.data.year}}</p></div></div><div class="cartodb-popup-tip-container"></div></div>', iconHtml, $el.data('units'));
 
         sublayer = currentLayer.getSubLayer(0);
 
@@ -478,10 +478,7 @@ define(['sprintf'], function(sprintf) {
               e.preventDefault();
               e.stopPropagation();
 
-              var overlayHtml = $($(e.currentTarget).data('overlay')).html();
-
-              $contentOverlay.html(overlayHtml);
-              $overlay.fadeIn('fast');
+              $($(e.currentTarget).data('overlay')).fadeIn();
             });
           }
         });
@@ -512,17 +509,9 @@ define(['sprintf'], function(sprintf) {
         window.sessionStorage.setItem('layer', '');
       }
 
-      $overlay = $('#overlay');
-      $contentOverlay = $('#contentOverlay');
-
       $layerSelector = $('#layerSelector');
       $mapTypeSelector = $('#mapTypeSelector');
       $legendWrapper = $('#legendWrapper');
-
-      $('#closeOverlay').click(function(e) {
-        e.preventDefault();
-        $overlay.fadeOut('fast');
-      });
 
       if ($('#map').length > 0) {
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -647,10 +636,7 @@ define(['sprintf'], function(sprintf) {
         e.preventDefault();
         e.stopPropagation();
 
-        var overlayHtml = $($(e.currentTarget).closest('a').data('overlay')).html();
-
-        $contentOverlay.html(overlayHtml);
-        $overlay.fadeIn('fast');
+        $($(e.currentTarget).parent().data('overlay')).fadeIn();
       });
 
       $mapTypeSelector.find('a').click(function(e) {
