@@ -17,7 +17,7 @@ define(['backbone', 'jqueryui'], function(Backbone) {
 
       $items.tooltip({
         position: {
-          at: 'center top',
+          at: 'center+20 top-5',
           my: 'center bottom'
         }
       });
