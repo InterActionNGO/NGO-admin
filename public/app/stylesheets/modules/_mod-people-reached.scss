@@ -1,0 +1,12 @@
+.mod-people-reached {
+  span {
+    position: relative;
+    font-size: 48px;
+    font-weight: lighter;
+    &:after {
+      @include after('(target)', block, absolute, -60%, 8px, auto, auto);
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}
