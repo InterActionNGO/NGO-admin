@@ -137,7 +137,7 @@ SQL
   def projects_count(site, category_id = nil)
     if category_id.present?
       if site.navigate_by_cluster?
-        category_join = "inner join clusters_projects as cp on cp.project_id = p.id and cp.cluster_id = #{category_id}"
+        category_join = "inner join clusters_projects as clpr on clpr.project_id = p.id and clpr.cluster_id = #{category_id}"
       else
         category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{category_id}"
       end
