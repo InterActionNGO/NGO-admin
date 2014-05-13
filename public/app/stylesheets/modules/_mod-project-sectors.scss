@@ -26,11 +26,11 @@
   border-radius: 15px;
   color: $color-0;
   background-color: $color-5;
+  text-transform: uppercase;
+  font-weight: lighter;
+  font-size: 12px;
   &:after {
-    @include before('', block, absolute, 50%, -10px, 0, 0);
-    @include triangle (5px, $color-5);
-    border-top: none;
-    border-bottom: 10px solid $color-5;
+    @include after ('', block, absolute, 50%, -10px, 0, 0);
+    @include triangle (8px, $color-5);
   }
-
 }
