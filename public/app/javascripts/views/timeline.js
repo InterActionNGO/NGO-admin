@@ -16,8 +16,6 @@ define(['backbone'], function(Backbone) {
       var total_days = this.daydiff(this.parseDate($('p.first_date').text()), this.parseDate($('p.second_date').text()));
       var days_completed = this.daydiff(this.parseDate($('p.first_date').text()), this.parseDate((d.getMonth() + 1) + '/' + (d.getDate()) + '/' + (d.getFullYear())));
 
-      console.log(total_days, days_completed);
-
       if (days_completed < total_days) {
         this.$el.find('.timeline-status').width((days_completed * w) / total_days);
       }
