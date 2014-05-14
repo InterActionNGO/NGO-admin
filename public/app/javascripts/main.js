@@ -13,7 +13,9 @@ require.config({
     liveupdate: '../lib/liveupdate/jquery.liveupdate',
     jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
     select2: '../vendor/select2/select2',
-    form: '../vendor/jquery-form/jquery.form'
+    form: '../vendor/jquery-form/jquery.form',
+    handlebars: '../vendor/handlebars/handlebars',
+    text: '../vendor/requirejs-text/text'
   },
 
   shim: {
@@ -45,6 +47,9 @@ require.config({
     form: {
       deps: ['jquery'],
       exports: '$'
+    },
+    handlebars: {
+      exports: 'Handlebars'
     }
   }
 
@@ -52,46 +57,24 @@ require.config({
 
 require([
   'jquery',
+  'handlebars',
+  'router'
+], function($, Handlebars, Router) {
 
-  'models/report',
+  // Extensions
+  Number.prototype.toCommas = function() {
+    return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
 
-  'views/clusters',
-  'views/map',
-  'views/filters',
-  'views/menu-fixed',
-  'views/downloads',
-  'views/embed-map',
-  'views/search',
-  'views/layer-overlay',
-  'views/timeline',
-  'views/report-form'
-], function($, ReportModel) {
-
-  var ClustersView = arguments[2],
-    MapView = arguments[3],
-    FiltersView = arguments[4],
-    MenuFixedView = arguments[5],
-    DownloadsView = arguments[6],
-    EmbedMapView = arguments[7],
-    SearchView = arguments[8],
-    LayerOverlayView = arguments[9],
-    TimelineView = arguments[10],
-    ReportForm = arguments[11];
-
-  var reportModel = new ReportModel();
-
-  new ClustersView();
-  new MapView();
-  new FiltersView();
-  new MenuFixedView();
-  new DownloadsView();
-  new EmbedMapView();
-  new SearchView();
-  new LayerOverlayView();
-  new TimelineView();
-  new ReportForm({
-    model: reportModel
+  // Handlebars
+  Handlebars.registerHelper('commas', function(context) {
+    if (typeof context !== 'number') {
+      return context;
+    }
+    return context.toCommas();
   });
+
+  new Router();
 
   var scrollTop,
     categoriesSelector = $('.categories-selector'),

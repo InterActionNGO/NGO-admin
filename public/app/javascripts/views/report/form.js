@@ -20,7 +20,7 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
         error: function(err) {
           throw err.statusText;
         }
-      });
+      }).submit();
 
       this.$el.find('select').select2({
         width: 'element'
@@ -28,9 +28,11 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
     },
 
     onSuccess: function(data) {
-      this.model.set(data, {
-        reset: true
+      this.model.clear({
+        silent: true
       });
+
+      this.model.set(data.results);
 
       console.log(this.model.toJSON());
     }
