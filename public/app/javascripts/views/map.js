@@ -393,9 +393,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       var $emptyLayer = $('#emptyLayer');
 
       var currentTable = $el.data('table');
-      //var currentSQL = $el.data('sql');
-      var currentMin = $el.data('min');
-      var currentMax = $el.data('max');
+      var currentMin = Number($el.data('min'));
+      var currentMax = Number($el.data('max'));
       var currentUnits = $el.data('units');
       var layerStyle = $el.data('style');
       var currentDiff = currentMax + currentMin;
