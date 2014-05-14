@@ -7,9 +7,14 @@ define(['backbone', 'liveupdate'], function(Backbone) {
     el: '#filtersView',
 
     initialize: function() {
-      this.$el.find('.mod-categories-child').each(function(index, el) {
-        $(el).find('input').liveUpdate('.mod-categories-child li a');
-      });
+      this.$el.find('.organizations input.mod-categories-search')
+        .liveUpdate('.organizations .mod-categories-child li a');
+
+      this.$el.find('.donors input.mod-categories-search')
+        .liveUpdate('.donors .mod-categories-child li a');
+
+      this.$el.find('.countries input.mod-categories-search')
+        .liveUpdate('.countries .mod-categories-child li a');
     }
 
   });
