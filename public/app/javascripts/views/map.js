@@ -393,11 +393,11 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       var $emptyLayer = $('#emptyLayer');
 
       var currentTable = $el.data('table');
-      var currentMin = Number($el.data('min'));
-      var currentMax = Number($el.data('max'));
+      var currentMin = $el.data('min');
+      var currentMax = $el.data('max');
       var currentUnits = $el.data('units');
       var layerStyle = $el.data('style');
-      var currentDiff = currentMax + currentMin;
+      var currentDiff;
 
       $legendWrapper.html('');
 
@@ -431,6 +431,17 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
             currentLegend = legends.red;
         }
 
+
+        var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
+          title: $el.data('layer'),
+          left: currentMin + currentUnits,
+          right: currentMax + currentUnits
+        }));
+
+        currentMin = Number(currentMin);
+        currentMax = Number(currentMax);
+        currentDiff = currentMax + currentMin;
+
         var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
         var c_len = currentLegend.colors.length;
 
@@ -438,11 +449,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
           currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
         });
 
-        var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
-          title: $el.data('layer'),
-          left: currentMin + currentUnits,
-          right: currentMax + currentUnits
-        }));
         var stackedLegend = new cdb.geo.ui.Legend.Stacked({
           legends: [choroplethLegend]
         });
