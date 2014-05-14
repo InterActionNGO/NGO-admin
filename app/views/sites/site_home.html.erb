@@ -6,9 +6,10 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <%= render 'new_partials/aside/projects' %>
-
-      <%= render 'new_partials/aside/organizations' %>
+      <div class="mod-highlighted-results">
+        <%= render 'new_partials/aside/projects' %>
+        <%= render 'new_partials/aside/organizations' %>
+      </div>
 
       <% cache("#{@site.id}/home/projects_by_cluster_sector") do %>
         <div class="project-sectors mod-info">
