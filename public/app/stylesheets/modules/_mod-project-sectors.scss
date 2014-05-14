@@ -1,10 +1,7 @@
 .mod-project-sectors {
-  label {
-    display: none;
-  }
-  a {
-    color: $color-3;
-  }
+  label { display: none; }
+  li { margin-bottom: 3px;}
+  a { color: $color-3; }
   .aller {
     text-align: right;
     font-size: 16px;
