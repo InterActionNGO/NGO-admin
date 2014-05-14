@@ -7,7 +7,6 @@
     background-color: $color-4;
     overflow: hidden;
     margin: 10px 0 20px 0;
-
   }
   h2 {
     font-size: 15px;
@@ -35,7 +34,9 @@
   #date_start_year,
   #date_start_month,
   #date_end_year,
-  #date_end_month {
+  #date_end_month,
+  //.select2-container
+  {
     width: 49%;
     float: left;
     background: image-url('form-background-lt.png') no-repeat center;
@@ -59,23 +60,32 @@
   }
 }
 
-.select2-container-multi, .select2-choices {
-  width: 100%;
-  border: none !important;
-  border-radius: 0  !important;
-  box-shadow: none  !important;
-  background-color: transparent  !important;
-  background-image: none  !important;
-  -webkit-appearance: none;
-  color: $color-5;
-}
-.select2-results {
-  background-color: $color-0;
-  border: 1px solid $color-4;
-}
-.select2-container-multi {
-  background: image-url('form-background.png') no-repeat center;
-  background-color: $color-5;
-}
+// .select2-container-multi, .select2-choices {
+//   width: 100%;
+//   border: none !important;
+//   border-radius: 0  !important;
+//   box-shadow: none  !important;
+//   background-color: transparent  !important;
+//   background-image: none  !important;
+//   -webkit-appearance: none;
+//   color: $color-5;
+// }
+// .select2-results {
+//   background-color: $color-0;
+//   border: 1px solid $color-4;
+// }
+// .select2-container-multi {
+//   background: image-url('form-background.png') no-repeat center;
+//   background-color: $color-5;
+// }
+
+// .select2-container .select2-choice,
+// .select2-dropdown-open .select2-choice,
+// .select2-container .select2-choice .select2-arrow {
+//   border: none;
+//   border-radius: 0;
+//   background-color: none;
+//   background-image: none;
+// }
 
 
