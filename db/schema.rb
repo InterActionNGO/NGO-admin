@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(:version => 20140507144143) do
 
+
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
     t.datetime "when"
