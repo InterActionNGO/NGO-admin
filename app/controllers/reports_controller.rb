@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
 	end
 
 	def report
-		#@data = Project.report(params)
+		@data = Project.report(params)
     @data = Project.bar_chart_report(params)
 
 		#@data_json = @data.to_json

@@ -1170,7 +1170,7 @@ SQL
     organizations = params[:organization] if params[:organization]
 
     # Data filtering
-    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select(["projects.id", "projects.estimated_people_reached"])
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select(["projects.id", "projects.name", "projects.estimated_people_reached"])
 
 
     # COUNTRIES (if not All of them selected)
@@ -1394,7 +1394,8 @@ SQL
   def self.bar_chart_countries(base_select)
     by_projects_select = <<-SQL
       -- COUNTRIES BY PROJECTS, ORGANIZATIONS, DONORS
-      SELECT country_id as country_id, country_name as country_name, count(distinct(project_id)) as n_projects
+      SELECT country_id as country_id, country_name as country_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
         FROM t
        WHERE country_id in (SELECT DISTINCT(country_id) FROM t ORDER BY country_id LIMIT 10)
       GROUP BY country_id, country_name
@@ -1403,7 +1404,8 @@ SQL
 
     by_organizations_select = <<-SQL
       -- COUNTRIES BY PROJECTS, ORGANIZATIONS, DONORS
-      SELECT country_id as country_id, country_name as country_name, count(distinct(organization_id)) as n_organizations
+      SELECT country_id as country_id, country_name as country_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
         FROM t
        WHERE country_id in (SELECT DISTINCT(country_id) FROM t ORDER BY country_id LIMIT 10)
       GROUP BY country_id, country_name
@@ -1412,7 +1414,8 @@ SQL
 
     by_donors_select = <<-SQL
       -- COUNTRIES BY PROJECTS, ORGANIZATIONS, DONORS
-      SELECT country_id as country_id, country_name as country_name, count(distinct(donor_id)) as n_donors
+      SELECT country_id as country_id, country_name as country_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
         FROM t
        WHERE country_id in
         (SELECT DISTINCT(country_id) FROM t ORDER BY country_id LIMIT 10)
@@ -1432,7 +1435,8 @@ SQL
   def self.bar_chart_organizations(base_select)
     by_projects_select = <<-SQL
       -- ORGANIZATIONS BY PROJECTS, ORGANIZATIONS, TOTAL_BUDGET
-      SELECT organization_id as organization_id, organization_name as organization_name, count(distinct(project_id)) as n_projects
+      SELECT organization_id as organization_id, organization_name as organization_name,
+             count(distinct(project_id)) as n_projects, count(distinct(country_id)) as n_countries, sum(distinct(project_budget)) as total_budget
         FROM t
        WHERE organization_id in
         (SELECT DISTINCT(organization_id) FROM t ORDER BY organization_id LIMIT 10)
@@ -1442,7 +1446,8 @@ SQL
 
     by_countries_select = <<-SQL
       -- ORGANIZATIONS BY PROJECTS, ORGANIZATIONS, TOTAL_BUDGET
-      SELECT organization_id as organization_id, organization_name as organization_name, count(distinct(country_id)) as n_countries
+      SELECT organization_id as organization_id, organization_name as organization_name,
+             count(distinct(project_id)) as n_projects, count(distinct(country_id)) as n_countries, sum(distinct(project_budget)) as total_budget
         FROM t
        WHERE organization_id in
         (SELECT DISTINCT(organization_id) FROM t ORDER BY organization_id LIMIT 10)
@@ -1452,7 +1457,8 @@ SQL
 
     by_budget_select = <<-SQL
       -- ORGANIZATIONS BY PROJECTS, ORGANIZATIONS, TOTAL_BUDGET
-      SELECT organization_id as organization_id, organization_name as organization_name, sum(distinct(project_budget)) as total_budget
+      SELECT organization_id as organization_id, organization_name as organization_name,
+             count(distinct(project_id)) as n_projects, count(distinct(country_id)) as n_countries, sum(distinct(project_budget)) as total_budget
         FROM t
        WHERE organization_id in
         (SELECT DISTINCT(organization_id) FROM t ORDER BY organization_id LIMIT 10)
@@ -1462,7 +1468,7 @@ SQL
 
     organizations = {}
     organizations[:by_projects] = ActiveRecord::Base.connection.execute(base_select + by_projects_select)
-    organizations[:by_organizations] = ActiveRecord::Base.connection.execute(base_select + by_countries_select)
+    organizations[:by_countries] = ActiveRecord::Base.connection.execute(base_select + by_countries_select)
     organizations[:by_budget] = ActiveRecord::Base.connection.execute(base_select + by_budget_select)
 
     organizations
@@ -1472,7 +1478,8 @@ SQL
   def self.bar_chart_donors(base_select)
     by_projects_select = <<-SQL
       -- DONORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
-      SELECT donor_id as donor_id, donor_name as donor_name, count(distinct(project_id)) as n_projects
+      SELECT donor_id as donor_id, donor_name as donor_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(country_id)) as n_countries
         FROM t
        WHERE donor_id in
         (SELECT DISTINCT(donor_id) FROM t ORDER BY donor_id LIMIT 10)
@@ -1482,7 +1489,8 @@ SQL
 
     by_organizations_select = <<-SQL
       -- DONORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
-      SELECT donor_id as donor_id, donor_name as donor_name count(distinct(organization_id)) as n_organizations
+      SELECT donor_id as donor_id, donor_name as donor_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(country_id)) as n_countries
         FROM t
        WHERE donor_id in
         (SELECT DISTINCT(donor_id) FROM t ORDER BY donor_id LIMIT 10)
@@ -1492,7 +1500,8 @@ SQL
 
     by_countries_select = <<-SQL
       -- DONORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
-      SELECT donor_id as donor_id, donor_name as donor_name, count(distinct(country_id)) as n_countries
+      SELECT donor_id as donor_id, donor_name as donor_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(country_id)) as n_countries
         FROM t
        WHERE donor_id in
         (SELECT DISTINCT(donor_id) FROM t ORDER BY donor_id LIMIT 10)
@@ -1512,7 +1521,8 @@ SQL
   def self.bar_chart_sectors(base_select)
     by_projects_select = <<-SQL
       -- SECTORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
-      SELECT sector_id as sector_id, sector_name as sector_name, count(distinct(project_id)) as n_projects
+      SELECT sector_id as sector_id, sector_name as sector_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
         FROM t
        WHERE sector_id in
         (SELECT DISTINCT(sector_id) FROM t ORDER BY sector_id LIMIT 10)
@@ -1522,7 +1532,8 @@ SQL
 
     by_organizations_select = <<-SQL
       -- SECTORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
-      SELECT sector_id as sector_id, sector_name as sector_name, count(distinct(organization_id)) as n_organizations
+      SELECT sector_id as sector_id, sector_name as sector_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
         FROM t
        WHERE sector_id in
         (SELECT DISTINCT(sector_id) FROM t ORDER BY sector_id LIMIT 10)
@@ -1532,7 +1543,8 @@ SQL
 
     by_donors_select = <<-SQL
       -- SECTORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
-      SELECT sector_id as sector_id, sector_name as sector_name, count(distinct(donor_id)) as n_donors
+      SELECT sector_id as sector_id, sector_name as sector_name,
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
         FROM t
        WHERE sector_id in
         (SELECT DISTINCT(sector_id) FROM t ORDER BY sector_id LIMIT 10)
