@@ -37,7 +37,9 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
         silent: true
       });
 
-      this.model.set(data.results);
+      this.model.set(_.extend(data.results, {
+        charts: data.bar_chart
+      }));
     }
 
   });

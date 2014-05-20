@@ -15,6 +15,7 @@ require.config({
     select2: '../vendor/select2/select2',
     form: '../vendor/jquery-form/jquery.form',
     handlebars: '../vendor/handlebars/handlebars',
+    highcharts: '../vendor/highcharts-release/highcharts',
     spin: '../vendor/spinjs/spin',
     moment: '../vendor/moment/moment',
     text: '../vendor/requirejs-text/text'
@@ -52,6 +53,10 @@ require.config({
     },
     handlebars: {
       exports: 'Handlebars'
+    },
+    highcharts: {
+      deps: ['jquery'],
+      exports: 'highcharts'
     }
   }
 
