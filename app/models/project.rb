@@ -1255,6 +1255,9 @@ SQL
       @data[:results][:budget][:min] = non_zero_values.min
       @data[:results][:budget][:average] = (avg * 100).round / 100.0
 
+      @data[:results][:totals][:sectors] = @data[:results][:donors].length
+      @data[:results][:totals][:countries] = @data[:results][:countries].length
+      @data[:results][:totals][:organizations] = @data[:results][:organizations].length
 
       # Reduze organizations to 20
       @data[:results][:organizations] = @data[:results][:organizations].take(20)
