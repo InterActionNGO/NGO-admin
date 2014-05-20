@@ -16,6 +16,7 @@ require.config({
     form: '../vendor/jquery-form/jquery.form',
     handlebars: '../vendor/handlebars/handlebars',
     spin: '../vendor/spinjs/spin',
+    moment: '../vendor/moment/moment',
     text: '../vendor/requirejs-text/text'
   },
 
