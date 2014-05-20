@@ -18,8 +18,9 @@ define([
     },
 
     render: function() {
-      console.log(this.model.toJSON());
-      this.$el.html(this.template(this.model.toJSON()));
+      this.data = this.model.processData().toJSON();
+      console.log(this.data);
+      this.$el.html(this.template(this.data));
       this.calculeReportBudget();
     },
 
