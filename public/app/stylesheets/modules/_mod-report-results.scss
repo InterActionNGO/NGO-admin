@@ -1,0 +1,80 @@
+.mod-report {
+  padding: 20px 0;
+  border-bottom: 3px solid #eee;
+
+  table {
+    width: 100%;
+  }
+
+  td {
+    padding: 2px 0;
+  }
+}
+
+.mod-report-summary {
+  th {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  td {
+    font-weight: lighter;
+    font-size: 36px;
+  }
+}
+
+.mod-report-budget {
+  .mod-report-budget-total {
+    font-weight: lighter;
+    font-size: 36px;
+    text-transform: uppercase;
+    .small {
+      font-size: 14px;
+      vertical-align: baseline;
+    }
+  }
+
+  .mod-report-budget-min,
+  .mod-report-budget-average,
+  .mod-report-budget-max {
+    padding-top: 20px;
+    &:before {
+      content: " ";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #ddd;
+      margin-right: 7px;
+    }
+  }
+  .mod-report-budget-min:before {
+    background-color: $color-1;
+  }
+  .mod-report-budget-average:before {
+    background-color: $color-4;
+  }
+  .mod-report-budget-max:before {
+    background-color: $color-0;
+  }
+
+  .mod-report-budget-chart {
+    border: 1px solid #ddd;
+    overflow: hidden;
+    margin-top: 20px;
+    @include border-radius(4px);
+  }
+
+  .mod-report-budget-chart-item {
+    height: 10px;
+    float: left;
+    &.min {
+      background-color: $color-1;
+    }
+    &.average {
+      background-color: $color-4;
+    }
+    &.max {
+      background-color: $color-0;
+    }
+  }
+}
