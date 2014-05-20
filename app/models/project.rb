@@ -1253,7 +1253,7 @@ SQL
       avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
       @data[:results][:budget][:max] = non_zero_values.max
       @data[:results][:budget][:min] = non_zero_values.min
-      @data[:results][:budget][:average] = avg
+      @data[:results][:budget][:average] = (avg * 100).round / 100.0
 
 
       # Reduze organizations to 20
@@ -1373,6 +1373,10 @@ SQL
 
   def self.bar_chart_report(params = {})
 
+    ###########################
+    ## FILTERING >>
+    ###########################
+
     start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year'])
     end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year'])
     countries = params[:country] if params[:country]
@@ -1384,18 +1388,38 @@ SQL
       if params[:donor_include] === "include"
         donors_filter = "AND d.name IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
       else
-        @projects = @projects.donors_name_not_in(donors)
+        donors_filter = "AND d.name NOT IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
+      end
+    end
+
+    if (sectors && !sectors.include?('All') )
+      if params[:donor_include] === "include"
+        sectors_filter = "AND s.name IN (" + sectors.map {|str| "'#{str}'"}.join(',') + ")"
+      else
+        sectors_filter = "AND s.name NOT IN (" + sectors.map {|str| "'#{str}'"}.join(',') + ")"
+      end
+    end
+
+    if (countries && !countries.include?('All') )
+      if params[:donor_include] === "include"
+        countries_filter = "AND c.name IN (" + countries.map {|str| "'#{str}'"}.join(',') + ")"
+      else
+        countries_filter = "AND c.name NOT IN (" + countries.map {|str| "'#{str}'"}.join(',') + ")"
+      end
+    end
+
+   if (organizations && !organizations.include?('All') )
+      if params[:donor_include] === "include"
+        organizations_filter = "AND c.name IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
+      else
+        organizations_filter = "AND c.name NOT IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
       end
     end
 
 
-    p start_date
-    p end_date
-    p countries
-    p donors
-    p  params[:donor_include]
-    p sectors
-    p organizations
+    ###########################
+    ## << FILTERING
+    ###########################
 
     base_select = <<-SQL
       WITH t AS (
@@ -1412,15 +1436,13 @@ SQL
           AND c.id = cp.country_id
           AND p.id = cp.project_id
           AND o.id = o.id
-          #{donors_filter}
-
           AND o.id = p.primary_organization_id
-          AND p.end_date >= current_date
+          AND p.start_date >= '#{start_date}'::date
+          AND p.end_date <= '#{end_date}'::date
+          #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
           GROUP BY p.id, o.id, s.id, d.id, c.id
       )
     SQL
-
-    print base_select
 
     @data = @data || {}
     @data[:bar_chart] = {}
