@@ -38,6 +38,7 @@ define([
       'sectors/:id': 'lists',
       'organizations/:id': 'lists',
       'donors/:id': 'lists',
+      'location/:id': 'lists',
       'projects/:id': 'project',
       'search': 'search',
       'p/analysis': 'report'
