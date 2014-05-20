@@ -1225,6 +1225,7 @@ SQL
     @data[:results][:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
     @data[:results][:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
     @data[:results][:totals] = {}
+    @data[:results][:budget] = {}
 
     # Totals
     sql = <<-SQL
@@ -1238,12 +1239,22 @@ SQL
       @data[:results][:totals][:people] = @projects.to_a.compact.inject(0) { |sum, p| sum + p.estimated_people_reached.to_i }
       # TOTAL BUDGET
       @data[:results][:totals][:budget] = 0
-      @data[:results][:organizations].each { |val| @data[:results][:totals][:budget] += val[:budget]}
+
       # TOTAL DONORS
       @data[:results][:totals][:donors] = result.getvalue(0,0).to_i
       # TOTAL PROJECTS
       @data[:results][:totals][:projects] = @projects.to_a.length
-      @data[:results][:projects].each { |val| @data[:results][:totals][:budget] += val[:budget].to_i}
+      # TOTAL PROJECTS BUDGET
+      non_zero_values = []
+      @data[:results][:projects].each do |val|
+        non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
+      end
+      @data[:results][:totals][:budget] = non_zero_values.inject(:+)
+      avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+      @data[:results][:budget][:max] = non_zero_values.max
+      @data[:results][:budget][:min] = non_zero_values.min
+      @data[:results][:budget][:average] = avg
+
 
       # Reduze organizations to 20
       @data[:results][:organizations] = @data[:results][:organizations].take(20)
