@@ -1170,7 +1170,8 @@ SQL
     organizations = params[:organization] if params[:organization]
 
     # Data filtering
-    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select(["projects.id", "projects.name", "projects.estimated_people_reached","projects.budget"])
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select(["projects.id",
+      "projects.name", "projects.estimated_people_reached","projects.budget","projects.start_date","projects.end_date"])
         #.group('user_profiles.id').order('name ASC')
 
 
