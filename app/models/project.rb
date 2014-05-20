@@ -1171,7 +1171,8 @@ SQL
 
     # Data filtering
     @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).select(["projects.id",
-      "projects.name", "projects.estimated_people_reached","projects.budget","projects.start_date","projects.end_date"])
+      "projects.name", "projects.estimated_people_reached","projects.budget","projects.start_date","projects.end_date",
+      "(end_date >= current_date) as active"])
         #.group('user_profiles.id').order('name ASC')
 
 
