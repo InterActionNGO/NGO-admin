@@ -9,13 +9,40 @@ define([
 
     processData: function() {
 
-      // this.attributes.projects = _.map(this.attributes.projects, function(project) {
-      //   project.project.year = moment(project.project.start_date).format('YYYY');
-      //   project.project.active = (moment().year() < moment(project.project.start_date).year());
-      //   return project.project;
-      // });
+      var active_years, disable_years, self = this;
 
-      this.attributes.projects_active_series = _.where(this.attributes.projects, {active: true});
+      this.attributes.projects = _.map(this.attributes.projects, function(project) {
+        project.project.year = Number(moment(project.project.start_date).format('YYYY'));
+        project.project.active = (project.project.active === 't');
+        return project.project;
+      });
+
+      active_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {active: true}), function(project) {
+        return project.year;
+      })), function(year) {
+        return year;
+      });
+
+      disable_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {active: false}), function(project) {
+        return project.year;
+      })), function(year) {
+        return year;
+      });
+
+      this.attributes.projects_active_series = _.map(active_years, function(year) {
+        return [year, _.where(self.attributes.projects, {year: year, active: true}).length];
+      });
+
+      this.attributes.projects_disable_series = _.map(disable_years, function(year) {
+        return [year, _.where(self.attributes.projects, {year: year, active: false}).length];
+      });
+
+      this.attributes.donors_by_projects = _.map(this.attributes.charts.donors.by_projects, function(donor) {
+        return {
+          name: donor.donor_name,
+          y: donor.n_projects
+        };
+      });
 
       return this;
 

@@ -9,6 +9,10 @@
   td {
     padding: 2px 0;
   }
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .report-spinner {
