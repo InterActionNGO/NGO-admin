@@ -1,0 +1,58 @@
+<!-- <div class="applied-filters">
+  <p>Filters applied:</p>
+  <p><strong>Organizations:</strong>Action Contre la Faim - ACF International, Agency for Technical Cooperation and Development (ACTED), CARE, IFRC/National Societies</p>
+  <p><strong>Donors:</strong>Action Contre la Faim - ACF International, African Rescue Committee, American Red Cross, Ann Ford</p>
+  <p><strong>Countries:</strong>Barbados, Belize, Bolivia, Burkina Faso, Burundi, Central African Rep., Chad</p>
+  <p><strong>From:</strong>1990 - January / To: All years - All months</p>
+</div> -->
+
+<div class="mod-report mod-report-summary">
+  <table>
+    <tr>
+      <th>Projects</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    <tr>
+      <td>{{commas totals.projects}}</td>
+      <td>{{commas totals.organizations}}</td>
+      <td>{{commas totals.donors}}</td>
+      <td>{{commas totals.countries}}</td>
+      <td>{{commas totals.sectors}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="mod-report mod-report-budget">
+  <table>
+    <tr>
+      <td colspan="3" class="mod-report-budget-total">
+        <span class="small">$</span>{{commas totals.budget}} <span class="small">(total)</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="mod-report-budget-min">${{commas budget.min}}</td>
+      <td class="mod-report-budget-average">${{commas budget.average}}</td>
+      <td class="mod-report-budget-max">${{commas budget.max}}</td>
+    </tr>
+  </table>
+  <div class="mod-report-budget-chart is-clearfix" id="reportBudgetChart" data-min="{{budget.min}}" data-max="{{budget.max}}" data-average="{{budget.average}}"></div>
+</div>
+
+
+<div class="mod-report">
+  <div id="modReportsTabs">
+    <ul>
+      <li><a href="#tab1">NGO Aid Map Project Number Over Time</a></li>
+      <li><a href="#tab2">Active Organizations Over Time</a></li>
+    </ul>
+    <div id="tab1">
+      <div id="chart1"></div>
+    </div>
+    <div id="tab1">
+      <div id="chart2"></div>
+    </div>
+  </div>
+</div>

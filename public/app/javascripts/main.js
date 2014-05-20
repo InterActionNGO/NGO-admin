@@ -15,6 +15,7 @@ require.config({
     select2: '../vendor/select2/select2',
     form: '../vendor/jquery-form/jquery.form',
     handlebars: '../vendor/handlebars/handlebars',
+    spin: '../vendor/spinjs/spin',
     text: '../vendor/requirejs-text/text'
   },
 
