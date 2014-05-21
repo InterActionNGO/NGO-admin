@@ -53,6 +53,7 @@ define([
         title: {
           text: null
         },
+        colors: ['#CBCBCB', '#323232', '#006C8D', '#AACED9', '#878787', '#8E921B', '#CDCF9A', '#C45017', '#E5B198', '#D7A900'],
         plotOptions: {
           column: {
             pointPadding: 0.05,
@@ -102,11 +103,16 @@ define([
 
     render: function() {
       this.data = this.model.processData().toJSON();
-      console.log(this.data);
       this.$el.html(this.template(this.data));
+
+      $('#modReportsTabs').tabs();
+
       this.calculeReportBudget();
       this.setProjectsChart();
       this.donorsCharts();
+      this.organizationsCharts();
+      this.countriesCharts();
+      this.sectorsCharts();
     },
 
     empty: function() {
@@ -154,6 +160,48 @@ define([
 
       $('#donorsByCountriesChart').highcharts(_.extend(this.options.columnChart, {
         series: this.data.donors_by_countries
+      }));
+    },
+
+    organizationsCharts: function() {
+      $('#organizationsByProjectsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.organizations_by_projects
+      }));
+
+      $('#organizationsByCountriesChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.organizations_by_countries
+      }));
+
+      $('#organizationsByBudgetChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.organizations_by_bugdet
+      }));
+    },
+
+    countriesCharts: function() {
+      $('#countriesByProjectsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.countries_by_donors
+      }));
+
+      $('#countriesByOrganizationsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.countries_by_organizations
+      }));
+
+      $('#countriesByDonorsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.countries_by_projects
+      }));
+    },
+
+    sectorsCharts: function() {
+      $('#sectorsByProjectsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.sectors_by_projects
+      }));
+
+      $('#sectorsByOrganizationsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.sectors_by_organizations
+      }));
+
+      $('#sectorsByDonorsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.sectors_by_donors
       }));
     }
 
