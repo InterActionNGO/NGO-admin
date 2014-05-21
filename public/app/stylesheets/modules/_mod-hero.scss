@@ -4,14 +4,14 @@
   top: -60px;
   background-color: $color-4;
 
-  .about &,
-  .getting-on-the-map &,
-  .staff-list &,
-  .contact-us &,
-  .of-interest & { background: image-url('hero-about.png') no-repeat center top;}
-  .purpose & { background: image-url('hero-purpose.jpg') no-repeat center top; background-size: cover;}
-
-  .data &,
-  .top-things-you-should-know-about-the-data &,
-  .data-guidance & { background: image-url('hero-data.png') no-repeat center top;}
+  .about & { background: image-url('hero-about.jpg') no-repeat center; background-size: cover;}
+  .contact-us & { background: image-url('hero-contact-us.jpg') no-repeat center; background-size: cover;}
+  .staff-list & { background: image-url('hero-staff-list.jpg') no-repeat center; background-size: cover;}
+  .getting-on-the-map & { background: image-url('hero-getting-on-the-map.jpg') no-repeat center; background-size: cover;}
+  .of-interest & { background: image-url('hero-of-interest.jpg') no-repeat center; background-size: cover;}
+  .purpose & { background: image-url('hero-purpose.jpg') no-repeat center; background-size: cover;}
+  .highlights & { background: image-url('hero-highlights.jpg') no-repeat center; background-size: cover;}
+  .data & { background: image-url('hero-data.jpg') no-repeat center; background-size: cover;}
+  .top-things-you-should-know-about-the-data & { background: image-url('hero-things-you-should-know.jpg') no-repeat center; background-size: cover;}
+  .data-guidance & { background: image-url('hero-data-guidance.jpg') no-repeat center; background-size: cover;}
 }
