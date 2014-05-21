@@ -348,7 +348,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       scrollwheel: false,
       disableDefaultUI: true,
       styles: stylesArray,
-      maxZoom: 14,
+      maxZoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
         mapTypeIds: ['EMPTY', google.maps.MapTypeId.ROADMAP]
