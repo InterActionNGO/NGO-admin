@@ -56,15 +56,19 @@
 }
 .organizations {
   @include categorie-selector($color-6);
+  .mod-go-up-menu:after { @include gradient }
 }
 .donors {
   @include categorie-selector($color-7);
+  .mod-go-up-menu:after { @include gradient }
 }
 .countries {
   @include categorie-selector($color-8);
+  .mod-go-up-menu:after { @include gradient }
 }
 .regions {
   @include categorie-selector($color-9);
+  .mod-go-up-menu:after { @include gradient }
 }
 
 
