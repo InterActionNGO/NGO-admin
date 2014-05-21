@@ -64,6 +64,10 @@
                 <!-- <%= select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
               </div>
             </li>
+
+            <li>
+              <button type="submit">Apply filters</button>
+            </li>
           </ul>
 
         <% end %>
@@ -73,6 +77,8 @@
 
   <div class="grid-12 offset-1">
     <section class="layout-content">
+
+      <div class="report-spinner" id="spinView"></div>
 
       <article class="mod-content-article">
         <h1>Report</h1>
