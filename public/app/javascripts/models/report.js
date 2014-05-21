@@ -40,7 +40,21 @@ define([
       this.attributes.donors_by_projects = _.map(this.attributes.charts.donors.by_projects, function(donor) {
         return {
           name: donor.donor_name,
-          y: donor.n_projects
+          data: [[donor.donor_name, Number(donor.n_projects)]]
+        };
+      });
+
+      this.attributes.donors_by_organizations = _.map(this.attributes.charts.donors.by_organizations, function(donor) {
+        return {
+          name: donor.donor_name,
+          data: [[donor.donor_name, Number(donor.n_organizations)]]
+        };
+      });
+
+      this.attributes.donors_by_countries = _.map(this.attributes.charts.donors.by_countries, function(donor) {
+        return {
+          name: donor.donor_name,
+          data: [[donor.donor_name, Number(donor.n_countries)]]
         };
       });
 
