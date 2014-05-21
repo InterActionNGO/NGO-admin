@@ -5,8 +5,8 @@ define([
 
   'models/report',
 
-  'views/report/form',
-  'views/report/totals',
+  'views/report-form',
+  'views/report-results',
 
   'views/clusters',
   'views/map',
@@ -16,11 +16,12 @@ define([
   'views/embed-map',
   'views/search',
   'views/layer-overlay',
-  'views/timeline'
+  'views/timeline',
+  'views/spin'
 ], function(Backbone, ReportModel) {
 
   var ReportFormView = arguments[2],
-    TotalsView = arguments[3],
+    ReportResultsView = arguments[3],
     ClustersView = arguments[4],
     MapView = arguments[5],
     FiltersView = arguments[6],
@@ -29,7 +30,8 @@ define([
     EmbedMapView = arguments[9],
     SearchView = arguments[10],
     LayerOverlayView = arguments[11],
-    TimelineView = arguments[12];
+    TimelineView = arguments[12],
+    SpinView = arguments[13];
 
   var Router = Backbone.Router.extend({
 
@@ -38,9 +40,10 @@ define([
       'sectors/:id': 'lists',
       'organizations/:id': 'lists',
       'donors/:id': 'lists',
+      'location/:id': 'lists',
       'projects/:id': 'project',
       'search': 'search',
-      'p/analysis': 'report'
+      'p/:page': 'page'
     },
 
     initialize: function() {
@@ -53,7 +56,6 @@ define([
       new ClustersView();
       new MapView();
       new FiltersView();
-      new MenuFixedView();
       new DownloadsView();
       new EmbedMapView();
       new LayerOverlayView();
@@ -68,16 +70,22 @@ define([
       new SearchView();
     },
 
-    report: function() {
-      var reportModel = new ReportModel();
+    page: function(page) {
+      new MenuFixedView();
 
-      new ReportFormView({
-        model: reportModel
-      });
+      if (page === 'analysis') {
+        var reportModel = new ReportModel();
 
-      new TotalsView({
-        model: reportModel
-      });
+        new SpinView();
+
+        new ReportFormView({
+          model: reportModel
+        });
+
+        new ReportResultsView({
+          model: reportModel
+        });
+      }
     }
 
   });

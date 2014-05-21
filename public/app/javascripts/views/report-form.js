@@ -14,8 +14,13 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
       }
 
       this.$el.find('form').ajaxForm({
+        beforeSubmit: function() {
+          Backbone.Events.trigger('spinner:start');
+          Backbone.Events.trigger('results:empty');
+        },
         success: function(data) {
           self.onSuccess(data);
+          Backbone.Events.trigger('spinner:stop');
         },
         error: function(err) {
           throw err.statusText;
@@ -32,9 +37,9 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
         silent: true
       });
 
-      this.model.set(data.results);
-
-      console.log(this.model.toJSON());
+      this.model.set(_.extend(data.results, {
+        charts: data.bar_chart
+      }));
     }
 
   });
