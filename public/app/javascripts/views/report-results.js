@@ -94,6 +94,11 @@ define([
       }
     },
 
+    events: {
+      'click #printReport': 'printReport',
+      'click #saveReport': 'saveReport'
+    },
+
     template: Handlebars.compile(tpl),
 
     initialize: function() {
@@ -203,6 +208,14 @@ define([
       $('#sectorsByDonorsChart').highcharts(_.extend(this.options.columnChart, {
         series: this.data.sectors_by_donors
       }));
+    },
+
+    printReport: function() {
+      window.print();
+    },
+
+    saveReport: function() {
+      //
     }
 
   });
