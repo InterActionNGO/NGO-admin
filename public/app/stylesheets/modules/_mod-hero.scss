@@ -3,12 +3,13 @@
   position: relative;
   top: -60px;
   background-color: $color-4;
+
   .about &,
-  .purpose &,
   .getting-on-the-map &,
   .staff-list &,
   .contact-us &,
   .of-interest & { background: image-url('hero-about.png') no-repeat center top;}
+  .purpose & { background: image-url('hero-purpose.jpg') no-repeat center top; background-size: cover;}
 
   .data &,
   .top-things-you-should-know-about-the-data &,
