@@ -47,8 +47,10 @@ define([
     },
 
     initialize: function() {
+      var pushState = !!(window.history && window.history.pushState);
+
       Backbone.history.start({
-        pushState: true
+        pushState: pushState
       });
     },
 
