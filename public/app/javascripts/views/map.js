@@ -348,13 +348,18 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       scrollwheel: false,
       disableDefaultUI: true,
       styles: stylesArray,
-      draggable: false,
       maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
         mapTypeIds: ['EMPTY', google.maps.MapTypeId.ROADMAP]
       }
     };
+
+    if (typeof window.ontouchstart !== 'undefined') {
+      mapOptions = _.extend(mapOptions, {
+        draggable: false
+      });
+    }
 
     cartodbOptions = {
       user_name: 'ngoaidmap',
