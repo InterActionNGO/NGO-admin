@@ -233,6 +233,23 @@
   border-radius: 50%;
 }
 
+@mixin gradient {
+  @include after('', block, absolute, 0, 30px, auto, 16px);
+    left:0;
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, #FFFFFF),
+      color-stop(1, rgba(255,255,255, 0))
+    );
+    background-image: -o-linear-gradient(top, #FFFFFF 0%, rgba(255,255,255, 0) 100%);
+    background-image: -moz-linear-gradient(top, #FFFFFF 0%,  rgba(255,255,255, 0) 100%);
+    background-image: -webkit-linear-gradient(top, #FFFFFF 0%, rgba(255,255,255, 0) 100%);
+    background-image: -ms-linear-gradient(top, #FFFFFF 0%,  rgba(255,255,255, 0) 100%);
+    background-image: linear-gradient(to top, #FFFFFF 0%,  rgba(255,255,255, 0) 100%);
+}
+
 
 
 
