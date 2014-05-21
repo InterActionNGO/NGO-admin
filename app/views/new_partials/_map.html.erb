@@ -62,7 +62,8 @@
     </div>
   </div>
 
-  <% if @filter_name.present? or @donor.present? %>
+  <%# if @filter_name.present? or @donor.present %>
+  <% unless title.empty? %>
     <%= render 'new_partials/filtered-categories' %>
   <% end %>
 

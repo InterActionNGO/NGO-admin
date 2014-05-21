@@ -60,10 +60,8 @@ HTML
 
   def title
     result = []
-    if @site
+    if @site and @site.name != 'global'
       result << @site.name
-    else
-      result << "IOM"
     end
     if @organization
       result << @organization.name
