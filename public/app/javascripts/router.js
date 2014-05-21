@@ -43,7 +43,7 @@ define([
       'location/:id': 'lists',
       'projects/:id': 'project',
       'search': 'search',
-      'p/analysis': 'report'
+      'p/:page': 'page'
     },
 
     initialize: function() {
@@ -56,7 +56,6 @@ define([
       new ClustersView();
       new MapView();
       new FiltersView();
-      new MenuFixedView();
       new DownloadsView();
       new EmbedMapView();
       new LayerOverlayView();
@@ -71,18 +70,22 @@ define([
       new SearchView();
     },
 
-    report: function() {
-      var reportModel = new ReportModel();
+    page: function(page) {
+      new MenuFixedView();
 
-      new SpinView();
+      if (page === 'analysis') {
+        var reportModel = new ReportModel();
 
-      new ReportFormView({
-        model: reportModel
-      });
+        new SpinView();
 
-      new ReportResultsView({
-        model: reportModel
-      });
+        new ReportFormView({
+          model: reportModel
+        });
+
+        new ReportResultsView({
+          model: reportModel
+        });
+      }
     }
 
   });

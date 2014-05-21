@@ -1168,11 +1168,11 @@ SQL
     donors = params[:donor] if params[:donor]
     sectors = params[:sector] if params[:sector]
     organizations = params[:organization] if params[:organization]
-    form_query = params[:q] if params[:q]
+    form_query = "%" + params[:q].downcase.strip + "%" if params[:q]
 
     # Data filtering
-    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(projects.name) = ?", form_query.downcase).select(["projects.id",
-      "projects.name", "projects.estimated_people_reached","projects.budget","projects.start_date","projects.end_date",
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query).select(["projects.id",
+      "projects.name","projects.budget","projects.start_date","projects.end_date",
       "(end_date >= current_date) as active"])
         #.group('user_profiles.id').order('name ASC')
 
@@ -1380,9 +1380,9 @@ SQL
     donors = params[:donor] if params[:donor]
     sectors = params[:sector] if params[:sector]
     organizations = params[:organization] if params[:organization]
-    form_query = params[:q].downcase if params[:q]
+    form_query = params[:q].downcase.strip if params[:q]
 
-    form_query_filter = "AND lower(p.name) LIKE '%" + params[:q] + "%'" if params[:q]
+    form_query_filter = "AND lower(p.name) LIKE '%" + form_query + "%'" if params[:q]
 
     if (donors && !donors.include?('All') )
       if params[:donor_include] === "include"

@@ -348,6 +348,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       scrollwheel: false,
       disableDefaultUI: true,
       styles: stylesArray,
+      draggable: false,
       maxZoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControlOptions: {
@@ -701,6 +702,11 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       this.$el.css({
         height: h
       });
+    },
+
+    block: function(e) {
+      e.preventDefault();
+      return false;
     }
 
   });
