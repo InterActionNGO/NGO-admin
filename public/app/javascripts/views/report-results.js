@@ -14,7 +14,9 @@ define([
     options: {
       areaChart: {
         chart: {
-          type: 'area'
+          type: 'area',
+          spacingLeft: 0,
+          spacingRight: 0
         },
         title: {
           text: null
@@ -31,7 +33,11 @@ define([
         },
         plotOptions: {
           area: {
-            fillOpacity: 0.5
+            fillOpacity: 0.5,
+            tooltip: {
+              headerFormat: '',
+              pointFormat: '<strong>{point.x}:</strong> {point.y}'
+            }
           }
         },
         credits: {
@@ -40,10 +46,22 @@ define([
       },
       columnChart: {
         chart: {
-          type: 'column'
+          type: 'column',
+          spacingLeft: 0,
+          spacingRight: 0
         },
         title: {
           text: null
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.05,
+            groupPadding: 0,
+            tooltip: {
+              headerFormat: '',
+              pointFormat: '{point.y}'
+            }
+          }
         },
         legend: {
           width: 200,
