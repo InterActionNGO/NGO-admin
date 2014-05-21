@@ -5,8 +5,8 @@ define([
 
   'models/report',
 
-  'views/report/form',
-  'views/report/totals',
+  'views/report-form',
+  'views/report-results',
 
   'views/clusters',
   'views/map',
@@ -16,11 +16,12 @@ define([
   'views/embed-map',
   'views/search',
   'views/layer-overlay',
-  'views/timeline'
+  'views/timeline',
+  'views/spin'
 ], function(Backbone, ReportModel) {
 
   var ReportFormView = arguments[2],
-    TotalsView = arguments[3],
+    ReportResultsView = arguments[3],
     ClustersView = arguments[4],
     MapView = arguments[5],
     FiltersView = arguments[6],
@@ -29,7 +30,8 @@ define([
     EmbedMapView = arguments[9],
     SearchView = arguments[10],
     LayerOverlayView = arguments[11],
-    TimelineView = arguments[12];
+    TimelineView = arguments[12],
+    SpinView = arguments[13];
 
   var Router = Backbone.Router.extend({
 
@@ -72,11 +74,13 @@ define([
     report: function() {
       var reportModel = new ReportModel();
 
+      new SpinView();
+
       new ReportFormView({
         model: reportModel
       });
 
-      new TotalsView({
+      new ReportResultsView({
         model: reportModel
       });
     }
