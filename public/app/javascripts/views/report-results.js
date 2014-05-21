@@ -12,7 +12,63 @@ define([
     el: '#totalsView',
 
     options: {
-      charts: {
+      areaChart: {
+        chart: {
+          type: 'area'
+        },
+        title: {
+          text: null
+        },
+        xAxis: {
+          lineWidth: 0,
+          tickLength: 0
+        },
+        yAxis: {
+          title: {
+            text: null
+          },
+          gridLineWidth: 0
+        },
+        plotOptions: {
+          area: {
+            fillOpacity: 0.5
+          }
+        },
+        credits: {
+          enabled: false
+        }
+      },
+      columnChart: {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: null
+        },
+        legend: {
+          width: 200,
+          itemWidth: 200,
+          itemDistance: 0,
+          itemMarginBottom: 10,
+          itemStyle: {
+            width: 175
+          }
+        },
+        yAxis: {
+          title: {
+            text: null
+          },
+          lineWidth: 1,
+          lineColor: '#989898',
+          gridLineWidth: 0
+        },
+        xAxis: {
+          labels: {
+            enabled: false
+          },
+          tickLength: 0,
+          lineColor: '#989898'
+        },
         credits: {
           enabled: false
         }
@@ -54,21 +110,15 @@ define([
     },
 
     setProjectsChart: function() {
-      var options = _.extend({}, this.options.charts, {
-        title: {
-          text: null
-        },
-        yAxis: {
-          title: {
-            text: 'Projects'
-          }
-        },
+      var options = _.extend(this.options.areaChart, {
         series: [{
-          name: 'Active projects',
-          data: this.data.projects_active_series
-        }, {
           name: 'Inactive projects',
-          data: this.data.projects_disable_series
+          data: this.data.projects_disable_series,
+          color: '#CBCBCB'
+        }, {
+          name: 'Active projects',
+          data: this.data.projects_active_series,
+          color: '#006C8D'
         }]
       });
 
@@ -76,16 +126,17 @@ define([
     },
 
     donorsCharts: function() {
-      var options = _.extend(this.options.charts, {
-        chart: {
-          type: 'column'
-        },
-        series: [{
-          data: this.data.donors_by_projects
-        }]
-      });
+      $('#donorsByProjectsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.donors_by_projects
+      }));
 
-      $('#donorsByProjectsChart').highcharts(options);
+      $('#donorsByOrganizationsChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.donors_by_organizations
+      }));
+
+      $('#donorsByCountriesChart').highcharts(_.extend(this.options.columnChart, {
+        series: this.data.donors_by_countries
+      }));
     }
 
   });
