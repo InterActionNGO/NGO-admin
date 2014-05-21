@@ -43,7 +43,8 @@ define([
       'location/:id': 'lists',
       'projects/:id': 'project',
       'search': 'search',
-      'p/analysis': 'report'
+      'p/:page': 'page',
+      'p/analysis': 'report',
     },
 
     initialize: function() {
@@ -56,7 +57,6 @@ define([
       new ClustersView();
       new MapView();
       new FiltersView();
-      new MenuFixedView();
       new DownloadsView();
       new EmbedMapView();
       new LayerOverlayView();
@@ -69,6 +69,10 @@ define([
 
     search: function() {
       new SearchView();
+    },
+
+    page: function() {
+      new MenuFixedView();
     },
 
     report: function() {
