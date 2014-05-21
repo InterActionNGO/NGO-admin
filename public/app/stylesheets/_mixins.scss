@@ -59,12 +59,17 @@
   width: $width;
   height: $height;
 }
+@mixin arrow ($width, $color, $border-width) {
+  width: $width;
+  height: $width;
+  border-top: $border-width solid $color;
+  border-left:  $border-width solid $color;
+}
 
 @mixin link-states($primary-color, $display) {
   display: $display;
   color: $primary-color;
   &:hover { text-decoration: underline;}
-  //&:visited { color: darken($primary-color, 10%);}
 }
 
 @mixin theme-color-1 { $primary-color: $color-1;}

@@ -22,31 +22,46 @@
   }
   #next, #previous, .more-projects {
     display: block;
-    width: auto;
     height: 50px;
-    min-width: 100px;
     line-height: 50px;
     background-color: $color-4;
     white-space: nowrap;
-    padding: 0 10px;
+    padding: 0 5%;
+    text-transform: uppercase;
     &:hover {
       background-color: darken($color-4, 10%);
     }
    }
   #next {
     float: right;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    width: 38%;
+    position: relative;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    text-align: left;
+    &:after {
+      @include after('', block, absolute, 15px, 19px, 8px, 8px);
+      @include arrow (8px, $color-3, 3px);
+      @include rotate(135deg);
+    }
   }
   #previous {
     float: left;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    width: 38%;
+    position: relative;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    text-align: right;
+    &:before {
+      @include before('', block, absolute, 15px, 19px, 8px, 8px);
+      @include arrow (8px, $color-3, 3px);
+      @include rotate(315deg);
+    }
   }
   .more-projects {
-    width: 10%;
-    margin: 0 auto;
-    border-radius: 20px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 30px;
   }
 
 }

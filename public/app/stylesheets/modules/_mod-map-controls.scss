@@ -64,7 +64,6 @@
   }
   .submenu {
     min-width: 150px;
-
     display: none;
     position: absolute;
     z-index: 100;
@@ -92,5 +91,11 @@
     font-family: 'Times New Roman';
     font-style: italic;
     text-align: center;
+    text-transform: lowercase;
   }
+  .current-selector .icon-info { display: none;}
+}
+
+div.cartodb-legend-stack {
+  bottom: 55px;
 }

@@ -14,12 +14,16 @@
       a { color: $color-3;}
     }
   }
+  p {
+    color: $color-5;
+    font-weight: lighter;
+  }
   span {
     font-size: 48px;
     font-weight: lighter;
   }
   li {
-    margin-bottom: 3px;
+    margin-bottom: 15px;
     line-height: 1.2;
     font-weight: lighter;
   }

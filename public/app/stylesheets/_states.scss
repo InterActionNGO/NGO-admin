@@ -9,3 +9,7 @@
     width: 13%;
   }
 }
+
+.is-clearfix {
+  @include clearfix();
+}

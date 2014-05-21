@@ -1,7 +1,7 @@
 /*global google,map_type,map_data:true,map_center,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
-define(['sprintf'], function(sprintf) {
+define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
   var stylesArray = [{
     'featureType': 'landscape.natural',
@@ -362,7 +362,7 @@ define(['sprintf'], function(sprintf) {
       legends: false,
       sublayers: [{
         sql: 'SELECT * from ne_10m_admin_0_countries',
-        cartocss: '#table{}'
+        cartocss: '#ne_10m_admin_0_countries{}'
       }]
     };
 
@@ -393,19 +393,18 @@ define(['sprintf'], function(sprintf) {
       var $emptyLayer = $('#emptyLayer');
 
       var currentTable = $el.data('table');
-      //var currentSQL = $el.data('sql');
       var currentMin = $el.data('min');
       var currentMax = $el.data('max');
       var currentUnits = $el.data('units');
       var layerStyle = $el.data('style');
-      var currentDiff = currentMax + currentMin;
+      var currentDiff;
 
       $legendWrapper.html('');
 
-      if ($el.data('layer') === 'none') {
+      if ($el.data('layer') === 'none' && currentLayer.getSubLayer(0)) {
         sublayer = currentLayer.getSubLayer(0);
         sublayer.setSQL('SELECT * from ne_10m_admin_0_countries');
-        sublayer.setCartoCSS('#table{}');
+        sublayer.setCartoCSS('#ne_10m_admin_0_countries{}');
       }
 
       if (window.sessionStorage) {
@@ -432,6 +431,17 @@ define(['sprintf'], function(sprintf) {
             currentLegend = legends.red;
         }
 
+
+        var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
+          title: $el.data('layer'),
+          left: currentMin + currentUnits,
+          right: currentMax + currentUnits
+        }));
+
+        currentMin = Number(currentMin);
+        currentMax = Number(currentMax);
+        currentDiff = currentMax + currentMin;
+
         var currentCSS = sprintf('#%1$s{line-color: #ffffff; line-opacity: 1; line-width: 1; polygon-opacity: 0.8;}', currentTable);
         var c_len = currentLegend.colors.length;
 
@@ -439,11 +449,6 @@ define(['sprintf'], function(sprintf) {
           currentCSS = currentCSS + sprintf(' #%1$s [data <= %3$s] {polygon-fill: %2$s;}', currentTable, currentLegend.colors[c_len - i - 1], (((currentDiff / c_len) * (c_len - i)) - currentMin).toFixed(1));
         });
 
-        var choroplethLegend = new cdb.geo.ui.Legend.Choropleth(_.extend(currentLegend, {
-          title: $el.data('layer'),
-          left: currentMin + currentUnits,
-          right: currentMax + currentUnits
-        }));
         var stackedLegend = new cdb.geo.ui.Legend.Stacked({
           legends: [choroplethLegend]
         });
@@ -462,8 +467,6 @@ define(['sprintf'], function(sprintf) {
           cartocss: currentCSS,
           interaction: 'country_name, data, year',
         });
-
-        sublayer.show();
 
         $('.infowindow-pop').unbind('click');
 
@@ -521,12 +524,6 @@ define(['sprintf'], function(sprintf) {
 
       map.mapTypes.set('EMPTY', emptyMapType);
 
-      // google.maps.event.addListener(map, 'zoom_changed', function() {
-      //   if (map.getZoom() > 12) {
-      //     map.setZoom(12);
-      //   }
-      // });
-
       if (map_type === 'administrative_map') {
         range = max_count / 5;
       }
@@ -547,9 +544,15 @@ define(['sprintf'], function(sprintf) {
         .addTo(map)
         .on('done', function(layer) {
           currentLayer = layer;
+          currentLayer.on('error', function(err) {
+            console.log(err);
+          });
           if (window.sessionStorage && window.sessionStorage.getItem('layer')) {
             $('#' + window.sessionStorage.getItem('layer')).trigger('click');
           }
+        })
+        .on('error', function(err) {
+          console.log(err);
         });
 
       // Markers

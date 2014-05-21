@@ -3,20 +3,19 @@
 
   <div class="grid-4">
     <aside class="layout-sidebar">
-      <div class="mod-report-filter mod-form">
+      <div class="mod-report-filter mod-form" id="reportFormView">
 
         <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
 
-        <div class="block search">
-          <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
-          <%= submit_tag '' %>
-        </div>
+          <div class="block search">
+            <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
+            <%= submit_tag '' %>
+          </div>
 
           <ul class="combo_search_select">
             <li class="comboselect">
               <label>ORGANIZATION</label>
-              <%= select_tag :organization,
-                options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+              <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
               <%= select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
             </li>
 
@@ -65,6 +64,10 @@
                 <!-- <%= select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
               </div>
             </li>
+
+            <li>
+              <button type="submit">Apply filters</button>
+            </li>
           </ul>
 
         <% end %>
@@ -75,25 +78,14 @@
   <div class="grid-12 offset-1">
     <section class="layout-content">
 
+      <div class="report-spinner" id="spinView"></div>
+
       <article class="mod-content-article">
         <h1>Report</h1>
-          <div class="applied-filters">
-            <p>Filters applied:</p>
-            <p><strong>Organizations:</strong>Action Contre la Faim - ACF International, Agency for Technical Cooperation and Development (ACTED), CARE, IFRC/National Societies</p>
-            <p><strong>Donors:</strong>Action Contre la Faim - ACF International, African Rescue Committee, American Red Cross, Ann Ford</p>
-            <p><strong>Countries:</strong>Barbados, Belize, Bolivia, Burkina Faso, Burundi, Central African Rep., Chad</p>
-            <p><strong>From:</strong>1990 - January / To: All years - All months</p>
-          </div>
-
-          <div class="results">
-
-          </div>
+        <div id="totalsView"></div>
       </article>
 
     </section>
   </div>
 
-</div> <!-- row -->
-
-<script src="/app/javascripts/backoffice/smbtc-reports.js" type="text/javascript" charset="utf-8"></script>
-<script src="/app/javascripts/sites/pages.js" type="text/javascript" charset="utf-8"></script>
+</div>
