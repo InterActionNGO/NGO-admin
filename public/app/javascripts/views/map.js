@@ -355,6 +355,12 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       }
     };
 
+    if (typeof window.ontouchstart !== 'undefined') {
+      mapOptions = _.extend(mapOptions, {
+        draggable: false
+      });
+    }
+
     cartodbOptions = {
       user_name: 'ngoaidmap',
       type: 'cartodb',
@@ -701,6 +707,11 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       this.$el.css({
         height: h
       });
+    },
+
+    block: function(e) {
+      e.preventDefault();
+      return false;
     }
 
   });
