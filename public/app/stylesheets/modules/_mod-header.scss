@@ -18,21 +18,24 @@
 
   .aid-map-logo {
     float: left;
-    margin-top: 16px;
+    margin-top: 10px;
   }
   .menu {
-    margin-top: 43px;
+    display: block;
+    margin-top: 42px;
+    text-align: right;
+    @include clearfix();
   }
   .menu-item {
-    float: left;
-    width: 19%;
-    margin: 0 .5%;
+    display: inline-block;
+    //width: 19%;
+    margin: 0 1%;
     text-align: center;
     text-transform: uppercase;
-    &.access { width: 35%;}
+    //&.access { width: 35%;}
     .index-item {
       position: relative;
-      padding: 5px 1%;
+      padding: 5px 15px;
       &.active { border-radius: 15px;}
     }
   }

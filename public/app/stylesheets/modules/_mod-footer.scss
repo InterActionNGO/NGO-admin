@@ -12,7 +12,6 @@
     text-transform: uppercase;
   }
   .aid-map-logo {
-    width: 200px;
     margin-top: 45px;
   }
   .interaction-logo {
@@ -25,7 +24,7 @@
 .mod-footer-top {
   height: 190px;
   background: image-url('footer_background_x2.png') no-repeat right top;
-  background-size: contain;
+  background-size: auto 190px;
 }
 .mod-footer-bottom {
   position: absolute;
