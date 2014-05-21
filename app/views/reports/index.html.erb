@@ -16,44 +16,48 @@
             <li class="comboselect">
               <label>ORGANIZATION</label>
               <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
-              <%= select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+              <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+              <%= hidden_field :organization_include, :value => 'include' %>
             </li>
 
             <!--
             <li class="comboselect">
               <label>Layer</label>
-              <%= select_tag :layer,
+              <%# select_tag :layer,
                 options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.title] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
-                <%= select_tag :layer_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
-                <%= text_field_tag (:layer_unit) %>
+                <%# select_tag :layer_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
+                <%# text_field_tag (:layer_unit) %>
             </li>  -->
 
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
                 options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
-              <%= select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+              <%# select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+              <%= hidden_field :country_include, :value => 'include' %>
             </li>
 
             <li class="comboselect">
               <label>SECTOR</label>
               <%= select_tag :sector,
                 options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
-                <%= select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+              <%# select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+              <%= hidden_field :sector_include, :value => 'include' %>
             </li>
 
             <li class="comboselect">
               <label>DONOR</label>
               <%= select_tag :donor,
                 options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
-                <%= select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+                <%# select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+                <%= hidden_field :donor_include, :value => 'include' %>
             </li>
 
             <li class="comboselect date">
               <label>START DATE</label>
               <div class="select_date">
                 <%= select_date @date_start, :prefix => :start_date %>
-                <!-- <%= select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
+                <%# select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
               </div>
             </li>
 
@@ -61,7 +65,7 @@
               <label>END DATE</label>
               <div class="select_date">
                 <%= select_date @date_end, :prefix => :end_date %>
-                <!-- <%= select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %> -->
+                <%# select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
               </div>
             </li>
 
