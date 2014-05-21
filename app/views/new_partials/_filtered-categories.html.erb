@@ -3,13 +3,16 @@
   <div class="grid-17">
     <div class="mod-filtered-categories">
       <ul>
-        <li><span class="filter">Filtering by: </span></li>
+        <li><span class="filter">Viewing: </span></li>
+
+        <li><%= CGI.unescapeHTML(title) %></li>
+
         <% if @donor %>
           <li><%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>
         <% elsif @site.navigate_by_cluster? %>
           <li><%= link_to raw(@filter_name) , cluster_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
-        <% else %>
-            <li><%= link_to raw(@filter_name) , sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
+        <% elsif @filter_name.present? %>
+          <li><%= link_to raw(@filter_name) , sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
         <% end %>
       </ul>
     </div>
