@@ -5,50 +5,83 @@ require.config({
   baseUrl: '/app/javascripts',
 
   paths: {
+    jquery: '../vendor/jquery/dist/jquery',
+    underscore: '../vendor/underscore/underscore',
+    backbone: '../vendor/backbone/backbone',
     sprintf: '../vendor/sprintf/src/sprintf',
     quicksilver: '../lib/liveupdate/quicksilver',
     liveupdate: '../lib/liveupdate/jquery.liveupdate',
     jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
-    select2: '../vendor/select2/select2'
+    select2: '../vendor/select2/select2',
+    form: '../vendor/jquery-form/jquery.form',
+    handlebars: '../vendor/handlebars/handlebars',
+    highcharts: '../vendor/highcharts-release/highcharts',
+    spin: '../vendor/spinjs/spin',
+    moment: '../vendor/moment/moment',
+    text: '../vendor/requirejs-text/text'
   },
 
   shim: {
+    jquery: {
+      exports: '$'
+    },
+    underscore: {
+      exports: '_'
+    },
+    backbone: {
+      deps: ['jquery', 'underscore'],
+      exports: 'Backbone'
+    },
     sprintf: {
       exports: 'sprintf'
     },
     liveupdate: {
-      deps: ['quicksilver'],
+      deps: ['jquery', 'quicksilver'],
       exports: '$'
     },
     jqueryui: {
+      deps: ['jquery'],
       exports: '$'
     },
     select2: {
+      deps: ['jquery'],
       exports: '$'
+    },
+    form: {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    handlebars: {
+      exports: 'Handlebars'
+    },
+    highcharts: {
+      deps: ['jquery'],
+      exports: 'highcharts'
     }
   }
 
 });
 
 require([
-  'views/clusters',
-  'views/map',
-  'views/filters',
-  'views/menu-fixed',
-  'views/downloads',
-  'views/embed-map',
-  'views/search',
-  'views/layer-overlay'
-], function(ClustersView, MapView, FiltersView, MenuFixedView, DownloadsView, EmbedMapView, SearchView, LayerOverlayView) {
+  'jquery',
+  'handlebars',
+  'router'
+], function($, Handlebars, Router) {
 
-  new ClustersView();
-  new MapView();
-  new FiltersView();
-  new MenuFixedView();
-  new DownloadsView();
-  new EmbedMapView();
-  new SearchView();
-  new LayerOverlayView();
+  // Extensions
+  Number.prototype.toCommas = function() {
+    return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  // Handlebars
+  Handlebars.registerHelper('commas', function(context) {
+    if (typeof context !== 'number') {
+      return context;
+    }
+    return context.toCommas();
+  });
+
+  new Router();
 
   var scrollTop,
     categoriesSelector = $('.categories-selector'),
@@ -74,12 +107,16 @@ require([
       categoriesSelector.addClass('is-fixed');
       menu.removeClass('mod-go-up-menu');
       menu.addClass('mod-drop-down-menu');
-      $('.layout-sidebar, .layout-content').css({marginTop: 50});
+      $('.layout-sidebar, .layout-content').css({
+        marginTop: 50
+      });
     } else {
       categoriesSelector.removeClass('is-fixed');
       menu.addClass('mod-go-up-menu');
       menu.removeClass('mod-drop-down-menu');
-      $('.layout-sidebar, .layout-content').css({marginTop: 0});
+      $('.layout-sidebar, .layout-content').css({
+        marginTop: 0
+      });
     }
   }
 

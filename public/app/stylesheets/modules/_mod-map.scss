@@ -20,6 +20,7 @@
 #map {
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 }
@@ -45,6 +46,7 @@
   background-color: $color-0;
   box-shadow: 0 0 0 5px rgba($color-1, .3);
   text-align: center;
+  text-transform: lowercase;
 
   h3 {
     font-size: 30px;
@@ -83,7 +85,6 @@
     font-weight: normal;
     color: $color-3;
     font-size: 13px;
-    text-transform: uppercase;
   }
 
 }
