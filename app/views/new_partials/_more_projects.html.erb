@@ -1,7 +1,7 @@
 <section>
   <% related_projects = @project.related(@site) %>
   <% unless related_projects.count < 1 %>
-    <h2 class="first">Other projects</h2>
+    <h3 class="first">Other projects</h3>
     <div class="mod-article mod-more-projects">
       <ul>
         <% related_projects.each_with_index do |r,i| %>
