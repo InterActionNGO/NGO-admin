@@ -136,7 +136,8 @@ module.exports = function(grunt) {
       },
       styles: {
         files: [
-          '<%= root.app %>/stylesheets/{,*/}*{,*/}*.{scss,sass}'
+          '<%= root.app %>/stylesheets/{,*/}*{,*/}*.{scss,sass}',
+          '<%= root.app %>/images/{,*/}*{,*/}*.{png,jpg}'
         ],
         tasks: ['compass:app']
       },
