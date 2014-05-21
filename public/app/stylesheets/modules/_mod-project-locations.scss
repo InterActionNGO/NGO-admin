@@ -7,9 +7,9 @@
     color: $color-5;
   }
 
-  .pos0:before { @include circle-decoration ($color-5); }
-  .pos1:before { @include circle-decoration (rgba($color-5, .75)); }
-  .pos2:before { @include circle-decoration (rgba($color-5, .50)); }
-  .pos3:before { @include circle-decoration (rgba($color-5, .25)); }
+  .pos0:before { @include circle-decoration (#333333); }
+  .pos1:before { @include circle-decoration (#565656); }
+  .pos2:before { @include circle-decoration (#727272); }
+  .pos3:before { @include circle-decoration (#ADADAD); }
 
 }
