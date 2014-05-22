@@ -56,6 +56,92 @@
       height: 25px;
     }
   }
+
+  // Icons
+  .health:before {
+    @include icons-sprite(icon-health);
+    background-position: sprite-position($icons, icon-health, 4px, 5px);
+  }
+
+  .agriculture:before {
+    @include icons-sprite(icon-agriculture);
+    background-position: sprite-position($icons, icon-agriculture, 4px, 5px);
+  }
+
+  .communication:before {
+    @include icons-sprite(icon-communication);
+    background-position: sprite-position($icons, icon-communication, 4px, 5px);
+  }
+
+  .early_recovery:before {
+    @include icons-sprite(icon-early_recovery);
+    background-position: sprite-position($icons, icon-early_recovery, 4px, 5px);
+  }
+
+  .economic_recovery:before {
+    @include icons-sprite(icon-economic_recovery);
+    background-position: sprite-position($icons, icon-economic_recovery, 4px, 5px);
+  }
+
+  .education:before {
+    @include icons-sprite(icon-education);
+    background-position: sprite-position($icons, icon-education, 4px, 5px);
+  }
+
+  .environment:before {
+    @include icons-sprite(icon-environment);
+    background-position: sprite-position($icons, icon-environment, 4px, 5px);
+  }
+
+  .food_aid:before {
+    @include icons-sprite(icon-food-aid);
+    background-position: sprite-position($icons, icon-food-aid, 4px, 5px);
+  }
+
+  .disaster_management:before {
+    @include icons-sprite(icon-other);
+    background-position: sprite-position($icons, icon-other, 4px, 5px);
+  }
+
+  .human_rights:before {
+    @include icons-sprite(icon-human_rights);
+    background-position: sprite-position($icons, icon-human_rights, 4px, 5px);
+  }
+
+  .logistics:before {
+    @include icons-sprite(icon-logistics);
+    background-position: sprite-position($icons, icon-logistics, 4px, 5px);
+  }
+
+  .nutrition:before {
+    @include icons-sprite(icon-other);
+    background-position: sprite-position($icons, icon-other, 4px, 5px);
+  }
+
+  .other:before {
+    @include icons-sprite(icon-other);
+    background-position: sprite-position($icons, icon-other, 4px, 5px);
+  }
+
+  .peace_security:before {
+    @include icons-sprite(icon-peace_security);
+    background-position: sprite-position($icons, icon-peace_security, 4px, 5px);
+  }
+
+  .protection:before {
+    @include icons-sprite(icon-protection);
+    background-position: sprite-position($icons, icon-protection, 4px, 5px);
+  }
+
+  .shelter:before {
+    @include icons-sprite(icon-shelter);
+    background-position: sprite-position($icons, icon-shelter, 4px, 5px);
+  }
+
+  .water_sanitation:before {
+    @include icons-sprite(icon-water);
+    background-position: sprite-position($icons, icon-water, 4px, 5px);
+  }
 }
 .sector {
   @include categorie-selector($color-2);
@@ -80,8 +166,6 @@
 .fedex-logo {
   margin-top: 3px;
 }
-
-
 
 
 

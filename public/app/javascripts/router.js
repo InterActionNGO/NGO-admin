@@ -42,6 +42,7 @@ define([
       'donors/:id': 'lists',
       'location/:id': 'lists',
       'projects/:id': 'project',
+      'location/:region/:id': 'lists',
       'search': 'search',
       'p/:page': 'page'
     },
