@@ -1,6 +1,12 @@
 @import "compass/css3",
+        "compass/utilities/sprites",
         "compass/reset",
-        "settings",
+        "icons/*.png";
+
+        @include all-icons-sprites;
+        //$icons-spacing: 30px;
+
+@import "settings",
         "mixins",
         "base",
         "grid",
@@ -40,4 +46,5 @@
         "modules/mod-highlighted-results",
         "modules/mod-overlay",
         "modules/mod-report-results";
+
 
