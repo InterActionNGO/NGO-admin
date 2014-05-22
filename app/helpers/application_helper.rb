@@ -87,9 +87,9 @@ HTML
     if @country
       result << @country.name
     end
-    if @area
-      result << @area.name
-    end
+    # if @area
+    #   result << @area.name
+    # end
     if controller_name == 'search' && action_name == 'index'
       if params[:q].blank?
         result << "Search"
