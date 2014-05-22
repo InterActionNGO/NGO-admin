@@ -78,7 +78,8 @@
 .select2-search-choice {
   border: none;
   box-shadow: none;
-
+  background: none;
+  @include appearance(none);
 }
 
 
