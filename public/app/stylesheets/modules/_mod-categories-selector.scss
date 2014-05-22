@@ -3,10 +3,13 @@
     float: left;
     position: relative;
     width: 98%;
-    margin-top: 7px;
-    padding: .5% 1%;
+    margin: 7px 0 0 0;
+    padding: 2px 1%;
     background-color: $color-0;
     border-radius: 20px;
+  }
+  ul {
+    @include clearfix();
   }
   li {
     float: left;
@@ -14,13 +17,13 @@
     font-weight: lighter;
     font-size: 14px;
     text-transform: uppercase;
-    line-height: 0px;
-    padding: 14px 23px;
-    margin-right: 1%;
+    line-height: 1;
+    padding: 9px 23px;
+    margin-right: 2%;
+    cursor: pointer;
     &.search { padding: 0;}
     &:hover {
       color: $color-0;
-      cursor: default;
       .mod-go-up-menu { display: block;}
       .mod-drop-down-menu { display: block;}
     }
@@ -29,6 +32,7 @@
     }
     li {
       padding: 0;
+      cursor: default;
       a {
         padding: 5px 20px;
         font-weight: normal;
@@ -41,6 +45,8 @@
   }
   .search {
     height: 25px;
+    margin-top: 3px;
+    margin-right: 0;
     border-bottom: 2px solid $color-4;
     input#q {
       background-color: $color-0;
@@ -71,6 +77,9 @@
   .mod-go-up-menu:after { @include gradient }
 }
 
+.fedex-logo {
+  margin-top: 3px;
+}
 
 
 
