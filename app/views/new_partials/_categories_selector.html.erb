@@ -22,7 +22,7 @@
                             <%= category.name %>
                           <% end %>
                         </a>
-                        <span><%= category.projects.size %> projects</span>
+                        <span><%= category.projects.reject{|p| p.end_date < DateTime.now.to_date}.size %> projects</span>
                       </li>
                     <% end %>
                   </ul>
