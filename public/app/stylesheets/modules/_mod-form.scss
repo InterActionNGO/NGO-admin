@@ -60,13 +60,8 @@
   }
 }
 
-.select2-container {
-  background: image-url('form-background.png') no-repeat center top !important;
-
-}
 //main content
 .select2-container-multi .select2-choices {
-  padding-top: 40px;
   border: none;
   background: none !important;
 }
@@ -76,10 +71,8 @@
   top: 0;
   z-index: 100;
 }
-
-// results list
-.select2-results {
-
+.select2-container-multi .select2-choices .select2-search-field {
+   background: image-url('form-background.png') no-repeat center;
 }
 
 //result item
@@ -91,24 +84,66 @@
 }
 .select2-container-multi .select2-choices li {
   float: none;
-  //margin: 5px 0
+  margin: 5px 0;
 }
 
 //close btn
 .select2-container-multi .select2-search-choice-close {
   background: none;
   &:after {
-    @include after('x', block, relative, -5px, 3px, 14px, 14px);
+    @include after('x', block, relative, 5px, 3px, 14px, 14px);
     color: $color-0;
     font-size: 12px;
-
     text-align: center;
-
     background: $color-5;
     border-radius: 50%;
-
   }
-
 }
+
+.block {
+  margin-bottom: 10px;
+  button {
+    width: 100%;
+    height: 40px;
+    background-color: $color-2;
+    color: $color-0;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+.select2-container .select2-choice {
+  border: none;
+  height: 40px;
+  border-radius: 0;
+  background: image-url('form-background-lt.png') no-repeat center;
+}
+
+.select2-container .select2-choice .select2-arrow {
+  opacity: 0;
+}
+
+#s2id_date_start_year,
+#s2id_date_start_month,
+#s2id_date_end_year,
+#s2id_date_end_month {
+   width: 49%;
+   float: left;
+   background: image-url('form-background-lt.png') no-repeat center;
+   margin-bottom: 10px;
+}
+#s2id_date_start_year,
+#s2id_date_end_year {
+  margin-right: 2%
+}
+.chzn-select .select2-choice {
+  background: image-url('form-background.png') no-repeat center !important;
+}
+.select2-chosen {
+  color: $color-5;
+  margin-top: 7px;
+}
+
 
 
