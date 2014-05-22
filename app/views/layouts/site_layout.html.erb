@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title><% unless CGI.unescapeHTML(title).empty? %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
-    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" %>
-    <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/select2/select2.css", "main" %>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/select2/select2.css", "main.css", :cache => true %>
     <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
     <meta name="viewport" content="width=980px">
     <%= csrf_meta_tag %>
