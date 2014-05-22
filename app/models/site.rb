@@ -67,7 +67,7 @@ class Site < ActiveRecord::Base
 
   has_many :site_layers
   has_many :layer, :through => :site_layers
-  
+
   has_attached_file :logo, :styles => {
                                       :small => {
                                         :geometry => "80x46>",
@@ -311,11 +311,20 @@ class Site < ActiveRecord::Base
   # Array of arrays
   # [[sector, count], [sector, count]]
   def projects_sectors
-    sql="select s.id,s.name,count(ps.*) as count from sectors as s
-    inner join projects_sectors as cp on s.id=cp.sector_id
-    inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{self.id}
-    inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
-    group by s.id,s.name order by count DESC limit 20"
+    sql = <<-SQL
+    select s.id, s.name, count(distinct(p.*)) as count
+      from sectors as s, projects_sectors as prs, projects_sites as ps, projects as p
+        where  ps.site_id=#{self.id}
+          and ps.project_id = p.id
+          and prs.project_id = p.id
+          and prs.sector_id = s.id
+          and prs.project_id = p.id
+          and p.end_date >= current_date
+          and p.end_date is not null
+        group by s.id,s.name
+        order by count desc
+        limit 20
+    SQL
     Sector.find_by_sql(sql).map do |s|
       [s,s.count.to_i]
     end
@@ -438,7 +447,7 @@ class Site < ActiveRecord::Base
   def sectors
     Sector.find_by_sql("select s.* from sectors as s where id in (
         select pse.sector_id from (projects_sectors as pse inner join projects as p on pse.project_id=p.id)
-        inner join projects_sites as ps on p.id=ps.project_id and site_id=#{self.id})
+        inner join projects_sites as ps on p.id=ps.project_id and site_id=#{self.id} where p.end_date >= current_date)
         order by s.name")
   end
 
@@ -605,7 +614,7 @@ SQL
     Donor.find_by_sql " SELECT distinct d.id as id , d.name as name
       FROM projects_sites AS ps JOIN projects as p ON ps.project_id = p.id AND ps.site_id = #{self.id} AND p.end_date > NOW()
       JOIN donations as dn ON dn.project_id = p.id
-      JOIN donors as d on d.id = dn.donor_id 
+      JOIN donors as d on d.id = dn.donor_id
       ORDER BY d.name ASC"
   end
 
@@ -766,7 +775,7 @@ SQL
     joins('INNER JOIN projects_sites ps ON ps.project_id = projects.id').
     where(:primary_organization_id => organization.id, :'ps.site_id' => id)
   end
-  
+
   def site_layers
     return "" if self.new_record?
     SiteLayer.where({:site_id => self.id})
