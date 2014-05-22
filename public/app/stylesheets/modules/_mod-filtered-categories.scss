@@ -4,30 +4,38 @@
   bottom: 20px;
   border-radius: 15px;
   background-color: rgba($color-1, .75);
-  color: $color-0;
   font-size: 14px;
   line-height: 14px;
-  max-width: 62.70588%;
-  li {
-    display: inline-block;
-    padding: 5px 0;
-    &:first-child { padding-left: 20px;}
-    &:last-child { padding-right: 20px;}
-  }
-  span {
-    color: $color-0;
-    font-weight: lighter;
-  }
-  a {
-    color: $color-0;
-    position: relative;
+  max-width: 50%;
+  padding: 5px 30px 5px 20px;
 
-    &:after {
-      @include after ('x', inline-block, relative, -5px, 40%, 15px, 15px);
+  li {
+    display: inline;
+    color: $color-0;
+    line-height: 1.2;
+    font-weight: lighter;
+
+    &:last-child a:after {
+      display: block;
+      position: absolute;
+      content: "x";
+      font-weight: lighter;
+      top: 50%;
+      right: -20px;
+      width: 15px;
+      line-height: 14px;
+      height: 15px;
       background-color: rgba($color-0, .3);
+      margin-top: -7px;
       border-radius: 50%;
       text-align: center;
     }
+  }
+  a {
+    display: inline;
+    color: $color-0;
+    position: relative;
+    font-weight: bold;
   }
   img {
     position: absolute;
