@@ -87,17 +87,19 @@
 }
 
 .ui-tooltip {
-  padding: 10px 15px;
+  padding: 7px 12px;
   box-shadow: none;
   border-radius: 15px;
   color: $color-0;
-  background-color: $color-5;
+  background-color: $color-3;
   text-transform: uppercase;
-  font-weight: lighter;
+  font-weight: bold;
   font-size: 15px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
   &:after {
-    @include after ('', block, absolute, 50%, -10px, 0, 0);
-    @include triangle (8px, $color-5);
+    @include after (" ", block, absolute, 50%, -10px, 0, 0);
+    @include triangle (8px, $color-3);
   }
 }
 
