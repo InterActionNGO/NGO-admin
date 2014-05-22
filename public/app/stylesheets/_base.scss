@@ -134,7 +134,7 @@ input {
 
 
 .health:before, a[href="/sectors/8"]:before { @include icons-sprite(icon-health);}
-// a[href="/sectors/8"]:before { background-position: sprite-position($icons, icon-health, 4px, -5px);}
+a[href="/sectors/8"]:before { background-position: sprite-position($icons, icon-health, 4px, 5px);}
 
 .agriculture:before, a[href="/sectors/1"]:before { @include icons-sprite(icon-agriculture);}
 // a[href="/sectors/1"]:before { background-position: sprite-position($icons, icon-agriculture, 4px, 3px);}

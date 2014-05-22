@@ -62,11 +62,19 @@
 
 .select2-container {
   background: image-url('form-background.png') no-repeat center top !important;
+
 }
 //main content
 .select2-container-multi .select2-choices {
+  padding-top: 40px;
   border: none;
   background: none !important;
+}
+.select2-container-multi .select2-choices .select2-search-field input {
+  width: 10px;
+  position: relative;
+  top: 0;
+  z-index: 100;
 }
 
 // results list
@@ -75,11 +83,30 @@
 }
 
 //result item
-.select2-search-choice {
+.select2-container-multi .select2-choices .select2-search-choice {
   border: none;
   box-shadow: none;
   background: none;
   @include appearance(none);
+}
+.select2-container-multi .select2-choices li {
+  float: none;
+}
+
+//close btn
+.select2-container-multi .select2-search-choice-close {
+  &:after {
+    @include after('x', block, relative, 0, 0, 14px, 14px);
+    color: $color-0;
+    font-size: 12px;
+
+    text-align: center;
+
+    background: $color-5;
+    border-radius: 50%;
+
+  }
+
 }
 
 
