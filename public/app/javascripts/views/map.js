@@ -30,6 +30,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     }]
   }];
 
+  var map, bounds;
+
   sprintf = sprintf.sprintf;
 
   function old() {
@@ -238,7 +240,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         google.maps.event.addDomListener(div, 'click', function(ev) {
           try {
             ev.stopPropagation();
-          } catch(e) {
+          } catch (e) {
             event.cancelBubble = true;
           }
 
@@ -328,7 +330,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     var emptyMapType = new EmptyMapType();
 
-    var latlng, zoom, mapOptions, cartodbOptions, map, bounds, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
+    var latlng, zoom, mapOptions, cartodbOptions, currentLayer, $layerSelector, legends, $legendWrapper, $mapTypeSelector, layerActive;
 
     if (map_type === 'project_map') {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
@@ -683,19 +685,28 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     el: '#mapView',
 
+    events: {
+      'click #map': 'resizeMap',
+      'mouseleave': 'resetMap'
+    },
+
     initialize: function() {
       if (this.$el.length === 0) {
         return false;
       }
 
+      this.active = false;
+
       var self = this;
 
       this.$w = $(window);
 
-      this.resizeMap();
-
-      this.$w.resize(function() {
-        self.resizeMap();
+      this.$w.on('resize', function() {
+        if (this.active) {
+          self.resizeMap();
+        } else {
+          this.resetMap();
+        }
       });
 
       old();
@@ -704,9 +715,23 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     resizeMap: function() {
       var h = this.$w.height() - 204;
 
-      this.$el.css({
+      this.active = true;
+
+      this.$el.animate({
         height: h
-      });
+      }, 300);
+
+      google.maps.event.trigger(map, 'resize');
+    },
+
+    resetMap: function() {
+      this.active = false;
+
+      this.$el.animate({
+        height: 500
+      }, 300);
+
+      google.maps.event.trigger(map, 'resize');
     },
 
     block: function(e) {
