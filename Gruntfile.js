@@ -84,6 +84,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           cssDir: '<%= root.dist %>/stylesheets',
+          generatedImagesDir: '<%= root.dist %>/images/sprite',
           httpStylesheetsPath: '/dist/stylesheets',
           httpImagesPath: '/dist/images',
           httpGeneratedImagesPath: '/dist/images/sprite',
