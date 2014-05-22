@@ -40,6 +40,7 @@ $color-11: $sea-blue;
 
 $primary-color: null;
 
+$icons: sprite-map("icons/*.png", $spacing: 10px);
 
 // Separations
 $section-padding: 3em 0;

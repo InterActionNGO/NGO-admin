@@ -1,28 +1,80 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title><%= title %></title>
-    <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png" />
-    <%=raw(javascript_include_merged(:base)) %>
-    <%=raw(javascript_include_merged(:base_2)) %>
-    <%=raw(stylesheet_link_merged(:base)) %>
-    <%=stylesheet_link_tag @site.theme.css_file if @site.theme %>
-    <style>
-      body {background: none;}
-      #maker_map_41 {width: 100%; height: 467px;}
-    </style>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "embed.css" %>
+    <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png">
   </head>
   <body>
-    <div id="map" class="home"></div>
-    <a href="#zoom_in" id="zoomIn" onclick="zoomIn()"></a>
-    <a href="#zoom_out" id="zoomOut" onclick="zoomOut()"></a>
-    <div class="map_style">
-      <p>PLAIN</p>
-      <ul>
-        <li><a id="plain_map" href="#plain">PLAIN</a></li>
-        <li><a id="satellite_map" href="#satellite">SATELLITE</a></li>
-      </ul>
-    </div>
+    <section class="layout-embed-map" id="mapView">
+      <div class="row">
+        <div class="grid-17">
+          <div class="mod-map-controls">
+
+            <div class="control-navbar">
+              <% if SiteLayer.where({:site_id => @site.id}).length >= 1 %>
+                <div class="selector menu-item" id="layerSelector">
+                  <ul>
+                    <li><span class="current-selector index-item">Layer</span>
+                      <ul class="selector-options submenu">
+                        <li class="submenu-item"><a href="#" data-layer="none">None</a></li>
+                        <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+                          <li class="submenu-item"><a href="#" id="CBLayer<%= sl.layer.id %>" data-min="<%= sl.layer.min %>" data-max="<%= sl.layer.max %>" data-layer="<%= sl.layer.title %>"
+                            data-sql="<%= sl.layer.sql %>" data-units="<%= sl.layer.units %>" data-style="<%= sl.layer_style.name %>" data-table="<%= sl.layer.cartodb_table %>" data-overlay="#Overlay<%= sl.layer.id %>"><%= sl.layer.title %> <span class="icon-info">i</span></a></li>
+                        <% end %>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="selector menu-item" id="mapTypeSelector">
+                <ul>
+                  <li>
+                    <span class="current-selector index-item">Roadmap</span>
+                    <ul class="selector-options submenu">
+                      <li class="is-hidden submenu-item" id="emptyLayer"><a href="#" data-type="EMPTY">Empty</a></li>
+                      <li class="submenu-item"><a href="#" id="roadmapLayer" data-type="ROADMAP">Roadmap</a></li>
+                      <li class="submenu-item"><a href="#" id="terrainLayer" data-type="TERRAIN">Terrain</a></li>
+                      <li class="submenu-item"><a href="#" id="hybridLayer" data-type="HYBRID">Hybrid</a></li>
+                      <li class="submenu-item"><a href="#" id="satelliteLayer" data-type="SATELLITE">Satellite</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+            </div> <!-- control-navbar -->
+
+            <div class="control-zoom" id="controlZoom">
+              <a href="#zoom-in" class="zoom-out" id="zoomOut">-</a>
+              <a href="#zoom-in" class="zoom-in" id="zoomIn">+</a>
+            </div>
+
+          </div> <!-- controls -->
+        </div>
+      </div>
+
+
+      <div id="map"></div>
+
+      <div id="legendWrapper"></div>
+
+    </section>
+
+    <% SiteLayer.where({:site_id => @site.id}).each do |sl| %>
+      <div id="Overlay<%= sl.layer.id %>" class="mod-overlay layer-overlay">
+        <div class="mod-overlay-content">
+          <div class="text">
+            <a class="mod-overlay-close" href="#">x</a>
+            <h2><%= sl.layer.long_title %></h2>
+            <p><%= sl.layer.description.html_safe %></p>
+            <p><%= sl.layer.credits.html_safe %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <script type="text/javascript">
       <% if @overview_map_bbox %>
       var bbox = <%=raw(@overview_map_bbox.to_json)%>;
@@ -45,18 +97,12 @@
       var theme = "<%=@site.theme_id%>";
       var stylez = <%=raw @site.map_styles  %>
       var empty_layer = false;
+      var kind = window.location.pathname.split('/')[1];
     </script>
 
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3"></script>
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <% if controller_name == 'georegion' %>
-      <% if @area.is_a?(Country) && @site.navigate_by_regions? %>
-      <%=raw(javascript_include_merged(:georegion_overview_map_show)) %>
-      <% else %>
-      <%=raw(javascript_include_merged(:georegion_show)) %>
-      <% end %>
-    <% else %>
-      <%=raw(javascript_include_merged(:sites_home)) %>
-    <% end %>
+    <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true&amp;v=3.3" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
+    <%= javascript_include_tag "../vendor/requirejs/require", "main" %>
+
   </body>
 </html>
