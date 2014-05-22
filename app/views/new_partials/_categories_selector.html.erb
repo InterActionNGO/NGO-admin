@@ -15,7 +15,7 @@
                   <ul class="mod-categories-child sector-child">
                     <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.sort_by(&:name).each do |category| %>
                       <li>
-                        <a class="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category)%>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
+                        <a class="<%= category.css_class %>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
                           <% if category.name.size>25 %>
                             <%= category.name[0..22] + '...' %>
                           <% else %>
