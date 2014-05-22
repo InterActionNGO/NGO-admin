@@ -686,7 +686,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     el: '#mapView',
 
     events: {
-      'mousedown': 'resizeMap',
+      'click #map': 'resizeMap',
       'mouseleave': 'resetMap'
     },
 
