@@ -130,24 +130,56 @@ input {
 /*********************************************************************************************/
 /****************************************ICONS************************************************/
 /*********************************************************************************************/
-.health:before, a[href="/sectors/8"]:before { background: image-url('icon-health.png') no-repeat center;}
-.agriculture:before, a[href="/sectors/1"]:before { background: image-url('icon-agriculture.png') no-repeat center;}
-.communication:before, a[href="/sectors/2"]:before { background: image-url('icon-communication.png') no-repeat center;}
-.early_recovery:before { background: image-url('icon-early_recovery.png') no-repeat center;}
-.economic_recovery:before, a[href="/sectors/4"]:before { background: image-url('icon-economic_recovery.png') no-repeat center;}
-.education:before, a[href="/sectors/5"]:before { background: image-url('icon-education.png') no-repeat center;}
-.emergency:before { background: image-url('icon-emergency.png') no-repeat center;}
-.environment:before, a[href="/sectors/6"]:before { background: image-url('icon-environment.png') no-repeat center;}
-.disaster_management:before, a[href="/sectors/3"]:before { background: image-url('icon-other.png') no-repeat center;}
-.food_aid:before, a[href="/sectors/7"]:before { background: image-url('icon-food-aid.png') no-repeat center;}
-.human_rights:before, a[href="/sectors/9"]:before { background: image-url('icon-human_rights.png') no-repeat center;}
-.logistics:before { background: image-url('icon-logistics.png') no-repeat center;}
-.nutrition:before { background: image-url('icon-other.png') no-repeat center;}
-.other:before,a[href="/sectors/14"]:before { background: image-url('icon-other.png') no-repeat center;}
-.peace_security:before, a[href="/sectors/10"]:before { background: image-url('icon-peace_security.png') no-repeat center;}
-.protection:before, a[href="/sectors/11"]:before { background: image-url('icon-protection.png') no-repeat center;}
-.shelter:before, a[href="/sectors/12"]:before { background: image-url('icon-shelter.png') no-repeat center;}
-.water_sanitation:before, a[href="/sectors/13"]:before { background: image-url('icon-water.png') no-repeat center;}
+
+
+
+.health:before, a[href="/sectors/8"]:before { @include icons-sprite(icon-health);}
+// a[href="/sectors/8"]:before { background-position: sprite-position($icons, icon-health, 4px, -5px);}
+
+.agriculture:before, a[href="/sectors/1"]:before { @include icons-sprite(icon-agriculture);}
+// a[href="/sectors/1"]:before { background-position: sprite-position($icons, icon-agriculture, 4px, 3px);}
+
+.communication:before, a[href="/sectors/2"]:before { @include icons-sprite(icon-communication);}
+// a[href="/sectors/2"]:before { background-position: sprite-position($icons, icon-communication, 4px, 3px);}
+
+.early_recovery:before { @include icons-sprite(icon-early_recovery);}
+
+.economic_recovery:before, a[href="/sectors/4"]:before { @include icons-sprite(icon-economic_recovery);}
+// a[href="/sectors/4"]:before { background-position: sprite-position($icons, icon-economic_recovery, 4px, 3px);}
+
+.education:before, a[href="/sectors/5"]:before { @include icons-sprite(icon-education);}
+// a[href="/sectors/5"]:before { background-position: sprite-position($icons, icon-education, 4px, 3px);}
+
+//.emergency:before {      @include icons-sprite(icon-emergency);}
+.environment:before, a[href="/sectors/6"]:before { @include icons-sprite(icon-environment);}
+// a[href="/sectors/6"]:before  { background-position: sprite-position($icons, icon-environment, 4px, 3px);}
+
+.disaster_management:before, a[href="/sectors/3"]:before { @include icons-sprite(icon-other);}
+// a[href="/sectors/3"]:before { background-position: sprite-position($icons, icon-other, 4px, 3px);}
+
+.food_aid:before, a[href="/sectors/7"]:before {@include icons-sprite(icon-food-aid);}
+// a[href="/sectors/7"]:before { background-position: sprite-position($icons, icon-food-aid, 4px, 3px);}
+
+.human_rights:before, a[href="/sectors/9"]:before { @include icons-sprite(icon-human_rights);}
+// a[href="/sectors/9"]:before { background-position: sprite-position($icons, icon-human_rights, 4px, 3px);}
+
+.logistics:before { @include icons-sprite(icon-logistics);}
+.nutrition:before { @include icons-sprite(icon-other);}
+
+.other:before,a[href="/sectors/14"]:before { @include icons-sprite(icon-other);}
+// a[href="/sectors/14"]:before { background-position: sprite-position($icons, icon-other, 4px, 3px);}
+
+.peace_security:before, a[href="/sectors/10"]:before { @include icons-sprite(icon-peace_security);}
+// a[href="/sectors/10"]:before { background-position: sprite-position($icons, icon-peace_security, 4px, 3px);}
+
+.protection:before, a[href="/sectors/11"]:before { @include icons-sprite(icon-protection);}
+// a[href="/sectors/11"]:before { background-position: sprite-position($icons, icon-protection, 4px, 3px);}
+
+.shelter:before, a[href="/sectors/12"]:before { @include icons-sprite(icon-shelter);}
+// a[href="/sectors/12"]:before { background-position: sprite-position($icons, icon-shelter, 4px, 3px);}
+
+.water_sanitation:before, a[href="/sectors/13"]:before { @include icons-sprite(icon-water);}
+// a[href="/sectors/13"]:before { background-position: sprite-position($icons, icon-water, 4px, 3px);}
 
 
 
