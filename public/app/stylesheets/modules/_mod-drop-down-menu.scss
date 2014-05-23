@@ -11,22 +11,17 @@
     position: absolute;
     bottom: 0;
     width: 90%;
+    height: 20px;
     margin: 0;
     padding: 5px 5%;
     text-transform: uppercase;
-  }
-  .sector & {
-    width: 600px;
-    height: 280px;
-    padding: 35px 0;
-
   }
   .sector & {
     a:before { background-color: $color-0;}
   }
   .mod-categories-child {
     top: 0;
-    height: 323px;
+    height: 320px;
   }
 }
 
