@@ -18,7 +18,11 @@
   .mod-header & {
     li {
       float: left;
-      &:first-child { margin-right: 10px;}
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+        margin-left: 3px;
+      }
     }
     a {
       width: 21px;
@@ -32,6 +36,10 @@
     .facebook {
       @include icons-sprite(icon-fb-lt);
       &:hover { @include icons-sprite(icon-fb-lt-color);}
+    }
+    .email {
+      @include icons-sprite(icon-email-lt);
+      &:hover { @include icons-sprite(icon-email-lt-color);}
     }
   }
 }

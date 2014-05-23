@@ -6,7 +6,9 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <%= render 'new_partials/aside/projects' %>
+      <div class="mod-highlighted-results">
+        <%= render 'new_partials/aside/projects' %>
+      </div>
 
       <% unless @site.nil? || @filter_by_category.present? || @organization_projects_clusters_sectors.empty? %>
         <div class="project-sectors mod-info">
