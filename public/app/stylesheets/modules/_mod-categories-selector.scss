@@ -57,6 +57,7 @@
     }
   }
 
+
   // Icons
   .health:before {
     @include icons-sprite(icon-health);
@@ -145,23 +146,49 @@
 }
 .sector {
   @include categorie-selector($color-2);
+  .mod-go-up-menu:after { @include gradient-up($color-0);
+    bottom: 0;
+  }
+  .mod-go-up-menu:before { @include gradient-down ($color-0);}
+  .mod-drop-down-menu {
+    &:after { @include gradient-up($color-2a)}
+    &:before { @include gradient-down ($color-2a); ; height:15px; bottom: 0;}
+  }
 }
 .organizations {
   @include categorie-selector($color-6);
-  .mod-go-up-menu:after { @include gradient }
+  .mod-go-up-menu {
+    &:after { @include gradient-up($color-0);}
+    &:before { @include gradient-down ($color-0);}
+  }
+  .mod-drop-down-menu {
+    &:after { @include gradient-up($color-6a)}
+    &:before { @include gradient-down ($color-6a); ; height:15px;}
+  }
 }
 .donors {
   @include categorie-selector($color-7);
-  .mod-go-up-menu:after { @include gradient }
+  .mod-go-up-menu {
+    &:after { @include gradient-up($color-0);}
+    &:before { @include gradient-down ($color-0);}
+  }
+  .mod-drop-down-menu {
+    &:after { @include gradient-up($color-7a)}
+    &:before { @include gradient-down ($color-7a); ; height:15px;}
+  }
 }
 .countries {
   @include categorie-selector($color-8);
-  .mod-go-up-menu:after { @include gradient }
+  .mod-go-up-menu {
+    &:after { @include gradient-up($color-0);}
+    &:before { @include gradient-down ($color-0);}
+  }
+  .mod-drop-down-menu {
+    &:after { @include gradient-up($color-8a)}
+    &:before { @include gradient-down ($color-8a); ; height:15px;}
+  }
 }
-.regions {
-  @include categorie-selector($color-9);
-  .mod-go-up-menu:after { @include gradient }
-}
+
 
 .fedex-logo {
   margin-top: 3px;
