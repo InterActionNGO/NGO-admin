@@ -34,11 +34,13 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <%= render 'new_partials/aside/location' %>
+      <div class="mod-highlighted-results">
+        <% unless @filter_by_location.present? %>
+          <%= render 'new_partials/aside/projects' %>
+        <% end %>
+      </div>
 
-      <% unless @filter_by_location.present? %>
-        <%= render 'new_partials/aside/projects' %>
-      <% end %>
+      <%= render 'new_partials/aside/location' %>
 
       <% if @filter_by_category.blank? && @area.projects_clusters_sectors(@site).size > 0 %>
         <div class="project-sectors mod-info">

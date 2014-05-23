@@ -6,15 +6,17 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <% unless @filter_by_location.present? %>
-        <%= render 'new_partials/aside/projects' %>
-      <% end %>
+      <div class="mod-highlighted-results">
+        <% unless @filter_by_location.present? %>
+            <%= render 'new_partials/aside/projects' %>
+        <% end %>
 
-      <% if @site.navigate_by_country %>
-        <%= render 'new_partials/aside/countries' %>
-      <% else %>
-        <%= render 'new_partials/aside/regions' %>
-      <% end %>
+        <% if @site.navigate_by_country %>
+          <%= render 'new_partials/aside/countries' %>
+        <% else %>
+          <%= render 'new_partials/aside/regions' %>
+        <% end %>
+        </div>
 
       <% unless @filter_by_organization.present? %>
         <%= render 'new_partials/aside/affiliated_organizations' %>
