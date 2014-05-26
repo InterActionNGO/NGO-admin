@@ -1,4 +1,7 @@
 .mod-map-controls {
+  position: relative;
+  z-index: 1;
+  height: 100%;
   .control-navbar, .control-zoom, .click-to-see {
     position: absolute;
     border-radius: 40px;
@@ -80,22 +83,40 @@
       font-weight: bold;
     }
   }
-  .icon-info {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-    border-radius: 50%;
-    color: $color-0;
-    background-color: $color-5;
-    font-family: 'Times New Roman';
-    font-style: italic;
-    text-align: center;
-    text-transform: lowercase;
-  }
   .current-selector .icon-info { display: none;}
 }
+.icon-info {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  color: $color-0;
+  background-color: $color-5;
+  font-family: 'Times New Roman';
+  font-style: italic;
+  text-align: center;
+  text-transform: lowercase;
+}
+.infowindow-pop, .infowindow-layer { display: inline-block;}
 
 div.cartodb-legend-stack {
   bottom: 55px;
 }
+
+div.cartodb-infowindow {
+  z-index: 1000;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
