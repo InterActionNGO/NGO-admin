@@ -46,6 +46,10 @@
     resize: none;
     text-align: center;
   }
+  a {
+    display: inline-block;
+    text-decoration: underline;
+  }
 }
 #embedMapView {
   p{ text-align: center;}
