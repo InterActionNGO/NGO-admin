@@ -27,9 +27,14 @@ Iom::Application.routes.draw do
   # Front urls
   # resources :reports
   resources :donors,        :only => [:index, :show]
-  resources :offices,      :only => [:show]
+  resources :offices,       :only => [:show]
   resources :projects,      :only => [:index, :show]
   resources :organizations, :only => [:index, :show]
+
+  # Global Site projects export links for downloading
+  get '/sites/download/(:id).csv', :to => 'sites#downloads', :format => :csv
+  get '/sites/download/(:id).xls', :to => 'sites#downloads', :format => :xls
+  get '/sites/download/(:id).kml', :to => 'sites#downloads', :format => :kml
 
   match 'regions/:id' => 'georegion#old_regions'
   # HACK!! route globbing doesn't work well when trying to get the request format in Rails <=3.0.7
