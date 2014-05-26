@@ -89,14 +89,14 @@
   background-image: radial-gradient(circle at 100% 0%, transparent $height, $background-color $height+2px);
 }
 
-@mixin categorie-selector($primary-color) {
+@mixin categorie-selector($primary-color, $bg-color) {
   .mod-go-up-menu {
     border-bottom: 10px solid $primary-color;
   }
   .mod-drop-down-menu {
     border-top: 10px solid $primary-color;
     ul {
-      background-color: rgba($primary-color, .1);
+      background-color: $bg-color;
     }
   }
 

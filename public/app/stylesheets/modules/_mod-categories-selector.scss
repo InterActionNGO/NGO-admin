@@ -145,7 +145,7 @@
   }
 }
 .sector {
-  @include categorie-selector($color-2);
+  @include categorie-selector($color-2, $color-2a);
   .mod-go-up-menu:after { @include gradient-up($color-0);
     bottom: 0;
   }
@@ -156,7 +156,7 @@
   }
 }
 .organizations {
-  @include categorie-selector($color-6);
+  @include categorie-selector($color-6, $color-6a);
   .mod-go-up-menu {
     &:after { @include gradient-up($color-0);}
     &:before { @include gradient-down ($color-0);}
@@ -167,7 +167,7 @@
   }
 }
 .donors {
-  @include categorie-selector($color-7);
+  @include categorie-selector($color-7, $color-7a);
   .mod-go-up-menu {
     &:after { @include gradient-up($color-0);}
     &:before { @include gradient-down ($color-0);}
@@ -178,7 +178,7 @@
   }
 }
 .countries {
-  @include categorie-selector($color-8);
+  @include categorie-selector($color-8, $color-8a);
   .mod-go-up-menu {
     &:after { @include gradient-up($color-0);}
     &:before { @include gradient-down ($color-0);}
