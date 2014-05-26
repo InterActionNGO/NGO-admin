@@ -15,19 +15,92 @@
   }
   .icon_statistics { position: relative; padding-left: 25px;}
   .icon_statistics:before { @include before('', block, absolute, 0, 0, 20px, 20px)}
+
+  // Icons
+  .health:before {
+    @include icons-sprite(icon-health);
+  }
+
+  .agriculture:before {
+    @include icons-sprite(icon-agriculture);
+  }
+
+  .communication:before {
+    @include icons-sprite(icon-communication);
+  }
+
+  .early_recovery:before {
+    @include icons-sprite(icon-early_recovery);
+  }
+
+  .economic_recovery:before {
+    @include icons-sprite(icon-economic_recovery);
+  }
+
+  .education:before {
+    @include icons-sprite(icon-education);
+  }
+
+  .environment:before {
+    @include icons-sprite(icon-environment);
+  }
+
+  .food_aid:before {
+    @include icons-sprite(icon-food-aid);
+  }
+
+  .disaster_management:before {
+    @include icons-sprite(icon-other);
+  }
+
+  .human_rights:before {
+    @include icons-sprite(icon-human_rights);
+  }
+
+  .logistics:before {
+    @include icons-sprite(icon-logistics);
+  }
+
+  .nutrition:before {
+    @include icons-sprite(icon-other);
+  }
+
+  .other:before {
+    @include icons-sprite(icon-other);
+  }
+
+  .peace_security:before {
+    @include icons-sprite(icon-peace_security);
+  }
+
+  .protection:before {
+    @include icons-sprite(icon-protection);
+  }
+
+  .shelter:before {
+    @include icons-sprite(icon-shelter);
+  }
+
+  .water_sanitation:before {
+    @include icons-sprite(icon-water);
+  }
 }
 
 .ui-tooltip {
-  padding: 10px 15px;
+  padding: 7px 12px;
   box-shadow: none;
   border-radius: 15px;
   color: $color-0;
-  background-color: $color-5;
+  background-color: $color-3;
   text-transform: uppercase;
-  font-weight: lighter;
+  font-weight: bold;
   font-size: 15px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
   &:after {
-    @include after ('', block, absolute, 50%, -10px, 0, 0);
-    @include triangle (8px, $color-5);
+    @include after (" ", block, absolute, 50%, -10px, 0, 0);
+    @include triangle (8px, $color-3);
   }
 }
+
+
