@@ -6,7 +6,9 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
+    <div class="mod-highlighted-results">
       <%= render 'new_partials/aside/projects' %>
+    </div>
 
       <% unless @filter_by_location.present? || @data.projects_regions(@site).empty?%>
         <div class="project-locations mod-info">
@@ -63,7 +65,7 @@
 
         <h1 class="section-title"><%= clusters_sectors_projects_list_subtitle %></h1>
 
-        <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => cluster_path(@data, @carry_on_filters.merge(:format => :csv)), :xls_path => cluster_path(@data, @carry_on_filters.merge(:format => :xls)), :kml_path => cluster_path(@data, @carry_on_filters.merge(:format => :kml)) } %>
+        <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :csv)) : sector_path(@data, @carry_on_filters.merge(:format => :csv)), :xls_path => @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :xls)) : sector_path(@data, @carry_on_filters.merge(:format => :xls)), :kml_path => @site.navigate_by_cluster?? cluster_path(@data, @carry_on_filters.merge(:format => :kml)) : sector_path(@data, @carry_on_filters.merge(:format => :kml)) } %>
 
         <%= render "new_partials/index_projects" %>
 

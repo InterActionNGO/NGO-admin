@@ -5,33 +5,41 @@
       margin-right: 16px;
     }
     a {
-      height: 45px;
-      width: 45px;
+      height: 40px;
+      width: 41px;
     }
-    .twitter { background: image-url('twitter.png') no-repeat center;}
-    .facebook { background: image-url('facebook.png') no-repeat center;}
-    .google { background: image-url('google.png') no-repeat center;}
-    .linkedin { background: image-url('linkedin.png') no-repeat center;}
-    .email { background: image-url('email.png') no-repeat center;}
+    .twitter { @include icons-sprite(twitter);}
+    .facebook { @include icons-sprite(facebook);}
+    .google { @include icons-sprite(google);}
+    .linkedin { @include icons-sprite(linkedin);}
+    .email { @include icons-sprite(email);}
   }
 
   .mod-header & {
     li {
       float: left;
-      &:first-child { margin-right: 10px;}
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+        margin-left: 3px;
+      }
     }
     a {
       width: 21px;
-      height: 21px;
+      height: 20px;
       float: right;
     }
     .twitter {
-      background: image-url('icon-tw-lt.png') no-repeat center;
-      &:hover { background: image-url('icon-tw-lt-color.png') no-repeat center;}
+      @include icons-sprite(icon-tw-lt);
+      &:hover { @include icons-sprite(icon-tw-lt-color);}
     }
     .facebook {
-      background: image-url('icon-fb-lt.png') no-repeat center;
-      &:hover { background: image-url('icon-fb-lt-color.png') no-repeat center;}
+      @include icons-sprite(icon-fb-lt);
+      &:hover { @include icons-sprite(icon-fb-lt-color);}
+    }
+    .email {
+      @include icons-sprite(icon-email-lt);
+      &:hover { @include icons-sprite(icon-email-lt-color);}
     }
   }
 }

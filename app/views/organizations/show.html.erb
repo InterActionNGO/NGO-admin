@@ -6,7 +6,9 @@
   <div class="grid-4">
     <aside class="layout-sidebar">
 
-      <%= render 'new_partials/aside/projects' %>
+      <div class="mod-highlighted-results">
+        <%= render 'new_partials/aside/projects' %>
+      </div>
 
       <% unless @site.nil? || @filter_by_category.present? || @organization_projects_clusters_sectors.empty? %>
         <div class="project-sectors mod-info">
@@ -90,7 +92,7 @@
           <p class="inline"><%= @organization.state %></p>
           <p><%= @organization.donation_phone_number %></p>
           <% unless (@organization.donation_website.nil?) || (@organization.donation_website.empty?) %>
-            <p><%= link_to(@organization.donation_website, "@organization.donation_website") %></p>
+            <a href="<%= @organization.donation_website %>" target="blank"><%= @organization.donation_website %></a>
           <% end %>
         </div>
       </div>

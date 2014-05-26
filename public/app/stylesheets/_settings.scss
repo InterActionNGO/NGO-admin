@@ -11,9 +11,13 @@ $white: #FFF;
 $black: #000;
 $blue: #016D90;
 $orange: #C65001;
+$ligth-orange: #f2d8cb;
 $purple: #492E45;
+$light-purple: #d7d1d6;
 $yellow: #D7A900;
+$light-yellow: #f6ecc6;
 $green: #8E921B;
+$light-green: #f3f4e8;
 $turquoise: #5A9198;
 $sea-blue: #B4D2D2;
 $light-grey: #EDEDED;
@@ -26,20 +30,26 @@ $color-00: $black;
 
 $color-1: $blue;
 $color-2: $orange;
+$color-2a: $ligth-orange;
 $color-3: $dark-grey;
 $color-4: $light-grey;
 $color-5: $grey;
 $color-10: $medium-grey;
 
 $color-6: $purple;
+$color-6a: $light-purple;
 $color-7: $yellow;
+$color-7a: $light-yellow;
 $color-8: $green;
+$color-8a: $light-green;
 $color-9: $turquoise;
+
 
 $color-11: $sea-blue;
 
 $primary-color: null;
 
+$icons: sprite-map("icons/*.png", $spacing: 10px);
 
 // Separations
 $section-padding: 3em 0;

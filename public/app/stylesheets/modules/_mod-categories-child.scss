@@ -1,8 +1,8 @@
 .mod-categories-child {
   position: absolute;
-  top:10px;
+  top: 0px;
   overflow: scroll;
-  height: 310px;
+  height: 320px;
 
   li {
     float: none;
@@ -14,11 +14,11 @@
     text-transform: none;
   }
   .sector & {
-    overflow: hidden;
-    padding: 10px 0 17px 0;
+    width: 100%;
+    height: auto;
+    bottom: 0;
     li {
-      width: 45%;
-      float: left;
+      width: 95%;
       padding: 8px 0 8px 5%;
     }
     a {

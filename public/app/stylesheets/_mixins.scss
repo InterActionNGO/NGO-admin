@@ -233,21 +233,38 @@
   border-radius: 50%;
 }
 
-@mixin gradient {
+@mixin gradient-up ($color) {
   @include after('', block, absolute, 0, 30px, auto, 16px);
     left:0;
     background-image: -webkit-gradient(
       linear,
       left bottom,
       left top,
-      color-stop(0, #FFFFFF),
+      color-stop(0, $color),
       color-stop(1, rgba(255,255,255, 0))
     );
-    background-image: -o-linear-gradient(top, #FFFFFF 0%, rgba(255,255,255, 0) 100%);
-    background-image: -moz-linear-gradient(top, #FFFFFF 0%,  rgba(255,255,255, 0) 100%);
-    background-image: -webkit-linear-gradient(top, #FFFFFF 0%, rgba(255,255,255, 0) 100%);
-    background-image: -ms-linear-gradient(top, #FFFFFF 0%,  rgba(255,255,255, 0) 100%);
-    background-image: linear-gradient(to top, #FFFFFF 0%,  rgba(255,255,255, 0) 100%);
+    background-image: -o-linear-gradient(top, $color 0%, rgba(255,255,255, 0) 100%);
+    background-image: -moz-linear-gradient(top, $color 0%,  rgba(255,255,255, 0) 100%);
+    background-image: -webkit-linear-gradient(top, $color 0%, rgba(255,255,255, 0) 100%);
+    background-image: -ms-linear-gradient(top, $color 0%,  rgba(255,255,255, 0) 100%);
+    background-image: linear-gradient(to top, $color 0%,  rgba(255,255,255, 0) 100%);
+}
+@mixin gradient-down ($color) {
+  @include before('', block, absolute, 0, 0, auto, 25px);
+    right: 0;
+    z-index: 100;
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, $color),
+      color-stop(1, rgba(255,255,255, 0))
+    );
+    background-image: -o-linear-gradient(bottom, $color 0%, rgba(255,255,255, 0) 100%);
+    background-image: -moz-linear-gradient(bottom, $color 0%,  rgba(255,255,255, 0) 100%);
+    background-image: -webkit-linear-gradient(bottom, $color 0%, rgba(255,255,255, 0) 100%);
+    background-image: -ms-linear-gradient(bottom, $color 0%,  rgba(255,255,255, 0) 100%);
+    background-image: linear-gradient(to bottom, $color 0%,  rgba(255,255,255, 0) 100%);
 }
 
 
