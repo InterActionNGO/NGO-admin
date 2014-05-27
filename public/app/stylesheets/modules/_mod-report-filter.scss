@@ -1,11 +1,23 @@
 .mod-report-filter {
   .comboselect {
     width: 100%;
+    margin-bottom: 20px;
   }
   .applied-filters {
     width: 90%;
     padding: 5%;
     border: 2px solid $color-4;
   }
+  #s2id_start_date_year,
+  #start_date_year,
+  #s2id_start_date_month,
+  #s2id_start_date_day,
+  #s2id_end_date_year,
+  #s2id_end_date_month,
+  #s2id_end_date_day
+  { width: 31% !important;}
 
+  .select2-container-multi .select2-choices .select2-search-choice:first-child {
+    margin-top: 20px;
+  }
 }
