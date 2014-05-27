@@ -47,8 +47,13 @@
     text-align: center;
   }
   a {
-    display: inline-block;
+    display: inline;
     text-decoration: underline;
+  }
+
+  .mod-overlay-close {
+    display: block;
+    text-decoration: none;
   }
 }
 #embedMapView {

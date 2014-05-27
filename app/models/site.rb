@@ -440,7 +440,7 @@ class Site < ActiveRecord::Base
   def clusters
     Cluster.find_by_sql("select c.* from clusters as c where id in (
         select cp.cluster_id from (clusters_projects as cp inner join projects as p on cp.project_id=p.id)
-        inner join projects_sites as ps on p.id=ps.project_id and site_id=#{self.id})
+        inner join projects_sites as ps on p.id=ps.project_id and site_id=#{self.id} where p.end_date >= current_date)
         order by c.name")
   end
 
