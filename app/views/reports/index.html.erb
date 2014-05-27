@@ -15,9 +15,9 @@
           <ul class="combo_search_select">
             <li class="comboselect">
               <label>ORGANIZATION</label>
-              <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+              <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
               <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-              <%= hidden_field :organization_include, :value => 'include' %>
+              <%= hidden_field_tag 'organization_include', 'include' %>
             </li>
 
             <!--
@@ -32,25 +32,25 @@
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
-                options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select country" %>
               <%# select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-              <%= hidden_field :country_include, :value => 'include' %>
+              <%= hidden_field_tag 'country_include', 'include' %>
             </li>
 
             <li class="comboselect">
               <label>SECTOR</label>
               <%= select_tag :sector,
-                options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5 %>
+                options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select sector" %>
               <%# select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-              <%= hidden_field :sector_include, :value => 'include' %>
+              <%= hidden_field_tag 'sector_include', 'include' %>
             </li>
 
             <li class="comboselect">
               <label>DONOR</label>
               <%= select_tag :donor,
-                options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
+                options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
                 <%# select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field :donor_include, :value => 'include' %>
+                <%= hidden_field_tag 'donor_include', 'include' %>
             </li>
 
             <li class="comboselect date">
@@ -70,7 +70,7 @@
             </li>
 
             <li>
-              <button type="submit">Apply filters</button>
+              <button class="apply" type="submit">Apply filters</button>
             </li>
           </ul>
 
