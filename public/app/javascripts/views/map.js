@@ -682,10 +682,10 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     el: '#mapView',
 
-    events: {
-      'click #map': 'resizeMap',
-      'mouseleave': 'resetMap'
-    },
+    // events: {
+    //   'click #map': 'resizeMap',
+    //   'mouseleave': 'resetMap'
+    // },
 
     initialize: function() {
       if (this.$el.length === 0) {
@@ -698,19 +698,21 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
       this.$w = $(window);
 
+      old();
+
+      this.resizeMap();
+
       if (this.$el.hasClass('layout-embed-map')) {
         this.undelegateEvents();
       } else {
         this.$w.on('resize', function() {
-          if (this.active) {
+          if (self.active) {
             self.resizeMap();
           } else {
-            this.resetMap();
+            self.resetMap();
           }
         });
       }
-
-      old();
     },
 
     resizeMap: function() {
