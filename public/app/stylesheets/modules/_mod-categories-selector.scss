@@ -23,7 +23,7 @@
     .father {
       display: block;
       padding: 9px 23px;
-      @include border-radius(10px);
+      @include border-radius(20px);
     }
     // &.current .father {
     //   color: $color-0;
