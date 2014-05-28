@@ -4,12 +4,14 @@ class SitesController < ApplicationController
 
   def home
 
-    @site = Site.find_by_name("global")
-
     if @site
       site_home
     else
-      general_home
+      @site = Site.find_by_name("global")
+      site_home
+      ## old behaviour:
+      #
+      # general_home
     end
   end
 
