@@ -5,12 +5,12 @@
         <nav>
           <ul>
             <% if @site.cluster %>
-              <li class="sector"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
+              <li class="sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
             <% elsif @site.sector %>
-              <li class="sector"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
+              <li class="sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
             <% else %>
-              <li class="sector" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
-                <%= @site.word_for_cluster_sector.upcase %>
+              <li class="sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
+                <span class="father"><%= @site.word_for_cluster_sector.upcase %></span>
                 <div class="mod-go-up-menu menu">
                   <ul class="mod-categories-child sector-child">
                     <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.sort_by(&:name).each do |category| %>
@@ -30,8 +30,8 @@
               </li>
             <% end %>
 
-            <li class="organizations">
-              Organizations
+            <li class="organizations <% if params[:controller] == 'organizations' %>current<% end %>">
+              <span class="father">Organizations</span>
               <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child organizations-child">
                   <% @site.organizations_select.each do |organization| %>
@@ -42,8 +42,8 @@
               </div>
             </li>
 
-            <li class="donors">
-              Donors
+            <li class="donors <% if params[:controller] == 'donors' %>current<% end %>">
+              <span class="father">Donors</span>
               <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child donors-child">
                   <% @site.donors_select.each do |donor| %>
@@ -55,8 +55,8 @@
             </li>
 
           <% if @site.navigate_by == :country %>
-            <li class="countries">
-              Countries
+            <li class="countries <% if params[:controller] == 'georegion' %>current<% end %>">
+              <span class="father">Countries</span>
               <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child countries-child">
                   <% @site.countries_select.each do |country| %>
@@ -68,8 +68,8 @@
             </li>
           <% else %>
 
-            <li class="regions">
-              Regions
+            <li class="regions <% if params[:controller] == 'georegion' %>current<% end %>">
+              <span class="father">Regions</span>
               <div class="mod-go-up-menu menu">
                 <ul class="mod-categories-child regions-child">
                   <% @site.regions_select.each do |region| %>
