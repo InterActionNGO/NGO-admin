@@ -14,7 +14,7 @@
         date1 = new Date();
         date2 = new Date("6/11/2014");
         timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - 1;
+        diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
         daysCounter.append(diffDays);
       }
