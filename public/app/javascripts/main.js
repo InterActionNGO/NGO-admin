@@ -142,4 +142,12 @@ require([
   addClassToBody();
   $(window).on('scroll', fixCategoriesSelector);
 
+  var $projectBudget = $('#projectBudgetValue');
+
+  if ($projectBudget.text().length > 8) {
+    $projectBudget.css({
+      'font-size': '35px'
+    });
+  }
+
 });
