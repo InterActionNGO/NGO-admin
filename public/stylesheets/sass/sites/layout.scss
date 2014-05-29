@@ -4107,3 +4107,53 @@ div {
 .is-hidden {
   display: none !important;
 }
+
+.iom-counter {
+  position: relative;
+  float: left;
+  width: 958px;
+  height: 469px;
+  background: url("/images/sites/home/bkg_gallery.png") no-repeat 0 0;
+  margin: 27px 0 0;
+  background-image: url(../../images/assets/counter-bg.png);
+  background-repeat: no-repeat;
+  background-color: #ffffff  ;
+}
+.map {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-image: url(../../images/assets/counter-map.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.counter {
+  display: block;
+  position: absolute;
+  width: 450px;
+  bottom: 108px;
+  right: 80px;
+  font-family: "Open Sans Bold";
+  font-size: 48px;
+  font-weight: bold;
+  color: #006C8C  ;
+}
+.date {
+  display: block;
+  position: absolute;
+  bottom: 37px;
+  left: 60px;
+  width: 350px;
+  font-size: 272px;
+  font-family: "Open Sans Bold";
+  font-weight: bold;
+  color: #006C8C  ;
+}
+#remaining-days {
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
