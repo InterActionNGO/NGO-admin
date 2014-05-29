@@ -5,14 +5,15 @@
       margin-right: 16px;
     }
     a {
-      height: 40px;
-      width: 41px;
+      display: block;
+      height: 43px;
+      width: 43px;
     }
     .twitter { @include icons-sprite(twitter);}
     .facebook { @include icons-sprite(facebook);}
     .google { @include icons-sprite(google);}
     .linkedin { @include icons-sprite(linkedin);}
-    .email { @include icons-sprite(email);}
+    .email { @include icons-sprite(email); margin-top: 2px;}
   }
 
   .mod-header & {

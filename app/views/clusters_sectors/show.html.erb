@@ -19,20 +19,18 @@
         </div>
       <% end %>
 
-      <div class="donors-in-this-country mod-info">
+      <div class="donors-in-this-country mod-info" id="donorsSidebarView">
         <h3>Donors in this <%= @site.word_for_cluster_sector.singularize %></h3>
         <% unless @data.donors(@site).empty? %>
           <ul id="donors_list">
             <% index = 1 %>
             <% @data.donors(@site).each do |donor| %>
-              <% if index <= 12 %>
-                <li><%= link_to(donor.name.html_safe, donor_path(donor)) %></li>
-                <% index = index + 1 %>
-              <% end %>
+              <li<% if (index > 10) %> class="out is-hidden"<% end %>><%= link_to(donor.name.html_safe, donor_path(donor)) %></li>
+              <% index = index + 1 %>
             <% end %>
-            <% if @data.donors(@site).length > 12 %>
-                <a href="/donors">See more donors</a>
-              <% end %>
+            <% if @data.donors(@site).length > 10 %>
+              <a href="#donors" id="moreDonorsBtn">See more donors</a>
+            <% end %>
           </ul>
         <% else %>
           <p>The are no donors</p>
