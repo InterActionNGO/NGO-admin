@@ -4113,11 +4113,11 @@ div {
   float: left;
   width: 958px;
   height: 469px;
-  background: url("/images/sites/home/bkg_gallery.png") no-repeat 0 0;
+  // background: url("/images/sites/home/bkg_gallery.png") no-repeat 0 0;
   margin: 27px 0 0;
   background-image: url(../../images/assets/counter-bg.png);
   background-repeat: no-repeat;
-  background-color: #ffffff  ;
+  background-color: #ffffff;
 }
 .map {
   position: absolute;
@@ -4139,7 +4139,7 @@ div {
   font-family: "Open Sans Bold";
   font-size: 48px;
   font-weight: bold;
-  color: #006C8C  ;
+  color: #006C8C;
 }
 .date {
   display: block;
@@ -4150,7 +4150,7 @@ div {
   font-size: 272px;
   font-family: "Open Sans Bold";
   font-weight: bold;
-  color: #006C8C  ;
+  color: #006C8C;
 }
 #remaining-days {
   text-align: center;
