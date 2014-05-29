@@ -47,37 +47,37 @@
         </div>
       <% end %>
 
-      <% unless (@organization.main_data_contact_name.nil? || @organization.main_data_contact_name.empty?) &&  (@organization.main_data_contact_position.nil? || @organization.main_data_contact_position.empty?) && (@organization.main_data_contact_phone_number.nil? || @organization.main_data_contact_phone_number.empty?) && (@organization.main_data_contact_email.nil? || @organization.main_data_contact_email.empty?)%>
+      <!-- <%# unless (@organization.main_data_contact_name.nil? || @organization.main_data_contact_name.empty?) &&  (@organization.main_data_contact_position.nil? || @organization.main_data_contact_position.empty?) && (@organization.main_data_contact_phone_number.nil? || @organization.main_data_contact_phone_number.empty?) && (@organization.main_data_contact_email.nil? || @organization.main_data_contact_email.empty?)%>
       <div class="contact-info mod-info">
         <h3>Data contact information</h3>
         <div class="mod-contact-info">
-          <% if @organization.main_data_contact_name? %>
-            <h4><%= @organization.main_data_contact_name %></h4>
-          <% end %>
-          <p><%= @organization.main_data_contact_position %></p>
-          <p><%= @organization.main_data_contact_phone_number %></p>
-          <% unless (@organization.main_data_contact_email.nil?) || (@organization.main_data_contact_email.empty?) %>
-            <p><%= link_to(@organization.main_data_contact_email, "mailto:#{@organization.main_data_contact_email}") %></p>
-          <% end %>
+          <%# if @organization.main_data_contact_name? %>
+            <h4><%#= @organization.main_data_contact_name %></h4>
+          <%# end %>
+          <p><%#= @organization.main_data_contact_position %></p>
+          <p><%#= @organization.main_data_contact_phone_number %></p>
+          <%# unless (@organization.main_data_contact_email.nil?) || (@organization.main_data_contact_email.empty?) %>
+            <p><%#= link_to(@organization.main_data_contact_email, "mailto:#{@organization.main_data_contact_email}") %></p>
+          <%# end %>
         </div>
       </div>
-      <% end %>
+      <%# end %> -->
 
-      <% unless (@organization.media_contact_name.nil? || @organization.media_contact_name.empty?) &&  (@organization.media_contact_position.nil? || @organization.media_contact_position.empty?) && (@organization.media_contact_phone_number.nil? || @organization.media_contact_phone_number.empty?) && (@organization.media_contact_email.nil? || @organization.media_contact_email.empty?) %>
+      <!-- <%# unless (@organization.media_contact_name.nil? || @organization.media_contact_name.empty?) &&  (@organization.media_contact_position.nil? || @organization.media_contact_position.empty?) && (@organization.media_contact_phone_number.nil? || @organization.media_contact_phone_number.empty?) && (@organization.media_contact_email.nil? || @organization.media_contact_email.empty?) %>
       <div class="contact-info mod-info">
         <h3>Media contact information</h3>
         <div class="mod-contact-info">
-          <% if @organization.media_contact_name? %>
-            <h4><%= @organization.media_contact_name %></h4>
-          <% end %>
-          <p><%= @organization.media_contact_position %></p>
-          <p><%= @organization.media_contact_phone_number %></p>
-          <% unless (@organization.media_contact_email.nil?) || (@organization.media_contact_email.empty?) %>
-            <p><%= link_to(@organization.media_contact_email, "mailto:#{@organization.media_contact_email}") %></p>
-          <% end %>
+          <%# if @organization.media_contact_name? %>
+            <h4><%#= @organization.media_contact_name %></h4>
+          <%# end %>
+          <p><%#= @organization.media_contact_position %></p>
+          <p><%#= @organization.media_contact_phone_number %></p>
+          <%# unless (@organization.media_contact_email.nil?) || (@organization.media_contact_email.empty?) %>
+            <p><%#= link_to(@organization.media_contact_email, "mailto:#{@organization.media_contact_email}") %></p>
+          <%# end %>
         </div>
       </div>
-      <% end %>
+      <%# end %> -->
 
       <% unless (@organization.donation_address.nil? || @organization.donation_address.empty?) &&  (@organization.city.nil? || @organization.city.empty?) && (@organization.donation_phone_number.nil? || @organization.donation_phone_number.empty?) && (@organization.zip_code.nil? || @organization.zip_code.empty?) && (@organization.state.nil? || @organization.state.empty?) && (@organization.donation_website.nil? || @organization.donation_website.empty?) %>
       <div class="contact-info mod-info">

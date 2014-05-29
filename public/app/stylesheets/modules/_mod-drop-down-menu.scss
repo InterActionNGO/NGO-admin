@@ -14,14 +14,10 @@
     height: 20px;
     margin: 0;
     padding: 5px 5%;
-    text-transform: uppercase;
+    font-size: 16px;
   }
   .sector & {
     a:before { background-color: $color-0;}
-  }
-  .mod-categories-child {
-    top: 0;
-    height: 320px;
   }
 }
 
