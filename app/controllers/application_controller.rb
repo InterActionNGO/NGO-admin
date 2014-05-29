@@ -57,11 +57,10 @@ class ApplicationController < ActionController::Base
         return
       end
 
-
       # If the request host isn't the main_site_host, it should be the host from a site
-      if request.host.gsub('www.','') != main_site_host
-        unless @site = Site.published.where(:url => request.host.replace('www.','')).first
-        #unless @site = Site.find_by_name("global")
+      if request.host != main_site_host
+       # unless @site = Site.published.where(:url => request.host).first
+        unless @site = Site.find_by_name("global")
           raise ActiveRecord::RecordNotFound
         end
       else
