@@ -42,7 +42,7 @@
   float: left;
   padding: 10px;
   margin-bottom: 15px;
-  margin-left: -3px;
+  margin-left: 3px;
   width: 150px;
   height: auto;
   background-color: $color-0;
@@ -91,5 +91,29 @@
 
 }
 
+.marker-bubble, .marker-project-bubble {
+  @include border-radius(100%);
+  @include box-shadow(0 0 0 3px rgba($color-0, .6));
+}
 
+.marker-project-bubble {
+  @include box-shadow(0 0 0 12px rgba($color-0, .6));
+}
 
+.theme-1 {
+  .marker-bubble, .marker-project-bubble {
+    background-color: $color-2;
+  }
+}
+
+.theme-2 {
+  .marker-bubble, .marker-project-bubble {
+    background-color: $color-1;
+  }
+}
+
+.theme-3 {
+  .marker-bubble, .marker-project-bubble {
+    background-color: $color-9;
+  }
+}
