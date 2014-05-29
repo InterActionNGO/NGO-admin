@@ -21,6 +21,7 @@ javascripts:
 - sites_general_home:
   - plugins/galleria
   - sites/home_sites
+  - plugins/days_counter
 - sites_home:
   - sites/home
   - sites/mercatorProjection
