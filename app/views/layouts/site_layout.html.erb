@@ -38,7 +38,7 @@
       <%= yield :js_vars %>
     <% end %>
   </head>
-  <body class="<%= params[:controller] %>-page">
+  <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %>">
     <%= render 'layouts/header' %>
 
     <%= yield %>
