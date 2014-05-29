@@ -162,7 +162,7 @@
     }
     .mod-go-up-menu:before { @include gradient-down ($color-0);}
     .mod-drop-down-menu {
-      &:after { @include gradient-up($color-2a)}
+      &:after { @include gradient-up($color-2a); bottom: 0;}
       &:before { @include gradient-down ($color-2a); ; height:15px; bottom: 0;}
     }
     &.current .father {
