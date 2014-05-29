@@ -585,7 +585,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
           diameter = 42;
           //image_source = '/app/images/themes/' + theme + '/marker_5.png';
         } else {
-          diameter = 58;
+          diameter = 26;
           //image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else if (map_type === 'overview_map') {
@@ -602,7 +602,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
           diameter = 42;
           // image_source = '/app/images/themes/' + theme + '/marker_5.png';
         } else {
-          diameter = 58;
+          diameter = 26;
           // image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else if (map_type === 'administrative_map') {
@@ -619,11 +619,11 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
           diameter = 42;
           // image_source = '/app/images/themes/' + theme + '/marker_5.png';
         } else {
-          diameter = 58;
+          diameter = 26;
           // image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else {
-        diameter = 72;
+        diameter = 34;
         classname = 'marker-project-bubble';
         // image_source = '/app/images/themes/' + theme + '/project_marker.png';
       }
