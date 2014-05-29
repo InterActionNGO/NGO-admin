@@ -31,7 +31,6 @@
         <%= render 'new_partials/aside/project_locations' %>
       <% end %>
 
-
       <% unless (@organization.contact_name.nil? || @organization.contact_name.empty?) &&  (@organization.contact_position.nil? || @organization.contact_position.empty?) && (@organization.contact_phone_number.nil? || @organization.contact_phone_number.empty?) && (@organization.contact_email.nil? || @organization.contact_email.empty?)%>
       <div class="contact-info mod-info">
         <h3>Contact information</h3>
@@ -98,14 +97,13 @@
       </div>
       <% end %>
 
-
       <% unless @organization.twitter.nil? &&  @organization.facebook.nil? && @organization.website.nil? %>
         <div class="follow-us mod-info">
           <% if @organization.logo? %>
             <% if @organization.website? %>
-              <a href="<%= @organization.website %>"><%= image_tag(@organization.logo.url(:small)) %></a>
+              <a href="<%= @organization.website %>"><%= image_tag(@organization.logo.url(:original), :class => 'organization-logo') %></a>
             <% else %>
-              <%= image_tag(@organization.logo.url(:small)) %>
+              <%= image_tag(@organization.logo.url(:original), :class => 'organization-logo') %>
             <% end %>
           <% end %>
           <% if @organization.twitter? || @organization.facebook? || @organization.website? %>
