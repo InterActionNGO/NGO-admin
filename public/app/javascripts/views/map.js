@@ -623,7 +623,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
           // image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else {
-        diameter = 72;
+        diameter = 34;
         classname = 'marker-project-bubble';
         // image_source = '/app/images/themes/' + theme + '/project_marker.png';
       }
