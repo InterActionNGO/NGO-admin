@@ -86,7 +86,7 @@ require([
   var scrollTop,
     categoriesSelector = $('.categories-selector'),
     menu = $('.mod-categories-selector .menu'),
-    elementOffset = (categoriesSelector.length > 0) ? categoriesSelector.offset().top : 0;
+    elementOffset = (categoriesSelector.length > 0) ? $('.layout-content').offset().top + 60 : 0;
 
   function sectionTitle() {
     var $title = $('.section-title');
@@ -140,6 +140,6 @@ require([
 
   sectionTitle();
   addClassToBody();
-  window.onscroll = fixCategoriesSelector;
+  $(window).on('scroll', fixCategoriesSelector);
 
 });
