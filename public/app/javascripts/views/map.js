@@ -1,4 +1,4 @@
-/*global google,map_type,map_data:true,map_center,kind,theme,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
+/*global google,map_type,map_data:true,map_center,kind,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
 'use strict';
 
 define(['backbone', 'sprintf'], function(Backbone, sprintf) {
@@ -98,13 +98,14 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       return new google.maps.Point(x, y);
     };
 
-    function IOMMarker(info, diameter, image, map) {
+    function IOMMarker(info, diameter, classname, map) {
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
       this.latlng_ = new google.maps.LatLng(parseFloat(info.lat), parseFloat(info.lon));
       this.url = info.url;
       this.count = info.count;
       this.total_in_region = info.total_in_region;
-      this.image = image;
+      //this.image = image;
+      this.classname = classname;
       this.map_ = map;
       this.name = info.name;
       this.diameter = diameter;
@@ -127,7 +128,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       var div = this.div_;
       if (!div) {
         div = this.div_ = document.createElement('div');
-        div.style.border = 'none';
+        //div.style.border = 'none';
+        div.className = this.classname;
         div.style.position = 'absolute';
         div.style.width = this.diameter + 'px';
         div.style.height = this.diameter + 'px';
@@ -135,12 +137,12 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         div.style.cursor = 'pointer';
 
         //Marker image
-        var marker_image = document.createElement('img');
-        marker_image.style.position = 'relative';
-        marker_image.style.width = '100%';
-        marker_image.style.height = '100%';
-        marker_image.src = this.image;
-        div.appendChild(marker_image);
+        // var marker_image = document.createElement('img');
+        // marker_image.style.position = 'relative';
+        // marker_image.style.width = '100%';
+        // marker_image.style.height = '100%';
+        // marker_image.src = this.image;
+        // div.appendChild(marker_image);
 
         try {
           if (show_regions_with_one_project) {
@@ -566,65 +568,67 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     // Markers
     for (var i = 0; i < map_data.length; i++) {
-      var image_source = '';
+      // var image_source = '';
+      var classname = 'marker-bubble';
 
       if (document.URL.indexOf('force_site_id=3') >= 0) {
         if (map_data[i].count < 5) {
           diameter = 20;
-          image_source = '/app/images/themes/' + theme + '/marker_2.png';
+          //image_source = '/app/images/themes/' + theme + '/marker_2.png';
         } else if ((map_data[i].count >= 5) && (map_data[i].count < 10)) {
           diameter = 26;
-          image_source = '/app/images/themes/' + theme + '/marker_3.png';
+          //image_source = '/app/images/themes/' + theme + '/marker_3.png';
         } else if ((map_data[i].count >= 10) && (map_data[i].count < 18)) {
           diameter = 34;
-          image_source = '/app/images/themes/' + theme + '/marker_4.png';
+          //image_source = '/app/images/themes/' + theme + '/marker_4.png';
         } else if ((map_data[i].count >= 18) && (map_data[i].count < 30)) {
           diameter = 42;
-          image_source = '/app/images/themes/' + theme + '/marker_5.png';
+          //image_source = '/app/images/themes/' + theme + '/marker_5.png';
         } else {
           diameter = 58;
-          image_source = '/app/images/themes/' + theme + '/marker_6.png';
+          //image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else if (map_type === 'overview_map') {
         if (map_data[i].count < 25) {
           diameter = 20;
-          image_source = '/app/images/themes/' + theme + '/marker_2.png';
+          //image_source = '/app/images/themes/' + theme + '/marker_2.png';
         } else if ((map_data[i].count >= 25) && (map_data[i].count < 50)) {
           diameter = 26;
-          image_source = '/app/images/themes/' + theme + '/marker_3.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_3.png';
         } else if ((map_data[i].count >= 50) && (map_data[i].count < 90)) {
           diameter = 34;
-          image_source = '/app/images/themes/' + theme + '/marker_4.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_4.png';
         } else if ((map_data[i].count >= 90) && (map_data[i].count < 130)) {
           diameter = 42;
-          image_source = '/app/images/themes/' + theme + '/marker_5.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_5.png';
         } else {
           diameter = 58;
-          image_source = '/app/images/themes/' + theme + '/marker_6.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else if (map_type === 'administrative_map') {
         if (map_data[i].count < range) {
           diameter = 20;
-          image_source = '/app/images/themes/' + theme + '/marker_2.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_2.png';
         } else if ((map_data[i].count >= range) && (map_data[i].count < (range * 2))) {
           diameter = 26;
-          image_source = '/app/images/themes/' + theme + '/marker_3.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_3.png';
         } else if ((map_data[i].count >= (range * 2)) && (map_data[i].count < (range * 3))) {
           diameter = 34;
-          image_source = '/app/images/themes/' + theme + '/marker_4.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_4.png';
         } else if ((map_data[i].count >= (range * 3)) && (map_data[i].count < (range * 4))) {
           diameter = 42;
-          image_source = '/app/images/themes/' + theme + '/marker_5.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_5.png';
         } else {
           diameter = 58;
-          image_source = '/app/images/themes/' + theme + '/marker_6.png';
+          // image_source = '/app/images/themes/' + theme + '/marker_6.png';
         }
       } else {
         diameter = 72;
-        image_source = '/app/images/themes/' + theme + '/project_marker.png';
+        classname = 'marker-project-bubble';
+        // image_source = '/app/images/themes/' + theme + '/project_marker.png';
       }
 
-      new IOMMarker(map_data[i], diameter, image_source, map);
+      new IOMMarker(map_data[i], diameter, classname, map);
 
       bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
     }
