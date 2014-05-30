@@ -15,14 +15,11 @@
         <% @site.pages_by_parent('data').each do |page| %>
           <li class="submenu-item"><a href="/p/<%=page.permalink %>"><%=page.title%></a></li>
         <% end %>
-        <li class="submenu-item"><a href="/p/analysis">Metrics or Analysis</a></li>
+        <% if @site.name == "global" %>
+          <li class="submenu-item"><a href="/p/analysis">Metrics or Analysis</a></li>
+        <% end %>
       </ul>
     </li>
 		<li class="menu-item access"><a href="/admin" class="index-item access <%= if action_name == 'access' then 'active' end %>">member access</a></li>
 	</ul>
-
-
-
 </nav>
-
-
