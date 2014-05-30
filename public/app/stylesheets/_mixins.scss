@@ -248,6 +248,7 @@
     background-image: -webkit-linear-gradient(top, $color 0%, rgba(255,255,255, 0) 100%);
     background-image: -ms-linear-gradient(top, $color 0%,  rgba(255,255,255, 0) 100%);
     background-image: linear-gradient(to top, $color 0%,  rgba(255,255,255, 0) 100%);
+    pointer-events: none;
 }
 @mixin gradient-down ($color) {
   @include before('', block, absolute, 0, 0, auto, 25px);
@@ -265,6 +266,7 @@
     background-image: -webkit-linear-gradient(bottom, $color 0%, rgba(255,255,255, 0) 100%);
     background-image: -ms-linear-gradient(bottom, $color 0%,  rgba(255,255,255, 0) 100%);
     background-image: linear-gradient(to bottom, $color 0%,  rgba(255,255,255, 0) 100%);
+    pointer-events: none;
 }
 
 
