@@ -4,15 +4,30 @@
     <div class="mod-filtered-categories">
       <ul>
         <li><span class="filter">Viewing: </span></li>
-
-        <li><%= CGI.unescapeHTML(title) %></li>
-
-        <% if @donor %>
-          <li><%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>
+        <% if @organization %>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to @filter_name, organization_path(@organization), :class => 'filter' %></li>
+        <% elsif @donor%>
+          <% if @filter_by_location || @filter_by_category || @filter_by_organization %>
+            <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>
+          <% else %>
+            <li><%= CGI.unescapeHTML(title) %> <strong><%= donors_list_subtitle(true) %><strong></li>
+          <% end %>
+        <% elsif @area %>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to @filter_name , location_path(@area), :class => 'filter' %></li>
         <% elsif @site.navigate_by_cluster? %>
-          <li><%= link_to raw(@filter_name) , cluster_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(@filter_name) , cluster_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
         <% elsif @filter_name.present? %>
-          <li><%= link_to raw(@filter_name) , sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(@filter_name) , sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
+        <% else %>
+          <li><%= CGI.unescapeHTML(title) %>
+            <% if @organization_projects_count %>
+              <strong><%= @organization_projects_count %> projects</strong>
+            <% elsif @cluster_sector_projects_count  %>
+              <strong><%= @cluster_sector_projects_count %> projects</strong>
+            <% elsif @georegion_projects_count %>
+              <strong><%= @georegion_projects_count %> projects</strong>
+            <% end %>
+          </li>
         <% end %>
       </ul>
     </div>

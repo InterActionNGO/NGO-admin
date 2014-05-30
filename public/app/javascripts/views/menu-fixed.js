@@ -20,7 +20,7 @@ define(['backbone'], function(Backbone) {
       this.$page = $('html, body');
 
       $(window).on('scroll', function(e) {
-        if (e.currentTarget.pageYOffset > 480) {
+        if (e.currentTarget.pageYOffset > 309) {
           self.$el.addClass('is-fixed');
         } else {
           self.$el.removeClass('is-fixed');

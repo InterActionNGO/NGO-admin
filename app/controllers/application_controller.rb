@@ -57,7 +57,6 @@ class ApplicationController < ActionController::Base
         return
       end
 
-
       # If the request host isn't the main_site_host, it should be the host from a site
       if request.subdomain == 'www' || request.subdomain == ''
           @site = Site.find_by_name('global')

@@ -18,17 +18,22 @@
     font-size: 14px;
     text-transform: uppercase;
     line-height: 1;
-    padding: 9px 23px;
     margin-right: 2%;
     cursor: pointer;
+    .father {
+      display: block;
+      padding: 9px 23px;
+      font-weight: lighter;
+      @include border-radius(20px);
+    }
+    // &.current .father {
+    //   color: $color-0;
+    // }
     &.search { padding: 0;}
     &:hover {
       color: $color-0;
       .mod-go-up-menu { display: block;}
       .mod-drop-down-menu { display: block;}
-    }
-    &.active {
-      color: $color-0;
     }
     li {
       padding: 0;
@@ -37,6 +42,10 @@
         padding: 5px 20px;
         font-weight: normal;
       }
+    }
+
+    .mod-go-up-menu {
+      z-index: 100;
     }
   }
   .fedex-logo {
@@ -143,56 +152,68 @@
     @include icons-sprite(icon-water);
     background-position: sprite-position($icons, icon-water, 4px, 5px);
   }
-}
-.sector {
-  @include categorie-selector($color-2, $color-2a);
-  .mod-go-up-menu:after { @include gradient-up($color-0);
-    bottom: 0;
-  }
-  .mod-go-up-menu:before { @include gradient-down ($color-0);}
-  .mod-drop-down-menu {
-    &:after { @include gradient-up($color-2a)}
-    &:before { @include gradient-down ($color-2a); ; height:15px; bottom: 0;}
-  }
-}
-.organizations {
-  @include categorie-selector($color-6, $color-6a);
-  .mod-go-up-menu {
-    &:after { @include gradient-up($color-0);}
-    &:before { @include gradient-down ($color-0);}
-  }
-  .mod-drop-down-menu {
-    &:after { @include gradient-up($color-6a)}
-    &:before { @include gradient-down ($color-6a); ; height:15px;}
-  }
-}
-.donors {
-  @include categorie-selector($color-7, $color-7a);
-  .mod-go-up-menu {
-    &:after { @include gradient-up($color-0);}
-    &:before { @include gradient-down ($color-0);}
-  }
-  .mod-drop-down-menu {
-    &:after { @include gradient-up($color-7a)}
-    &:before { @include gradient-down ($color-7a); ; height:15px;}
-  }
-}
-.countries {
-  @include categorie-selector($color-8, $color-8a);
-  .mod-go-up-menu {
-    &:after { @include gradient-up($color-0);}
-    &:before { @include gradient-down ($color-0);}
-  }
-  .mod-drop-down-menu {
-    &:after { @include gradient-up($color-8a)}
-    &:before { @include gradient-down ($color-8a); ; height:15px;}
-  }
-}
 
 
-.fedex-logo {
-  margin-top: 3px;
+  // Items
+  .sector {
+    @include categorie-selector($color-2, $color-2a);
+    .mod-go-up-menu:after { @include gradient-up($color-0);
+      bottom: 0;
+    }
+    .mod-go-up-menu:before { @include gradient-down ($color-0);}
+    .mod-drop-down-menu {
+      &:after { @include gradient-up($color-2a); bottom: 0;}
+      &:before { @include gradient-down ($color-2a); ; height:15px; bottom: 0;}
+    }
+    &.current .father {
+      background-color: rgba($color-2, .3);
+    }
+  }
+  .organizations {
+    @include categorie-selector($color-6, $color-6a);
+    .mod-go-up-menu {
+      &:after { @include gradient-up($color-0);}
+      &:before { @include gradient-down ($color-0);}
+    }
+    .mod-drop-down-menu {
+      &:after { @include gradient-up($color-6a)}
+      &:before { @include gradient-down ($color-6a); ; height:15px;}
+    }
+    &.current .father {
+      background-color: rgba($color-6, .3);
+    }
+  }
+  .donors {
+    @include categorie-selector($color-7, $color-7a);
+    .mod-go-up-menu {
+      &:after { @include gradient-up($color-0);}
+      &:before { @include gradient-down ($color-0);}
+    }
+    .mod-drop-down-menu {
+      &:after { @include gradient-up($color-7a)}
+      &:before { @include gradient-down ($color-7a); ; height:15px;}
+    }
+    &.current .father {
+      background-color: rgba($color-7, .3);
+    }
+  }
+  .countries, .regions {
+    @include categorie-selector($color-8, $color-8a);
+    .mod-go-up-menu {
+      &:after { @include gradient-up($color-0);}
+      &:before { @include gradient-down ($color-0);}
+    }
+    .mod-drop-down-menu {
+      &:after { @include gradient-up($color-8a)}
+      &:before { @include gradient-down ($color-8a); ; height:15px;}
+    }
+    &.current .father {
+      background-color: rgba($color-8, .3);
+    }
+  }
+
+  .fedex-logo {
+    margin-top: 3px;
+  }
+
 }
-
-
-
