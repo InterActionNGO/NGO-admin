@@ -787,8 +787,15 @@ SQL
 
 
   def pages_by_parent(parent_permalink)
-    parent_id = self.pages.where(:permalink => parent_permalink).first.id
-    self.pages.where(:parent_id => parent_id).to_a
+    unless parent_page = self.pages.where(:permalink => parent_permalink).first
+      []
+    else
+      self.pages.where(:parent_id => parent_page.id).to_a
+    end
+  end
+
+  def featured_sites
+    Site.where(:featured => true)
   end
 
   private
