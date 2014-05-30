@@ -41,7 +41,7 @@ jQuery.fn.liveUpdate = function(list){
 
       cache.each(function(i){
         var score = this.score(term);
-        if (score > 0) { scores.push([score, i]); }
+        if (score > 0.9) { scores.push([score, i]); } // Change score
       });
 
       jQuery.each(scores.sort(function(a, b){return b[0] - a[0];}), function(){
