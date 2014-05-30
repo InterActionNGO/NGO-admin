@@ -1,12 +1,27 @@
 <footer class="mod-footer">
 
+  <div class="row mod-info">
+    <ul>
+      <% @site.featured_sites.each do |s|  %>
+          <li><a class="" href="http://<%= s.url %>" target"_self" ><%= s.name %></a></li>
+      <% end %>
+    </ul>
+  </div>
+
   <div class="row">
     <div class="mod-footer-top">
       <div class="grid-6 offset-5">
         <%= render 'new_partials/main-menu' %>
       </div>
-      <div class="grid-6">
-        <%= image_tag "footer_logos.svg", :alt  => "interaction aid map logo", :class  => "aid-map-logo", :width => '330', :height => '100' %>
+      <div class="grid-4">
+        <a href="/">
+          <%= image_tag "footer_ngo.svg", :alt  => "interaction aid map logo", :class  => "aid-map-logo", :width => '170', :height => '80' %>
+        </a>
+      </div>
+      <div class="grid-2">
+      <a href="http://www.interaction.org/">
+        <%= image_tag "footer_interaction.svg", :alt  => "interaction aid map logo", :class  => "aid-map-logo", :width => '95', :height => '105' %>
+      </a>
       </div>
     </div>
   </div>

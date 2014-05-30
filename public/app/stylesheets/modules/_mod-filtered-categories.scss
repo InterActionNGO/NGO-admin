@@ -17,18 +17,18 @@
 
     &:last-child a:after {
       display: block;
-      position: absolute;
+      float: right;
+      //position: static;
       content: "x";
       font-weight: lighter;
-      top: 50%;
-      right: -20px;
       width: 15px;
       line-height: 14px;
       height: 15px;
       background-color: rgba($color-0, .3);
-      margin-top: -7px;
+      //margin-top: -7px;
       border-radius: 50%;
       text-align: center;
+      margin-left: 5px;
     }
   }
   a {
