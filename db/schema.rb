@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140528155103) do
+ActiveRecord::Schema.define(:version => 20140530130528) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -552,6 +552,7 @@ ActiveRecord::Schema.define(:version => 20140528155103) do
     t.float    "overview_map_lon"
     t.integer  "overview_map_zoom"
     t.text     "internal_description"
+    t.boolean  "featured",                                       :default => false
   end
 
   add_index "sites", ["geographic_context_geometry"], :name => "index_sites_on_geographic_context_geometry", :spatial => true
