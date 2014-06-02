@@ -271,7 +271,7 @@ class Project < ActiveRecord::Base
       where << "pr_region_id = #{options[:organization_region_id]}" if options[:organization_region_id]
       where << "cp.country_id = #{options[:organization_country_id]}" if options[:organization_country_id]
     elsif options[:project]
-      where << "project_id = #{options[:project]}"
+      where << "pr.project_id = #{options[:project]}"
     end
 
     where = "WHERE #{where.join(' AND ')}" if where.present?
