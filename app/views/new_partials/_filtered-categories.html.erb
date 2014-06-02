@@ -13,11 +13,11 @@
             <li><%= CGI.unescapeHTML(title) %> <strong><%= donors_list_subtitle(true) %><strong></li>
           <% end %>
         <% elsif @area %>
-          <li><%= CGI.unescapeHTML(title) %> <%= link_to @filter_name , location_path(@area), :class => 'filter' %></li>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to @filter_name, location_path(@area), :class => 'filter' if @filter_name.present? %></li>
         <% elsif @site.navigate_by_cluster? %>
-          <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(@filter_name) , cluster_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(@filter_name), cluster_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
         <% elsif @filter_name.present? %>
-          <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(@filter_name) , sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(@filter_name), sector_path(params[:category_id]), :class => 'filter' if @filter_name.present? %></li>
         <% else %>
           <li><%= CGI.unescapeHTML(title) %>
             <% if @organization_projects_count %>
