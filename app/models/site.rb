@@ -785,6 +785,19 @@ SQL
     ActiveRecord::Base.connection.execute("DELETE from site_layers where site_id=#{self.id}")
   end
 
+
+  def pages_by_parent(parent_permalink)
+    unless parent_page = self.pages.where(:permalink => parent_permalink).first
+      []
+    else
+      self.pages.where(:parent_id => parent_page.id).to_a
+    end
+  end
+
+  def featured_sites
+    Site.where(:featured => true)
+  end
+
   private
 
     def clean_html
@@ -818,5 +831,6 @@ SQL
       self.pages.create :title => 'Contact', :parent_id => about.id
       self.pages.create :title => 'Highlights', :parent_id => about.id
     end
+
 
 end
