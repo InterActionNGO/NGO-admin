@@ -4,7 +4,8 @@
     font-size: 48px;
     font-weight: lighter;
     &:after {
-      @include after('(target)', block, absolute, -60%, 8px, auto, auto);
+      display: block;
+      content:  "(target)";
       font-size: 15px;
       font-weight: bold;
     }
