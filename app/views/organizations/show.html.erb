@@ -97,7 +97,7 @@
       </div>
       <% end %>
 
-      <% unless @organization.twitter.nil? &&  @organization.facebook.nil? && @organization.website.nil? %>
+      <% unless @organization.twitter.nil? &&  @organization.facebook.nil? && @organization.contact_email.nil? %>
         <div class="follow-us mod-info">
           <% if @organization.logo? %>
             <% if @organization.website? %>
@@ -106,19 +106,26 @@
               <%= image_tag(@organization.logo.url(:original), :class => 'organization-logo') %>
             <% end %>
           <% end %>
+
           <% if @organization.twitter? || @organization.facebook? || @organization.website? %>
             <div class="mod-follow-us">
+
+              <% if @organization.website? %>
+               <a href="<%= @organization.website %>" class='website'><%= @organization.website %></a>
+              <% end %>
+
               <ul>
                 <% if @organization.twitter? %>
                   <li><%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %></li>
                 <% end %>
-                <% if @organization.twitter? %>
+                <% if @organization.facebook? %>
                   <li><%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %></li>
                 <% end %>
-                <% if @organization.website? %>
-                  <li><%= link_to(' ', @organization.website, :class => 'email', :target => '_blank') %></li>
+                <% if @organization.contact_email? %>
+                  <li><%= link_to(' ', "mailto:#{@organization.contact_email}", :class=>"email", :target=>"_blank") %></li>
                 <% end %>
               </ul>
+
             </div>
           <% end %>
         </div>
@@ -142,4 +149,6 @@
     </section>
   </div>
 </div>
+
+<%=debug @organization %>
 

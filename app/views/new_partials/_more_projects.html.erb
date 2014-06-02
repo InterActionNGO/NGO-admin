@@ -6,7 +6,7 @@
       <ul>
         <% related_projects.each_with_index do |r,i| %>
           <li>
-            <article>
+            <article class="other-project">
               <div class="image">
                 <img src="http://maps.google.com/maps/api/staticmap?size=90x70&maptype=roadmap&style=feature:all|element:labels|visibility:off&path=fillcolor:0x00000090|color:0x00000001&sensor=false&center=<%=r['center_lat']%>,<%=r['center_lon']%>&zoom=6" title="<%= r['project_name'] %>" />
                 <img class="marker" src="/app/images/themes/<%=@site.theme_id%>/marker_1.png" alt="<%= r['project_name'] %>" title="<%= r['project_name'] %>" />
