@@ -6,6 +6,7 @@
   color: $color-0;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  &:hover {background-color: $color-2;}
   @include rotate (-90deg);
+  font-weight: lighter;
+  &:hover {background-color: $color-2;}
 }
