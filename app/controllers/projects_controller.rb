@@ -11,6 +11,10 @@ class ProjectsController < ApplicationController
     sql = "select * from data_denormalization where site_id=#{@site.id} and
                                                     (end_date is null OR end_date > now()) and
                                                     project_id=#{id}"
+
+
+    p "=========================>   " + sql.gsub("\n","")
+
     @raw_project = Project.find_by_sql(sql).first
     raise ActiveRecord::RecordNotFound unless @raw_project
     @project = Project.find(@raw_project['project_id'])
