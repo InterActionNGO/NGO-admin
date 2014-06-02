@@ -1504,11 +1504,6 @@ SQL
       GROUP BY donor_id, donor_name
     SQL
     donors = {}
-    p "========================================="
-    p (base_select + concrete_select + " ORDER by n_projects DESC").gsub("\n","")
-    p (base_select + concrete_select + " ORDER by n_organizations DESC").gsub("\n","")
-    p (base_select + concrete_select + " ORDER by n_countries DESC").gsub("\n","")
-    p "========================================="
 
     donors[:by_projects] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_projects DESC")
     donors[:by_organizations] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_organizations DESC")
