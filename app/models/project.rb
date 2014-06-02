@@ -1238,10 +1238,16 @@ SQL
       # TOTAL PROJECTS BUDGET
       non_zero_values = []
       @data[:results][:projects].each do |val|
+        p val[:budget].to_f
         non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
       end
-      @data[:results][:totals][:budget] = non_zero_values.inject(:+)
-      avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+      p @data[:results][:totals][:budget]
+      @data[:results][:totals][:budget] = non_zero_values.inject(:+) if @data[:results][:totals][:budget] > 0
+      if non_zero_values.length > 0
+        avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+      else
+        avg = 0.00
+      end
       @data[:results][:budget][:max] = non_zero_values.max
       @data[:results][:budget][:min] = non_zero_values.min
       @data[:results][:budget][:average] = (avg * 100).round / 100.0
