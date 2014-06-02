@@ -206,13 +206,13 @@ class ClustersSectorsController < ApplicationController
       format.csv do
         send_data Project.to_csv(@site, projects_custom_find_options),
           :type => 'text/plain; charset=utf-8; application/download',
-          :disposition => "attachment; filename=#{@data.name}_projects.csv"
+          :disposition => "attachment; filename=#{@data.name.gsub(/[^0-9A-Za-z]/, '')}_projects.csv"
 
       end
       format.xls do
         send_data Project.to_excel(@site, projects_custom_find_options),
           :type        => 'application/vnd.ms-excel',
-          :disposition => "attachment; filename=#{@data.name}_projects.xls"
+          :disposition => "attachment; filename=#{@data.name.gsub(/[^0-9A-Za-z]/, '')}_projects.xls"
       end
       format.kml do
         @projects_for_kml = Project.to_kml(@site, projects_custom_find_options)

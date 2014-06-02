@@ -271,7 +271,7 @@ class Project < ActiveRecord::Base
       where << "pr_region_id = #{options[:organization_region_id]}" if options[:organization_region_id]
       where << "cp.country_id = #{options[:organization_country_id]}" if options[:organization_country_id]
     elsif options[:project]
-      where << "project_id = #{options[:project]}"
+      where << "pr.project_id = #{options[:project]}"
     end
 
     where = "WHERE #{where.join(' AND ')}" if where.present?
@@ -1238,10 +1238,16 @@ SQL
       # TOTAL PROJECTS BUDGET
       non_zero_values = []
       @data[:results][:projects].each do |val|
+        p val[:budget].to_f
         non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
       end
-      @data[:results][:totals][:budget] = non_zero_values.inject(:+)
-      avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+      p @data[:results][:totals][:budget]
+      @data[:results][:totals][:budget] = non_zero_values.inject(:+) if @data[:results][:totals][:budget] > 0
+      if non_zero_values.length > 0
+        avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+      else
+        avg = 0.00
+      end
       @data[:results][:budget][:max] = non_zero_values.max
       @data[:results][:budget][:min] = non_zero_values.min
       @data[:results][:budget][:average] = (avg * 100).round / 100.0
@@ -1422,7 +1428,8 @@ SQL
                d.id AS donor_id,   d.name AS donor_name,
                s.id AS sector_id,  s.name AS sector_name,
                c.id AS country_id, c.name AS country_name,
-               o.id AS organization_id, o.name AS organization_name
+               o.id AS organization_id, o.name AS organization_name,
+               c.center_lat AS lat, c.center_lon AS lon
          FROM donors d, sectors s, projects p, organizations o, projects_sectors ps, donations pd, countries_projects cp, countries c
         WHERE d.id = pd.donor_id
           AND p.id = pd.project_id
@@ -1456,7 +1463,8 @@ SQL
   def self.bar_chart_countries(base_select, limit=10)
     concrete_select = <<-SQL
       SELECT country_id as country_id, country_name as country_name,
-             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors,
+             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
         FROM t
        WHERE country_id in (SELECT DISTINCT(country_id) FROM t ORDER BY country_id LIMIT #{limit})
       GROUP BY country_id, country_name
@@ -1474,7 +1482,8 @@ SQL
   def self.bar_chart_organizations(base_select, limit=10)
     concrete_select = <<-SQL
       SELECT organization_id as organization_id, organization_name as organization_name,
-             count(distinct(project_id)) as n_projects, count(distinct(country_id)) as n_countries, sum(distinct(project_budget)) as total_budget
+             count(distinct(project_id)) as n_projects, count(distinct(country_id)) as n_countries, sum(distinct(project_budget)) as total_budget,
+             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
         FROM t
        WHERE organization_id in
         (SELECT DISTINCT(organization_id) FROM t ORDER BY organization_id LIMIT #{limit})
@@ -1493,13 +1502,15 @@ SQL
   def self.bar_chart_donors(base_select, limit=10)
     concrete_select = <<-SQL
       SELECT donor_id as donor_id, donor_name as donor_name,
-             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(country_id)) as n_countries
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(country_id)) as n_countries,
+             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
         FROM t
        WHERE donor_id in
         (SELECT DISTINCT(donor_id) FROM t ORDER BY donor_id LIMIT #{limit})
       GROUP BY donor_id, donor_name
     SQL
     donors = {}
+
     donors[:by_projects] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_projects DESC")
     donors[:by_organizations] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_organizations DESC")
     donors[:by_countries] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_countries DESC")
@@ -1510,7 +1521,8 @@ SQL
   def self.bar_chart_sectors(base_select, limit=10)
     concrete_select = <<-SQL
       SELECT sector_id as sector_id, sector_name as sector_name,
-             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors
+             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors,
+             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
         FROM t
        WHERE sector_id in
         (SELECT DISTINCT(sector_id) FROM t ORDER BY sector_id LIMIT #{limit})

@@ -16,8 +16,8 @@ class SearchController < ApplicationController
       filtered_regions_where = "where r.id not in (#{params[:regions_ids].join(",")})"
       where << params[:regions_ids].map{|region_id| "regions_ids && ('{'||#{region_id}||'}')::integer[]"}.join(' OR ')
 
-      p params[:regions_ids]
-      p where
+      #p params[:regions_ids]
+      #p where
     end
 
     if params[:sectors_ids].present?
@@ -25,7 +25,7 @@ class SearchController < ApplicationController
       filtered_sectors_where = "where s.id not in (#{params[:sectors_ids].join(",")})"
       where << params[:sectors_ids].map{|sector_id| "sector_ids && ('{'||#{sector_id}||'}')::integer[]"}.join(' OR ')
 
-      p where
+      #p where
     end
 
     if params[:clusters_ids].present?
@@ -92,6 +92,8 @@ class SearchController < ApplicationController
                  sectors ilike '#{q}' OR
                  regions ilike '#{q}' )"
     end
+
+    where << "(end_date is null OR end_date >= now())"
 
     where = where.present? ? "WHERE #{where.join(' AND ')}" : ''
 

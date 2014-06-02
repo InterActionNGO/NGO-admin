@@ -342,6 +342,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       zoom = 3;
     }
 
+    console.log(zoom);
+
     $layerSelector = $('#layerSelector');
     $mapTypeSelector = $('#mapTypeSelector');
     $legendWrapper = $('#legendWrapper');
@@ -635,10 +637,10 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     map.fitBounds(bounds);
 
-    if (map_data[0].type === 'country') {
+    if (map_data[0].type === 'country' || map_data.length === 1) {
       setTimeout(function() {
         map.setZoom(8);
-      }, 1000);
+      }, 300);
     }
 
     // Layer selector

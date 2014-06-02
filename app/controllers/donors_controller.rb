@@ -347,12 +347,12 @@ class DonorsController < ApplicationController
       format.csv do
         send_data Project.to_csv(@site, options_export),
           :type => 'text/plain; charset=utf-8; application/download',
-          :disposition => "attachment; filename=#{@donor.name}_projects.csv"
+          :disposition => "attachment; filename=#{@donor.name.gsub(/[^0-9A-Za-z]/, '')}_projects.csv"
       end
       format.xls do
         send_data Project.to_excel(@site, options_export),
           :type        => 'application/vnd.ms-excel',
-          :disposition => "attachment; filename=#{@donor.name}_projects.xls"
+          :disposition => "attachment; filename=#{@donor.name.gsub(/[^0-9A-Za-z]/, '')}_projects.xls"
       end
       format.kml do
         @projects_for_kml = Project.to_kml(@site, options_export)
