@@ -1,13 +1,12 @@
+<div class="row mod-info">
+  <ul>
+    <% @site.featured_sites.each do |s|  %>
+        <li><a class="" href="http://<%= s.url %>" target"_self" ><%= s.name %></a></li>
+    <% end %>
+  </ul>
+</div>
+
 <footer class="mod-footer">
-
-  <div class="row mod-info">
-    <ul>
-      <% @site.featured_sites.each do |s|  %>
-          <li><a class="" href="http://<%= s.url %>" target"_self" ><%= s.name %></a></li>
-      <% end %>
-    </ul>
-  </div>
-
   <div class="row">
     <div class="mod-footer-top">
       <div class="grid-6 offset-5">
