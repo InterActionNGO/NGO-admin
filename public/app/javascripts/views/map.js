@@ -237,6 +237,31 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
               $(this).css('zIndex', global_index++);
             });
           }
+        } else {
+          if (map_type === 'project_map') {
+            var _hidden_div = document.createElement('div');
+            _hidden_div.className = 'map-tooltip';
+            _hidden_div.style.bottom = this.diameter + 4 + 'px';
+            _hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
+
+            var _top_hidden = document.createElement('div');
+            _top_hidden.className = 'map-top-tooltip';
+
+            $(_top_hidden).html('<h3>' + this.name + '</h3>');
+
+            _hidden_div.appendChild(_top_hidden);
+
+            div.appendChild(_hidden_div);
+
+            google.maps.event.addDomListener(div, 'mouseover', function() {
+              $(this).css('zIndex', global_index++);
+              $(this).children('div').show();
+            });
+
+            google.maps.event.addDomListener(div, 'mouseout', function() {
+              $(this).children('div').hide();
+            });
+          }
         }
 
         google.maps.event.addDomListener(div, 'click', function(ev) {
