@@ -41,7 +41,7 @@
           <p><%= @organization.contact_position %></p>
           <p><%= @organization.contact_phone_number %></p>
           <% unless (@organization.contact_email.nil?) || (@organization.contact_email.empty?) %>
-            <p><%= link_to(@organization.contact_email, "mailto:#{@organization.contact_email}") %></p>
+            <a href="mailto:<%= @organization.contact_email%>" class="donations-website">Contact e-mail address</a>
           <% end %>
         </div>
         </div>
@@ -86,12 +86,18 @@
           <% if @organization.donation_address? %>
             <h4><%= @organization.donation_address %></h4>
           <% end %>
-          <p class="inline"><%= @organization.city %>, </p>
-          <p class="inline"><%= @organization.zip_code %>, </p>
-          <p class="inline"><%= @organization.state %></p>
+          <% unless @organization.city.empty? || @organization.city.nil? %>
+            <p class="inline"><%= @organization.city %>,</p>
+          <% end %>
+          <% unless @organization.zip_code.empty? || @organization.zip_code.nil? %>
+            <p class="inline"><%= @organization.zip_code %>,</p>
+          <% end %>
+          <% unless @organization.state.empty? || @organization.state.nil? %>
+            <p class="inline"><%= @organization.state %>,</p>
+          <% end %>
           <p><%= @organization.donation_phone_number %></p>
           <% unless (@organization.donation_website.nil?) || (@organization.donation_website.empty?) %>
-            <a href="<%= @organization.donation_website %>" target="blank"><%= @organization.donation_website %></a>
+            <a href="<%= @organization.donation_website %>" target="blank" class="donations-website">Donations website</a>
           <% end %>
         </div>
       </div>
@@ -111,7 +117,7 @@
             <div class="mod-follow-us">
 
               <% if @organization.website? %>
-               <a href="<%= @organization.website %>" class='website'><%= @organization.website %></a>
+               <a href="<%= @organization.website %>" class='website'>Organization website</a>
               <% end %>
 
               <ul>
@@ -150,5 +156,4 @@
   </div>
 </div>
 
-<%=debug @organization %>
 
