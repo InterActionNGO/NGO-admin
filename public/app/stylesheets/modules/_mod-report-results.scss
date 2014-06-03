@@ -94,3 +94,20 @@
     }
   }
 }
+
+.mod-report-locations {
+  .mod-report-locations-map {
+    background-color: $color-4;
+    height: 380px;
+  }
+
+  .report-marker {
+    max-width: 50px;
+    max-height: 50px;
+    background-color: $color-2;
+    text-align: center;
+    color: $color-0;
+    @include border-radius(100%);
+    @include box-shadow(0 0 0 3px rgba($color-0, .6));
+  }
+}

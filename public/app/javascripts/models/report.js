@@ -11,6 +11,32 @@ define([
 
       var active_years, disable_years, self = this;
 
+      function getLocations(locations_data) {
+        var data = _.map(locations_data.split('@@@'), function(location_st) {
+          var location = location_st.split('|');
+          return {
+            id: Number(location[0]),
+            name: location[1],
+            lat: Number(location[3]),
+            lng: Number(location[2])
+          };
+        });
+
+        var locations = _.uniq(data, function(location) {
+          return location.id;
+        });
+
+        locations = _.map(locations, function(location) {
+          location.projects = _.where(data, {
+            id: location.id
+          }).length;
+
+          return location;
+        });
+
+        return locations;
+      }
+
       this.attributes.projects = _.map(this.attributes.projects, function(project) {
         project.project.year = Number(moment(project.project.start_date).format('YYYY'));
         project.project.active = (project.project.active === 't');
@@ -41,21 +67,24 @@ define([
       this.attributes.donors_by_projects = _.map(this.attributes.charts.donors.by_projects, function(donor) {
         return {
           name: donor.donor_name,
-          data: [[donor.donor_name, Number(donor.n_projects)]]
+          data: [[donor.donor_name, Number(donor.n_projects)]],
+          locations: getLocations(donor.array_to_string)
         };
       });
 
       this.attributes.donors_by_organizations = _.map(this.attributes.charts.donors.by_organizations, function(donor) {
         return {
           name: donor.donor_name,
-          data: [[donor.donor_name, Number(donor.n_organizations)]]
+          data: [[donor.donor_name, Number(donor.n_organizations)]],
+          locations: getLocations(donor.array_to_string)
         };
       });
 
       this.attributes.donors_by_countries = _.map(this.attributes.charts.donors.by_countries, function(donor) {
         return {
           name: donor.donor_name,
-          data: [[donor.donor_name, Number(donor.n_countries)]]
+          data: [[donor.donor_name, Number(donor.n_countries)]],
+          locations: getLocations(donor.array_to_string)
         };
       });
 
@@ -125,8 +154,9 @@ define([
         };
       });
 
-      return this;
+      console.log(this.toJSON());
 
+      return this;
     }
 
   });

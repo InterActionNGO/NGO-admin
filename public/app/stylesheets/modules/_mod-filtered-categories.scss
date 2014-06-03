@@ -16,8 +16,7 @@
     font-weight: lighter;
 
     &:last-child a:after {
-      display: block;
-      float: right;
+      display: inline-block;
       //position: static;
       content: "x";
       font-weight: lighter;
