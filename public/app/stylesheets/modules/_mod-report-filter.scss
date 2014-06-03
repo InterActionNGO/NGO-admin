@@ -61,6 +61,15 @@
   }
 }
 
+.ui-tabs-anchor {
+  float: none;
+  display: inline-block;
+  position: relative;
+  &:focus {
+    outline: 0;
+  }
+}
+
 .select2-container .select2-choice {
   background: $color-4;
   font-size: 13px;
