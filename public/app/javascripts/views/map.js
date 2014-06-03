@@ -342,8 +342,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       zoom = 3;
     }
 
-    console.log(zoom);
-
     $layerSelector = $('#layerSelector');
     $mapTypeSelector = $('#mapTypeSelector');
     $legendWrapper = $('#legendWrapper');
