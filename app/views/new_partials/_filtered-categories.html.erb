@@ -5,7 +5,7 @@
       <ul>
         <li><span class="filter">Viewing: </span></li>
         <% if @organization %>
-          <li><%= CGI.unescapeHTML(title) %> <%= link_to @filter_name, organization_path(@organization), :class => 'filter' %></li>
+          <li><%= CGI.unescapeHTML(title) %> <%= link_to @filter_name, organization_path(@organization), :class => 'filter' if @filter_name.present? %></li>
         <% elsif @donor%>
           <% if @filter_by_location || @filter_by_category || @filter_by_organization %>
             <li><%= CGI.unescapeHTML(title) %> <%= link_to raw(donors_list_subtitle(true)) , donor_path(@donor), :class => 'filter' %></li>

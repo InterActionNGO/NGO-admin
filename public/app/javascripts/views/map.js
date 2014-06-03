@@ -214,7 +214,9 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
             var top_hidden = document.createElement('div');
             top_hidden.className = 'map-top-tooltip';
 
-            if (this.total_in_region) {
+            if (this.total_in_region && $('body').hasClass('organizations-page')) {
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects by this ' + kind.slice(0, -1) : ' project by this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
+            } else if (this.total_in_region) {
               $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
             } else {
               $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
@@ -235,6 +237,31 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
           } else {
             google.maps.event.addDomListener(div, 'mouseover', function() {
               $(this).css('zIndex', global_index++);
+            });
+          }
+        } else {
+          if (map_type === 'project_map') {
+            var _hidden_div = document.createElement('div');
+            _hidden_div.className = 'map-tooltip';
+            _hidden_div.style.bottom = this.diameter + 4 + 'px';
+            _hidden_div.style.left = (this.diameter / 2) - (175 / 2) + 'px';
+
+            var _top_hidden = document.createElement('div');
+            _top_hidden.className = 'map-top-tooltip';
+
+            $(_top_hidden).html('<h3>' + this.name + '</h3>');
+
+            _hidden_div.appendChild(_top_hidden);
+
+            div.appendChild(_hidden_div);
+
+            google.maps.event.addDomListener(div, 'mouseover', function() {
+              $(this).css('zIndex', global_index++);
+              $(this).children('div').show();
+            });
+
+            google.maps.event.addDomListener(div, 'mouseout', function() {
+              $(this).children('div').hide();
             });
           }
         }
@@ -341,8 +368,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       latlng = new google.maps.LatLng(0, 0);
       zoom = 3;
     }
-
-    console.log(zoom);
 
     $layerSelector = $('#layerSelector');
     $mapTypeSelector = $('#mapTypeSelector');
