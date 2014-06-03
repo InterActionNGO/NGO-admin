@@ -3,21 +3,21 @@
   font-weight: bold;
   margin-bottom: 60px;
   box-shadow: 0 5px 0 rgba($color-1, 0.3);
-
   .about &,
   .purpose &,
   .getting-on-the-map &,
   .staff-list &,
   .contact-us &,
   .of-interest &,
-  .highlights &,
-  { box-shadow: 0 5px 0 $color-8;}
-
+  .highlights & {
+    box-shadow: 0 5px 0 $color-8;
+  }
   .data &,
   .top-things-you-should-know-about-the-data &,
   .data-guidance &,
-  .analysis & { box-shadow: 0 5px 0 $color-1;}
-
+  .analysis & {
+    box-shadow: 0 5px 0 $color-1;
+  }
   .aid-map-logo {
     float: left;
     margin-top: 10px;
@@ -26,7 +26,7 @@
     display: block;
     margin-top: 42px;
     text-align: right;
-    @include clearfix();
+    @include clearfix;
   }
   .menu-item {
     display: inline-block;
@@ -38,10 +38,11 @@
     .index-item {
       position: relative;
       padding: 5px 15px;
-      &.active { border-radius: 15px;}
+      &.active {
+        border-radius: 15px;
+      }
     }
   }
-
   .interaction-logo {
     float: right;
     margin-top: 10px;
@@ -63,12 +64,20 @@
       font-weight: bold;
     }
   }
-
-  .home { @include menu-item($color-3);}
-  .about { @include drop-down-menu($color-8);}
-  .data { @include drop-down-menu($color-1);}
-  .access { @include menu-item($color-2);}
+  .home {
+    @include menu-item($color-3);
+  }
+  .about {
+    @include drop-down-menu($color-8);
+  }
+  .data {
+    @include drop-down-menu($color-1);
+  }
+  .access {
+    @include menu-item($color-2);
+  }
 }
 
-.mod-footer .submenu { display: none;}
-
+.mod-footer .submenu {
+  display: none;
+}

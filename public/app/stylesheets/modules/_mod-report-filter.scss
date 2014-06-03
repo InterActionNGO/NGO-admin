@@ -2,6 +2,13 @@
   .comboselect {
     width: 100%;
     margin-bottom: 20px;
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    select, input {
+      height: 30px;
+    }
   }
   .applied-filters {
     width: 90%;
@@ -22,51 +29,62 @@
   }
 }
 
-.ui-tabs .ui-tabs-nav li {
-  box-sizing: border-box;
-  width: 50%;
-  padding-left: 5%;
-  margin: 0;
-  font-weight: bold;
-  line-height: 30px;
-  border-bottom: 2px solid $color-4;
-  text-align: center;
-  &:first-child:before {
-    @include before('', block, absolute, 10px, 10px, 30px, 28px);
-    @include icons-sprite(icon-folder-hover);
+.ui-tabs .ui-tabs-nav {
+  padding: 0;
+
+  li {
+    box-sizing: border-box;
+    width: 50%;
+    margin: 0;
+    font-weight: bold;
+    line-height: 30px;
+    height: 52px;
+    border: 2px solid transparent;
+    border-bottom-color: $color-4;
+    text-align: center;
+    &:first-child:before {
+      @include before('', inline-block, relative, 10px, 10px, 30px, 28px);
+      @include icons-sprite(icon-folder-hover);
+    }
+    &:last-child:before {
+      @include before('', inline-block, relative, 5px, 10px, 35px, 30px);
+      @include icons-sprite(icon-schema-hover);
+    }
+    &:focus {
+      outline: 0;
+    }
+    &.ui-tabs-active {
+      border-top-color: $color-4;
+      border-left-color: $color-4;
+      border-right-color: $color-4;
+      border-bottom-color: transparent;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      &:first-child:before {
+        @include before('', inline-block, relative, 10px, 10px, 30px, 28px);
+        @include icons-sprite(icon-folder);
+      }
+      &:last-child:before {
+        @include before('', inline-block, relative, 5px, 10px, 35px, 30px);
+        @include icons-sprite(icon-schema);
+      }
+      .ui-tabs-anchor {
+        color: $color-3;
+      }
+    }
   }
-  &:last-child:before {
-    @include before('', block, absolute, 5px, 10px, 35px, 30px);
-    @include icons-sprite(icon-schema-hover);
-  }
-  a {
+
+  .ui-tabs-anchor {
+    float: none;
+    display: inline-block;
+    position: relative;
     color: $color-4;
     font-size: 14px;
-  }
-}
-
-.ui-tabs .ui-tabs-nav li.ui-tabs-active {
-  border: 2px solid $color-4;
-  border-bottom: none;
-  &:first-child:before {
-    @include before('', block, absolute, 10px, 10px, 30px, 28px);
-    @include icons-sprite(icon-folder);
-  }
-  &:last-child:before {
-    @include before('', block, absolute, 5px, 10px, 35px, 30px);
-    @include icons-sprite(icon-schema);
-  }
-  a {
-    color: $color-3;
-  }
-}
-
-.ui-tabs-anchor {
-  float: none;
-  display: inline-block;
-  position: relative;
-  &:focus {
-    outline: 0;
+    padding: 10px;
+    line-height: 32px;
+    &:focus {
+      outline: 0;
+    }
   }
 }
 

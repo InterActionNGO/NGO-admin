@@ -91,6 +91,18 @@ define([
         credits: {
           enabled: false
         }
+      },
+      map: {
+        center: [0, 0],
+        zoom: 11,
+        dragging: false,
+        boxZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        touchZoom: false,
+        zoomControl: false,
+        attributionControl: false,
+        keyboard: false
       }
     },
 
@@ -166,6 +178,13 @@ define([
       $('#donorsByCountriesChart').highcharts(_.extend(this.options.columnChart, {
         series: this.data.donors_by_countries
       }));
+
+      if (this.donorsMap) {
+        this.donorsMap.remove();
+      }
+
+      this.donorsMap = this.setMap('reportDonorsMap');
+      this.donorsLayer = this.setLayer(this.donorsMap, 'donors_by_projects');
     },
 
     organizationsCharts: function() {
@@ -216,6 +235,70 @@ define([
 
     saveReport: function() {
       //
+    },
+
+    setMap: function(el) {
+      var map = L.map(el, this.options.map);
+
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+      return map;
+    },
+
+    setLayer: function(map, layerType) {
+      var locations = this.getGeoJSON(this.data[layerType]);
+
+      var layer = L.geoJson(locations, {
+        pointToLayer: function(feature, latlng) {
+          var size = (feature.properties.projects > 20) ? 1.2 * feature.properties.projects : 20;
+          var fsize = (feature.properties.projects > 20) ? 0.6 * feature.properties.projects : 12;
+
+          size = (size > 50) ? 50 : size;
+          fsize = (fsize > 24) ? 24 : fsize;
+
+          var marker = L.marker(latlng, {
+            icon: L.divIcon({
+              iconSize: [size, size],
+              iconAnchor: [size/2, size/2],
+              className: 'report-marker',
+              html: '<span style="line-height: ' + size +'px; font-size: ' + fsize + 'px">'+ feature.properties.projects + '</span>',
+              riseOnHover: true
+            })
+          });
+          return marker;
+        }
+      });
+
+      map.addLayer(layer);
+      map.fitBounds(layer.getBounds());
+
+      return layer;
+    },
+
+    getGeoJSON: function(data) {
+      var locations = _.flatten(_.map(data, function(d) {
+        return d.locations;
+      }));
+
+      var geojson = {};
+
+      geojson.type = 'FeatureCollection';
+
+      geojson.features = _.map(locations, function(d) {
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [d.lat, d.lng]
+          },
+          properties: {
+            name: d.name,
+            projects: d.projects
+          }
+        };
+      });
+
+      return geojson;
     }
 
   });
