@@ -124,7 +124,7 @@
             <p><%= @project.contact_position %></p>
             <p><%= @project.contact_phone_number %></p>
             <% unless (@project.contact_email.nil?)||(@project.contact_email.empty?) %>
-              <p><%= link_to(@project.contact_email, "mailto:#{@project.contact_email}") %></p>
+             <a class="donations-website" href="mailto:<%= @project.contact_email %>">Project contact email</a>
             <%end%>
           </div>
         </div>
@@ -134,7 +134,7 @@
         <div class="mod-info">
           <h3>Project website</h3>
           <% unless (@project.website.nil?)||(@project.website.empty?) %>
-            <p><%= link_to(@project.website, @project.website) %></p>
+            <a class="donations-website" href="<%= @project.website %>">Project website</a>
           <%end%>
         </div>
       <% end %>
@@ -218,3 +218,4 @@
 
   </section>
 </div>
+
