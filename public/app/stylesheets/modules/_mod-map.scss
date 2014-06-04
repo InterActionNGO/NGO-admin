@@ -101,6 +101,10 @@
   @include box-shadow(0 0 0 12px rgba($color-0, .6));
 }
 
+.marker-bubble, .marker-project-bubble {
+  background-color: $color-2;
+}
+
 .theme-1 {
   .marker-bubble, .marker-project-bubble {
     background-color: $color-2;
@@ -119,16 +123,22 @@
   }
 }
 
-.cartodb-logo {
-  bottom: 70px !important;
-  left: 15px !important;
-}
+.projects-pages,
+.clusters_sectors-page,
+.organizations-page,
+.donors-page,
+.georegion-page {
+  .cartodb-logo {
+    bottom: 70px !important;
+    left: 15px !important;
+  }
 
-.gm-style > div:nth-child(2) {
-  bottom: 75px !important;
-  left: 15px !important;
-}
+  .gm-style > div:nth-child(2) {
+    bottom: 75px !important;
+    left: 15px !important;
+  }
 
-.gmnoprint {
-  bottom: 60px !important;
+  .gmnoprint {
+    bottom: 60px !important;
+  }
 }
