@@ -249,7 +249,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
             var _top_hidden = document.createElement('div');
             _top_hidden.className = 'map-top-tooltip';
 
-            $(_top_hidden).html('<h3>' + this.name + '</h3>');
+            $(_top_hidden).html('<strong>' + this.name + '</strong>');
 
             _hidden_div.appendChild(_top_hidden);
 
