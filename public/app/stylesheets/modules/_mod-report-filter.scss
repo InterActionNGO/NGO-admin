@@ -22,7 +22,10 @@
   #s2id_end_date_year,
   #s2id_end_date_month,
   #s2id_end_date_day
-  { width: 31% !important;}
+  {
+    width: 31% !important;
+    background: image-url('form-background-lt.png') no-repeat center;
+  }
 
   .select2-container-multi .select2-choices .select2-search-choice:first-child {
     margin-top: 20px;
@@ -89,6 +92,5 @@
 }
 
 .select2-container .select2-choice {
-  background: $color-4;
   font-size: 13px;
 }
