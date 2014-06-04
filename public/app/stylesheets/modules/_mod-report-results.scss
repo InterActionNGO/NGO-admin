@@ -111,3 +111,9 @@
     @include box-shadow(0 0 0 3px rgba($color-0, .6));
   }
 }
+
+#printReport, #saveReport {
+  @extend .apply;
+  width: 50%;
+
+}
