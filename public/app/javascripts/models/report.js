@@ -12,28 +12,16 @@ define([
       var active_years, disable_years, self = this;
 
       function getLocations(locations_data) {
-        var data = _.map(locations_data.split('@@@'), function(location_st) {
-          var location = location_st.split('|');
+        var locations = _.map(locations_data, function(location_data) {
+          var location = location_data.country.split('|');
           return {
             id: Number(location[0]),
             name: location[1],
             lat: Number(location[3]),
-            lng: Number(location[2])
+            lng: Number(location[2]),
+            projects: Number(location_data.n_projects)
           };
         });
-
-        var locations = _.uniq(data, function(location) {
-          return location.id;
-        });
-
-        locations = _.map(locations, function(location) {
-          location.projects = _.where(data, {
-            id: location.id
-          }).length;
-
-          return location;
-        });
-
         return locations;
       }
 
@@ -64,97 +52,104 @@ define([
       });
 
       // Donors
-      this.attributes.donors_by_projects = _.map(this.attributes.charts.donors.by_projects, function(donor) {
+      this.attributes.donors_by_projects = _.map(this.attributes.charts.donors.bar_chart.by_n_projects, function(donor) {
         return {
           name: donor.donor_name,
           data: [[donor.donor_name, Number(donor.n_projects)]],
-          locations: getLocations(donor.array_to_string)
+          locations: getLocations(self.attributes.charts.donors.maps.by_n_projects)
         };
       });
 
-      this.attributes.donors_by_organizations = _.map(this.attributes.charts.donors.by_organizations, function(donor) {
+      this.attributes.donors_by_organizations = _.map(this.attributes.charts.donors.bar_chart.by_n_organizations, function(donor) {
         return {
           name: donor.donor_name,
           data: [[donor.donor_name, Number(donor.n_organizations)]],
-          locations: getLocations(donor.array_to_string)
+          locations: getLocations(self.attributes.charts.donors.maps.by_n_organizations)
         };
       });
 
-      this.attributes.donors_by_countries = _.map(this.attributes.charts.donors.by_countries, function(donor) {
+      this.attributes.donors_by_countries = _.map(this.attributes.charts.donors.bar_chart.by_n_countries, function(donor) {
         return {
           name: donor.donor_name,
           data: [[donor.donor_name, Number(donor.n_countries)]],
-          locations: getLocations(donor.array_to_string)
+          locations: getLocations(self.attributes.charts.donors.maps.by_n_countries)
         };
       });
 
       // Organizations
-      this.attributes.organizations_by_projects = _.map(this.attributes.charts.organizations.by_projects, function(organization) {
+      this.attributes.organizations_by_projects = _.map(this.attributes.charts.organizations.bar_chart.by_n_projects, function(organization) {
         return {
           name: organization.organization_name,
-          data: [[organization.organization_name, Number(organization.n_projects)]]
+          data: [[organization.organization_name, Number(organization.n_projects)]],
+          locations: getLocations(self.attributes.charts.organizations.maps.by_n_projects)
         };
       });
 
-      this.attributes.organizations_by_countries = _.map(this.attributes.charts.organizations.by_countries, function(organization) {
+      this.attributes.organizations_by_countries = _.map(this.attributes.charts.organizations.bar_chart.by_n_countries, function(organization) {
         return {
           name: organization.organization_name,
-          data: [[organization.organization_name, Number(organization.n_countries)]]
+          data: [[organization.organization_name, Number(organization.n_countries)]],
+          locations: getLocations(self.attributes.charts.organizations.maps.by_n_countries)
         };
       });
 
-      this.attributes.organizations_by_bugdet = _.map(this.attributes.charts.organizations.by_budget, function(organization) {
+      this.attributes.organizations_by_bugdet = _.map(this.attributes.charts.organizations.bar_chart.by_total_budget, function(organization) {
         return {
           name: organization.organization_name,
-          data: [[organization.organization_name, Number(organization.total_budget)]]
+          data: [[organization.organization_name, Number(organization.total_budget)]],
+          locations: getLocations(self.attributes.charts.organizations.maps.by_total_budget)
         };
       });
 
       // Countries
-      this.attributes.countries_by_donors = _.map(this.attributes.charts.countries.by_donors, function(country) {
+      this.attributes.countries_by_donors = _.map(this.attributes.charts.countries.bar_chart.by_n_donors, function(country) {
         return {
           name: country.country_name,
-          data: [[country.country_name, Number(country.n_donors)]]
+          data: [[country.country_name, Number(country.n_donors)]],
+          locations: getLocations(self.attributes.charts.countries.maps.by_n_donors)
         };
       });
 
-      this.attributes.countries_by_organizations = _.map(this.attributes.charts.countries.by_organizations, function(country) {
+      this.attributes.countries_by_organizations = _.map(this.attributes.charts.countries.bar_chart.by_n_organizations, function(country) {
         return {
           name: country.country_name,
-          data: [[country.country_name, Number(country.n_organizations)]]
+          data: [[country.country_name, Number(country.n_organizations)]],
+          locations: getLocations(self.attributes.charts.countries.maps.by_n_organizations)
         };
       });
 
-      this.attributes.countries_by_projects = _.map(this.attributes.charts.countries.by_projects, function(country) {
+      this.attributes.countries_by_projects = _.map(this.attributes.charts.countries.bar_chart.by_n_projects, function(country) {
         return {
           name: country.country_name,
-          data: [[country.country_name, Number(country.n_projects)]]
+          data: [[country.country_name, Number(country.n_projects)]],
+          locations: getLocations(self.attributes.charts.countries.maps.by_n_projects)
         };
       });
 
       // Sectors
-      this.attributes.sectors_by_donors = _.map(this.attributes.charts.sectors.by_donors, function(sector) {
+      this.attributes.sectors_by_donors = _.map(this.attributes.charts.sectors.bar_chart.by_n_donors, function(sector) {
         return {
           name: sector.sector_name,
-          data: [[sector.sector_name, Number(sector.n_donors)]]
+          data: [[sector.sector_name, Number(sector.n_donors)]],
+          locations: getLocations(self.attributes.charts.sectors.maps.by_n_donors)
         };
       });
 
-      this.attributes.sectors_by_organizations = _.map(this.attributes.charts.sectors.by_organizations, function(sector) {
+      this.attributes.sectors_by_organizations = _.map(this.attributes.charts.sectors.bar_chart.by_n_organizations, function(sector) {
         return {
           name: sector.sector_name,
-          data: [[sector.sector_name, Number(sector.n_organizations)]]
+          data: [[sector.sector_name, Number(sector.n_organizations)]],
+          locations: getLocations(self.attributes.charts.sectors.maps.by_n_organizations)
         };
       });
 
-      this.attributes.sectors_by_projects = _.map(this.attributes.charts.sectors.by_projects, function(sector) {
+      this.attributes.sectors_by_projects = _.map(this.attributes.charts.sectors.bar_chart.by_n_projects, function(sector) {
         return {
           name: sector.sector_name,
-          data: [[sector.sector_name, Number(sector.n_projects)]]
+          data: [[sector.sector_name, Number(sector.n_projects)]],
+          locations: getLocations(self.attributes.charts.sectors.maps.by_n_projects)
         };
       });
-
-      console.log(this.toJSON());
 
       return this;
     }
