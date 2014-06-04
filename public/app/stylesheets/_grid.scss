@@ -18,6 +18,7 @@ $grid-gutter-width: 1%;
 }
 
 .grid {
+  position: relative;
   display: block;
   float: left;
   margin: 0 $grid-gutter-width;
