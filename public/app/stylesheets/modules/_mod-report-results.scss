@@ -2,17 +2,9 @@
   padding: 20px 0;
   border-bottom: 3px solid #eee;
 
-  table {
-    width: 100%;
-  }
-
-  td {
-    padding: 2px 0;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
+  table {  width: 100%; }
+  td { padding: 2px 0; }
+  &:last-child { border-bottom: 0; }
 }
 
 .mod-report-grid-3 {
@@ -114,6 +106,8 @@
 
 #printReport, #saveReport {
   @extend .apply;
-  width: 50%;
+  width: 48%;
+  float: left;
+  &:first-child { margin-right: 4%;}
 
 }
