@@ -1480,7 +1480,7 @@ SQL
                  GROUP BY country_id ORDER BY total DESC LIMIT #{limit}) max_donors
               )
         GROUP BY country_id, country_name
-        ORDER BY #{criteria[1]}
+        ORDER BY #{criteria[1]} DESC
       SQL
       countries[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
 
@@ -1523,7 +1523,7 @@ SQL
                  GROUP BY organization_id ORDER BY total DESC LIMIT #{limit}) max_donors
               )
         GROUP BY organization_id, organization_name
-        ORDER BY #{criteria[1]}
+        ORDER BY #{criteria[1]} DESC
       SQL
       organizations[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
 
@@ -1565,7 +1565,7 @@ SQL
                  GROUP BY donor_id ORDER BY total DESC LIMIT #{limit}) max_donors
               )
         GROUP BY donor_id, donor_name
-        ORDER BY #{criteria[1]}
+        ORDER BY #{criteria[1]} DESC
       SQL
       donors[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
 
@@ -1607,7 +1607,7 @@ SQL
                  GROUP BY sector_id ORDER BY total DESC LIMIT #{limit}) max_donors
               )
         GROUP BY sector_id, sector_name
-        ORDER BY #{criteria[1]}
+        ORDER BY #{criteria[1]} DESC
       SQL
       sectors[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
 

@@ -61,5 +61,4 @@ Iom::Application.configure do
       "/dist#{asset_path}"
     end
   }
-
 end
