@@ -215,9 +215,9 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
             top_hidden.className = 'map-top-tooltip';
 
             if (this.total_in_region && $('body').hasClass('organizations-page')) {
-              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects by this ' + kind.slice(0, -1) : ' project by this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects by this ' + kind.slice(0, -1) : ' project by this ' + kind.slice(0, -1)) + '</strong>.<br/><strong>' + this.total_in_region + ' in total</strong>');
             } else if (this.total_in_region) {
-              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong><br/><strong>' + this.total_in_region + ' in total</strong>');
+              $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects in this ' + kind.slice(0, -1) : ' project in this ' + kind.slice(0, -1)) + '</strong>.<br/><strong>' + this.total_in_region + ' in total</strong>');
             } else {
               $(top_hidden).html('<h3>' + this.name + '</h3><strong>' + this.count + ((this.count > 1) ? ' projects' : ' project') + '</strong>');
             }
