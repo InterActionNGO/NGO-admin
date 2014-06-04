@@ -108,7 +108,8 @@ define([
 
     events: {
       'click #printReport': 'printReport',
-      'click #saveReport': 'saveReport'
+      'click #saveReport': 'saveReport',
+      'click .mod-report-locations-header a': 'changeReportMap'
     },
 
     template: Handlebars.compile(tpl),
@@ -305,6 +306,10 @@ define([
       });
 
       return geojson;
+    },
+
+    changeReportMap: function(e) {
+      e.preventDefault();
     }
 
   });
