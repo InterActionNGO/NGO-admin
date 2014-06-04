@@ -191,6 +191,13 @@
       }
     }
   }
+  &.no-child:hover .index-item {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    &:after {
+      display: none;
+    }
+  }
   .submenu {
     border-top: 5px solid rgba($primary-color, .3);
   }
