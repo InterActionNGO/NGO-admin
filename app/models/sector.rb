@@ -123,8 +123,10 @@ SQL
        'agriculture'
     elsif (name.include? 'Camp Coordination')
     'camp_coordination'
+    elsif (name.include? 'Communication')
+    'communication'
     elsif (name.include? 'Disaster')
-    'disaster_management'
+    'disaster-management'
     elsif (name.include? 'Early Recovery')
     'early_recovery'
     elsif (name.include? 'Economic Recovery')
