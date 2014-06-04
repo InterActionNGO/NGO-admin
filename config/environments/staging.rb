@@ -49,4 +49,17 @@ Iom::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  config.action_controller.asset_path = proc { |asset_path|
+    case asset_path
+    when /^\/(system)/
+      "#{asset_path}"
+    when /^\/(stylesheets\/lib)/
+      "/app#{asset_path}".sub("/stylesheets", "")
+    when /^\/(stylesheets\/vendor)/
+      "/app#{asset_path}".sub("/stylesheets", "")
+    else
+      "/dist#{asset_path}"
+    end
+  }
+
 end
