@@ -22,7 +22,7 @@ module DonorsHelper
       pluralize(@projects_count, "project", "projects") + ' ' + by + " in #{@location_name}"
 
     elsif @filter_by_category
-      pluralize(@projects_count, "#{@filter_name} project", "#{@filter_name} projects") + ' ' + by
+      pluralize(@projects_count, "#{@category_name} project", "#{@category_name} projects") + ' ' + by
 
     elsif @filter_by_organization
       pluralize(@projects_count, "project", "projects") + ' ' + by + " implemented  by #{CGI.unescapeHTML(@organization.name)}"

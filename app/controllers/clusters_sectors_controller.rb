@@ -15,16 +15,6 @@ class ClustersSectorsController < ApplicationController
     @carry_on_filters = {}
     @carry_on_filters[:location_id] = @filter_by_location if @filter_by_location.present?
 
-    if @filter_by_location.present?
-      @location_name = if @filter_by_location.size > 1
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      else
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      end
-      @filter_name = "projects in #{@location_name}"
-    end
-
     if params[:id].to_i <= 0
       render_404
       return
@@ -74,6 +64,15 @@ class ClustersSectorsController < ApplicationController
 
     @cluster_sector_projects_count = @data.total_projects(@site, @filter_by_location)
 
+    if @filter_by_location.present?
+      @location_name = if @filter_by_location.size > 1
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      else
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      end
+      @filter_name = "#{@cluster_sector_projects_count} projects in #{@location_name}"
+    end
 
     respond_to do |format|
       format.html do

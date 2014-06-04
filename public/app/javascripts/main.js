@@ -136,7 +136,7 @@ require([
     e.preventDefault();
   }
 
-  $('.click-to-see-btn').on('click', goTo);
+  $('.btn-go-to-projects').on('click', goTo);
 
   sectionTitle();
   addClassToBody();

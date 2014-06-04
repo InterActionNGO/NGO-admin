@@ -36,11 +36,6 @@ class GeoregionController < ApplicationController
       end
     end
 
-    if @filter_by_category.present?
-      @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.try(:name)
-      @filter_name =  "#{@category_name} projects"
-    end
-
     if geo_ids.size == 1 && @site.navigate_by_country?
       raise NotFound if country.projects_count(@site) == 0
 
@@ -150,6 +145,11 @@ class GeoregionController < ApplicationController
     end
 
     @georegion_projects_count = @area.projects_count(@site, @filter_by_category)
+
+    if @filter_by_category.present?
+      @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.try(:name)
+      @filter_name =  "#{@georegion_projects_count} #{@category_name} projects"
+    end
 
     raise NotFound if sql.blank?
 
