@@ -199,6 +199,9 @@ define([
       $('#organizationsByBudgetChart').highcharts(_.extend(this.options.columnChart, {
         series: this.data.organizations_by_bugdet
       }));
+
+      this.organizationsMap = this.setMap('reportOrganizationsMap');
+      this.organizationsLayer = this.setLayer(this.organizationsMap, 'organizations_by_projects');
     },
 
     countriesCharts: function() {
@@ -213,6 +216,9 @@ define([
       $('#countriesByDonorsChart').highcharts(_.extend(this.options.columnChart, {
         series: this.data.countries_by_projects
       }));
+
+      this.countriesMap = this.setMap('reportCountriesMap');
+      this.countriesLayer = this.setLayer(this.countriesMap, 'countries_by_donors');
     },
 
     sectorsCharts: function() {
@@ -227,6 +233,9 @@ define([
       $('#sectorsByDonorsChart').highcharts(_.extend(this.options.columnChart, {
         series: this.data.sectors_by_donors
       }));
+
+      this.sectorsMap = this.setMap('reportSectorsMap');
+      this.sectorsLayer = this.setLayer(this.sectorsMap, 'sectors_by_projects');
     },
 
     printReport: function() {
@@ -291,10 +300,7 @@ define([
             type: 'Point',
             coordinates: [d.lat, d.lng]
           },
-          properties: {
-            name: d.name,
-            projects: d.projects
-          }
+          properties: d
         };
       });
 
