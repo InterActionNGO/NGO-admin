@@ -45,6 +45,10 @@
     @include icons-sprite(icon-education);
   }
 
+  .energy:before {
+    @include icons-sprite(icon-energy);
+  }
+
   .environment:before {
     @include icons-sprite(icon-environment);
   }
@@ -57,8 +61,20 @@
     @include icons-sprite(icon-human_rights);
   }
 
+  .humanitarian-aid:before {
+    @include icons-sprite(icon-humanitarian-aid);
+  }
+
   .logistics:before {
     @include icons-sprite(icon-logistics);
+  }
+
+  .mining-and-extractive-resources:before {
+    @include icons-sprite(icon-mining-and-extractive-resources);
+  }
+
+  .non-food-relief-items {
+    @include icons-sprite(icon-non-food-relief-items);
   }
 
   .nutrition:before {
@@ -75,6 +91,10 @@
 
   .protection:before {
     @include icons-sprite(icon-protection);
+  }
+
+  .safety-nets {
+    @include icons-sprite(icon-safety-nets);
   }
 
   .shelter:before {
