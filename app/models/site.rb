@@ -787,7 +787,7 @@ SQL
 
 
   def pages_by_parent(parent_permalink)
-    unless parent_page = self.pages.where(:permalink => parent_permalink).first
+    unless parent_page = self.pages.where(:permalink => parent_permalink, :published => true).first
       []
     else
       self.pages.where(:parent_id => parent_page.id).to_a

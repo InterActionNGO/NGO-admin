@@ -103,6 +103,11 @@
     background-position: sprite-position($icons, icon-education, 4px, 5px);
   }
 
+  .energy:before {
+    @include icons-sprite(icon-energy);
+    background-position: sprite-position($icons, icon-energy, 4px, 5px);
+  }
+
   .environment:before {
     @include icons-sprite(icon-environment);
     background-position: sprite-position($icons, icon-environment, 4px, 5px);
@@ -118,9 +123,24 @@
     background-position: sprite-position($icons, icon-human_rights, 4px, 5px);
   }
 
+  .humanitarian-aid:before {
+    @include icons-sprite(icon-humanitarian-aid);
+    background-position: sprite-position($icons, icon-humanitarian-aid, 4px, 5px);
+  }
+
   .logistics:before {
     @include icons-sprite(icon-logistics);
     background-position: sprite-position($icons, icon-logistics, 4px, 5px);
+  }
+
+  .mining-and-extractive-resources:before {
+    @include icons-sprite(icon-mining-and-extractive-resources);
+    background-position: sprite-position($icons, icon-mining-and-extractive-resources, 4px, 5px);
+  }
+
+  .non-food-relief-items {
+    @include icons-sprite(icon-non-food-relief-items);
+    background-position: sprite-position($icons, icon-non-food-relief-items, 4px, 5px);
   }
 
   .nutrition:before {
@@ -141,6 +161,11 @@
   .protection:before {
     @include icons-sprite(icon-protection);
     background-position: sprite-position($icons, icon-protection, 4px, 5px);
+  }
+
+  .safety-nets {
+    @include icons-sprite(icon-safety-nets);
+    background-position: sprite-position($icons, icon-safety-nets, 4px, 5px);
   }
 
   .shelter:before {

@@ -129,6 +129,8 @@ SQL
     'disaster-management'
     elsif (name.include? 'Early Recovery')
     'early_recovery'
+    elsif (name.include? 'Energy')
+    'energy'
     elsif (name.include? 'Economic Recovery')
     'economic_recovery'
     elsif (name.include? 'Education')
@@ -145,14 +147,22 @@ SQL
     'health'
     elsif (name.include? 'Human')
     'human_rights'
+    elsif (name.include? 'Humanitarian')
+    'humanitarian-aid'
     elsif (name.include? 'Logistics')
     'logistics'
+    elsif (name.include? 'Mining')
+    'mining-and-extractive-resources'
+    elsif (name.include? 'Non food')
+    'non-food-relief-items'
     elsif (name.include? 'Nutrition')
     'nutrition'
     elsif (name.include? 'Peace')
      'peace_security'
     elsif (name.include? 'Protection')
       'protection'
+    elsif (name.include? 'Safety nets')
+      'safety-nets'
     elsif (name.include? 'Shelter')
        'shelter'
     elsif (name.include? 'Water')
