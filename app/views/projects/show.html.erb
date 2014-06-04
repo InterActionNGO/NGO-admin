@@ -183,22 +183,12 @@
                   video_players['<%= media_resource.id %>'] = '<%= raw media_resource.video_embed_html %>';
                 </script>
                 <% else %>
-                  <%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption) %>
+                  <p><%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption) %></p>
                 <% end %>
               <% end %>
-              <div class="mamufas"></div>
             </div>
 
-            <a href="#view_video" class="video"></a>
-
-            <div class="loader_gallery">
-              <p>Loading videos and images</p>
-              <img src="/images/sites/projects/ajax-loader.gif" title="loader" alt="loader" />
-              <div class="video_player">
-                <a id="back_gallery" href="#back_gallery">Back to gallery</a>
-              </div>
-            </div>
-          <% end %>
+        <% end %>
 
         <% if @project.activities || @project.additional_information || @project.cross_cutting_issues || (@locations.present? && @locations.to_a.join.present?)%>
           <section>
