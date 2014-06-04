@@ -8,5 +8,5 @@
   border-bottom-right-radius: 15px;
   @include rotate (-90deg);
   font-weight: lighter;
-  &:hover {background-color: rgba($color-2, .3);}
+  &:hover {background-color: darken($color-2, 10%);}
 }
