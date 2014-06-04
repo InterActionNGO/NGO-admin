@@ -20,7 +20,7 @@ define([
             lat: Number(location[3]),
             lng: Number(location[2]),
             projects: Number(location_data.n_projects)
-          }
+          };
         });
         return locations;
       }
