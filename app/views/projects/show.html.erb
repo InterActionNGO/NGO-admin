@@ -42,8 +42,8 @@
         <div class="mod-info mod-project-timeline" id="timelineView">
           <h3>Project timeline</h3>
           <div class="timeline">
-            <span class="timeline-status"><% if @project.finished? %>Completed project<% end %></span>
-            <p class="months_left"><%= pluralize(@project.months_left, 'month', 'months') %> left</p>
+            <span class="timeline-status"></span>
+            <% if @project.finished? %>Completed project<% else %><p class="months_left"><%= pluralize(@project.months_left, 'month', 'months') %> left</p><% end %>
           </div>
           <p class="first_date"><%= @project.start_date.strftime("%m/%d/%Y") %></p>
           <p class="second_date"><%= @project.end_date.strftime("%m/%d/%Y") %></p>
