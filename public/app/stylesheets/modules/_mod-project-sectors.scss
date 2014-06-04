@@ -26,7 +26,11 @@
   }
 
   .communication:before {
-    @include icons-sprite(icon-communication);
+    @include icons-sprite(icon-communications);
+  }
+
+  .disaster-management:before {
+    @include icons-sprite(icon-disaster-management);
   }
 
   .early_recovery:before {
@@ -47,10 +51,6 @@
 
   .food_aid:before {
     @include icons-sprite(icon-food-aid);
-  }
-
-  .disaster_management:before {
-    @include icons-sprite(icon-other);
   }
 
   .human_rights:before {

@@ -79,8 +79,13 @@
   }
 
   .communication:before {
-    @include icons-sprite(icon-communication);
-    background-position: sprite-position($icons, icon-communication, 4px, 5px);
+    @include icons-sprite(icon-communications);
+    background-position: sprite-position($icons, icon-communications, 4px, 5px);
+  }
+
+  .disaster-management:before {
+    @include icons-sprite(icon-disaster-management);
+    background-position: sprite-position($icons, icon-disaster-management, 4px, 5px);
   }
 
   .early_recovery:before {
@@ -106,11 +111,6 @@
   .food_aid:before {
     @include icons-sprite(icon-food-aid);
     background-position: sprite-position($icons, icon-food-aid, 4px, 5px);
-  }
-
-  .disaster_management:before {
-    @include icons-sprite(icon-other);
-    background-position: sprite-position($icons, icon-other, 4px, 5px);
   }
 
   .human_rights:before {
@@ -152,6 +152,7 @@
     @include icons-sprite(icon-water);
     background-position: sprite-position($icons, icon-water, 4px, 5px);
   }
+
 
 
   // Items

@@ -2,11 +2,11 @@
   left: -49px !important;
   padding: 10px 25px;
   text-transform: uppercase;
-  background-color:rgba($color-2, .3);
+  background-color: $color-2;
   color: $color-0;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   @include rotate (-90deg);
   font-weight: lighter;
-  &:hover {background-color: $color-2;}
+  &:hover {background-color: rgba($color-2, .3);}
 }
