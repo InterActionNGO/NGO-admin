@@ -58,37 +58,6 @@ class DonorsController < ApplicationController
     #   end
     # end
 
-    @filter_name = ''
-
-    if @filter_by_category
-      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
-    end
-    if @filter_by_category && @filter_by_location
-      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
-      @location_name = if @filter_by_location.size == 1
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      else
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      end
-      @filter_name =  "#{@category_name} projects in #{@location_name}"
-    elsif @filter_by_location
-      @location_name = if @filter_by_location.size == 1
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      else
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      end
-      @filter_name = "projects in #{@location_name}"
-    # elsif @donor.filter_by_category_valid?
-    #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
-    #   @filter_name =  "#{@category_name} projects"
-    elsif @filter_by_category
-      @filter_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
-    end
-
-    puts @filter_name
-
     projects_options = {
       :donor_id => @donor.id,
       :per_page => 10,
@@ -171,6 +140,35 @@ class DonorsController < ApplicationController
     end
 
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
+
+    @filter_name = ''
+
+    if @filter_by_category
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
+    end
+    if @filter_by_category && @filter_by_location
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name =  "#{@projects_count}  #{@category_name} projects in #{@location_name}"
+    elsif @filter_by_location
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name = "#{@projects_count} projects in #{@location_name}"
+    # elsif @donor.filter_by_category_valid?
+    #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
+    #   @filter_name =  "#{@category_name} projects"
+    elsif @filter_by_category
+      @filter_name = "#{@projects_count} projects in " + (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
+    end
 
     if @filter_by_location.present?
       if @filter_by_location.size > 1
