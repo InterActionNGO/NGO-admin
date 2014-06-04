@@ -347,7 +347,7 @@ define([
           var fsize = (feature.properties.projects > 20) ? 0.6 * feature.properties.projects : 12;
 
           size = (size > 50) ? 50 : size;
-          fsize = (fsize > 24) ? 24 : fsize;
+          fsize = (fsize > 19) ? 19 : fsize;
 
           var marker = L.marker(latlng, {
             icon: L.divIcon({
