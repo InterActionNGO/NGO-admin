@@ -1242,7 +1242,7 @@ SQL
         non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
       end
       p @data[:results][:totals][:budget]
-      @data[:results][:totals][:budget] = non_zero_values.inject(:+) if @data[:results][:totals][:budget] > 0
+      @data[:results][:totals][:budget] = non_zero_values.inject(:+)
       if non_zero_values.length > 0
         avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
       else
@@ -1461,80 +1461,170 @@ SQL
 
   # COUNTRIES BY PROJECTS, ORGANIZATIONS, DONORS
   def self.bar_chart_countries(base_select, limit=10)
-    concrete_select = <<-SQL
-      SELECT country_id as country_id, country_name as country_name,
-             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors,
-             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
-        FROM t
-       WHERE country_id in (SELECT DISTINCT(country_id) FROM t ORDER BY country_id LIMIT #{limit})
-      GROUP BY country_id, country_name
-    SQL
-    donors = {}
-    donors[:by_projects] = ActiveRecord::Base.connection.execute(base_select + concrete_select + "ORDER by n_projects DESC")
-    donors[:by_organizations] = ActiveRecord::Base.connection.execute(base_select + concrete_select + "ORDER by n_organizations DESC")
-    donors[:by_donors] = ActiveRecord::Base.connection.execute(base_select + concrete_select + "ORDER by n_donors DESC")
+    countries = {}
+    countries[:bar_chart] = {}
+    countries[:maps] = {}
 
-    donors
+    # ITERATE over the 3 criterias for grouping on Organizations scenario
+    [["project_id","n_projects"], ["organization_id","n_organizations"], ["donor_id","n_donors"]].each do |criteria|
+
+      # SELECTS FOR BAR CHARTS ON REPORTING
+      concrete_select = <<-SQL
+        SELECT country_id, country_name,
+               count(distinct(project_id)) AS n_projects,  count(distinct(organization_id)) AS n_organizations, sum(distinct(donor_id)) as n_donors
+          FROM t
+         WHERE country_id IN
+              (SELECT country_id FROM
+                (SELECT distinct(country_id), count(#{criteria[0]}) AS total
+                 FROM t
+                 GROUP BY country_id ORDER BY total DESC LIMIT #{limit}) max_donors
+              )
+        GROUP BY country_id, country_name
+        ORDER BY #{criteria[1]}
+      SQL
+      countries[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
+
+      # SELECTS FOR MAPS ON REPORTING
+      projects_map_select = <<-SQL
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        FROM t
+        WHERE country_id IN
+          (SELECT country_id FROM
+            (SELECT DISTINCT(country_id), count(distinct(#{criteria[0]})) as total FROM t group by country_id ORDER BY total desc LIMIT  #{limit}) max_donors
+          )
+        GROUP BY  country_id, country_name, lat, lon
+        ORDER BY n_projects desc
+      SQL
+      countries[:maps]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + projects_map_select)
+    end
+    countries
 
   end
 
   # ORGANIZATIONS BY PROJECTS, ORGANIZATIONS, TOTAL_BUDGET
   def self.bar_chart_organizations(base_select, limit=10)
-    concrete_select = <<-SQL
-      SELECT organization_id as organization_id, organization_name as organization_name,
-             count(distinct(project_id)) as n_projects, count(distinct(country_id)) as n_countries, sum(distinct(project_budget)) as total_budget,
-             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
-        FROM t
-       WHERE organization_id in
-        (SELECT DISTINCT(organization_id) FROM t ORDER BY organization_id LIMIT #{limit})
-      GROUP BY organization_id, organization_name
-    SQL
+
     organizations = {}
-    organizations[:by_projects] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_projects DESC")
-    organizations[:by_countries] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_countries DESC")
-    organizations[:by_budget] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by total_budget DESC")
+    organizations[:bar_chart] = {}
+    organizations[:maps] = {}
 
+    # ITERATE over the 3 criterias for grouping on Organizations scenario
+    [["project_id","n_projects"], ["country_id","n_countries"], ["project_budget","total_budget"]].each do |criteria|
+
+      # SELECTS FOR BAR CHARTS ON REPORTING
+      concrete_select = <<-SQL
+        SELECT organization_id, organization_name,
+               count(distinct(project_id)) AS n_projects, count(distinct(country_id)) AS n_countries, sum(distinct(project_budget)) as total_budget
+          FROM t
+         WHERE organization_id IN
+              (SELECT organization_id FROM
+                (SELECT distinct(organization_id), count(#{criteria[0]}) AS total
+                 FROM t
+                 GROUP BY organization_id ORDER BY total DESC LIMIT #{limit}) max_donors
+              )
+        GROUP BY organization_id, organization_name
+        ORDER BY #{criteria[1]}
+      SQL
+      organizations[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
+
+      # SELECTS FOR MAPS ON REPORTING
+      projects_map_select = <<-SQL
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        FROM t
+        WHERE organization_id IN
+          (SELECT organization_id FROM
+            (SELECT DISTINCT(organization_id), count(distinct(#{criteria[0]})) as total FROM t group by organization_id ORDER BY total desc LIMIT  #{limit}) max_donors
+          )
+        GROUP BY  country_id, country_name, lat, lon
+        ORDER BY n_projects desc
+      SQL
+      organizations[:maps]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + projects_map_select)
+    end
     organizations
-
   end
 
   # DONORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
   def self.bar_chart_donors(base_select, limit=10)
-    concrete_select = <<-SQL
-      SELECT donor_id as donor_id, donor_name as donor_name,
-             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(country_id)) as n_countries,
-             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
-        FROM t
-       WHERE donor_id in
-        (SELECT DISTINCT(donor_id) FROM t ORDER BY donor_id LIMIT #{limit})
-      GROUP BY donor_id, donor_name
-    SQL
-    donors = {}
 
-    donors[:by_projects] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_projects DESC")
-    donors[:by_organizations] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_organizations DESC")
-    donors[:by_countries] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_countries DESC")
+    donors = {}
+    donors[:bar_chart] = {}
+    donors[:maps] = {}
+
+    # ITERATE over the 3 criterias for grouping on Donors scenario
+    [["project_id","n_projects"], ["organization_id","n_organizations"], ["country_id","n_countries"]].each do |criteria|
+
+      # SELECTS FOR BAR CHARTS ON REPORTING
+      concrete_select = <<-SQL
+        SELECT donor_id, donor_name,
+               count(distinct(project_id)) AS n_projects, count(distinct(organization_id)) AS n_organizations, count(distinct(country_id)) AS n_countries
+          FROM t
+         WHERE donor_id IN
+              (SELECT donor_id FROM
+                (SELECT distinct(donor_id), count(#{criteria[0]}) AS total
+                 FROM t
+                 GROUP BY donor_id ORDER BY total DESC LIMIT #{limit}) max_donors
+              )
+        GROUP BY donor_id, donor_name
+        ORDER BY #{criteria[1]}
+      SQL
+      donors[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
+
+      # SELECTS FOR MAPS ON REPORTING
+      projects_map_select = <<-SQL
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        FROM t
+        WHERE donor_id IN
+          (SELECT donor_id FROM
+            (SELECT DISTINCT(donor_id), count(distinct(#{criteria[0]})) as total FROM t group by donor_id ORDER BY total desc LIMIT  #{limit}) max_donors
+          )
+        GROUP BY  country_id, country_name, lat, lon
+        ORDER BY n_projects desc
+      SQL
+      donors[:maps]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + projects_map_select)
+    end
     donors
   end
 
   # SECTORS BY PROJECTS, ORGANIZATIONS, COUNTRIES
   def self.bar_chart_sectors(base_select, limit=10)
-    concrete_select = <<-SQL
-      SELECT sector_id as sector_id, sector_name as sector_name,
-             count(distinct(project_id)) as n_projects, count(distinct(organization_id)) as n_organizations, count(distinct(donor_id)) as n_donors,
-             array_to_string(array_agg(country_id ||'|'||country_name ||'|'|| lat||'|'||lon), '@@@')
+
+    sectors = {}
+    sectors[:bar_chart] = {}
+    sectors[:maps] = {}
+
+    # ITERATE over the 3 criterias for grouping on Organizations scenario
+    [["project_id","n_projects"], ["organization_id","n_organizations"], ["donor_id","n_donors"]].each do |criteria|
+
+      # SELECTS FOR BAR CHARTS ON REPORTING
+      concrete_select = <<-SQL
+        SELECT sector_id, sector_name,
+               count(distinct(project_id)) AS n_projects,  count(distinct(organization_id)) AS n_organizations, sum(distinct(donor_id)) as n_donors
+          FROM t
+         WHERE sector_id IN
+              (SELECT sector_id FROM
+                (SELECT distinct(sector_id), count(#{criteria[0]}) AS total
+                 FROM t
+                 GROUP BY sector_id ORDER BY total DESC LIMIT #{limit}) max_donors
+              )
+        GROUP BY sector_id, sector_name
+        ORDER BY #{criteria[1]}
+      SQL
+      sectors[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
+
+      # SELECTS FOR MAPS ON REPORTING
+      projects_map_select = <<-SQL
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
         FROM t
-       WHERE sector_id in
-        (SELECT DISTINCT(sector_id) FROM t ORDER BY sector_id LIMIT #{limit})
-      GROUP BY sector_id, sector_name
-    SQL
-
-    countries = {}
-    countries[:by_projects] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_projects DESC")
-    countries[:by_organizations] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_organizations DESC")
-    countries[:by_donors] = ActiveRecord::Base.connection.execute(base_select + concrete_select + " ORDER by n_donors DESC")
-
-    countries
+        WHERE sector_id IN
+          (SELECT sector_id FROM
+            (SELECT DISTINCT(sector_id), count(distinct(#{criteria[0]})) as total FROM t group by sector_id ORDER BY total desc LIMIT  #{limit}) max_donors
+          )
+        GROUP BY  country_id, country_name, lat, lon
+        ORDER BY n_projects desc
+      SQL
+      sectors[:maps]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + projects_map_select)
+    end
+    sectors
   end
 
   ################################################
