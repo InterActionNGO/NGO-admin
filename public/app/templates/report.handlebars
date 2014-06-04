@@ -75,16 +75,16 @@
     </div>
   </div>
   <div class="row">
-    <div class="mod-report-locations">
+    <div class="mod-report-locations" id="reportDonorsLocations">
       <div class="mod-report-locations-header">
         <h3>Supported project locations</h3>
         <ul>
           <li>
             <span class="current">By number of projects</span>
             <ul class="mod-report-locations-header-child">
-              <li><a href="#by-projects">By number of projects</a></li>
-              <li><a href="#by-organizations">By number of organizations</a></li>
-              <li><a href="#by-countries">By number of countries</a></li>
+              <li><a href="#by-projects" data-layer="donors_by_projects">By number of projects</a></li>
+              <li><a href="#by-organizations" data-layer="donors_by_organizations">By number of organizations</a></li>
+              <li><a href="#by-countries" data-layer="donors_by_countries">By number of countries</a></li>
             </ul>
           </li>
         </ul>
@@ -112,16 +112,16 @@
     </div>
   </div>
   <div class="row">
-    <div class="mod-report-locations">
+    <div class="mod-report-locations" id="reportOrganizationsLocations">
       <div class="mod-report-locations-header">
         <h3>Supported project locations</h3>
         <ul>
           <li>
             <span class="current">By number of projects</span>
             <ul class="mod-report-locations-header-child">
-              <li><a href="#by-projects">By number of projects</a></li>
-              <li><a href="#by-countries">By number of countries</a></li>
-              <li><a href="#by-budget">By budget</a></li>
+              <li><a href="#by-projects" data-layer="organizations_by_projects">By number of projects</a></li>
+              <li><a href="#by-countries" data-layer="organizations_by_countries">By number of countries</a></li>
+              <li><a href="#by-budget" data-layer="organizations_by_bugdet">By budget</a></li>
             </ul>
           </li>
         </ul>
@@ -149,16 +149,16 @@
     </div>
   </div>
   <div class="row">
-    <div class="mod-report-locations">
+    <div class="mod-report-locations" id="reportCountriesLocations">
       <div class="mod-report-locations-header">
         <h3>Supported project locations</h3>
         <ul>
           <li>
             <span class="current">By number of projects</span>
             <ul class="mod-report-locations-header-child">
-              <li><a href="#by-projects">By number of projects</a></li>
-              <li><a href="#by-organizations">By number of organizations</a></li>
-              <li><a href="#by-donors">By number of donors</a></li>
+              <li><a href="#by-projects" data-layer="countries_by_donors">By number of projects</a></li>
+              <li><a href="#by-organizations" data-layer="countries_by_organizations">By number of organizations</a></li>
+              <li><a href="#by-donors" data-layer="countries_by_projects">By number of donors</a></li>
             </ul>
           </li>
         </ul>
@@ -186,16 +186,16 @@
     </div>
   </div>
   <div class="row">
-    <div class="mod-report-locations">
+    <div class="mod-report-locations" id="reportSectorsLocations">
       <div class="mod-report-locations-header">
         <h3>Supported project locations</h3>
         <ul>
           <li>
             <span class="current">By number of projects</span>
             <ul class="mod-report-locations-header-child">
-              <li><a href="#by-projects">By number of projects</a></li>
-              <li><a href="#by-organizations">By number of organizations</a></li>
-              <li><a href="#by-donors">By number of donors</a></li>
+              <li><a href="#by-projects" data-layer="sectors_by_projects">By number of projects</a></li>
+              <li><a href="#by-organizations" data-layer="sectors_by_organizations">By number of organizations</a></li>
+              <li><a href="#by-donors" data-layer="sectors_by_donors">By number of donors</a></li>
             </ul>
           </li>
         </ul>
@@ -207,5 +207,5 @@
 
 <div class="mod-report mod-report-actions">
   <button id="printReport">Print</button>
-  <button id="saveReport">Save PDF</button>
+  {{!-- <button id="saveReport">Save PDF</button> --}}
 </div>
