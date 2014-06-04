@@ -1,15 +1,20 @@
 <div class="featured-projects">
   <div class="row mod-featured-projects">
-    <div class="grid-4">
-      <p>Featured projects</p>
+    <div class="grid-5">
+      <h4>Featured projects</h4>
     </div>
-    <div class="grid-12">
+
       <ul>
         <% @site.featured_sites.each do |s|  %>
-            <li><a class="" href="http://<%= s.url %>" target"_self" ><%= s.name %></a></li>
+            <li class="featured-project grid-3">
+              <a href="http://<%= s.url %>" target"_self" >
+                <img src="<%= s.aid_map_image.url %>" alt="" width="200" height="115">
+                <p><%= s.name %></p>
+              </a>
+            </li>
         <% end %>
       </ul>
-    </div>
+
   </div>
 </div>
 
@@ -20,7 +25,7 @@
         <%= render 'new_partials/main-menu' %>
       </div>
       <div class="grid-4">
-        <a href="/">
+        <a href="http://<%= Settings.main_site_host %>">
           <%= image_tag "footer_ngo.svg", :alt  => "interaction aid map logo", :class  => "aid-map-logo", :width => '170', :height => '80' %>
         </a>
       </div>
