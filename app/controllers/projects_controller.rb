@@ -19,9 +19,12 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html do
         #Map data
-        sql="select r.id,r.center_lon as lon,r.center_lat as lat,r.name,r.code,r.country_id
+        sql="select r.id,r.center_lon as lon,r.center_lat as lat,r.name,r.code,r.country_id, c.name as country_name
         from (projects as p inner join projects_regions as pr on pr.project_id=p.id and p.id=#{@project.id})
-        inner join regions as r on pr.region_id=r.id and r.level=#{@site.level_for_region}"
+        inner join regions as r on pr.region_id=r.id and r.level=#{@site.level_for_region}
+        inner join countries as c on r.country_id = c.id"
+
+        p sql.gsub("\n"," ")
 
         @locations = ActiveRecord::Base.connection.execute(sql)
         if @locations.count == 0
