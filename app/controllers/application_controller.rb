@@ -60,11 +60,7 @@ class ApplicationController < ActionController::Base
       # If the request host isn't the main_site_host, it should be the host from a site
       if request.subdomain == 'www' || request.subdomain == ''
           @site = Site.find_by_name('global')
-        elsif
-            unless @site = Site.published.where(:url => request.host, :featured => true).first
-              @site = Site.find_by_name('global')
-              redirect_to "http://" + Settings.main_site_host
-            end
+        elsif @site = Site.published.where(:url => request.host).first
             #unless @site = Site.find_by_name("global")
           # raise ActiveRecord::RecordNotFound
         # end
