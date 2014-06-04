@@ -1,12 +1,28 @@
-.nyroModal {
-  left: -49px !important;
+#feedbackBtn {
   padding: 10px 25px;
   text-transform: uppercase;
   background-color: $color-2;
   color: $color-0;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  @include rotate (-90deg);
   font-weight: lighter;
-  &:hover {background-color: darken($color-2, 10%);}
+  position: fixed;
+  top: 350px;
+  left: 0;
+  z-index: 1000;
+
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+
+  @include transform(rotate(-90deg) translate(0, 100%));
+
+  -webkit-transform-origin: 0% 100%;
+  -moz-transform-origin: 0% 100%;
+  -ms-transform-origin: 0% 100%;
+  -o-transform-origin: 0% 100%;
+  transform-origin: 0% 100%;
+
+  &:hover {
+    background-color: darken($color-2, 10%);
+  }
 }
