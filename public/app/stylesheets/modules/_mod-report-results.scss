@@ -111,3 +111,16 @@
   &:first-child { margin-right: 4%;}
 
 }
+
+.mod-report-locations-header {
+  background-color: $color-4;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.mod-report-locations-header-child {
+  padding-left: 0;
+  font-weight: bold;
+  list-style: none; list-decoration: none;
+  li { list-decoration: none;}
+  a { color: $color-3}
+}
