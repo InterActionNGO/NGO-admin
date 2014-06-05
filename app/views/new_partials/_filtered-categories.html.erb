@@ -17,7 +17,7 @@
               <strong><%= CGI.unescapeHTML(title) %></strong>, <%= link_to raw(@filter_name), sector_path(params[:category_id]), :class => 'filter' %>
             <% end %>
           </p>
-        <% elsif !title.empty? %>
+        <% elsif title != @site.name %>
           <p class="filtered">
             <strong>Showing</strong>:
             <% if @donor && @projects_count %>
@@ -32,8 +32,6 @@
               <strong><%= CGI.unescapeHTML(title) %></strong>
             <% end %>
           </p>
-        <% else %>
-          <div></div>
         <% end %>
       </div>
     <% end %>
