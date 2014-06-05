@@ -95,6 +95,10 @@ define([
           model: reportModel
         });
       }
+
+      $('#faqAccordion').accordion({
+        heightStyle: 'content'
+      });
     }
 
   });
