@@ -29,5 +29,18 @@
     margin-top: 20px;
   }
 
+  .ui-accordion {
+    .ui-accordion-header {
+      padding: 0;
+    }
+    .ui-accordion-icons {
+      padding: .7em 0;
+      color: $color-2;
+      text-transform: none;
+    }
+    .ui-accordion-content {
+      padding: 1em 0;
+    }
+  }
 }
 
