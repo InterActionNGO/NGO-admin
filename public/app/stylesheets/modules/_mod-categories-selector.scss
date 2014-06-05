@@ -26,9 +26,6 @@
       font-weight: lighter;
       @include border-radius(20px);
     }
-    // &.current .father {
-    //   color: $color-0;
-    // }
     &.search { padding: 0;}
     &:hover {
       color: $color-0;
