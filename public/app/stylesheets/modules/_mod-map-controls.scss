@@ -5,12 +5,16 @@
   .control-navbar, .control-zoom, .click-to-see {
     position: absolute;
     border-radius: 40px;
-    background-color: rgba($color-1, 0.8);
+    background-color: rgba($color-1, 0.7);
     box-shadow: 0 0 0 5px rgba($color-1, 0.3);
     font-weight: lighter;
     font-size: 14px;
     text-transform: uppercase;
     cursor: pointer;
+  }
+
+  .control-navbar.featured-control-navbar {
+    box-shadow: 0 0 0 5px rgba($color-1, 0.7);
   }
 
   .control-zoom {
@@ -68,8 +72,8 @@
     }
 
     &#mapTypeSelector > ul {
-      @include border-top-radius(40px);
-      @include border-left-radius(40px);
+      @include border-top-right-radius(40px);
+      @include border-bottom-right-radius(40px);
     }
   }
   .featured {
@@ -85,7 +89,7 @@
   .index-item {
     display: block;
     position: relative;
-    padding: 8px 15px;
+    padding: 8px 10px;
     text-align: center;
   }
   .submenu {
