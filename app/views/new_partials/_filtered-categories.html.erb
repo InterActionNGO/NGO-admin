@@ -28,8 +28,6 @@
               <strong><%= CGI.unescapeHTML(title) %></strong>, <%= @cluster_sector_projects_count %> <% if @cluster_sector_projects_count === 1 %>project<% else %>projects<% end %>
             <% elsif @georegion_projects_count %>
               <strong><%= CGI.unescapeHTML(title) %></strong>, <%= @georegion_projects_count %> <% if @georegion_projects_count === 1 %>project<% else %>projects<% end %>
-            <% else %>
-              <strong><%= CGI.unescapeHTML(title) %></strong>
             <% end %>
           </p>
         <% end %>
