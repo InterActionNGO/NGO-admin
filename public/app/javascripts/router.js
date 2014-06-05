@@ -18,7 +18,8 @@ define([
   'views/layer-overlay',
   'views/timeline',
   'views/spin',
-  'views/donors-sidebar'
+  'views/donors-sidebar',
+  'views/gallery'
 ], function(Backbone, ReportModel) {
 
   var ReportFormView = arguments[2],
@@ -33,7 +34,8 @@ define([
     LayerOverlayView = arguments[11],
     TimelineView = arguments[12],
     SpinView = arguments[13],
-    DonorsSidebarView = arguments[14];
+    DonorsSidebarView = arguments[14],
+    GalleryView = arguments[15];
 
   var Router = Backbone.Router.extend({
 
@@ -70,6 +72,7 @@ define([
     project: function() {
       this.lists();
       new TimelineView();
+      new GalleryView();
     },
 
     search: function() {
