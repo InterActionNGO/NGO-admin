@@ -113,14 +113,28 @@
 }
 
 .mod-report-locations-header {
+  box-sizing: border-box;
+  padding: 0 20px;
   background-color: $color-4;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  h3, ul {
+    display: inline-block;
+  }
+  li {
+    position: relative;
+    list-style: none;
+    list-decoration: none;
+  }
+  .current {
+    font-size: 15px;
+    text-transform: uppercase;
+  }
 }
 .mod-report-locations-header-child {
+  position: absolute;
   padding-left: 0;
   font-weight: bold;
   list-style: none; list-decoration: none;
-  li { list-decoration: none;}
   a { color: $color-3}
 }
