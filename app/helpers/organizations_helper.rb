@@ -8,8 +8,7 @@ module OrganizationsHelper
     elsif @filter_by_location
       pluralize(@organization_projects_count, "project", "projects") + ' ' + by + " in #{@location_name}"
     elsif @filter_by_category
-      pluralize(@organization_projects_count, "#{@filter_name}")
-      #pluralize(@organization_projects_count, "#{@filter_name} project", "#{@filter_name} projects")
+      pluralize(@organization_projects_count, "#{@category_name} project", "#{@category_name} projects")
     else
       pluralize(@organization_projects_count, "project", "projects") + ' ' + by
     end
