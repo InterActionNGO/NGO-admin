@@ -119,6 +119,7 @@
     @include negative-radius-upper($primary-color, 15px);
   }
 
+
   .is-fixed &{
     &:hover, &.active {
       background-color: $primary-color;
@@ -138,6 +139,17 @@
       top: auto;
       @include negative-radius-down($primary-color, 15px);
     }
+  }
+
+  &.no-child:hover {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    &:after {
+      display: none;
+    }
+    a { color: $color-0;}
   }
 
   input {
@@ -190,14 +202,11 @@
         @include negative-radius-down(rgba($primary-color, .3), 12px);
       }
     }
+    .father a { color: $color-0;}
   }
-  &.no-child:hover .index-item {
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    &:after {
-      display: none;
-    }
-  }
+
+
+
   .submenu {
     border-top: 5px solid rgba($primary-color, .3);
   }
