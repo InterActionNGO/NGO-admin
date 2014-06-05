@@ -70,7 +70,8 @@ require.config({
 require([
   'jquery',
   'handlebars',
-  'router'
+  'router',
+  'chachiSlider'
 ], function($, Handlebars, Router) {
 
   // Extensions
@@ -171,5 +172,10 @@ require([
       'font-size': '35px'
     });
   }
+
+  $('.mod-logos-slider').chachiSlider({
+    navigation: false,
+    pauseTime: 7000
+  });
 
 });
