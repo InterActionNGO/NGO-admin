@@ -4,6 +4,8 @@
       <% if @site.featured? %>
         <h3>Featured map</h3>
         <h2 class="feature"><%= CGI.unescapeHTML(title) %></h2>
+      <% elsif title.empty? %>
+        <h2 class="feature">Global Map</h2>
       <% elsif @filter_name.present? || @filter_by_location || @filter_by_category || @filter_by_organization %>
         <h3>Filtered by</h3>
         <p class="filtered">
