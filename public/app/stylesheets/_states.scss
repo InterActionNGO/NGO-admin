@@ -2,6 +2,9 @@
   display: none !important;
   visibility: hidden;
 }
+.is-visible {
+  display: block;
+}
 
 .is-fixed {
   position: fixed;
