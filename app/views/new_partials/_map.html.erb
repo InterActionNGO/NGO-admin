@@ -36,6 +36,10 @@
             </ul>
           </div>
 
+          <% if @site.featured? %>
+            <div class="featured"><%= CGI.unescapeHTML(title) %></div>
+          <% end %>
+
         </div> <!-- control-navbar -->
 
         <div class="control-zoom" id="controlZoom">
@@ -52,7 +56,6 @@
 
   <div id="legendWrapper"></div>
 
-  <%# if @filter_name.present? or @donor.present %>
   <%= render 'new_partials/filtered-categories' %>
 
 </section>
