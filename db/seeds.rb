@@ -189,6 +189,11 @@ if (1==0)
   )
 end
 
+####################################################################
+#
+# GLOBAL SITE
+#
+####################################################################
 
 site = Site.find_or_initialize_by_name('global')
 
@@ -207,7 +212,42 @@ site.update_attributes(
 )
 
 
+####################################################################
+#
+# GLOBAL PAGES
+#
+####################################################################
 
+
+  # ===> DATA PARENT PAGE
+  page = Page.find_or_initialize_by_title_and_site_id('Data', haiti_site_id)
+
+  page.update(
+    :title        => 'Data',
+    :body         => '',
+    :site_id      => haiti_site_id,
+    :permalink    => '',
+    :published    => true,
+    :parent_id    => nil,
+    :order_index  => 0
+  )
+  data_page_id = page.id
+
+
+
+  # ===> DATA PARENT PAGE
+  page = Page.find_or_initialize_by_title_and_site_id_and_parent_id('Data guidance', haiti_site_id, data_page_id)
+
+  page.update(
+    :title        => 'Data guidance',
+    :body         => '',
+    :site_id      => haiti_site_id,
+    :permalink    => '',
+    :published    => true,
+    :parent_id    => nil,
+    :order_index  => 0
+  )
+  data_page_id = page.id
 
 
 ####################################################################
@@ -216,3 +256,27 @@ site.update_attributes(
 #
 ####################################################################
 
+Sector.first_or_create :name => 'Energy'
+Sector.first_or_create :name => 'Humanitarian aid'
+Sector.first_or_create :name => 'Mining and extractive resources'
+Sector.first_or_create :name => 'Non-food relief items (NFIs)'
+Sector.first_or_create :name => 'Safety nets'
+
+
+####################################################################
+#
+# CENTROIDS UPDATE
+#
+####################################################################
+
+philipines = Country.find_or_initialize_by_name('Philipines')
+philipines.update_attributes(
+  :center_lat => 11.1682658,
+  :center_lon => 122.8132091
+)
+
+usa = Country.find_or_initialize_by_name('United States')
+usa.update_attributes(
+  :center_lat => 39.503926,
+  :center_lon => -100.885364
+)
