@@ -58,37 +58,6 @@ class DonorsController < ApplicationController
     #   end
     # end
 
-    @filter_name = ''
-
-    if @filter_by_category 
-      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
-    end
-    if @filter_by_category && @filter_by_location
-      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
-      @location_name = if @filter_by_location.size == 1
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      else
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      end
-      @filter_name =  "#{@category_name} projects in #{@location_name}"
-    elsif @filter_by_location
-      @location_name = if @filter_by_location.size == 1
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      else
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      end
-      @filter_name = "projects in #{@location_name}"
-    # elsif @donor.filter_by_category_valid?
-    #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
-    #   @filter_name =  "#{@category_name} projects"
-    elsif @filter_by_category
-      @filter_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
-    end
-
-    puts @filter_name
-
     projects_options = {
       :donor_id => @donor.id,
       :per_page => 10,
@@ -160,7 +129,7 @@ class DonorsController < ApplicationController
       :order         => 'created_at DESC',
       :start_in_page => params[:start_in_page]
     }
-   
+
 
     if params[:location_id]
       @projects_count = @projects.count
@@ -171,6 +140,35 @@ class DonorsController < ApplicationController
     end
 
     @donor_projects_clusters_sectors = @donor.projects_clusters_sectors(@site, @filter_by_location)
+
+    @filter_name = ''
+
+    if @filter_by_category
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
+    end
+    if @filter_by_category && @filter_by_location
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name =  "#{@projects_count}  #{@category_name} projects in #{@location_name}"
+    elsif @filter_by_location
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name = "#{@projects_count} projects in #{@location_name}"
+    # elsif @donor.filter_by_category_valid?
+    #   @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
+    #   @filter_name =  "#{@category_name} projects"
+    elsif @filter_by_category
+      @filter_name = "#{@projects_count} projects in " + (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
+    end
 
     if @filter_by_location.present?
       if @filter_by_location.size > 1
@@ -198,7 +196,7 @@ class DonorsController < ApplicationController
     else
       carry_on_url = donor_path(@donor, filters_for_url)
     end
-    
+
     organization_location_condition = "AND p.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
     projects_organization_condition = "AND projects.primary_organization_id = #{params[:organization_id].sanitize_sql!.to_i}" if params[:organization_id]
     respond_to do |format|
@@ -252,7 +250,7 @@ class DonorsController < ApplicationController
                 #{category_join}
                 WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i} #{organization_location_condition}
                 GROUP BY r.id,r.name,lon,lat,r.name,r.path,r.code
-              
+
                 UNION
                 SELECT c.id,
                 count(distinct ps.project_id) AS count,
@@ -269,7 +267,7 @@ class DonorsController < ApplicationController
                 #{category_join} #{organization_location_condition}
                 WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
                 GROUP BY c.id,c.name,lon,lat,c.code
-              
+
               SQL
             else
                 <<-SQL
@@ -335,7 +333,6 @@ class DonorsController < ApplicationController
           @map_data_max_count = md[:count].to_i if @map_data_max_count < md[:count].to_i
         end
         @map_data = @map_data.to_json
-
       end
       format.js do
         render :update do |page|
@@ -348,12 +345,12 @@ class DonorsController < ApplicationController
       format.csv do
         send_data Project.to_csv(@site, options_export),
           :type => 'text/plain; charset=utf-8; application/download',
-          :disposition => "attachment; filename=#{@donor.name}_projects.csv"
+          :disposition => "attachment; filename=#{@donor.name.gsub(/[^0-9A-Za-z]/, '')}_projects.csv"
       end
       format.xls do
         send_data Project.to_excel(@site, options_export),
           :type        => 'application/vnd.ms-excel',
-          :disposition => "attachment; filename=#{@donor.name}_projects.xls"
+          :disposition => "attachment; filename=#{@donor.name.gsub(/[^0-9A-Za-z]/, '')}_projects.xls"
       end
       format.kml do
         @projects_for_kml = Project.to_kml(@site, options_export)

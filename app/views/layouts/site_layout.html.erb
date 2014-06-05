@@ -1,66 +1,72 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title><%= CGI.unescapeHTML(title) %></title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLF_4Hka9T0of09Z0eGPmExn-tG2ZIveU&sensor=false"></script>
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-  <%=raw(javascript_include_merged(:base)) %>
-  <%=raw(javascript_include_merged(:base_2)) %>
-  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
-  <%=raw(stylesheet_link_merged(:base)) %>
-  <%=stylesheet_link_tag @site.theme.css_file if @site.theme %>
-  <%=auto_discovery_link_tag(:rss, "#{url(@site)}/.xml", {:title => @site.name}) %>
-  <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png" />
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><% unless CGI.unescapeHTML(title).empty? %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" %>
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+    <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css" %>
+    <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
+    <meta name="viewport" content="width=980px">
+    <%= csrf_meta_tag %>
 
-
-
-  <% if Rails.env.production? %>
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-  </script>
-  <% end %>
-</head>
-<body>
-  <script>
-    var empty_layer = false;
-  </script>
-
-  <% unless action_name == 'home' && controller_name == 'sites' %>
-    <% cache("#{@site.id}/home/menu") do %>
-      <%= render :partial => 'shared/menu' %>
-    <% end %>
-  <% end %>
-
-  <div id="outer_layout">
-
-    <%= yield %> <!-- Main layout has to content <div id="layout"> -->
-
-    </div>
-
-    <% if controller_name == 'sites' && action_name == 'home'%>
-      <%= render :partial => 'shared/footer_home' %>
+    <% unless content_for?(:js_vars) %>
+      <% if defined?(@map_data) %>
+        <script>
+          <% if @site.overview_map_lat && @site.overview_map_lon %>
+          var map_center = [<%= @site.overview_map_lat %>, <%= @site.overview_map_lon %>];
+          <% else %>
+          var map_center = [];
+          <% end %>
+          var map_zoom = <%= @site.overview_map_zoom %> || 3;
+          var chco = '<%= @overview_map_chco %>';
+          var chf = '<%= @overview_map_chf %>';
+          var chld = '<%= @chld %>';
+          var chd = '<%= @chd %>';
+          var map_data = <%=raw(@map_data)%>;
+          var max_count = <%=@map_data_max_count%>;
+          var map_type = '<%= @filter_by_location.present?? "administrative_map" : "overview_map" %>';
+          var theme = "<%= @site.theme_id %>";
+          var kind = window.location.pathname.split('/')[1];
+          var stylez = <%=raw @site.map_styles  %>
+          var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
+        </script>
+      <% end %>
     <% else %>
-      <%= render :partial => 'shared/footer_general' %>
+      <%= yield :js_vars %>
+    <% end %>
+  </head>
+  <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %>">
+    <%= render 'layouts/header' %>
+
+    <%= yield %>
+
+    <%= render 'layouts/footer' %>
+
+    <%= render 'new_partials/embed_map' %>
+
+    <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=AIzaSyA2xfzq0KmJZIlGIpxXK1CjXa6enzmPGlM&sensor=false" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
+    <%= javascript_include_tag "../vendor/requirejs/require", "main" %>
+
+    <% if Rails.env.production? %>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
     <% end %>
 
-  </div>
-
-  <div id="overlay">
-    <div class="content-overlay">
-      <a href="#close-overlay" class="close-overlay" id="closeOverlay">x</a>
-      <div id="contentOverlay"></div>
-    </div>
-  </div>
-
-  <%= yield :js %>
-</body>
+    <!-- START: Feedback -->
+    <a href="http://questionpro.com/a/TakeSurvey?id=3822025" id="feedbackBtn" class="btn-feedback" target="_blank">Feedback</a>
+    <!-- END: Feedback -->
+  </body>
 </html>

@@ -1,0 +1,103 @@
+/*********************************************************************************************/
+/******************************************HEADER*********************************************/
+/*********************************************************************************************/
+.mod-header {
+  height: 154px;
+  position: relative;
+  z-index: 100;
+  .follow-us-container {
+    width: 100%;
+    padding: 7px 0;
+    height: 20px;
+    border-bottom: 1px solid $color-10;
+    background-color: $color-4;
+  }
+  .mod-info {
+    float: right;
+    margin: 0;
+    padding: 0;
+  }
+  .mod-follow-us {
+    float: right;
+  }
+}
+
+.about,
+.purpose,
+.getting-on-the-map,
+.staff-list,
+.contact-us,
+.of-interest,
+.data,
+.top-things-you-should-know-about-the-data,
+.data-guidance,
+.analysis {
+  // max-width: 1280px;
+  // margin: 0 auto;
+}
+
+/*********************************************************************************************/
+/******************************************SECTIONS*******************************************/
+/*********************************************************************************************/
+.categories-selector {
+  position: relative;
+  top: -30px;
+  height: 50px;
+  background-color: $color-4;
+  border-bottom: 1px solid rgba($color-4, 0.3);
+  &.is-fixed {
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    -webkit-transition: border-bottom linear 2s;
+    -moz-transition: border-bottom linear 2s;
+    -o-transition: border-bottom linear 2s;
+    transition: border-bottom linear 2s;
+    border-bottom: 1px solid rgba(152, 152, 152, 0.3);
+  }
+}
+
+
+.layout-content {
+  margin-bottom: 30px;
+  header { margin-bottom: 25px;}
+  min-height: 400px;
+}
+.layout-sidebar {
+  margin-bottom: 30px;
+}
+
+.layout-sidebar .is-fixed {
+  top: 60px;
+}
+.layout-content { position: relative;}
+
+.featured-projects {
+  margin-top: 40px;
+  padding: 40px 0;
+  // height: 120px;
+  background-color: $color-4;
+  margin-bottom: 10px;
+}
+
+.about-subsections {
+  p { margin-bottom: 20px;}
+}
+
+/*********************************************************************************************/
+/******************************************ASIDE**********************************************/
+/*********************************************************************************************/
+
+
+
+
+
+/*********************************************************************************************/
+/******************************************FOOTER*********************************************/
+/*********************************************************************************************/
+.mod-footer {
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 60px;
+  background-color: $color-4;
+}
