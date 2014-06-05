@@ -188,6 +188,7 @@
     background-color: $primary-color;
     color: $color-0;
   }
+
 }
 
 @mixin drop-down-menu($primary-color){
@@ -203,6 +204,15 @@
       }
     }
     .father a { color: $color-0;}
+  }
+  &.no-child:hover .index-item {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    &:after {
+      display: none;
+    }
   }
 
 
