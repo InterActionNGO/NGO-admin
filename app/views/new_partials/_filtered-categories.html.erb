@@ -17,7 +17,7 @@
               <strong><%= CGI.unescapeHTML(title) %></strong>, <%= link_to raw(@filter_name), sector_path(params[:category_id]), :class => 'filter' %>
             <% end %>
           </p>
-        <% else %>
+        <% elsif title != @site.name %>
           <p class="filtered">
             <strong>Showing</strong>:
             <% if @donor && @projects_count %>
@@ -28,13 +28,15 @@
               <strong><%= CGI.unescapeHTML(title) %></strong>, <%= @cluster_sector_projects_count %> <% if @cluster_sector_projects_count === 1 %>project<% else %>projects<% end %>
             <% elsif @georegion_projects_count %>
               <strong><%= CGI.unescapeHTML(title) %></strong>, <%= @georegion_projects_count %> <% if @georegion_projects_count === 1 %>project<% else %>projects<% end %>
+            <% else %>
+              <strong><%= CGI.unescapeHTML(title) %></strong>
             <% end %>
           </p>
         <% end %>
       </div>
     <% end %>
 
-    <div class="<% unless title.empty? %>grid-4<% else %>grid-17<% end %>">
+    <div class="mod-btn-projects <% unless title.empty? %>grid-4<% else %>grid-17<% end %>">
       <a href="#content" class="btn-go-to-projects">View projects list</a>
     </div>
   </div>
