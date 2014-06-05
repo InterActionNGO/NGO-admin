@@ -75,6 +75,11 @@
       @include border-top-right-radius(40px);
       @include border-bottom-right-radius(40px);
     }
+
+    &#mapTypeSelector:first-child > ul {
+      @include border-top-left-radius(40px);
+      @include border-bottom-left-radius(40px);
+    }
   }
   .featured {
     float: left;
