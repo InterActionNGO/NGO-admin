@@ -5,7 +5,8 @@
   .control-navbar, .control-zoom, .click-to-see {
     position: absolute;
     border-radius: 40px;
-    box-shadow: 0 0 0 5px rgba($color-1 ,0.3);
+    background-color: rgba($color-1, 0.8);
+    box-shadow: 0 0 0 5px rgba($color-1, 0.3);
     font-weight: lighter;
     font-size: 14px;
     text-transform: uppercase;
@@ -43,21 +44,43 @@
   }
 
   .control-navbar {
-    padding: 5px 20px;
     top: 20px;
     left: 0px;
-    background-color: $color-0;
   }
   .selector {
+    float: left;
+
     @include drop-down-menu($color-1);
-    &:last-child {
-      float: right;
-    }
-    &:first-child {
+
+    & > ul {
       float: left;
-      margin-right: 15px;
-      border-right: none;
+      padding: 5px 15px;
+      background-color: $color-0;
     }
+
+    &:first-child > ul {
+      border-right: none;
+      @include border-radius(40px 0 0 40px);
+    }
+
+    &:last-child > ul {
+      @include border-radius(0 40px 40px 0);
+    }
+
+    &#mapTypeSelector > ul {
+      @include border-top-radius(40px);
+      @include border-left-radius(40px);
+    }
+  }
+  .featured {
+    float: left;
+    padding: 0 15px;
+    line-height: 40px;
+    font-size: 31px;
+    font-weight: lighter;
+    color: $color-0;
+    text-transform: capitalize;
+    -webkit-font-smoothing: antialiased;
   }
   .index-item {
     display: block;
