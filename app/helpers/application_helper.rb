@@ -131,6 +131,42 @@ HTML
     end + (Rails.env == 'development' ? ":#{request.port}" : '')
   end
 
+  def locations_by_one_organization(org)
+    projects = org.projects
+    counts    = projects.map{ |geo| geo.last}
+    values    = counts.slice!(0, 3) + [counts.inject( nil ) { |sum,x| sum ? sum + x : x }]
+    values.compact!
+    max_value = values.max
+    lis       = []
+    projects[0..2].each_with_index do |geo_entries, index|
+      geo = geo_entries.first
+      count  = geo_entries.last
+      lis << (content_tag :li,  :class => "pos#{index}" do
+        case controller_name
+          when 'organizations'
+            raw("#{link_to geo.name, organization_path(@organization, @carry_on_filters.merge(:location_id => geo.to_param))} - #{count}")
+          when 'clusters_sectors'
+            if site.navigate_by_cluster?
+              raw("#{link_to geo.name, cluster_path(@data, @carry_on_filters.merge(:location_id => geo.to_param))} - #{count}")
+            else
+              raw("#{link_to geo.name, sector_path(@data, @carry_on_filters.merge(:location_id => geo.to_param))} - #{count}")
+            end
+          when 'georegion'
+            raw("#{link_to geo.name, location_path(@area, @carry_on_filters.merge(:location_id => geo.to_param))} - #{count}")
+          when 'donors'
+            raw("#{link_to geo.name, donor_path(@donor, @carry_on_filters.merge(:location_id => geo.to_param))} - #{count}")
+        else
+          raw("#{link_to geo.name, location_path(geo, @carry_on_filters)} - #{count}")
+        end
+      end)
+    end
+    lis << content_tag(:li, "Others - #{values.last}", :class => 'pos3') if projects.count > 3
+
+    ul    = content_tag :ul, raw(lis), :class => 'chart'
+    chart = image_tag "http://chart.apis.google.com/chart?cht=p&chs=120x120&chd=t:#{values.join(',')}&chds=0,#{max_value}&chco=333333|565656|727272|ADADAD|EFEFEF|FFFFFF&chf=bg,s,FFFFFF00", :class => 'pie_chart'
+    [ul, chart]
+  end
+
   def projects_by_location(site, collection = nil)
     projects = collection
     projects ||= if site.world_wide_context?
