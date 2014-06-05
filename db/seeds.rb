@@ -365,82 +365,88 @@ global_site.update_attributes(
 
   faq_page.update(
     :title        => 'FAQ´s',
-    :body         => '<ul>
-                        <li>
-                          <a href="faq-1">What is NGO Aid Map?</a>
-                          <p id="faq-1">NGO Aid Map is an InterAction initiative that provides detailed information on our members’ work around the world through a web-based mapping platform. Read more here. </p>
-                        </li>
-                        <li>
-                          <a href="faq-2">Who funds this initiative?</a>
-                          <p id="faq-2">NGO Aid Map is supported by FedEx and the International Fund for Agricultural Development (IFAD).</p>
-                        </li>
-                        <li>
-                          <a href="faq-3">Why is mapping NGO data important? </a>
-                          <div id="faq-3">
-                            <p>By making information on NGO activities easily accessible, NGO Aid Map strives to:</p>
-                            <ul>
-                              <li>Promote transparency.</li>
-                              <li>Facilitate partnerships and improve coordination.</li>
-                              <li>Publicize the work of NGOs.</li>
-                              <li>Help guide decisions about where to direct aid resources.</li>
-                              <li>Inform advocacy and influence policy.</li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li>
-                          <a href="faq-4">Who can participate? Which organizations are represented on this site?</a>
-                          <p id="faq-4">Only InterAction member organizations can participate and contribute data to NGO Aid Map at this time, and their participation is completely voluntary. NGO Aid Map features information on InterAction members working either directly on the ground, or indirectly through local or international partners.</p>
-                        </li>
-                        <li>
-                          <a href="faq-5">What data is available?</a>
-                          <p id="faq-5">On the home page, you will find a world map with all active projects that have been added by InterAction members. You can filter this information by donor, location, sector, or implementing organization. Additionally, you view the map with additional layers of additional data sets, such as poverty rates, to help provide further context. Read more about the data here.</p>
-                        </li>
-                        <li>
-                          <a href="faq-6">Why do some countries have very few projects?</a>
-                          <p id="faq-6">Data is provided by our members on a voluntary basis, so the map is a partial picture of what our community does. Projects are continuously being added, so we encourage you to visit often to learn more about the work of InterAction members.</p>
-                        </li>
-                        <li>
-                          <a href="faq-7">How often is the information updated?</a>
-                          <p id="faq-7">InterAction members can log in to NGO Aid Map at any time to add or update data. Our team facilitates three data calls a year to help ensure organizations keep their data up to date.</p>
-                        </li>
-                        <li>
-                          <a href="faq-8">Is the data on the site vetted?</a>
-                          <p id="faq-8">No. InterAction relies on its members and other participating organizations to provide accurate and complete information on their work. We review the data to check for inconsistencies, code the data by sector, and follow up with organizations as needed to ensure that their information is as complete as possible. However, InterAction cannot independently verify the accuracy of the information submitted.</p>
-                        </li>
-                        <li>
-                          <a href="faq-9">How can organizations participate in the NGO Aid Map?</a>
-                          <p id="faq-9">Only InterAction members can participate in NGO Aid Map at this time (find out how to apply to become an InterAction member). If you are an InterAction member, please contact us at MappingInfo@InterAction.org for more information on how to start adding your data to the map.</p>
-                        </li>
-                        <li>
-                          <a href="faq-10">What data do InterAction members have to share to submit a project to NGO Aid Map?</a>
-                          <div id="faq-10">
-                            <p>We encourage members to add as much project data as possible, including budget, pictures and videos, and contact information. For a project to become active on NGO Aid Map, the InterAction member organization must share the following minimum amount of information:</p>
-                            <ul>
-                              <li>Organization name.</li>
-                              <li>Project description.</li>
-                              <li>Start date.</li>
-                              <li>End date.</li>
-                              <li>Sector(s).</li>
-                              <li>Country.</li>
-                            </ul>
-                          </div>
-                        </li>
-                        <li>
-                          <a href="faq-11">Where does InterAction promote NGO Aid Map?</a>
-                          <div id="faq-11">
-                            <p>InterAction promotes NGO Aid Map in many places. We present NGO Aid Map at international expos, forums, and meetings all over the world. NGO Aid Map is highlighted in communications with our members, who are encouraged to feature their projects on the map in their own outreach.</p>
-                            <p>The Mapping Team at InterAction works across the international aid, data, transparency, and technology sectors, and we promote our initiative in all these spheres. Online, they are featured on the InterAction website and NGO Aid Maps’ social media accounts.</p>
-                          </div>
-                        </li>
-                        <li>
-                          <a href="faq-12">Is NGO Aid Map open source?</a>
-                          <p id="faq-12">Yes, the project is released on Open Source. You can find the source at Github. The project also makes extensive use of other Open Source projects like PostgreSQL, PostGIS, Ruby on Rails and many other projects. If you would like to contribute to the project or you are interested in contacting the development team, send an email to contact@vizzuality.com</p>
-                        </li>
-                        <li>
-                          <a href="faq-13">Can I use the data from NGO Aid Map?</a>
-                          <p id="faq-13">Yes, the data on NGO Aid Map is made available under the Open Data Commons Attribution (ODC-BY 1.0) License. This states that you can use the use the data as long as you cite NGO Aid Map as the source.</p>
-                        </li>
-                      </ul>',
+    :body         => '<div id="faqAccordion">
+                      <h3>What is NGO Aid Map?</h3>
+                      <div>
+                        <p>NGO Aid Map is an InterAction initiative that provides detailed information on our members’ work around the world through a web-based mapping platform. Read more here. </p>
+                      </div>
+
+                      <h3>Who funds this initiative?</h3>
+                      <div>
+                        <p>NGO Aid Map is supported by FedEx and the International Fund for Agricultural Development (IFAD).</p>
+                      </div>
+
+                      <h3>Why is mapping NGO data important?</h3>
+                      <div>
+                        <p>By making information on NGO activities easily accessible, NGO Aid Map strives to:</p>
+                        <ul>
+                          <li>Promote transparency.</li>
+                          <li>Facilitate partnerships and improve coordination.</li>
+                          <li>Publicize the work of NGOs.</li>
+                          <li>Help guide decisions about where to direct aid resources.</li>
+                          <li>Inform advocacy and influence policy.</li>
+                        </ul>
+                      </div>
+
+                      <h3>Who can participate? Which organizations are represented on this site?</h3>
+                      <div>
+                        <p>Only InterAction member organizations can participate and contribute data to NGO Aid Map at this time, and their participation is completely voluntary. NGO Aid Map features information on InterAction members working either directly on the ground, or indirectly through local or international partners.</p>
+                      </div>
+
+                      <h3>What data is available?</h3>
+                      <div>
+                        <p>On the home page, you will find a world map with all active projects that have been added by InterAction members. You can filter this information by donor, location, sector, or implementing organization. Additionally, you view the map with additional layers of additional data sets, such as poverty rates, to help provide further context. Read more about the data here.</p>
+                      </div>
+
+                      <h3>Why do some countries have very few projects?</h3>
+                      <div>
+                        <p>Data is provided by our members on a voluntary basis, so the map is a partial picture of what our community does. Projects are continuously being added, so we encourage you to visit often to learn more about the work of InterAction members.</p>
+                      </div>
+
+                      <h3>How often is the information updated?</h3>
+                      <div>
+                        <p>InterAction members can log in to NGO Aid Map at any time to add or update data. Our team facilitates three data calls a year to help ensure organizations keep their data up to date.</p>
+                      </div>
+
+                      <h3>Is the data on the site vetted?</h3>
+                      <div>
+                        <p>No. InterAction relies on its members and other participating organizations to provide accurate and complete information on their work. We review the data to check for inconsistencies, code the data by sector, and follow up with organizations as needed to ensure that their information is as complete as possible. However, InterAction cannot independently verify the accuracy of the information submitted.</p>
+                      </div>
+
+                      <h3>How can organizations participate in the NGO Aid Map?</h3>
+                      <div>
+                        <p>Only InterAction members can participate in NGO Aid Map at this time (find out how to apply to become an InterAction member). If you are an InterAction member, please contact us at MappingInfo@InterAction.org for more information on how to start adding your data to the map.</p>
+                      </div>
+
+                      <h3>What data do InterAction members have to share to submit a project to NGO Aid Map?</h3>
+                      <div>
+                        <p>We encourage members to add as much project data as possible, including budget, pictures and videos, and contact information. For a project to become active on NGO Aid Map, the InterAction member organization must share the following minimum amount of information:</p>
+                        <ul>
+                          <li>Organization name.</li>
+                          <li>Project description.</li>
+                          <li>Start date.</li>
+                          <li>End date.</li>
+                          <li>Sector(s).</li>
+                          <li>Country.</li>
+                        </ul>
+                      </div>
+
+                      <h3>Where does InterAction promote NGO Aid Map?</h3>
+                      <div>
+                        <p>InterAction promotes NGO Aid Map in many places. We present NGO Aid Map at international expos, forums, and meetings all over the world. NGO Aid Map is highlighted in communications with our members, who are encouraged to feature their projects on the map in their own outreach.</p>
+                        <p>The Mapping Team at InterAction works across the international aid, data, transparency, and technology sectors, and we promote our initiative in all these spheres. Online, they are featured on the InterAction website and NGO Aid Maps’ social media accounts.</p>
+                      </div>
+
+                      <h3>Is NGO Aid Map open source?</h3>
+                      <div>
+                        <p>Yes, the project is released on Open Source. You can find the source at Github. The project also makes extensive use of other Open Source projects like PostgreSQL, PostGIS, Ruby on Rails and many other projects. If you would like to contribute to the project or you are interested in contacting the development team, send an email to <a href="mailto:contact@vizzuality.com">contact@vizzuality.com</a></p>
+                      </div>
+
+                      <h3>Can I use the data from NGO Aid Map?</h3>
+                      <div>
+                        <p>Yes, the data on NGO Aid Map is made available under the Open Data Commons Attribution (ODC-BY 1.0) License. This states that you can use the use the data as long as you cite NGO Aid Map as the source.</p>
+                      </div>
+                    </div>',
     :site_id      => global_id,
     :permalink    => 'faq',
     :published    => true,
