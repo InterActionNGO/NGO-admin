@@ -5,22 +5,20 @@
         <nav>
           <ul>
             <% if @site.cluster %>
-              <li class="sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
+              <li class="menu-item sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>"><span class="father"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></span></li>
             <% elsif @site.sector %>
-              <li class="sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></li>
+              <li class="menu-item sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>">
+                <span class="father"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></span>
+              </li>
             <% else %>
-              <li class="sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
+              <li class="menu-item sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
                 <span class="father"><%= @site.word_for_cluster_sector.upcase %></span>
                 <div class="mod-go-up-menu menu">
-                  <ul class="mod-categories-child sector-child">
+                  <ul class="mod-categories-child sector-child submenu">
                     <% @site.clusters_or_sectors.reject{|c| c.name.eql?('N/A') || c.total_projects(@site) == 0}.sort_by(&:name).each do |category| %>
                       <li>
                         <a class="<%= category.css_class %>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>">
-                          <% if category.name.size>25 %>
-                            <%= category.name[0..22] + '...' %>
-                          <% else %>
                             <%= category.name %>
-                          <% end %>
                         </a>
                         <span><%= category.projects.reject{|p| p.end_date < DateTime.now.to_date}.size %> projects</span>
                       </li>
