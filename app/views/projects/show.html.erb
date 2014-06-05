@@ -175,19 +175,18 @@
         <% end %>
 
         <% unless @project.media_resources.empty? %>
-          <div class="galleryStyle">
+          <div class="mod-gallery chachi-slider">
             <% @project.media_resources.each do |media_resource| %>
               <% if media_resource.is_a_video? %>
-                <%= image_tag(media_resource.video_thumb.url(:medium), :alt => media_resource.caption, :video_id => media_resource.id) %>
+                <%= image_tag(media_resource.video_thumb.url(:medium), :alt => media_resource.caption, :video_id => media_resource.id, :class => "chachi-item") %>
                 <script type="text/javascript">
                   video_players['<%= media_resource.id %>'] = '<%= raw media_resource.video_embed_html %>';
                 </script>
-                <% else %>
-                  <p><%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption) %></p>
-                <% end %>
+              <% else %>
+                <%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption, :class => "chachi-item") %>
               <% end %>
-            </div>
-
+            <% end %>
+          </div>
         <% end %>
 
         <% if @project.activities || @project.additional_information || @project.cross_cutting_issues || (@locations.present? && @locations.to_a.join.present?)%>

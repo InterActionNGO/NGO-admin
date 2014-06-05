@@ -16,6 +16,7 @@ require.config({
     form: '../vendor/jquery-form/jquery.form',
     handlebars: '../vendor/handlebars/handlebars',
     highcharts: '../vendor/highcharts-release/highcharts',
+    chachiSlider: '../vendor/chachi-slider/jquery.chachi-slider',
     spin: '../vendor/spinjs/spin',
     moment: '../vendor/moment/moment',
     text: '../vendor/requirejs-text/text'
@@ -57,6 +58,10 @@ require.config({
     highcharts: {
       deps: ['jquery'],
       exports: 'highcharts'
+    },
+    chachiSlider: {
+      deps: ['jquery'],
+      exports: '$'
     }
   }
 
