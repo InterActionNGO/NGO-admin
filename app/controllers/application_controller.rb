@@ -58,10 +58,13 @@ class ApplicationController < ActionController::Base
       end
 
       # If the request host isn't the main_site_host, it should be the host from a site
-      if request.host != main_site_host
-        unless @site = Site.published.where(:url => request.host).first
-          raise ActiveRecord::RecordNotFound
-        end
+      if request.subdomain == 'www' || request.subdomain == ''
+          @site = Site.find_by_name('global')
+        elsif @site = Site.published.where(:url => request.host).first
+            #unless @site = Site.find_by_name("global")
+          # raise ActiveRecord::RecordNotFound
+        # end
+        @site
       else
         # Sessions controller doesn't depend on the host
         return true if %w(sessions passwords).include?(controller_name)
@@ -95,7 +98,7 @@ class ApplicationController < ActionController::Base
         end
       rescue
       ensure
-        render :file => "public/404.html.erb", :status => 404, :layout => false
+        render :file => "errors/404.html.erb", :status => 404, :layout => "layouts/error.html.erb"
       end
     end
 

@@ -113,12 +113,12 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% description = f.object.description || '' %>
-      <p id="chars_left_description"><%= 2000 - description.length %> chars left</p>
+      <p id="chars_left_description"><%= 10000 - description.length %> chars left</p>
     </span>
 
     <span class="textarea <%= 'error' if !@project.errors[:description].empty? && action_name != 'new' %>">
         <div class="wrapper">
-            <%= f.text_area :description, :maxlength => 2000, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 2000, 'chars_left_description')" %>
+            <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 10000, 'chars_left_description')" %>
         </div>
     </span>
 
@@ -145,10 +145,10 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% activities = f.object.activities || '' %>
-      <p id="chars_left_activities"><%= 2000 - activities.length %> chars left</p>
+      <p id="chars_left_activities"><%= 10000 - activities.length %> chars left</p>
     </span>
     <span class="textarea">
-      <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 2000, 'chars_left_activities')"%>
+      <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 10000, 'chars_left_activities')"%>
     </span>
   </div>
   <div class="field">
@@ -173,10 +173,10 @@
         <!-- END FIELD DESCRIPTION -->
       </label>
       <% additional_information = f.object.additional_information || '' %>
-      <p id="chars_left_aditional_info"><%= 2000 - additional_information.length %> chars left</p>
+      <p id="chars_left_aditional_info"><%= 10000 - additional_information.length %> chars left</p>
     </span>
     <span class="textarea">
-      <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 2000, 'chars_left_aditional_info')" %>
+      <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 10000, 'chars_left_aditional_info')" %>
     </span>
   </div>
   <div class="field">
@@ -560,7 +560,7 @@
         <p class="info_region_exp">You can specify the administrative level you need (1st, 2nd or 3rd)</p>
         <div class="level_0">
           <label>COUNTRY <strong>*</strong></label>
-          <img class="loader" src="/images/backoffice/projects/activity-indicator.gif" alt="loader" title="loader"/>
+          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader'} %>
           <span class="region_combo">
             <p id="country_0">Not specified</p>
             <div class="wrapper">
@@ -759,11 +759,5 @@
     var organizations_ids   = <%= (@organizations_ids || {}).to_json.html_safe %>;
     var countries_iso_codes = <%= (@countries_iso_codes || {}).to_json.html_safe %>;
   </script>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  <script src="/javascripts/backoffice/project_map.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/plugins/jquery.mousewheel.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/plugins/jquery.jscrollpane.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/plugins/jquery.livequery.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/plugins/jquery.stylish-select.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/backoffice/project.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/backoffice/project_region.js" type="text/javascript" charset="utf-8"></script>
+
+  <%= javascript_include_tag "backoffice/project_map.js", "backoffice/project.js", "backoffice/project_region.js" %>

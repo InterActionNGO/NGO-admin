@@ -3,10 +3,15 @@ class SitesController < ApplicationController
   layout :sites_layout
 
   def home
+
     if @site
       site_home
     else
-      general_home
+      @site = Site.find_by_name("global")
+      site_home
+      ## old behaviour:
+      #
+      # general_home
     end
   end
 
@@ -93,20 +98,25 @@ class SitesController < ApplicationController
           page << "resizeColumn();"
         end
       end
+    end
+  end
+
+  def downloads
+    respond_to do |format|
       format.csv do
-        send_data Project.to_csv(@site),
+        send_data Project.to_csv(@site, {}),
           :type => 'text/plain; charset=utf-8; application/download',
-          :disposition => "attachment; filename=#{@site.name}_projects.csv"
+          :disposition => "attachment; filename=#{@site.id}_projects.csv"
       end
       format.xls do
-        send_data Project.to_excel(@site),
+        send_data Project.to_excel(@site, {}),
           :type        => 'application/vnd.ms-excel',
-          :disposition => "attachment; filename=#{@site.name}_projects.xls"
+          :disposition => "attachment; filename=#{@site.id}_projects.xls"
       end
       format.kml do
-        @projects_for_kml = Project.to_kml(@site)
-
-        render :site_home
+        send_data Project.to_kml(@site, {}),
+        # :type        => 'application/vnd.google-earth.kml+xml, application/vnd.google-earth.kmz',
+          :disposition => "attachment; filename=#{@site.id}_projects.kml"
       end
       format.xml do
         @rss_items = Project.custom_find @site, :start_in_page => 0, :random => false, :per_page => 1000
