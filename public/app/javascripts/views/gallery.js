@@ -8,7 +8,7 @@ define(['backbone', 'chachiSlider'], function(Backbone) {
 
     initialize: function() {
       this.$el.chachiSlider({
-        pause: 7000
+        pauseTime: 7000
       });
     }
 
