@@ -108,7 +108,7 @@ require([
   var scrollTop,
     categoriesSelector = $('.categories-selector'),
     menu = $('.mod-categories-selector .menu'),
-    elementOffset = (categoriesSelector.length > 0) ? $('.layout-content').offset().top + 60 : 0;
+    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 50: 0;
 
   function sectionTitle() {
     var $title = $('.section-title');
@@ -153,7 +153,7 @@ require([
 
   function goTo(e) {
     $('body, html').animate({
-      scrollTop: $('.layout-content').offset().top - 109
+      scrollTop: $('.main-content').offset().top
     }, 500);
     e.preventDefault();
   }
