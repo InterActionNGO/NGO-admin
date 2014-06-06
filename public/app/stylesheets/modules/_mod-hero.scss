@@ -1,7 +1,6 @@
 .mod-hero {
   height: 340px;
   position: relative;
-  top: -30px;
   background-color: $color-4;
 
   .about &, .pages-page & { background: image-url('hero-about.jpg') no-repeat center; background-size: cover;}
