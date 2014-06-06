@@ -129,6 +129,7 @@ GEM
     net-ssh (2.6.8)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    newrelic_rpm (3.8.1.221)
     nofxx-georuby (1.9.2)
     nokogiri (1.5.10)
     paperclip (2.8.0)
@@ -248,6 +249,7 @@ DEPENDENCIES
   mail_view!
   memcache-client
   money
+  newrelic_rpm
   nofxx-georuby
   nokogiri (< 1.6.0)
   paperclip (~> 2.7)
