@@ -41,22 +41,22 @@
 /*********************************************************************************************/
 .categories-selector {
   position: relative;
-  top: -30px;
   height: 50px;
   background-color: $color-4;
   border-bottom: 1px solid rgba($color-4, 0.3);
+  @include transition(all 2s ease);
   &.is-fixed {
     top: 0;
     z-index: 100;
     width: 100%;
-    -webkit-transition: border-bottom linear 2s;
-    -moz-transition: border-bottom linear 2s;
-    -o-transition: border-bottom linear 2s;
-    transition: border-bottom linear 2s;
-    border-bottom: 1px solid rgba(152, 152, 152, 0.3);
+    border-bottom-color: rgba(152, 152, 152, 0.3);
   }
 }
 
+.main-content {
+  padding-top: 30px;
+  @include clearfix();
+}
 
 .layout-content {
   margin-bottom: 30px;
