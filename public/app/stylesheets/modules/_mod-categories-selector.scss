@@ -40,7 +40,6 @@
         font-weight: normal;
       }
     }
-
     .mod-go-up-menu {
       z-index: 100;
     }
@@ -234,9 +233,12 @@
       background-color: rgba($color-8, .3);
     }
   }
+}
 
-  .fedex-logo {
-    margin-top: 3px;
+.mod-logos-slider {
+  height: 40px;
+  margin-top: 3px;
+  img {
+    display: block;
   }
-
 }
