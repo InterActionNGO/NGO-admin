@@ -4,6 +4,7 @@ class DonorsController < ApplicationController
 
   respond_to :html, :kml, :js, :xls, :csv
   layout :sites_layout
+  caches_action :show, :expires_in => 300
 
 
   def show
