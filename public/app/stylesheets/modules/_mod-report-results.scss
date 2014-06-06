@@ -111,3 +111,57 @@
   &:first-child { margin-right: 4%;}
 
 }
+
+.mod-report-locations-header {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 20px;
+  background-color: $color-4;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  h3, ul {
+    display: inline-block;
+  }
+  li {
+    list-style: none;
+    list-decoration: none;
+    overflow: hidden;
+    padding-right: 20px;
+  }
+  ul {
+    position: absolute;
+    top: 16px;
+    right: 35px;
+    padding: 0 !important;
+  }
+  .current {
+    position: relative;
+    font-size: 15px;
+    font-weight: bold;
+    &:after {
+      @include after('', block, absolute, -20px, 3px, 0, 0) ;
+      @include triangle (5px, $color-3);
+    }
+  }
+  &:hover .mod-report-locations-header-child {
+    display: block;
+  }
+}
+ul.mod-report-locations-header-child {
+  display: none;
+  position: absolute;
+  top: 30px;
+  width: 210px;
+  left: -20px;
+  z-index: 1;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+  background-color: #ededed;
+    a { color: $color-3}
+    li {
+      padding-left: 20px;
+      font-weight: normal;
+      font-size: 15px;
+    }
+}
