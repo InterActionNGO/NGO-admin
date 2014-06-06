@@ -9,41 +9,48 @@ class SearchController < ApplicationController
     @clusters = @regions = @filtered_regions = @filtered_sectors = @filtered_clusters = @filtered_organizations = @filtered_donors = []
     @navigate_by_cluster = @site.navigate_by_cluster?
 
+    p params[:regions_ids]
+
     if params[:regions_ids].present?
-      @filtered_regions = Region.find_by_sql("select r.id, r.name as title, c.name as subtitle from regions as r inner join countries as c on c.id = r.country_id where r.id in (#{params[:regions_ids].sanitize_sql!})")
-      filtered_regions_where = "where r.id not in (#{params[:regions_ids].sanitize_sql!})"
-      where << params[:regions_ids].split(',').map{|region_id| "regions_ids && ('{'||#{region_id.sanitize_sql!}||'}')::integer[]"}.join(' OR ')
+      @filtered_regions = Region.find_by_sql("select r.id, r.name as title, c.name as subtitle from regions as r inner join countries as c on c.id = r.country_id where r.id in (#{params[:regions_ids].join(",")})")
+      filtered_regions_where = "where r.id not in (#{params[:regions_ids].join(",")})"
+      where << params[:regions_ids].map{|region_id| "regions_ids && ('{'||#{region_id}||'}')::integer[]"}.join(' OR ')
+
+      #p params[:regions_ids]
+      #p where
     end
 
     if params[:sectors_ids].present?
-      @filtered_sectors = Sector.find_by_sql("select s.id, s.name as title from sectors as s where s.id in (#{params[:sectors_ids].sanitize_sql!})")
-      filtered_sectors_where = "where s.id not in (#{params[:sectors_ids].sanitize_sql!})"
-      where << params[:sectors_ids].split(',').map{|sector_id| "sector_ids && ('{'||#{sector_id.sanitize_sql!}||'}')::integer[]"}.join(' OR ')
+      @filtered_sectors = Sector.find_by_sql("select s.id, s.name as title from sectors as s where s.id in (#{params[:sectors_ids].join(",")})")
+      filtered_sectors_where = "where s.id not in (#{params[:sectors_ids].join(",")})"
+      where << params[:sectors_ids].map{|sector_id| "sector_ids && ('{'||#{sector_id}||'}')::integer[]"}.join(' OR ')
+
+      #p where
     end
 
     if params[:clusters_ids].present?
-      @filtered_clusters = Cluster.find_by_sql("select c.id, c.name as title from clusters as c where c.id in (#{params[:clusters_ids].sanitize_sql!})")
-      filtered_clusters_where = "where c.id not in (#{params[:clusters_ids].sanitize_sql!})"
-      where << params[:clusters_ids].split(',').map{|cluster_id| "cluster_ids && ('{'||#{cluster_id.sanitize_sql!}||'}')::integer[]"}.join(' OR ')
+      @filtered_clusters = Cluster.find_by_sql("select c.id, c.name as title from clusters as c where c.id in (#{params[:clusters_ids].join(",")})")
+      filtered_clusters_where = "where c.id not in (#{params[:clusters_ids].join(",")})"
+      where << params[:clusters_ids].map{|cluster_id| "cluster_ids && ('{'||#{cluster_id}||'}')::integer[]"}.join(' OR ')
     end
 
     if params[:organizations_ids].present?
-      @filtered_organizations = Cluster.find_by_sql("select o.id, o.name as title from organizations as o where o.id in (#{params[:organizations_ids].sanitize_sql!})")
-      filtered_organizations_where = "where o.id not in (#{params[:organizations_ids].sanitize_sql!})"
-      where << "organization_id IN (#{params[:organizations_ids].sanitize_sql!})"
+      @filtered_organizations = Cluster.find_by_sql("select o.id, o.name as title from organizations as o where o.id in (#{params[:organizations_ids].join(",")})")
+      filtered_organizations_where = "where o.id not in (#{params[:organizations_ids].join(",")})"
+      where << "organization_id IN (#{params[:organizations_ids].join(",")})"
     end
 
     if params[:donors_ids].present?
-      @filtered_donors = Donor.find_by_sql("select d.id, d.name as title from donors as d where d.id in (#{params[:donors_ids].sanitize_sql!})")
-      filtered_donors_where = "where d.id not in (#{params[:donors_ids].sanitize_sql!})"
-      where << params[:donors_ids].split(',').map{|donor_id| "donors_ids && ('{'||#{donor_id.sanitize_sql!}||'}')::integer[]"}.join(' OR ')
+      @filtered_donors = Donor.find_by_sql("select d.id, d.name as title from donors as d where d.id in (#{params[:donors_ids].join(",")})")
+      filtered_donors_where = "where d.id not in (#{params[:donors_ids].join(",")})"
+      where << params[:donors_ids].map{|donor_id| "donors_ids && ('{'||#{donor_id}||'}')::integer[]"}.join(' OR ')
     end
 
     if params[:status].present? and params[:status] != 'Any'
       case params[:status]
-        when 'Active' 
+        when 'Active'
           then where << "(end_date is null OR end_date > now())"
-        when 'Inactive' 
+        when 'Inactive'
           then where << "end_date < now()"
       end
     end
@@ -85,6 +92,8 @@ class SearchController < ApplicationController
                  sectors ilike '#{q}' OR
                  regions ilike '#{q}' )"
     end
+
+    where << "(end_date is null OR end_date >= now())"
 
     where = where.present? ? "WHERE #{where.join(' AND ')}" : ''
 

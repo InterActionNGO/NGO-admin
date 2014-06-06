@@ -1,4 +1,7 @@
 .mod-affiliated-organizations {
-  a { margin-bottom: 0;}
-  li { margin-bottom: 20px;}
+  a {
+    display: block;
+    margin-bottom: 0;
+  }
+  li { color: $color-5;}
 }

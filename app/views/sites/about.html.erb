@@ -1,28 +1,22 @@
-<div class="mod-hero about">
-  <img src="" alt="">
-</div>
+<div class="mod-hero about"></div>
 
 <div class="row">
   <div class="grid-4">
-    <aside>
-      <div class="mod-info">
+    <aside class="layout-sidebar">
+      <div class="mod-info mod-sites-info" id="menuFixedView">
         <h3>About NGO Aid Map</h3>
         <ul>
-          <li class="page"><a href="/about-interaction">About InterAction</a></li>
-          <li class="page"><a href="/about-data">About the data</li>
-          <li class="page"><a href="/media">NGO Aid Map in the media</a></li>
-          <li class="page"><a href="/testimonials">Testimonials</a></li>
-          <li class="page"><a href="/link-ngo-aid-map">Link to NGO Aid Map</a></li>
-          <li class="page"><a href="/make-your-own-map">Make your own map</li>
-          <li class="page"><a href="/faq">Frequently asked questions</a></li>
-          <li class="page"><a href="/contact">Contact us</a></li>
+          <li class="page-link"><a href="#focus-area">Focus area</a></li>
+          <li class="page-link"><a href="#benefits-of-participating">Benefits of participating</a></li>
+          <li class="page-link"><a href="#how-to-get-involved">How to get involved</a></li>
+          <li class="page-link"><a href="#credits">Credits</a></li>
         </ul>
       </div>
     </aside>
   </div>
 
   <div class="grid-12 offset-1">
-    <section class="about" id="pages">
+    <section class="layout-content">
 
       <article class="mod-content-article">
         <h2 class="section-title">About NGO Aid Map</h2>
@@ -40,7 +34,7 @@
           </p>
         </section>
 
-        <section class="subsection">
+        <section class="subsection" id="focus-area">
           <h3 class="subsection-title">Focus area</h3>
           <p>Our mapping work is currently focused on:</p>
           <p><a href="http://foodsecurity.ngoaidmap.org">Food Security</a>: With funding from the International Fund for Agricultural Development (IFAD), InterAction has developed Food Security Aid Map to provide detailed project-level information on food security and agriculture projects being done by NGOs and the US NGO Working Group on IFAD and Rural Poverty.</p>
@@ -48,7 +42,7 @@
           <p><a href="http://hornofafrica.ngoaidmap.org">Horn of Africa</a>: In response to the drought crises, InterAction, with funding from FedEx, developed Horn of Africa Aid Map. The map highlights the work of members responding to the crisis, as well as long-term development projects that build resiliency against future crises.</p>
         </section>
 
-        <section class="subsection">
+        <section class="subsection" id="benefits-of-participating">
           <h3 class="subsection-title">Benefits of participating</h3>
           <p>InterAction members who participate in the mapping initiative will have access to a powerful, user-friendly mapping software, <a href="http://www.fortiusone.com/Products-Services/GeoIQ">GeoIQ</a>, at no cost. With this tool, members will be able to:</p>
           <ul>
@@ -60,7 +54,7 @@
           </ul>
         </section>
 
-        <section class="subsection">
+        <section class="subsection" id="how-to-get-involved">
           <h3 class="subsection-title">How to get involved</h3>
           <p>For more information on the mapping initiative, including how your organization can participate, please contact Danielle Heiberg at <a href="mailto:mappinginfo@interaction.org">mappinginfo@interaction.org</a> or 202-552-6576.</p>
           <br/><br/>
@@ -69,8 +63,8 @@
           <%= link_to image_tag('sites/partners/fedex.jpg',:alt=>"FexEx", :title=>"FexEx"), "http://fedex.com/", :target=>"_blank" %>
         </section>
 
-        <section class="subsection">
-          <h3 class="subsection-title" id="credits">Credits</h3>
+        <section class="subsection" id="credits">
+          <h3 class="subsection-title">Credits</h3>
           <p>Food Security Aid Map photo was provided by Tony Rinaudo, <%= link_to 'World Vision Australia', 'http://www.worldvision.com.au/' %>.</p>
           <p>Haiti Aid Map photo was provided by Jon Warren, <%= link_to 'World Vision', 'http://www.worldvision.org' %>.</p>
           <p>Horn of Africa photo was provided by UN/Stuart Price, <%= link_to 'World Humanitarian Day', 'http://www.un.org/en/events/humanitarianday/slideshow.shtml' %>.</p>

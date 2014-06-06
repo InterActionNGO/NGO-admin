@@ -3,7 +3,7 @@ Iom::Application.routes.draw do
   # Home
   root :to => "sites#home"
   # report page
-  match 'reports' => 'reports#index' , :as => :report_index
+  match 'p/analysis' => 'reports#index' , :as => :report_index
   match 'report_generate' => 'reports#report', :as => :report_generate
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
@@ -16,7 +16,7 @@ Iom::Application.routes.draw do
   match 'faq' => 'sites#faq'
   match 'contact' => 'sites#contact'
   match 'explore' => 'sites#explore'
-  
+
   # Session
   resource :session, :only => [:new, :create, :destroy]
   match 'login' => 'sessions#new', :as => :login
@@ -27,9 +27,14 @@ Iom::Application.routes.draw do
   # Front urls
   # resources :reports
   resources :donors,        :only => [:index, :show]
-  resources :offices,      :only => [:show]
+  resources :offices,       :only => [:show]
   resources :projects,      :only => [:index, :show]
   resources :organizations, :only => [:index, :show]
+
+  # Global Site projects export links for downloading
+  get '/sites/download/(:id).csv', :to => 'sites#downloads', :format => :csv
+  get '/sites/download/(:id).xls', :to => 'sites#downloads', :format => :xls
+  get '/sites/download/(:id).kml', :to => 'sites#downloads', :format => :kml
 
   match 'regions/:id' => 'georegion#old_regions'
   # HACK!! route globbing doesn't work well when trying to get the request format in Rails <=3.0.7

@@ -1,33 +1,62 @@
-<footer class="mod-footer">
+<% cache("#{@site.id}/footer") do %>
+  <div class="featured-projects">
+    <div class="row">
+      <div class="grid-17">
+        <div class="mod-featured-projects">
 
-  <div class="row">
-    <div class="grid-17">
-  		<div class="mod-footer-top">
-        <nav>
+          <div class="title">
+            <h4>Featured maps</h4>
+          </div>
+
           <ul>
-            <li><a href="/" class="home <%= if action_name == 'home' then 'active' else 'inactive' end %>">home</a></li>
-            <li><a href="/about" class="about <%= if action_name == 'about' then 'active' else 'inactive' end %>">about</a></li>
-            <li><a href="/news" class="news <%= if action_name == 'news' then 'active' else 'inactive' end %>">news</a></li>
-            <li><a href="/contact" class="contact <%= if action_name == 'contact' then 'active' else 'inactive' end %>">contact us</a></li>
-            <li><a href="/access" class="access <%= if action_name == 'access' then 'active' else 'inactive' end %>">member access</a></li>
+            <% @site.featured_sites.each do |s|  %>
+                <li class="featured-project">
+                  <a href="http://<%= s.url %>" target"_self" >
+                    <img src="<%= s.aid_map_image.url %>" alt="" width="200" height="115">
+                    <p><%= s.name %></p>
+                  </a>
+                </li>
+            <% end %>
           </ul>
-        </nav>
-  		</div>
+
+        </div>
+      </div>
     </div>
   </div>
 
-
-
-	<div class="row">
-		<div class="grid-17">
-			<div class="mod-footer-bottom">
-				<%= image_tag "aid-map-logo-bn.png", :alt  => "interaction aid map logo", :class  => "aid-map-logo" %>
-        <%= image_tag "interaction-logo-bn.png", :alt  => "interaction logo", :class  => "interaction-logo" %>
-        <div class="signature">
-          <p class="claim">NGO Aid Map</p>
-          <p>Copyrighted by InterAction @2014 | Developed by <a href="#" class="link-to-simbiotica">Simbiótica</a></p>
+  <footer class="mod-footer">
+    <div class="row">
+      <div class="mod-footer-top">
+        <div class="grid-6 offset-5">
+          <%= render 'new_partials/main-menu' %>
         </div>
-			</div>
-		</div>
-	</div>
-</footer>
+        <div class="grid-4">
+          <a href="http://<%= Settings.main_site_host %>">
+            <%= image_tag "footer_ngo.svg", :alt  => "interaction aid map logo", :class  => "aid-map-logo", :width => '170', :height => '80' %>
+          </a>
+        </div>
+        <div class="grid-2">
+        <a href="http://www.interaction.org/">
+          <%= image_tag "footer_interaction.svg", :alt  => "interaction aid map logo", :class  => "aid-map-logo", :width => '95', :height => '105' %>
+        </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mod-footer-bottom">
+      <div class="row">
+        <div class="grid-7">
+          <div class="address">
+            <p>1400 16th Street, NW. Suite 210 Washington, DC 20036</p>
+          </div>
+        </div>
+        <div class="grid-7 offset-3">
+          <div class="signature">
+            <p>Copyrighted by <a href="http://www.interaction.org/" target="_blank">InterAction</a> © 2014 · Developed by <a href="http://simbiotica.es" target="_blank" class="link-to-simbiotica">Simbiótica</a></p>
+          </div>
+        </div>
+  		</div>
+  	</div>
+
+  </footer>
+<% end %>

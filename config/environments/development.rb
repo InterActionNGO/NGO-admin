@@ -21,6 +21,7 @@ Iom::Application.configure do
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
+  config.log_level = :warn
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
@@ -30,6 +31,12 @@ Iom::Application.configure do
   # Assets path
   config.action_controller.asset_path = proc { |asset_path|
     case asset_path
+    when /^\/(system)/
+      "#{asset_path}"
+    when /^\/(stylesheets\/lib)/
+      "/app#{asset_path}".sub("/stylesheets", "")
+    when /^\/(stylesheets\/vendor)/
+      "/app#{asset_path}".sub("/stylesheets", "")
     when /^\/(stylesheets)/
       "/.tmp#{asset_path}"
     else

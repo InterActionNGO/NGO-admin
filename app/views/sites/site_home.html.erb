@@ -1,64 +1,68 @@
-<%= render 'new_partials/map' %>
+<% cache("#{@site.id}/home/map") do %>
+  <%= render 'new_partials/map' %>
+<% end %>
 
 <%= render 'new_partials/categories_selector' %>
 
-<div class="row">
-  <aside>
+<div class="main-content">
+  <div class="row">
     <div class="grid-4">
+      <aside class="layout-sidebar">
 
-      <%= render 'new_partials/aside/projects' %>
+        <% cache("#{@site.id}/home/totals") do %>
+          <div class="mod-highlighted-results">
+            <%= render 'new_partials/aside/projects' %>
+            <%= render 'new_partials/aside/organizations' %>
+          </div>
+        <% end %>
 
-      <%= render 'new_partials/aside/organizations' %>
-
-      <% cache("#{@site.id}/home/projects_by_cluster_sector") do %>
-        <div class="project-sectors mod-info">
-          <h3>Project sectors</h3>
-          <div class="mod-project-sectors">
-            <ul id="clustersView">
-              <% @site.projects_sectors_or_clusters.each do |category, count| %>
-                <% unless category.name.eql?('N/A') %>
-                  <li>
-                    <div class="tooltip">
-                      <span class="body_tooltip">
-                        <label><%= category.name %></label>
-                      </span>
-                      <span class="bottom_tooltip"></span>
-                    </div>
-                    <a class="<%= category.css_class %> icon_statistics" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
-                  </li>
+        <% cache("#{@site.id}/home/projects_by_cluster_sector") do %>
+          <div class="project-sectors mod-info">
+            <h3>Project sectors</h3>
+            <div class="mod-project-sectors">
+              <ul id="clustersView">
+                <% @site.projects_sectors_or_clusters.each do |category, count| %>
+                  <% unless category.name.eql?('N/A') %>
+                    <li>
+                      <a class="<%= category.css_class %> icon_statistics" title="<%= category.name %>" href="<%= category.is_a?(Cluster) ? cluster_path(category) : sector_path(category) %>" data-value="<%= count %>"><span class="aller"><%= count %></span></a>
+                    </li>
+                  <% end %>
                 <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <% cache("#{@site.id}/home/projects_by_location") do %>
+          <%= render 'new_partials/aside/project_locations' %>
+        <% end %>
+
+        <% cache("#{@site.id}/home/organizations") do %>
+          <div class="affiliated-organizations mod-info">
+            <div class="mod-affiliated-organizations" >
+              <h3>Some organizations</h3>
+              <% @site.projects_organizations[0...9].each do |organization, count| %>
+                <li><%= link_to organization.name, organization_path(organization) %> <%= pluralize(count, 'project') %></li>
               <% end %>
-            </ul>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
 
-      <% cache("#{@site.id}/home/projects_by_location") do %>
-        <%= render 'new_partials/aside/project_locations' %>
-      <% end %>
-
-      <% cache("#{@site.id}/home/organizations") do %>
-        <div class="affiliated-organizations mod-info">
-          <div class="mod-affiliated-organizations" >
-            <h3>Some organizations</h3>
-            <% @site.projects_organizations[0...9].each do |organization, count| %>
-              <li><%= link_to organization.name, organization_path(organization) %> - <%= pluralize(count, 'project') %></li>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-
+      </aside>
     </div>
-  </aside>
 
-  <section class="content">
     <div class="grid-12 offset-1">
-      <h1 class="section-title"><%= @site.name %></h1>
+      <section class="layout-content">
 
-      <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => "#{url(@site)}/.csv", :xls_path => "#{url(@site)}/.xls", :kml_path => "#{url(@site)}/.xml" } %>
+        <header>
+          <h1 class="section-title">All projects</h1>
+        </header>
 
-      <%= render "new_partials/index_projects" %>
+        <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => "/sites/download/#{@site.id}.csv", :xls_path => "/sites/download/#{@site.id}.xls", :kml_path => "/sites/download/#{@site.id}.kml" } %>
 
+        <%= render "new_partials/index_projects" %>
+
+      </section>
     </div>
-  </section>
+  </div>
 </div>
