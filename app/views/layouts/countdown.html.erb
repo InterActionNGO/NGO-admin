@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>NGO AID MAP</title>
+<!--
+  <script src="./countdown_files/jquery.min.js" type="text/javascript"></script>
+<script src="./countdown_files/jquery.ui.core.js" type="text/javascript"></script>
+<script src="./countdown_files/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="./countdown_files/jquery.ui.position.js" type="text/javascript"></script>
+-->
+
+  <%= stylesheet_link_tag "countdown.css" %>
+
+  <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png">
+<script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
+<body>
+
+  <div id="layout">
+    <div id="header_sites">
+      <div class="left">
+        <h1><a href="./countdown_files/countdown.html">NGO AID MAP</a></h1>
+      </div>
+      <div class="right">
+        <div class="brand-interaction">
+          <img src="./countdown_files/interaction-logo.png">
+        </div>
+      </div>
+      <div class="right">
+        <ul class="menu">
+          <li class="last">
+            <a href="http://localhost:3000/admin">MEMBER ACCESS</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+  <div id="outer_layout">
+      <!-- div id="header_sites" -->
+  <div class="iom-counter">
+    <div class="map"></div>
+    <div class="date"><span id="remaining-days">5</span></div>
+    <p class="counter">DAYS UNTIL<br>THE GLOBAL MAP</p>
+  </div>
+<!--
+  <script src="./countdown_files/galleria.js" type="text/javascript"></script>
+<script src="./countdown_files/home_sites.js" type="text/javascript"></script>
+<script src="./countdown_files/days_counter.js" type="text/javascript"></script>
+-->
+ <!-- Main layout has to content <div id="layout"> -->
+
+     <%= javascript_include_tag "vendor/jquery/dist/jquery" "countdown/days_counter" %>
+
+      <div id="footer_sites">
+        <div class="left_footer">
+          <a class="logo" href="./countdown_files/countdown.html"></a>
+          <div class="project">
+              <p class="site_name"><a href="http://ngoaidmap.org/">NGO Aid Map</a></p>
+              <p class="all_rights">Copyrighted by <a class="link interaction" href="http://www.interaction.org/">InterAction</a> ©2013. Designed and developed by <a class="link" href="http://www.vizzuality.com/">Vizzuality</a></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body></html>
