@@ -74,10 +74,7 @@
 
 .featured-projects {
   margin-top: 40px;
-  padding: 40px 0;
-  // height: 120px;
-  background-color: $color-4;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .about-subsections {
@@ -100,4 +97,5 @@
   padding-top: 40px;
   padding-bottom: 60px;
   background-color: $color-4;
+  border-top: 1px solid rgba($color-5, .3);
 }
