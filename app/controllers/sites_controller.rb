@@ -1,6 +1,8 @@
 class SitesController < ApplicationController
 
-  layout :sites_layout
+  #layout :sites_layout
+  layout :selective_layout
+
 
   def home
 
@@ -134,5 +136,15 @@ class SitesController < ApplicationController
 
   def contact
   end
+
+  private
+  def selective_layout
+    if current_user && current_user.is_admin?
+      'application'
+    else
+      'countdown'
+    end
+  end
+
 
 end
