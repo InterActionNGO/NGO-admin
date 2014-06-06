@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title><% unless CGI.unescapeHTML(title) == 'generic' %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
-    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
+    <%= stylesheet_link_tag "main" %>
     <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
     <%= csrf_meta_tag %>
   </head>
@@ -13,6 +13,8 @@
     <%= yield %>
 
     <%= render 'layouts/footer' %>
+
+    <%= javascript_include_tag "../vendor/requirejs/require", "main" %>
 
     <% if Rails.env.production? %>
       <script type="text/javascript">
