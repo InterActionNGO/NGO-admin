@@ -1,26 +1,14 @@
 .mod-content-article {
-  font-family: "Helvetica Neue";
+  font-weight: lighter;
   font-size: 16px;
-  .section-title {
-    padding-bottom: 50px;
-
-    .about & { color: $color-8;}
-    .news  & { color: $color-7;}
-  }
-  .subsection {
-    padding-bottom: 50px;
-  }
-  .subsection-title {
-    font-family: "Helvetica Neue light";
-    font-weight: normal;
-    font-size: 36px;
-    .about & { @include theme-color-8; color: $primary-color;}
-    .news  & { @include theme-color-7; color: $primary-color;}
-  }
-  p { padding-bottom: 20px;}
+  section { margin-bottom: 40px;}
   a {
     display: inline-block;
     color: $color-2;
+    &:hover {
+      color: lighten($color-2, 10%);
+      text-decoration: underline;
+    }
   }
   li {
     list-style: disc;
@@ -31,6 +19,28 @@
     padding-left: 30px;
     list-style: disc;
   }
+  img {
+     margin-bottom: 40px;
+  }
+  h1 {
+    color: $color-1;
+  }
+  h3 {
+    margin-top: 20px;
+  }
 
+  .ui-accordion {
+    .ui-accordion-header {
+      padding: 0;
+    }
+    .ui-accordion-icons {
+      padding: .7em 0;
+      color: $color-2;
+      text-transform: none;
+    }
+    .ui-accordion-content {
+      padding: 1em 0;
+    }
+  }
 }
 

@@ -1,6 +1,7 @@
 class GeoregionController < ApplicationController
 
   layout :sites_layout
+  caches_action :show, :expires_in => 300
 
   skip_before_filter :set_site, :only => [:list_regions1_from_country,:list_regions2_from_country,:list_regions3_from_country]
 
@@ -34,11 +35,6 @@ class GeoregionController < ApplicationController
       else
         category_join = "inner join projects_sectors as pse on pse.project_id = p.id and pse.sector_id = #{@filter_by_category}"
       end
-    end
-
-    if @filter_by_category.present?
-      @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.try(:name)
-      @filter_name =  "#{@category_name} projects"
     end
 
     if geo_ids.size == 1 && @site.navigate_by_country?
@@ -80,7 +76,7 @@ class GeoregionController < ApplicationController
                   '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                   END as url,
                   c.code, 'country' as type
-                  from ((countries_projects as cp inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{@site.id}) inner join projects as p 
+                  from ((countries_projects as cp inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{@site.id}) inner join projects as p
                   on cp.project_id=p.id and (p.end_date is null OR p.end_date > now() AND cp.country_id=#{country.id}) inner join countries as c on cp.country_id=c.id and c.id=#{country.id} )
                   group by c.id,c.name,lon,lat,c.name,c.code
                   "
@@ -150,6 +146,11 @@ class GeoregionController < ApplicationController
     end
 
     @georegion_projects_count = @area.projects_count(@site, @filter_by_category)
+
+    if @filter_by_category.present?
+      @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.try(:name)
+      @filter_name =  "#{@georegion_projects_count} #{@category_name} projects"
+    end
 
     raise NotFound if sql.blank?
 

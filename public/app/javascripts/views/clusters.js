@@ -1,16 +1,26 @@
 'use strict';
 
-define(function() {
+define(['backbone', 'jqueryui'], function(Backbone) {
 
   var ClustersView = Backbone.View.extend({
 
     el: '#clustersView',
 
     initialize: function() {
+      if (this.$el.length === 0) {
+        return false;
+      }
+
       var $items = this.$el.find('a'),
-      w = this.$el.width(),
-      values = [],
-      max = $($items[0]).data('value');
+        w = this.$el.width(),
+        max = $($items[0]).data('value');
+
+      $items.tooltip({
+        position: {
+          at: 'center+20 top-5',
+          my: 'center bottom'
+        }
+      });
 
       for (var i = 0, len = $items.length; i < len; i++) {
         var item = $($items[i]);

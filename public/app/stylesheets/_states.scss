@@ -2,4 +2,17 @@
   display: none !important;
   visibility: hidden;
 }
+.is-visible {
+  display: block;
+}
 
+.is-fixed {
+  position: fixed;
+  .grid-4 & {
+    width: 13%;
+  }
+}
+
+.is-clearfix {
+  @include clearfix();
+}

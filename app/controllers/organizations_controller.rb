@@ -1,6 +1,8 @@
 class OrganizationsController < ApplicationController
 
   layout :sites_layout
+  caches_action :index, :expires_in => 300
+  caches_action :show, :expires_in => 300
 
   def index
     @organizations = @site.organizations
@@ -32,30 +34,6 @@ class OrganizationsController < ApplicationController
     @carry_on_filters[:category_id] = params[:category_id] if params[:category_id].present?
     @carry_on_filters[:location_id] = params[:location_id] if params[:location_id].present?
 
-    @filter_name = ''
-
-    if @filter_by_category && @filter_by_location
-      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
-      @location_name = if @filter_by_location.size == 1
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      else
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      end
-      @filter_name =  "#{@category_name} projects in #{@location_name}"
-    elsif @filter_by_location
-      @location_name = if @filter_by_location.size == 1
-        "#{Country.where(:id => @filter_by_location.first).first.name}"
-      else
-        region = Region.where(:id => @filter_by_location.last).first
-        "#{region.country.name}/#{region.name}" rescue ''
-      end
-      @filter_name = "projects in #{@location_name}"
-    elsif filter_by_category_valid?
-      @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
-      @filter_name =  "#{@category_name} projects"
-    end
-
     projects_custom_find_options = {
       :organization  => @organization.id,
       :per_page      => 10,
@@ -80,6 +58,30 @@ class OrganizationsController < ApplicationController
       @organization.projects_countries(@site, @filter_by_category)
     else
       @organization.projects_regions(@site, @filter_by_category)
+    end
+
+    @filter_name = ''
+
+    if @filter_by_category && @filter_by_location
+      @category_name =  "#{(@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name}"
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name =  "#{@organization_projects_count} #{@category_name} projects in #{@location_name}"
+    elsif @filter_by_location
+      @location_name = if @filter_by_location.size == 1
+        "#{Country.where(:id => @filter_by_location.first).first.name}"
+      else
+        region = Region.where(:id => @filter_by_location.last).first
+        "#{region.country.name}/#{region.name}" rescue ''
+      end
+      @filter_name = "#{@organization_projects_count} projects in #{@location_name}"
+    elsif filter_by_category_valid?
+      @category_name = (@site.navigate_by_sector?? Sector : Cluster).where(:id => @filter_by_category).first.name
+      @filter_name =  "#{@organization_projects_count} #{@category_name} projects"
     end
 
     respond_to do |format|
@@ -239,12 +241,12 @@ class OrganizationsController < ApplicationController
       format.csv do
         send_data Project.to_csv(@site, projects_custom_find_options),
           :type => 'text/plain; charset=utf-8; application/download',
-          :disposition => "attachment; filename=#{@organization.name}_projects.csv"
+          :disposition => "attachment; filename=#{@organization.name.gsub(/[^0-9A-Za-z]/, '')}_projects.csv"
       end
       format.xls do
         send_data Project.to_excel(@site, projects_custom_find_options),
           :type        => 'application/vnd.ms-excel',
-          :disposition => "attachment; filename=#{@organization.name}_projects.xls"
+          :disposition => "attachment; filename=#{@organization.name.gsub(/[^0-9A-Za-z]/, '')}_projects.xls"
       end
       format.kml do
         @projects_for_kml = Project.to_kml(@site, projects_custom_find_options)

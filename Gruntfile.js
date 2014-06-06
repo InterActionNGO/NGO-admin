@@ -27,7 +27,8 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= root.app %>/javascripts/{,*/}{,*/}*.js'
+        '<%= root.app %>/javascripts/{,*/}{,*/}*.js',
+        '!<%= root.app %>/javascripts/backoffice/{,*/}{,*/}*.js'
       ]
     },
 
@@ -63,7 +64,8 @@ module.exports = function(grunt) {
           src: [
             'fonts/**/*',
             'images/**/*',
-            'stylesheets/backoffice/**/*'
+            'stylesheets/backoffice/**/*',
+            'javascripts/backoffice/**/*'
           ]
         }]
       }
@@ -81,6 +83,8 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
+          cssDir: '<%= root.dist %>/stylesheets',
+          generatedImagesDir: '<%= root.dist %>/images/sprite',
           httpStylesheetsPath: '/dist/stylesheets',
           httpImagesPath: '/dist/images',
           httpGeneratedImagesPath: '/dist/images/sprite',
@@ -104,9 +108,26 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= root.app %>/images',
-          src: '{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif}',
+          src: '{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif,svg}',
           dest: '<%= root.dist %>/images'
         }]
+      }
+    },
+
+    requirejs: {
+      options: {
+        optimize: 'uglify',
+        preserveLicenseComments: false,
+        useStrict: true,
+        wrap: false
+      },
+      dist: {
+        options: {
+          baseUrl: '<%= root.app %>/javascripts',
+          include: 'main',
+          out: '<%= root.dist %>/javascripts/main.js',
+          mainConfigFile: '<%= root.app %>/javascripts/main.js',
+        }
       }
     },
 
@@ -116,7 +137,8 @@ module.exports = function(grunt) {
       },
       styles: {
         files: [
-          '<%= root.app %>/stylesheets/{,*/}*{,*/}*.{scss,sass}'
+          '<%= root.app %>/stylesheets/{,*/}*{,*/}*.{scss,sass}',
+          '<%= root.app %>/images/{,*/}*{,*/}*.{png,jpg}'
         ],
         tasks: ['compass:app']
       },
@@ -130,6 +152,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'clean',
+    'jshint',
     'copy:app',
     'compass:app'
   ]);
@@ -140,7 +163,8 @@ module.exports = function(grunt) {
     'uglify',
     'copy:dist',
     'imagemin',
-    'compass:dist'
+    'compass:dist',
+    'requirejs'
   ]);
 
 };

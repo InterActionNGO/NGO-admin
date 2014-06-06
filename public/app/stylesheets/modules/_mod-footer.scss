@@ -1,44 +1,47 @@
 .mod-footer {
-  position: relative;
-  padding: 20px 0;
-  ul {
-    width: 100%;
-  }
+  font-size: 13px;
+
+  a { display: inline-block;}
+
+  ul { margin-top: 40px;}
   li {
-    float: left;
-    width: 20%;
+    float: none;
     font-weight: bold;
-    font-size: 14px;
+    margin-bottom: 20px;
+    font-size: 13px;
     text-transform: uppercase;
-    text-align: center;
-    &:first-child { text-align: left;}
-    &:last-child { text-align: right;}
   }
   .aid-map-logo {
-    float: left;
-    margin-right: 20px;
+    margin-top: 45px;
   }
   .interaction-logo {
     float: left;
   }
   .signature {
-    float: right;
     text-align: right;
-    margin-top: 22px;
-    color: $color-5;
-  }
-  .claim {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  .link-to-simbiotica {
-    display: inline-block;
-    color: $color-5;
   }
 }
+.mod-footer-top {
+  height: 190px;
+  background: image-url('footer_background_x2.svg') no-repeat left center;
+  background-size: auto 130px;
+}
 .mod-footer-bottom {
-  position: relative;
-  margin-top: 55px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 25px;
+  padding-top: 10px;
+  background-color: $color-1;
+  color: $color-0;
+  font-weight: lighter;
+  a {
+    display: inline-block;
+    font-weight: bold;
+    color: $color-0;
+    text-decoration: underline;
+  }
+  p { color: $color-11;}
 }
 
 

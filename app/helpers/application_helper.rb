@@ -60,10 +60,8 @@ HTML
 
   def title
     result = []
-    if @site
+    if @site and @site.name != 'global'
       result << @site.name
-    else
-      result << "IOM"
     end
     if @organization
       result << @organization.name
@@ -89,9 +87,9 @@ HTML
     if @country
       result << @country.name
     end
-    if @area
-      result << @area.name
-    end
+    # if @area
+    #   result << @area.name
+    # end
     if controller_name == 'search' && action_name == 'index'
       if params[:q].blank?
         result << "Search"
