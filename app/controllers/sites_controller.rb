@@ -2,7 +2,8 @@ class SitesController < ApplicationController
 
   #layout :sites_layout
   layout :selective_layout
-
+  caches_action :site_home, :expires_in => 300
+  caches_action :general_home, :expires_in => 300
 
   def home
 

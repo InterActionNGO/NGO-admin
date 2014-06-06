@@ -1,6 +1,8 @@
 class OrganizationsController < ApplicationController
 
   layout :sites_layout
+  caches_action :index, :expires_in => 300
+  caches_action :show, :expires_in => 300
 
   def index
     @organizations = @site.organizations
