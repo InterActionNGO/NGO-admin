@@ -18,6 +18,8 @@ define(['backbone'], function(Backbone) {
       }
 
       var h = $('.mod-header').height() + $('.mod-hero').height();
+      var maxh = $('.mod-featured-projects').offset().top - this.$el.height() - 130;
+      var t = $('.layout-content').height() - this.$el.height();
 
       this.$page = $('html, body');
 
@@ -26,6 +28,12 @@ define(['backbone'], function(Backbone) {
           self.$el.addClass('is-fixed');
         } else {
           self.$el.removeClass('is-fixed');
+        }
+
+        if (e.currentTarget.pageYOffset > maxh) {
+          self.$el.addClass('is-bottom-fixed').css('top', t + 'px');
+        } else {
+          self.$el.removeClass('is-bottom-fixed').css('top', '60px');
         }
       });
     },
