@@ -139,8 +139,8 @@ class SitesController < ApplicationController
 
   private
   def selective_layout
-    if current_user && current_user.is_admin?
-      'application'
+    if (current_user && current_user.admin?)
+      sites_layout
     else
       'countdown'
     end
