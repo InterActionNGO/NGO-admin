@@ -1,12 +1,21 @@
 html { background: rgba($color-1, .8); }
 body { background: image-url('backoffice-bg.png') no-repeat top;}
 
-.mod-backoffice-header {
+.mod-backoffice-menu {
+  position: relative;
   width: 1100px;
   height: 100px;
   margin: 0 auto;
   padding: 25px 0;
   .interaction-logo { float: left; }
+  .admin-menu {
+
+  }
+  .main-menu {
+    position: absolute;
+    top: 63px;
+    right: -15px;
+  }
 }
 
 .mod-login {
