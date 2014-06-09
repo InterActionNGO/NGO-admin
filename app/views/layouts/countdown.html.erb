@@ -37,8 +37,6 @@
     <p class="counter">DAYS UNTIL<br>THE GLOBAL MAP</p>
   </div>
 
-     <%= javascript_include_tag "../vendor/jquery/dist/jquery", "countdown/days_counter" %>
-
       <div id="footer_sites">
         <div class="left_footer">
           <a class="logo" href="/"></a>
@@ -52,7 +50,7 @@
     </div>
   </div>
 
-
+  <%= javascript_include_tag "../vendor/requirejs/require", "countdown" %>
 
 
 </body></html>

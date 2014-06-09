@@ -1,7 +1,7 @@
 <div class="mod-filtered-categories">
   <div class="row">
-    <% unless title.empty? %>
-      <div class="grid-13">
+    <div class="grid-17">
+      <% unless title.empty? %>
         <% if @filter_name.present? || @filter_by_location || @filter_by_category || @filter_by_organization %>
           <p class="filtered">
             <strong>Showing</strong>:
@@ -33,11 +33,11 @@
             <% end %>
           </p>
         <% end %>
-      </div>
-    <% end %>
+      <% end %>
 
-    <div class="mod-btn-projects <% unless title.empty? %>grid-4<% else %>grid-17<% end %>">
-      <a href="#content" class="btn-go-to-projects">View projects list</a>
+      <div class="mod-btn-projects">
+        <a href="#content" class="btn-go-to-projects">View projects list</a>
+      </div>
     </div>
   </div>
 </div>
