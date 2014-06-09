@@ -1,0 +1,36 @@
+html { background: rgba($color-1, .8); }
+body { background: image-url('backoffice-bg.png') no-repeat top;}
+
+.auxiliary-wrapper {
+  width: 100%;
+  overflow: hidden;
+  background-color: #E1E5E7
+}
+.mod-backoffice-header {
+  width: 1100px;
+  height: 100px;
+  margin: 0 auto;
+  padding: 25px 0;
+  .interaction-logo { float: left; }
+}
+
+.mod-login {
+   @include box-sizing(border-box);
+  position: relative;
+  width: 100%;
+  padding: 85px 16.67% 135px;
+  background-color: $color-0;
+  .footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    background: image-url('backoffice-bg.png'), rgba($color-1,.9);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 100%;
+  }
+}
+
+
