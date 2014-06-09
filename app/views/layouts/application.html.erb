@@ -56,9 +56,9 @@
         <div class="notice"><%= raw flash[:notice] %></div>
       </div>
     <% end -%>
-    <div class="auxiliary-wrapper">
+
     <%= yield %>
-    </div>
+
 
     <% if logged_in? %>
       <div id="footer">
