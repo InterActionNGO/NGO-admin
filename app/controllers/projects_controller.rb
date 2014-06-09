@@ -1,8 +1,8 @@
 class ProjectsController < ApplicationController
 
   layout 'site_layout'
-  caches_action :show, :expires_in => 300
-  
+  caches_action :show, :expires_in => 300, :cache_path => Proc.new { |c| c.params }
+
   def show
     id = if params[:id].sanitize_sql! =~ /^\d+$/
       params[:id].sanitize_sql!
