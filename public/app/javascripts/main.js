@@ -161,7 +161,9 @@ require([
   }
 
   function autoResizeTextare(el) {
-    $(el).css('height', 0).height(el.scrollHeight);
+    if (el) {
+      $(el).css('height', 0).height(el.scrollHeight);
+    }
   }
 
   $('.btn-go-to-projects').on('click', goTo);
