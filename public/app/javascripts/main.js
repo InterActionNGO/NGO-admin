@@ -120,7 +120,7 @@ require([
 
   function fixCategoriesSelector() {
     elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 50: 0;
-    
+
     if (categoriesSelector.length === 0) {
       return false;
     }
@@ -155,7 +155,7 @@ require([
 
   function goTo(e) {
     $('body, html').animate({
-      scrollTop: $('.main-content').offset().top
+      scrollTop: $('.main-content').offset().top - 49
     }, 500);
     e.preventDefault();
   }
