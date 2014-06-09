@@ -3,6 +3,7 @@
 
     <div class="grid-4">
       <aside class="layout-sidebar">
+        <% cache '#{@site.id}/reports' do %>
         <div class="mod-report-filter mod-form" id="reportFormView">
 
           <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
@@ -69,6 +70,10 @@
                 </div>
               </li>
 
+              <li class="comboselect" id="activeProjects">
+                <label><input type="checkbox" name="active_projects"> Show active projects</label>
+              </li>
+
               <li>
                 <button class="apply" type="submit">Apply filters</button>
               </li>
@@ -76,6 +81,7 @@
 
           <% end %>
         </div> <!-- mod-report-filter -->
+        <% end %>
       </aside>
     </div>
 
@@ -85,7 +91,7 @@
         <div class="report-spinner" id="spinView"></div>
 
         <article class="mod-content-article">
-          <h1>Report</h1>
+          <h1 class="report-title"><textarea placeholder="Type a title here"></textarea></h1>
           <div id="totalsView"></div>
         </article>
 
