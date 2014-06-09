@@ -1,95 +1,96 @@
+<div class="main-content">
+  <div class="row">
 
-<div class="row">
+    <div class="grid-4">
+      <aside class="layout-sidebar">
+        <div class="mod-report-filter mod-form" id="reportFormView">
 
-  <div class="grid-4">
-    <aside class="layout-sidebar">
-      <div class="mod-report-filter mod-form" id="reportFormView">
+          <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
 
-        <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
+            <div class="block search">
+              <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
+              <%= submit_tag '' %>
+            </div>
 
-          <div class="block search">
-            <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
-            <%= submit_tag '' %>
-          </div>
+            <ul class="combo_search_select">
+              <li class="comboselect">
+                <label>ORGANIZATION</label>
+                <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
+                <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+                <%= hidden_field_tag 'organization_include', 'include' %>
+              </li>
 
-          <ul class="combo_search_select">
-            <li class="comboselect">
-              <label>ORGANIZATION</label>
-              <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
-              <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-              <%= hidden_field_tag 'organization_include', 'include' %>
-            </li>
+              <!--
+              <li class="comboselect">
+                <label>Layer</label>
+                <%# select_tag :layer,
+                  options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.title] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
+                  <%# select_tag :layer_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
+                  <%# text_field_tag (:layer_unit) %>
+              </li>  -->
 
-            <!--
-            <li class="comboselect">
-              <label>Layer</label>
-              <%# select_tag :layer,
-                options_for_select([['All',0]] + Layer.get_select_values.collect{ |l| [l.title, l.title] }, params[:layer]), :class => :"chzn-select", :multiple => true, :size => 5%>
-                <%# select_tag :layer_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
-                <%# text_field_tag (:layer_unit) %>
-            </li>  -->
+              <li class="comboselect">
+                <label>COUNTRY</label>
+                <%= select_tag :country,
+                  options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select country" %>
+                <%# select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+                <%= hidden_field_tag 'country_include', 'include' %>
+              </li>
 
-            <li class="comboselect">
-              <label>COUNTRY</label>
-              <%= select_tag :country,
-                options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select country" %>
-              <%# select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-              <%= hidden_field_tag 'country_include', 'include' %>
-            </li>
+              <li class="comboselect">
+                <label>SECTOR</label>
+                <%= select_tag :sector,
+                  options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select sector" %>
+                <%# select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+                <%= hidden_field_tag 'sector_include', 'include' %>
+              </li>
 
-            <li class="comboselect">
-              <label>SECTOR</label>
-              <%= select_tag :sector,
-                options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select sector" %>
-              <%# select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-              <%= hidden_field_tag 'sector_include', 'include' %>
-            </li>
+              <li class="comboselect">
+                <label>DONOR</label>
+                <%= select_tag :donor,
+                  options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
+                  <%# select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
+                  <%= hidden_field_tag 'donor_include', 'include' %>
+              </li>
 
-            <li class="comboselect">
-              <label>DONOR</label>
-              <%= select_tag :donor,
-                options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
-                <%# select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'donor_include', 'include' %>
-            </li>
+              <li class="comboselect date">
+                <label>START DATE</label>
+                <div class="select_date">
+                  <%= select_date @date_start, {:prefix => :start_date, :use_short_month =>true} %>
+                  <%# select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
+                </div>
+              </li>
 
-            <li class="comboselect date">
-              <label>START DATE</label>
-              <div class="select_date">
-                <%= select_date @date_start, {:prefix => :start_date, :use_short_month =>true} %>
-                <%# select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
-              </div>
-            </li>
+              <li class="comboselect date">
+                <label>END DATE</label>
+                <div class="select_date">
+                  <%= select_date @date_end, {:prefix => :end_date, :use_short_month =>true} %>
+                  <%# select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
+                </div>
+              </li>
 
-            <li class="comboselect date">
-              <label>END DATE</label>
-              <div class="select_date">
-                <%= select_date @date_end, {:prefix => :end_date, :use_short_month =>true} %>
-                <%# select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
-              </div>
-            </li>
+              <li>
+                <button class="apply" type="submit">Apply filters</button>
+              </li>
+            </ul>
 
-            <li>
-              <button class="apply" type="submit">Apply filters</button>
-            </li>
-          </ul>
+          <% end %>
+        </div> <!-- mod-report-filter -->
+      </aside>
+    </div>
 
-        <% end %>
-      </div> <!-- mod-report-filter -->
-    </aside>
+    <div class="grid-12 offset-1">
+      <section class="layout-content">
+
+        <div class="report-spinner" id="spinView"></div>
+
+        <article class="mod-content-article">
+          <h1>Report</h1>
+          <div id="totalsView"></div>
+        </article>
+
+      </section>
+    </div>
+
   </div>
-
-  <div class="grid-12 offset-1">
-    <section class="layout-content">
-
-      <div class="report-spinner" id="spinView"></div>
-
-      <article class="mod-content-article">
-        <h1>Report</h1>
-        <div id="totalsView"></div>
-      </article>
-
-    </section>
-  </div>
-
 </div>
