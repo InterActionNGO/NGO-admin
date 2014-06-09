@@ -121,5 +121,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
   protected :sites_layout
 end

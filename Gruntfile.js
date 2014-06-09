@@ -128,6 +128,14 @@ module.exports = function(grunt) {
           out: '<%= root.dist %>/javascripts/main.js',
           mainConfigFile: '<%= root.app %>/javascripts/main.js',
         }
+      },
+      countdown: {
+        options: {
+          baseUrl: '<%= root.app %>/javascripts',
+          include: 'countdown',
+          out: '<%= root.dist %>/javascripts/countdown.js',
+          mainConfigFile: '<%= root.app %>/javascripts/countdown.js',
+        }
       }
     },
 
