@@ -5,6 +5,43 @@
   table {  width: 100%; }
   td { padding: 2px 0; }
   &:last-child { border-bottom: 0; }
+
+  &.mod-report-intro {
+    margin-top: 0;
+
+    img {
+      display: inline-block;
+      margin-top: 30px;
+    }
+    p {
+      margin-bottom: 1em;
+      text-align: left;
+      font-size: 16px;
+    }
+  }
+}
+
+.report-title {
+  textarea {
+    display: inline-block;
+    width: 100%;
+
+    border: 0;
+
+    color: $color-1;
+    font-family: $font-family;
+    font-size: 48px;
+    font-weight: lighter;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+
+    overflow: hidden;
+    resize: none;
+
+    &:focus {
+      outline: 0;
+    }
+  }
 }
 
 .mod-report-grid-3 {
