@@ -74,6 +74,8 @@ require([
   'chachiSlider'
 ], function($, Handlebars, Router) {
 
+  var $reportTitleTextarea = $('.report-title').find('textarea');
+
   // Extensions
   Number.prototype.toCommas = function() {
     return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -102,8 +104,6 @@ require([
       new SearchMenu(el);
     });
   };
-
-  new Router();
 
   var scrollTop,
     categoriesSelector = $('.categories-selector'),
@@ -160,6 +160,10 @@ require([
     e.preventDefault();
   }
 
+  function autoResizeTextare(el) {
+    $(el).css('height', 0).height(el.scrollHeight);
+  }
+
   $('.btn-go-to-projects').on('click', goTo);
 
   sectionTitle();
@@ -179,5 +183,13 @@ require([
     navigation: false,
     pauseTime: 7000
   });
+
+  $reportTitleTextarea.on('keyup', function(e) {
+    autoResizeTextare(e.currentTarget);
+  });
+
+  autoResizeTextare($reportTitleTextarea[0]);
+
+  new Router();
 
 });
