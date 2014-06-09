@@ -47,6 +47,7 @@ define([
       'location/:id': 'lists',
       'projects/:id': 'project',
       'location/:region/:id': 'lists',
+      'location/:region/:id/*regions': 'lists',
       'search': 'search',
       'p/:page': 'page'
     },
