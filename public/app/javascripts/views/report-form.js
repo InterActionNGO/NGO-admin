@@ -1,10 +1,16 @@
 'use strict';
 
-define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
+define(['moment', 'backbone', 'jquery', 'form', 'select2'], function(moment, Backbone) {
 
   var ReportFormView = Backbone.View.extend({
 
     el: '#reportFormView',
+
+    events: {
+      'change #end_date_year': 'checkDate',
+      'change #end_date_month': 'checkDate',
+      'change #end_date_day': 'checkDate',
+    },
 
     initialize: function() {
       var self = this;
@@ -30,6 +36,8 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
       this.$el.find('select').select2({
         width: 'element'
       });
+
+      this.$activeProjects = $('#activeProjects');
     },
 
     onSuccess: function(data) {
@@ -40,6 +48,22 @@ define(['backbone', 'jquery', 'form', 'select2'], function(Backbone) {
       this.model.set(_.extend(data.results, {
         charts: data.bar_chart
       }));
+    },
+
+    checkDate: function() {
+      var currentEndDate = moment({
+        year: $('#end_date_year').val(),
+        month: $('#end_date_month').val() - 1,
+        day: $('#end_date_day').val()
+      });
+
+      var isBefore = currentEndDate.isBefore(moment(), 'day');
+
+      if (isBefore) {
+        this.$activeProjects.addClass('is-hidden');
+      } else {
+        this.$activeProjects.removeClass('is-hidden');
+      }
     }
 
   });
