@@ -31,7 +31,7 @@ define(['moment', 'backbone', 'jquery', 'form', 'select2'], function(moment, Bac
         error: function(err) {
           throw err.statusText;
         }
-      }).submit();
+      });
 
       this.$el.find('select').select2({
         width: 'element'
