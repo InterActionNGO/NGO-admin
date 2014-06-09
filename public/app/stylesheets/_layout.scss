@@ -22,20 +22,6 @@
   }
 }
 
-.about,
-.purpose,
-.getting-on-the-map,
-.staff-list,
-.contact-us,
-.of-interest,
-.data,
-.top-things-you-should-know-about-the-data,
-.data-guidance,
-.analysis {
-  // max-width: 1280px;
-  // margin: 0 auto;
-}
-
 /*********************************************************************************************/
 /******************************************SECTIONS*******************************************/
 /*********************************************************************************************/
@@ -44,7 +30,7 @@
   height: 50px;
   background-color: $color-4;
   border-bottom: 1px solid rgba($color-4, 0.3);
-  @include transition(all 2s ease);
+  @include transition(border 2s ease);
   &.is-fixed {
     top: 0;
     z-index: 100;
@@ -62,6 +48,13 @@
   margin-bottom: 30px;
   header { margin-bottom: 25px;}
   min-height: 400px;
+
+  .disclaimer {
+    padding: 10px 15px 10px 70px;
+    margin-bottom: 1em;
+    background: rgba($color-7, .3) image-url("disclaimer-alert.svg") no-repeat 10px 50%;
+    background-size: 45px 52px;
+  }
 }
 .layout-sidebar {
   position: relative;
