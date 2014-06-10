@@ -126,6 +126,13 @@ module.exports = function(grunt) {
             '<%= root.tmp %>/stylesheets/countdown.css'
           ]
         }
+      },
+      backoffice: {
+        files: {
+          '<%= root.dist %>/stylesheets/backoffice.css': [
+            '<%= root.tmp %>/stylesheets/backoffice.css'
+          ]
+        }
       }
     },
 
