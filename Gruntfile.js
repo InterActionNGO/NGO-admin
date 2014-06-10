@@ -83,7 +83,6 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
-          cssDir: '<%= root.dist %>/stylesheets',
           generatedImagesDir: '<%= root.dist %>/images/sprite',
           httpStylesheetsPath: '/dist/stylesheets',
           httpImagesPath: '/dist/images',
@@ -103,12 +102,57 @@ module.exports = function(grunt) {
       }
     },
 
+    cssmin: {
+      main: {
+        files: {
+          '<%= root.dist %>/stylesheets/main.css': [
+            '<%= root.app %>/lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css',
+            '<%= root.app %>/vendor/chachi-slider/chachi-slider.css',
+            '<%= root.app %>/vendor/select2/select2.css',
+            '<%= root.tmp %>/stylesheets/main.css'
+          ]
+        }
+      },
+      embed: {
+        files: {
+          '<%= root.dist %>/stylesheets/embed.css': [
+            '<%= root.tmp %>/stylesheets/embed.css'
+          ]
+        }
+      },
+      countdown: {
+        files: {
+          '<%= root.dist %>/stylesheets/countdown.css': [
+            '<%= root.tmp %>/stylesheets/countdown.css'
+          ]
+        }
+      }
+    },
+
     imagemin: {
       dist: {
         files: [{
           expand: true,
           cwd: '<%= root.app %>/images',
-          src: '{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif,svg}',
+          src: '{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif}',
+          dest: '<%= root.dist %>/images'
+        }]
+      }
+    },
+
+    svgmin: {
+      options: {
+        plugins: [{
+          removeViewBox: false
+        }, {
+          removeUselessStrokeAndFill: false
+        }]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= root.app %>/images',
+          src: '{,*/}*{,*/}*{,*/}*.svg',
           dest: '<%= root.dist %>/images'
         }]
       }
@@ -171,7 +215,9 @@ module.exports = function(grunt) {
     'uglify',
     'copy:dist',
     'imagemin',
+    'svgmin',
     'compass:dist',
+    'cssmin',
     'requirejs'
   ]);
 
