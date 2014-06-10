@@ -665,10 +665,12 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     map.fitBounds(bounds);
 
-    if (map_data[0].type === 'country' || map_data.length === 1) {
-      setTimeout(function() {
-        map.setZoom(8);
-      }, 300);
+    if (map_data.length > 0) {
+      if (map_data[0].type === 'country' || map_data.length === 1) {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 300);
+      }
     }
 
     // Layer selector
