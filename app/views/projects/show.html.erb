@@ -21,6 +21,7 @@
     var kind = window.location.pathname.split('/')[1];
     var stylez = <%=raw @site.map_styles  %>
     var empty_layer = <%= @empty_layer.present?? @empty_layer : false %>;
+    var video_players = [];
   </script>
 <% end %>
 
@@ -32,7 +33,7 @@
         <div class="mod-info mod-reporting-organisation">
           <h3>Reporting organisation</h3>
           <% if @project.primary_organization.logo.file? %>
-            <a href="<%= organization_path(@project.primary_organization) %>"><%= image_tag(@project.primary_organization.logo.url(:small)) %></a>
+            <a href="<%= organization_path(@project.primary_organization) %>"><%= image_tag(@project.primary_organization.logo.url(:medium)) %></a>
             <%= link_to(@project.primary_organization.name, organization_path(@project.primary_organization)) %>
           <% else %>
             <%= link_to(@project.primary_organization.name, organization_path(@project.primary_organization), :class=>'long') %>
@@ -179,10 +180,8 @@
             <div class="mod-gallery chachi-slider">
               <% @project.media_resources.each do |media_resource| %>
                 <% if media_resource.is_a_video? %>
-                  <%= image_tag(media_resource.video_thumb.url(:medium), :alt => media_resource.caption, :video_id => media_resource.id, :class => "chachi-item") %>
-                  <script type="text/javascript">
-                    video_players['<%= media_resource.id %>'] = '<%= raw media_resource.video_embed_html %>';
-                  </script>
+                  <%# image_tag(media_resource.video_thumb.url(:medium), :alt => media_resource.caption, :video_id => media_resource.id, :class => "chachi-item") %>
+                  <div class="chachi-item"><%= raw media_resource.video_embed_html %></div>
                 <% else %>
                   <%= image_tag(media_resource.picture.url(:medium), :alt=>media_resource.caption, :class => "chachi-item") %>
                 <% end %>
