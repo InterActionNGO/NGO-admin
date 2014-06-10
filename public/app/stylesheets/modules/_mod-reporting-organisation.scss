@@ -1,5 +1,8 @@
 .mod-reporting-organisation {
   img { display: inline-block; }
+  a {
+    margin: .5em 0;
+  }
   a:nth-child(3) {
     width: 73%;
     margin-left: 2%;
