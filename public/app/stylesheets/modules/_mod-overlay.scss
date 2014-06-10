@@ -12,11 +12,18 @@
 .mod-overlay-content {
   position: relative;
   max-width: 670px;
-  padding: 5%;
-  margin: 0 auto;
-  margin-top: 20%;
+  max-height: 400px;
+  padding: 50px;
+  margin: -200px auto 0 auto;
+  top: 50%;
+
+  -webkit-overflow-scrolling: touch;
+
   background-color: $color-0;
+
   box-shadow: 0 0 0 5px rgba($color-1 ,0.3);
+  overflow: auto;
+
   .text { margin: 0 auto;}
   .mod-overlay-close {
     position: absolute;
