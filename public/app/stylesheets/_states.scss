@@ -16,3 +16,9 @@
 .is-clearfix {
   @include clearfix();
 }
+
+@media print {
+  .is-unprintable {
+    display: none;
+  }
+}
