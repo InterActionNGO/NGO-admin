@@ -287,8 +287,9 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
               window.location.href = me.url;
             }
           } else {
+            var elementOffset = $('.main-content').offset().top - 49;
             $('html, body').animate({
-              scrollTop: $('.layout-content').offset().top - 100
+              scrollTop: elementOffset
             }, 500);
           }
         });

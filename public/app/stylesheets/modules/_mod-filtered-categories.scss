@@ -16,12 +16,14 @@
   }
 
   .feature, .filtered {
-    float: left;
     margin: 0;
     color: $color-0;
     max-width: 70%;
     background-color: rgba($color-1, .75);
     border-radius: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
   .feature {
@@ -56,12 +58,8 @@
   }
 
   .btn-go-to-projects {
-    position: absolute;
     height: 32px;
     padding: 0 30px 0 15px;
-    right: 0;
-    top: auto;
-    bottom: 0;
 
     background: $color-0 image-url("down.svg") no-repeat 95% 50%;
     background-size: 12px 18px;
@@ -84,6 +82,8 @@
 }
 
 .mod-btn-projects {
-  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   height: 32px;
 }
