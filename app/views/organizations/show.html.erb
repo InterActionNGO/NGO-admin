@@ -74,7 +74,7 @@
             <p><%= @organization.media_contact_position %></p>
             <p><%= @organization.media_contact_phone_number %></p>
             <% unless (@organization.media_contact_email.nil?) || (@organization.media_contact_email.empty?) %>
-              <p><%= link_to(@organization.media_contact_email, "mailto:#{@organization.media_contact_email}") %></p>
+              <p><%= link_to("Contact e-mail address", "mailto:#{@organization.media_contact_email}") %></p>
             <% end %>
           </div>
         </div>
@@ -146,7 +146,7 @@
 
         <header>
           <h1 class="section-title"><%= projects_list_subtitle %></h1>
-          <%= simple_format(@organization.description.squish.truncate(800)) if @organization.description.present? %>
+          <%= simple_format(@organization.description) if @organization.description.present? %>
         </header>
 
         <%= render :partial => 'new_partials/downloads', :locals => { :csv_path => organization_path(@organization, @carry_on_filters.merge(:format => :csv)), :xls_path => organization_path(@organization, @carry_on_filters.merge(:format => :xls)), :kml_path => organization_path(@organization, @carry_on_filters.merge(:format => :kml)) } %>

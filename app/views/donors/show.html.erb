@@ -86,7 +86,7 @@
 
         <header>
           <h1 class="section-title"><%= donors_list_subtitle(false) %></h1>
-          <%= simple_format(@donor.description.squish.truncate(800)) if @donor.description.present? %>
+          <%= simple_format(@donor.description) if @donor.description.present? %>
         </header>
 
         <p class="disclaimer"><%= params[:organization_id] ? "In some cases, this organization may be sub-recipient (rather than a direct recipient) of this donor's funding." : "The projects presented here are voluntarily provided by InterAction members and are not intended to be a complete representation of this donor’s activities." %> </p>
