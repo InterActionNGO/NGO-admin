@@ -93,7 +93,7 @@ require([
 
     var SearchMenu = function(el) {
       var $el = $(el),
-          menuChildren = $el.find('.submenu li').length;
+        menuChildren = $el.find('.submenu li').length;
 
       if (menuChildren === 0) {
         $el.addClass('no-child');
@@ -108,7 +108,7 @@ require([
   var scrollTop,
     categoriesSelector = $('.categories-selector'),
     menu = $('.mod-categories-selector .menu'),
-    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 50: 0;
+    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 50 : 0;
 
   function sectionTitle() {
     var $title = $('.section-title');
@@ -119,7 +119,7 @@ require([
   }
 
   function fixCategoriesSelector() {
-    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 50: 0;
+    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 50 : 0;
 
     if (categoriesSelector.length === 0) {
       return false;

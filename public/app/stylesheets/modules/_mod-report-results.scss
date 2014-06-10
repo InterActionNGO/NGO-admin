@@ -203,3 +203,20 @@ ul.mod-report-locations-header-child {
       font-size: 15px;
     }
 }
+
+@media print {
+  .mod-header,
+  .featured-projects,
+  .mod-footer {
+    display: none;
+  }
+
+  .grid-12.offset-1 {
+    margin: 0 auto;
+    float: none;
+  }
+
+  .mod-report {
+    page-break-before: always;
+  }
+}
