@@ -37,6 +37,9 @@
     <% else %>
       <%= yield :js_vars %>
     <% end %>
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
+    <![endif]-->
   </head>
   <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %>">
     <%= render 'layouts/header' %>
