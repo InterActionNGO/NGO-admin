@@ -27,6 +27,6 @@
     "spinjs": "~2.0.1",
     "moment": "~2.6.0",
     "highcharts-release": "~4.0.1",
-    "chachi-slider": "~2.0.3"
+    "chachi-slider": "~2.0.4"
   }
 }
