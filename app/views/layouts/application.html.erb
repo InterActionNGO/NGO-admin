@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>IOM - Administrator</title>
+    <%= stylesheet_link_tag 'backoffice.css' %>
     <%= stylesheet_link_tag 'backoffice/jscroll.css', 'backoffice/chosen.css', 'backoffice/plugins/fineuploader-3.3.0.css', 'backoffice/jquery-ui-1.7.2.custom.css', 'backoffice/layout.css', 'backoffice/smbtc-layout.css', 'backoffice.css' %>
 
-    <%= stylesheet_link_tag 'backoffice.css' %>
 
     <%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=false', 'backoffice/jquery.min.js', 'backoffice/jquery.ui.core.js', 'backoffice/jquery.ui.widget.js', 'backoffice/jquery.ui.position.js', 'backoffice/jquery.ui.autocomplete.js', 'backoffice/rails.js', 'backoffice/plugins/chosen/chosen.jquery.js', 'backoffice/plugins/jquery.mousewheel.js','backoffice/plugins/jquery.jscrollpane.js', 'backoffice/plugins/date_combos.js', 'backoffice/plugins/jquery.mousewheel.js', 'backoffice/plugins/jquery.livequery.min.js', 'backoffice/plugins/jquery.stylish-select.js', 'backoffice/plugins/jHtmlArea-0.7.0.min.js', 'backoffice/plugins/fineuploader-3.3.0.js' %>
 
@@ -16,7 +16,6 @@
   <body>
 
     <% if logged_in? %>
-      <div class="row">
         <div class="mod-backoffice-menu">
 
           <a href="<%= admin_admin_path %>" class="interaction-logo"><%= image_tag "interaction-white.svg", :alt  => "interaction logo", :height => '98', :width => '150' %></a>
@@ -45,7 +44,7 @@
               <li class="<%= ((@organization || controller_name == 'organizations' || (@element && @element.is_a?(Organization))) ? 'selected' : nil) %>"><%= link_to(edit_admin_organization_path(current_user.organization)) do %>Your organization<% end %></li>
             <% end -%>
           </ul>
-        </div>
+        </div> <!--  mod-backoffice-menu -->
     <% end %>
 
 
@@ -55,7 +54,9 @@
       </div>
     <% end -%>
 
-    <%= yield %>
+    <div class="row">
+      <%= yield %>
+    </div>
 
 
     <% if logged_in? %>
@@ -86,9 +87,7 @@
           <div class="bottom_border"></div>
         </div>
       </div>
-
     <% end %>
-
 
   </body>
 </html>
