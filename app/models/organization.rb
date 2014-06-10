@@ -62,6 +62,10 @@ class Organization < ActiveRecord::Base
                                       :small => {
                                         :geometry => "80x46>",
                                         :format => 'jpg'
+                                      },
+                                      :medium => {
+                                        :geometry => "200x150>",
+                                        :format => 'jpg'
                                       }
                                     },
                             :url => "/system/:attachment/:id/:style.:extension"
@@ -316,7 +320,7 @@ SQL
   end
 
   def update_data_denormalization
-    sql = """UPDATE data_denormalization 
+    sql = """UPDATE data_denormalization
             SET organization_name = '#{self.name}'
             WHERE organization_id = #{self.id}"""
     ActiveRecord::Base.connection.execute(sql)
