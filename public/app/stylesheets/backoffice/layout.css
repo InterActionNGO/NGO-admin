@@ -284,10 +284,10 @@ div.add_new {
   width: 920px;
   height: 98px;
   margin: 20px 0 0 5px;
-  background-color: #c15022;
+  /*background-color: #c15022;
   border-radius: 10px;
-  border: 5px solid #FFF;
-  /*background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0;*/ }
+  border: 5px solid #FFF;*/
+  background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0; }
   div.add_new:hover {
     background-color: #963e1a;
   }
@@ -297,7 +297,7 @@ div.add_new {
     height: 70px;
     padding: 28px 0 0 0;
     margin: 0px;
-    /*background: url("/app/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;*/
+    background: url("/app/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;
     text-align: center;
 
     font: normal 27px "Akzidenz",Arial;
