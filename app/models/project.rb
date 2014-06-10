@@ -1422,6 +1422,8 @@ SQL
     ## << FILTERING
     ###########################
 
+    active_projects = params[:active_projects] ? "AND p.end_date > now()" : "";
+
     base_select = <<-SQL
       WITH t AS (
         SELECT p.id AS project_id,  p.name AS project_name, p.budget as project_budget,
@@ -1441,6 +1443,7 @@ SQL
           AND o.id = p.primary_organization_id
           AND p.start_date >= '#{start_date}'::date
           AND p.end_date <= '#{end_date}'::date
+          #{active_projects}
           #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
           GROUP BY p.id, o.id, s.id, d.id, c.id
       )
@@ -1477,7 +1480,7 @@ SQL
               (SELECT country_id FROM
                 (SELECT distinct(country_id), count(#{criteria[0]}) AS total
                  FROM t
-                 GROUP BY country_id ORDER BY total DESC LIMIT #{limit}) max_donors
+                 GROUP BY country_id ORDER BY total DESC LIMIT #{limit}) max
               )
         GROUP BY country_id, country_name
         ORDER BY #{criteria[1]} DESC
@@ -1486,11 +1489,11 @@ SQL
 
       # SELECTS FOR MAPS ON REPORTING
       projects_map_select = <<-SQL
-        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(#{criteria[0]}) AS n_projects
         FROM t
         WHERE country_id IN
           (SELECT country_id FROM
-            (SELECT DISTINCT(country_id), count(distinct(#{criteria[0]})) as total FROM t group by country_id ORDER BY total desc LIMIT  #{limit}) max_donors
+            (SELECT DISTINCT(country_id), count(distinct(#{criteria[0]})) as total FROM t group by country_id ORDER BY total desc LIMIT  #{limit}) max
           )
         GROUP BY  country_id, country_name, lat, lon
         ORDER BY n_projects desc
@@ -1514,30 +1517,34 @@ SQL
       # SELECTS FOR BAR CHARTS ON REPORTING
       concrete_select = <<-SQL
         SELECT organization_id, organization_name,
-               count(distinct(project_id)) AS n_projects, count(distinct(country_id)) AS n_countries, sum(distinct(project_budget)) as total_budget
+               count(distinct(project_id)) AS n_projects, count(country_id) AS n_countries, sum(distinct(project_budget)) as total_budget
           FROM t
          WHERE organization_id IN
               (SELECT organization_id FROM
                 (SELECT distinct(organization_id), count(#{criteria[0]}) AS total
                  FROM t
-                 GROUP BY organization_id ORDER BY total DESC LIMIT #{limit}) max_donors
+                 GROUP BY organization_id ORDER BY total DESC LIMIT #{limit}) max
               )
         GROUP BY organization_id, organization_name
         ORDER BY #{criteria[1]} DESC
       SQL
       organizations[:bar_chart]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + concrete_select)
+      p (base_select + concrete_select).gsub("\n", " ")
 
       # SELECTS FOR MAPS ON REPORTING
       projects_map_select = <<-SQL
-        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(#{criteria[0]}) AS n_projects
         FROM t
         WHERE organization_id IN
           (SELECT organization_id FROM
-            (SELECT DISTINCT(organization_id), count(distinct(#{criteria[0]})) as total FROM t group by organization_id ORDER BY total desc LIMIT  #{limit}) max_donors
+            (SELECT DISTINCT(organization_id), count(distinct(#{criteria[0]})) as total
+               FROM t group by organization_id
+               ORDER BY total desc LIMIT  #{limit}) max
           )
         GROUP BY  country_id, country_name, lat, lon
         ORDER BY n_projects desc
       SQL
+      p (base_select + projects_map_select).gsub("\n", " ")
       organizations[:maps]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + projects_map_select)
     end
     organizations
@@ -1562,7 +1569,7 @@ SQL
               (SELECT donor_id FROM
                 (SELECT distinct(donor_id), count(#{criteria[0]}) AS total
                  FROM t
-                 GROUP BY donor_id ORDER BY total DESC LIMIT #{limit}) max_donors
+                 GROUP BY donor_id ORDER BY total DESC LIMIT #{limit}) max
               )
         GROUP BY donor_id, donor_name
         ORDER BY #{criteria[1]} DESC
@@ -1571,11 +1578,11 @@ SQL
 
       # SELECTS FOR MAPS ON REPORTING
       projects_map_select = <<-SQL
-        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(#{criteria[0]}) AS n_projects
         FROM t
         WHERE donor_id IN
           (SELECT donor_id FROM
-            (SELECT DISTINCT(donor_id), count(distinct(#{criteria[0]})) as total FROM t group by donor_id ORDER BY total desc LIMIT  #{limit}) max_donors
+            (SELECT DISTINCT(donor_id), count(distinct(#{criteria[0]})) as total FROM t group by donor_id ORDER BY total desc LIMIT  #{limit}) max
           )
         GROUP BY  country_id, country_name, lat, lon
         ORDER BY n_projects desc
@@ -1604,7 +1611,7 @@ SQL
               (SELECT sector_id FROM
                 (SELECT distinct(sector_id), count(#{criteria[0]}) AS total
                  FROM t
-                 GROUP BY sector_id ORDER BY total DESC LIMIT #{limit}) max_donors
+                 GROUP BY sector_id ORDER BY total DESC LIMIT #{limit}) max
               )
         GROUP BY sector_id, sector_name
         ORDER BY #{criteria[1]} DESC
@@ -1613,11 +1620,11 @@ SQL
 
       # SELECTS FOR MAPS ON REPORTING
       projects_map_select = <<-SQL
-        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(distinct(#{criteria[0]})) AS n_projects
+        SELECT DISTINCT(country_id ||'|'|| country_name ||'|'|| lat||'|'||lon) AS country, count(#{criteria[0]}) AS n_projects
         FROM t
         WHERE sector_id IN
           (SELECT sector_id FROM
-            (SELECT DISTINCT(sector_id), count(distinct(#{criteria[0]})) as total FROM t group by sector_id ORDER BY total desc LIMIT  #{limit}) max_donors
+            (SELECT DISTINCT(sector_id), count(distinct(#{criteria[0]})) as total FROM t group by sector_id ORDER BY total desc LIMIT  #{limit}) max
           )
         GROUP BY  country_id, country_name, lat, lon
         ORDER BY n_projects desc

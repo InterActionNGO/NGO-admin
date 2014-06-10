@@ -33,9 +33,9 @@
       </td>
     </tr>
     <tr>
-      <td class="mod-report-budget-min">${{commas budget.min}}</td>
-      <td class="mod-report-budget-average">${{commas budget.average}}</td>
-      <td class="mod-report-budget-max">${{commas budget.max}}</td>
+      <td class="mod-report-budget-min">min.: ${{commas budget.min}}</td>
+      <td class="mod-report-budget-average">mdn.: ${{commas budget.average}}</td>
+      <td class="mod-report-budget-max">max.: ${{commas budget.max}}</td>
     </tr>
   </table>
   <div class="mod-report-budget-chart is-clearfix" id="reportBudgetChart" data-min="{{budget.min}}" data-max="{{budget.max}}" data-average="{{budget.average}}"></div>
@@ -59,7 +59,7 @@
 
 <div class="mod-report">
   <h2>Donors snapshot</h2>
-  <p>Total #donors in result, supporting #projects of #organizations in #countries across #sectors</p>
+  <p>A total of {{totals.donors}} found donors, supporting {{totals.projects}} projects by {{totals.organizations}} organizations in {{totals.countries}} countries across {{totals.sectors}} sectors.</p>
   <div class="row">
     <div class="mod-report-grid-3">
       <h3>By number<br> of projects</h3>
@@ -96,7 +96,7 @@
 
 <div class="mod-report">
   <h2>Organizations snapshot</h2>
-  <p>Total #donors in result, supporting #projects of #organizations in #countries across #sectors</p>
+  <p>A total of {{totals.organizations}} found organizations, supporting {{totals.projects}} projects by {{totals.donors}} donors in {{totals.countries}} countries across {{totals.sectors}} sectors.</p>
   <div class="row">
     <div class="mod-report-grid-3">
       <h3>By number<br> of projects</h3>
@@ -133,7 +133,7 @@
 
 <div class="mod-report">
   <h2>Countries snapshot</h2>
-  <p>Total #donors in result, supporting #projects of #organizations in #countries across #sectors</p>
+  <p>A total of {{totals.countries}} found countries, with {{totals.projects}} projects by {{totals.organizations}} organizations across {{totals.sectors}} sectors.</p>
   <div class="row">
     <div class="mod-report-grid-3">
       <h3>By number<br> of projects</h3>
@@ -170,7 +170,7 @@
 
 <div class="mod-report">
   <h2>Sectors snapshot</h2>
-  <p>Total #donors in result, supporting #projects of #organizations in #countries across #sectors</p>
+  <p>A total of {{totals.sectors}} found sectors, supporting {{totals.projects}} projects by {{totals.donors}} donors and {{totals.organizations}} organizations in {{totals.countries}} countries.</p>
   <div class="row">
     <div class="mod-report-grid-3">
       <h3>By number<br> of projects</h3>
@@ -205,7 +205,7 @@
   </div>
 </div>
 
-<div class="mod-report mod-report-actions">
+<div class="mod-report mod-report-actions is-unprintable">
   <button id="printReport">Print</button>
   {{!-- <button id="saveReport">Save PDF</button> --}}
 </div>
