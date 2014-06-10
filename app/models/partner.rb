@@ -22,6 +22,10 @@ class Partner < ActiveRecord::Base
                                       :small => {
                                         :geometry => '80x46>',
                                         :format => 'png'
+                                      },
+                                      :medium => {
+                                        :geometry => "200x150>",
+                                        :format => 'jpg'
                                       }
                                     },
                             :url => "/system/partners/:attachment/:id/:style.:extension"
