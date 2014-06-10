@@ -1,7 +1,7 @@
 class SitesController < ApplicationController
 
-  #layout :sites_layout
-  layout :selective_layout
+  layout :sites_layout
+  #layout :selective_layout
   caches_action :site_home, :expires_in => 300, :cache_path => Proc.new { |c| c.params }
   caches_action :general_home, :expires_in => 300, :cache_path => Proc.new { |c| c.params }
 
