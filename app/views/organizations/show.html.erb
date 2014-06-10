@@ -108,9 +108,9 @@
           <div class="follow-us mod-info">
             <% if @organization.logo? %>
               <% if @organization.website? %>
-                <a href="<%= @organization.website %>"><%= image_tag(@organization.logo.url(:original), :class => 'organization-logo') %></a>
+                <a href="<%= @organization.website %>"><%= image_tag(@organization.logo.url(:medium), :class => 'organization-logo') %></a>
               <% else %>
-                <%= image_tag(@organization.logo.url(:original), :class => 'organization-logo') %>
+                <%= image_tag(@organization.logo.url(:medium), :class => 'organization-logo') %>
               <% end %>
             <% end %>
 
