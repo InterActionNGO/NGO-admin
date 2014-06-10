@@ -1,5 +1,5 @@
 html { background: rgba($color-1, .8); }
-body { background: image-url('backoffice-bg.png') no-repeat top;}
+body { background: image-url('backoffice-bg.png') no-repeat top; position: relative;}
 
 .mod-backoffice-menu {
   position: relative;
@@ -20,7 +20,7 @@ body { background: image-url('backoffice-bg.png') no-repeat top;}
 }
 
 .mod-login {
-   @include box-sizing(border-box);
+  @include box-sizing(border-box);
   position: relative;
   width: 100%;
   padding: 85px 16.67% 135px;
@@ -38,4 +38,30 @@ body { background: image-url('backoffice-bg.png') no-repeat top;}
   }
 }
 
+.mod-background-main {
+  width: 1060px;
+  overflow: hidden;
+  background-color: $color-0;
+}
 
+.mod-backoffice-footer {
+  @include box-sizing(border-box);
+  position: absolute;
+  bottom: 0;
+  width: 1060px;
+  height: 100px;
+  padding: 20px 0;
+  background: image-url('backoffice-bg.png'), rgba($color-1,.9);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100%;
+  .logo {
+    margin: 0 auto;
+  }
+  .last {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    color: $color-0;
+  }
+}
