@@ -134,7 +134,7 @@
     background-position: sprite-position($icons, icon-mining-and-extractive-resources, 4px, 5px);
   }
 
-  .non-food-relief-items {
+  .non-food-relief-items:before {
     @include icons-sprite(icon-non-food-relief-items);
     background-position: sprite-position($icons, icon-non-food-relief-items, 4px, 5px);
   }
@@ -159,7 +159,7 @@
     background-position: sprite-position($icons, icon-protection, 4px, 5px);
   }
 
-  .safety-nets {
+  .safety-nets:before {
     @include icons-sprite(icon-safety-nets);
     background-position: sprite-position($icons, icon-safety-nets, 4px, 5px);
   }
