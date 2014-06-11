@@ -19,6 +19,9 @@
     text-transform: uppercase;
     line-height: 1;
     margin-right: 2%;
+    .is-touchscreen & {
+      margin-right: 1.5%;
+    }
 
     .father {
       display: block;
@@ -27,7 +30,7 @@
       @include border-radius(20px);
     }
     &.search { padding: 0;}
-    &:hover {
+    .is-screen &:hover {
       color: $color-0;
       .mod-go-up-menu { display: block;}
       .mod-drop-down-menu { display: block;}
