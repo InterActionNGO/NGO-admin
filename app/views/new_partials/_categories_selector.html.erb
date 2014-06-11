@@ -6,13 +6,13 @@
           <nav>
             <ul>
               <% if @site.cluster %>
-                <li class="menu-item sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>"><span class="father"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></span></li>
+                <li class="menu-item sector"><span class="father"><a href="<%= cluster_path(@site.cluster) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></span></li>
               <% elsif @site.sector %>
-                <li class="menu-item sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>">
+                <li class="menu-item sector">
                   <span class="father"><a href="<%= sector_path(@site.sector) %>"><%= @site.word_for_cluster_sector.upcase.singularize %></a></span>
                 </li>
               <% else %>
-                <li class="menu-item sector <% if params[:controller] == 'clusters_sectors' %>current<% end %>" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
+                <li class="menu-item sector" id="<%= @site.navigate_by_cluster? ? 'cluster' : 'sector' %>_option">
                   <span class="father"><%= @site.word_for_cluster_sector.upcase %></span>
                   <div class="mod-go-up-menu menu">
                     <ul class="mod-categories-child sector-child submenu">
@@ -29,7 +29,7 @@
                 </li>
               <% end %>
 
-              <li class="organizations <% if params[:controller] == 'organizations' %>current<% end %>">
+              <li class="organizations">
                 <span class="father">Organizations</span>
                 <div class="mod-go-up-menu menu">
                   <ul class="mod-categories-child organizations-child">
@@ -41,7 +41,7 @@
                 </div>
               </li>
 
-              <li class="donors <% if params[:controller] == 'donors' %>current<% end %>">
+              <li class="donors">
                 <span class="father">Donors</span>
                 <div class="mod-go-up-menu menu">
                   <ul class="mod-categories-child donors-child">
@@ -54,7 +54,7 @@
               </li>
 
             <% if @site.navigate_by == :country %>
-              <li class="countries <% if params[:controller] == 'georegion' %>current<% end %>">
+              <li class="countries">
                 <span class="father">Countries</span>
                 <div class="mod-go-up-menu menu">
                   <ul class="mod-categories-child countries-child">
@@ -66,8 +66,7 @@
                 </div>
               </li>
             <% else %>
-
-              <li class="regions <% if params[:controller] == 'georegion' %>current<% end %>">
+              <li class="regions">
                 <span class="father">Regions</span>
                 <div class="mod-go-up-menu menu">
                   <ul class="mod-categories-child regions-child">
