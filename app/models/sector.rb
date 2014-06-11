@@ -153,7 +153,7 @@ SQL
     'logistics'
     elsif (name.include? 'Mining')
     'mining-and-extractive-resources'
-    elsif (name.include? 'Non food')
+    elsif (name.include? 'Non-food')
     'non-food-relief-items'
     elsif (name.include? 'Nutrition')
     'nutrition'
