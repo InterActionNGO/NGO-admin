@@ -52,7 +52,7 @@ body {
 .mod-backoffice-footer {
   @include box-sizing(border-box);
   position: absolute;
-  bottom: 0;
+  bottom: -10px;
   width: 100%;
   height: 100px;
   padding: 20px 0;

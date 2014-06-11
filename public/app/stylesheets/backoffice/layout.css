@@ -200,9 +200,12 @@ div.main_layout {
     div.main_layout div.block div.med {
       float: left;
       width: 880px;
-      /*overflow: hidden;*/
+
       padding: 16px 31px 28px;
       background: url("/app/images/backoffice/backgrounds/mid_long.png") repeat-y center 0; }
+      div.main_layout div.block div.main_layout div.block div.med {
+        min-height: 600px;
+      }
 div.med div.header {
   width: 100%;
   overflow: hidden;
@@ -311,7 +314,7 @@ div.block div.med div.right {
   position: relative;
   float: right;
   width: 284px;
-  /*min-height:420px;*/ }
+  min-height:600px }
   div.block div.med div.right ul {
     float: left;
     width: 230px;
@@ -1270,14 +1273,14 @@ div.block.donor_funded div.med {
       div.block.donor_funded div.med div.left ul li {
         float: left;
         width: 100%;
-        height: 71px;
+        height: 85px;
         border-bottom: 1px solid #CCCCCC; }
         div.block.donor_funded div.med div.left ul li.last {
           border: none; }
         div.block.donor_funded div.med div.left ul li span {
           float: left;
           width: 404px;
-          height: 71px; }
+          height: 85px; }
           div.block.donor_funded div.med div.left ul li span h3 {
             float: left;
             width: 100%;
@@ -1300,14 +1303,14 @@ div.block.donor_funded div.med {
         div.block.donor_funded div.med div.left ul li p {
           float: left;
           width: 148px;
-          height: 45px;
+          height: 59px;
           padding: 26px 10px 0 10px;
           margin: 0;
           background: #F7F7F7;
           text-align: center; }
           div.block.donor_funded div.med div.left ul li p.more {
             padding: 20px 10px 0 10px;
-            height: 51px; }
+            height: 65px; }
           div.block.donor_funded div.med div.left ul li p a {
             font: normal 14px Arial;
             color: #c15022;
