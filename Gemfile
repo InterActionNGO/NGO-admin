@@ -24,10 +24,8 @@ gem 'roadie'
 gem 'ruby-oembed'
 gem 'sass'
 gem 'compass'
-# gem 'cartodb-rb-client'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
-#gem 'searchlogic'
 gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
 
 group :development do
