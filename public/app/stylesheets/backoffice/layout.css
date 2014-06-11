@@ -281,13 +281,11 @@ div.med .info_list p {
 /*add new site,donor,...*/
 div.add_new {
   float: left;
-  width: 920px;
+  width: 922px;
   height: 98px;
+  padding: 5px;
   margin: 20px 0 0 5px;
-  /*background-color: #c15022;
-  border-radius: 10px;
-  border: 5px solid #FFF;*/
-  background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0; }
+  background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0;}
   div.add_new:hover {
     background-color: #963e1a;
   }
@@ -299,17 +297,15 @@ div.add_new {
     margin: 0px;
     background: url("/app/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;
     text-align: center;
-
     font: normal 27px "Akzidenz",Arial;
     color: #FFF; }
     div.add_new a:hover {
-
-      /*background-position: 0 -98px;*/ }
+      background-position: 0 -98px; }
     div.add_new a strong {
       float: left;
       width: 100%;
       font: normal 15px Arial;
-      color: #FFF;
+      color: #C3DB9F;
       text-align: center; }
 div.block div.med div.right {
   position: relative;
