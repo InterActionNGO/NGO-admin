@@ -664,16 +664,14 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
     }
 
-    if (!globalPage && page === 'sites') {
+    if (!globalPage) {
       map.fitBounds(bounds);
     }
 
-    if (map_data.length > 0) {
-      if (map_data[0].type === 'country' || map_data.length === 1) {
-        setTimeout(function() {
-          map.setZoom(8);
-        }, 300);
-      }
+    if (page === 'georegion' || map_data.length === 1) {
+      setTimeout(function() {
+        map.setZoom(8);
+      }, 300);
     }
 
     // Layer selector
