@@ -96,7 +96,14 @@ class OrganizationsController < ApplicationController
         end
 
         #Map data
-        carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
+        #carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
+        filters_for_url = @carry_on_filters.clone
+        if params[:location_id]
+          carry_on_url = organization_path(@organization, filters_for_url.except!(:location_id))
+        else
+          carry_on_url = organization_path(@organization, filters_for_url)
+        end
+
 
         if @site.geographic_context_country_id
 
