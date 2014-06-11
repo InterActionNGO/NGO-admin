@@ -1,6 +1,11 @@
 class Admin::AdminController < ApplicationController
-  before_filter :login_required
-  before_filter :check_user_permissions
+  #before_filter :login_required
+  #before_filter :check_user_permissions
+  before_filter :temporal_redirect
+
+  def temporal_redirect
+    redirect_to "/"
+  end
 
   def index
     @changes_last_day_count = ChangesHistoryRecord.in_last_24h.count

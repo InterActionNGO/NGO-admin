@@ -35,6 +35,10 @@ class Donor < ActiveRecord::Base
                                       :small => {
                                         :geometry => "80x46>",
                                         :format => 'jpg'
+                                      },
+                                      :medium => {
+                                        :geometry => "200x150>",
+                                        :format => 'jpg'
                                       }
                                     },
                             :url => "/system/:attachment/:id/:style.:extension"
@@ -61,7 +65,7 @@ class Donor < ActiveRecord::Base
   #   where = []
   #   where << "d.donor_id = #{self.id}"
   #   where << "p.primary_organization_id=#{options[:organization_id]}" if options[:organization_id]
-  #   where << 
+  #   where <<
   #   joins = []
   #   joins << "inner join projects as p on d.project_id = p.id and (p.end_date is null OR p.end_date > now())"
   #   joins << "inner join projects_sites as ps on d.project_id=ps.project_id and ps.site_id=#{site.id}"
@@ -86,7 +90,7 @@ class Donor < ActiveRecord::Base
   # to get only id and name
   def self.get_select_values
     scoped.select("id,name").order("name ASC")
-  end  
+  end
 
   # Array of arrays
   # [[category, count], [category, count]]
@@ -178,7 +182,7 @@ class Donor < ActiveRecord::Base
       organization_filter = "and p.primary_organization_id = #{organization_id}"
     end
 
-    if location_id.present? 
+    if location_id.present?
       location_filter = "and r.id IN (#{location_id})"
     end
 
@@ -214,7 +218,7 @@ SQL
       organization_filter = "and p.primary_organization_id = #{organization_id}"
     end
 
-    if location_id.present? 
+    if location_id.present?
       location_filter = "and c.id IN (#{location_id})"
     end
 
@@ -304,11 +308,11 @@ def projects_clusters_sectors(site, location_id = nil)
   end
 
   private
-  
+
   def filter_by_category_valid?
     @filter_by_category.present? && @filter_by_category.to_i > 0
   end
-  
+
   def clean_html
     %W{ name description website twitter facebook contact_person_name contact_company contact_person_position contact_email contact_phone_number }.each do |att|
       eval("self.#{att} = Sanitize.clean(self.#{att}.gsub(/\r/,'')) unless self.#{att}.blank?")

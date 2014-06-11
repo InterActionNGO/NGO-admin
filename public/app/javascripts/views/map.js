@@ -287,8 +287,9 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
               window.location.href = me.url;
             }
           } else {
+            var elementOffset = $('.main-content').offset().top - 49;
             $('html, body').animate({
-              scrollTop: $('.layout-content').offset().top - 100
+              scrollTop: elementOffset
             }, 500);
           }
         });
@@ -665,10 +666,12 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
     map.fitBounds(bounds);
 
-    if (map_data[0].type === 'country' || map_data.length === 1) {
-      setTimeout(function() {
-        map.setZoom(8);
-      }, 300);
+    if (map_data.length > 0) {
+      if (map_data[0].type === 'country' || map_data.length === 1) {
+        setTimeout(function() {
+          map.setZoom(8);
+        }, 300);
+      }
     }
 
     // Layer selector

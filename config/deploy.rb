@@ -2,7 +2,7 @@ require 'capistrano/ext/multistage'
 require 'config/boot'
 require "bundler/capistrano"
 
-
+set :use_sudo, false
 set :stages, %w(staging production smbtc)
 
 APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
