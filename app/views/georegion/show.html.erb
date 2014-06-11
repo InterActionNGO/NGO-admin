@@ -23,6 +23,8 @@
     var kind = window.location.pathname.split('/')[1];
     var stylez = <%=raw @site.map_styles  %>;
     var empty_layer = <%= @empty_layer %>;
+    var globalPage = <%= @site.featured?? true : false %>;
+    var page = "<%= params[:controller] %>";
   </script>
 <% end %>
 
