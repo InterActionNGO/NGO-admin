@@ -21,9 +21,9 @@ define(['backbone', 'liveupdate'], function(Backbone) {
         .liveUpdate('.countries .mod-categories-child li a');
 
       if (is_touch_device()) {
-        this.$el.find('li').on('touchstart', function(ev) {
+        this.$el.find('.father').on('touchstart', function(ev) {
           $(ev.currentTarget)
-            .toggleClass('is-touched')
+            .closest('li').toggleClass('is-touched')
             .find('.mod-go-up-menu').toggle();
         });
       }
