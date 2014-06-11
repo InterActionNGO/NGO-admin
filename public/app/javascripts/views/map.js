@@ -664,7 +664,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
     }
 
-    if (!globalPage) {
+    if (!globalPage || page !== 'sites') {
       map.fitBounds(bounds);
     }
 
