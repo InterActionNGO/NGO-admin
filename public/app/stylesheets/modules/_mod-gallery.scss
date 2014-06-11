@@ -49,4 +49,9 @@
 
     color: $color-0;
   }
+  .chachi-slide-item iframe {
+    width: 100%;
+    min-height: 361px;
+    height: auto;
+  }
 }

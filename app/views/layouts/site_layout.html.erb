@@ -7,7 +7,11 @@
     <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
     <![endif]-->
-    <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
+    <% if Rails.env.production? %>
+      <%= stylesheet_link_tag "main.css", :media => 'all' %>
+    <% else %>
+      <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
+    <% end %>
     <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
     <meta name="viewport" content="width=980px">
     <%= csrf_meta_tag %>
@@ -37,6 +41,9 @@
     <% else %>
       <%= yield :js_vars %>
     <% end %>
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
+    <![endif]-->
   </head>
   <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %>">
     <%= render 'layouts/header' %>
