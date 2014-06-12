@@ -1,4 +1,4 @@
-/*global google,map_type,map_data:true,map_center,kind,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer*/
+/*global google,map_type,map_data:true,map_center,kind,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer,globalPage,page*/
 'use strict';
 
 define(['backbone', 'sprintf'], function(Backbone, sprintf) {
@@ -369,8 +369,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       latlng = new google.maps.LatLng(map_center[0], map_center[1]);
       zoom = map_zoom;
     } else {
-      latlng = new google.maps.LatLng(0, 0);
-      zoom = 3;
+      latlng = new google.maps.LatLng(28.576419976370865, 0.5943599084500972);
+      zoom = 2;
     }
 
     $layerSelector = $('#layerSelector');
@@ -664,14 +664,14 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
     }
 
-    map.fitBounds(bounds);
+    if (!globalPage || page !== 'sites') {
+      map.fitBounds(bounds);
+    }
 
-    if (map_data.length > 0) {
-      if (map_data[0].type === 'country' || map_data.length === 1) {
-        setTimeout(function() {
-          map.setZoom(8);
-        }, 300);
-      }
+    if (page === 'georegion' || map_data.length === 1) {
+      setTimeout(function() {
+        map.setZoom(8);
+      }, 300);
     }
 
     // Layer selector
