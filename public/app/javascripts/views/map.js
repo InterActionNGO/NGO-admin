@@ -668,7 +668,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       map.fitBounds(bounds);
     }
 
-    if (page === 'georegion' || map_data.length === 1) {
+    if (page === 'georegion' && map_data.length === 1) {
       setTimeout(function() {
         map.setZoom(8);
       }, 300);
