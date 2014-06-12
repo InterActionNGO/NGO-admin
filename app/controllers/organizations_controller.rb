@@ -96,14 +96,7 @@ class OrganizationsController < ApplicationController
         end
 
         #Map data
-        #carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
-        filters_for_url = @carry_on_filters.clone
-        if params[:location_id]
-          carry_on_url = organization_path(@organization, filters_for_url.except!(:location_id))
-        else
-          carry_on_url = organization_path(@organization, filters_for_url)
-        end
-
+        carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
 
         if @site.geographic_context_country_id
 
@@ -137,7 +130,7 @@ class OrganizationsController < ApplicationController
                         r.center_lon AS lon,
                         r.center_lat AS lat,
                         CASE WHEN count(ps.project_id) > 1 THEN
-                          '#{carry_on_url}'||r.path
+                          '#{carry_on_url}'||r.path´
                         ELSE
                           '/projects/'||(array_to_string(array_agg(ps.project_id),''))
                         END AS url,
