@@ -1058,8 +1058,8 @@ SQL
                     self.regions << region unless self.regions.include?(region)
                 end
               end
-              # After check presence of the regions, add then the country
-              if all_regions_exist
+              # After check presence of the regions, add then the country (also if no regions present)
+              if all_regions_exist || !regions.present?
                 self.countries << country unless self.countries.include?(country)
               end
             end
