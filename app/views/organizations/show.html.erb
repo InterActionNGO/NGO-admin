@@ -32,6 +32,17 @@
           <%= render 'new_partials/aside/project_locations' %>
         <% end %>
 
+        <% unless @organization.resources_for_site(@site).empty? %>
+          <div class="mod-info">
+            <h3>Additional resources</h3>
+            <% @organization.resources_for_site(@site).each do |resource| %>
+              <ul>
+                <li><a href="<%= resource.url %>" target="_blank"><%= resource.title %></a></li>
+              </ul>
+            <%end%>
+          </div>
+        <% end %>
+
         <% unless (@organization.contact_name.nil? || @organization.contact_name.empty?) &&  (@organization.contact_position.nil? || @organization.contact_position.empty?) && (@organization.contact_phone_number.nil? || @organization.contact_phone_number.empty?) && (@organization.contact_email.nil? || @organization.contact_email.empty?)%>
         <div class="contact-info mod-info">
           <h3>Contact information</h3>
@@ -123,10 +134,10 @@
 
                 <ul>
                   <% if @organization.twitter? %>
-                    <li><%= link_to(' ' ,"http://twitter.com/#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %></li>
+                    <li><%= link_to(' ' ,"#{@organization.twitter}", :class=>"twitter", :target=>"_blank") %></li>
                   <% end %>
                   <% if @organization.facebook? %>
-                    <li><%= link_to(' ' ,"http://facebook.com/#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %></li>
+                    <li><%= link_to(' ' ,"#{@organization.facebook}", :class=>"facebook", :target=>"_blank") %></li>
                   <% end %>
                   <% if @organization.contact_email? %>
                     <li><%= link_to(' ', "mailto:#{@organization.contact_email}", :class=>"email", :target=>"_blank") %></li>
