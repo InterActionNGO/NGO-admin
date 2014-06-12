@@ -19,6 +19,9 @@
     text-transform: uppercase;
     line-height: 1;
     margin-right: 2%;
+    .is-touchscreen & {
+      margin-right: 1.2%;
+    }
 
     .father {
       display: block;
@@ -27,7 +30,7 @@
       @include border-radius(20px);
     }
     &.search { padding: 0;}
-    &:hover {
+    .is-screen &:hover {
       color: $color-0;
       .mod-go-up-menu { display: block;}
       .mod-drop-down-menu { display: block;}
@@ -187,7 +190,7 @@
       &:after { @include gradient-up($color-2a); bottom: 0;}
       &:before { @include gradient-down ($color-2a); ; height:15px; bottom: 0;}
     }
-    &.current .father {
+    .clusters_sectors-page & .father {
       background-color: rgba($color-2, .3);
     }
   }
@@ -201,7 +204,7 @@
       &:after { @include gradient-up($color-6a)}
       &:before { @include gradient-down ($color-6a); ; height:15px;}
     }
-    &.current .father {
+    .organizations-page & .father {
       background-color: rgba($color-6, .3);
     }
   }
@@ -215,7 +218,7 @@
       &:after { @include gradient-up($color-7a)}
       &:before { @include gradient-down ($color-7a); ; height:15px;}
     }
-    &.current .father {
+    .donors-page & .father {
       background-color: rgba($color-7, .3);
     }
   }
@@ -229,7 +232,7 @@
       &:after { @include gradient-up($color-8a)}
       &:before { @include gradient-down ($color-8a); ; height:15px;}
     }
-    &.current .father {
+    .georegion-page & .father {
       background-color: rgba($color-8, .3);
     }
   }
