@@ -53,10 +53,10 @@
               <div class="mod-follow-us">
                 <ul>
                   <% if @donor.twitter? %>
-                    <li><%= link_to(' ', "http://twitter.com/#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %></li>
+                    <li><%= link_to(' ', "#{@donor.twitter}", :class=>"twitter", :target=>"_blank") %></li>
                   <% end %>
                   <% if @donor.facebook? %>
-                    <li><%= link_to(' ', "http://facebook.com/#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %></li>
+                    <li><%= link_to(' ', "#{@donor.facebook}", :class=>"facebook", :target=>"_blank") %></li>
                   <% end %>
                   <% if @donor.website? %>
                     <li><%= link_to(' ', @donor.website, :class => 'email', :target => '_blank') %></li>

@@ -98,6 +98,8 @@
       var stylez = <%=raw @site.map_styles  %>
       var empty_layer = false;
       var kind = window.location.pathname.split('/')[1];
+      var globalPage = <%= @site.featured?? true : false %>;
+      var page = "<%= params[:controller] %>";
     </script>
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=AIzaSyA2xfzq0KmJZIlGIpxXK1CjXa6enzmPGlM&sensor=false" %>
