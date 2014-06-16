@@ -762,7 +762,7 @@ div.one {
     width: 100%;
     text-align: center;
     font: normal 15px "Museo Sans",Arial;
-    color: #EB4142; }
+    color: #c15022; }
     div.one a:hover {
       text-decoration: underline;
       cursor: pointer; }
@@ -785,7 +785,7 @@ div.med h5 {
   font: normal 15px Arial;
   color: #666666; }
 div.med.information h2 a {
-  color: #EB4142;
+  color: #c15022;
   text-decoration: none; }
   div.med.information h2 a:hover {
     text-decoration: underline; }
@@ -823,7 +823,7 @@ div.med.information div.info {
       color: #333333;
       font-weight: normal; }
     div.med.information div.info div.left p a {
-      color: #EB4142;
+      color: #c15022;
       text-decoration: none; }
       div.med.information div.info div.left p a:hover {
         text-decoration: underline; }
@@ -852,7 +852,7 @@ div.bottom_grey a {
   width: auto;
   margin: 20px 32px 0 0;
   font: normal 17px Arial;
-  color: #EB4142;
+  color: #c15022;
   text-decoration: none; }
   div.bottom_grey a:hover {
     text-decoration: underline; }
@@ -1410,10 +1410,10 @@ div.one_donor {
 div.med.offices_list h2 a.remove, div.med.donors_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
-  border-bottom: 1px dotted #EB4142;
+  border-bottom: 1px dotted #c15022;
   background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
 div.med.offices_list h2 a.remove:hover, div.med.donors_list h2 a.remove:hover {
-  border-bottom: 1px solid #EB4142;
+  border-bottom: 1px solid #c15022;
   text-decoration: none; }
 div.med.offices_list ul, div.med.donors_list ul {
   float: left;
@@ -1459,7 +1459,7 @@ div.med.offices_list ul li p, div.med.donors_list ul li p {
 div.med.offices_list ul li p a, div.med.donors_list ul li p a {
   padding: 0;
   font: normal 13px Arial;
-  color: #EB4142; }
+  color: #c15022; }
 div.med.offices_list ul li p a:hover, div.med.donors_list ul li p a:hover {
   text-decoration: underline; }
 div.med.offices_list ul li p.red, div.med.donors_list ul li p.red {
@@ -2259,10 +2259,10 @@ a.import_csv {
 div.med.projects_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
-  border-bottom: 1px dotted #EB4142;
+  border-bottom: 1px dotted #c15022;
   background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
   div.med.projects_list h2 a.remove:hover {
-    border-bottom: 1px solid #EB4142;
+    border-bottom: 1px solid #c15022;
     text-decoration: none; }
 div.med.projects_list ul {
   float: left;
@@ -2386,13 +2386,13 @@ div.med.projects_list ul li p {
   color: #666666;
   text-align: center; }
   div.med.projects_list ul li p.red {
-    color: #EB4142;
+    color: #c15022;
     width: 147px;
     margin: 0 0 0 9px; }
     div.med.projects_list ul li p.red a {
       padding: 0;
       font: normal 13px Arial;
-      color: #EB4142; }
+      color: #c15022; }
   div.med.projects_list ul li p.secondary {
     margin: 2px 0 0 0;
     padding: 0; }
@@ -3642,10 +3642,10 @@ div.block.donations_project div.bottom {
 div.med.ngos_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
-  border-bottom: 1px dotted #EB4142;
+  border-bottom: 1px dotted #c15022;
   background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
   div.med.ngos_list h2 a.remove:hover {
-    border-bottom: 1px solid #EB4142;
+    border-bottom: 1px solid #c15022;
     text-decoration: none; }
 div.med.ngos_list ul {
   float: left;
@@ -3691,7 +3691,7 @@ div.med.ngos_list ul {
       div.med.ngos_list ul li p.red {
         background: #f7f7f7; }
         div.med.ngos_list ul li p.red a {
-          color: #EB4142; }
+          color: #c15022; }
 div.med.ngos_list div.no_results {
   float: left;
   width: 100%;
