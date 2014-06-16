@@ -48,7 +48,8 @@ define([
         chart: {
           type: 'column',
           spacingLeft: 0,
-          spacingRight: 0
+          spacingRight: 0,
+          height: 600
         },
         title: {
           text: null
@@ -65,6 +66,7 @@ define([
           }
         },
         legend: {
+          useHTML: true,
           width: 200,
           itemWidth: 200,
           itemDistance: 0,
@@ -79,7 +81,8 @@ define([
           },
           lineWidth: 1,
           lineColor: '#989898',
-          gridLineWidth: 0
+          gridLineWidth: 0,
+          minTickInterval: 1
         },
         xAxis: {
           labels: {
@@ -182,8 +185,8 @@ define([
       }));
 
       function setDonorsLocations(layer) {
-        if (self.donorsMap) {
-          self.donorsMap.remove();
+        if (self.donorsLayer) {
+          self.donorsMap.removeLayer(self.donorsLayer);
         }
         self.donorsMap = self.setMap('reportDonorsMap');
         self.donorsLayer = self.setLayer(self.donorsMap, layer);
@@ -222,8 +225,8 @@ define([
       }
 
       function setOrganizationsLocations(layer) {
-        if (self.organizationsMap) {
-          self.organizationsMap.remove();
+        if (self.organizationsLayer) {
+          self.organizationsMap.removeLayer(self.organizationsLayer);
         }
         self.organizationsMap = self.setMap('reportOrganizationsMap');
         self.organizationsLayer = self.setLayer(self.organizationsMap, layer);
@@ -262,8 +265,8 @@ define([
       }
 
       function setCountriesLocations(layer) {
-        if (self.countriesMap) {
-          self.countriesMap.remove();
+        if (self.countriesLayer) {
+          self.countriesMap.removeLayer(self.countriesLayer);
         }
         self.countriesMap = self.setMap('reportCountriesMap');
         self.countriesLayer = self.setLayer(self.countriesMap, layer);
@@ -302,8 +305,8 @@ define([
       }
 
       function setSectorsLocations(layer) {
-        if (self.sectorsMap) {
-          self.sectorsMap.remove();
+        if (self.sectorsLayer) {
+          self.sectorsMap.removeLayer(self.sectorsLayer);
         }
         self.sectorsMap = self.setMap('reportSectorsMap');
         self.sectorsLayer = self.setLayer(self.sectorsMap, layer);
