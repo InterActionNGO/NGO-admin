@@ -93,6 +93,22 @@ require([
     return context.toCommas();
   });
 
+  Handlebars.registerHelper('starray', function(context) {
+    var result = '', i = 0, len = context.length;
+
+    if (context.length > 0) {
+      for (i=0;i<len;i++) {
+        if (i === len -1) {
+          result += context[i];
+        } else {
+          result += context[i] + ', ';
+        }
+      }
+    }
+
+    return result;
+  });
+
   $.fn.noHandleChildren = function() {
 
     var SearchMenu = function(el) {
