@@ -43,11 +43,11 @@ define([
         return year;
       });
 
-      this.attributes.projects_active_series = _.map(active_years, function(year) {
+      this.attributes.projects_active_series = _.map(_.range(2005, 2014), function(year) {
         return [year, _.where(self.attributes.projects, {year: year, active: true}).length];
       });
 
-      this.attributes.projects_disable_series = _.map(disable_years, function(year) {
+      this.attributes.projects_disable_series = _.map(_.range(2005, 2014), function(year) {
         return [year, _.where(self.attributes.projects, {year: year, active: false}).length];
       });
 
