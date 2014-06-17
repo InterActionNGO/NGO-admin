@@ -1272,7 +1272,7 @@ SQL
     @data[:filters][:start_date] = start_date
     @data[:filters][:end_date] = end_date
     @data[:filters][:countries] = countries
-    @data[:filters][:countries] = donors
+    @data[:filters][:donors] = donors
     @data[:filters][:sectors] = sectors
     @data[:filters][:organizations] = organizations
     @data[:filters][:search_word] = params[:q]
