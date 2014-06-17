@@ -27,7 +27,7 @@ define([
       }
 
       this.$el.find('form').ajaxForm({
-        beforeSubmit: function(formData, jqForm) {
+        beforeSubmit: function() {
           Backbone.Events.trigger('spinner:start');
           Backbone.Events.trigger('results:empty');
         },
