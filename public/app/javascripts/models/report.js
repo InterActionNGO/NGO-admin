@@ -9,7 +9,7 @@ define([
 
     processData: function() {
 
-      var active_years, disable_years, organizations, self = this;
+      var active_years, disable_years, organizations, years, self = this;
 
       function getLocations(locations_data) {
         var locations = _.map(locations_data, function(location_data) {
@@ -43,11 +43,13 @@ define([
         return year;
       });
 
-      this.attributes.projects_active_series = _.map(active_years, function(year) {
+      years = _.range(Number(moment(this.attributes.filters.start_date).format('YYYY')), Number(moment(this.attributes.filters.end_date).format('YYYY')) + 1);
+
+      this.attributes.projects_active_series = _.map(years, function(year) {
         return [year, _.where(self.attributes.projects, {year: year, active: true}).length];
       });
 
-      this.attributes.projects_disable_series = _.map(disable_years, function(year) {
+      this.attributes.projects_disable_series = _.map(years, function(year) {
         return [year, _.where(self.attributes.projects, {year: year, active: false}).length];
       });
 
