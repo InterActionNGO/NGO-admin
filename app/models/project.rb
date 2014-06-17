@@ -1170,10 +1170,16 @@ SQL
     organizations = params[:organization] if params[:organization]
     form_query = "%" + params[:q].downcase.strip + "%" if params[:q]
 
-    # Data filtering
-    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query).select(["projects.id",
-      "projects.name","projects.budget","projects.start_date","projects.end_date", "projects.primary_organization_id", "(end_date >= current_date) as active"])
-        #.group('user_profiles.id').order('name ASC')
+    projects_select = <<-SQL
+      SELECT  id, name, budget, start_date, end_date, primary_organization_id, end_date > '2014-06-17' as active
+      FROM projects
+      WHERE ( (start_date <= '#{start_date}' AND end_date >='#{start_date}') OR (start_date>='#{start_date}' AND end_date <='#{end_date}') OR (start_date<='#{end_date}' AND end_date>='#{end_date}') )
+        AND lower(trim(name)) like '%#{form_query}%'
+       GROUP BY id
+       ORDER BY name ASC
+    SQL
+
+    @projects = Project.find_by_sql(projects_select)
 
     # COUNTRIES (if not All of them selected)
     if ( params[:country] && !params[:country].include?('All') )
@@ -1433,6 +1439,8 @@ SQL
     ###########################
 
     active_projects = params[:active_projects] ? "AND p.end_date > now()" : "";
+
+    p " ============================= " + start_date.to_s + end_date.to_s
 
     base_select = <<-SQL
       WITH t AS (
