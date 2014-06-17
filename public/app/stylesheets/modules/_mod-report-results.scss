@@ -21,6 +21,18 @@
   }
 }
 
+.mod-applied-filters {
+  padding: 15px 20px;
+
+  border: 3px solid #eee;
+
+  @include border-radius(10px);
+
+  p {
+    margin: .5em 0;
+  }
+}
+
 .report-title {
   textarea {
     display: inline-block;
