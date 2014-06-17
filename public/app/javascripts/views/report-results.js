@@ -123,6 +123,7 @@ define([
 
     render: function() {
       this.data = this.model.processData().toJSON();
+      console.log(this.data);
       this.$el.html(this.template(this.data));
 
       $('#modReportsTabs').tabs();

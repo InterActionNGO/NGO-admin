@@ -66,7 +66,6 @@ define([
     },
 
     lists: function() {
-      console.log('list');
       new ClustersView();
       new MapView();
       new FiltersView();
