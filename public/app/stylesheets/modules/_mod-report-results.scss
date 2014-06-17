@@ -216,6 +216,10 @@ ul.mod-report-locations-header-child {
     }
 }
 
+.highcharts-title {
+  display: none;
+}
+
 @media print {
   .mod-header,
   .featured-projects,
@@ -230,5 +234,18 @@ ul.mod-report-locations-header-child {
 
   .mod-report {
     page-break-before: always;
+  }
+
+  .highcharts-title {
+    display: block;
+  }
+
+  .ui-tabs {
+    .ui-tabs-nav {
+      display: none !important;
+    }
+    .ui-tabs-panel {
+      display: block !important;
+    }
   }
 }
