@@ -1,6 +1,13 @@
 'use strict';
 
-define(['moment', 'backbone', 'jquery', 'form', 'select2'], function(moment, Backbone) {
+define([
+  'moment',
+  'backbone',
+  'models/filter',
+  'jquery',
+  'form',
+  'select2'
+], function(moment, Backbone) {
 
   var ReportFormView = Backbone.View.extend({
 
@@ -20,7 +27,7 @@ define(['moment', 'backbone', 'jquery', 'form', 'select2'], function(moment, Bac
       }
 
       this.$el.find('form').ajaxForm({
-        beforeSubmit: function() {
+        beforeSubmit: function(formData, jqForm) {
           Backbone.Events.trigger('spinner:start');
           Backbone.Events.trigger('results:empty');
         },
