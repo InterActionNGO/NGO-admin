@@ -76,8 +76,8 @@ require([
 
   var $reportTitleTextarea = $('.report-title').find('textarea');
 
-  function is_touch_device() {
-    return 'ontouchstart' in window || 'onmsgesturechange' in window;
+  function isTouchDevice() {
+    return 'ontouchstart' in window;
   }
 
   // Extensions
@@ -196,7 +196,7 @@ require([
 
   autoResizeTextare($reportTitleTextarea[0]);
 
-  if (is_touch_device()) {
+  if (isTouchDevice()) {
     $('body').addClass('is-touchscreen');
   } else {
     $('body').addClass('is-screen');

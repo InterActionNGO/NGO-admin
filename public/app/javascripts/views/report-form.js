@@ -1,6 +1,13 @@
 'use strict';
 
-define(['moment', 'backbone', 'jquery', 'form', 'select2'], function(moment, Backbone) {
+define([
+  'moment',
+  'backbone',
+  'models/filter',
+  'jquery',
+  'form',
+  'select2'
+], function(moment, Backbone) {
 
   var ReportFormView = Backbone.View.extend({
 
