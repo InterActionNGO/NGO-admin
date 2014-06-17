@@ -62,7 +62,7 @@ define([
         return organization.id;
       });
 
-      this.attributes.organizations_series = _.map(active_years, function(year) {
+      this.attributes.organizations_series = _.map(years, function(year) {
         return [year, _.where(organizations, {year: year}).length];
       });
 
