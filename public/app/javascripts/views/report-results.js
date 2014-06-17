@@ -344,6 +344,7 @@ define([
 
     setLayer: function(map, layerType) {
       var locations = this.getGeoJSON(this.data[layerType]);
+      var bounds;
 
       var layer = L.geoJson(locations, {
         pointToLayer: function(feature, latlng) {
@@ -354,20 +355,25 @@ define([
           fsize = (fsize > 19) ? 19 : fsize;
 
           var marker = L.marker(latlng, {
+            riseOnHover: true,
             icon: L.divIcon({
               iconSize: [size, size],
               iconAnchor: [size/2, size/2],
               className: 'report-marker',
-              html: '<span style="line-height: ' + size +'px; font-size: ' + fsize + 'px">'+ feature.properties.projects + '</span>',
-              riseOnHover: true
+              html: '<span style="line-height: ' + size +'px; font-size: ' + fsize + 'px">'+ feature.properties.projects + '</span>'
             })
           });
           return marker;
         }
       });
 
+      bounds = layer.getBounds();
+
       map.addLayer(layer);
-      map.fitBounds(layer.getBounds());
+
+      if (bounds.isValid()) {
+        map.fitBounds(layer.getBounds());
+      }
 
       return layer;
     },
