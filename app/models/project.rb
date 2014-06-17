@@ -1172,8 +1172,7 @@ SQL
 
     # Data filtering
     @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query).select(["projects.id",
-      "projects.name","projects.budget","projects.start_date","projects.end_date",
-      "(end_date >= current_date) as active"])
+      "projects.name","projects.budget","projects.start_date","projects.end_date", "projects.primary_organization_id", "(end_date >= current_date) as active"])
         #.group('user_profiles.id').order('name ASC')
 
     # COUNTRIES (if not All of them selected)
@@ -1266,6 +1265,17 @@ SQL
       @data[:results][:totals][:donors] = 0
       @data[:results][:totals][:projects] = 0
     end
+
+    # Returned to Frontend to be printed on human readable format
+    @data[:filters] = {}
+    @data[:filters][:start_date] = start_date
+    @data[:filters][:end_date] = end_date
+    @data[:filters][:countries] = countries
+    @data[:filters][:donors] = donors
+    @data[:filters][:sectors] = sectors
+    @data[:filters][:organizations] = organizations
+    @data[:filters][:search_word] = params[:q]
+
     @data
   end
 
@@ -1448,8 +1458,6 @@ SQL
           GROUP BY p.id, o.id, s.id, d.id, c.id
       )
     SQL
-
-    p base_select
 
     @data = @data || {}
     @data[:bar_chart] = {}
