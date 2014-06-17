@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><% unless CGI.unescapeHTML(title).empty? %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <!--[if lte IE 8]>
