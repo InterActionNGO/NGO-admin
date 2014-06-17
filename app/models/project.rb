@@ -1266,6 +1266,17 @@ SQL
       @data[:results][:totals][:donors] = 0
       @data[:results][:totals][:projects] = 0
     end
+
+    # Returned to Frontend to be printed on human readable format
+    @data[:filters] = {}
+    @data[:filters][:start_date] = start_date
+    @data[:filters][:end_date] = end_date
+    @data[:filters][:countries] = countries
+    @data[:filters][:countries] = donors
+    @data[:filters][:sectors] = sectors
+    @data[:filters][:organizations] = organizations
+    @data[:filters][:search_word] = params[:q]
+
     @data
   end
 
@@ -1448,8 +1459,6 @@ SQL
           GROUP BY p.id, o.id, s.id, d.id, c.id
       )
     SQL
-
-    p base_select
 
     @data = @data || {}
     @data[:bar_chart] = {}
