@@ -96,7 +96,11 @@ class OrganizationsController < ApplicationController
         end
 
         #Map data
-        carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
+        if params[:location_id]
+          carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => params[:location_id]))
+        else
+          carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
+        end
 
         if @site.geographic_context_country_id
 
@@ -122,6 +126,7 @@ class OrganizationsController < ApplicationController
                 group by r.id,r.path,lon,lat,r.name,r.code"
         else
           if @filter_by_location
+            "@filter_by_location.size: " + @filter_by_location.size.to_s
             sql = if @filter_by_location.size == 1
                     <<-SQL
                       SELECT r.id,
@@ -148,7 +153,8 @@ class OrganizationsController < ApplicationController
                         c.name as name,
                         c.center_lon AS lon,
                         c.center_lat AS lat,
-                        null as url,
+
+                        '#{carry_on_url}' url,
                         c.code
                       FROM projects AS p
                       INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
@@ -202,7 +208,6 @@ class OrganizationsController < ApplicationController
           end
 
         end
-
         result=ActiveRecord::Base.connection.execute(sql)
         @map_data = result.map do |r|
           uri = URI.parse(r['url'])
