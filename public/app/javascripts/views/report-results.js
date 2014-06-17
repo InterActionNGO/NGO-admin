@@ -123,7 +123,7 @@ define([
 
     render: function() {
       this.data = this.model.processData().toJSON();
-      console.log(this.data);
+
       this.$el.html(this.template(this.data));
 
       $('#modReportsTabs').tabs();
@@ -189,7 +189,9 @@ define([
         if (self.donorsLayer) {
           self.donorsMap.removeLayer(self.donorsLayer);
         }
-        self.donorsMap = self.setMap('reportDonorsMap');
+        if (!self.donorsMap) {
+          self.donorsMap = self.setMap('reportDonorsMap');
+        }
         self.donorsLayer = self.setLayer(self.donorsMap, layer);
       }
 
@@ -229,7 +231,9 @@ define([
         if (self.organizationsLayer) {
           self.organizationsMap.removeLayer(self.organizationsLayer);
         }
-        self.organizationsMap = self.setMap('reportOrganizationsMap');
+        if (!self.organizationsMap) {
+          self.organizationsMap = self.setMap('reportOrganizationsMap');
+        }
         self.organizationsLayer = self.setLayer(self.organizationsMap, layer);
       }
 
@@ -269,7 +273,9 @@ define([
         if (self.countriesLayer) {
           self.countriesMap.removeLayer(self.countriesLayer);
         }
-        self.countriesMap = self.setMap('reportCountriesMap');
+        if (!self.countriesMap) {
+          self.countriesMap = self.setMap('reportCountriesMap');
+        }
         self.countriesLayer = self.setLayer(self.countriesMap, layer);
       }
 
@@ -309,7 +315,9 @@ define([
         if (self.sectorsLayer) {
           self.sectorsMap.removeLayer(self.sectorsLayer);
         }
-        self.sectorsMap = self.setMap('reportSectorsMap');
+        if (!self.sectorsMap) {
+          self.sectorsMap = self.setMap('reportSectorsMap');
+        }
         self.sectorsLayer = self.setLayer(self.sectorsMap, layer);
       }
 
