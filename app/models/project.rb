@@ -1172,8 +1172,7 @@ SQL
 
     # Data filtering
     @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query).select(["projects.id",
-      "projects.name","projects.budget","projects.start_date","projects.end_date",
-      "(end_date >= current_date) as active"])
+      "projects.name","projects.budget","projects.start_date","projects.end_date", "projects.primary_organization_id", "(end_date >= current_date) as active"])
         #.group('user_profiles.id').order('name ASC')
 
     # COUNTRIES (if not All of them selected)
