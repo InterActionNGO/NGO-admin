@@ -52,8 +52,10 @@ define([
         silent: true
       });
 
-      this.model.set(_.extend(data.results, {
+      this.model.set(_.extend({}, data.results, {
         charts: data.bar_chart
+      }, {
+        filters: data.filters
       }));
     },
 
