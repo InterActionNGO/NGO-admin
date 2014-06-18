@@ -73,9 +73,13 @@ define([
           itemMarginBottom: 10,
           itemStyle: {
             width: 175
+          },
+          labelFormatter: function() {
+            return this.name +' (' + (this.yData[0]) + ')';
           }
         },
         yAxis: {
+          allowDecimals: false,
           title: {
             text: null
           },
@@ -98,6 +102,7 @@ define([
       map: {
         center: [0, 0],
         zoom: 11,
+        maxZoom: 7,
         dragging: false,
         boxZoom: false,
         scrollWheelZoom: false,
