@@ -1,4 +1,10 @@
 .mod-categories-selector {
+
+  &.is-fixed {
+    min-width: 960px;
+    z-index: 100;
+  }
+
   nav {
     float: left;
     position: relative;
@@ -19,9 +25,6 @@
     text-transform: uppercase;
     line-height: 1;
     margin-right: 2%;
-    .touch & {
-      margin-right: 1.2%;
-    }
 
     .father {
       display: block;
@@ -30,7 +33,7 @@
       @include border-radius(20px);
     }
     &.search { padding: 0;}
-    .no-touch &:hover {
+    .no-touch &:hover, &.is-touched {
       color: $color-0;
       .mod-go-up-menu { display: block;}
       .mod-drop-down-menu { display: block;}
@@ -54,6 +57,7 @@
   .search {
     float: right;
     height: 25px;
+    width: 170px;
     margin-top: 3px;
     margin-right: 0;
     border-bottom: 2px solid $color-4;
