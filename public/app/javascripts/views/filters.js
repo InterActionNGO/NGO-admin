@@ -19,6 +19,8 @@ define(['backbone', 'liveupdate'], function(Backbone) {
       if (Modernizr.touch) {
         this.$el.find('.father').on('touchstart', function(ev) {
           $(ev.currentTarget)
+            .closest('li')
+            .toggleClass('is-touched')
             .find('.mod-go-up-menu').toggle();
         });
       }
