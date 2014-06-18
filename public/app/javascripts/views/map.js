@@ -729,11 +729,10 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         return false;
       }
 
-      this.active = false;
-
+      var $w = $(window);
       var self = this;
 
-      this.$w = $(window);
+      this.active = false;
 
       old();
 
@@ -742,7 +741,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       if (this.$el.hasClass('layout-embed-map')) {
         this.undelegateEvents();
       } else {
-        this.$w.on('resize', function() {
+        $w.on('resize', function() {
           if (self.active) {
             self.resizeMap();
           } else {
@@ -753,7 +752,9 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     },
 
     resizeMap: function() {
-      var h = this.$w.height() - 204;
+      var h = window.innerHeight - 204;
+
+      console.log(h);
 
       this.active = true;
 
