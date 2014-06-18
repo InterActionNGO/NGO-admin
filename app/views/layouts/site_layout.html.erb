@@ -11,7 +11,7 @@
     <% if Rails.env.production? %>
       <%= stylesheet_link_tag "main.css", :media => 'all' %>
     <% else %>
-      <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
+    <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
     <% end %>
     <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
     <meta name="viewport" content="width=980px">
@@ -44,9 +44,7 @@
     <% else %>
       <%= yield :js_vars %>
     <% end %>
-    <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
-    <![endif]-->
+    <%= javascript_include_tag "../lib/modernizr/modernizr.custom.js" %>
   </head>
   <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %>">
     <%= render 'layouts/header' %>
@@ -59,7 +57,7 @@
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=AIzaSyA2xfzq0KmJZIlGIpxXK1CjXa6enzmPGlM&sensor=false" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
-    <%= javascript_include_tag "../vendor/requirejs/require", "main" %>
+    <%= javascript_include_tag "../vendor/requirejs/require.js", "main.js" %>
 
     <% if Rails.env.production? %>
       <script type="text/javascript">
