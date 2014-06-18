@@ -1,4 +1,9 @@
 .mod-categories-selector {
+
+  &.is-fixed {
+    z-index: 100;
+  }
+
   nav {
     float: left;
     position: relative;
@@ -27,7 +32,7 @@
       @include border-radius(20px);
     }
     &.search { padding: 0;}
-    .no-touch &:hover {
+    .no-touch &:hover, &.is-touched {
       color: $color-0;
       .mod-go-up-menu { display: block;}
       .mod-drop-down-menu { display: block;}
