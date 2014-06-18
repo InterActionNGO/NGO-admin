@@ -1179,7 +1179,10 @@ SQL
        ORDER BY name ASC
     SQL
 
-    @projects = Project.find_by_sql(projects_select)
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query)
+
+    #@projects = Project.find_by_sql(projects_select)
+    #@projects = ActiveRecord::Base.connection.execute(projects_select)
 
     # COUNTRIES (if not All of them selected)
     if ( params[:country] && !params[:country].include?('All') )
@@ -1216,6 +1219,10 @@ SQL
         @projects = @projects.sectors_name_not_in(sectors)
       end
     end
+
+    @projects = @projects.select(["projects.id","projects.name","projects.budget","projects.start_date","projects.end_date","(end_date >= current_date) as active"])
+
+    #p "===========  PROJECTS ============ " + @projects.to_sql.to_s.gsub("\"","")
 
     @data ||= {}
     @totals ||= {}
