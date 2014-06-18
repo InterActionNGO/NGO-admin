@@ -38,7 +38,12 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= root.dist %>/vendor/requirejs/require.js': ['<%= root.app %>/vendor/requirejs/require.js']
+          '<%= root.dist %>/vendor/requirejs/require.js': [
+            '<%= root.app %>/vendor/requirejs/require.js'
+          ],
+          '<%= root.dist %>/lib/modernizr/modernizr.custom.js': [
+            '<%= root.app %>/lib/modernizr/modernizr.custom.js'
+          ]
         }
       }
     },
