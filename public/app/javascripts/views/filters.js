@@ -18,8 +18,7 @@ define(['backbone', 'liveupdate'], function(Backbone) {
 
       if (Modernizr.touch) {
         this.$el.find('.father').on('touchstart', function(ev) {
-          $(ev.currentTarget)
-            .find('.mod-go-up-menu').toggle();
+          $(ev.currentTarget).closest('li').find('.mod-go-up-menu').toggle();
         });
       }
     }
