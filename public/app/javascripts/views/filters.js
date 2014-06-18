@@ -14,12 +14,19 @@ define(['backbone', 'liveupdate'], function(Backbone) {
 
       this.liveUpdate();
 
+
+
       if (Modernizr.touch) {
         this.$el.find('.father').on('touchstart', function(ev) {
-          $(ev.currentTarget)
-            .closest('li')
-            .toggleClass('is-touched')
-            .find('.mod-go-up-menu').toggle();
+          var item = $(ev.currentTarget).closest('li');
+
+          item.toggleClass('is-touched');
+
+          if (item.hasClass('is-touched')) {
+            item.find('.mod-go-up-menu').show();
+          } else {
+            item.find('.mod-go-up-menu').hide();
+          }
         });
       }
 
