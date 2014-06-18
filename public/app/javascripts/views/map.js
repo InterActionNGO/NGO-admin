@@ -754,8 +754,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     resizeMap: function() {
       var h = window.innerHeight - 204;
 
-      console.log(h);
-
       this.active = true;
 
       this.$el.animate({
