@@ -100,7 +100,7 @@
     }
   }
 
-  .no-touch &:hover, &.active, .touch & {
+  .no-touch &:hover, &.active, &.is-touched {
     background-color: $primary-color;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -114,7 +114,7 @@
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
   }
-  .no-touch &:hover:after, .touch &:after {
+  .no-touch &:hover:after, &.is-touched:after {
     @include after('', block, absolute, -15px, auto, 15px, 15px);
     top: 0;
     @include negative-radius-upper($primary-color, 15px);
