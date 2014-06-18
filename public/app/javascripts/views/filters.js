@@ -15,15 +15,15 @@ define(['backbone', 'liveupdate'], function(Backbone) {
       this.liveUpdate();
 
       if (Modernizr.touch) {
-        this.$el.find('.father').on('touchstart', function(ev) {
+        this.$el.find('.father').on('touchend', function(ev) {
           var item = $(ev.currentTarget).closest('li');
 
           item.toggleClass('is-touched');
 
           if (item.hasClass('is-touched')) {
-            item.find('.mod-go-up-menu').show();
+            item.find('.menu').css('display', 'block');
           } else {
-            item.find('.mod-go-up-menu').hide();
+            item.find('.menu').css('display', 'none');
           }
         });
       }
