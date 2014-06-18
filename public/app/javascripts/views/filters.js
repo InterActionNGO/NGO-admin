@@ -14,8 +14,6 @@ define(['backbone', 'liveupdate'], function(Backbone) {
 
       this.liveUpdate();
 
-
-
       if (Modernizr.touch) {
         this.$el.find('.father').on('touchstart', function(ev) {
           var item = $(ev.currentTarget).closest('li');

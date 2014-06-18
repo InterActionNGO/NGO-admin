@@ -1,6 +1,7 @@
 .mod-categories-selector {
 
   &.is-fixed {
+    min-width: 960px;
     z-index: 100;
   }
 
