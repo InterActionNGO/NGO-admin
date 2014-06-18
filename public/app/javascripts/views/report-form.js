@@ -28,6 +28,7 @@ define([
 
       this.$el.find('form').ajaxForm({
         beforeSubmit: function() {
+          $(window).scrollTop(154);
           Backbone.Events.trigger('spinner:start');
           Backbone.Events.trigger('results:empty');
         },
