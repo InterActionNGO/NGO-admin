@@ -76,10 +76,6 @@ require([
 
   var $reportTitleTextarea = $('.report-title').find('textarea');
 
-  function isTouchDevice() {
-    return 'ontouchstart' in window;
-  }
-
   // Extensions
   Number.prototype.toCommas = function() {
     return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -211,12 +207,6 @@ require([
   });
 
   autoResizeTextare($reportTitleTextarea[0]);
-
-  if (isTouchDevice()) {
-    $('body').addClass('is-touchscreen');
-  } else {
-    $('body').addClass('is-screen');
-  }
 
   new Router();
 
