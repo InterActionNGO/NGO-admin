@@ -26,7 +26,7 @@ define(['backbone', 'liveupdate'], function(Backbone) {
       this.fixCategoriesSelector();
 
       $(window).on('scroll', function() {
-        self.fixCategoriesSelector()
+        self.fixCategoriesSelector();
       });
     },
 
