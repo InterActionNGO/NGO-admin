@@ -46,7 +46,7 @@
     <% end %>
     <%= javascript_include_tag "../lib/modernizr/modernizr.custom.js" %>
   </head>
-  <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %>">
+  <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %> <%= "section-" + @page.top_parent.permalink if @page.present? %> <%= "linos-" + @page.permalink if @page.present? %>">
     <%= render 'layouts/header' %>
 
     <%= yield %>
