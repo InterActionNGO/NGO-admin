@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><% unless CGI.unescapeHTML(title).empty? %><%= CGI.unescapeHTML(title) %><% else %>Welcome<% end %> · NGO Aid Map</title>
+    <meta name="content" content="NGO Aid Map is an InterAction initiative that collects information on the work of NGOs and makes it accessible.">
+    <meta name="viewport" content="width=980px">
+
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
@@ -11,11 +14,14 @@
     <% if Rails.env.production? %>
       <%= stylesheet_link_tag "main.css", :media => 'all' %>
     <% else %>
-    <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
+      <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
     <% end %>
-    <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
-    <meta name="viewport" content="width=980px">
-    <%= csrf_meta_tag %>
+
+    <% if Rails.env.development? %>
+      <link rel="icon" type="image/png" href="/app/images/favicon-dev.png">
+    <% else %>
+      <link rel="icon" type="image/png" href="/dist/images/favicon.png">
+    <% end %>
 
     <% unless content_for?(:js_vars) %>
       <% if defined?(@map_data) %>
@@ -45,6 +51,8 @@
       <%= yield :js_vars %>
     <% end %>
     <%= javascript_include_tag "../lib/modernizr/modernizr.custom.js" %>
+
+    <%= csrf_meta_tag %>
   </head>
   <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %> <%= "section-" + @page.top_parent.permalink if @page.present? %> <%= "linos-" + @page.permalink if @page.present? %>">
     <%= render 'layouts/header' %>
