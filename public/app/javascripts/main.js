@@ -135,7 +135,7 @@ require([
     position = window.location.pathname.split('/').length - 1;
     newClass = window.location.pathname.split('/')[position];
 
-    $('body').addClass(newClass);
+    $('body').addClass('linos-' + newClass);
   }
 
   function goTo(e) {
