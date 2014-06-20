@@ -162,7 +162,7 @@ class OrganizationsController < ApplicationController
                       INNER JOIN countries as c ON c.id = #{params[:location_id]}
                       INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
                       #{category_join}
-                      WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                      WHERE p.primary_organization_id = #{params[:id].sanitize_sql!.to_i}
                       GROUP BY c.id,c.name,lon,lat,c.code
                     SQL
             else
