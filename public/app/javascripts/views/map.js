@@ -752,15 +752,17 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     },
 
     resizeMap: function() {
-      var h = window.innerHeight - 204;
+      if (!this.$el.hasClass('layout-embed-map')) {
+        var h = window.innerHeight - 204;
 
-      this.active = true;
+        this.active = true;
 
-      this.$el.animate({
-        height: h
-      }, 300);
+        this.$el.animate({
+          height: h
+        }, 300);
 
-      google.maps.event.trigger(map, 'resize');
+        google.maps.event.trigger(map, 'resize');
+      }
     },
 
     resetMap: function() {
