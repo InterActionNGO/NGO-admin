@@ -4,8 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><%= title %></title>
+    <meta name="content" content="NGO Aid Map emebedded map">
+
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "embed.css" %>
-    <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png">
+
+    <% if Rails.env.development? %>
+      <link rel="icon" type="image/png" href="/app/images/favicon-dev.png">
+    <% else %>
+      <link rel="icon" type="image/png" href="/dist/images/favicon.png">
+    <% end %>
 
     <script type="text/javascript">
       <% if @overview_map_bbox %>
@@ -34,6 +41,8 @@
       var page = "<%= params[:controller] %>";
     </script>
     <%= javascript_include_tag "../lib/modernizr/modernizr.custom.js" %>
+
+    <%= csrf_meta_tag %>
   </head>
   <body class="embed-page">
     <section class="layout-embed-map" id="mapView">
