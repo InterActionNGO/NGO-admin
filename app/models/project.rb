@@ -1447,30 +1447,29 @@ SQL
 
     active_projects = params[:active_projects] ? "AND p.end_date > now()" : "";
 
-    p " ============================= " + start_date.to_s + end_date.to_s
-
     base_select = <<-SQL
       WITH t AS (
         SELECT p.id AS project_id,  p.name AS project_name, p.budget as project_budget,
-               d.id AS donor_id,   d.name AS donor_name,
+               CASE WHEN d.id is null THEN '0' ELSE  d.id END donor_id,
+               CASE WHEN d.id is null THEN 'UNKNOWN' ELSE d.name END donor_name,
                s.id AS sector_id,  s.name AS sector_name,
                c.id AS country_id, c.name AS country_name,
                o.id AS organization_id, o.name AS organization_name,
                c.center_lat AS lat, c.center_lon AS lon
-         FROM donors d, sectors s, projects p, organizations o, projects_sectors ps, donations pd, countries_projects cp, countries c
-        WHERE d.id = pd.donor_id
-          AND p.id = pd.project_id
-          AND s.id = ps.sector_id
-          AND p.id = ps.project_id
-          AND c.id = cp.country_id
-          AND p.id = cp.project_id
-          AND o.id = o.id
-          AND o.id = p.primary_organization_id
-          AND p.start_date >= '#{start_date}'::date
-          AND p.end_date <= '#{end_date}'::date
+        FROM projects p
+               INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+               LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+               LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+               LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+               INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+               INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+               INNER JOIN countries c ON (c.id = cp.country_id)
+        WHERE p.start_date <= '#{end_date}'::date
+          AND p.end_date >= '#{start_date}'::date
           #{active_projects}
           #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-          GROUP BY p.id, o.id, s.id, d.id, c.id
+        GROUP BY p.id, o.id, s.id, d.id, c.id
+
       )
     SQL
 
