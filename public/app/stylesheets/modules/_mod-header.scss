@@ -2,19 +2,10 @@
   font-size: 14px;
   font-weight: bold;
   box-shadow: 0 5px 0 rgba($color-1, 0.3);
-  .about &,
-  .purpose &,
-  .getting-on-the-map &,
-  .staff-list &,
-  .contact-us &,
-  .of-interest &,
-  .highlights & {
+  .section-about & {
     box-shadow: 0 5px 0 $color-8;
   }
-  .data &,
-  .top-things-you-should-know-about-the-data &,
-  .data-guidance &,
-  .analysis & {
+  .section-data & {
     box-shadow: 0 5px 0 $color-1;
   }
   .aid-map-logo {

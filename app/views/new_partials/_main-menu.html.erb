@@ -2,7 +2,7 @@
 	<ul class="menu">
 		<li class="menu-item home"><a href="/" class="index-item home <%= if action_name == 'home' then 'active' end %>">home</a></li>
 		<li class="menu-item about">
-      <a href="/p/about" class="index-item about <%= if (params[:id] == 'about' || params[:id] == 'purpose' || params[:id] == 'getting-on-the-map' || params[:id] == 'staff-list' || params[:id] == 'contact-us' || params[:id] == 'of-interest' || params[:id] == 'highlights' ) then 'active' end %>">about</a>
+      <a href="/p/about" class="index-item about <%= "active" if (@page.permalink == 'about' || @page.top_parent.permalink == 'about') %>">about</a>
       <ul class="submenu">
         <% @site.pages_by_parent('about').each do |page| %>
           <% if page.published %>
@@ -12,7 +12,7 @@
       </ul>
     </li>
 		<li class="menu-item data">
-      <a href="/p/data" class="index-item data <%= if (params[:id] == 'report'|| params[:id] == 'data' || params[:id] == 'top-things-you-should-know-about-the-data' || params[:id] == 'data-guidance') then 'active' end %>">data</a>
+      <a href="/p/data" class="index-item data <%= "active" if (@page.permalink == 'data' || @page.top_parent.permalink == 'data') %>">data</a>
       <ul class="submenu">
         <% @site.pages_by_parent('data').each do |page| %>
           <% if page.published %>
