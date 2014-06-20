@@ -1,7 +1,7 @@
 .mod-map-controls {
   position: relative;
   z-index: 1;
-  height: 100%;
+
   .control-navbar, .control-zoom, .click-to-see {
     position: absolute;
     border-radius: 40px;
@@ -137,8 +137,14 @@ div.cartodb-infowindow {
 
 }
 
-
-
+.layout-embed-map {
+  .control-zoom {
+    right: 20px;
+  }
+  .control-navbar {
+    left: 20px;
+  }
+}
 
 
 
