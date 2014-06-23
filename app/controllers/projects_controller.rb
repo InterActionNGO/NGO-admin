@@ -30,8 +30,8 @@ class ProjectsController < ApplicationController
                c.name       AS country_name,
                r.level
         FROM   (projects AS p
-                INNER JOIN projects_regions AS pr ON pr.project_id = p.id AND p.id = 5692
-                INNER JOIN countries_projects as cp ON cp.project_id = p.id AND p.id = 5692)
+                INNER JOIN projects_regions AS pr ON pr.project_id = p.id AND p.id = #{@project.id}
+                INNER JOIN countries_projects as cp ON cp.project_id = p.id AND p.id = #{@project.id})
                 INNER JOIN regions AS r   ON pr.region_id = r.id  AND r.level = 1
                 INNER JOIN countries AS c ON r.country_id = c.id
         UNION
@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
                c.name       AS country_name,
                null as level
         FROM   (projects AS p
-                INNER JOIN countries_projects as cp ON cp.project_id = p.id AND p.id = 5692)
+                INNER JOIN countries_projects as cp ON cp.project_id = p.id AND p.id = #{@project.id})
                 INNER JOIN countries AS c ON cp.country_id = c.id
         SQL
 
