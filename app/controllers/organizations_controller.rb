@@ -158,7 +158,7 @@ class OrganizationsController < ApplicationController
                         c.code
                       FROM projects AS p
                       INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
-                      INNER JOIN donations on donations.project_id = p.id
+                      LEFT OUTER JOIN donations on donations.project_id = p.id
                       INNER JOIN countries as c ON c.id = #{params[:location_id]}
                       INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
                       #{category_join}
@@ -208,6 +208,7 @@ class OrganizationsController < ApplicationController
           end
 
         end
+
         result=ActiveRecord::Base.connection.execute(sql)
         @map_data = result.map do |r|
           uri = URI.parse(r['url'])
