@@ -20,12 +20,33 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html do
         #Map data
-        sql="select r.id,r.center_lon as lon,r.center_lat as lat,r.name,r.code,r.country_id, c.name as country_name
-        from (projects as p inner join projects_regions as pr on pr.project_id=p.id and p.id=#{@project.id})
-        inner join regions as r on pr.region_id=r.id and r.level=#{@site.level_for_region}
-        inner join countries as c on r.country_id = c.id"
-
-        p sql.gsub("\n"," ")
+        sql = <<-SQL
+        SELECT r.id,
+               r.center_lon AS lon,
+               r.center_lat AS lat,
+               r.name,
+               r.code,
+               r.country_id,
+               c.name       AS country_name,
+               r.level
+        FROM   (projects AS p
+                INNER JOIN projects_regions AS pr ON pr.project_id = p.id AND p.id = 5692
+                INNER JOIN countries_projects as cp ON cp.project_id = p.id AND p.id = 5692)
+                INNER JOIN regions AS r   ON pr.region_id = r.id  AND r.level = 1
+                INNER JOIN countries AS c ON r.country_id = c.id
+        UNION
+        SELECT c.id,
+               c.center_lon AS lon,
+               c.center_lat AS lat,
+               c.name,
+               c.code,
+               c.id,
+               c.name       AS country_name,
+               null as level
+        FROM   (projects AS p
+                INNER JOIN countries_projects as cp ON cp.project_id = p.id AND p.id = 5692)
+                INNER JOIN countries AS c ON cp.country_id = c.id
+        SQL
 
         @locations = ActiveRecord::Base.connection.execute(sql)
         if @locations.count == 0
@@ -34,6 +55,7 @@ class ProjectsController < ApplicationController
           inner join countries as c on cp.country_id=c.id"
           @locations = ActiveRecord::Base.connection.execute(sql)
         end
+
         @map_data  = @locations.to_json
 
         @overview_map_chco = @site.theme.data[:overview_map_chco]
