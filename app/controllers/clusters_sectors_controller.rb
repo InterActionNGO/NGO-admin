@@ -129,42 +129,67 @@ class ClustersSectorsController < ApplicationController
           else
 
             if @filter_by_location
-              location_filter = @filter_by_location.size == 1 ? "r.country_id = #{@filter_by_location.first}" : "r.id = #{@filter_by_location.last}"
+              region_location_filter = @filter_by_location.size == 1 ? "r.country_id = #{@filter_by_location.first}" : "r.id = #{@filter_by_location.last}"
+              country_location_filter = @filter_by_location.size == 1 ? "c.id = #{@filter_by_location.first}" : "c.id = #{@filter_by_location.last}"
 
-              sql="select r.id,r.name,count(ps.*) as count,r.center_lon as lon,r.center_lat as lat,
 
-              CASE WHEN count(distinct ps.project_id) > 1 THEN
-                  '#{carry_on_url}'||r.path
-              ELSE
-                  '/projects/'||(array_to_string(array_agg(ps.project_id),''))
-              END as url,
-                  (select count(*) from data_denormalization where regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
-              from regions as r
-                inner join projects_regions as pr on r.id=pr.region_id
-                inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{@site.id}
-                inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
-                inner join projects_sectors as pse on pse.project_id=p.id and pse.sector_id=#{params[:id].sanitize_sql!.to_i}
-                where #{location_filter}
-                group by r.id,r.name,lon,lat,r.path"
-            else
-              sql="select c.id,c.name,count(ps.*) as count,c.center_lon as lon,c.center_lat as lat,c.name,
+              sql = <<-SQL
+                SELECT r.id AS id,
+                       r.name as region_name,
+                       count(ps.*) AS count,
+                       r.center_lon AS lon,
+                       r.center_lat AS lat,
+                       c.name as country_name,
+                       CASE
+                           WHEN COUNT(DISTINCT ps.project_id) > 1 THEN '#{carry_on_url}'||r.path
+                           ELSE '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                       END AS url,
 
-              CASE WHEN count(distinct ps.project_id) > 1 THEN
-                  '#{carry_on_url}'||c.id
-              ELSE
-                  '/projects/'||(array_to_string(array_agg(ps.project_id),''))
-              END as url,
-                  (select count(*) from data_denormalization where countries_ids && ('{'||c.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
-              from countries as c
-                inner join countries_projects as cp on c.id=cp.country_id
-                inner join projects_sites as ps on cp.project_id=ps.project_id and ps.site_id=#{@site.id}
-                inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
-                inner join projects_sectors as pse on pse.project_id=p.id and pse.sector_id=#{params[:id].sanitize_sql!.to_i}
-                group by c.id,c.name,lon,lat,c.name"
+                  (SELECT COUNT(*)
+                   FROM data_denormalization
+                   WHERE regions_ids && ('{'||r.id||'}')::integer[] and (end_date is null OR end_date > now()) and site_id=#{@site.id}) as total_in_region
+
+                   from regions as r
+                   inner join projects_regions as pr on r.id=pr.region_id
+                   inner join projects_sites as ps on pr.project_id=ps.project_id and ps.site_id=#{@site.id}
+                    inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
+                    inner join projects_sectors as pse on pse.project_id=p.id and pse.sector_id=#{params[:id].sanitize_sql!.to_i}
+                    inner join countries c on r.country_id = c.id
+                    where #{region_location_filter}
+                     group by r.id,r.name,lon,lat,r.path,c.name
+                UNION
+
+                 select c.id as id,
+                 c.name as name,
+                 count(ps.*) as count,
+                 c.center_lon as lon,
+                 c.center_lat as lat,
+                 c.name as country_name,
+                 CASE WHEN count(distinct ps.project_id) > 1 THEN '#{carry_on_url}'||c.id
+                 ELSE '/projects/'||(array_to_string(array_agg(ps.project_id),''))
+                 END as url,
+                 (select count(*) from data_denormalization
+                 where countries_ids && ('{'||c.id||'}')::integer[] AND (end_date IS NULL OR end_date > now()) AND site_id=#{@site.id}) AS total_in_region
+
+                  FROM countries AS c
+                  INNER JOIN countries_projects AS cp ON c.id=cp.country_id
+                  INNER JOIN projects_sites AS ps ON cp.project_id=ps.project_id
+                  AND ps.site_id=#{@site.id}
+                  INNER JOIN projects AS p ON ps.project_id=p.id
+                  AND (p.end_date IS NULL
+                       OR p.end_date > now())
+                  INNER JOIN projects_sectors AS pse ON pse.project_id=p.id
+                  AND pse.sector_id=#{params[:id].sanitize_sql!.to_i}
+                  AND #{country_location_filter}
+                  GROUP BY c.id, c.name, lon, lat, c.name
+              SQL
             end
-
           end
         end
+
+        p "===========>  "
+        p sql.gsub("\n", " ")
+        p "===========>  "
 
         result = ActiveRecord::Base.connection.execute(sql)
         @map_data = result.map do |r|
