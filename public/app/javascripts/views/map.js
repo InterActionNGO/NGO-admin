@@ -382,6 +382,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       center: latlng,
       scrollwheel: false,
       disableDefaultUI: true,
+      overviewMapControl: true,
       styles: stylesArray,
       minZoom: 1,
       maxZoom: 12,
