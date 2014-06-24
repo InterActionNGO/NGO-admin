@@ -391,11 +391,11 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       }
     };
 
-    if (typeof window.ontouchstart !== 'undefined') {
-      mapOptions = _.extend(mapOptions, {
-        draggable: false
-      });
-    }
+    // if (typeof window.ontouchstart !== 'undefined') {
+    //   mapOptions = _.extend(mapOptions, {
+    //     draggable: false
+    //   });
+    // }
 
     cartodbOptions = {
       user_name: 'ngoaidmap',
