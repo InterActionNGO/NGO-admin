@@ -107,7 +107,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       //this.image = image;
       this.classname = classname;
       this.map_ = map;
-      this.name = info.name;
+      this.name = info.name || info.region_name;
       this.countryName = info.country_name;
       this.diameter = diameter;
 

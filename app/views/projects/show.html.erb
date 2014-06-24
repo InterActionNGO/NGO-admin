@@ -218,7 +218,7 @@
                 <ul>
                   <% @locations.each do |location| %>
                     <% if @site.navigate_by_country? && location['country_id'].present? %>
-                      <li><%= location['name'] %>, <%= Country.find(location['country_id'], :select => 'name').name %></li>
+                      <li><%= location['name'] + ', ' if location['name'] and location['name'] != '' %> <%= Country.find(location['country_id'], :select => 'name').name %></li>
                     <% else %>
                       <li><%= location['name'] %></li>
                     <% end %>

@@ -187,10 +187,6 @@ class ClustersSectorsController < ApplicationController
           end
         end
 
-        p "===========>  "
-        p sql.gsub("\n", " ")
-        p "===========>  "
-
         result = ActiveRecord::Base.connection.execute(sql)
         @map_data = result.map do |r|
           uri = URI.parse(r['url'])
