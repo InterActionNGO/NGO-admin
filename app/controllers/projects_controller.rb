@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
         SELECT c.id,
                c.center_lon AS lon,
                c.center_lat AS lat,
-               c.name,
+               null as name,
                c.code,
                c.id,
                c.name       AS country_name,
