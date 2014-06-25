@@ -101,14 +101,20 @@
 }
 
 .marker-bubble, .marker-project-bubble {
+  color: $color-0;
   background-color: $color-2;
+  &.is-marker-region {
+    font-weight: bold;
+  }
 }
 
 .theme-1 {
   .marker-bubble, .marker-project-bubble {
     background-color: $color-2;
     &.is-marker-region {
-      background-color: rgba($color-0, .6);
+      color: $color-2;
+      background-color: rgba($color-0, .85);
+      @include box-shadow(0 0 0 3px $color-2);
     }
   }
   .marker-project-bubble.is-marker-region {
@@ -120,7 +126,9 @@
   .marker-bubble, .marker-project-bubble {
     background-color: $color-1;
     &.is-marker-region {
-      background-color: rgba($color-0, .6);
+      color: $color-1;
+      background-color: rgba($color-0, .85);
+      @include box-shadow(0 0 0 3px $color-2);
     }
   }
   .marker-project-bubble.is-marker-region {
@@ -132,7 +140,9 @@
   .marker-bubble, .marker-project-bubble {
     background-color: $color-9;
     &.is-marker-region {
-      background-color: rgba($color-0, .6);
+      color: $color-9;
+      background-color: rgba($color-0, .85);
+      @include box-shadow(0 0 0 3px $color-9);
     }
   }
   .marker-project-bubble.is-marker-region {
