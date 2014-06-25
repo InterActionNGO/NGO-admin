@@ -100,12 +100,13 @@
     }
   }
 
-  &:hover, &.active {
+  .no-touch &:hover, &.active, &.is-touched {
     background-color: $primary-color;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    color: $color-0;
   }
   &.active {
     border-top-left-radius: 0px;
@@ -113,15 +114,14 @@
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
   }
-  &:hover:after {
+  .no-touch &:hover:after, &.is-touched:after {
     @include after('', block, absolute, -15px, auto, 15px, 15px);
     top: 0;
     @include negative-radius-upper($primary-color, 15px);
   }
 
-
-  .is-fixed &{
-    &:hover, &.active {
+  .is-fixed & {
+    .no-touch &:hover, &.active, &.is-touched {
       background-color: $primary-color;
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
@@ -134,14 +134,14 @@
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
     }
-    &:hover:after {
+    .no-touch &:hover:after, &.is-touched:after {
       @include after('', block, absolute, -15px, 0, 15px, 15px);
       top: auto;
       @include negative-radius-down($primary-color, 15px);
     }
   }
 
-  &.no-child:hover {
+  .no-touch &.no-child:hover {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -214,8 +214,6 @@
       display: none;
     }
   }
-
-
 
   .submenu {
     border-top: 5px solid rgba($primary-color, .3);

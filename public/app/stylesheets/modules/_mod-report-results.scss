@@ -21,6 +21,18 @@
   }
 }
 
+.mod-applied-filters {
+  padding: 15px 20px;
+
+  border: 3px solid #eee;
+
+  @include border-radius(10px);
+
+  p {
+    margin: .5em 0;
+  }
+}
+
 .report-title {
   textarea {
     display: inline-block;
@@ -204,6 +216,10 @@ ul.mod-report-locations-header-child {
     }
 }
 
+.highcharts-title {
+  display: none;
+}
+
 @media print {
   .mod-header,
   .featured-projects,
@@ -216,7 +232,20 @@ ul.mod-report-locations-header-child {
     float: none;
   }
 
-  .mod-report {
+  .is-break-before {
     page-break-before: always;
+  }
+
+  .highcharts-title {
+    display: block;
+  }
+
+  .ui-tabs {
+    .ui-tabs-nav {
+      display: none !important;
+    }
+    .ui-tabs-panel {
+      display: block !important;
+    }
   }
 }

@@ -96,14 +96,11 @@ class OrganizationsController < ApplicationController
         end
 
         #Map data
-        #carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
-        filters_for_url = @carry_on_filters.clone
         if params[:location_id]
-          carry_on_url = organization_path(@organization, filters_for_url.except!(:location_id))
+          carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => params[:location_id]))
         else
-          carry_on_url = organization_path(@organization, filters_for_url)
+          carry_on_url = organization_path(@organization, @carry_on_filters.merge(:location_id => ''))
         end
-
 
         if @site.geographic_context_country_id
 
@@ -129,6 +126,7 @@ class OrganizationsController < ApplicationController
                 group by r.id,r.path,lon,lat,r.name,r.code"
         else
           if @filter_by_location
+            "@filter_by_location.size: " + @filter_by_location.size.to_s
             sql = if @filter_by_location.size == 1
                     <<-SQL
                       SELECT r.id,
@@ -155,15 +153,16 @@ class OrganizationsController < ApplicationController
                         c.name as name,
                         c.center_lon AS lon,
                         c.center_lat AS lat,
-                        null as url,
+
+                        '#{carry_on_url}' url,
                         c.code
                       FROM projects AS p
                       INNER JOIN projects_sites AS ps ON ps.site_id=#{@site.id} and ps.project_id = p.id AND (p.end_date is NULL OR p.end_date > now())
-                      INNER JOIN donations on donations.project_id = p.id
+                      LEFT OUTER JOIN donations on donations.project_id = p.id
                       INNER JOIN countries as c ON c.id = #{params[:location_id]}
                       INNER JOIN countries_projects as cp on cp.country_id = c.id AND cp.project_id = p.id
                       #{category_join}
-                      WHERE donations.donor_id = #{params[:id].sanitize_sql!.to_i}
+                      WHERE p.primary_organization_id = #{params[:id].sanitize_sql!.to_i}
                       GROUP BY c.id,c.name,lon,lat,c.code
                     SQL
             else

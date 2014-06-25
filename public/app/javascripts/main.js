@@ -89,6 +89,22 @@ require([
     return context.toCommas();
   });
 
+  Handlebars.registerHelper('starray', function(context) {
+    var result = '', i = 0, len = context.length;
+
+    if (context.length > 0) {
+      for (i=0;i<len;i++) {
+        if (i === len -1) {
+          result += context[i];
+        } else {
+          result += context[i] + ', ';
+        }
+      }
+    }
+
+    return result;
+  });
+
   $.fn.noHandleChildren = function() {
 
     var SearchMenu = function(el) {
@@ -105,42 +121,11 @@ require([
     });
   };
 
-  var scrollTop,
-    categoriesSelector = $('.categories-selector'),
-    menu = $('.mod-categories-selector .menu'),
-    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 49 : 0;
-
   function sectionTitle() {
-    var $title = $('.section-title');
+    var $title = $('.mod-content-article').find('h1');
 
     if ($title.text().length > 50) {
       $title.css('font-size', '36px');
-    }
-  }
-
-  function fixCategoriesSelector() {
-    elementOffset = (categoriesSelector.length > 0) ? $('.main-content').offset().top - 49 : 0;
-
-    if (categoriesSelector.length === 0) {
-      return false;
-    }
-
-    scrollTop = $(window).scrollTop();
-
-    if (scrollTop > elementOffset) {
-      categoriesSelector.addClass('is-fixed');
-      menu.removeClass('mod-go-up-menu');
-      menu.addClass('mod-drop-down-menu');
-      $('.layout-sidebar, .layout-content').css({
-        marginTop: 50
-      });
-    } else {
-      categoriesSelector.removeClass('is-fixed');
-      menu.addClass('mod-go-up-menu');
-      menu.removeClass('mod-drop-down-menu');
-      $('.layout-sidebar, .layout-content').css({
-        marginTop: 0
-      });
     }
   }
 
@@ -150,7 +135,7 @@ require([
     position = window.location.pathname.split('/').length - 1;
     newClass = window.location.pathname.split('/')[position];
 
-    $('body').addClass(newClass);
+    $('body').addClass('linos-' + newClass);
   }
 
   function goTo(e) {
@@ -171,7 +156,6 @@ require([
   sectionTitle();
   addClassToBody();
   $('.menu-item').noHandleChildren();
-  $(window).on('scroll', fixCategoriesSelector);
 
   var $projectBudget = $('#projectBudgetValue');
 

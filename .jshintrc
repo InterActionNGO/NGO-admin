@@ -30,6 +30,7 @@
     "cdb",
     "L",
     "Backbone",
-    "_"
+    "_",
+    "Modernizr"
   ]
 }

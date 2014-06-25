@@ -57,7 +57,7 @@
               <li class="comboselect date">
                 <label>START DATE</label>
                 <div class="select_date">
-                  <%= select_date @date_start, {:prefix => :start_date, :use_short_month =>true} %>
+                  <%= select_date @date_start, {:prefix => :start_date, :use_short_month =>true, :start_year => Time.now.year - 30, :end_year => Time.now.year} %>
                   <%# select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
                 </div>
               </li>
@@ -65,7 +65,7 @@
               <li class="comboselect date">
                 <label>END DATE</label>
                 <div class="select_date">
-                  <%= select_date @date_end, {:prefix => :end_date, :use_short_month =>true} %>
+                  <%= select_date @date_end, {:prefix => :end_date, :use_short_month =>true, :start_year => Time.now.year - 30, :end_year => Time.now.year} %>
                   <%# select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
                 </div>
               </li>
@@ -91,7 +91,7 @@
         <div class="report-spinner" id="spinView"></div>
 
         <article class="mod-content-article">
-          <h1 class="report-title"><textarea placeholder="Untitled report"></textarea></h1>
+          <h1 class="report-title"><textarea placeholder="Type your title"></textarea></h1>
           <div id="totalsView">
             <div class="mod-report mod-report-intro">
               <p>Start applying some filters to generate a report.</p>

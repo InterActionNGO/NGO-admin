@@ -26,6 +26,7 @@ define([
           tickLength: 0
         },
         yAxis: {
+          allowDecimals: false,
           title: {
             text: null
           },
@@ -48,7 +49,8 @@ define([
         chart: {
           type: 'column',
           spacingLeft: 0,
-          spacingRight: 0
+          spacingRight: 0,
+          height: 600
         },
         title: {
           text: null
@@ -65,21 +67,28 @@ define([
           }
         },
         legend: {
+          useHTML: true,
           width: 200,
           itemWidth: 200,
           itemDistance: 0,
           itemMarginBottom: 10,
           itemStyle: {
             width: 175
+          },
+          labelFormatter: function() {
+            var value = (Number(this.yData[0]) > 999) ? Number(this.yData[0]).toCommas() : this.yData[0];
+            return this.name + ' (' + value + ')';
           }
         },
         yAxis: {
+          allowDecimals: false,
           title: {
             text: null
           },
           lineWidth: 1,
           lineColor: '#989898',
-          gridLineWidth: 0
+          gridLineWidth: 0,
+          minTickInterval: 1
         },
         xAxis: {
           labels: {
@@ -95,6 +104,7 @@ define([
       map: {
         center: [0, 0],
         zoom: 11,
+        maxZoom: 7,
         dragging: false,
         boxZoom: false,
         scrollWheelZoom: false,
@@ -114,12 +124,15 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      this.map = {};
+      this.layer = {};
       Backbone.Events.on('results:empty', this.empty, this);
       this.model.on('change', this.render, this);
     },
 
     render: function() {
       this.data = this.model.processData().toJSON();
+
       this.$el.html(this.template(this.data));
 
       $('#modReportsTabs').tabs();
@@ -151,7 +164,10 @@ define([
     },
 
     setProjectsChart: function() {
-      var options = _.extend(this.options.areaChart, {
+      var projectOptions = _.extend({}, this.options.areaChart, {
+        title: {
+          text: 'NGO Aid Map Project Number Over Time'
+        },
         series: [{
           name: 'Inactive projects',
           data: this.data.projects_disable_series,
@@ -163,163 +179,51 @@ define([
         }]
       });
 
-      $('#projectChart').highcharts(options);
+      var organizationOption = _.extend({}, this.options.areaChart, {
+        title: {
+          text: 'Active Organizations Over Time'
+        },
+        series: [{
+          name: 'Organizations',
+          data: this.data.organizations_series,
+          color: '#006C8D'
+        }]
+      });
+
+      $('#projectChart').highcharts(projectOptions);
+      $('#organizationChart').highcharts(organizationOption);
     },
 
     donorsCharts: function() {
-      var self = this;
+      this.setHighchart('donorsByProjectsChart', this.data.donors_by_projects);
+      this.setHighchart('donorsByOrganizationsChart', this.data.donors_by_organizations);
+      this.setHighchart('donorsByCountriesChart', this.data.donors_by_countries);
 
-      $('#donorsByProjectsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.donors_by_projects
-      }));
-
-      $('#donorsByOrganizationsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.donors_by_organizations
-      }));
-
-      $('#donorsByCountriesChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.donors_by_countries
-      }));
-
-      function setDonorsLocations(layer) {
-        if (self.donorsMap) {
-          self.donorsMap.remove();
-        }
-        self.donorsMap = self.setMap('reportDonorsMap');
-        self.donorsLayer = self.setLayer(self.donorsMap, layer);
-      }
-
-      $('#reportDonorsLocations').find('.mod-report-locations-header a').on('click', function(e) {
-        e.preventDefault();
-        var $el = $(e.currentTarget);
-        var $parent = $el.closest('.mod-report-locations-header');
-
-        $parent.find('.current').text($el.text());
-
-        setDonorsLocations($el.data('layer'));
-      });
-
-      setDonorsLocations('donors_by_projects');
+      this.setLocationsMap('reportDonorsMap', 'reportDonorsLocations', 'donors_by_projects');
     },
 
     organizationsCharts: function() {
-      var self = this;
+      this.setHighchart('organizationsByProjectsChart', this.data.organizations_by_projects);
+      this.setHighchart('organizationsByCountriesChart', this.data.organizations_by_countries);
+      this.setHighchart('organizationsByBudgetChart', this.data.organizations_by_bugdet);
 
-      $('#organizationsByProjectsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.organizations_by_projects
-      }));
-
-      $('#organizationsByCountriesChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.organizations_by_countries
-      }));
-
-      $('#organizationsByBudgetChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.organizations_by_bugdet
-      }));
-
-      if (this.organizationsMap) {
-        this.organizationsMap.remove();
-      }
-
-      function setOrganizationsLocations(layer) {
-        if (self.organizationsMap) {
-          self.organizationsMap.remove();
-        }
-        self.organizationsMap = self.setMap('reportOrganizationsMap');
-        self.organizationsLayer = self.setLayer(self.organizationsMap, layer);
-      }
-
-      $('#reportOrganizationsLocations').find('.mod-report-locations-header a').on('click', function(e) {
-        e.preventDefault();
-        var $el = $(e.currentTarget);
-        var $parent = $el.closest('.mod-report-locations-header');
-
-        $parent.find('.current').text($el.text());
-
-        setOrganizationsLocations($el.data('layer'));
-      });
-
-      setOrganizationsLocations('organizations_by_projects');
+      this.setLocationsMap('reportOrganizationsMap', 'reportOrganizationsLocations', 'organizations_by_projects');
     },
 
     countriesCharts: function() {
-      var self = this;
+      this.setHighchart('countriesByProjectsChart', this.data.countries_by_donors);
+      this.setHighchart('countriesByOrganizationsChart', this.data.countries_by_organizations);
+      this.setHighchart('countriesByDonorsChart', this.data.countries_by_projects);
 
-      $('#countriesByProjectsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.countries_by_donors
-      }));
-
-      $('#countriesByOrganizationsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.countries_by_organizations
-      }));
-
-      $('#countriesByDonorsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.countries_by_projects
-      }));
-
-      if (this.countriesMap) {
-        this.countriesMap.remove();
-      }
-
-      function setCountriesLocations(layer) {
-        if (self.countriesMap) {
-          self.countriesMap.remove();
-        }
-        self.countriesMap = self.setMap('reportCountriesMap');
-        self.countriesLayer = self.setLayer(self.countriesMap, layer);
-      }
-
-      $('#reportCountriesLocations').find('.mod-report-locations-header a').on('click', function(e) {
-        e.preventDefault();
-        var $el = $(e.currentTarget);
-        var $parent = $el.closest('.mod-report-locations-header');
-
-        $parent.find('.current').text($el.text());
-
-        setCountriesLocations($el.data('layer'));
-      });
-
-      setCountriesLocations('countries_by_donors');
+      this.setLocationsMap('reportCountriesMap', 'reportCountriesLocations', 'countries_by_donors');
     },
 
     sectorsCharts: function() {
-      var self = this;
+      this.setHighchart('sectorsByProjectsChart', this.data.sectors_by_projects);
+      this.setHighchart('sectorsByOrganizationsChart', this.data.sectors_by_organizations);
+      this.setHighchart('sectorsByDonorsChart', this.data.sectors_by_donors);
 
-      $('#sectorsByProjectsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.sectors_by_projects
-      }));
-
-      $('#sectorsByOrganizationsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.sectors_by_organizations
-      }));
-
-      $('#sectorsByDonorsChart').highcharts(_.extend(this.options.columnChart, {
-        series: this.data.sectors_by_donors
-      }));
-
-      if (this.sectorsMap) {
-        this.sectorsMap.remove();
-      }
-
-      function setSectorsLocations(layer) {
-        if (self.sectorsMap) {
-          self.sectorsMap.remove();
-        }
-        self.sectorsMap = self.setMap('reportSectorsMap');
-        self.sectorsLayer = self.setLayer(self.sectorsMap, layer);
-      }
-
-      $('#reportSectorsLocations').find('.mod-report-locations-header a').on('click', function(e) {
-        e.preventDefault();
-        var $el = $(e.currentTarget);
-        var $parent = $el.closest('.mod-report-locations-header');
-
-        $parent.find('.current').text($el.text());
-
-        setSectorsLocations($el.data('layer'));
-      });
-
-      setSectorsLocations('sectors_by_projects');
+      this.setLocationsMap('reportSectorsMap', 'reportSectorsLocations', 'sectors_by_projects');
     },
 
     printReport: function() {
@@ -330,16 +234,39 @@ define([
       //
     },
 
-    setMap: function(el) {
-      var map = L.map(el, this.options.map);
+    setLocationsMap: function(el, target, layer) {
+      var self = this;
 
-      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+      this.map[target] = L.map(el, this.options.map);
 
-      return map;
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(this.map[target]);
+
+      $('#' + target).find('.mod-report-locations-header a').on('click', function(e) {
+        e.preventDefault();
+        var $el = $(e.currentTarget);
+        var $parent = $el.closest('.mod-report-locations-header');
+
+        $parent.find('.current').text($el.text());
+
+        self.setLayer(self.map[target], target, $el.data('layer'));
+      });
+
+      if (this.data[layer].length > 0) {
+        this.setLayer(this.map[target], target, layer);
+      } else {
+        $('#' + target).remove();
+      }
+
+      return this.map[target];
     },
 
-    setLayer: function(map, layerType) {
+    setLayer: function(map, target, layerType) {
+      if (this.layer[target]) {
+        this.map[target].removeLayer(this.layer[target]);
+      }
+
       var locations = this.getGeoJSON(this.data[layerType]);
+      var bounds;
 
       var layer = L.geoJson(locations, {
         pointToLayer: function(feature, latlng) {
@@ -350,22 +277,44 @@ define([
           fsize = (fsize > 19) ? 19 : fsize;
 
           var marker = L.marker(latlng, {
+            riseOnHover: true,
             icon: L.divIcon({
               iconSize: [size, size],
               iconAnchor: [size/2, size/2],
               className: 'report-marker',
-              html: '<span style="line-height: ' + size +'px; font-size: ' + fsize + 'px">'+ feature.properties.projects + '</span>',
-              riseOnHover: true
+              html: '<span style="line-height: ' + size +'px; font-size: ' + fsize + 'px">'+ feature.properties.projects + '</span>'
             })
           });
           return marker;
         }
       });
 
+      bounds = layer.getBounds();
+
       map.addLayer(layer);
-      map.fitBounds(layer.getBounds());
+
+      if (bounds.isValid()) {
+        map.fitBounds(layer.getBounds());
+      }
+
+      this.layer[target] = layer;
 
       return layer;
+    },
+
+    setHighchart: function(target, data) {
+      var len = data.length, el = $('#' + target);
+
+      if (len > 0) {
+        el.highcharts(_.extend({}, this.options.columnChart, {
+          chart: _.extend({}, this.options.columnChart.chart, {
+            height: (data.length > 3) ? 600 : 250
+          }),
+          series: data
+        }));
+      } else {
+        el.closest('.mod-report-grid-3').remove();
+      }
     },
 
     getGeoJSON: function(data) {
