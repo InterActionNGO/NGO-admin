@@ -122,7 +122,7 @@ require([
   };
 
   function sectionTitle() {
-    var $title = $('.section-title');
+    var $title = $('.mod-content-article').find('h1');
 
     if ($title.text().length > 50) {
       $title.css('font-size', '36px');
