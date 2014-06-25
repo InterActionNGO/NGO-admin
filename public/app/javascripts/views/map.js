@@ -99,7 +99,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     };
 
     function IOMMarker(info, diameter, classname, map) {
-
       var isRegion = (info.name || info.region_name);
 
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
@@ -123,6 +122,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         this.classname = 'marker-project-bubble is-marker-region';
         this.height_ = 20;
         this.width_ = 20;
+      } else if (this.classname === 'marker-bubble' && !info.code) {
+        this.classname = 'marker-bubble is-marker-region';
       }
 
       this.setMap(map);
@@ -169,7 +170,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
               count.style.margin = '-9px 0 0 0px';
               count.style.font = 'normal 18px Arial';
             }
-            count.style.color = 'white';
             $(count).text(this.count);
             div.appendChild(count);
           }
@@ -197,7 +197,6 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
               count.style.margin = '-9px 0 0 0px';
               count.style.font = 'normal 18px Arial';
             }
-            count.style.color = 'white';
             $(count).text(this.count);
             div.appendChild(count);
           }
