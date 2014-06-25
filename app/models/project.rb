@@ -1058,8 +1058,8 @@ SQL
                     self.regions << region unless self.regions.include?(region)
                 end
               end
-              # After check presence of the regions, add then the country
-              if all_regions_exist
+              # After check presence of the regions, add then the country (also if no regions present)
+              if all_regions_exist || !regions.present?
                 self.countries << country unless self.countries.include?(country)
               end
             end
@@ -1170,11 +1170,19 @@ SQL
     organizations = params[:organization] if params[:organization]
     form_query = "%" + params[:q].downcase.strip + "%" if params[:q]
 
-    # Data filtering
-    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query).select(["projects.id",
-      "projects.name","projects.budget","projects.start_date","projects.end_date",
-      "(end_date >= current_date) as active"])
-        #.group('user_profiles.id').order('name ASC')
+    projects_select = <<-SQL
+      SELECT  id, name, budget, start_date, end_date, primary_organization_id, end_date > '2014-06-17' as active
+      FROM projects
+      WHERE ( (start_date <= '#{start_date}' AND end_date >='#{start_date}') OR (start_date>='#{start_date}' AND end_date <='#{end_date}') OR (start_date<='#{end_date}' AND end_date>='#{end_date}') )
+        AND lower(trim(name)) like '%#{form_query}%'
+       GROUP BY id
+       ORDER BY name ASC
+    SQL
+
+    @projects = Project.where("start_date <= ?", end_date).where("end_date >= ?",start_date).where("lower(trim(projects.name)) like ?", form_query)
+
+    #@projects = Project.find_by_sql(projects_select)
+    #@projects = ActiveRecord::Base.connection.execute(projects_select)
 
     # COUNTRIES (if not All of them selected)
     if ( params[:country] && !params[:country].include?('All') )
@@ -1211,6 +1219,10 @@ SQL
         @projects = @projects.sectors_name_not_in(sectors)
       end
     end
+
+    @projects = @projects.select(["projects.id","projects.name","projects.budget","projects.start_date","projects.end_date","(end_date >= current_date) as active"])
+
+    #p "===========  PROJECTS ============ " + @projects.to_sql.to_s.gsub("\"","")
 
     @data ||= {}
     @totals ||= {}
@@ -1266,6 +1278,17 @@ SQL
       @data[:results][:totals][:donors] = 0
       @data[:results][:totals][:projects] = 0
     end
+
+    # Returned to Frontend to be printed on human readable format
+    @data[:filters] = {}
+    @data[:filters][:start_date] = start_date
+    @data[:filters][:end_date] = end_date
+    @data[:filters][:countries] = countries
+    @data[:filters][:donors] = donors
+    @data[:filters][:sectors] = sectors
+    @data[:filters][:organizations] = organizations
+    @data[:filters][:search_word] = params[:q]
+
     @data
   end
 
@@ -1427,29 +1450,28 @@ SQL
     base_select = <<-SQL
       WITH t AS (
         SELECT p.id AS project_id,  p.name AS project_name, p.budget as project_budget,
-               d.id AS donor_id,   d.name AS donor_name,
+               CASE WHEN d.id is null THEN '0' ELSE  d.id END donor_id,
+               CASE WHEN d.id is null THEN 'UNKNOWN' ELSE d.name END donor_name,
                s.id AS sector_id,  s.name AS sector_name,
                c.id AS country_id, c.name AS country_name,
                o.id AS organization_id, o.name AS organization_name,
                c.center_lat AS lat, c.center_lon AS lon
-         FROM donors d, sectors s, projects p, organizations o, projects_sectors ps, donations pd, countries_projects cp, countries c
-        WHERE d.id = pd.donor_id
-          AND p.id = pd.project_id
-          AND s.id = ps.sector_id
-          AND p.id = ps.project_id
-          AND c.id = cp.country_id
-          AND p.id = cp.project_id
-          AND o.id = o.id
-          AND o.id = p.primary_organization_id
-          AND p.start_date >= '#{start_date}'::date
-          AND p.end_date <= '#{end_date}'::date
+        FROM projects p
+               INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+               LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+               LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+               LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+               INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+               INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+               INNER JOIN countries c ON (c.id = cp.country_id)
+        WHERE p.start_date <= '#{end_date}'::date
+          AND p.end_date >= '#{start_date}'::date
           #{active_projects}
           #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-          GROUP BY p.id, o.id, s.id, d.id, c.id
+        GROUP BY p.id, o.id, s.id, d.id, c.id
+
       )
     SQL
-
-    p base_select
 
     @data = @data || {}
     @data[:bar_chart] = {}

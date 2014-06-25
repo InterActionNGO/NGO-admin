@@ -6,6 +6,10 @@ body {
   font-size: 16px;
   color: $color-3;
   text-rendering: optimizeLegibility;
+
+  &.embed-page {
+    min-width: 0;
+  }
 }
 
 h1, h2, h3 {
@@ -65,39 +69,18 @@ h1 {
   font-size: 48px;
   font-weight: lighter;
 
-  .about &,
-  .purpose &,
-  .getting-on-the-map &,
-  .staff-list &,
-  .contact-us &,
-  .of-interest &,
-  .highlights & { color: $color-8;}
-
-  .data &,
-  .top-things-you-should-know-about-the-data &,
-  .data-guidance &,
-  .analysis &  { color: $color-1;}
-
-  .history & { display: none;}
-
+  .section-data & { color: $color-1;}
+  .section-about & { color: $color-8;}
+  .linos-history & { display: none;}
 }
 h2 {
   margin-bottom: 10px;
   font-size: 36px;
   font-weight: lighter;
   text-transform: capitalize;
-  .about &,
-  .purpose &,
-  .getting-on-the-map &,
-  .staff-list &,
-  .contact-us &,
-  .of-interest &,
-  .highlights &  { color: $color-8;}
 
-  .data &,
-  .top-things-you-should-know-about-the-data &,
-  .data-guidance &,
-  .analysis &   { color: $color-1;}
+  .section-data & { color: $color-1;}
+  .section-about & { color: $color-8;}
 }
 h3 {
   margin-bottom: 20px;

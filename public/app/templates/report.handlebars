@@ -1,10 +1,23 @@
-<!-- <div class="applied-filters">
+<div class="mod-applied-filters">
   <p>Filters applied:</p>
-  <p><strong>Organizations:</strong>Action Contre la Faim - ACF International, Agency for Technical Cooperation and Development (ACTED), CARE, IFRC/National Societies</p>
-  <p><strong>Donors:</strong>Action Contre la Faim - ACF International, African Rescue Committee, American Red Cross, Ann Ford</p>
-  <p><strong>Countries:</strong>Barbados, Belize, Bolivia, Burkina Faso, Burundi, Central African Rep., Chad</p>
-  <p><strong>From:</strong>1990 - January / To: All years - All months</p>
-</div> -->
+  {{#if filters.organizations}}
+    <p><strong>Organizations</strong>: {{starray filters.organizations}}</p>
+  {{/if}}
+
+  {{#if filters.countries}}
+    <p><strong>Countries</strong>: {{starray filters.countries}}</p>
+  {{/if}}
+
+  {{#if filters.sectors}}
+    <p><strong>Sectors</strong>: {{starray filters.sectors}}</p>
+  {{/if}}
+
+  {{#if filters.donors}}
+    <p><strong>Donors</strong>: {{starray filters.donors}}</p>
+  {{/if}}
+
+  <p><strong>From</strong>: {{filters.start_date}} / <strong>To</strong>: {{filters.end_date}}</p>
+</div>
 
 <div class="mod-report mod-report-summary">
   <table>
@@ -45,19 +58,19 @@
 <div class="mod-report">
   <div id="modReportsTabs">
     <ul>
-      <li><a href="#tab1">NGO Aid Map Project Number Over Time</a></li>
-      <li><a href="#tab2">Active Organizations Over Time</a></li>
+      <li><a href="#projectTab">NGO Aid Map Project Number Over Time</a></li>
+      <li><a href="#organizationTab">Active Organizations Over Time</a></li>
     </ul>
-    <div id="tab1">
+    <div id="projectTab">
       <div class="mod-report-line-chart" id="projectChart"></div>
     </div>
-    <div id="tab1">
-      <div class="mod-report-line-chart"></div>
+    <div id="organizationTab">
+      <div class="mod-report-line-chart" id="organizationChart"></div>
     </div>
   </div>
 </div>
 
-<div class="mod-report">
+<div class="mod-report is-break-before">
   <h2>Donors snapshot</h2>
   <p>A total of {{totals.donors}} found donors, supporting {{totals.projects}} projects by {{totals.organizations}} organizations in {{totals.countries}} countries across {{totals.sectors}} sectors.</p>
   <div class="row">
@@ -94,7 +107,7 @@
   </div>
 </div>
 
-<div class="mod-report">
+<div class="mod-report is-break-before">
   <h2>Organizations snapshot</h2>
   <p>A total of {{totals.organizations}} found organizations, supporting {{totals.projects}} projects by {{totals.donors}} donors in {{totals.countries}} countries across {{totals.sectors}} sectors.</p>
   <div class="row">
@@ -131,7 +144,7 @@
   </div>
 </div>
 
-<div class="mod-report">
+<div class="mod-report is-break-before">
   <h2>Countries snapshot</h2>
   <p>A total of {{totals.countries}} found countries, with {{totals.projects}} projects by {{totals.organizations}} organizations across {{totals.sectors}} sectors.</p>
   <div class="row">
@@ -168,7 +181,7 @@
   </div>
 </div>
 
-<div class="mod-report">
+<div class="mod-report is-break-before">
   <h2>Sectors snapshot</h2>
   <p>A total of {{totals.sectors}} found sectors, supporting {{totals.projects}} projects by {{totals.donors}} donors and {{totals.organizations}} organizations in {{totals.countries}} countries.</p>
   <div class="row">

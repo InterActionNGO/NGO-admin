@@ -23,6 +23,7 @@ div.right {
   width: auto; }
 
 a {
+  display: inline-block;
   text-decoration: none; }
   a:focus {
     outline: none; }
@@ -38,7 +39,7 @@ ul {
 
 label strong {
   font: normal 14px Georgia;
-  color: #E93E3F; }
+  color: #c15022; }
 
 textarea:focus {
   outline: none; }
@@ -49,7 +50,13 @@ input[type="text"], textarea {
 
 /*FONT FACE*/
 @font-face {
-  font-family: 'Museo Sans';
+  font-family: "Akzidenz";
+  src: url("/app/fonts/akzidenz/12_akzidenz_grotesk_roman___05003-webfont.eot");
+  src: local("☺"), url("/app/fonts/akzidenz/12_akzidenz_grotesk_roman___05003-webfont.woff") format("woff"), url("/app/fonts/akzidenz/12_akzidenz_grotesk_roman___05003-webfont.ttf") format("truetype"), url("/app/fonts/akzidenz/12_akzidenz_grotesk_roman___05003-webfont.svg") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "Museo Sans";
   src: url("/app/fonts/museosans_500-webfont.eot");
   src: local("☺"), url("/app/fonts/museosans_500-webfont.woff") format("woff"), url("/app/fonts/museosans_500-webfont.ttf") format("truetype"), url("/app/fonts/museosans_500-webfont.svg#webfontX97tj7j1") format("svg");
   font-weight: normal;
@@ -86,7 +93,7 @@ div.field {
     background: url("/app/images/backoffice/backgrounds/flash_notice.png") no-repeat scroll top left;
     text-align: center; }
     .flash .notice a {
-      color: #E93E3F;
+      color: #c15022;
       text-decoration: underline; }
 
 /*ERROR MESSAGES*/
@@ -163,7 +170,7 @@ span.simple_field_error {
 /* LAYOUT */
 div.main_layout {
   margin: 0 auto;
-  width: 942px; }
+  width: 942px;}
   div.main_layout p.link_to_back {
     background: url("/app/images/backoffice/common/red_arrow.png") no-repeat 0 3px;
     width: auto;
@@ -182,7 +189,8 @@ div.main_layout {
   div.main_layout div.block {
     float: left;
     width: 942px;
-    margin: 40px 0 0 0; }
+    margin: 40px auto;
+     }
     div.main_layout div.block div.top {
       float: left;
       width: 942px;
@@ -192,8 +200,12 @@ div.main_layout {
     div.main_layout div.block div.med {
       float: left;
       width: 880px;
+
       padding: 16px 31px 28px;
       background: url("/app/images/backoffice/backgrounds/mid_long.png") repeat-y center 0; }
+      div.main_layout div.block div.main_layout div.block div.med {
+        min-height: 600px;
+      }
 div.med div.header {
   width: 100%;
   overflow: hidden;
@@ -217,11 +229,11 @@ div.med div.header {
     div.med div.header span p {
       display: inline-block;
       zoom: 1;
-      *display: inline;
+      display: inline;
       vertical-align: top;
       width: auto;
       padding: 0 25px 0 0;
-      font: normal 27px "Museo Sans";
+      font: normal 27px "Akzidenz";
       color: #333333; }
       div.med div.header span p em {
         padding: 0 0 0 3px;
@@ -276,7 +288,10 @@ div.add_new {
   height: 98px;
   padding: 5px;
   margin: 20px 0 0 5px;
-  background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0; }
+  background: url("/app/images/backoffice/dashboard/add_new_bkg.png") no-repeat center 0;}
+  div.add_new:hover {
+    background-color: #963e1a;
+  }
   div.add_new a {
     float: left;
     width: 922px;
@@ -285,8 +300,8 @@ div.add_new {
     margin: 0px;
     background: url("/app/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;
     text-align: center;
-    font: normal 27px "Museo Sans",Arial;
-    color: white; }
+    font: normal 27px "Akzidenz",Arial;
+    color: #FFF; }
     div.add_new a:hover {
       background-position: 0 -98px; }
     div.add_new a strong {
@@ -299,7 +314,7 @@ div.block div.med div.right {
   position: relative;
   float: right;
   width: 284px;
-  /*min-height:420px;*/ }
+  min-height:600px }
   div.block div.med div.right ul {
     float: left;
     width: 230px;
@@ -322,21 +337,27 @@ div.block div.med div.right {
       div.block div.med div.right ul li a {
         float: left;
         font: bold 15px Arial;
-        color: #E93E3F;
+        color: #c15022;
         padding: 0 0 0 20px; }
       div.block div.med div.right ul li p {
         float: left;
         margin: 2px 0 0 7px;
         padding: 0 0 0 5px;
-        background: url("/app/images/backoffice/common/amount_left.png") no-repeat 0 0; }
+        /*background: url("/app/images/backoffice/common/amount_left.png") no-repeat 0 0;*/ }
         div.block div.med div.right ul li p span {
           float: left;
-          padding: 1px 7px 1px 2px;
+          padding: 2px 6px;
           height: 12px;
           line-height: 12px;
-          background: url("/app/images/backoffice/common/amount_right.png") no-repeat right 0;
+          background-color: #c15022;
+          border-radius: 50%;
+          text-align: center;
+          /*background: url("/app/images/backoffice/common/amount_right.png") no-repeat right 0;*/
           font: bold 11px Arial;
           color: white; }
+          div.block div.med div.right ul li p span:hover {
+            background-color: #000;
+          }
       div.block div.med div.right ul li.selected a {
         color: #333333; }
       div.block div.med div.right ul li.selected p {
@@ -374,7 +395,7 @@ div.block div.med div.right {
       div.block div.med div.right ul li:hover p {
         background-position: 0 -14px; }
       div.block div.med div.right ul li:hover span {
-        background-position: right -14px; }
+        background: #000; }
       div.block div.med div.right ul li.disabled:hover a {
         color: #cccccc;
         cursor: default; }
@@ -384,6 +405,9 @@ div.block div.med div.right {
         margin: 10px 0 0 0;
         padding: 15px 0 0 0;
         background: url("/app/images/backoffice/donors/menu_top.png") no-repeat right 0; }
+        div.block div.med div.right ul li.list_selected:hover .list{
+          background-color: #FFF;
+        }
         div.block div.med div.right ul li.list_selected div.bottom_selected {
           float: left;
           width: auto;
@@ -391,7 +415,7 @@ div.block div.med div.right {
           background: url("/app/images/backoffice/donors/menu_bottom.png") no-repeat right bottom; }
           div.block div.med div.right ul li.list_selected div.bottom_selected a.basic {
             width: 100%;
-            color: #E93E3F;
+            color: #c15022;
             padding: 0 0 0 20px; }
             div.block div.med div.right ul li.list_selected div.bottom_selected a.basic:hover {
               cursor: default; }
@@ -416,7 +440,7 @@ div.block div.med div.right {
               div.block div.med div.right ul li.list_selected div.bottom_selected span.list p.sublist {
                 margin: 5px 0 0 40px; }
         div.block div.med div.right ul li.list_selected:hover div.bottom_selected p a {
-          color: #E93E3F; }
+          color: #c15022; }
       div.block div.med div.right ul li.sublist_selected {
         float: left;
         width: auto;
@@ -429,7 +453,7 @@ div.block div.med div.right {
           padding: 0 14px 15px 0;
           background: url("/app/images/backoffice/donors/menu_bottom.png") no-repeat right bottom; }
           div.block div.med div.right ul li.sublist_selected div.bottom_selected a.basic {
-            color: #E93E3F;
+            color: #c15022;
             padding: 0 0 0 20px; }
             div.block div.med div.right ul li.sublist_selected div.bottom_selected a.basic:hover {
               cursor: default; }
@@ -449,7 +473,7 @@ div.block div.med div.right {
                 padding: 0 0 0 6px;
                 background: url("/app/images/backoffice/icons/red_square.jpg") no-repeat 0 7px !important;
                 font: normal 13px Arial;
-                color: #E93E3F; }
+                color: #c15022; }
               div.block div.med div.right ul li.sublist_selected div.bottom_selected span.list p.sublist {
                 margin: 5px 0 0 40px; }
               div.block div.med div.right ul li.sublist_selected div.bottom_selected span.list p.no.sublist {
@@ -464,9 +488,9 @@ div.block div.med div.right {
                 div.block div.med div.right ul li.sublist_selected div.bottom_selected span.list p a:hover {
                   text-decoration: underline; }
         div.block div.med div.right ul li.sublist_selected:hover div.bottom_selected p a {
-          color: #E93E3F; }
+          color: #c15022; }
       div.block div.med div.right ul li:hover div.bottom_selected p a {
-        color: #E93E3F; }
+        color: #c15022; }
   div.block div.med div.right div.export_import, div.block div.med div.right div.delete {
     position: absolute;
     display: none;
@@ -475,7 +499,7 @@ div.block div.med div.right {
     bottom: 145px; }
     div.block div.med div.right div.export_import h5 {
       float: left;
-      font: normal 17px "Museo Sans",Arial;
+      font: normal 17px "Akzidenz",Arial;
       color: #333333;
       letter-spacing: -1px; }
     div.block div.med div.right div.export_import p {
@@ -493,7 +517,7 @@ div.block div.med div.right {
       float: left;
       margin: 17px 0 0 0;
       font: normal 15px Arial;
-      color: #D8393D;
+      color: #c15022;
       text-decoration: underline; }
       div.block div.med div.right div.export_import a.link_hidden {
         position: relative; }
@@ -528,7 +552,7 @@ div.block div.med div.right {
     bottom: 0; }
     div.block div.med div.right div.delete h5 {
       float: left;
-      font: normal 17px "Museo Sans",Arial;
+      font: normal 17px "Akzidenz",Arial;
       color: #333333;
       letter-spacing: -1px; }
     div.block div.med div.right div.delete p {
@@ -541,7 +565,7 @@ div.block div.med div.right {
       float: left;
       margin: 17px 0 0 0;
       font: normal 15px Arial;
-      color: #D8393D;
+      color: #c15022;
       text-decoration: underline; }
       div.block div.med div.right div.delete a:hover {
         text-decoration: none; }
@@ -564,8 +588,8 @@ div#header {
         letter-spacing: -2px; }
         div#header div.inner_header div.top a sup {
           padding: 0 0 0 7px;
-          font: normal 15px "Museo Sans",Arial;
-          color: #E93E3F;
+          font: normal 15px "Akzidenz",Arial;
+          color: #c15022;
           letter-spacing: 0; }
     div#header div.inner_header div.bottom {
       position: relative;
@@ -598,7 +622,7 @@ div#header {
             height: 32px;
             padding: 10px 22px 0 18px;
             background: url("/app/images/backoffice/common/header_tab_right.png") no-repeat right 0;
-            font: normal 17px "Museo Sans", Arial;
+            font: normal 17px "Akzidenz", Arial;
             color: #DEE1E4;
             vertical-align: top; }
           div#header div.inner_header div.bottom ul.main_menu li a:hover {
@@ -623,7 +647,7 @@ div#header {
           padding: 0 11px;
           background: url("/app/images/backoffice/common/footer_list_separator.png") no-repeat right -2px; }
           div#header div.inner_header div.bottom ul.admin li a {
-            font: normal 13px "Museo Sans", "Arial";
+            font: normal 13px "Akzidenz", "Arial";
             color: #DEE1E4;
             text-decoration: underline; }
             div#header div.inner_header div.bottom ul.admin li a:hover {
@@ -656,8 +680,8 @@ div.login {
         letter-spacing: -2px; }
         div.login div.main h1 a sup {
           padding: 0 0 0 7px;
-          font: normal 15px "Museo Sans",Arial;
-          color: #E93E3F;
+          font: normal 15px "Akzidenz",Arial;
+          color: #c15022;
           letter-spacing: 0; }
     div.login div.main div.top_data {
       float: left;
@@ -721,7 +745,7 @@ div.login {
         background: url("/app/images/backoffice/login/submit_bkg.png") no-repeat 0 0;
         border: none;
         text-align: center;
-        font: normal 19px "Museo Sans","Arial";
+        font: normal 19px "Akzidenz","Arial";
         color: white;
         text-shadow: 0 1px #96272D; }
         div.login div.main div.bottom_data input:hover {
@@ -756,7 +780,7 @@ div.one {
     float: left;
     width: 100%;
     text-align: center;
-    font: normal 61px "Museo Sans",Arial;
+    font: normal 61px "Akzidenz",Arial;
     color: #333333;
     letter-spacing: -2px;
     line-height: 59px; }
@@ -764,8 +788,8 @@ div.one {
     float: left;
     width: 100%;
     text-align: center;
-    font: normal 15px "Museo Sans",Arial;
-    color: #EB4142; }
+    font: normal 15px "Akzidenz",Arial;
+    color: #c15022; }
     div.one a:hover {
       text-decoration: underline;
       cursor: pointer; }
@@ -773,14 +797,14 @@ div.one {
       outline: none; }
   div.one p.info {
     padding: 11px 0 0 0;
-    font: normal 15px "Museo Sans",Arial;
+    font: normal 15px "Akzidenz",Arial;
     color: #999999;
     letter-spacing: 0;
     line-height: 15px; }
 div.med h2 {
   float: left;
   width: 100%;
-  font: normal 27px "Museo Sans",Arial;
+  font: normal 27px "Akzidenz",Arial;
   color: #333333; }
 div.med h5 {
   float: left;
@@ -788,7 +812,7 @@ div.med h5 {
   font: normal 15px Arial;
   color: #666666; }
 div.med.information h2 a {
-  color: #EB4142;
+  color: #c15022;
   text-decoration: none; }
   div.med.information h2 a:hover {
     text-decoration: underline; }
@@ -808,7 +832,7 @@ div.med.information ul {
       text-transform: uppercase; }
     div.med.information ul li p {
       padding: 0;
-      font: normal 35px "Museo Sans",Arial;
+      font: normal 35px "Akzidenz",Arial;
       color: #333333;
       letter-spacing: -1px; }
 div.med.information div.info {
@@ -826,7 +850,8 @@ div.med.information div.info {
       color: #333333;
       font-weight: normal; }
     div.med.information div.info div.left p a {
-      color: #EB4142;
+      color: #c15022;
+      display: inline-block;
       text-decoration: none; }
       div.med.information div.info div.left p a:hover {
         text-decoration: underline; }
@@ -855,19 +880,19 @@ div.bottom_grey a {
   width: auto;
   margin: 20px 32px 0 0;
   font: normal 17px Arial;
-  color: #EB4142;
+  color: #c15022;
   text-decoration: none; }
   div.bottom_grey a:hover {
     text-decoration: underline; }
   div.bottom_grey a.published {
     float: left;
     margin: 20px 0 0 30px;
-    color: #99CC33;
+    color: #c15022;
     text-decoration: underline; }
   div.bottom_grey a.not_published {
     float: left;
     margin: 20px 0 0 30px;
-    color: #FF6600;
+    color: #444444;
     text-decoration: underline; }
 
 /*common right column*/
@@ -905,7 +930,7 @@ div.right.tips {
   div.right.tips div h3 {
     float: left;
     width: 100%;
-    font: normal 17px "Museo Sans","Arial";
+    font: normal 17px "Akzidenz","Arial";
     color: #333333; }
   div.right.tips div p {
     float: left;
@@ -944,7 +969,7 @@ div.block.edit div.med {
           color: #999999 !important; }
         div.block.edit div.med div.left div.image_container p a.remove {
           font: normal 15px Arial;
-          color: #D8393D;
+          color: #c15022;
           text-decoration: underline; }
           div.block.edit div.med div.left div.image_container p a.remove:hover {
             cursor: pointer; }
@@ -1013,7 +1038,7 @@ div.block.edit div.med {
       text-transform: uppercase; }
       div.block.edit div.med div.left label a.show_password_link {
         font: normal 13px Arial;
-        color: #D8393D;
+        color: #c15022;
         text-transform: none;
         text-decoration: underline; }
     div.block.edit div.med div.left div.common {
@@ -1024,7 +1049,7 @@ div.block.edit div.med {
         float: left;
         width: 100%;
         padding: 0 0 5px 0;
-        font: normal 17px "Museo Sans","Arial";
+        font: normal 17px "Akzidenz","Arial";
         color: #333333;
         text-transform: uppercase; }
     div.block.edit div.med div.left div.short_field {
@@ -1060,7 +1085,7 @@ div.block.edit div.med {
       width: auto;
       margin: 43px 0 0 10px;
       font: normal 14px Arial;
-      color: #D8393D;
+      color: #c15022;
       text-decoration: underline; }
       div.block.edit div.med div.left a.preview.no_margin {
         margin: 43px 0 0 0; }
@@ -1248,21 +1273,21 @@ div.block.donor_funded div.med {
       div.block.donor_funded div.med div.left ul li {
         float: left;
         width: 100%;
-        height: 71px;
+        height: 85px;
         border-bottom: 1px solid #CCCCCC; }
         div.block.donor_funded div.med div.left ul li.last {
           border: none; }
         div.block.donor_funded div.med div.left ul li span {
           float: left;
           width: 404px;
-          height: 71px; }
+          height: 85px; }
           div.block.donor_funded div.med div.left ul li span h3 {
             float: left;
             width: 100%;
             margin: 15px 0 0 0; }
             div.block.donor_funded div.med div.left ul li span h3 a {
               font: bold 17px Arial;
-              color: #E93E3F;
+              color: #c15022;
               text-decoration: none; }
               div.block.donor_funded div.med div.left ul li span h3 a:hover {
                 text-decoration: underline; }
@@ -1278,17 +1303,17 @@ div.block.donor_funded div.med {
         div.block.donor_funded div.med div.left ul li p {
           float: left;
           width: 148px;
-          height: 45px;
+          height: 59px;
           padding: 26px 10px 0 10px;
           margin: 0;
           background: #F7F7F7;
           text-align: center; }
           div.block.donor_funded div.med div.left ul li p.more {
             padding: 20px 10px 0 10px;
-            height: 51px; }
+            height: 65px; }
           div.block.donor_funded div.med div.left ul li p a {
             font: normal 14px Arial;
-            color: #E93E3F;
+            color: #c15022;
             text-decoration: none; }
             div.block.donor_funded div.med div.left ul li p a:hover {
               text-decoration: underline; }
@@ -1306,14 +1331,14 @@ div.block.donor_funded div.bottom_projects_org {
       float: left;
       padding: 20px 10px 7px;
       background: url("/app/images/backoffice/donors/page_selected.jpg") no-repeat center bottom;
-      font: normal 15px "Museo Sans",Arial;
+      font: normal 15px "Akzidenz",Arial;
       color: #333333; }
     div.block.donor_funded div.bottom_projects_org div.pagination a {
       float: left;
       margin: 0;
       padding: 20px 10px 7px 10px;
-      font: normal 15px "Museo Sans",Arial;
-      color: #E93E3F;
+      font: normal 15px "Akzidenz",Arial;
+      color: #c15022;
       line-height: 15px;
       text-transform: uppercase; }
       div.block.donor_funded div.bottom_projects_org div.pagination a:hover {
@@ -1383,11 +1408,11 @@ div.one_donor {
     float: left;
     margin: 20px 5px 0 0;
     width: auto;
-    font: normal 43px "Museo Sans",Arial;
+    font: normal 43px "Akzidenz",Arial;
     color: #333333; }
   div.one_donor label {
     float: left;
-    font: normal 15px "Museo Sans",Arial;
+    font: normal 15px "Akzidenz",Arial;
     color: #666666;
     margin: 24px 0 0 0;
     text-align: left; }
@@ -1398,7 +1423,7 @@ div.one_donor {
     margin: 7px 0 0 46px;
     padding: 4px 0 0 40px;
     background: url("/app/images/backoffice/donors/add_donor.png") no-repeat 0 0;
-    font: normal 19px "Museo Sans",Arial;
+    font: normal 19px "Akzidenz",Arial;
     color: white;
     text-shadow: 0 1px #5C7C31; }
     div.one_donor a:hover {
@@ -1410,7 +1435,7 @@ div.one_donor {
       margin: 3px 0 0 46px;
       padding: 6px 0 0 27px;
       background: url("/app/images/backoffice/projects/export_csv_btn.png") no-repeat 0 0;
-      font: normal 19px "Museo Sans",Arial;
+      font: normal 19px "Akzidenz",Arial;
       color: white;
       text-shadow: 0 1px #000000; }
       div.one_donor a.import_csv:hover {
@@ -1418,10 +1443,10 @@ div.one_donor {
 div.med.offices_list h2 a.remove, div.med.donors_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
-  border-bottom: 1px dotted #EB4142;
+  border-bottom: 1px dotted #c15022;
   background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
 div.med.offices_list h2 a.remove:hover, div.med.donors_list h2 a.remove:hover {
-  border-bottom: 1px solid #EB4142;
+  border-bottom: 1px solid #c15022;
   text-decoration: none; }
 div.med.offices_list ul, div.med.donors_list ul {
   float: left;
@@ -1449,10 +1474,10 @@ div.med.offices_list ul li h3 {
   width: 400px !important; }
   div.med.offices_list ul li h3 a {
     font: bold 17px Arial;
-    color: #E93E3F; }
+    color: #c15022; }
 div.med.donors_list ul li h3 a {
   font: bold 17px Arial;
-  color: #E93E3F; }
+  color: #c15022; }
 div.med.offices_list ul li h3 a:hover, div.med.donors_list ul li h3 a:hover {
   text-decoration: underline; }
 div.med.offices_list ul li p, div.med.donors_list ul li p {
@@ -1467,7 +1492,7 @@ div.med.offices_list ul li p, div.med.donors_list ul li p {
 div.med.offices_list ul li p a, div.med.donors_list ul li p a {
   padding: 0;
   font: normal 13px Arial;
-  color: #EB4142; }
+  color: #c15022; }
 div.med.offices_list ul li p a:hover, div.med.donors_list ul li p a:hover {
   text-decoration: underline; }
 div.med.offices_list ul li p.red, div.med.donors_list ul li p.red {
@@ -1490,7 +1515,7 @@ div.med div.no_results {
     font: normal 17px Arial;
     color: #666666; }
     div.med div.no_results p a {
-      color: #E93E3F;
+      color: #c15022;
       text-decoration: underline; }
       div.med div.no_results p a:hover {
         color: #7F2023; }
@@ -1503,14 +1528,14 @@ div.bottom_grey div.pagination {
     float: left;
     padding: 20px 10px 7px;
     background: url("/app/images/backoffice/donors/page_selected.jpg") no-repeat center bottom;
-    font: normal 15px "Museo Sans",Arial;
+    font: normal 15px "Akzidenz",Arial;
     color: #333333; }
   div.bottom_grey div.pagination a {
     float: left;
     margin: 0;
     padding: 20px 10px 7px 10px;
-    font: normal 15px "Museo Sans",Arial;
-    color: #E93E3F;
+    font: normal 15px "Akzidenz",Arial;
+    color: #c15022;
     line-height: 15px;
     text-transform: uppercase; }
     div.bottom_grey div.pagination a:hover {
@@ -1535,7 +1560,7 @@ div.block.edit div.med div.left div.specific_edit {
     width: 100%; }
   div.block.edit div.med div.left div.specific_edit h3 {
     float: left;
-    font: normal 17px "Museo Sans",Arial;
+    font: normal 17px "Akzidenz",Arial;
     color: #333333; }
   div.block.edit div.med div.left div.specific_edit p.paylock {
     float: right;
@@ -1551,7 +1576,7 @@ div.block.edit div.med div.left div.specific_edit {
       background-position: right -43px;
       color: #999999; }
     div.block.edit div.med div.left div.specific_edit p.paylock a {
-      color: #E93E3F;
+      color: #c15022;
       text-decoration: underline; }
       div.block.edit div.med div.left div.specific_edit p.paylock a:hover {
         color: #7F2023; }
@@ -1982,7 +2007,7 @@ div#manage_partners {
       background-position: 0 -12px; }
   div#manage_partners h3 {
     float: left;
-    font: normal 21px "Museo Sans",Arial;
+    font: normal 21px "Akzidenz",Arial;
     color: #333333; }
   div#manage_partners label {
     font: normal 11px Arial;
@@ -2392,11 +2417,11 @@ div.one_project {
     float: left;
     margin: 12px 5px 0 0;
     width: auto;
-    font: normal 43px "Museo Sans",Arial;
+    font: normal 43px "Akzidenz",Arial;
     color: #333333; }
   div.one_project label {
     float: left;
-    font: normal 15px "Museo Sans",Arial;
+    font: normal 15px "Akzidenz",Arial;
     color: #666666;
     margin: 15px 0 0 0;
     text-align: left; }
@@ -2408,7 +2433,7 @@ a.add_project {
   margin: 0 10px 0 0;
   padding: 6px 0 0 0;
   background: url("/app/images/backoffice/projects/green_new.png") no-repeat 0 0;
-  font: normal 19px "Museo Sans",Arial;
+  font: normal 19px "Akzidenz",Arial;
   color: white;
   text-shadow: 0 1px #5C7C31;
   text-align: center; }
@@ -2421,7 +2446,7 @@ a.import_csv {
   margin: 0;
   padding: 6px 0 0 0;
   background: url("/app/images/backoffice/projects/export_csv_btn.png") no-repeat 0 0;
-  font: normal 19px "Museo Sans",Arial;
+  font: normal 19px "Akzidenz",Arial;
   color: white;
   text-shadow: 0 1px #000000;
   text-align: center; }
@@ -2434,10 +2459,10 @@ a.import_csv {
 div.med.projects_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
-  border-bottom: 1px dotted #EB4142;
+  border-bottom: 1px dotted #c15022;
   background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
   div.med.projects_list h2 a.remove:hover {
-    border-bottom: 1px solid #EB4142;
+    border-bottom: 1px solid #c15022;
     text-decoration: none; }
 div.med.projects_list ul {
   float: left;
@@ -2456,7 +2481,7 @@ div.med .projects_list ul li.last {
   border: none; }
 div.med .projects_list ul li h3 a {
   font: bold 17px Arial;
-  color: #E93E3F; }
+  color: #c15022; }
   div.med .projects_list ul li h3 a:hover {
     text-decoration: underline; }
 div.med .projects_list ul li div.project_name {
@@ -2507,7 +2532,7 @@ div.med .projects_list div.no_results {
     font: normal 17px Arial;
     color: #666666; }
     div.med .projects_list div.no_results p a {
-      color: #E93E3F;
+      color: #c15022;
       text-decoration: underline; }
       div.med .projects_list div.no_results p a:hover {
         color: #7F2023; }
@@ -2521,7 +2546,7 @@ div.med .projects_list table {
     width: 100%; }
     div.med .projects_list table tr td {
       height: 110px;
-      padding: 0 10px;
+      padding: 10px;
       border-bottom: 1px solid #E5E5E5; }
       div.med .projects_list table tr td.center {
         text-align: center; }
@@ -2538,8 +2563,9 @@ div.med .projects_list table {
       font: normal 17px Arial;
       color: #666666; }
       div.med .projects_list table tr h3 a {
+        display: inline-block;
         font: bold 17px Arial;
-        color: #E93E3F; }
+        color: #c15022; }
         div.med .projects_list table tr h3 a:hover {
           text-decoration: underline; }
     div.med .projects_list table tr a.project_status {
@@ -2561,13 +2587,13 @@ div.med.projects_list ul li p {
   color: #666666;
   text-align: center; }
   div.med.projects_list ul li p.red {
-    color: #EB4142;
+    color: #c15022;
     width: 147px;
     margin: 0 0 0 9px; }
     div.med.projects_list ul li p.red a {
       padding: 0;
       font: normal 13px Arial;
-      color: #EB4142; }
+      color: #c15022; }
   div.med.projects_list ul li p.secondary {
     margin: 2px 0 0 0;
     padding: 0; }
@@ -2597,8 +2623,9 @@ div.block p.by {
   color: #666666; }
   div.block p.by a {
     width: auto;
+    display: inline-block;
     font: normal 15px Arial;
-    color: #E93E3F;
+    color: #c15022;
     text-decoration: none; }
     div.block p.by a:hover {
       text-decoration: underline; }
@@ -2860,7 +2887,7 @@ div.block.project_info div.med div.left form h3.section {
   float: left;
   margin: 30px 0 0 2px;
   width: 100%;
-  font: 500 17px "Museo Sans",Arial;
+  font: 500 17px "Akzidenz",Arial;
   color: #333333; }
 div.block.project_info div.med div.left form ul.dates {
   float: left;
@@ -3093,7 +3120,7 @@ div.block.project_info div.med div.left form div.cluster_options {
     background: url("/app/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
     width: 118px;
     height: 25px;
-    font: 500 15px "Museo Sans",Arial;
+    font: 500 15px "Akzidenz",Arial;
     color: #FFFFFF;
     text-shadow: 0 1px #6E8C30;
     text-align: center;
@@ -3158,7 +3185,7 @@ div.block.project_info div.med div.left form div.sector_options {
     background: url("/app/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
     width: 118px;
     height: 25px;
-    font: 500 15px "Museo Sans",Arial;
+    font: 500 15px "Akzidenz",Arial;
     color: #FFFFFF;
     text-shadow: 0 1px #6E8C30;
     text-align: center;
@@ -3197,7 +3224,7 @@ div.block.project_info div.med div.left form div.location_options.empty {
     background: url("/app/images/backoffice/projects/add_cluster_bttn.png") no-repeat 0 0;
     width: 118px;
     height: 25px;
-    font: 500 15px "Museo Sans",Arial;
+    font: 500 15px "Akzidenz",Arial;
     color: #FFFFFF;
     text-shadow: 0 1px #6E8C30;
     text-align: center;
@@ -3250,7 +3277,7 @@ div.region_window {
     float: left;
     width: 100%;
     padding: 0 0 10px 0;
-    font: normal 21px "Museo Sans",Arial;
+    font: normal 21px "Akzidenz",Arial;
     color: #333333; }
   div.region_window div a.close {
     position: absolute;
@@ -3375,7 +3402,7 @@ div.field_info {
       width: 100%;
       padding: 0 0 8px 0;
       margin: 10px 0 0 0;
-      font: normal 21px "Museo Sans",Arial;
+      font: normal 21px "Akzidenz",Arial;
       color: white;
       text-transform: none; }
     div.field_info div.field_text div.top a {
@@ -3416,9 +3443,21 @@ div.block.project_info div.med div.left form div.two_columns {
     width: 280px;
     height: 90px;
     z-index: 0; }
+
+
+
 div.block.project_info div.med div.left form input[type="submit"] {
+
   background: url("/app/images/backoffice/projects/save_changes_bttn.png") no-repeat 0 0;
-  font: 500 19px "Museo Sans",Arial;
+
+/*  position: relative;
+  height: 40px;
+  background-color: #c15022;
+  color: #fff;
+  font-size: 15px;
+  text-transform: uppercase;*/
+
+  font: 500 19px "Akzidenz",Arial;
   color: #FFFFFF;
   text-shadow: 0 1px #6E8C30;
   border: none;
@@ -3427,10 +3466,13 @@ div.block.project_info div.med div.left form input[type="submit"] {
   height: 32px;
   float: right;
   margin: 30px 10px 0 0;
-  /*position:absolute;
-  bottom:0;
-  right:0;
-   */ }
+}
+  div.block.project_info div.med div.left form input[type="submit"]:before {
+    content: 'Save changes';
+    display: block;
+    position: absolute;
+
+  }
   div.block.project_info div.med div.left form input[type="submit"]:hover {
     background-position: 0 -32px;
     cursor: pointer; }
@@ -3447,7 +3489,7 @@ div.map_window {
   div.map_window h3 {
     float: left;
     width: 100%;
-    font: normal 21px "Museo Sans",Arial;
+    font: normal 21px "Akzidenz",Arial;
     color: #333333; }
   div.map_window a.close {
     position: absolute;
@@ -3591,12 +3633,12 @@ div.block.donations_project div.med {
           margin: 22px 0 0 0; }
           div.block.donations_project div.med div.left ul.donations li div.name_box h3 a {
             font: bold 17px Arial;
-            color: #E93E3F; }
+            color: #c15022; }
         div.block.donations_project div.med div.left ul.donations li div.name_box span {
           color: #666666;
           font-size: 13px; }
           div.block.donations_project div.med div.left ul.donations li div.name_box span a {
-            color: #E93E3F; }
+            color: #c15022; }
         div.block.donations_project div.med div.left ul.donations li p {
           float: left;
           padding: 5px 0 0 0;
@@ -3606,7 +3648,7 @@ div.block.donations_project div.med {
     div.block.donations_project div.med div.left h4.total {
       float: left;
       margin: 25px 0 0 268px;
-      font: 500 17px "Museo Sans",Arial;
+      font: 500 17px "Akzidenz",Arial;
       color: #333333;
       width: 150px; }
     div.block.donations_project div.med div.left span.total_account {
@@ -3792,7 +3834,7 @@ div.block.donations_project div.med {
             font: normal 15px Arial;
             color: #333333; }
       div.block.donations_project div.med div.left form h4 {
-        font: normal 21px "Museo Sans",Arial;
+        font: normal 21px "Akzidenz",Arial;
         color: #333333;
         text-shadow: 0 1px white;
         margin: 22px 0 0 22px; }
@@ -3828,10 +3870,10 @@ div.block.donations_project div.bottom {
 div.med.ngos_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;
-  border-bottom: 1px dotted #EB4142;
+  border-bottom: 1px dotted #c15022;
   background: url("/app/images/backoffice/icons/red_x.png") no-repeat right 17px; }
   div.med.ngos_list h2 a.remove:hover {
-    border-bottom: 1px solid #EB4142;
+    border-bottom: 1px solid #c15022;
     text-decoration: none; }
 div.med.ngos_list ul {
   float: left;
@@ -3856,7 +3898,7 @@ div.med.ngos_list ul {
       padding: 27px 0; }
       div.med.ngos_list ul li h3 a {
         font: bold 17px Arial;
-        color: #E93E3F; }
+        color: #c15022; }
         div.med.ngos_list ul li h3 a:hover {
           text-decoration: underline; }
     div.med.ngos_list ul li p {
@@ -3877,7 +3919,7 @@ div.med.ngos_list ul {
       div.med.ngos_list ul li p.red {
         background: #f7f7f7; }
         div.med.ngos_list ul li p.red a {
-          color: #EB4142; }
+          color: #c15022; }
 div.med.ngos_list div.no_results {
   float: left;
   width: 100%;
@@ -3894,7 +3936,7 @@ div.med.ngos_list div.no_results {
     font: normal 17px Arial;
     color: #666666; }
     div.med.ngos_list div.no_results p a {
-      color: #E93E3F;
+      color: #c15022;
       text-decoration: underline; }
       div.med.ngos_list div.no_results p a:hover {
         color: #7F2023; }
@@ -3934,7 +3976,7 @@ div.block.resources div.med {
           margin: 15px 0 0 0; }
           div.block.resources div.med div.left ul li h3 a {
             font: bold 17px Arial;
-            color: #E93E3F; }
+            color: #c15022; }
         div.block.resources div.med div.left ul li p {
           float: left;
           padding: 5px 0 0 0;
@@ -4007,7 +4049,7 @@ div.block.resources div.med {
       margin: 20px 0 0 2px;
       background: url("/app/images/backoffice/common/green_form_bkg.png") no-repeat center center; }
       div.block.resources div.med div.left form h4 {
-        font: normal 21px "Museo Sans",Arial;
+        font: normal 21px "Akzidenz",Arial;
         color: #333333;
         text-shadow: 0 1px white; }
       div.block.resources div.med div.left form label {
@@ -4184,7 +4226,7 @@ div.block.media div.med {
             color: #999999; }
             div.block.media div.med div.left ul li div.med_media p a {
               font: normal 15px Arial;
-              color: #E93E3F;
+              color: #c15022;
               text-decoration: underline; }
               div.block.media div.med div.left ul li div.med_media p a:hover {
                 color: #7F2023; }
@@ -4232,7 +4274,7 @@ div.block.media div.med {
       div.block.media div.med div.left div.add_media h3 {
         float: left;
         width: auto;
-        font: normal 21px "Museo Sans",Arial;
+        font: normal 21px "Akzidenz",Arial;
         line-height: 21px;
         text-shadow: 0 1px white;
         color: #333333; }
@@ -4244,7 +4286,7 @@ div.block.media div.med {
         font: normal 15px Arial;
         color: #333333; }
         div.block.media div.med div.left div.add_media p a {
-          color: #E93E3F;
+          color: #c15022;
           text-decoration: underline; }
           div.block.media div.med div.left div.add_media p a:hover {
             color: #7F2023; }
@@ -4312,18 +4354,20 @@ div.steps_create_project {
     float: left;
     width: 932px;
     height: 7px;
-    background: url("/app/images/backoffice/sites/bkg_top_msg.png") no-repeat 0 0;
+    /*background: url("/app/images/backoffice/sites/bkg_top_msg.png") no-repeat 0 0;*/
     margin: 0; }
   div.steps_create_project div.middle {
     float: left;
     width: 932px;
     height: auto;
-    background: url("/app/images/backoffice/sites/bkg_middle_msg.png") repeat-y 0;
+    background-color: rgba(255,255,255, .9);
+    border-radius: 10px;
+    /*background: url("/app/images/backoffice/sites/bkg_middle_msg.png") repeat-y 0;*/
     margin: 0; }
     div.steps_create_project div.middle h1 {
       float: left;
       margin: 20px 0 0 30px;
-      font: 500 21px "Museo Sans",Arial;
+      font: 500 21px "Akzidenz",Arial;
       color: #333333;
       width: 626px; }
     div.steps_create_project div.middle ul.steps {
@@ -4337,31 +4381,33 @@ div.steps_create_project {
         height: 90px; }
         div.steps_create_project div.middle ul.steps li span.circle {
           float: left;
-          width: 29px;
-          height: 24px;
-          background: url("/app/images/backoffice/sites/circle_step.png") no-repeat 0 0;
-          font: 500 15px "Museo Sans",Arial;
+          width: 30px;
+          height: 30px;
+          background-color: #c15022;
+          border-radius: 50%;
+          /*background: url("/app/images/backoffice/sites/circle_step.png") no-repeat 0 0;*/
+          font: 500 15px "Akzidenz",Arial;
           color: white;
           text-align: center;
-          padding: 5px 0 0 0; }
+          line-height: 30px; }
         div.steps_create_project div.middle ul.steps li label {
           float: left;
           margin: 5px 0 0 12px;
-          font: 500 13px "Museo Sans",Arial;
+          font: 500 13px "Akzidenz",Arial;
           color: #333333;
           width: 240px;
           text-transform: uppercase; }
         div.steps_create_project div.middle ul.steps li p {
           float: left;
           font: normal 13px Arial;
-          color: #849064;
+          color: #333;
           width: 246px;
           margin: 7px 0 0 12px; }
   div.steps_create_project span.bottom {
     float: left;
     width: 932px;
     height: 7px;
-    background: url("/app/images/backoffice/sites/bkg_bottom_msg.png") no-repeat 0 0;
+    /*background: url("/app/images/backoffice/sites/bkg_bottom_msg.png") no-repeat 0 0;*/
     margin: 0; }
 div.block.site_info div.top {
   float: left;
@@ -4384,7 +4430,7 @@ div.block.site_info div.med {
       div.block.site_info div.med div.left p.by a {
         width: auto;
         font: normal 15px Arial;
-        color: #E93E3F;
+        color: #c15022;
         text-decoration: none; }
         div.block.site_info div.med div.left p.by a:hover {
           text-decoration: underline; }
@@ -4415,7 +4461,7 @@ div.block.site_info div.med {
         width: 100%; }
         div.block.site_info div.med div.left form p.title strong {
           font: normal 14px Georgia;
-          color: #E93E3F; }
+          color: #c15022; }
         div.block.site_info div.med div.left form p.title span.info {
           font: normal 13px Arial;
           color: #999999;
@@ -4506,7 +4552,7 @@ div.block.site_info div.med {
         float: left;
         margin: 35px 0 0 2px;
         width: 100%;
-        font: 500 17px "Museo Sans",Arial;
+        font: 500 17px "Akzidenz",Arial;
         color: #333333; }
       div.block.site_info div.med div.left form ul.geographic_options {
         float: left;
@@ -4787,7 +4833,7 @@ div.block.site_info div.med {
           color: #333333; }
       div.block.site_info div.med div.left form input[type="submit"] {
         background: url("/app/images/backoffice/projects/save_changes_bttn.png") no-repeat 0 0;
-        font: 500 19px "Museo Sans",Arial;
+        font: 500 19px "Akzidenz",Arial;
         color: #FFFFFF;
         text-shadow: 0 1px #6E8C30;
         border: none;
@@ -4848,7 +4894,7 @@ ul.pages {
         margin: 12px 0 0 0;
         font: bold 17px Arial !important; }
         ul.pages li div.head h3 a {
-          color: #E93E3F;
+          color: #c15022;
           text-align: left;
           font: bold 17px Arial !important; }
           ul.pages li div.head h3 a:hover {
@@ -4878,7 +4924,7 @@ ul.pages {
         ul.pages li div.body span a {
           float: left;
           font: normal 15px Arial;
-          color: #E93E3F;
+          color: #c15022;
           text-decoration: none; }
           ul.pages li div.body span a:hover {
             text-decoration: underline; }
@@ -5042,7 +5088,7 @@ div#modal_window {
         div#modal_window div.alert div.messages a.cancel {
           margin: 5px 12px 0 0;
           font: normal 15px Arial;
-          color: #E93E3F;
+          color: #c15022;
           text-decoration: underline; }
           div#modal_window div.alert div.messages a.cancel:hover {
             color: #7F2023;
@@ -5603,7 +5649,7 @@ div.block.activity span.combo_date {
     font: normal 17px Arial;
     color: #666666; }
     .changes_list div.no_results p a {
-      color: #E93E3F;
+      color: #c15022;
       text-decoration: underline; }
       .changes_list div.no_results p a:hover {
         color: #7F2023; }
@@ -5619,7 +5665,7 @@ div.med div.changes_list {
       width: 874px; }
     div.med div.changes_list div.change .summary {
       background-color: #e0edf1;
-      height: 47px;
+      /*height: 47px;*/
       margin: 0;
       padding: 10px 0 10px;
       clear: both; }
@@ -5686,7 +5732,8 @@ div.med div.changes_list {
         font-size: 17px;
         color: #666666; }
         div.med div.changes_list div.change .summary .title_by .title a {
-          color: #E93E3F; }
+          display: inline-block;
+          color: #c15022; }
           div.med div.changes_list div.change .summary .title_by .title a:hover {
             text-decoration: underline; }
       div.med div.changes_list div.change .summary .title_by .by {
@@ -5704,7 +5751,7 @@ div.med div.changes_list {
       width: 60px;
       padding: 5px;
       font-size: 13px;
-      position: relative; }
+      position: absolute; }
       div.med div.changes_list div.change .summary .more a {
         display: block;
         height: 100%;
@@ -5868,7 +5915,7 @@ div.med div.changes_list div.change.checked .detail {
   float: left;
   margin: 0 30px 0 32px !important; }
 .users div.block.edit div.med div.left .user a {
-  color: #E93E3F; }
+  color: #c15022; }
 .users div.block.edit div.med div.left .user .name {
   display: block;
   font-size: 17px;
@@ -5887,7 +5934,7 @@ div.med div.changes_list div.change.checked .detail {
   margin: 0;
   margin-top: -8px; }
 .users div.block.edit div.med div.left .user a {
-  color: #E93E3F; }
+  color: #c15022; }
 .users div.block.edit div.med div.left .user .name {
   display: block;
   font-size: 17px;
@@ -5913,7 +5960,7 @@ div.med div.changes_list div.change.checked .detail {
     height: 18px;
     margin: 0px 0 0 9px;
     background: url("/app/images/backoffice/projects/export_csv_btn.png") no-repeat 0 0;
-    font: normal 19px "Museo Sans",Arial;
+    font: normal 19px "Akzidenz",Arial;
     color: white;
     text-shadow: 0 1px #000000; }
   #uploader .qq-uploader .qq-drop-processing, #uploader .qq-uploader .qq-upload-list {
@@ -5924,7 +5971,7 @@ div.disable_user {
   left: 20px;
   bottom: 0; }
   div.disable_user h5 {
-    font: normal 17px "Museo Sans",Arial;
+    font: normal 17px "Akzidenz",Arial;
     color: #333333;
     letter-spacing: -1px; }
   div.disable_user p {
@@ -5935,5 +5982,5 @@ div.disable_user {
   div.disable_user a {
     margin: 17px 0 0 0;
     font: normal 15px Arial;
-    color: #D8393D;
+    color: #c15022;
     text-decoration: underline; }

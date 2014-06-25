@@ -37,6 +37,7 @@ after "deploy:update", "deploy:cleanup"
 desc "Restart Application"
 deploy.task :restart, :roles => [:app] do
   run "touch #{current_path}/tmp/restart.txt"
+  run "#{sudo} /etc/init.d/memcached force-reload"
 end
 
 desc "Migraciones"

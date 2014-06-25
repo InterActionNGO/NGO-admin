@@ -1,6 +1,6 @@
 .mod-map {
   position: relative;
-  min-height: 500px;
+  min-height: 400px;
   max-height: 670px;
 }
 
@@ -107,18 +107,36 @@
 .theme-1 {
   .marker-bubble, .marker-project-bubble {
     background-color: $color-2;
+    &.is-marker-region {
+      background-color: rgba($color-0, .6);
+    }
+  }
+  .marker-project-bubble.is-marker-region {
+    @include box-shadow(0 0 0 9px $color-2);
   }
 }
 
 .theme-2 {
   .marker-bubble, .marker-project-bubble {
     background-color: $color-1;
+    &.is-marker-region {
+      background-color: rgba($color-0, .6);
+    }
+  }
+  .marker-project-bubble.is-marker-region {
+    @include box-shadow(0 0 0 9px $color-1);
   }
 }
 
 .theme-3 {
   .marker-bubble, .marker-project-bubble {
     background-color: $color-9;
+    &.is-marker-region {
+      background-color: rgba($color-0, .6);
+    }
+  }
+  .marker-project-bubble.is-marker-region {
+    @include box-shadow(0 0 0 9px $color-9);
   }
 }
 
@@ -139,4 +157,17 @@
   // .gmnoprint {
   //   bottom: 60px !important;
   // }
+}
+
+
+.layout-embed-map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  #map {
+    background-color: #6ebcd5 !important;
+  }
 }
