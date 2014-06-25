@@ -26,6 +26,13 @@
     </div>
 	-->
 
+    <div class="field">
+      <label>FEATURED MAPS</label>
+      <span>
+         <%= f.check_box :featured %><p>Featured site</p>
+      </span>
+    </div>
+
     <%= f.label :theme %>
     <ul class="themes">
       <% Theme.all.each_with_index do |theme, i| %>
