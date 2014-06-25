@@ -250,7 +250,13 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
             var _top_hidden = document.createElement('div');
             _top_hidden.className = 'map-top-tooltip';
 
-            var locationName = (this.countryName) ? this.name + ', ' + this.countryName : this.name;
+            var locationName = this.name;
+
+            if (this.countryName && this.name) {
+              locationName = this.name + ', ' + this.countryName;
+            } else if (!locationName) {
+              locationName = this.countryName;
+            }
 
             $(_top_hidden).html('<strong>' + locationName + '</strong>');
 
