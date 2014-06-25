@@ -99,23 +99,31 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     };
 
     function IOMMarker(info, diameter, classname, map) {
+
+      var isRegion = (info.name || info.region_name);
+
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
       this.latlng_ = new google.maps.LatLng(parseFloat(info.lat), parseFloat(info.lon));
       this.url = info.url;
       this.count = info.count;
       this.total_in_region = info.total_in_region;
       //this.image = image;
-      this.classname = classname;
+
       this.map_ = map;
       this.name = info.name || info.region_name;
       this.countryName = info.country_name;
       this.diameter = diameter;
-
-
       this.offsetVertical_ = -(this.diameter / 2);
       this.offsetHorizontal_ = -(this.diameter / 2);
       this.height_ = this.diameter;
       this.width_ = this.diameter;
+      this.classname = classname;
+
+      if (this.classname === 'marker-project-bubble' && isRegion) {
+        this.classname = 'marker-project-bubble is-marker-region';
+        this.height_ = 20;
+        this.width_ = 20;
+      }
 
       this.setMap(map);
     }
@@ -129,21 +137,13 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
       var div = this.div_;
       if (!div) {
         div = this.div_ = document.createElement('div');
-        //div.style.border = 'none';
+
         div.className = this.classname;
         div.style.position = 'absolute';
         div.style.width = this.diameter + 'px';
         div.style.height = this.diameter + 'px';
         div.style.zIndex = 1;
         div.style.cursor = 'pointer';
-
-        //Marker image
-        // var marker_image = document.createElement('img');
-        // marker_image.style.position = 'relative';
-        // marker_image.style.width = '100%';
-        // marker_image.style.height = '100%';
-        // marker_image.src = this.image;
-        // div.appendChild(marker_image);
 
         try {
           if (show_regions_with_one_project) {
