@@ -1233,7 +1233,7 @@ SQL
     @data[:results] = {}
 
     # Add years ranges of activeness for report charts
-    @data[:results][:year_ranges] = {}
+    @data[:results][:projects_year_ranges] = {}
     @projects.each do |project|
       #add the range made an array
       @data[:results][:projects_year_ranges][project.id] = ((project.start_date.year..project.end_date.year).to_a)
