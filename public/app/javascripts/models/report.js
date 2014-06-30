@@ -26,9 +26,11 @@ define([
       }
 
       this.attributes.projects = _.map(this.attributes.projects, function(project) {
-        project.project.year = Number(moment(project.project.start_date).format('YYYY'));
-        project.project.active = (project.project.active !== 'f');
-        return project.project;
+        var p = project.project;
+        p.year = Number(moment(project.project.start_date).format('YYYY'));
+        p.active = (project.project.active !== 'f');
+        p.ranges = self.attributes.projects_year_ranges[project.project.id];
+        return p;
       });
 
       active_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {
@@ -53,16 +55,14 @@ define([
       );
 
       this.attributes.projects_active_series = _.map(years, function(year) {
-        return [year, _.where(self.attributes.projects, {
-          year: year,
-          active: true
+        return [year, _.filter(self.attributes.projects, function(p) {
+          return _.contains(p.ranges, year) && p.active === true;
         }).length];
       });
 
       this.attributes.projects_disable_series = _.map(years, function(year) {
-        return [year, _.where(self.attributes.projects, {
-          year: year,
-          active: false
+        return [year, _.filter(self.attributes.projects, function(p) {
+          return _.contains(p.ranges, year) && p.active === false;
         }).length];
       });
 
