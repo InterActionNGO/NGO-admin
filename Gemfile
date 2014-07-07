@@ -17,7 +17,6 @@ gem 'fastercsv'
 gem 'money'
 gem 'geokit'
 gem 'nokogiri', '< 1.6.0'
-gem 'rollbar'
 gem 'memcache-client'
 gem 'spreadsheet'
 gem 'roadie'
@@ -36,6 +35,7 @@ group :development do
   gem 'wirble'
   gem 'railroady'
   gem 'mail_view', :git => 'https://github.com/37signals/mail_view.git'
+  gem 'puma'
 end
 
 group :test, :development do
