@@ -119,12 +119,11 @@
   .current-selector .icon-info { display: none;}
 }
 .icon-info {
-  float: right;
   display: inline-block;
   width: 20px;
   height: 20px;
   background: image-url('icons/icon-info.svg') no-repeat center;
-
+  vertical-align: -6px;
 }
 .infowindow-pop, .infowindow-layer { display: inline-block;}
 
@@ -145,12 +144,3 @@ div.cartodb-infowindow {
     left: 20px;
   }
 }
-
-
-
-
-
-
-
-
-
