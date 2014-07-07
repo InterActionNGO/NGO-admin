@@ -5,6 +5,7 @@ Iom::Application.routes.draw do
   # report page
   match 'p/analysis' => 'reports#index' , :as => :report_index
   match 'report_generate' => 'reports#report', :as => :report_generate
+  get 'get-table', :to => 'reports#get_table', :as => :report_get_table
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
   match 'about-interaction' => 'sites#about_interaction'
