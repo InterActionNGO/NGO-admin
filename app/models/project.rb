@@ -1678,6 +1678,11 @@ SQL
     else
       the_model='p'
     end
+    if params[:limit]
+      the_limit = params[:limit]
+    else
+      the_limit=10
+    end
 
 
     if start_date && end_date
@@ -1704,26 +1709,49 @@ SQL
 
     active_projects = params[:active_projects] ? "AND p.end_date > now()" : "" unless date_filter != nil
 
-
-    sql = <<-SQL
-      SELECT #{the_model}.name,
-      COUNT(DISTINCT p.id) AS projects_count, 
-      COUNT(DISTINCT d.id) AS donors_count,
-      COUNT(DISTINCT c.id) AS countries_count,
-      COUNT(DISTINCT s.id) AS sectors_count,
-      COUNT(DISTINCT o.id) AS organizations_count
-        FROM projects p
-               INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
-               LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
-               LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-               LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
-               INNER JOIN organizations o ON (p.primary_organization_id = o.id)
-               INNER JOIN countries_projects cp ON (p.id = cp.project_id)
-               INNER JOIN countries c ON (c.id = cp.country_id)
-        WHERE true
-       #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-        GROUP BY #{the_model}.name
-    SQL
+    if the_model == 'p'
+      sql = <<-SQL
+        SELECT p.name, o.name AS primary_organization,
+        COUNT(DISTINCT d.id) AS donors_count,
+        COUNT(DISTINCT c.id) AS countries_count,
+        COUNT(DISTINCT s.id) AS sectors_count
+          FROM projects p
+                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                 INNER JOIN countries c ON (c.id = cp.country_id)
+          WHERE true
+         #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+          GROUP BY p.name, o.name
+          ORDER BY p.name
+          LIMIT #{the_limit}
+      SQL
+    else
+      sql = <<-SQL
+        SELECT #{the_model}.name,
+        COUNT(DISTINCT p.id) AS projects_count, 
+        COUNT(DISTINCT d.id) AS donors_count,
+        COUNT(DISTINCT c.id) AS countries_count,
+        COUNT(DISTINCT s.id) AS sectors_count,
+        COUNT(DISTINCT o.id) AS organizations_count
+          FROM projects p
+                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                 INNER JOIN countries c ON (c.id = cp.country_id)
+          WHERE true
+         #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+          GROUP BY #{the_model}.name
+          ORDER BY projects_count DESC
+          LIMIT #{the_limit}
+      SQL
+    end
     list = ActiveRecord::Base.connection.execute(sql)
   end
 
