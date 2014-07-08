@@ -1665,6 +1665,68 @@ SQL
     sectors
   end
 
+  def self.get_list(params={})
+    start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year']) if params[:start_date]
+    end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year']) if params[:end_date]
+    countries = params[:country] if params[:country]
+    donors = params[:donor] if params[:donor]
+    sectors = params[:sector] if params[:sector]
+    organizations = params[:organization] if params[:organization]
+    form_query = params[:q].downcase.strip if params[:q]
+    if params[:model]
+      the_model = params[:model]
+    else
+      the_model='p'
+    end
+
+
+    if start_date && end_date
+      date_filter = "projects.start_date <= '#{end_date}'::date AND projects.end_date >= '#{start_date}'::date"
+    end
+
+    form_query_filter = "AND lower(projects.name) LIKE '%" + form_query + "%'" if params[:q]
+
+    if donors
+      donors_filter = "AND d.name IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if sectors
+      sectors_filter = "AND s.name IN (" + sectors.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if countries
+      countries_filter = "AND c.name IN (" + countries.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if organizations
+      organizations_filter = "AND o.name IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    active_projects = params[:active_projects] ? "AND p.end_date > now()" : "" unless date_filter != nil
+
+
+    sql = <<-SQL
+      SELECT #{the_model}.name,
+      COUNT(DISTINCT p.id) AS projects_count, 
+      COUNT(DISTINCT d.id) AS donors_count,
+      COUNT(DISTINCT c.id) AS countries_count,
+      COUNT(DISTINCT s.id) AS sectors_count,
+      COUNT(DISTINCT o.id) AS organizations_count
+        FROM projects p
+               INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+               LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+               LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+               LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+               INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+               INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+               INNER JOIN countries c ON (c.id = cp.country_id)
+        WHERE true
+       #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+        GROUP BY #{the_model}.name
+    SQL
+    list = ActiveRecord::Base.connection.execute(sql)
+  end
+
   ################################################
   ## EBD OF REPORTING LOGIC
   ################################################
