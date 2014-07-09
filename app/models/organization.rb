@@ -78,7 +78,7 @@ class Organization < ActiveRecord::Base
 
   before_save :check_user_valid
 
-  validates_format_of :website, :donation_website, :facebook, :twitter, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :allow_blank => true
+  validates_format_of :website, :donation_website, :facebook, :twitter, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true
 
   validates_presence_of :name
   validates_uniqueness_of :organization_id
