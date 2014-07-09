@@ -78,8 +78,11 @@ class Organization < ActiveRecord::Base
 
   before_save :check_user_valid
 
+  validates_format_of :website, :donation_website, :facebook, :twitter, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :allow_blank => true
+
   validates_presence_of :name
   validates_uniqueness_of :organization_id
+
 
   serialize :site_specific_information
 
@@ -316,8 +319,8 @@ SQL
 
   def check_user_valid
     self.attributes = attributes.reject
-
   end
+
 
   def update_data_denormalization
     sql = """UPDATE data_denormalization
