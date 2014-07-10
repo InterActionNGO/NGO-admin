@@ -78,7 +78,9 @@ class Project < ActiveRecord::Base
   before_validation :strip_urls
 
   def strip_urls
-    self.website = self.website.strip
+    if self.website.present?
+      self.website = self.website.strip 
+    end
   end
 
   def tags=(tag_names)

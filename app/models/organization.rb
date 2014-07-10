@@ -92,9 +92,18 @@ class Organization < ActiveRecord::Base
   before_validation :strip_urls
 
   def strip_urls
-    self.website = self.website.strip
-    self.twitter = self.twitter.strip
-    self.facebook = self.facebook.strip
+    if self.website.present?
+      self.website = self.website.strip
+    end
+    if self.donation_website.present?
+      self.donation_website = self.donation_website.strip
+    end
+    if self.twitter.present?
+      self.twitter = self.twitter.strip
+    end
+    if self.facebook.present?
+      self.facebook = self.facebook.strip
+    end
   end
 
   # Attributes for site getter
