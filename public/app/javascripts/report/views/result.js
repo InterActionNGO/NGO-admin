@@ -1,11 +1,12 @@
 'use strict';
 
 define([
+  'underscore',
   'backbone',
   'handlebars',
   'highcharts',
-  'text!../../templates/report.handlebars'
-], function(Backbone, Handlebars, highcharts, tpl) {
+  'text!templates/report.handlebars'
+], function(_, Backbone, Handlebars, highcharts, tpl) {
 
   var TotalsView = Backbone.View.extend({
 

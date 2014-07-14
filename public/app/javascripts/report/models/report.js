@@ -1,9 +1,10 @@
 'use strict';
 
 define([
+  'underscore',
   'backbone',
   'moment'
-], function(Backbone, moment) {
+], function(_, Backbone, moment) {
 
   var ReportModel = Backbone.Model.extend({
 
