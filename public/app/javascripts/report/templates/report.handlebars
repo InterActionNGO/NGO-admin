@@ -16,7 +16,7 @@
     <p><strong>Donors</strong>: {{starray filters.donors}}</p>
   {{/if}}
 
-  <p><strong>From</strong>: {{filters.start_date}} / <strong>To</strong>: {{filters.end_date}}</p>
+  <p><strong>From</strong>: {{filters.startDate}} / <strong>To</strong>: {{filters.endDate}}</p>
 </div>
 
 <div class="mod-report mod-report-summary">
@@ -29,11 +29,11 @@
       <th>Sectors</th>
     </tr>
     <tr>
-      <td>{{commas totals.projects}}</td>
-      <td>{{commas totals.organizations}}</td>
-      <td>{{commas totals.donors}}</td>
-      <td>{{commas totals.countries}}</td>
-      <td>{{commas totals.sectors}}</td>
+      <td>{{commas projects.length}}</td>
+      <td>{{commas organizations.length}}</td>
+      <td>{{commas donors.length}}</td>
+      <td>{{commas countries.length}}</td>
+      <td>{{commas sectors.length}}</td>
     </tr>
   </table>
 </div>
@@ -42,16 +42,21 @@
   <table>
     <tr>
       <td colspan="3" class="mod-report-budget-total">
-        <span class="small">$</span>{{commas totals.budget}} <span class="small">(total)</span>
+        <span class="small">$</span>{{commas budgets.total}} <span class="small">(total budget)</span>
       </td>
     </tr>
-    <tr>
-      <td class="mod-report-budget-min">min.: ${{commas budget.min}}</td>
-      <td class="mod-report-budget-average">mdn.: ${{commas budget.average}}</td>
-      <td class="mod-report-budget-max">max.: ${{commas budget.max}}</td>
-    </tr>
+    {{#if budgets}}
+      <tr>
+        <td class="mod-report-budget-min">min.: ${{commas budgets.min}}</td>
+        <td class="mod-report-budget-average">median: ${{commas budgets.median}}</td>
+        <td class="mod-report-budget-max">max.: ${{commas budgets.max}}</td>
+      </tr>
+    {{/if}}
   </table>
-  <div class="mod-report-budget-chart is-clearfix" id="reportBudgetChart" data-min="{{budget.min}}" data-max="{{budget.max}}" data-average="{{budget.average}}"></div>
+  {{#if budgets}}
+    <div class="mod-report-budget-chart is-clearfix" id="reportBudgetChart"
+      data-min="{{budgets.min}}" data-max="{{budgets.max}}" data-average="{{budgets.median}}"></div>
+  {{/if}}
 </div>
 
 

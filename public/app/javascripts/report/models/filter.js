@@ -1,10 +1,77 @@
 'use strict';
 
 define([
-  'backbone'
-], function(Backbone) {
+  'underscore',
+  'underscoreString',
+  'backbone',
+  'moment'
+], function(_, underscoreString, Backbone, moment) {
 
-  var FilterModel = Backbone.Model.extend({});
+  var FilterModel = Backbone.Model.extend({
+
+    setByURLParams: function(URLParams) {
+
+      var model = {};
+      var params = this._getObjFromURI(URLParams);
+
+      if (params['organization[]']) {
+        model.organizations = params['organization[]'];
+      }
+
+      if (params['country[]']) {
+        model.countries = params['country[]'];
+      }
+
+      if (params['sector[]']) {
+        model.sectors = params['sector[]'];
+      }
+
+      if (params['donor[]']) {
+        model.donors = params['donor[]'];
+      }
+
+      model.startDate = moment({
+        year: params['start_date[year]'],
+        month: params['start_date[month]'],
+        day: params['start_date[day]']
+      }).format('YYYY/MM/DD');
+
+      model.endDate = moment({
+        year: params['end_date[year]'],
+        month: params['end_date[month]'],
+        day: params['end_date[day]']
+      }).format('YYYY/MM/DD');
+
+      this.clear({
+        silent: true
+      });
+
+      this.set(model);
+
+    },
+
+    _getObjFromURI: function(URLParams) {
+      var uri = decodeURIComponent(URLParams);
+      var chunks = uri.split('&');
+      var params = {};
+
+      for (var i = 0; i < chunks.length; i++) {
+        var chunk = chunks[i].split('=');
+        if (chunk[0].search('\\[\\]') !== -1) {
+          if (typeof params[chunk[0]] === 'undefined') {
+            params[chunk[0]] = [chunk[1].replace(/\+/g, ' ')];
+          } else {
+            params[chunk[0]].push(chunk[1].replace(/\+/g, ' '));
+          }
+        } else {
+          params[chunk[0]] = chunk[1].replace(/\+/g, ' ');
+        }
+      }
+
+      return params;
+    }
+
+  });
 
   return new FilterModel();
 

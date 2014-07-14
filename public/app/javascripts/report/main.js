@@ -6,20 +6,25 @@ require.config({
 
   paths: {
     jquery: '../../vendor/jquery/dist/jquery',
+    jqueryui: '../../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
     underscore: '../../vendor/underscore/underscore',
     underscoreString: '../../vendor/underscore.string/lib/underscore.string',
     backbone: '../../vendor/backbone/backbone',
     select2: '../../vendor/select2/select2',
-    form: '../../vendor/jquery-form/jquery.form',
     handlebars: '../../vendor/handlebars/handlebars',
     highcharts: '../../vendor/highcharts-release/highcharts',
     spin: '../../vendor/spinjs/spin',
     moment: '../../vendor/moment/moment',
+    momentRange: '../../vendor/moment-range/lib/moment-range.bare',
     text: '../../vendor/requirejs-text/text'
   },
 
   shim: {
     jquery: {
+      exports: '$'
+    },
+    jqueryui: {
+      deps: ['jquery'],
       exports: '$'
     },
     underscore: {
@@ -50,27 +55,34 @@ require.config({
     highcharts: {
       deps: ['jquery'],
       exports: 'highcharts'
+    },
+    momentRange: {
+      deps: ['moment'],
+      exports: 'momentRange'
     }
   }
 
 });
 
 require([
-  'handlebars',
+  'underscore',
   'underscoreString',
-  'models/report',
+  'handlebars',
   'views/filters-form',
   'views/result',
   'views/spin'
-], function(Handlebars, _, ReportModel, FiltersFormView, ResultView, SpinView) {
+], function(_, underscoreString, Handlebars, FiltersFormView, ResultView, SpinView) {
 
   // Extensions
   Number.prototype.toCommas = function() {
-    return _.str.numberFormat(this.toString(), 0);
+    return _.str.numberFormat(this, 0);
   };
 
   // Handlebars
   Handlebars.registerHelper('commas', function(context) {
+    if (!context) {
+      return '0';
+    }
     if (typeof context !== 'number') {
       return context;
     }
@@ -82,16 +94,8 @@ require([
   });
 
   // Initialize
-  var reportModel = new ReportModel();
-
   new SpinView();
-
-  new FiltersFormView({
-    model: reportModel
-  });
-
-  new ResultView({
-    model: reportModel
-  });
+  new FiltersFormView();
+  new ResultView();
 
 });
