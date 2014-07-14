@@ -9,6 +9,8 @@ define([
 
     processData: function() {
 
+      console.log(moment().range);
+
       var active_years, disable_years, organizations, years, self = this;
 
       function getLocations(locations_data) {
@@ -28,7 +30,7 @@ define([
       this.attributes.projects = _.map(this.attributes.projects, function(project) {
         var p = project.project;
         p.year = Number(moment(project.project.start_date).format('YYYY'));
-        p.active = (project.project.active !== 'f');
+        p.active = !!(moment(project.project.end_date).isAfter(moment()));
         p.ranges = self.attributes.projects_year_ranges[project.project.id];
         return p;
       });
