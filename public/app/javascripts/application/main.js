@@ -2,24 +2,18 @@
 
 require.config({
 
-  baseUrl: '/app/javascripts',
+  baseUrl: '/app/javascripts/application',
 
   paths: {
-    jquery: '../vendor/jquery/dist/jquery',
-    underscore: '../vendor/underscore/underscore',
-    backbone: '../vendor/backbone/backbone',
-    sprintf: '../vendor/sprintf/src/sprintf',
-    quicksilver: '../lib/liveupdate/quicksilver',
-    liveupdate: '../lib/liveupdate/jquery.liveupdate',
-    jqueryui: '../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
-    select2: '../vendor/select2/select2',
-    form: '../vendor/jquery-form/jquery.form',
-    handlebars: '../vendor/handlebars/handlebars',
-    highcharts: '../vendor/highcharts-release/highcharts',
-    chachiSlider: '../vendor/chachi-slider/jquery.chachi-slider',
-    spin: '../vendor/spinjs/spin',
-    moment: '../vendor/moment/moment',
-    text: '../vendor/requirejs-text/text'
+    jquery: '../../vendor/jquery/dist/jquery',
+    underscore: '../../vendor/underscore/underscore',
+    underscoreString: '../../vendor/underscore.string/lib/underscore.string',
+    backbone: '../../vendor/backbone/backbone',
+    quicksilver: '../../lib/liveupdate/quicksilver',
+    liveupdate: '../../lib/liveupdate/jquery.liveupdate',
+    jqueryui: '../../lib/jquery-ui/js/jquery-ui-1.10.4.custom',
+    select2: '../../vendor/select2/select2',
+    chachiSlider: '../../vendor/chachi-slider/jquery.chachi-slider'
   },
 
   shim: {
@@ -29,12 +23,13 @@ require.config({
     underscore: {
       exports: '_'
     },
+    underscoreString: {
+      deps: ['underscore'],
+      exports: '_.str'
+    },
     backbone: {
       deps: ['jquery', 'underscore'],
       exports: 'Backbone'
-    },
-    sprintf: {
-      exports: 'sprintf'
     },
     liveupdate: {
       deps: ['jquery', 'quicksilver'],
@@ -48,17 +43,6 @@ require.config({
       deps: ['jquery'],
       exports: '$'
     },
-    form: {
-      deps: ['jquery'],
-      exports: '$'
-    },
-    handlebars: {
-      exports: 'Handlebars'
-    },
-    highcharts: {
-      deps: ['jquery'],
-      exports: 'highcharts'
-    },
     chachiSlider: {
       deps: ['jquery'],
       exports: '$'
@@ -69,10 +53,9 @@ require.config({
 
 require([
   'jquery',
-  'handlebars',
   'router',
   'chachiSlider'
-], function($, Handlebars, Router) {
+], function($, Router) {
 
   var $reportTitleTextarea = $('.report-title').find('textarea');
 
@@ -80,30 +63,6 @@ require([
   Number.prototype.toCommas = function() {
     return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
-
-  // Handlebars
-  Handlebars.registerHelper('commas', function(context) {
-    if (typeof context !== 'number') {
-      return context;
-    }
-    return context.toCommas();
-  });
-
-  Handlebars.registerHelper('starray', function(context) {
-    var result = '', i = 0, len = context.length;
-
-    if (context.length > 0) {
-      for (i=0;i<len;i++) {
-        if (i === len -1) {
-          result += context[i];
-        } else {
-          result += context[i] + ', ';
-        }
-      }
-    }
-
-    return result;
-  });
 
   $.fn.noHandleChildren = function() {
 

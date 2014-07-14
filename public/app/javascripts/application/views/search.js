@@ -6,11 +6,6 @@ define(['backbone', 'select2'], function(Backbone) {
 
     el: '#searchSidebarView',
 
-    events: {
-      //'change select': 'onChange',
-      //'change input': 'onChange'
-    },
-
     initialize: function() {
       if (this.$el.length === 0) {
         return false;

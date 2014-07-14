@@ -2,7 +2,7 @@ require 'json'
 
 class ReportsController < ApplicationController
 
-  layout 'site_layout'
+  layout 'report_layout'
 
 	def index
 		respond_to do |format|
