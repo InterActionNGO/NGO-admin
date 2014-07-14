@@ -27,6 +27,7 @@
     "moment": "~2.7.0",
     "highcharts-release": "~4.0.1",
     "chachi-slider": "~2.0.4",
-    "underscore.string": "~2.3.3"
+    "underscore.string": "~2.3.3",
+    "moment-range": "~1.0.2"
   }
 }

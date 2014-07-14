@@ -2,63 +2,53 @@
 
 define([
   'jquery',
+  'select2',
   'underscore',
   'backbone',
   'moment',
-  'models/filter',
-  'form',
-  'select2'
-], function($, _, Backbone, moment) {
+  'models/report',
+  'models/filter'
+], function($, select2, _, Backbone, moment, reportModel, filterModel) {
 
   var ReportFormView = Backbone.View.extend({
 
     el: '#reportFormView',
 
     events: {
+      'submit form': 'onSubmit',
       'change #end_date_year': 'checkDate',
       'change #end_date_month': 'checkDate',
       'change #end_date_day': 'checkDate',
     },
 
     initialize: function() {
-      var self = this;
-
-      if (this.$el.length === 0) {
-        return false;
-      }
-
-      this.$el.find('form').ajaxForm({
-        beforeSubmit: function() {
-          $(window).scrollTop(154);
-          Backbone.Events.trigger('spinner:start');
-          Backbone.Events.trigger('results:empty');
-        },
-        success: function(data) {
-          self.onSuccess(data);
-          Backbone.Events.trigger('spinner:stop');
-        },
-        error: function(err) {
-          throw err.statusText;
-        }
-      });
-
       this.$el.find('select').select2({
         width: 'element'
       });
 
+      this.$window = $(window);
       this.$activeProjects = $('#activeProjects');
     },
 
-    onSuccess: function(data) {
-      this.model.clear({
-        silent: true
+    onSubmit: function(e) {
+      var URLParams;
+
+      Backbone.Events.trigger('spinner:start filters:fetch');
+      this.$window.scrollTop(154);
+
+      URLParams = $(e.currentTarget).serialize();
+
+      filterModel.setByURLParams(URLParams);
+
+      reportModel.getByURLParams(URLParams, function(err) {
+        if (err) {
+          throw err;
+        }
+
+        Backbone.Events.trigger('spinner:stop filters:done');
       });
 
-      this.model.set(_.extend({}, data.results, {
-        charts: data.bar_chart
-      }, {
-        filters: data.filters
-      }));
+      return false;
     },
 
     checkDate: function() {

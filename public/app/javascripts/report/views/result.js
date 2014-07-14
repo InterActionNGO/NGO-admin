@@ -1,12 +1,17 @@
 'use strict';
 
 define([
+  'jqueryui',
   'underscore',
   'backbone',
   'handlebars',
   'highcharts',
+  'moment',
+  'momentRange',
+  'models/report',
+  'models/filter',
   'text!templates/report.handlebars'
-], function(_, Backbone, Handlebars, highcharts, tpl) {
+], function($, _, Backbone, Handlebars, highcharts, moment, momentRange, reportModel, filterModel, tpl) {
 
   var TotalsView = Backbone.View.extend({
 
@@ -125,32 +130,61 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      this.map = {};
-      this.layer = {};
-      Backbone.Events.on('results:empty', this.empty, this);
-      this.model.on('change', this.render, this);
+      this.$textareaTitle = $('.report-title').find('textarea');
+
+      this.autoResizeTextarea();
+
+      this.$textareaTitle.on('keyup', _.bind(this.autoResizeTextarea, this));
+
+      Backbone.Events.on('filters:fetch', this.empty, this);
+      Backbone.Events.on('filters:done', this.showData, this);
     },
 
     render: function() {
-      this.data = this.model.processData().toJSON();
-
       this.$el.html(this.template(this.data));
 
       $('#modReportsTabs').tabs();
 
-      this.calculeReportBudget();
+      this.setBudgetChart();
       this.setProjectsChart();
-      this.donorsCharts();
-      this.organizationsCharts();
-      this.countriesCharts();
-      this.sectorsCharts();
+      // this.donorsCharts();
+      // this.organizationsCharts();
+      // this.countriesCharts();
+      // this.sectorsCharts();
+    },
+
+    showData: function() {
+      this.data = _.extend({}, {
+        filters: filterModel.toJSON(),
+        budgets: this.calculeBudgets()
+      }, reportModel.toJSON());
+      this.render();
     },
 
     empty: function() {
       this.$el.html('');
     },
 
-    calculeReportBudget: function() {
+    calculeBudgets: function() {
+      var result;
+      var budgets = _.sortBy(_.compact(_.pluck(reportModel.get('projects'), 'budget')));
+      var budgetsLength = _.size(budgets);
+
+      if (budgetsLength > 0) {
+        result = {
+          min: _.min(budgets),
+          max: _.max(budgets),
+          median: (budgetsLength % 2 === 0) ? (budgets[(budgetsLength/2) - 1] + budgets[budgetsLength/2]) / 2  : budgets[(budgetsLength - 1) / 2],
+          total: _.reduce(budgets, function(memo, budget) {
+            return memo + budget;
+          }, 0)
+        };
+      }
+
+      return result;
+    },
+
+    setBudgetChart: function() {
       var $budgetChart = $('#reportBudgetChart');
       var min = $budgetChart.data('min');
       var max = $budgetChart.data('max');
@@ -165,34 +199,57 @@ define([
     },
 
     setProjectsChart: function() {
-      var projectOptions = _.extend({}, this.options.areaChart, {
+      var startDate = moment(filterModel.get('startDate'));
+      var endDate = moment(filterModel.get('endDate'));
+      var dateRange = moment().range(startDate, endDate);
+      var projects = reportModel.get('projects');
+      var activeProjects = [];
+      var totalProjects = [];
+      var projectOptions;
+
+      dateRange.by('months', function(date) {
+        activeProjects.push(
+          _.filter(projects, function(project) {
+            return moment().range(moment(project.startDate), moment(project.endDate)).contains(date)
+              && project.active;
+          }).length
+        );
+
+        totalProjects.push(
+          _.filter(projects, function(project) {
+            return (moment().range(moment(project.startDate), moment(project.endDate)).contains(date) && !project.active);
+          }).length
+        );
+      });
+
+      projectOptions = _.extend({}, this.options.areaChart, {
         title: {
           text: 'NGO Aid Map Project Number Over Time'
         },
         series: [{
-          name: 'Inactive projects',
-          data: this.data.projects_disable_series,
+          name: 'Total projects',
+          data: totalProjects,
           color: '#CBCBCB'
         }, {
           name: 'Active projects',
-          data: this.data.projects_active_series,
+          data: activeProjects,
           color: '#006C8D'
         }]
       });
 
-      var organizationOption = _.extend({}, this.options.areaChart, {
-        title: {
-          text: 'Active Organizations Over Time'
-        },
-        series: [{
-          name: 'Organizations',
-          data: this.data.organizations_series,
-          color: '#006C8D'
-        }]
-      });
+      // var organizationOption = _.extend({}, this.options.areaChart, {
+      //   title: {
+      //     text: 'Active Organizations Over Time'
+      //   },
+      //   series: [{
+      //     name: 'Organizations',
+      //     data: this.data.organizations_series,
+      //     color: '#006C8D'
+      //   }]
+      // });
 
       $('#projectChart').highcharts(projectOptions);
-      $('#organizationChart').highcharts(organizationOption);
+      // $('#organizationChart').highcharts(organizationOption);
     },
 
     donorsCharts: function() {
@@ -339,6 +396,10 @@ define([
       });
 
       return geojson;
+    },
+
+    autoResizeTextarea: function() {
+      this.$textareaTitle.css('height', 0).height(this.$textareaTitle[0].scrollHeight);
     }
 
   });
