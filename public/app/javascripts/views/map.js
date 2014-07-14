@@ -99,7 +99,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     };
 
     function IOMMarker(info, diameter, classname, map) {
-      var isRegion = (info.name || info.region_name);
+      var isRegion = !!(info.name || info.region_name);
 
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
       this.latlng_ = new google.maps.LatLng(parseFloat(info.lat), parseFloat(info.lon));
