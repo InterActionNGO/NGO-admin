@@ -7,8 +7,14 @@ define([
   'backbone',
   'moment',
   'models/report',
-  'models/filter'
-], function($, select2, _, Backbone, moment, reportModel, filterModel) {
+  'models/filter',
+  'collections/projects',
+  'collections/organizations',
+  'collections/donors'
+], function(
+  $, select2, _, Backbone, moment, reportModel, filterModel,
+  ProjectsCollection, OrganizationsCollection, DonorsCollection
+) {
 
   var ReportFormView = Backbone.View.extend({
 
@@ -22,6 +28,10 @@ define([
     },
 
     initialize: function() {
+      this.projectsCollection = new ProjectsCollection();
+      this.organizationsCollection = new OrganizationsCollection();
+      this.donorCollection = new DonorsCollection();
+
       this.$el.find('select').select2({
         width: 'element'
       });
@@ -40,15 +50,68 @@ define([
 
       filterModel.setByURLParams(URLParams);
 
-      reportModel.getByURLParams(URLParams, function(err) {
+      $.when(
+        this.getProjects(),
+        this.getOrganizations(),
+        this.getDonors()
+      ).then(_.bind(function() {
+
+        reportModel.clear({
+          silent: true
+        });
+
+        reportModel.set({
+          donors: this.donorCollection.toJSON(),
+          countries: [],
+          sectors: [],
+          projects: this.projectsCollection.toJSON(),
+          organizations: this.organizationsCollection.toJSON()
+        });
+
+        Backbone.Events.trigger('spinner:stop filters:done');
+
+      }, this));
+
+      return false;
+    },
+
+    getProjects: function() {
+      var deferred = $.Deferred();
+
+      this.projectsCollection.getByURLParams('organization[]=Action Aid International USA', function(err) {
         if (err) {
           throw err;
         }
-
-        Backbone.Events.trigger('spinner:stop filters:done');
+        deferred.resolve();
       });
 
-      return false;
+      return deferred.promise();
+    },
+
+    getOrganizations: function() {
+      var deferred = $.Deferred();
+
+      this.organizationsCollection.getByURLParams('organization[]=Action Aid International USA', function(err) {
+        if (err) {
+          throw err;
+        }
+        deferred.resolve();
+      });
+
+      return deferred.promise();
+    },
+
+    getDonors: function() {
+      var deferred = $.Deferred();
+
+      this.donorCollection.getByURLParams('organization[]=Action Aid International USA', function(err) {
+        if (err) {
+          throw err;
+        }
+        deferred.resolve();
+      });
+
+      return deferred.promise();
     },
 
     checkDate: function() {

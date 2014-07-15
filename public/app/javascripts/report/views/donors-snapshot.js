@@ -6,9 +6,8 @@ define([
   'backbone',
   'handlebars',
   'models/report',
-  'views/snapshot/chart',
   'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars, reportModel, ChartView, tpl) {
+], function(_, underscoreString, Backbone, Handlebars, reportModel, tpl) {
 
   var DonorsSnapshotView = Backbone.View.extend({
 
