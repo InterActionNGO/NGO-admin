@@ -39,6 +39,8 @@ define([
 
       result.sectors = data.results.sectors;
 
+      console.log(data, result);
+
       return result;
 
     },

@@ -32,15 +32,15 @@ define([
 
       model.startDate = moment({
         year: params['start_date[year]'],
-        month: params['start_date[month]'],
+        month: params['start_date[month]'] -1,
         day: params['start_date[day]']
-      }).format('YYYY/MM/DD');
+      }).format('YYYY-MM-DD');
 
       model.endDate = moment({
         year: params['end_date[year]'],
-        month: params['end_date[month]'],
+        month: params['end_date[month]'] -1,
         day: params['end_date[day]']
-      }).format('YYYY/MM/DD');
+      }).format('YYYY-MM-DD');
 
       this.clear({
         silent: true
