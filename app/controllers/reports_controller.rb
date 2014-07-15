@@ -44,5 +44,14 @@ class ReportsController < ApplicationController
 
   end
 
+  def list
+    #@table = Organization.joins(:projects).where('end_date > ?', Time.now).group('organizations.name').count('DISTINCT projects.id').sort_by {|k,v| v}.reverse
+
+    @table = Project.get_list(params)
+    respond_to do |format|
+      format.json { render :json => @table.to_json }
+    end
+  end
+
 
 end
