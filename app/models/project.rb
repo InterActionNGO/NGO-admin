@@ -1686,10 +1686,10 @@ SQL
 
 
     if start_date && end_date
-      date_filter = "projects.start_date <= '#{end_date}'::date AND projects.end_date >= '#{start_date}'::date"
+      date_filter = "AND p.start_date <= '#{end_date}'::date AND p.end_date >= '#{start_date}'::date"
     end
 
-    form_query_filter = "AND lower(projects.name) LIKE '%" + form_query + "%'" if params[:q]
+    form_query_filter = "AND lower(p.name) LIKE '%" + form_query + "%'" if params[:q]
 
     if donors
       donors_filter = "AND d.name IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
