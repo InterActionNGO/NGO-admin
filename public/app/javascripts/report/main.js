@@ -68,10 +68,23 @@ require([
   'underscore',
   'underscoreString',
   'handlebars',
+
+  'views/spin',
   'views/filters-form',
-  'views/result',
-  'views/spin'
-], function(_, underscoreString, Handlebars, FiltersFormView, ResultView, SpinView) {
+  'views/intro',
+  'views/title',
+  'views/filters',
+  'views/summary',
+  'views/budgets',
+  'views/timeline-charts',
+
+  'views/donors-snapshot'
+], function(
+  _, underscoreString, Handlebars,
+  SpinView, FiltersFormView, IntroView,
+  TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView,
+  DonorsSnapshotView
+) {
 
   // Extensions
   Number.prototype.toCommas = function() {
@@ -96,6 +109,13 @@ require([
   // Initialize
   new SpinView();
   new FiltersFormView();
-  new ResultView();
+  new IntroView();
+  new TitleView();
+  new FiltersView();
+  new SummaryView();
+  new BudgetsView();
+  new TimelineChartsView();
+
+  new DonorsSnapshotView();
 
 });
