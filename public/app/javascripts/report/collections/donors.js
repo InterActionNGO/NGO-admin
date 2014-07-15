@@ -29,7 +29,6 @@ define([
       this.fetch({
         dataType: 'json',
         data: {
-          limit: 100,
           model: 'd'
         },
         success: onSuccess,
