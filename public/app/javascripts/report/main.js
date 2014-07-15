@@ -114,8 +114,8 @@ require([
   new FiltersView();
   new SummaryView();
   new BudgetsView();
-  new TimelineChartsView();
 
+  new TimelineChartsView();
   new DonorsSnapshotView();
 
 });

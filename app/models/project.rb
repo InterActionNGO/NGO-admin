@@ -71,7 +71,7 @@ class Project < ActiveRecord::Base
   #validates_uniqueness_of :intervention_id, :if => (lambda do
     #intervention_id.present?
   #end)
-  
+
   after_create :generate_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
@@ -79,7 +79,7 @@ class Project < ActiveRecord::Base
 
   def strip_urls
     if self.website.present?
-      self.website = self.website.strip 
+      self.website = self.website.strip
     end
   end
 
@@ -1239,73 +1239,78 @@ SQL
     # Projects IDs for IN clausules
     projects_str = @projects.map { |elem| elem.id }.join(',') || ""
 
-    @data[:results] = {}
+    # @data[:results] = {}
 
     # Add years ranges of activeness for report charts
-    @data[:results][:projects_year_ranges] = {}
-    @projects.each do |project|
-      #add the range made an array
-      @data[:results][:projects_year_ranges][project.id] = ((project.start_date.year..project.end_date.year).to_a)
-    end
+    # @data[:results][:projects_year_ranges] = {}
+    # @projects.each do |project|
+    #   #add the range made an array
+    #   @data[:results][:projects_year_ranges][project.id] = ((project.start_date.year..project.end_date.year).to_a)
+    # end
 
-    @data[:results][:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
-    @data[:results][:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
-    @data[:results][:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
-    @data[:results][:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
-    @data[:results][:totals] = {}
-    @data[:results][:budget] = {}
+    @data[:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
+    @data[:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
+    @data[:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
+    @data[:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
+    @data[:projects] = @projects
+
+    # @data[:results][:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
+    # @data[:results][:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
+    # @data[:results][:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
+    # @data[:results][:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
+    # @data[:results][:totals] = {}
+    # @data[:results][:budget] = {}
 
     # Totals
-    if !projects_str.blank?
-      # TOTAL BUDGET
-      @data[:results][:totals][:budget] = 0
+    # if !projects_str.blank?
+    #   # TOTAL BUDGET
+    #   @data[:results][:totals][:budget] = 0
 
 
-      # TOTAL PROJECTS BUDGET
-      non_zero_values = []
-       @projects.each do |val|
-        #p val[:budget].to_f
-        non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
-      end
+    #   # TOTAL PROJECTS BUDGET
+    #   non_zero_values = []
+    #    @projects.each do |val|
+    #     #p val[:budget].to_f
+    #     non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
+    #   end
 
-      #p @data[:results][:totals][:budget]
-      @data[:results][:totals][:budget] = non_zero_values.inject(:+)
-      if non_zero_values.length > 0
-        avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
-      else
-        avg = 0.00
-      end
-      @data[:results][:budget][:max] = non_zero_values.max
-      @data[:results][:budget][:min] = non_zero_values.min
-      @data[:results][:budget][:average] = (avg * 100).round / 100.0
+    #   #p @data[:results][:totals][:budget]
+    #   @data[:results][:totals][:budget] = non_zero_values.inject(:+)
+    #   if non_zero_values.length > 0
+    #     avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+    #   else
+    #     avg = 0.00
+    #   end
+    #   @data[:results][:budget][:max] = non_zero_values.max
+    #   @data[:results][:budget][:min] = non_zero_values.min
+    #   @data[:results][:budget][:average] = (avg * 100).round / 100.0
 
+    #   @data[:results][:projects] = @projects
 
-      @data[:results][:projects] = @projects
+    #   @data[:results][:totals][:projects] = @data[:results][:projects].length
+    #   @data[:results][:totals][:donors] = @data[:results][:donors].length
+    #   @data[:results][:totals][:sectors] = @data[:results][:sectors].length
+    #   @data[:results][:totals][:countries] = @data[:results][:countries].length
+    #   @data[:results][:totals][:organizations] = @data[:results][:organizations].length
 
-      @data[:results][:totals][:projects] = @data[:results][:projects].length
-      @data[:results][:totals][:donors] = @data[:results][:donors].length
-      @data[:results][:totals][:sectors] = @data[:results][:sectors].length
-      @data[:results][:totals][:countries] = @data[:results][:countries].length
-      @data[:results][:totals][:organizations] = @data[:results][:organizations].length
-
-      # Reduze organizations to 20
-      #@data[:results][:organizations] = @data[:results][:organizations].take(20)
-    else
-      @data[:results][:totals][:people] = 0
-      @data[:results][:totals][:budget] = 0
-      @data[:results][:totals][:donors] = 0
-      @data[:results][:totals][:projects] = 0
-    end
+    #   # Reduze organizations to 20
+    #   #@data[:results][:organizations] = @data[:results][:organizations].take(20)
+    # else
+    #   @data[:results][:totals][:people] = 0
+    #   @data[:results][:totals][:budget] = 0
+    #   @data[:results][:totals][:donors] = 0
+    #   @data[:results][:totals][:projects] = 0
+    # end
 
     # Returned to Frontend to be printed on human readable format
-    @data[:filters] = {}
-    @data[:filters][:start_date] = start_date
-    @data[:filters][:end_date] = end_date
-    @data[:filters][:countries] = countries
-    @data[:filters][:donors] = donors
-    @data[:filters][:sectors] = sectors
-    @data[:filters][:organizations] = organizations
-    @data[:filters][:search_word] = params[:q]
+    # @data[:filters] = {}
+    # @data[:filters][:start_date] = start_date
+    # @data[:filters][:end_date] = end_date
+    # @data[:filters][:countries] = countries
+    # @data[:filters][:donors] = donors
+    # @data[:filters][:sectors] = sectors
+    # @data[:filters][:organizations] = organizations
+    # @data[:filters][:search_word] = params[:q]
 
     @data
   end
@@ -1682,6 +1687,7 @@ SQL
     sectors = params[:sector] if params[:sector]
     organizations = params[:organization] if params[:organization]
     form_query = params[:q].downcase.strip if params[:q]
+
     if params[:model]
       the_model = params[:model]
     else
@@ -1690,9 +1696,8 @@ SQL
     if params[:limit]
       the_limit = params[:limit]
     else
-      the_limit=10
+      the_limit='NULL'
     end
-
 
     if start_date && end_date
       date_filter = "projects.start_date <= '#{end_date}'::date AND projects.end_date >= '#{start_date}'::date"
@@ -1720,7 +1725,7 @@ SQL
 
     if the_model == 'p'
       sql = <<-SQL
-        SELECT p.name, o.name AS primary_organization,
+        SELECT p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization,
         COUNT(DISTINCT d.id) AS donors_count,
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count
@@ -1734,14 +1739,14 @@ SQL
                  INNER JOIN countries c ON (c.id = cp.country_id)
           WHERE true
          #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-          GROUP BY p.name, o.name
+          GROUP BY p.name, o.id, p.budget, p.start_date, p.end_date
           ORDER BY p.name
           LIMIT #{the_limit}
       SQL
     else
       sql = <<-SQL
         SELECT #{the_model}.name,
-        COUNT(DISTINCT p.id) AS projects_count, 
+        COUNT(DISTINCT p.id) AS projects_count,
         COUNT(DISTINCT d.id) AS donors_count,
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count,

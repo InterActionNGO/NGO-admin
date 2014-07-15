@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
 
 	def report
 		@data = Project.report(params)
-    @data = Project.bar_chart_report(params)
+    #@data = Project.bar_chart_report(params)
 
 		#@data_json = @data.to_json
 
@@ -41,7 +41,6 @@ class ReportsController < ApplicationController
     indicator = params[:indicator_name]
     operator = params[:operator]
     value = params[:indicator_value]
-
   end
 
   def list
