@@ -108,7 +108,6 @@ require([
 
   // Initialize
   new SpinView();
-  new FiltersFormView();
   new IntroView();
   new TitleView();
   new FiltersView();
@@ -117,5 +116,7 @@ require([
 
   new TimelineChartsView();
   new DonorsSnapshotView();
+
+  new FiltersFormView();
 
 });

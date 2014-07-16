@@ -10,10 +10,12 @@ define([
   'models/filter',
   'collections/projects',
   'collections/organizations',
-  'collections/donors'
+  'collections/donors',
+  'collections/countries',
+  'collections/sectors'
 ], function(
-  $, select2, _, Backbone, moment, reportModel, filterModel,
-  ProjectsCollection, OrganizationsCollection, DonorsCollection
+  $, select2, _, Backbone, moment, ReportModel, FilterModel,
+  ProjectsCollection, OrganizationsCollection, DonorsCollection, CountriesCollection, SectorsCollection
 ) {
 
   var ReportFormView = Backbone.View.extend({
@@ -21,7 +23,7 @@ define([
     el: '#reportFormView',
 
     events: {
-      'submit form': 'onSubmit',
+      'submit form': 'fetchData',
       'change #end_date_year': 'checkDate',
       'change #end_date_month': 'checkDate',
       'change #end_date_day': 'checkDate',
@@ -30,7 +32,9 @@ define([
     initialize: function() {
       this.projectsCollection = new ProjectsCollection();
       this.organizationsCollection = new OrganizationsCollection();
-      this.donorCollection = new DonorsCollection();
+      this.donorsCollection = new DonorsCollection();
+      this.countriesCollection = new CountriesCollection();
+      this.sectorsCollection = new SectorsCollection();
 
       this.$el.find('select').select2({
         width: 'element'
@@ -38,35 +42,38 @@ define([
 
       this.$window = $(window);
       this.$activeProjects = $('#activeProjects');
+
+      if (window.location.search !== '') {
+        this.fetchData();
+      }
     },
 
-    onSubmit: function(e) {
-      var URLParams;
-
+    fetchData: function() {
       Backbone.Events.trigger('spinner:start filters:fetch');
+
       this.$window.scrollTop(154);
 
-      URLParams = $(e.currentTarget).serialize();
+      this.URLParams = this.$el.find('form').serialize();
 
-      filterModel.setByURLParams(URLParams);
+      FilterModel.instance.setByURLParams(this.URLParams);
 
       $.when(
+        this.getDonors(),
         this.getProjects(),
         this.getOrganizations(),
-        this.getDonors()
+        this.getCountries(),
+        this.getSectors()
       ).then(_.bind(function() {
 
-        reportModel.clear({
-          silent: true
-        });
-
-        reportModel.set({
-          donors: this.donorCollection.toJSON(),
-          countries: [],
-          sectors: [],
+        var data = {
+          donors: this.donorsCollection.toJSON(),
           projects: this.projectsCollection.toJSON(),
-          organizations: this.organizationsCollection.toJSON()
-        });
+          organizations: this.organizationsCollection.toJSON(),
+          countries: this.countriesCollection.toJSON(),
+          sectors: this.sectorsCollection.toJSON()
+        };
+
+        ReportModel.instance.set(data);
 
         Backbone.Events.trigger('spinner:stop filters:done');
 
@@ -78,7 +85,7 @@ define([
     getProjects: function() {
       var deferred = $.Deferred();
 
-      this.projectsCollection.getByURLParams('organization[]=Action Aid International USA', function(err) {
+      this.projectsCollection.getByURLParams(this.URLParams, function(err) {
         if (err) {
           throw err;
         }
@@ -91,7 +98,7 @@ define([
     getOrganizations: function() {
       var deferred = $.Deferred();
 
-      this.organizationsCollection.getByURLParams('organization[]=Action Aid International USA', function(err) {
+      this.organizationsCollection.getByURLParams(this.URLParams, function(err) {
         if (err) {
           throw err;
         }
@@ -104,7 +111,33 @@ define([
     getDonors: function() {
       var deferred = $.Deferred();
 
-      this.donorCollection.getByURLParams('organization[]=Action Aid International USA', function(err) {
+      this.donorsCollection.getByURLParams(this.URLParams, function(err) {
+        if (err) {
+          throw err;
+        }
+        deferred.resolve();
+      });
+
+      return deferred.promise();
+    },
+
+    getCountries: function() {
+      var deferred = $.Deferred();
+
+      this.countriesCollection.getByURLParams(this.URLParams, function(err) {
+        if (err) {
+          throw err;
+        }
+        deferred.resolve();
+      });
+
+      return deferred.promise();
+    },
+
+    getSectors: function() {
+      var deferred = $.Deferred();
+
+      this.sectorsCollection.getByURLParams(this.URLParams, function(err) {
         if (err) {
           throw err;
         }

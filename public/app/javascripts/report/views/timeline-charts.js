@@ -9,7 +9,9 @@ define([
   'momentRange',
   'models/report',
   'models/filter'
-], function($, _, Backbone, highcharts, moment, momentRange, reportModel, filterModel) {
+], function($, _, Backbone, highcharts, moment, momentRange, ReportModel, FilterModel) {
+
+  var NOW = new Date();
 
   var TimelineChartsView = Backbone.View.extend({
 
@@ -63,47 +65,51 @@ define([
       this.$organizationsChart = $('#organizationsChart');
       $('#modReportsTabs').tabs();
       Backbone.Events.on('filters:fetch', this.hide, this);
-      Backbone.Events.on('filters:done', this.show, this);
+      Backbone.Events.on('filters:done', this.showCharts, this);
     },
 
-    show: function() {
+    showCharts: function() {
       this.$el.removeClass('is-hidden');
       this.setCharts();
     },
 
     setCharts: function() {
-      var startDate = moment(filterModel.get('startDate'));
-      var endDate = moment(filterModel.get('endDate'));
-      var dateRange = moment().range(startDate, endDate);
-      var projects = reportModel.get('projects');
+      var dateRange = moment().range(
+        moment(FilterModel.instance.get('startDate')),
+        moment(FilterModel.instance.get('endDate'))
+      );
+      var projects = ReportModel.instance.get('projects');
+      var projectsLength = projects.length;
+
       var activeProjectsData = [];
       var totalProjectsData = [];
       var activeOrganizationsData = [];
-      var projectsOptions = {};
-      var organizationsOptions = {};
 
       dateRange.by('months', function(date) {
-        var activeProjects = _.filter(projects, function(project) {
-          return moment().range(
-            moment(project.startDate, 'YYYY-MM-DD'),
-            moment(project.endDate, 'YYYY-MM-DD')
-          ).contains(date);
-        });
+        var activeProjects = [];
+        var organizationsActives = [];
+        var totalProjects = 0;
+        var d = date.valueOf() - (date.zone() * 60000);
 
-        var totalProjects = _.filter(projects, function(project) {
-          return moment(project.endDate, 'YYYY-MM-DD').isBefore(date);
-        });
+        for (var i = 0; i < projectsLength; i++) {
+          var sd = new Date(projects[i].startDate).getTime();
+          var ed = new Date(projects[i].endDate).getTime();
+          if (d > sd && d < ed) {
+            activeProjects.push(projects[i].organizationId);
+          }
+          if (d > ed) {
+            totalProjects = totalProjects + 1;
+          }
+        }
 
-        var organizationsActives = _.uniq(activeProjects, function(project) {
-          return project.organizationId;
-        });
+        organizationsActives = _.uniq(activeProjects);
 
-        activeProjectsData.push([date.valueOf(), activeProjects.length]);
-        totalProjectsData.push([date.valueOf(), totalProjects.length]);
-        activeOrganizationsData.push([date.valueOf(), organizationsActives.length]);
+        activeProjectsData.push([d, activeProjects.length]);
+        totalProjectsData.push([d, totalProjects]);
+        activeOrganizationsData.push([d, organizationsActives.length]);
       });
 
-      projectsOptions = _.extend({}, this.options, {
+      this.$projectChart.highcharts(_.extend({}, this.options, {
         title: {
           text: 'NGO Aid Map Project Number Over Time'
         },
@@ -116,9 +122,9 @@ define([
           data: activeProjectsData,
           color: '#006C8D'
         }]
-      });
+      }));
 
-      organizationsOptions = _.extend({}, this.options, {
+      this.$organizationsChart.highcharts(_.extend({}, this.options, {
         title: {
           text: 'Active Organizations Over Time'
         },
@@ -131,10 +137,7 @@ define([
           data: activeOrganizationsData,
           color: '#006C8D'
         }]
-      });
-
-      this.$projectChart.highcharts(projectsOptions);
-      this.$organizationsChart.highcharts(organizationsOptions);
+      }));
     },
 
     hide: function() {

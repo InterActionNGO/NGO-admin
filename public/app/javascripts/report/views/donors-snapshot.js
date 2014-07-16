@@ -7,7 +7,7 @@ define([
   'handlebars',
   'models/report',
   'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars, reportModel, tpl) {
+], function(_, underscoreString, Backbone, Handlebars, ReportModel, tpl) {
 
   var DonorsSnapshotView = Backbone.View.extend({
 
@@ -32,11 +32,11 @@ define([
       this.data = {
         title: 'Donors snapshot',
         description: _.str.sprintf('A total of %(donors)s found donors, supporting %(projects)s projects by %(organizations)s organizations in %(countries)s countries across %(sectors)s sectors.', {
-          donors: reportModel.get('donors').length,
-          projects: reportModel.get('projects').length,
-          organizations: reportModel.get('organizations').length,
-          countries: reportModel.get('countries').length,
-          sectors: reportModel.get('sectors').length
+          donors: ReportModel.instance.get('donors').length,
+          projects: ReportModel.instance.get('projects').length,
+          organizations: ReportModel.instance.get('organizations').length,
+          countries: ReportModel.instance.get('countries').length,
+          sectors: ReportModel.instance.get('sectors').length
         }),
         charts: [{
           name: 'By number of projects',

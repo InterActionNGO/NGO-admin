@@ -1,21 +1,15 @@
 'use strict';
 
 define([
-  'backbone',
-], function(Backbone) {
+  'underscore',
+  'backbone'
+], function(_, Backbone) {
 
-  var ReportModel = Backbone.Model.extend({
+  var ReportModel = Backbone.Model.extend({});
 
-    defaults: {
-      donors: [],
-      organizations: [],
-      projects: [],
-      countries: [],
-      sectors: []
-    }
-
-  });
-
-  return new ReportModel();
+  return {
+    Model: ReportModel,
+    instance: new ReportModel()
+  };
 
 });
