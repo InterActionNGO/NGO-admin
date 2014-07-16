@@ -18,7 +18,7 @@
                 <label>ORGANIZATION</label>
                 <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
                 <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'organization_include', 'include' %>
+                <%# hidden_field_tag 'organization_include', 'include' %>
               </li>
 
               <!--
@@ -35,7 +35,7 @@
                 <%= select_tag :country,
                   options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select country" %>
                 <%# select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'country_include', 'include' %>
+                <%# hidden_field_tag 'country_include', 'include' %>
               </li>
 
               <li class="comboselect">
@@ -43,15 +43,15 @@
                 <%= select_tag :sector,
                   options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select sector" %>
                 <%# select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'sector_include', 'include' %>
+                <%# hidden_field_tag 'sector_include', 'include' %>
               </li>
 
               <li class="comboselect">
                 <label>DONOR</label>
-                <%= select_tag :donor,
-                  options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
+                  <%= select_tag :donor,
+                    options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
                   <%# select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                  <%= hidden_field_tag 'donor_include', 'include' %>
+                  <%# hidden_field_tag 'donor_include', 'include' %>
               </li>
 
               <li class="comboselect date">

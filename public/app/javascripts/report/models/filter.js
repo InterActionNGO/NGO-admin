@@ -73,6 +73,9 @@ define([
 
   });
 
-  return new FilterModel();
+  return {
+    Model: FilterModel,
+    instance: new FilterModel()
+  };
 
 });

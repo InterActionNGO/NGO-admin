@@ -5,7 +5,7 @@ define([
   'handlebars',
   'models/filter',
   'text!templates/filters.handlebars'
-], function(Backbone, Handlebars, filterModel, tpl) {
+], function(Backbone, Handlebars, FilterModel, tpl) {
 
   var FiltersView = Backbone.View.extend({
 
@@ -20,7 +20,7 @@ define([
 
     showFilters: function() {
       this.data = {
-        filters: filterModel.toJSON()
+        filters: FilterModel.instance.toJSON()
       };
 
       this.render();

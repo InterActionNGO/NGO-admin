@@ -5,7 +5,7 @@ define([
   'handlebars',
   'models/report',
   'text!templates/summary.handlebars'
-], function(Backbone, Handlebars, reportModel, tpl) {
+], function(Backbone, Handlebars, ReportModel, tpl) {
 
   var SummaryView = Backbone.View.extend({
 
@@ -23,7 +23,7 @@ define([
     },
 
     showSummary: function() {
-      this.data = reportModel.toJSON();
+      this.data = ReportModel.instance.toJSON();
 
       this.render();
 

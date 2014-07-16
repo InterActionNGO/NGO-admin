@@ -6,7 +6,7 @@ define([
   'moment'
 ], function(_, Backbone, moment) {
 
-  var NOW = moment();
+  var NOW = new Date().getTime();
 
   var ProjectsCollection = Backbone.Collection.extend({
 
@@ -25,7 +25,7 @@ define([
           countriesCount: Number(project.countries_count),
           startDate: project.start_date,
           endDate: project.end_date,
-          active: !!(moment(project.end_date).isAfter(NOW))
+          active: (new Date(project.end_date).getTime() < NOW)
         };
       });
     },

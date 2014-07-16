@@ -6,7 +6,7 @@ define([
   'handlebars',
   'models/report',
   'text!templates/budgets.handlebars'
-], function(_, Backbone, Handlebars, reportModel, tpl) {
+], function(_, Backbone, Handlebars, ReportModel, tpl) {
 
   var BudgetsView = Backbone.View.extend({
 
@@ -36,7 +36,7 @@ define([
 
     calculeBudgets: function() {
       var result;
-      var budgets = _.sortBy(_.compact(_.pluck(reportModel.get('projects'), 'budget')));
+      var budgets = _.sortBy(_.compact(_.pluck(ReportModel.instance.get('projects'), 'budget')));
       var budgetsLength = _.size(budgets);
 
       if (budgetsLength > 0) {
