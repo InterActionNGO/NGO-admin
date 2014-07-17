@@ -2,9 +2,8 @@
 
 define([
   'underscore',
-  'backbone',
-  'moment'
-], function(_, Backbone, moment) {
+  'backbone'
+], function(_, Backbone) {
 
   var NOW = new Date().getTime();
 

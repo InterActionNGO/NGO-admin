@@ -11,8 +11,6 @@ define([
   'models/filter'
 ], function($, _, Backbone, highcharts, moment, momentRange, ReportModel, FilterModel) {
 
-  var NOW = new Date();
-
   var TimelineChartsView = Backbone.View.extend({
 
     el: '#timelineChartsView',
