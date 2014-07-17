@@ -177,20 +177,28 @@ module.exports = function(grunt) {
         useStrict: true,
         wrap: false
       },
-      dist: {
+      application: {
         options: {
-          baseUrl: '<%= root.app %>/javascripts',
+          baseUrl: '<%= root.app %>/javascripts/application',
           include: 'main',
-          out: '<%= root.dist %>/javascripts/main.js',
-          mainConfigFile: '<%= root.app %>/javascripts/main.js',
+          out: '<%= root.dist %>/javascripts/application/main.js',
+          mainConfigFile: '<%= root.app %>/javascripts/application/main.js',
+        }
+      },
+      report: {
+        options: {
+          baseUrl: '<%= root.app %>/javascripts/report',
+          include: 'main',
+          out: '<%= root.dist %>/javascripts/report/main.js',
+          mainConfigFile: '<%= root.app %>/javascripts/report/main.js',
         }
       },
       countdown: {
         options: {
-          baseUrl: '<%= root.app %>/javascripts',
-          include: 'countdown',
-          out: '<%= root.dist %>/javascripts/countdown.js',
-          mainConfigFile: '<%= root.app %>/javascripts/countdown.js',
+          baseUrl: '<%= root.app %>/javascripts/countdown',
+          include: 'main',
+          out: '<%= root.dist %>/javascripts/countdown/main.js',
+          mainConfigFile: '<%= root.app %>/javascripts/countdown/main.js',
         }
       }
     },
