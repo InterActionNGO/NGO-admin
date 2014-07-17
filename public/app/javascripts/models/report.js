@@ -26,31 +26,44 @@ define([
       }
 
       this.attributes.projects = _.map(this.attributes.projects, function(project) {
-        project.project.year = Number(moment(project.project.start_date).format('YYYY'));
-        project.project.active = (project.project.active === 't');
-        return project.project;
+        var p = project.project;
+        p.year = Number(moment(project.project.start_date).format('YYYY'));
+        p.active = (project.project.active !== 'f');
+        p.ranges = self.attributes.projects_year_ranges[project.project.id];
+        return p;
       });
 
-      active_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {active: true}), function(project) {
+      active_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {
+        active: true
+      }), function(project) {
         return project.year;
       })), function(year) {
         return year;
       });
 
-      disable_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {active: false}), function(project) {
+      disable_years = _.sortBy(_.uniq(_.map(_.where(this.attributes.projects, {
+        active: false
+      }), function(project) {
         return project.year;
       })), function(year) {
         return year;
       });
 
-      years = _.range(Number(moment(this.attributes.filters.start_date).format('YYYY')), Number(moment(this.attributes.filters.end_date).format('YYYY')) + 1);
+      years = _.range(
+        Number(moment(this.attributes.filters.start_date).format('YYYY')),
+        Number(moment(this.attributes.filters.end_date).format('YYYY')) + 1
+      );
 
       this.attributes.projects_active_series = _.map(years, function(year) {
-        return [year, _.where(self.attributes.projects, {year: year, active: true}).length];
+        return [year, _.filter(self.attributes.projects, function(p) {
+          return _.contains(p.ranges, year) && p.active === true;
+        }).length];
       });
 
       this.attributes.projects_disable_series = _.map(years, function(year) {
-        return [year, _.where(self.attributes.projects, {year: year, active: false}).length];
+        return [year, _.filter(self.attributes.projects, function(p) {
+          return _.contains(p.ranges, year) && p.active === false;
+        }).length];
       });
 
       organizations = _.uniq(_.map(this.attributes.projects, function(project) {
@@ -63,14 +76,18 @@ define([
       });
 
       this.attributes.organizations_series = _.map(years, function(year) {
-        return [year, _.where(organizations, {year: year}).length];
+        return [year, _.where(organizations, {
+          year: year
+        }).length];
       });
 
       // Donors
       this.attributes.donors_by_projects = _.map(this.attributes.charts.donors.bar_chart.by_n_projects, function(donor) {
         return {
           name: donor.donor_name,
-          data: [[donor.donor_name, Number(donor.n_projects)]],
+          data: [
+            [donor.donor_name, Number(donor.n_projects)]
+          ],
           locations: getLocations(self.attributes.charts.donors.maps.by_n_projects)
         };
       });
@@ -78,7 +95,9 @@ define([
       this.attributes.donors_by_organizations = _.map(this.attributes.charts.donors.bar_chart.by_n_organizations, function(donor) {
         return {
           name: donor.donor_name,
-          data: [[donor.donor_name, Number(donor.n_organizations)]],
+          data: [
+            [donor.donor_name, Number(donor.n_organizations)]
+          ],
           locations: getLocations(self.attributes.charts.donors.maps.by_n_organizations)
         };
       });
@@ -86,7 +105,9 @@ define([
       this.attributes.donors_by_countries = _.map(this.attributes.charts.donors.bar_chart.by_n_countries, function(donor) {
         return {
           name: donor.donor_name,
-          data: [[donor.donor_name, Number(donor.n_countries)]],
+          data: [
+            [donor.donor_name, Number(donor.n_countries)]
+          ],
           locations: getLocations(self.attributes.charts.donors.maps.by_n_countries)
         };
       });
@@ -95,7 +116,9 @@ define([
       this.attributes.organizations_by_projects = _.map(this.attributes.charts.organizations.bar_chart.by_n_projects, function(organization) {
         return {
           name: organization.organization_name,
-          data: [[organization.organization_name, Number(organization.n_projects)]],
+          data: [
+            [organization.organization_name, Number(organization.n_projects)]
+          ],
           locations: getLocations(self.attributes.charts.organizations.maps.by_n_projects)
         };
       });
@@ -103,7 +126,9 @@ define([
       this.attributes.organizations_by_countries = _.map(this.attributes.charts.organizations.bar_chart.by_n_countries, function(organization) {
         return {
           name: organization.organization_name,
-          data: [[organization.organization_name, Number(organization.n_countries)]],
+          data: [
+            [organization.organization_name, Number(organization.n_countries)]
+          ],
           locations: getLocations(self.attributes.charts.organizations.maps.by_n_countries)
         };
       });
@@ -111,7 +136,9 @@ define([
       this.attributes.organizations_by_bugdet = _.map(this.attributes.charts.organizations.bar_chart.by_total_budget, function(organization) {
         return {
           name: organization.organization_name,
-          data: [[organization.organization_name, Number(organization.total_budget)]],
+          data: [
+            [organization.organization_name, Number(organization.total_budget)]
+          ],
           locations: getLocations(self.attributes.charts.organizations.maps.by_total_budget)
         };
       });
@@ -120,7 +147,9 @@ define([
       this.attributes.countries_by_donors = _.map(this.attributes.charts.countries.bar_chart.by_n_donors, function(country) {
         return {
           name: country.country_name,
-          data: [[country.country_name, Number(country.n_donors)]],
+          data: [
+            [country.country_name, Number(country.n_donors)]
+          ],
           locations: getLocations(self.attributes.charts.countries.maps.by_n_donors)
         };
       });
@@ -128,7 +157,9 @@ define([
       this.attributes.countries_by_organizations = _.map(this.attributes.charts.countries.bar_chart.by_n_organizations, function(country) {
         return {
           name: country.country_name,
-          data: [[country.country_name, Number(country.n_organizations)]],
+          data: [
+            [country.country_name, Number(country.n_organizations)]
+          ],
           locations: getLocations(self.attributes.charts.countries.maps.by_n_organizations)
         };
       });
@@ -136,7 +167,9 @@ define([
       this.attributes.countries_by_projects = _.map(this.attributes.charts.countries.bar_chart.by_n_projects, function(country) {
         return {
           name: country.country_name,
-          data: [[country.country_name, Number(country.n_projects)]],
+          data: [
+            [country.country_name, Number(country.n_projects)]
+          ],
           locations: getLocations(self.attributes.charts.countries.maps.by_n_projects)
         };
       });
@@ -145,7 +178,9 @@ define([
       this.attributes.sectors_by_donors = _.map(this.attributes.charts.sectors.bar_chart.by_n_donors, function(sector) {
         return {
           name: sector.sector_name,
-          data: [[sector.sector_name, Number(sector.n_donors)]],
+          data: [
+            [sector.sector_name, Number(sector.n_donors)]
+          ],
           locations: getLocations(self.attributes.charts.sectors.maps.by_n_donors)
         };
       });
@@ -153,7 +188,9 @@ define([
       this.attributes.sectors_by_organizations = _.map(this.attributes.charts.sectors.bar_chart.by_n_organizations, function(sector) {
         return {
           name: sector.sector_name,
-          data: [[sector.sector_name, Number(sector.n_organizations)]],
+          data: [
+            [sector.sector_name, Number(sector.n_organizations)]
+          ],
           locations: getLocations(self.attributes.charts.sectors.maps.by_n_organizations)
         };
       });
@@ -161,7 +198,9 @@ define([
       this.attributes.sectors_by_projects = _.map(this.attributes.charts.sectors.bar_chart.by_n_projects, function(sector) {
         return {
           name: sector.sector_name,
-          data: [[sector.sector_name, Number(sector.n_projects)]],
+          data: [
+            [sector.sector_name, Number(sector.n_projects)]
+          ],
           locations: getLocations(self.attributes.charts.sectors.maps.by_n_projects)
         };
       });

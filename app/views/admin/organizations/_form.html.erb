@@ -1,7 +1,11 @@
 <%= form_for(@organization, :url => (@organization.new_record? ? admin_organizations_path : admin_organization_path(@organization)), :html => { :multipart => true }) do |f| %>
 
-  <% if flash[:error] -%>
-  <div class="form_error"><%= flash[:error] %></div>
+  <% if @organization.errors.full_messages.any? %>
+  <div class="form_error">
+    <% @organization.errors.full_messages.each do |error_message| %>
+      <p><%= error_message %></p> <br />
+    <% end %>
+  </div>
   <% end -%>
 
   <div class="field">
