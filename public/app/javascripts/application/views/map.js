@@ -99,7 +99,7 @@ define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
     };
 
     function IOMMarker(info, diameter, classname, map) {
-      var isRegion = !!(info.name || info.region_name);
+      var isRegion = !!(!info.total_in_region && info.code === null && info.region_name);
 
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
       this.latlng_ = new google.maps.LatLng(parseFloat(info.lat), parseFloat(info.lon));
@@ -122,7 +122,7 @@ define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
         this.classname = 'marker-project-bubble is-marker-region';
         this.height_ = 20;
         this.width_ = 20;
-      } else if (this.classname === 'marker-bubble' && !info.code) {
+      } else if (this.classname === 'marker-bubble' && isRegion) {
         this.classname = 'marker-bubble is-marker-region';
       }
 
@@ -603,7 +603,7 @@ define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
         console.log(err);
       });
 
-    var countriesAndRegions = !!(_.where(map_data, {code: null}).length > 0);
+    var countriesAndRegions = (_.where(map_data, {code: null}).length > 0);
 
     // Markers
     for (var i = 0; i < map_data.length; i++) {
