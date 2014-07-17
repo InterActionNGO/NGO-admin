@@ -66,7 +66,7 @@
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=AIzaSyA2xfzq0KmJZIlGIpxXK1CjXa6enzmPGlM&sensor=false" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
-    <%= javascript_include_tag "../vendor/requirejs/require.js", "main.js" %>
+    <%= javascript_include_tag "../vendor/requirejs/require.js", "application/main.js" %>
 
     <% if Rails.env.production? %>
       <script type="text/javascript">

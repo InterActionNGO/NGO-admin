@@ -1,55 +1,59 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>NGO AID MAP</title>
-  <link rel="shortcut icon" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png" type="image/png"/>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Report · NGO Aid Map</title>
+    <meta name="content" content="NGO Aid Map report generator.">
+    <meta name="viewport" content="width=980px">
+    <meta name="google-site-verification" content="r4LPeTYNAKGuj7MPrkGpDgZ2ZXaKpVqn-nV7ixs5-sQ">
 
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+    <% if Rails.env.production? %>
+      <%= stylesheet_link_tag "main.css", :media => 'all' %>
+    <% else %>
+      <%= stylesheet_link_tag "lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css", "vendor/chachi-slider/chachi-slider.css", "vendor/select2/select2.css", "main.css", :media => 'all' %>
+    <% end %>
 
-  <meta charset="utf-8">
-    <title><%= CGI.unescapeHTML(title) %> · NGO Aid Map</title>
-    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", "main" %>
-    <link rel="icon" type="image/png" href="http://www.interaction.org/sites/default/files/interaction_favicon_0.png">
+    <% if Rails.env.development? %>
+      <link rel="icon" type="image/png" href="/app/images/favicon-dev.png">
+    <% else %>
+      <link rel="icon" type="image/png" href="/dist/images/favicon.png">
+    <% end %>
 
-    <%= stylesheet_link_tag 'backoffice/jscroll.css', 'backoffice/chosen.css', 'backoffice/plugins/fineuploader-3.3.0.css', 'backoffice/jquery-ui-1.7.2.custom.css', 'backoffice/layout.css', 'backoffice/smbtc-layout.css' %>
+    <%= javascript_include_tag "../lib/modernizr/modernizr.custom.js" %>
 
-    <%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=false', 'backoffice/jquery.min.js', 'backoffice/jquery.ui.core.js', 'backoffice/jquery.ui.widget.js', 'backoffice/jquery.ui.position.js', 'backoffice/jquery.ui.autocomplete.js', 'backoffice/rails.js', 'backoffice/plugins/chosen/chosen.jquery.js', 'backoffice/plugins/jquery.mousewheel.js','backoffice/plugins/jquery.jscrollpane.js', 'backoffice/plugins/date_combos.js', 'backoffice/plugins/jquery.mousewheel.js', 'backoffice/plugins/jquery.livequery.min.js', 'backoffice/plugins/jquery.stylish-select.js', 'backoffice/plugins/jHtmlArea-0.7.0.min.js', 'backoffice/plugins/fineuploader-3.3.0.js' %>
     <%= csrf_meta_tag %>
-
-<script>
-  $( document ).ready(function() {
-
-    $('form').submit(function() {
-        var valuesToSubmit = $(this).serialize();
-        event.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            cache    : false,
-            data: valuesToSubmit,
-            dataType: "JSON",
-            success: function(json){
-              $('#results').empty().text(JSON.stringify(json, undefined, 2));
-            }
-        });
-        return false; // prevents normal behaviour
-    });
-
-  });
-</script>
-</head>
-
-  <body>
+  </head>
+  <body class="<%= params[:controller] %>-page theme-<%= @site.theme_id %> <%= "section-" + @page.top_parent.permalink if @page.present? %> <%= "linos-" + @page.permalink if @page.present? %>">
     <%= render 'layouts/header' %>
-    <div class="row">
-      <div class="grid-17">
-        <%= yield %>
-        <div id="results"></div>
-      </div>
-    </div>
+
+    <%= yield %>
+
     <%= render 'layouts/footer' %>
 
-    <%# javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=AIzaSyA2xfzq0KmJZIlGIpxXK1CjXa6enzmPGlM&sensor=false" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
-    <%= javascript_include_tag "../vendor/requirejs/require", "main" %>
+    <%= javascript_include_tag "../vendor/requirejs/require.js", "report/main.js" %>
 
+    <% if Rails.env.production? %>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= @site.google_analytics_id %>']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+
+    <!-- START: Feedback -->
+    <a href="http://questionpro.com/a/TakeSurvey?id=3822025" id="feedbackBtn" class="btn-feedback is-unprintable" target="_blank">Feedback</a>
+    <!-- END: Feedback -->
   </body>
 </html>
