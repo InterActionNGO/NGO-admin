@@ -521,8 +521,7 @@ define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
         $('.infowindow-pop').unbind('click');
 
         var infowindow = cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
-          infowindowTemplate: infowindowHtml,
-          //cursorInteraction: false
+          infowindowTemplate: infowindowHtml
         });
 
         infowindow.model.on('change:visibility', function(model) {
@@ -604,6 +603,8 @@ define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
         console.log(err);
       });
 
+    var countriesAndRegions = !!(_.where(map_data, {code: null}).length > 0);
+
     // Markers
     for (var i = 0; i < map_data.length; i++) {
       // var image_source = '';
@@ -666,7 +667,11 @@ define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
         // image_source = '/app/images/themes/' + theme + '/project_marker.png';
       }
 
-      new IOMMarker(map_data[i], diameter, classname, map);
+      if (!countriesAndRegions) {
+        new IOMMarker(map_data[i], diameter, classname, map);
+      } else if (countriesAndRegions && !map_data[i].code) {
+        new IOMMarker(map_data[i], diameter, classname, map);
+      }
 
       bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
     }
