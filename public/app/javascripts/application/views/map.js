@@ -1,7 +1,7 @@
 /*global google,map_type,map_data:true,map_center,kind,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer,globalPage,page*/
 'use strict';
 
-define(['backbone', 'sprintf'], function(Backbone, sprintf) {
+define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
 
   var stylesArray = [{
     'featureType': 'landscape.natural',
@@ -32,7 +32,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
   var map, bounds;
 
-  sprintf = sprintf.sprintf;
+  var sprintf = _.str.sprintf;
 
   function old() {
     var MERCATOR_RANGE = 256;
@@ -99,7 +99,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     };
 
     function IOMMarker(info, diameter, classname, map) {
-      var isRegion = (info.name || info.region_name);
+      var isRegion = !!(info.name || info.region_name);
 
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
       this.latlng_ = new google.maps.LatLng(parseFloat(info.lat), parseFloat(info.lon));

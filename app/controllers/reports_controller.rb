@@ -2,7 +2,7 @@ require 'json'
 
 class ReportsController < ApplicationController
 
-  layout 'site_layout'
+  layout 'report_layout'
 
 	def index
 		respond_to do |format|
@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
 
 	def report
 		@data = Project.report(params)
-    @data = Project.bar_chart_report(params)
+    #@data = Project.bar_chart_report(params)
 
 		#@data_json = @data.to_json
 
@@ -41,7 +41,15 @@ class ReportsController < ApplicationController
     indicator = params[:indicator_name]
     operator = params[:operator]
     value = params[:indicator_value]
+  end
 
+  def list
+    #@table = Organization.joins(:projects).where('end_date > ?', Time.now).group('organizations.name').count('DISTINCT projects.id').sort_by {|k,v| v}.reverse
+
+    @table = Project.get_list(params)
+    respond_to do |format|
+      format.json { render :json => @table.to_json }
+    end
   end
 
 
