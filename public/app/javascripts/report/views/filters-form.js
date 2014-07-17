@@ -75,6 +75,10 @@ define([
 
         ReportModel.instance.set(data);
 
+        if (window.location.search === '') {
+          window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
+        }
+
         Backbone.Events.trigger('spinner:stop filters:done');
 
       }, this));

@@ -77,13 +77,17 @@ require([
   'views/summary',
   'views/budgets',
   'views/timeline-charts',
+  'views/actions',
 
-  'views/donors-snapshot'
+  'views/donors-snapshot',
+  'views/organizations-snapshot',
+  'views/countries-snapshot',
+  'views/sectors-snapshot'
 ], function(
   _, underscoreString, Handlebars,
   SpinView, FiltersFormView, IntroView,
-  TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView,
-  DonorsSnapshotView
+  TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView, ActionsView,
+  DonorsSnapshotView, OrganizationsSnapshotView, CountriesSnapshotView, SectorsSnapshotView
 ) {
 
   // Extensions
@@ -113,9 +117,13 @@ require([
   new FiltersView();
   new SummaryView();
   new BudgetsView();
+  new ActionsView();
 
   new TimelineChartsView();
   new DonorsSnapshotView();
+  new OrganizationsSnapshotView();
+  new CountriesSnapshotView();
+  new SectorsSnapshotView();
 
   new FiltersFormView();
 
