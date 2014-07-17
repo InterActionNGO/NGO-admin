@@ -65,14 +65,23 @@ class Project < ActiveRecord::Base
   validates_presence_of :sectors
   validate :location_presence,                                       :unless => lambda { sync_mode }
   validate :dates_consistency#, :presence_of_clusters_and_sectors
+  validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :website_changed?
+
 
   #validates_uniqueness_of :intervention_id, :if => (lambda do
     #intervention_id.present?
   #end)
-
+  
   after_create :generate_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
+  before_validation :strip_urls
+
+  def strip_urls
+    if self.website.present?
+      self.website = self.website.strip 
+    end
+  end
 
   def tags=(tag_names)
     if tag_names.blank?
@@ -611,6 +620,7 @@ SQL
       raise Iom::InvalidOffset if offset < 0
       sql << " OFFSET #{offset}"
     end
+
     result = ActiveRecord::Base.connection.execute(sql).map{ |r| r }
     page = Integer(options[:page]) rescue 1
 
@@ -1171,7 +1181,7 @@ SQL
     form_query = "%" + params[:q].downcase.strip + "%" if params[:q]
 
     projects_select = <<-SQL
-      SELECT  id, name, budget, start_date, end_date, primary_organization_id, end_date > '2014-06-17' as active
+      SELECT  id, name, budget, start_date, end_date, primary_organization_id, end_date >= now() as active
       FROM projects
       WHERE ( (start_date <= '#{start_date}' AND end_date >='#{start_date}') OR (start_date>='#{start_date}' AND end_date <='#{end_date}') OR (start_date<='#{end_date}' AND end_date>='#{end_date}') )
         AND lower(trim(name)) like '%#{form_query}%'
@@ -1220,9 +1230,7 @@ SQL
       end
     end
 
-    @projects = @projects.select(["projects.id","projects.name","projects.budget","projects.start_date","projects.end_date","(end_date >= current_date) as active"])
-
-    #p "===========  PROJECTS ============ " + @projects.to_sql.to_s.gsub("\"","")
+    @projects = @projects.select(["projects.id","projects.name","projects.budget","projects.primary_organization_id", "projects.start_date","projects.end_date","(end_date >= current_date) as active"])
 
     @data ||= {}
     @totals ||= {}
@@ -1232,7 +1240,13 @@ SQL
     projects_str = @projects.map { |elem| elem.id }.join(',') || ""
 
     @data[:results] = {}
-    @data[:results][:projects] = @projects
+
+    # Add years ranges of activeness for report charts
+    @data[:results][:projects_year_ranges] = {}
+    @projects.each do |project|
+      #add the range made an array
+      @data[:results][:projects_year_ranges][project.id] = ((project.start_date.year..project.end_date.year).to_a)
+    end
 
     @data[:results][:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
     @data[:results][:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
@@ -1249,11 +1263,12 @@ SQL
 
       # TOTAL PROJECTS BUDGET
       non_zero_values = []
-      @data[:results][:projects].each do |val|
-        p val[:budget].to_f
+       @projects.each do |val|
+        #p val[:budget].to_f
         non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
       end
-      p @data[:results][:totals][:budget]
+
+      #p @data[:results][:totals][:budget]
       @data[:results][:totals][:budget] = non_zero_values.inject(:+)
       if non_zero_values.length > 0
         avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
@@ -1263,6 +1278,9 @@ SQL
       @data[:results][:budget][:max] = non_zero_values.max
       @data[:results][:budget][:min] = non_zero_values.min
       @data[:results][:budget][:average] = (avg * 100).round / 100.0
+
+
+      @data[:results][:projects] = @projects
 
       @data[:results][:totals][:projects] = @data[:results][:projects].length
       @data[:results][:totals][:donors] = @data[:results][:donors].length
