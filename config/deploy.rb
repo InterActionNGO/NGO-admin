@@ -23,10 +23,10 @@ set :repository, "git://github.com/simbiotica/iom.git"
 ssh_options[:forward_agent] = true
 set :keep_releases, 5
 
-set :linode_staging, '178.79.131.104'
-set :linode_production_old, '173.255.238.86'
+# set :linode_staging_old, '178.79.131.104'
+# set :linode_production_old, '173.255.238.86'
 set :linode_production, '23.92.20.76'
-set :linode_smbtc, '66.228.36.71'
+set :linode_staging, '66.228.36.71'
 set :user,  'ubuntu'
 
 set :deploy_to, "/home/ubuntu/www/#{application}"
