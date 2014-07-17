@@ -5054,11 +5054,11 @@ div#modal_window {
   z-index: 10; }
   div#modal_window div.alert {
     position: absolute;
-    top: 300px;
+    top: 50%;
     left: 50%;
     width: 450px;
     padding: 22px;
-    margin: 0 0 0 -247px;
+    margin: -150px 0 0 -247px;
     background: url("/app/images/backoffice/common/modal_middle.png") repeat 0 0; }
     div#modal_window div.alert .top_border, div#modal_window div.alert .bottom_border {
       position: relative;
