@@ -1,13 +1,26 @@
 'use strict';
 
 define([
+  'underscore',
   'backbone'
-], function(Backbone) {
+], function(_, Backbone) {
 
   var OrganizationsCollection = Backbone.Collection.extend({
 
     url: function() {
       return '/list?' + this.URLParams;
+    },
+
+    parse: function(data) {
+      return _.map(data, function(organization) {
+        return {
+          name: organization.name,
+          projectsCount: Number(organization.projects_count),
+          countriesCount: Number(organization.countries_count),
+          sectorsCount: Number(organization.sectors_count),
+          donorsCount: Number(organization.donors_count)
+        };
+      });
     },
 
     getByURLParams: function(URLParams, callback) {
