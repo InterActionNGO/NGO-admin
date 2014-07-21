@@ -34,6 +34,14 @@ define([
     },
 
     showSnapshot: function() {
+      var countriesByProjects = _.first(ReportModel.instance.get('countries'), this.options.limit);
+      var countriesByOrganizations = _.first(_.sortBy(ReportModel.instance.get('countries'), function(country) {
+        return -country.organizationsCount;
+      }), this.options.limit);
+      var countriesByDonors = _.first(_.sortBy(ReportModel.instance.get('countries'), function(country) {
+        return -country.donorsCount;
+      }), this.options.limit);
+
       this.data = {
         title: 'Countries snapshot',
         description: _.str.sprintf('A total of %(countries)s found countries, with %(projects)s projects by %(organizations)s organizations across %(sectors)s sectors.', {
@@ -45,28 +53,28 @@ define([
         }),
         charts: [{
           name: 'By number of projects',
-          series: _.first(_.map(ReportModel.instance.get('countries'), function(country) {
+          series: _.map(countriesByProjects, function(country) {
             return {
               name: country.name,
               data: [[country.name, country.projectsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of organizations',
-          series: _.first(_.map(ReportModel.instance.get('countries'), function(country) {
+          series: _.map(countriesByOrganizations, function(country) {
             return {
               name: country.name,
               data: [[country.name, country.organizationsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of donors',
-          series: _.first(_.map(ReportModel.instance.get('countries'), function(country) {
+          series: _.map(countriesByDonors, function(country) {
             return {
               name: country.name,
               data: [[country.name, country.donorsCount]]
             };
-          }), this.options.limit)
+          })
         }]
       };
 

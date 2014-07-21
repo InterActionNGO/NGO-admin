@@ -1,0 +1,107 @@
+{{#if donors}}
+  <h2>Donors list</h2>
+  <table>
+    <tr>
+      <th>Donor</th>
+      <th>Projects</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each donors}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+
+{{#if organizations}}
+  <h2>Organizations list</h2>
+  <table>
+    <tr>
+      <th>Donor</th>
+      <th>Projects</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each organizations}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+
+{{#if countries}}
+  <h2>Countries list</h2>
+  <table>
+    <tr>
+      <th>Country</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Projects</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each countries}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+{{#if projects}}
+  <h2>Projects list</h2>
+  <table>
+    <tr>
+      <th>Project</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each projects}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+{{#if sectors}}
+  <h2>Sectors list</h2>
+  <table>
+    <tr>
+      <th>Sector</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Projects</th>
+      <th>Countries</th>
+    </tr>
+    {{#each sectors}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
