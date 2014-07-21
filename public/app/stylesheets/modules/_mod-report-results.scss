@@ -2,6 +2,11 @@
   padding: 20px 0;
   border-bottom: 3px solid #eee;
 
+  h3 {
+    margin: 20px 0;
+    min-height: 30px;
+  }
+
   table {  width: 100%; }
   td { padding: 2px 0; }
   &:last-child { border-bottom: 0; }
@@ -61,9 +66,6 @@
   float: left;
   margin: 0 1%;
   width: 31.333334%;
-  h3 {
-    min-height: 30px;
-  }
 }
 
 .report-spinner {
@@ -81,6 +83,12 @@
   td {
     font-weight: lighter;
     font-size: 36px;
+  }
+  .btn-show-list {
+    display: block;
+    font-size: 15px;
+    font-weight: normal;
+    color: $color-1;
   }
 }
 

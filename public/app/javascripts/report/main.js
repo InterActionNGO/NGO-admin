@@ -82,12 +82,19 @@ require([
   'views/donors-snapshot',
   'views/organizations-snapshot',
   'views/countries-snapshot',
-  'views/sectors-snapshot'
+  'views/sectors-snapshot',
+
+  'views/donors-list',
+  'views/organizations-list',
+  'views/projects-list',
+  'views/countries-list',
+  'views/sectors-list'
 ], function(
   _, underscoreString, Handlebars,
   SpinView, FiltersFormView, IntroView,
   TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView, ActionsView,
-  DonorsSnapshotView, OrganizationsSnapshotView, CountriesSnapshotView, SectorsSnapshotView
+  DonorsSnapshotView, OrganizationsSnapshotView, CountriesSnapshotView, SectorsSnapshotView,
+  DonorsListView, OrganizationsListView, ProjectsListView, CountriesListView, SectorsListView
 ) {
 
   // Extensions
@@ -124,6 +131,12 @@ require([
   new OrganizationsSnapshotView();
   new CountriesSnapshotView();
   new SectorsSnapshotView();
+
+  new DonorsListView();
+  new OrganizationsListView();
+  new ProjectsListView();
+  new CountriesListView();
+  new SectorsListView();
 
   new FiltersFormView();
 
