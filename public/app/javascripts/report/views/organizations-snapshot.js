@@ -36,7 +36,7 @@ define([
     showSnapshot: function() {
       this.data = {
         title: 'Organizations snapshot',
-        description: _.str.sprintf('A total of %(organizations)s found organizations, supporting %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.', {
+        description: _.str.sprintf('A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.', {
           donors: ReportModel.instance.get('donors').length,
           projects: ReportModel.instance.get('projects').length,
           organizations: ReportModel.instance.get('organizations').length,
