@@ -51,7 +51,9 @@ define([
     fetchData: function() {
       Backbone.Events.trigger('spinner:start filters:fetch');
 
-      this.$window.scrollTop(154);
+      _.delay(_.bind(function() {
+        this.$window.scrollTop(154);
+      }, this), 100);
 
       this.URLParams = this.$el.find('form').serialize();
 
@@ -75,9 +77,7 @@ define([
 
         ReportModel.instance.set(data);
 
-        if (window.location.search === '') {
-          window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
-        }
+        window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
 
         Backbone.Events.trigger('spinner:stop filters:done');
 

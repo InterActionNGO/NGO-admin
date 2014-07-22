@@ -13,6 +13,10 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click .btn-show-list': 'showList'
+    },
+
     initialize: function() {
       Backbone.Events.on('filters:fetch', this.hide, this);
       Backbone.Events.on('filters:done', this.showSummary, this);
@@ -28,6 +32,17 @@ define([
       this.render();
 
       this.$el.removeClass('is-hidden');
+    },
+
+    showList: function(e) {
+      var $current = $(e.currentTarget);
+
+      Backbone.Events.trigger('list:show', {
+        name: $current.data('list'),
+        category: $current.data('category')
+      });
+
+      e.preventDefault();
     },
 
     hide: function() {

@@ -9,15 +9,6 @@ define([
   var ChartView = Backbone.View.extend({
 
     options: {
-      // chart: {
-      //   type: 'column',
-      //   spacingLeft: 0,
-      //   spacingRight: 0,
-      //   height: 600
-      // },
-      // title: {
-      //   text: null
-      // },
       colors: ['#CBCBCB', '#323232', '#006C8D', '#AACED9', '#878787', '#8E921B', '#CDCF9A', '#C45017', '#E5B198', '#D7A900'],
       plotOptions: {
         column: {

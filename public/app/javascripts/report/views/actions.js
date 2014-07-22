@@ -13,8 +13,8 @@ define([
     },
 
     initialize: function() {
-      Backbone.Events.once('filters:fetch', this.hide, this);
-      Backbone.Events.once('filters:done', this.show, this);
+      Backbone.Events.on('filters:fetch', this.hide, this);
+      Backbone.Events.on('filters:done', this.show, this);
     },
 
     hide: function() {

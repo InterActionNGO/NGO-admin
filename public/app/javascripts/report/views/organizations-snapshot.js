@@ -5,7 +5,7 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
-  'views/snapshot/chart',
+  'views/class/chart',
   'models/report',
   'text!templates/snapshot.handlebars'
 ], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
@@ -34,9 +34,17 @@ define([
     },
 
     showSnapshot: function() {
+      var organizationsByProjects = _.first(ReportModel.instance.get('organizations'), this.options.limit);
+      var organizationsByCountries = _.first(_.sortBy(ReportModel.instance.get('organizations'), function(organization) {
+        return -organization.countriesCount;
+      }), this.options.limit);
+      var organizationsByBudget = _.first(_.sortBy(ReportModel.instance.get('organizations'), function(organization) {
+        return -organization.countriesCount;
+      }), this.options.limit);
+
       this.data = {
         title: 'Organizations snapshot',
-        description: _.str.sprintf('A total of %(organizations)s found organizations, supporting %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.', {
+        description: _.str.sprintf('A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.', {
           donors: ReportModel.instance.get('donors').length,
           projects: ReportModel.instance.get('projects').length,
           organizations: ReportModel.instance.get('organizations').length,
@@ -45,28 +53,28 @@ define([
         }),
         charts: [{
           name: 'By number of projects',
-          series: _.first(_.map(ReportModel.instance.get('organizations'), function(organization) {
+          series: _.map(organizationsByProjects, function(organization) {
             return {
               name: organization.name,
               data: [[organization.name, organization.projectsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of countries',
-          series: _.first(_.map(ReportModel.instance.get('organizations'), function(organization) {
+          series: _.map(organizationsByCountries, function(organization) {
             return {
               name: organization.name,
               data: [[organization.name, organization.countriesCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By budget',
-          series: _.first(_.map(ReportModel.instance.get('organizations'), function(organization) {
+          series: _.map(organizationsByBudget, function(organization) {
             return {
               name: organization.name,
               data: [[organization.name, organization.countriesCount]]
             };
-          }), this.options.limit)
+          })
         }]
       };
 
