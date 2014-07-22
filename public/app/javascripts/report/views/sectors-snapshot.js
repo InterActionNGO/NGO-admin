@@ -5,7 +5,7 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
-  'views/snapshot/chart',
+  'views/class/chart',
   'models/report',
   'text!templates/snapshot.handlebars'
 ], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
@@ -34,6 +34,14 @@ define([
     },
 
     showSnapshot: function() {
+      var sectorsByProjects = _.first(ReportModel.instance.get('sectors'), this.options.limit);
+      var sectorsByOrganizations = _.first(_.sortBy(ReportModel.instance.get('sectors'), function(sector) {
+        return -sector.organizationsCount;
+      }), this.options.limit);
+      var sectorsByDonors = _.first(_.sortBy(ReportModel.instance.get('sectors'), function(sector) {
+        return -sector.donorsCount;
+      }), this.options.limit);
+
       this.data = {
         title: 'Sectors snapshot',
         description: _.str.sprintf('A total of %(sectors)s found sectors, supporting %(projects)s projects by %(donors)s donors and %(organizations)s organizations in %(countries)s countries.', {
@@ -45,28 +53,28 @@ define([
         }),
         charts: [{
           name: 'By number of projects',
-          series: _.first(_.map(ReportModel.instance.get('sectors'), function(sector) {
+          series: _.map(sectorsByProjects, function(sector) {
             return {
               name: sector.name,
               data: [[sector.name, sector.projectsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of organizations',
-          series: _.first(_.map(ReportModel.instance.get('sectors'), function(sector) {
+          series: _.map(sectorsByOrganizations, function(sector) {
             return {
               name: sector.name,
               data: [[sector.name, sector.organizationsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of donors',
-          series: _.first(_.map(ReportModel.instance.get('sectors'), function(sector) {
+          series: _.map(sectorsByDonors, function(sector) {
             return {
               name: sector.name,
-              data: [[sector.name, sector.countriesCount]]
+              data: [[sector.name, sector.donorsCount]]
             };
-          }), this.options.limit)
+          })
         }]
       };
 

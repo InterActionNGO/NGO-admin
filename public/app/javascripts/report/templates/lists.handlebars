@@ -1,0 +1,157 @@
+{{#if donors}}
+  <h2>Donors list</h2>
+  <ul class="mod-report-lists-selector">
+    <li>
+      <span class="current">By number of projects</span>
+      <ul>
+        <li><a href="#projects" data-category="projectsCount">By number of projects</a></li>
+        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+      </ul>
+    </li>
+  </ul>
+  <table>
+    <tr>
+      <th>Donor</th>
+      <th>Projects</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each donors}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+
+{{#if organizations}}
+  <h2>Organizations list</h2>
+  <ul class="mod-report-lists-selector">
+    <li>
+      <span class="current">By number of projects</span>
+      <ul>
+        <li><a href="#projects" data-category="projectsCount">By number of projects</a></li>
+        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+      </ul>
+    </li>
+  </ul>
+  <table>
+    <tr>
+      <th>Organization</th>
+      <th>Projects</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each organizations}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+
+{{#if countries}}
+  <h2>Countries list</h2>
+  <ul class="mod-report-lists-selector">
+    <li>
+      <span class="current">By number of organizations</span>
+      <ul>
+        <li><a href="#organizations" data-category="organizationsCount">By number of organizations</a></li>
+        <li><a href="#donors" data-category="donorsCount">By number of donors</a></li>
+        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+      </ul>
+    </li>
+  </ul>
+  <table>
+    <tr>
+      <th>Country</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Projects</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each countries}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+{{#if projects}}
+  <h2>Projects list</h2>
+  <ul class="mod-report-lists-selector">
+    <li>
+      <span class="current">By number of donors</span>
+      <ul>
+        <li><a href="#donors" data-category="donorsCount">By number of donors</a></li>
+        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+      </ul>
+    </li>
+  </ul>
+  <table>
+    <tr>
+      <th>Project</th>
+      <th>Donors</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    {{#each projects}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}
+
+{{#if sectors}}
+  <h2>Sectors list</h2>
+  <ul class="mod-report-lists-selector">
+    <li>
+      <span class="current">By number of organizations</span>
+      <ul>
+        <li><a href="#organizations" data-category="organizationsCount">By number of organizations</a></li>
+        <li><a href="#donors" data-category="donorsCount">By number of donors</a></li>
+        <li><a href="#projects" data-category="projectsCount">By number of projects</a></li>
+        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
+      </ul>
+    </li>
+  </ul>
+  <table>
+    <tr>
+      <th>Sector</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Projects</th>
+      <th>Countries</th>
+    </tr>
+    {{#each sectors}}
+      <tr>
+        <td>{{name}}</td>
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+      </tr>
+    {{/each}}
+  </table>
+{{/if}}

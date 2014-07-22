@@ -5,7 +5,7 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
-  'views/snapshot/chart',
+  'views/class/chart',
   'models/report',
   'text!templates/snapshot.handlebars'
 ], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
@@ -34,6 +34,14 @@ define([
     },
 
     showSnapshot: function() {
+      var donorsByProjects = _.first(ReportModel.instance.get('donors'), this.options.limit);
+      var donorsByOrganizations = _.first(_.sortBy(ReportModel.instance.get('donors'), function(donor) {
+        return -donor.organizationsCount;
+      }), this.options.limit);
+      var donorsByCountries = _.first(_.sortBy(ReportModel.instance.get('donors'), function(donor) {
+        return -donor.countriesCount;
+      }), this.options.limit);
+
       this.data = {
         title: 'Donors snapshot',
         description: _.str.sprintf('A total of %(donors)s found donors, supporting %(projects)s projects by %(organizations)s organizations in %(countries)s countries across %(sectors)s sectors.', {
@@ -45,28 +53,28 @@ define([
         }),
         charts: [{
           name: 'By number of projects',
-          series: _.first(_.map(ReportModel.instance.get('donors'), function(donor) {
+          series: _.map(donorsByProjects, function(donor) {
             return {
               name: donor.name,
               data: [[donor.name, donor.projectsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of organizations',
-          series: _.first(_.map(ReportModel.instance.get('donors'), function(donor) {
+          series: _.map(donorsByOrganizations, function(donor) {
             return {
               name: donor.name,
               data: [[donor.name, donor.organizationsCount]]
             };
-          }), this.options.limit)
+          })
         }, {
           name: 'By number of countries',
-          series: _.first(_.map(ReportModel.instance.get('donors'), function(donor) {
+          series: _.map(donorsByCountries, function(donor) {
             return {
               name: donor.name,
               data: [[donor.name, donor.countriesCount]]
             };
-          }), this.options.limit)
+          })
         }]
       };
 
