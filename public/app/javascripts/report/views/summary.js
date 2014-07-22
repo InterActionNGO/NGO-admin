@@ -35,9 +35,14 @@ define([
     },
 
     showList: function(e) {
-      e.preventDefault();
+      var $current = $(e.currentTarget);
 
-      Backbone.Events.trigger('list:show', $(e.currentTarget).data('list'));
+      Backbone.Events.trigger('list:show', {
+        name: $current.data('list'),
+        category: $current.data('category')
+      });
+
+      e.preventDefault();
     },
 
     hide: function() {

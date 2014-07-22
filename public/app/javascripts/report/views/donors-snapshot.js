@@ -5,7 +5,7 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
-  'views/snapshot/chart',
+  'views/class/chart',
   'models/report',
   'text!templates/snapshot.handlebars'
 ], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {

@@ -232,6 +232,33 @@ ul.mod-report-locations-header-child {
   display: none;
 }
 
+.mod-report-lists {
+  table {
+    margin: 20px 0 0 0;
+  }
+  th {
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  td {
+    font-size: 30px;
+    font-weight: lighter;
+    &:first-child {
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+  th, td {
+    padding: 5px;
+    text-align: center;
+    &:first-child {
+      padding-left: 0;
+      text-align: left;
+    }
+  }
+}
+
 @media print {
   .mod-header,
   .featured-projects,

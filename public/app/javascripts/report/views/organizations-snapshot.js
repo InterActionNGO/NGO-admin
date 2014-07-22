@@ -5,7 +5,7 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
-  'views/snapshot/chart',
+  'views/class/chart',
   'models/report',
   'text!templates/snapshot.handlebars'
 ], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
@@ -41,6 +41,8 @@ define([
       var organizationsByBudget = _.first(_.sortBy(ReportModel.instance.get('organizations'), function(organization) {
         return -organization.countriesCount;
       }), this.options.limit);
+
+      console.log(organizationsByProjects);
 
       this.data = {
         title: 'Organizations snapshot',
