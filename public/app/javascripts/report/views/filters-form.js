@@ -51,9 +51,9 @@ define([
     fetchData: function() {
       Backbone.Events.trigger('spinner:start filters:fetch');
 
-      _.delay(function() {
+      _.delay(_.bind(function() {
         this.$window.scrollTop(154);
-      }, 100, this);
+      }, this), 100);
 
       this.URLParams = this.$el.find('form').serialize();
 

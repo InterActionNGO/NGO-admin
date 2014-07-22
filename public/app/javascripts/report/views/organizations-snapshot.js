@@ -42,8 +42,6 @@ define([
         return -organization.countriesCount;
       }), this.options.limit);
 
-      console.log(organizationsByProjects);
-
       this.data = {
         title: 'Organizations snapshot',
         description: _.str.sprintf('A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.', {

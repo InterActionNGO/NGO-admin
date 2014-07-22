@@ -13,7 +13,7 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .report-lists-selector a': '_onClickSelector'
+      'click .mod-report-lists-selector a': '_onClickSelector'
     },
 
     initialize: function() {
@@ -51,10 +51,17 @@ define([
     },
 
     _onClickSelector: function(e) {
+      var $current = $(e.currentTarget);
+      var currentText = $current.text();
+
       this._showList({
         name: this.options.slug,
-        category: $(e.currentTarget).data('category')
+        category: $current.data('category')
       });
+
+      console.log(currentText);
+
+      this.$el.find('.current').text(currentText);
 
       e.preventDefault();
     }
