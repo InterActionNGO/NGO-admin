@@ -233,6 +233,8 @@ ul.mod-report-locations-header-child {
 }
 
 .mod-report-lists {
+  position: relative;
+
   table {
     margin: 20px 0 0 0;
   }
@@ -250,14 +252,57 @@ ul.mod-report-locations-header-child {
     }
   }
   th, td {
-    padding: 5px;
+    padding: 5px 7px;
     text-align: center;
     &:first-child {
       padding-left: 0;
       text-align: left;
     }
+    &:last-child {
+      padding-right: 0;
+    }
   }
 }
+
+.mod-report-lists-selector {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  background-color: $color-4;
+  border-radius: 15px;
+  right: 0;
+  top: 20px;
+  z-index: 1;
+
+  & > li {
+    ul {
+      display: none;
+      padding: 10px 0;
+      li {
+        padding: 5px 0;
+      }
+    }
+    &:hover ul {
+      display: block;
+    }
+  }
+
+  li, .current {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .current {
+    display: block;
+    position: relative;
+    padding-right: 20px;
+    &:after {
+      @include after('', block, absolute, 0, 3px, 0, 0) ;
+      @include triangle (5px, $color-3);
+    }
+  }
+}
+
 
 @media print {
   .mod-header,
