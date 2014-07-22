@@ -1723,6 +1723,10 @@ SQL
 
     active_projects = params[:active_projects] ? "AND p.end_date > now()" : "" unless date_filter != nil
 
+    if the_model == 'o'
+      budget_line = ", SUM(p.budget) AS budget"
+    end 
+
     if the_model == 'p'
       sql = <<-SQL
         SELECT p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization,
@@ -1751,6 +1755,7 @@ SQL
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count,
         COUNT(DISTINCT o.id) AS organizations_count
+        #{budget_line}
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
