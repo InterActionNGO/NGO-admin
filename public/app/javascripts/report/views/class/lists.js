@@ -12,9 +12,14 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click .report-lists-selector a': '_onClickSelector'
+    },
+
     initialize: function() {
       this.$page = $('html, body');
-      Backbone.Events.on('list:show', this.showList, this);
+      Backbone.Events.on('filters:fetch', this.hide, this);
+      Backbone.Events.on('list:show', this._showList, this);
     },
 
     render: function() {
@@ -22,10 +27,6 @@ define([
     },
 
     show: function() {
-      console.log(ReportModel.instance.get(this.options.slug));
-      this.data = {};
-      this.data[this.options.slug] = _.first(ReportModel.instance.get(this.options.slug), this.options.limit);
-      this.render();
       this.$el.removeClass('is-hidden');
       this.$page.animate({
         scrollTop: this.$el.offset().top - 30 + 'px'
@@ -36,11 +37,26 @@ define([
       this.$el.addClass('is-hidden');
     },
 
-    showList: function(list) {
+    _showList: function(list) {
+      var items = ReportModel.instance.get(this.options.slug);
       this.hide();
-      if (list === this.options.slug) {
+      if (list.name === this.options.slug) {
+        this.data = {};
+        this.data[this.options.slug] = _.first(_.sortBy(items, function(item) {
+          return -item[list.category];
+        }), this.options.limit);
+        this.render();
         this.show();
       }
+    },
+
+    _onClickSelector: function(e) {
+      this._showList({
+        name: this.options.slug,
+        category: $(e.currentTarget).data('category')
+      });
+
+      e.preventDefault();
     }
 
   });
