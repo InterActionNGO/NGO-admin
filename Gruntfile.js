@@ -118,6 +118,15 @@ module.exports = function(grunt) {
           ]
         }
       },
+      report: {
+        files: {
+          '<%= root.dist %>/stylesheets/report.css': [
+            '<%= root.app %>/lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css',
+            '<%= root.app %>/vendor/select2/select2.css',
+            '<%= root.tmp %>/stylesheets/report.css'
+          ]
+        }
+      },
       embed: {
         files: {
           '<%= root.dist %>/stylesheets/embed.css': [
@@ -149,6 +158,12 @@ module.exports = function(grunt) {
           src: '{,*/}*{,*/}*{,*/}*.{png,jpg,jpeg,gif}',
           dest: '<%= root.dist %>/images'
         }]
+      },
+      libs: {
+        files: {
+          '<%= root.dist %>/stylesheets/select2.png': '<%= root.app %>/vendor/select2/select2.png',
+          '<%= root.dist %>/stylesheets/select2-spinner.gif': '<%= root.app %>/vendor/select2/select2-spinner.gif'
+        }
       }
     },
 
