@@ -18,7 +18,7 @@
                 <label>ORGANIZATION</label>
                 <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
                 <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'organization_include', 'include' %>
+                <%# hidden_field_tag 'organization_include', 'include' %>
               </li>
 
               <!--
@@ -35,7 +35,7 @@
                 <%= select_tag :country,
                   options_for_select(@countries_combo_values, params[:country]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select country" %>
                 <%# select_tag :country_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'country_include', 'include' %>
+                <%# hidden_field_tag 'country_include', 'include' %>
               </li>
 
               <li class="comboselect">
@@ -43,15 +43,15 @@
                 <%= select_tag :sector,
                   options_for_select(@sectors_combo_values, params[:sector]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select sector" %>
                 <%# select_tag :sector_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                <%= hidden_field_tag 'sector_include', 'include' %>
+                <%# hidden_field_tag 'sector_include', 'include' %>
               </li>
 
               <li class="comboselect">
                 <label>DONOR</label>
-                <%= select_tag :donor,
-                  options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
+                  <%= select_tag :donor,
+                    options_for_select(@donors_combo_values, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select donor"%>
                   <%# select_tag :donor_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
-                  <%= hidden_field_tag 'donor_include', 'include' %>
+                  <%# hidden_field_tag 'donor_include', 'include' %>
               </li>
 
               <li class="comboselect date">
@@ -91,13 +91,50 @@
         <div class="report-spinner" id="spinView"></div>
 
         <article class="mod-content-article">
-          <h1 class="report-title"><textarea placeholder="Type your title"></textarea></h1>
-          <div id="totalsView">
-            <div class="mod-report mod-report-intro">
-              <p>Start applying some filters to generate a report.</p>
-              <p><%= image_tag "arrow-reports.svg" %></p>
+          <h1 id="titleView" class="report-title"><textarea placeholder="Type your title"></textarea></h1>
+
+          <div id="introView" class="mod-report mod-report-intro">
+            <p>Start applying some filters to generate a report.</p>
+            <p><%= image_tag "arrow-reports.svg" %></p>
+          </div>
+
+          <div id="filtersView" class="mod-applied-filters is-hidden"></div>
+
+          <div id="summaryView" class="mod-report mod-report-summary is-hidden"></div>
+
+          <div id="budgetsView" class="mod-report mod-report-budget is-hidden"></div>
+
+          <div id="timelineChartsView" class="mod-report is-hidden">
+            <div id="modReportsTabs">
+              <ul>
+                <li><a href="#projectTab">NGO Aid Map Project Number Over Time</a></li>
+                <li><a href="#organizationTab">Active Organizations Over Time</a></li>
+              </ul>
+              <div id="projectTab">
+                <div class="mod-report-line-chart" id="projectsChart"></div>
+              </div>
+              <div id="organizationTab">
+                <div class="mod-report-line-chart" id="organizationsChart"></div>
+              </div>
             </div>
           </div>
+
+          <div id="projectsListView" class="mod-report mod-report-lists is-break-before is-hidden"></div>
+          <div id="donorsListView" class="mod-report mod-report-lists is-break-before is-hidden"></div>
+          <div id="organizationsListView" class="mod-report mod-report-lists is-break-before is-hidden"></div>
+          <div id="countriesListView" class="mod-report mod-report-lists is-break-before is-hidden"></div>
+          <div id="sectorsListView" class="mod-report mod-report-lists is-break-before is-hidden"></div>
+
+          <div id="donorsSnapshotView" class="mod-report is-break-before is-hidden"></div>
+          <div id="organizationsSnapshotView" class="mod-report is-break-before is-hidden"></div>
+          <div id="countriesSnapshotView" class="mod-report is-break-before is-hidden"></div>
+          <div id="sectorsSnapshotView" class="mod-report is-break-before is-hidden"></div>
+
+          <div id="actionsView" class="mod-report mod-report-actions is-unprintable is-hidden">
+            <button id="printReport">Print</button>
+            <!-- <button id="saveReport">Save PDF</button> -->
+          </div>
+
         </article>
 
       </section>

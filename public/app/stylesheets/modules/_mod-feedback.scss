@@ -1,4 +1,4 @@
-#feedbackBtn {
+.btn-feedback {
   padding: 10px 25px;
   text-transform: uppercase;
   background-color: $color-2;
@@ -9,7 +9,7 @@
   position: fixed;
   top: 350px;
   left: 0;
-  z-index: 1000;
+  z-index: 99;
 
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;

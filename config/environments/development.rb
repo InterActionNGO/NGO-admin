@@ -22,11 +22,11 @@ Iom::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
   config.log_level = :debug
-
+    
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  config.action_controller.cache_store = :memory_store
+  #config.action_controller.cache_store = :memory_store
 
   # Assets path
   config.action_controller.asset_path = proc { |asset_path|

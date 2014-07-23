@@ -2,10 +2,10 @@
 
 require.config({
 
-  baseUrl: '/app/javascripts',
+  baseUrl: '/app/javascripts/countdown',
 
   paths: {
-    jquery: '../vendor/jquery/dist/jquery'
+    jquery: '../../vendor/jquery/dist/jquery'
   },
 
   shim: {
