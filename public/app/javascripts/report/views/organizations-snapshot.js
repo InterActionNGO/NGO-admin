@@ -39,7 +39,7 @@ define([
         return -organization.countriesCount;
       }), this.options.limit);
       var organizationsByBudget = _.first(_.sortBy(ReportModel.instance.get('organizations'), function(organization) {
-        return -organization.countriesCount;
+        return -organization.budget;
       }), this.options.limit);
 
       this.data = {
@@ -72,7 +72,7 @@ define([
           series: _.map(organizationsByBudget, function(organization) {
             return {
               name: organization.name,
-              data: [[organization.name, organization.countriesCount]]
+              data: [[organization.name, organization.budget]]
             };
           })
         }]
