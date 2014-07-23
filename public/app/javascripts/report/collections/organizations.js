@@ -18,7 +18,8 @@ define([
           projectsCount: Number(organization.projects_count),
           countriesCount: Number(organization.countries_count),
           sectorsCount: Number(organization.sectors_count),
-          donorsCount: Number(organization.donors_count)
+          donorsCount: Number(organization.donors_count),
+          budget: Number(organization.budget) || 0
         };
       });
     },
