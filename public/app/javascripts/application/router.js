@@ -3,11 +3,6 @@
 define([
   'backbone',
 
-  'models/report',
-
-  'views/report-form',
-  'views/report-results',
-
   'views/clusters',
   'views/map',
   'views/filters',
@@ -17,25 +12,21 @@ define([
   'views/search',
   'views/layer-overlay',
   'views/timeline',
-  'views/spin',
   'views/donors-sidebar',
   'views/gallery'
-], function(Backbone, ReportModel) {
+], function(Backbone) {
 
-  var ReportFormView = arguments[2],
-    ReportResultsView = arguments[3],
-    ClustersView = arguments[4],
-    MapView = arguments[5],
-    FiltersView = arguments[6],
-    MenuFixedView = arguments[7],
-    DownloadsView = arguments[8],
-    EmbedMapView = arguments[9],
-    SearchView = arguments[10],
-    LayerOverlayView = arguments[11],
-    TimelineView = arguments[12],
-    SpinView = arguments[13],
-    DonorsSidebarView = arguments[14],
-    GalleryView = arguments[15];
+  var ClustersView = arguments[1],
+    MapView = arguments[2],
+    FiltersView = arguments[3],
+    MenuFixedView = arguments[4],
+    DownloadsView = arguments[5],
+    EmbedMapView = arguments[6],
+    SearchView = arguments[7],
+    LayerOverlayView = arguments[8],
+    TimelineView = arguments[9],
+    DonorsSidebarView = arguments[10],
+    GalleryView = arguments[11];
 
   var Router = Backbone.Router.extend({
 
@@ -85,22 +76,8 @@ define([
       new SearchView();
     },
 
-    page: function(page) {
+    page: function() {
       new MenuFixedView();
-
-      if (page === 'analysis') {
-        var reportModel = new ReportModel();
-
-        new SpinView();
-
-        new ReportFormView({
-          model: reportModel
-        });
-
-        new ReportResultsView({
-          model: reportModel
-        });
-      }
 
       $('#faqAccordion').accordion({
         heightStyle: 'content'

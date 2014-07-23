@@ -1,7 +1,7 @@
 /*global google,map_type,map_data:true,map_center,kind,map_zoom,MAP_EMBED,show_regions_with_one_project,max_count,empty_layer,globalPage,page*/
 'use strict';
 
-define(['backbone', 'sprintf'], function(Backbone, sprintf) {
+define(['underscore', 'backbone', 'underscoreString'], function(_, Backbone) {
 
   var stylesArray = [{
     'featureType': 'landscape.natural',
@@ -32,7 +32,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
 
   var map, bounds;
 
-  sprintf = sprintf.sprintf;
+  var sprintf = _.str.sprintf;
 
   function old() {
     var MERCATOR_RANGE = 256;
@@ -99,7 +99,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
     };
 
     function IOMMarker(info, diameter, classname, map) {
-      var isRegion = (info.name || info.region_name);
+      var isRegion = !!(!info.total_in_region && info.code === null && info.region_name);
 
       // this.latlng_ = new google.maps.LatLng(info.lat,info.lon);
       this.latlng_ = new google.maps.LatLng(parseFloat(info.lat), parseFloat(info.lon));
@@ -122,7 +122,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         this.classname = 'marker-project-bubble is-marker-region';
         this.height_ = 20;
         this.width_ = 20;
-      } else if (this.classname === 'marker-bubble' && !info.code) {
+      } else if (this.classname === 'marker-bubble' && isRegion) {
         this.classname = 'marker-bubble is-marker-region';
       }
 
@@ -521,8 +521,7 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         $('.infowindow-pop').unbind('click');
 
         var infowindow = cdb.vis.Vis.addInfowindow(map, sublayer, ['country_name', 'data', 'year'], {
-          infowindowTemplate: infowindowHtml,
-          //cursorInteraction: false
+          infowindowTemplate: infowindowHtml
         });
 
         infowindow.model.on('change:visibility', function(model) {
@@ -604,6 +603,8 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         console.log(err);
       });
 
+    var countriesAndRegions = (_.where(map_data, {code: null}).length > 0);
+
     // Markers
     for (var i = 0; i < map_data.length; i++) {
       // var image_source = '';
@@ -666,7 +667,11 @@ define(['backbone', 'sprintf'], function(Backbone, sprintf) {
         // image_source = '/app/images/themes/' + theme + '/project_marker.png';
       }
 
-      new IOMMarker(map_data[i], diameter, classname, map);
+      if (!countriesAndRegions) {
+        new IOMMarker(map_data[i], diameter, classname, map);
+      } else if (countriesAndRegions && !map_data[i].code) {
+        new IOMMarker(map_data[i], diameter, classname, map);
+      }
 
       bounds.extend(new google.maps.LatLng(map_data[i].lat, map_data[i].lon));
     }

@@ -44,8 +44,8 @@ class Project < ActiveRecord::Base
   has_and_belongs_to_many :regions, :after_add => :add_to_country, :after_remove => :remove_from_country
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :tags, :after_add => :update_tag_counter, :after_remove => :update_tag_counter
-  has_many :resources, :conditions => 'resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}', :foreign_key => :element_id, :dependent => :destroy
-  has_many :media_resources, :conditions => 'media_resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}', :foreign_key => :element_id, :dependent => :destroy, :order => 'position ASC'
+  has_many :resources, :conditions => proc {"resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy
+  has_many :media_resources, :conditions => proc {"media_resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy, :order => 'position ASC'
   has_many :donations, :dependent => :destroy
   has_many :donors, :through => :donations
   has_many :cached_sites, :class_name => 'Site', :finder_sql => 'select sites.* from sites, projects_sites where projects_sites.project_id = #{id} and projects_sites.site_id = sites.id'
@@ -71,7 +71,7 @@ class Project < ActiveRecord::Base
   #validates_uniqueness_of :intervention_id, :if => (lambda do
     #intervention_id.present?
   #end)
-  
+
   after_create :generate_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
@@ -79,7 +79,7 @@ class Project < ActiveRecord::Base
 
   def strip_urls
     if self.website.present?
-      self.website = self.website.strip 
+      self.website = self.website.strip
     end
   end
 
@@ -1239,73 +1239,78 @@ SQL
     # Projects IDs for IN clausules
     projects_str = @projects.map { |elem| elem.id }.join(',') || ""
 
-    @data[:results] = {}
+    # @data[:results] = {}
 
     # Add years ranges of activeness for report charts
-    @data[:results][:projects_year_ranges] = {}
-    @projects.each do |project|
-      #add the range made an array
-      @data[:results][:projects_year_ranges][project.id] = ((project.start_date.year..project.end_date.year).to_a)
-    end
+    # @data[:results][:projects_year_ranges] = {}
+    # @projects.each do |project|
+    #   #add the range made an array
+    #   @data[:results][:projects_year_ranges][project.id] = ((project.start_date.year..project.end_date.year).to_a)
+    # end
 
-    @data[:results][:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
-    @data[:results][:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
-    @data[:results][:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
-    @data[:results][:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
-    @data[:results][:totals] = {}
-    @data[:results][:budget] = {}
+    @data[:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
+    @data[:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
+    @data[:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
+    @data[:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
+    @data[:projects] = @projects
+
+    # @data[:results][:donors] =  projects_str.blank? ? {} : Project.report_donors(projects_str)
+    # @data[:results][:organizations] = projects_str.blank? ? {} : Project.report_organizations(projects_str)
+    # @data[:results][:countries] = projects_str.blank? ? {} : Project.report_countries(projects_str)
+    # @data[:results][:sectors] = projects_str.blank? ? {}  : Project.report_sectors(projects_str)
+    # @data[:results][:totals] = {}
+    # @data[:results][:budget] = {}
 
     # Totals
-    if !projects_str.blank?
-      # TOTAL BUDGET
-      @data[:results][:totals][:budget] = 0
+    # if !projects_str.blank?
+    #   # TOTAL BUDGET
+    #   @data[:results][:totals][:budget] = 0
 
 
-      # TOTAL PROJECTS BUDGET
-      non_zero_values = []
-       @projects.each do |val|
-        #p val[:budget].to_f
-        non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
-      end
+    #   # TOTAL PROJECTS BUDGET
+    #   non_zero_values = []
+    #    @projects.each do |val|
+    #     #p val[:budget].to_f
+    #     non_zero_values.push(val[:budget]) if val[:budget].to_f > 0.0
+    #   end
 
-      #p @data[:results][:totals][:budget]
-      @data[:results][:totals][:budget] = non_zero_values.inject(:+)
-      if non_zero_values.length > 0
-        avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
-      else
-        avg = 0.00
-      end
-      @data[:results][:budget][:max] = non_zero_values.max
-      @data[:results][:budget][:min] = non_zero_values.min
-      @data[:results][:budget][:average] = (avg * 100).round / 100.0
+    #   #p @data[:results][:totals][:budget]
+    #   @data[:results][:totals][:budget] = non_zero_values.inject(:+)
+    #   if non_zero_values.length > 0
+    #     avg = @data[:results][:totals][:budget].to_f / non_zero_values.length
+    #   else
+    #     avg = 0.00
+    #   end
+    #   @data[:results][:budget][:max] = non_zero_values.max
+    #   @data[:results][:budget][:min] = non_zero_values.min
+    #   @data[:results][:budget][:average] = (avg * 100).round / 100.0
 
+    #   @data[:results][:projects] = @projects
 
-      @data[:results][:projects] = @projects
+    #   @data[:results][:totals][:projects] = @data[:results][:projects].length
+    #   @data[:results][:totals][:donors] = @data[:results][:donors].length
+    #   @data[:results][:totals][:sectors] = @data[:results][:sectors].length
+    #   @data[:results][:totals][:countries] = @data[:results][:countries].length
+    #   @data[:results][:totals][:organizations] = @data[:results][:organizations].length
 
-      @data[:results][:totals][:projects] = @data[:results][:projects].length
-      @data[:results][:totals][:donors] = @data[:results][:donors].length
-      @data[:results][:totals][:sectors] = @data[:results][:sectors].length
-      @data[:results][:totals][:countries] = @data[:results][:countries].length
-      @data[:results][:totals][:organizations] = @data[:results][:organizations].length
-
-      # Reduze organizations to 20
-      #@data[:results][:organizations] = @data[:results][:organizations].take(20)
-    else
-      @data[:results][:totals][:people] = 0
-      @data[:results][:totals][:budget] = 0
-      @data[:results][:totals][:donors] = 0
-      @data[:results][:totals][:projects] = 0
-    end
+    #   # Reduze organizations to 20
+    #   #@data[:results][:organizations] = @data[:results][:organizations].take(20)
+    # else
+    #   @data[:results][:totals][:people] = 0
+    #   @data[:results][:totals][:budget] = 0
+    #   @data[:results][:totals][:donors] = 0
+    #   @data[:results][:totals][:projects] = 0
+    # end
 
     # Returned to Frontend to be printed on human readable format
-    @data[:filters] = {}
-    @data[:filters][:start_date] = start_date
-    @data[:filters][:end_date] = end_date
-    @data[:filters][:countries] = countries
-    @data[:filters][:donors] = donors
-    @data[:filters][:sectors] = sectors
-    @data[:filters][:organizations] = organizations
-    @data[:filters][:search_word] = params[:q]
+    # @data[:filters] = {}
+    # @data[:filters][:start_date] = start_date
+    # @data[:filters][:end_date] = end_date
+    # @data[:filters][:countries] = countries
+    # @data[:filters][:donors] = donors
+    # @data[:filters][:sectors] = sectors
+    # @data[:filters][:organizations] = organizations
+    # @data[:filters][:search_word] = params[:q]
 
     @data
   end
@@ -1672,6 +1677,101 @@ SQL
       sectors[:maps]["by_"+criteria[1]] = ActiveRecord::Base.connection.execute(base_select + projects_map_select)
     end
     sectors
+  end
+
+  def self.get_list(params={})
+    start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year']) if params[:start_date]
+    end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year']) if params[:end_date]
+    countries = params[:country] if params[:country]
+    donors = params[:donor] if params[:donor]
+    sectors = params[:sector] if params[:sector]
+    organizations = params[:organization] if params[:organization]
+    form_query = params[:q].downcase.strip if params[:q]
+
+    if params[:model]
+      the_model = params[:model]
+    else
+      the_model='p'
+    end
+    if params[:limit]
+      the_limit = params[:limit]
+    else
+      the_limit='NULL'
+    end
+
+    if start_date && end_date
+      date_filter = "AND p.start_date <= '#{end_date}'::date AND p.end_date >= '#{start_date}'::date"
+    end
+
+    form_query_filter = "AND lower(p.name) LIKE '%" + form_query + "%'" if params[:q]
+
+    if donors
+      donors_filter = "AND d.name IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if sectors
+      sectors_filter = "AND s.name IN (" + sectors.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if countries
+      countries_filter = "AND c.name IN (" + countries.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if organizations
+      organizations_filter = "AND o.name IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    active_projects = params[:active_projects] ? "AND p.end_date > now()" : "" unless date_filter != nil
+
+    if the_model == 'o'
+      budget_line = ", SUM(p.budget) AS budget"
+    end 
+
+    if the_model == 'p'
+      sql = <<-SQL
+        SELECT p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization,
+        COUNT(DISTINCT d.id) AS donors_count,
+        COUNT(DISTINCT c.id) AS countries_count,
+        COUNT(DISTINCT s.id) AS sectors_count
+          FROM projects p
+                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                 INNER JOIN countries c ON (c.id = cp.country_id)
+          WHERE true
+         #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+          GROUP BY p.name, o.id, p.budget, p.start_date, p.end_date
+          ORDER BY p.name
+          LIMIT #{the_limit}
+      SQL
+    else
+      sql = <<-SQL
+        SELECT #{the_model}.name,
+        COUNT(DISTINCT p.id) AS projects_count,
+        COUNT(DISTINCT d.id) AS donors_count,
+        COUNT(DISTINCT c.id) AS countries_count,
+        COUNT(DISTINCT s.id) AS sectors_count,
+        COUNT(DISTINCT o.id) AS organizations_count
+        #{budget_line}
+          FROM projects p
+                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                 INNER JOIN countries c ON (c.id = cp.country_id)
+          WHERE true
+         #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+          GROUP BY #{the_model}.name
+          ORDER BY projects_count DESC
+          LIMIT #{the_limit}
+      SQL
+    end
+    list = ActiveRecord::Base.connection.execute(sql)
   end
 
   ################################################

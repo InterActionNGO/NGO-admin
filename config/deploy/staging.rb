@@ -1,4 +1,8 @@
-set :default_stage, "staging"
+require "rvm/capistrano"
+set :default_stage, "smbtc"
+set :rvm_type, :system
+
+set :use_sudo, false
 
 role :app, linode_staging
 role :web, linode_staging
