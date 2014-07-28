@@ -101,14 +101,14 @@ $(document).ready(function(ev){
 
       var scroll_position = window.pageYOffset;
       var window_height = (typeof window.innerHeight != 'undefined' ? window.innerHeight : document.body.offsetHeight);
-      $('div#modal_window').css('height',window_height+'px');
-      $('div#modal_window').css('top',scroll_position+'px');
+      // $('div#modal_window').css('height',window_height+'px');
+      // $('div#modal_window').css('top',scroll_position+'px');
       $('body').css('overflow','hidden');
       $(window).resize(function() {
         var scroll_position = window.pageYOffset;
         var window_height = (typeof window.innerHeight != 'undefined' ? window.innerHeight : document.body.offsetHeight);
-        $('div#modal_window').css('height',window_height+'px');
-        $('div#modal_window').css('top',scroll_position+'px');
+        // $('div#modal_window').css('height',window_height+'px');
+        // $('div#modal_window').css('top',scroll_position+'px');
       });
       var href_ = $(this).attr('destroy_url');
       var name_ = $(this).attr('att_name');
