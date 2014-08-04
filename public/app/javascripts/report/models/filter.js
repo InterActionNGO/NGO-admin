@@ -52,6 +52,10 @@ define([
 
     _getObjFromURI: function(URLParams) {
       var uri = decodeURIComponent(URLParams);
+
+      uri = uri.split('+').join(' ');
+      uri = uri.replace('&amp;', '%26');
+
       var chunks = uri.split('&');
       var params = {};
 

@@ -1,3 +1,76 @@
+<div class="mod-applied-filters">
+  <p>Filters applied:</p>
+  {{#if filters.organizations}}
+    <p><strong>Organizations</strong>: {{starray filters.organizations}}</p>
+  {{/if}}
+
+  {{#if filters.countries}}
+    <p><strong>Countries</strong>: {{starray filters.countries}}</p>
+  {{/if}}
+
+  {{#if filters.sectors}}
+    <p><strong>Sectors</strong>: {{starray filters.sectors}}</p>
+  {{/if}}
+
+  {{#if filters.donors}}
+    <p><strong>Donors</strong>: {{starray filters.donors}}</p>
+  {{/if}}
+
+  <p><strong>Active between</strong>: {{filters.start_date}} <strong>and</strong>: {{filters.end_date}}</p>
+</div>
+
+<div class="mod-report mod-report-summary">
+  <table>
+    <tr>
+      <th>Projects</th>
+      <th>Organizations</th>
+      <th>Donors</th>
+      <th>Countries</th>
+      <th>Sectors</th>
+    </tr>
+    <tr>
+      <td>{{commas totals.projects}}</td>
+      <td>{{commas totals.organizations}}</td>
+      <td>{{commas totals.donors}}</td>
+      <td>{{commas totals.countries}}</td>
+      <td>{{commas totals.sectors}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="mod-report mod-report-budget">
+  <table>
+    <tr>
+      <td colspan="3" class="mod-report-budget-total">
+        <span class="small">$</span>{{commas totals.budget}} <span class="small">(total)</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="mod-report-budget-min">min.: ${{commas budget.min}}</td>
+      <td class="mod-report-budget-average">mdn.: ${{commas budget.average}}</td>
+      <td class="mod-report-budget-max">max.: ${{commas budget.max}}</td>
+    </tr>
+  </table>
+  <div class="mod-report-budget-chart is-clearfix" id="reportBudgetChart" data-min="{{budget.min}}" data-max="{{budget.max}}" data-average="{{budget.average}}"></div>
+</div>
+
+
+<div class="mod-report">
+  <div id="modReportsTabs">
+    <ul>
+      <li><a href="#projectTab">NGO Aid Map Project Number Over Time</a></li>
+      <li><a href="#organizationTab">Active Organizations Over Time</a></li>
+    </ul>
+    <div id="projectTab">
+      <div class="mod-report-line-chart" id="projectChart"></div>
+    </div>
+    <div id="organizationTab">
+      <div class="mod-report-line-chart" id="organizationChart"></div>
+    </div>
+  </div>
+</div>
+
+>>>>>>> features/report-filters:public/app/templates/report.handlebars
 <div class="mod-report is-break-before">
   <h2>Donors snapshot</h2>
   <p>A total of {{totals.donors}} found donors, supporting {{totals.projects}} projects by {{totals.organizations}} organizations in {{totals.countries}} countries across {{totals.sectors}} sectors.</p>

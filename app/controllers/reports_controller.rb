@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
 				@countries_combo_values = [['All','All']] + Country.get_select_values.collect{ |c| [c.name, c.name] }
 				@sectors_combo_values = [['Any sector','All']] + Sector.get_select_values.collect { |c| [c.name, c.name] }
 				@donors_combo_values = [['Any donor','All']] + Donor.get_select_values.collect{ |d| [d.name, d.name] }
-				@date_start = Date.new(2005, 1, 1)
+				@date_start = Date.new(2004, 9, 1)
 				@date_end = Date.today
 			end
 		end
