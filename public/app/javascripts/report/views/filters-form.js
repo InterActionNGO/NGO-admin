@@ -4,6 +4,7 @@ define([
   'jquery',
   'select2',
   'underscore',
+  'underscoreString',
   'backbone',
   'moment',
   'models/report',
@@ -14,7 +15,7 @@ define([
   'collections/countries',
   'collections/sectors'
 ], function(
-  $, select2, _, Backbone, moment, ReportModel, FilterModel,
+  $, select2, _, underscoreString, Backbone, moment, ReportModel, FilterModel,
   ProjectsCollection, OrganizationsCollection, DonorsCollection, CountriesCollection, SectorsCollection
 ) {
 
@@ -37,7 +38,10 @@ define([
       this.sectorsCollection = new SectorsCollection();
 
       this.$el.find('select').select2({
-        width: 'element'
+        width: 'element',
+        escapeMarkup: function(item) {
+          return _.str.unescapeHTML(item);
+        }
       });
 
       this.$window = $(window);
