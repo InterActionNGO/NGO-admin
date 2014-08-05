@@ -55,7 +55,7 @@
               </li>
 
               <li class="comboselect date">
-                <label>START DATE</label>
+                <label>ACTIVE BETWEEN</label>
                 <div class="select_date">
                   <%= select_date @date_start, {:prefix => :start_date, :use_short_month =>true, :start_year => Time.now.year - 30, :end_year => Time.now.year} %>
                   <%# select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
@@ -63,7 +63,7 @@
               </li>
 
               <li class="comboselect date">
-                <label>END DATE</label>
+                <label>AND</label>
                 <div class="select_date">
                   <%= select_date @date_end, {:prefix => :end_date, :use_short_month =>true, :start_year => Time.now.year - 30, :end_year => Time.now.year} %>
                   <%# select_tag :en1d_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
