@@ -1726,7 +1726,6 @@ SQL
     if the_model == 'o'
       budget_line = ", SUM(p.budget) AS budget"
     end 
-    #6383
     if the_model == 'p'
       sql = <<-SQL
         SELECT p.id, p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization,
