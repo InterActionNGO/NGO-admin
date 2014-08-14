@@ -121,6 +121,11 @@ require([
     pauseTime: 7000
   });
 
+  $('#feedbackBtn').on('click', function(e) {
+    e.preventDefault();
+    $('#feedbackOverlay').show();
+  });
+
   new Router();
 
 });
