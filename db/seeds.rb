@@ -184,7 +184,7 @@ if (1==0)
     :theme => Theme.find_by_name('Garnet'),
     :aid_map_image => File.open(File.join(Rails.root, '/public/images/sites/food_img_example.jpg')),
     :navigate_by_country => true,
-    :navigate_by_level1 => true
+    :navigate_by_level1 => true,
     :word_for_regions => "Country"
   )
 end
@@ -207,7 +207,7 @@ global_site.update_attributes(
   :theme => Theme.find_by_name('Garnet'),
   :aid_map_image => File.open(File.join(Rails.root, '/public/images/sites/food_img_example.jpg')),
   :navigate_by_country => true,
-  :navigate_by_level1 => true
+  :navigate_by_level1 => true,
   :word_for_regions => "Country"
 )
 
@@ -317,7 +317,7 @@ global_site.update_attributes(
                         <li><p>Make it as easy as possible to share data. If it’s not easy, organizations won’t keep providing information, and there’s little value to a map that never gets updated.</p></li>
                         <li><p>Present the data in a way that makes it simple to understand and use. Our site is designed to make it easy to find the information people are looking for, to help them make the decisions they need to make.</p></li>
                         <li><p>Make the data open and accessible. We know there are many ways to slice and dice data. That’s why we’ve made it possible to download the data on every page of the site.</p></li>
-                        <li><p>Do no harm. While we are strong advocates of openness, we realize there can be negative consequences to sharing data. We let organizations know that they should only share information if it is safe to do so, and review data that has been submitted to make sure that there isn't anything that could put someone in harm's way.</p></li>
+                        <li><p>Do no harm. While we are strong advocates of openness, we realize there can be negative consequences to sharing data. We let organizations know that they should only share information if it is safe to do so, and review data that has been submitted to make sure that there isn’t anything that could put someone in harm’s way.</p></li>
                         <li><p>Collaborate with like-minded organizations also working to make more information available. NGO Aid Map is just one piece of the puzzle. By working with organizations who also see the value in open data, we hope to create a more complete picture of what is happening with international aid.</p></li>
                       </ul>
                       <p>Data is provided by our members on a voluntary basis, so the map is a partial picture of what our community does. Projects are continuously being added, so we encourage you to visit often to learn more about the work of InterAction members.</p>',
