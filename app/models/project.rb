@@ -1705,19 +1705,19 @@ SQL
 
     form_query_filter = "AND lower(p.name) LIKE '%" + form_query + "%'" if params[:q]
 
-    if donors
+    if donors && !donors.include?('All')
       donors_filter = "AND d.name IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
     end
 
-    if sectors
+    if sectors && !sectors.include?('All')
       sectors_filter = "AND s.name IN (" + sectors.map {|str| "'#{str}'"}.join(',') + ")"
     end
 
-    if countries
+    if countries && !countries.include?('All')
       countries_filter = "AND c.name IN (" + countries.map {|str| "'#{str}'"}.join(',') + ")"
     end
 
-    if organizations
+    if organizations && !organizations.include?('All')
       organizations_filter = "AND o.name IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
     end
 
