@@ -3,9 +3,10 @@
 define([
   'backbone',
   'handlebars',
+  'moment',
   'models/filter',
   'text!templates/filters.handlebars'
-], function(Backbone, Handlebars, FilterModel, tpl) {
+], function(Backbone, Handlebars, moment, FilterModel, tpl) {
 
   var FiltersView = Backbone.View.extend({
 
@@ -23,7 +24,8 @@ define([
         filters: FilterModel.instance.toJSON()
       };
 
-      console.log(this.data);
+      this.data.filters.startDate = moment(this.data.filters.startDate).format('MMMM DD, YYYY');
+      this.data.filters.endDate = moment(this.data.filters.endDate).format('MMMM DD, YYYY');
 
       this.render();
 
