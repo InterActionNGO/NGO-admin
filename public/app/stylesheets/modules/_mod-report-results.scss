@@ -248,11 +248,12 @@ ul.mod-report-locations-header-child {
     font-weight: lighter;
     &:first-child {
       font-size: 16px;
+      line-height: 1.2;
       font-weight: normal;
     }
   }
   th, td {
-    padding: 5px 7px;
+    padding: 7px;
     text-align: center;
     &:first-child {
       padding-left: 0;
@@ -261,6 +262,10 @@ ul.mod-report-locations-header-child {
     &:last-child {
       padding-right: 0;
     }
+  }
+
+  .mod-report-list-close {
+    position: absolute;
   }
 }
 
@@ -279,7 +284,7 @@ ul.mod-report-locations-header-child {
       display: none;
       padding: 10px 0;
       li {
-        padding: 5px 0;
+        padding: 7px 0;
       }
     }
     &:hover ul {
@@ -288,8 +293,8 @@ ul.mod-report-locations-header-child {
   }
 
   li, .current {
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 13px;
+    line-height: 15px;
   }
 
   .current {
