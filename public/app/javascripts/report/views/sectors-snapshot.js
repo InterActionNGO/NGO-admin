@@ -42,20 +42,19 @@ define([
         return -sector.donorsCount;
       }), this.options.limit);
 
+      // var subtitle = 'A total of %(sectors)s found sectors, supporting %(projects)s projects by %(donors)s donors and %(organizations)s organizations in %(countries)s countries.';
+      var subtitle = 'Out of %(sectors)s sectors.';
+
       this.data = {
-        title: 'Sectors snapshot',
-        description: _.str.sprintf('A total of %(sectors)s found sectors, supporting %(projects)s projects by %(donors)s donors and %(organizations)s organizations in %(countries)s countries.', {
-          donors: ReportModel.instance.get('donors').length,
-          projects: ReportModel.instance.get('projects').length,
-          organizations: ReportModel.instance.get('organizations').length,
-          countries: ReportModel.instance.get('countries').length,
+        title: 'Top 10 Sectors',
+        description: _.str.sprintf(subtitle, {
           sectors: ReportModel.instance.get('sectors').length
         }),
         charts: [{
           name: 'By number of projects',
           series: _.map(sectorsByProjects, function(sector) {
             return {
-              name: sector.name,
+              name: sector.name || 'Nameless',
               data: [[sector.name, sector.projectsCount]]
             };
           })
@@ -63,7 +62,7 @@ define([
           name: 'By number of organizations',
           series: _.map(sectorsByOrganizations, function(sector) {
             return {
-              name: sector.name,
+              name: sector.name || 'Nameless',
               data: [[sector.name, sector.organizationsCount]]
             };
           })
@@ -71,7 +70,7 @@ define([
           name: 'By number of donors',
           series: _.map(sectorsByDonors, function(sector) {
             return {
-              name: sector.name,
+              name: sector.name || 'Nameless',
               data: [[sector.name, sector.donorsCount]]
             };
           })
@@ -94,8 +93,8 @@ define([
             type: 'column',
             spacingLeft: 0,
             spacingRight: 0,
-            width: 206,
-            height: (this.data.charts[index].series.length > 3) ? 600 : 250
+            width: 206
+            // height: (this.data.charts[index].series.length > 3) ? 600 : 250
           },
           series: this.data.charts[index].series
         };
