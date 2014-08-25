@@ -29,7 +29,7 @@ define([
       };
 
       this.render();
-      this.setBudgetChart();
+      // this.setBudgetChart();
 
       this.$el.removeClass('is-hidden');
     },
