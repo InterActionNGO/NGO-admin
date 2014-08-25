@@ -28,7 +28,7 @@
     box-shadow: none;
     @include appearance(none);
     color: $color-5;
-    background: image-url('form-background.png') no-repeat center !important;
+    background: #ededed image-url('form-background.png') no-repeat right !important;
   }
 
   #date_start_year,
@@ -72,7 +72,7 @@
   z-index: 100;
 }
 .select2-container-multi .select2-choices .select2-search-field {
-   background: image-url('form-background.png') no-repeat center;
+   background: #ededed image-url('form-background.png') no-repeat right;
 }
 
 //result item
