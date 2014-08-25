@@ -13,7 +13,8 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .mod-report-lists-selector a': '_onClickSelector'
+      'click .mod-report-lists-selector a': '_onClickSelector',
+      'click .is-inline-btn': 'hide'
     },
 
     initialize: function() {
@@ -46,7 +47,7 @@ define([
           return -item[list.category];
         }), this.options.limit);
         this.render();
-        this.show();
+        _.delay(_.bind(this.show, this), 200);
       }
     },
 
@@ -58,8 +59,6 @@ define([
         name: this.options.slug,
         category: $current.data('category')
       });
-
-      console.log(currentText);
 
       this.$el.find('.current').text(currentText);
 
