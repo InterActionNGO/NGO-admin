@@ -17,7 +17,7 @@ define([
 
     options: {
       chart: {
-        type: 'area',
+        type: 'line',
         spacingLeft: 0,
         spacingRight: 0,
         zoomType: 'x'
@@ -33,7 +33,7 @@ define([
       },
       plotOptions: {
         fillOpacity: 0.5,
-        area: {
+        line: {
           marker: {
             enabled: false,
             symbol: 'circle',
@@ -109,7 +109,7 @@ define([
 
       this.$projectChart.highcharts(_.extend({}, this.options, {
         title: {
-          text: 'NGO Aid Map Project Number Over Time'
+          text: 'Number of Active Projects Over Time'
         },
         series: [{
           name: 'Total projects',
@@ -124,7 +124,7 @@ define([
 
       this.$organizationsChart.highcharts(_.extend({}, this.options, {
         title: {
-          text: 'Active Organizations Over Time'
+          text: 'Number of Active Organizations Over Time'
         },
         tooltip: {
           headerFormat: '{point.x:%b %Y}<br>',
