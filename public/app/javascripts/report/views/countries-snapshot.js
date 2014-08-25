@@ -42,20 +42,19 @@ define([
         return -country.donorsCount;
       }), this.options.limit);
 
+      // var subtitle = 'A total of %(countries)s found countries, with %(projects)s projects by %(organizations)s organizations across %(sectors)s sectors.';
+      var subtitle = 'Out of %(countries)s countries';
+
       this.data = {
-        title: 'Countries snapshot',
-        description: _.str.sprintf('A total of %(countries)s found countries, with %(projects)s projects by %(organizations)s organizations across %(sectors)s sectors.', {
-          donors: ReportModel.instance.get('donors').length,
-          projects: ReportModel.instance.get('projects').length,
-          organizations: ReportModel.instance.get('organizations').length,
-          countries: ReportModel.instance.get('countries').length,
-          sectors: ReportModel.instance.get('sectors').length
+        title: 'Top 10 Countries',
+        description: _.str.sprintf(subtitle, {
+          countries: ReportModel.instance.get('countries').length
         }),
         charts: [{
           name: 'By number of projects',
           series: _.map(countriesByProjects, function(country) {
             return {
-              name: country.name,
+              name: country.name || 'Nameless',
               data: [[country.name, country.projectsCount]]
             };
           })
@@ -63,7 +62,7 @@ define([
           name: 'By number of organizations',
           series: _.map(countriesByOrganizations, function(country) {
             return {
-              name: country.name,
+              name: country.name || 'Nameless',
               data: [[country.name, country.organizationsCount]]
             };
           })
@@ -71,7 +70,7 @@ define([
           name: 'By number of donors',
           series: _.map(countriesByDonors, function(country) {
             return {
-              name: country.name,
+              name: country.name || 'Nameless',
               data: [[country.name, country.donorsCount]]
             };
           })
@@ -94,8 +93,8 @@ define([
             type: 'column',
             spacingLeft: 0,
             spacingRight: 0,
-            width: 206,
-            height: (this.data.charts[index].series.length > 3) ? 600 : 250
+            width: 206
+            // height: (this.data.charts[index].series.length > 3) ? 600 : 250
           },
           series: this.data.charts[index].series
         };

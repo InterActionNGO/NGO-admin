@@ -5,6 +5,7 @@
     label {
       display: block;
       margin-bottom: 5px;
+      text-transform: uppercase;
     }
     select, input {
       height: 30px;
@@ -38,6 +39,9 @@
       margin: 0 5px 0 0;
       padding: 0;
       vertical-align: 2px;
+    }
+    label {
+      text-transform: none;
     }
   }
 }

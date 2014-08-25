@@ -42,20 +42,19 @@ define([
         return -organization.budget;
       }), this.options.limit);
 
+      // var subtitle = 'A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.'
+      var subtitle = 'Out of %(organizations)s organizations.';
+
       this.data = {
-        title: 'Organizations snapshot',
-        description: _.str.sprintf('A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.', {
-          donors: ReportModel.instance.get('donors').length,
-          projects: ReportModel.instance.get('projects').length,
-          organizations: ReportModel.instance.get('organizations').length,
-          countries: ReportModel.instance.get('countries').length,
-          sectors: ReportModel.instance.get('sectors').length
+        title: 'Top 10 Organizations',
+        description: _.str.sprintf(subtitle, {
+          organizations: ReportModel.instance.get('organizations').length
         }),
         charts: [{
           name: 'By number of projects',
           series: _.map(organizationsByProjects, function(organization) {
             return {
-              name: organization.name,
+              name: organization.name || 'Nameless',
               data: [[organization.name, organization.projectsCount]]
             };
           })
@@ -63,15 +62,15 @@ define([
           name: 'By number of countries',
           series: _.map(organizationsByCountries, function(organization) {
             return {
-              name: organization.name,
+              name: organization.name || 'Nameless',
               data: [[organization.name, organization.countriesCount]]
             };
           })
         }, {
-          name: 'By budget',
+          name: 'By budget (USD)',
           series: _.map(organizationsByBudget, function(organization) {
             return {
-              name: organization.name,
+              name: organization.name || 'Nameless',
               data: [[organization.name, organization.budget]]
             };
           })
@@ -94,8 +93,8 @@ define([
             type: 'column',
             spacingLeft: 0,
             spacingRight: 0,
-            width: 206,
-            height: (this.data.charts[index].series.length > 3) ? 600 : 250
+            width: 206
+            // height: (this.data.charts[index].series.length > 3) ? 600 : 250
           },
           series: this.data.charts[index].series
         };
