@@ -39,7 +39,7 @@ define([
     },
 
     _showList: function(list) {
-      var items = ReportModel.instance.get(this.options.slug);
+      var items = ReportModel.instance.get(list.name);
       this.hide();
       if (list.name === this.options.slug) {
         this.data = {};

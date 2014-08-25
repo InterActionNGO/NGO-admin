@@ -23,6 +23,8 @@ define([
         filters: FilterModel.instance.toJSON()
       };
 
+      console.log(this.data);
+
       this.render();
 
       this.$el.removeClass('is-hidden');

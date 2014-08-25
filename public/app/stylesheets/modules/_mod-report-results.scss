@@ -244,16 +244,15 @@ ul.mod-report-locations-header-child {
     text-transform: uppercase;
   }
   td {
-    font-size: 30px;
-    font-weight: lighter;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: normal;
     &:first-child {
-      font-size: 16px;
-      line-height: 1.2;
-      font-weight: normal;
+      width: 55%;
     }
   }
   th, td {
-    padding: 7px;
+    padding: 10px 7px;
     text-align: center;
     &:first-child {
       padding-left: 0;

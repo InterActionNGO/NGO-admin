@@ -2,11 +2,11 @@
   <h2>Donors list <button class="is-inline-btn is-unprintable">Close</button></h2>
   <ul class="mod-report-lists-selector">
     <li>
-      <span class="current">By number of projects</span>
+      <span class="current">Sort by number of projects</span>
       <ul>
-        <li><a href="#projects" data-category="projectsCount">By number of projects</a></li>
-        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
-        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+        <li><a href="#projects" data-category="projectsCount">Sort by number of projects</a></li>
+        <li><a href="#countries" data-category="countriesCount">Sort by number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">Sort by number of sectors</a></li>
       </ul>
     </li>
   </ul>
@@ -20,9 +20,9 @@
     {{#each donors}}
       <tr>
         <td>{{name}}</td>
-        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
-        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
-        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{else}}<td></td>{{/if}}
       </tr>
     {{/each}}
   </table>
@@ -33,11 +33,11 @@
   <h2>Organizations list <button class="is-inline-btn is-unprintable">Close</button></h2>
   <ul class="mod-report-lists-selector">
     <li>
-      <span class="current">By number of projects</span>
+      <span class="current">Sort by number of projects</span>
       <ul>
-        <li><a href="#projects" data-category="projectsCount">By number of projects</a></li>
-        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
-        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+        <li><a href="#projects" data-category="projectsCount">Sort by number of projects</a></li>
+        <li><a href="#countries" data-category="countriesCount">Sort by number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">Sort by number of sectors</a></li>
       </ul>
     </li>
   </ul>
@@ -51,9 +51,9 @@
     {{#each organizations}}
       <tr>
         <td>{{name}}</td>
-        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
-        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
-        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{else}}<td></td>{{/if}}
       </tr>
     {{/each}}
   </table>
@@ -64,12 +64,12 @@
   <h2>Countries list <button class="is-inline-btn is-unprintable">Close</button></h2>
   <ul class="mod-report-lists-selector">
     <li>
-      <span class="current">By number of organizations</span>
+      <span class="current">Sort by number of organizations</span>
       <ul>
-        <li><a href="#organizations" data-category="organizationsCount">By number of organizations</a></li>
-        <li><a href="#donors" data-category="donorsCount">By number of donors</a></li>
-        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
-        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+        <li><a href="#organizations" data-category="organizationsCount">Sort by number of organizations</a></li>
+        <li><a href="#donors" data-category="donorsCount">Sort by number of donors</a></li>
+        <li><a href="#countries" data-category="countriesCount">Sort by number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">Sort by number of sectors</a></li>
       </ul>
     </li>
   </ul>
@@ -84,10 +84,10 @@
     {{#each countries}}
       <tr>
         <td>{{name}}</td>
-        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
-        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
-        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
-        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{else}}<td></td>{{/if}}
       </tr>
     {{/each}}
   </table>
@@ -97,11 +97,11 @@
   <h2>Projects list <button class="is-inline-btn is-unprintable">Close</button></h2>
   <ul class="mod-report-lists-selector">
     <li>
-      <span class="current">By number of donors</span>
+      <span class="current">Sort by number of donors</span>
       <ul>
-        <li><a href="#donors" data-category="donorsCount">By number of donors</a></li>
-        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
-        <li><a href="#sectors" data-category="sectorsCount">By number of sectors</a></li>
+        <li><a href="#donors" data-category="donorsCount">Sort by number of donors</a></li>
+        <li><a href="#countries" data-category="countriesCount">Sort by number of countries</a></li>
+        <li><a href="#sectors" data-category="sectorsCount">Sort by number of sectors</a></li>
       </ul>
     </li>
   </ul>
@@ -115,9 +115,9 @@
     {{#each projects}}
       <tr>
         <td>{{name}}</td>
-        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
-        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
-        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if sectorsCount}}<td>{{sectorsCount}}</td>{{else}}<td></td>{{/if}}
       </tr>
     {{/each}}
   </table>
@@ -127,12 +127,12 @@
   <h2>Sectors list <button class="is-inline-btn is-unprintable">Close</button></h2>
   <ul class="mod-report-lists-selector">
     <li>
-      <span class="current">By number of organizations</span>
+      <span class="current">Sort by number of organizations</span>
       <ul>
-        <li><a href="#organizations" data-category="organizationsCount">By number of organizations</a></li>
-        <li><a href="#donors" data-category="donorsCount">By number of donors</a></li>
-        <li><a href="#projects" data-category="projectsCount">By number of projects</a></li>
-        <li><a href="#countries" data-category="countriesCount">By number of countries</a></li>
+        <li><a href="#organizations" data-category="organizationsCount">Sort by number of organizations</a></li>
+        <li><a href="#donors" data-category="donorsCount">Sort by number of donors</a></li>
+        <li><a href="#projects" data-category="projectsCount">Sort by number of projects</a></li>
+        <li><a href="#countries" data-category="countriesCount">Sort by number of countries</a></li>
       </ul>
     </li>
   </ul>
@@ -147,10 +147,10 @@
     {{#each sectors}}
       <tr>
         <td>{{name}}</td>
-        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{/if}}
-        {{#if donorsCount}}<td>{{donorsCount}}</td>{{/if}}
-        {{#if projectsCount}}<td>{{projectsCount}}</td>{{/if}}
-        {{#if countriesCount}}<td>{{countriesCount}}</td>{{/if}}
+        {{#if organizationsCount}}<td>{{organizationsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if donorsCount}}<td>{{donorsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if projectsCount}}<td>{{projectsCount}}</td>{{else}}<td></td>{{/if}}
+        {{#if countriesCount}}<td>{{countriesCount}}</td>{{else}}<td></td>{{/if}}
       </tr>
     {{/each}}
   </table>
