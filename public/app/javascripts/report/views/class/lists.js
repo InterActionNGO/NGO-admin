@@ -36,12 +36,17 @@ define([
 
     hide: function() {
       this.$el.addClass('is-hidden');
+      Backbone.Events.trigger('list:hide', this.options);
     },
 
     _showList: function(list) {
       var items = ReportModel.instance.get(list.name);
-      this.hide();
+
       if (list.name === this.options.slug) {
+        if (!this.$el.hasClass('is-hidden')) {
+          return this.hide();
+        }
+
         this.data = {};
         this.data[this.options.slug] = _.first(_.sortBy(items, function(item) {
           return -item[list.category];
