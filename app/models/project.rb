@@ -1687,7 +1687,7 @@ SQL
     sectors = params[:sector] if params[:sector]
     organizations = params[:organization] if params[:organization]
     form_query = params[:q].downcase.strip if params[:q]
-
+    active = params[:active_projects]
     if params[:model]
       the_model = params[:model]
     else
@@ -1699,8 +1699,10 @@ SQL
       the_limit='NULL'
     end
 
-    if start_date && end_date
+    if start_date && end_date && !active == 'yes'
       date_filter = "AND p.start_date <= '#{end_date}'::date AND p.end_date >= '#{start_date}'::date"
+    elsif active == 'yes'
+      date_filter = "AND p.start_date <= '#{Time.now.to_date}'::date AND p.end_date >= '#{Time.now.to_date}'::date"
     end
 
     form_query_filter = "AND lower(p.name) LIKE '%" + form_query + "%'" if params[:q]
@@ -1721,11 +1723,9 @@ SQL
       organizations_filter = "AND o.name IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
     end
 
-    active_projects = params[:active_projects] ? "AND p.end_date > now()" : "" unless date_filter != nil
-
     if the_model == 'o'
       budget_line = ", SUM(p.budget) AS budget"
-    end 
+    end
     if the_model == 'p'
       sql = <<-SQL
         SELECT p.id, p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization,
@@ -1741,7 +1741,7 @@ SQL
                  INNER JOIN countries_projects cp ON (p.id = cp.project_id)
                  INNER JOIN countries c ON (c.id = cp.country_id)
           WHERE true
-         #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+         #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
           GROUP BY p.id, p.name, o.id, p.budget, p.start_date, p.end_date
           ORDER BY p.name
           LIMIT #{the_limit}
@@ -1764,7 +1764,7 @@ SQL
                  INNER JOIN countries_projects cp ON (p.id = cp.project_id)
                  INNER JOIN countries c ON (c.id = cp.country_id)
           WHERE true
-         #{date_filter} #{active_projects} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+         #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
           GROUP BY #{the_model}.name
           ORDER BY projects_count DESC
           LIMIT #{the_limit}
