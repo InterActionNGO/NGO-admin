@@ -16,7 +16,7 @@
             <ul class="combo_search_select">
               <li class="comboselect">
                 <label>ORGANIZATION</label>
-                <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
+                <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select organization" %>
                 <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
                 <%# hidden_field_tag 'organization_include', 'include' %>
               </li>
