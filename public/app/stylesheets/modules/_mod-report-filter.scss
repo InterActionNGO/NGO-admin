@@ -60,11 +60,13 @@
     border-bottom-color: $color-4;
     text-align: center;
     &:first-child:before {
-      @include before('', inline-block, relative, 10px, 10px, 30px, 28px);
+      margin-right: 5px;
+      @include before('', inline-block, relative, 6px, 1px, 15px, 13px);
       @include icons-sprite(icon-folder-hover);
     }
     &:last-child:before {
-      @include before('', inline-block, relative, 5px, 10px, 35px, 30px);
+      margin-right: 5px;
+      @include before('', inline-block, relative, 6px, 0, 20px, 14px);
       @include icons-sprite(icon-schema-hover);
     }
     &:focus {
@@ -78,16 +80,22 @@
       margin-bottom: 0;
       padding-bottom: 0;
       &:first-child:before {
-        @include before('', inline-block, relative, 10px, 10px, 30px, 28px);
+        @include before('', inline-block, relative, 6px, 1px, 15px, 13px);
         @include icons-sprite(icon-folder);
       }
       &:last-child:before {
-        @include before('', inline-block, relative, 5px, 10px, 35px, 30px);
+        @include before('', inline-block, relative, 6px, 0, 20px, 14px);
         @include icons-sprite(icon-schema);
       }
       .ui-tabs-anchor {
         color: $color-3;
       }
+    }
+
+    .ui-tabs-anchor, a {
+      display: inline-block;
+      font-size: 13px;
+      padding: 10px 8px 10px 5px;
     }
   }
 

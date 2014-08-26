@@ -72,6 +72,7 @@ define([
     },
 
     setCharts: function() {
+      var today = new Date(moment().utc()).getTime();
       var dateRange = moment().range(
         moment(FilterModel.instance.get('startDate')),
         moment(FilterModel.instance.get('endDate'))
@@ -83,19 +84,30 @@ define([
       var totalProjectsData = [];
       var activeOrganizationsData = [];
 
+      function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+      }
+
+      // debugger;
+
       dateRange.by('months', function(date) {
         var activeProjects = [];
         var organizationsActives = [];
         var totalProjects = 0;
-        var d = date.valueOf() - (date.zone() * 60000);
+        var days = daysInMonth(date.year(), date.month()-1) * 86400000;
+        var d = new Date(date.utc().format()).getTime() + days;
+
+        if (d > today) {
+          d = today;
+        }
 
         for (var i = 0; i < projectsLength; i++) {
           var sd = new Date(projects[i].startDate).getTime();
           var ed = new Date(projects[i].endDate).getTime();
-          if (d > sd && d < ed) {
-            activeProjects.push(projects[i].organizationId);
+          if (sd <= today && sd <= d && ed >= d) {
+            activeProjects.push(projects[i]);
           }
-          if (d > ed) {
+          if (sd <= d && sd <= today) {
             totalProjects = totalProjects + 1;
           }
         }
