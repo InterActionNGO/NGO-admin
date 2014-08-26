@@ -20,6 +20,7 @@ define([
     initialize: function() {
       Backbone.Events.on('filters:fetch', this.hide, this);
       Backbone.Events.on('filters:done', this.showSummary, this);
+      Backbone.Events.on('list:hide', this.hideList, this);
     },
 
     render: function() {
@@ -34,8 +35,19 @@ define([
       this.$el.removeClass('is-hidden');
     },
 
+    hideList: function(list) {
+      this.$el.find('a[data-list="' + list.slug + '"]')
+        .text('Show list').removeClass('is-active');
+    },
+
     showList: function(e) {
       var $current = $(e.currentTarget);
+
+      if ($current.hasClass('is-active')) {
+        $current.text('Show list').removeClass('is-active');
+      } else {
+        $current.text('Hide list').addClass('is-active');
+      }
 
       Backbone.Events.trigger('list:show', {
         name: $current.data('list'),
