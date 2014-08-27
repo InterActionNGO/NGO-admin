@@ -8,11 +8,11 @@ class ReportsController < ApplicationController
 		respond_to do |format|
 			format.html do
 				#render :html => '/reports/index'
-				@org_combo_values = [['All','All']] + Organization.get_select_values.collect{ |o| [o.name, o.name] }
-				@countries_combo_values = [['All','All']] + Country.get_select_values.collect{ |c| [c.name, c.name] }
-				@sectors_combo_values = [['Any sector','All']] + Sector.get_select_values.collect { |c| [c.name, c.name] }
-				@donors_combo_values = [['Any donor','All']] + Donor.get_select_values.collect{ |d| [d.name, d.name] }
-				@date_start = Date.new(2004, 9, 1)
+				@org_combo_values = Organization.get_select_values.collect{ |o| [o.name, o.name] }
+				@countries_combo_values = Country.get_select_values.collect{ |c| [c.name, c.name] }
+				@sectors_combo_values = Sector.get_select_values.collect { |c| [c.name, c.name] }
+				@donors_combo_values = Donor.get_select_values.collect{ |d| [d.name, d.name] }
+				@date_start = Project.order('start_date ASC').first.start_date
 				@date_end = Date.today
 			end
 		end

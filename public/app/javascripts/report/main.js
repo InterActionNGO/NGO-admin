@@ -54,7 +54,7 @@ require.config({
     },
     highcharts: {
       deps: ['jquery'],
-      exports: 'highcharts'
+      exports: 'Highcharts'
     },
     momentRange: {
       deps: ['moment'],
@@ -68,6 +68,7 @@ require([
   'underscore',
   'underscoreString',
   'handlebars',
+  'highcharts',
 
   'views/spin',
   'views/filters-form',
@@ -90,7 +91,7 @@ require([
   'views/countries-list',
   'views/sectors-list'
 ], function(
-  _, underscoreString, Handlebars,
+  _, underscoreString, Handlebars, Highcharts,
   SpinView, FiltersFormView, IntroView,
   TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView, ActionsView,
   DonorsSnapshotView, OrganizationsSnapshotView, CountriesSnapshotView, SectorsSnapshotView,
@@ -116,6 +117,25 @@ require([
   Handlebars.registerHelper('starray', function(context) {
     return _.str.toSentence(context);
   });
+
+  // Highcharts
+  (function(H) {
+    H.wrap(H.Legend.prototype, 'render', function (proceed) {
+      var chart = this.chart;
+
+      proceed.call(this);
+
+      if (this.options.adjustChartSize && this.options.verticalAlign === 'bottom') {
+        chart.chartHeight += this.legendHeight - 100;
+        chart.marginBottom += this.legendHeight - 100;
+        chart.container.style.height = chart.container.firstChild.style.height = chart.chartHeight + 'px';
+
+        this.group.attr({
+          translateY: this.group.attr('translateY') + this.legendHeight - 100
+        });
+      }
+    });
+  } (Highcharts));
 
   // Initialize
   new SpinView();
