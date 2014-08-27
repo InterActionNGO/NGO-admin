@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="row">
 
-    <div class="grid-4 is-unprintable">
+    <div class="grid-5 is-unprintable">
       <aside class="layout-sidebar">
         <% cache '#{@site.id}/reports' do %>
         <div class="mod-report-filter mod-form" id="reportFormView">
@@ -16,7 +16,7 @@
             <ul class="combo_search_select">
               <li class="comboselect">
                 <label>ORGANIZATION</label>
-                <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "select organization" %>
+                <%= select_tag :organization, options_for_select(@org_combo_values, params[:organization]), :class => :"chzn-select", :multiple => true, :size => 5, :placeholder => "Select organization" %>
                 <%# select_tag :organization_include, options_for_select({:include => 'include', :exclude =>'exclude'}) %>
                 <%# hidden_field_tag 'organization_include', 'include' %>
               </li>
@@ -54,15 +54,15 @@
                   <%# hidden_field_tag 'donor_include', 'include' %>
               </li>
 
-              <li class="comboselect date">
-                <label>ACTIVE BETWEEN</label>
+              <li class="comboselect date" id="startDateSelector">
+                <label>Projects Active Between</label>
                 <div class="select_date">
                   <%= select_date @date_start, {:prefix => :start_date, :use_short_month =>true, :start_year => Time.now.year - 30, :end_year => Time.now.year} %>
                   <%# select_tag :start_date_op, options_for_select(['>', '=', '<', '>=', '<=']) %>
                 </div>
               </li>
 
-              <li class="comboselect date">
+              <li class="comboselect date" id="endDateSelector">
                 <label>AND</label>
                 <div class="select_date">
                   <%= select_date @date_end, {:prefix => :end_date, :use_short_month =>true, :start_year => Time.now.year - 30, :end_year => Time.now.year} %>
@@ -71,7 +71,7 @@
               </li>
 
               <li class="comboselect" id="activeProjects">
-                <label><input type="checkbox" name="active_projects"> Show only active projects</label>
+                <label><%= check_box_tag 'active_projects', 'yes', params.has_key?(:active_projects) %> Show only currently active projects</label>
               </li>
 
               <li>
@@ -85,7 +85,7 @@
       </aside>
     </div>
 
-    <div class="grid-12 offset-1">
+    <div class="grid-11 offset-1">
       <section class="layout-content">
 
         <div class="report-spinner" id="spinView"></div>
@@ -104,11 +104,11 @@
 
           <div id="budgetsView" class="mod-report mod-report-budget is-hidden"></div>
 
-          <div id="timelineChartsView" class="mod-report is-hidden">
+          <div id="timelineChartsView" class="mod-report is-break-before is-hidden">
             <div id="modReportsTabs">
               <ul>
-                <li><a href="#projectTab">NGO Aid Map Project Number Over Time</a></li>
-                <li><a href="#organizationTab">Active Organizations Over Time</a></li>
+                <li><a href="#projectTab">Number of Active Projects Over Time</a></li>
+                <li><a href="#organizationTab">Number of Active Organizations Over Time</a></li>
               </ul>
               <div id="projectTab">
                 <div class="mod-report-line-chart" id="projectsChart"></div>

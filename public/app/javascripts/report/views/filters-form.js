@@ -25,9 +25,10 @@ define([
 
     events: {
       'submit form': 'fetchData',
-      'change #end_date_year': 'checkDate',
-      'change #end_date_month': 'checkDate',
-      'change #end_date_day': 'checkDate',
+      // 'change #end_date_year': 'checkDate',
+      // 'change #end_date_month': 'checkDate',
+      // 'change #end_date_day': 'checkDate',
+      'change #activeProjects input': 'checkActive'
     },
 
     initialize: function() {
@@ -45,11 +46,15 @@ define([
       });
 
       this.$window = $(window);
+      this.$startDateSelector = $('#startDateSelector');
+      this.$endDateSelector = $('#endDateSelector');
       this.$activeProjects = $('#activeProjects');
 
       if (window.location.search !== '') {
         this.fetchData();
       }
+
+      this.checkActive();
     },
 
     fetchData: function() {
@@ -168,6 +173,26 @@ define([
         this.$activeProjects.addClass('is-hidden');
       } else {
         this.$activeProjects.removeClass('is-hidden');
+      }
+    },
+
+    checkActive: function() {
+      if (this.$activeProjects.find('input').prop('checked')) {
+        var today = new Date();
+
+        this.$startDateSelector.addClass('is-disabled');
+        this.$endDateSelector.addClass('is-disabled');
+
+        this.$startDateSelector.find('#start_date_year').select2('val', '1984');
+        this.$startDateSelector.find('#start_date_month').select2('val', '9');
+        this.$startDateSelector.find('#start_date_day').select2('val', '1');
+
+        this.$endDateSelector.find('#end_date_year').select2('val', today.getUTCFullYear());
+        this.$endDateSelector.find('#end_date_month').select2('val', today.getMonth() + 1);
+        this.$endDateSelector.find('#end_date_day').select2('val', today.getDate());
+      } else {
+        this.$startDateSelector.removeClass('is-disabled');
+        this.$endDateSelector.removeClass('is-disabled');
       }
     }
 

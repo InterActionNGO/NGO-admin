@@ -13,13 +13,14 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .mod-report-lists-selector a': '_onClickSelector'
+      'click .mod-report-lists-selector a': '_onClickSelector',
+      'click .is-inline-btn': 'hide'
     },
 
     initialize: function() {
       this.$page = $('html, body');
       Backbone.Events.on('filters:fetch', this.hide, this);
-      Backbone.Events.on('list:show', this._showList, this);
+      Backbone.Events.on('list:toggle', this._toggleList, this);
     },
 
     render: function() {
@@ -35,18 +36,29 @@ define([
 
     hide: function() {
       this.$el.addClass('is-hidden');
+      Backbone.Events.trigger('list:hide', this.options);
     },
 
     _showList: function(list) {
-      var items = ReportModel.instance.get(this.options.slug);
-      this.hide();
+      var items = ReportModel.instance.get(list.name);
+
       if (list.name === this.options.slug) {
         this.data = {};
         this.data[this.options.slug] = _.first(_.sortBy(items, function(item) {
           return -item[list.category];
         }), this.options.limit);
         this.render();
-        this.show();
+        _.delay(_.bind(this.show, this), 200);
+      }
+    },
+
+    _toggleList: function(list) {
+      if (list.name === this.options.slug) {
+        if (this.$el.hasClass('is-hidden')) {
+          this._showList(list);
+        } else {
+          this.hide();
+        }
       }
     },
 
@@ -58,8 +70,6 @@ define([
         name: this.options.slug,
         category: $current.data('category')
       });
-
-      console.log(currentText);
 
       this.$el.find('.current').text(currentText);
 

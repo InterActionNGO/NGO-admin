@@ -17,7 +17,7 @@ define([
 
     options: {
       chart: {
-        type: 'area',
+        type: 'line',
         spacingLeft: 0,
         spacingRight: 0,
         zoomType: 'x'
@@ -33,7 +33,7 @@ define([
       },
       plotOptions: {
         fillOpacity: 0.5,
-        area: {
+        line: {
           marker: {
             enabled: false,
             symbol: 'circle',
@@ -51,7 +51,8 @@ define([
         title: {
           text: null
         },
-        gridLineWidth: 0
+        gridLineWidth: 0,
+        min: 0
       },
       credits: {
         enabled: false
@@ -72,6 +73,7 @@ define([
     },
 
     setCharts: function() {
+      var today = new Date(moment().utc()).getTime();
       var dateRange = moment().range(
         moment(FilterModel.instance.get('startDate')),
         moment(FilterModel.instance.get('endDate'))
@@ -83,19 +85,30 @@ define([
       var totalProjectsData = [];
       var activeOrganizationsData = [];
 
+      function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+      }
+
+      // debugger;
+
       dateRange.by('months', function(date) {
         var activeProjects = [];
         var organizationsActives = [];
         var totalProjects = 0;
-        var d = date.valueOf() - (date.zone() * 60000);
+        var days = daysInMonth(date.year(), date.month()-1) * 86400000;
+        var d = new Date(date.utc().format()).getTime() + days;
+
+        if (d > today) {
+          d = today;
+        }
 
         for (var i = 0; i < projectsLength; i++) {
           var sd = new Date(projects[i].startDate).getTime();
           var ed = new Date(projects[i].endDate).getTime();
-          if (d > sd && d < ed) {
-            activeProjects.push(projects[i].organizationId);
+          if (sd <= today && sd <= d && ed >= d) {
+            activeProjects.push(projects[i]);
           }
-          if (d > ed) {
+          if (sd <= d && sd <= today) {
             totalProjects = totalProjects + 1;
           }
         }
@@ -109,7 +122,7 @@ define([
 
       this.$projectChart.highcharts(_.extend({}, this.options, {
         title: {
-          text: 'NGO Aid Map Project Number Over Time'
+          text: 'Number of Active Projects Over Time'
         },
         series: [{
           name: 'Total projects',
@@ -124,7 +137,7 @@ define([
 
       this.$organizationsChart.highcharts(_.extend({}, this.options, {
         title: {
-          text: 'Active Organizations Over Time'
+          text: 'Number of Active Organizations Over Time'
         },
         tooltip: {
           headerFormat: '{point.x:%b %Y}<br>',

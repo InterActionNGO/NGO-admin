@@ -30,6 +30,14 @@ define([
         model.donors = params['donor[]'];
       }
 
+      if (params.q) {
+        model.term = params.q;
+      }
+
+      if (params.active_projects) {
+        model.active = params.active_projects;
+      }
+
       model.startDate = moment({
         year: params['start_date[year]'],
         month: params['start_date[month]'] -1,

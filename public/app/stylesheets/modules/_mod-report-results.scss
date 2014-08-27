@@ -244,15 +244,15 @@ ul.mod-report-locations-header-child {
     text-transform: uppercase;
   }
   td {
-    font-size: 30px;
-    font-weight: lighter;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: normal;
     &:first-child {
-      font-size: 16px;
-      font-weight: normal;
+      width: 55%;
     }
   }
   th, td {
-    padding: 5px 7px;
+    padding: 10px 7px;
     text-align: center;
     &:first-child {
       padding-left: 0;
@@ -279,7 +279,7 @@ ul.mod-report-locations-header-child {
       display: none;
       padding: 10px 0;
       li {
-        padding: 5px 0;
+        padding: 7px 0;
       }
     }
     &:hover ul {
@@ -288,8 +288,8 @@ ul.mod-report-locations-header-child {
   }
 
   li, .current {
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 13px;
+    line-height: 15px;
   }
 
   .current {
@@ -311,7 +311,7 @@ ul.mod-report-locations-header-child {
     display: none;
   }
 
-  .grid-12.offset-1 {
+  .grid-11.offset-1 {
     margin: 0 auto;
     float: none;
   }

@@ -27,12 +27,14 @@ define([
         itemDistance: 0,
         itemMarginBottom: 10,
         itemStyle: {
-          width: 175
+          width: 175,
+          fontWeight: 'normal'
         },
         labelFormatter: function() {
           var value = (Number(this.yData[0]) > 999) ? Number(this.yData[0]).toCommas() : this.yData[0];
           return this.name + ' (' + value + ')';
-        }
+        },
+        adjustChartSize: true
       },
       yAxis: {
         allowDecimals: false,
