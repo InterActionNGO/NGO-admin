@@ -10,6 +10,11 @@
     select, input {
       height: 30px;
     }
+
+    &.is-disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
   }
   .applied-filters {
     width: 90%;
@@ -22,8 +27,7 @@
   #s2id_start_date_day,
   #s2id_end_date_year,
   #s2id_end_date_month,
-  #s2id_end_date_day
-  {
+  #s2id_end_date_day {
     width: 31% !important;
     background: image-url('form-background-lt.png') no-repeat center;
   }
