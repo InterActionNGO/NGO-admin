@@ -71,7 +71,7 @@
               </li>
 
               <li class="comboselect" id="activeProjects">
-                <label><%= check_box_tag 'active_projects', 'yes', :checked => defined?(params[:active_projects]) %> Show only currently active projects</label>
+                <label><%= check_box_tag 'active_projects', 'yes', params.has_key?(:active_projects) %> Show only currently active projects</label>
               </li>
 
               <li>

@@ -51,7 +51,8 @@ define([
         title: {
           text: null
         },
-        gridLineWidth: 0
+        gridLineWidth: 0,
+        min: 0
       },
       credits: {
         enabled: false
