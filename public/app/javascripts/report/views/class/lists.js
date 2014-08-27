@@ -45,6 +45,9 @@ define([
       if (list.name === this.options.slug) {
         this.data = {};
         this.data[this.options.slug] = _.first(_.sortBy(items, function(item) {
+          if (typeof item[list.category] === 'string') {
+            return item[list.category];
+          }
           return -item[list.category];
         }), this.options.limit);
         this.render();

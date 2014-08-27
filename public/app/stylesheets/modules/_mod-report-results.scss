@@ -250,6 +250,13 @@ ul.mod-report-locations-header-child {
     &:first-child {
       width: 55%;
     }
+    &.mod-report-lists-project {
+      font-weight: lighter;
+      color: $color-1;
+      strong {
+        color: $color-3;
+      }
+    }
   }
   th, td {
     padding: 10px 7px;
