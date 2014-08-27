@@ -14,10 +14,12 @@ define([
 
     events: {
       'click .mod-report-lists-selector a': '_onClickSelector',
-      'click .is-inline-btn': 'hide'
+      'click .is-inline-btn': 'hide',
+      'click .is-show-all-btn': '_toggleShowAll'
     },
 
     initialize: function() {
+      this.isShowAllActive = false;
       this.$page = $('html, body');
       Backbone.Events.on('filters:fetch', this.hide, this);
       Backbone.Events.on('list:toggle', this._toggleList, this);
@@ -43,6 +45,7 @@ define([
       var items = ReportModel.instance.get(list.name);
 
       if (list.name === this.options.slug) {
+        console.log(list.category);
         this.data = {};
         this.data[this.options.slug] = _.first(_.sortBy(items, function(item) {
           if (typeof item[list.category] === 'string') {
@@ -50,6 +53,7 @@ define([
           }
           return -item[list.category];
         }), this.options.limit);
+        console.log(this.data[this.options.slug]);
         this.render();
         _.delay(_.bind(this.show, this), 200);
       }
@@ -62,6 +66,19 @@ define([
         } else {
           this.hide();
         }
+      }
+    },
+
+    _toggleShowAll: function() {
+      if (this.isShowAllActive) {
+        this.isShowAllActive = false;
+        this._showList({
+          name: this.options.slug,
+          category: ''
+        });
+      } else {
+        this.isShowAllActive = true;
+        _.delay(_.bind(this.show, this), 200);
       }
     },
 
