@@ -49,7 +49,7 @@ define([
         $current.text('Hide list').addClass('is-active');
       }
 
-      Backbone.Events.trigger('list:show', {
+      Backbone.Events.trigger('list:toggle', {
         name: $current.data('list'),
         category: $current.data('category')
       });
