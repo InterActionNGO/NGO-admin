@@ -83,8 +83,7 @@ module.exports = function(grunt) {
         generatedImagesDir: '<%= root.tmp %>/images/sprite',
         fontsDir: '<%= root.app %>/fonts',
         imagesDir: '<%= root.app %>/images',
-        relativeAssets: true,
-        assetCacheBuster: true
+        relativeAssets: true
       },
       dist: {
         options: {
@@ -100,8 +99,6 @@ module.exports = function(grunt) {
       app: {
         options: {
           debugInfo: true,
-          assetCacheBuster: false,
-          force: true,
           environment: 'development'
         }
       }
