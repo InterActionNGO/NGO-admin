@@ -95,6 +95,7 @@
 
 {{#if projects}}
   <h2>Projects list <button class="is-inline-btn is-unprintable">Close</button></h2>
+  {{#if title}}<p>Top {{title}}</p>{{/if}}
   <ul class="mod-report-lists-selector">
     <li>
       <span class="current">Sort by number of donors</span>
@@ -158,5 +159,8 @@
 {{/if}}
 
 {{#if isLong}}
-  <button class="is-btn is-show-all-btn">Show all</button>
+  <button class="is-btn is-show-all-btn is-unprintable">Show all</button>
+{{/if}}
+{{#if isActive}}
+  <button class="is-btn is-show-all-btn is-unprintable">Clear show all</button>
 {{/if}}
