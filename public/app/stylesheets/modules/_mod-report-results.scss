@@ -290,8 +290,13 @@ ul.mod-report-locations-header-child {
 
   & > li {
     ul {
+      position: absolute;
       display: none;
-      padding: 10px 0;
+      padding: 10px 20px;
+      margin-left: -20px;
+      width: 100%;
+      background-color: $color-4;
+      border-radius: 0 0 15px 15px;
       li {
         padding: 7px 0;
       }
@@ -302,17 +307,34 @@ ul.mod-report-locations-header-child {
   }
 
   li, .current {
+    position: relative;
+    display: inline-block;
     font-size: 13px;
     line-height: 15px;
   }
 
   .current {
-    display: block;
-    position: relative;
     padding-right: 20px;
     &:after {
       @include after('', block, absolute, 0, 3px, 0, 0) ;
       @include triangle (5px, $color-3);
+    }
+  }
+
+  .show-toolbar {
+    display: inline-block;
+    padding-left: 5px;
+    margin-left: 5px;
+    border-left: 1px solid $color-10;
+
+    button {
+      width: 20px;
+      height: 20px;
+      border-radius: 100% 100%;
+      &.is-active {
+        background-color: $color-1;
+        color: $color-0;
+      }
     }
   }
 }
