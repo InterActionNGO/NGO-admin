@@ -81,8 +81,6 @@ define([
         this.data.isLong = iLen > rLen;
         this.data.isActive = !!(!this.options.limit);
 
-        console.log(this.data);
-
         this.render();
 
         toolbar = this.$el.find('.show-toolbar');

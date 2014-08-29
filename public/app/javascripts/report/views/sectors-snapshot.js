@@ -54,7 +54,7 @@ define([
           name: 'By number of projects',
           series: _.map(sectorsByProjects, function(sector) {
             return {
-              name: sector.name || 'Nameless',
+              name: sector.name,
               data: [[sector.name, sector.projectsCount]]
             };
           })
@@ -62,7 +62,7 @@ define([
           name: 'By number of organizations',
           series: _.map(sectorsByOrganizations, function(sector) {
             return {
-              name: sector.name || 'Nameless',
+              name: sector.name,
               data: [[sector.name, sector.organizationsCount]]
             };
           })
@@ -70,7 +70,7 @@ define([
           name: 'By number of donors',
           series: _.map(sectorsByDonors, function(sector) {
             return {
-              name: sector.name || 'Nameless',
+              name: sector.name,
               data: [[sector.name, sector.donorsCount]]
             };
           })
@@ -93,7 +93,8 @@ define([
             type: 'column',
             spacingLeft: 0,
             spacingRight: 0,
-            width: 206
+            width: 206,
+            reflow: false
             // height: (this.data.charts[index].series.length > 3) ? 600 : 250
           },
           series: this.data.charts[index].series
