@@ -1728,7 +1728,7 @@ SQL
     end
     if the_model == 'p'
       sql = <<-SQL
-        SELECT p.id, p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization,
+        SELECT p.id, p.name, p.budget, p.start_date, p.end_date, o.id AS primary_organization, o.name AS organization_name,
         COUNT(DISTINCT d.id) AS donors_count,
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count
@@ -1742,7 +1742,7 @@ SQL
                  INNER JOIN countries c ON (c.id = cp.country_id)
           WHERE true
          #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-          GROUP BY p.id, p.name, o.id, p.budget, p.start_date, p.end_date
+          GROUP BY p.id, p.name, o.id, o.name, p.budget, p.start_date, p.end_date
           ORDER BY p.name
           LIMIT #{the_limit}
       SQL

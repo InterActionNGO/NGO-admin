@@ -54,7 +54,7 @@ define([
           name: 'By number of projects',
           series: _.map(organizationsByProjects, function(organization) {
             return {
-              name: organization.name || 'Nameless',
+              name: organization.name,
               data: [[organization.name, organization.projectsCount]]
             };
           })
@@ -62,7 +62,7 @@ define([
           name: 'By number of countries',
           series: _.map(organizationsByCountries, function(organization) {
             return {
-              name: organization.name || 'Nameless',
+              name: organization.name,
               data: [[organization.name, organization.countriesCount]]
             };
           })
@@ -93,7 +93,8 @@ define([
             type: 'column',
             spacingLeft: 0,
             spacingRight: 0,
-            width: 206
+            width: 206,
+            reflow: false
             // height: (this.data.charts[index].series.length > 3) ? 600 : 250
           },
           series: this.data.charts[index].series

@@ -12,15 +12,19 @@ define([
     },
 
     parse: function(data) {
-      return _.map(data, function(donor) {
-        return {
-          name: donor.name,
-          projectsCount: Number(donor.projects_count),
-          countriesCount: Number(donor.countries_count),
-          sectorsCount: Number(donor.sectors_count),
-          organizationsCount: Number(donor.organizations_count)
-        };
+      var result = _.map(data, function(donor) {
+        if (donor.name) {
+          return {
+            name: donor.name,
+            projectsCount: Number(donor.projects_count),
+            countriesCount: Number(donor.countries_count),
+            sectorsCount: Number(donor.sectors_count),
+            organizationsCount: Number(donor.organizations_count)
+          };
+        }
       });
+
+      return _.compact(result);
     },
 
     getByURLParams: function(URLParams, callback) {
