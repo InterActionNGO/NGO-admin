@@ -14,10 +14,13 @@ define([
 
     events: {
       'click .mod-report-lists-selector a': '_onClickSelector',
-      'click .is-inline-btn': 'hide'
+      'click .is-inline-btn': 'hide',
+      'click .is-show-all-btn': '_toggleShowAll',
+      'click .show-toolbar button': '_changeLimit'
     },
 
     initialize: function() {
+      this.isShowAllActive = false;
       this.$page = $('html, body');
       Backbone.Events.on('filters:fetch', this.hide, this);
       Backbone.Events.on('list:toggle', this._toggleList, this);
@@ -41,14 +44,50 @@ define([
 
     _showList: function(list) {
       var items = ReportModel.instance.get(list.name);
+      var toolbar;
+      var result = [];
+      var rLen = 0;
+      var iLen = 0;
+      var last;
+
+      this.currentList = list;
 
       if (list.name === this.options.slug) {
         this.data = {};
-        this.data[this.options.slug] = _.first(_.sortBy(items, function(item) {
+
+        result = _.sortBy(items, function(item) {
+          if (typeof item[list.category] === 'string') {
+            return item[list.category];
+          }
           return -item[list.category];
-        }), this.options.limit);
+        });
+
+        iLen = items.length;
+
+        this.data.pagination = _.first(_.range(10, iLen, 10), 3);
+
+        last = _.last(this.data.pagination);
+
+        if (this.options.limit) {
+          this.options.limit = last;
+          result = _.first(result, this.options.limit);
+        }
+
+        rLen = result.length;
+
+        this.data[this.options.slug] = result;
+
+        this.data.title = (!this.options.limit || iLen < this.options.limit) ? null : last;
+        this.data.isLong = iLen > rLen;
+        this.data.isActive = !!(!this.options.limit);
+
         this.render();
-        _.delay(_.bind(this.show, this), 200);
+
+        toolbar = this.$el.find('.show-toolbar');
+        toolbar.find('button').removeClass('is-active');
+        toolbar.find('button[data-limit="' + ((!this.options.limit) ? 'all' : last) + '"]').addClass('is-active');
+
+        _.delay(_.bind(this.show, this), 50);
       }
     },
 
@@ -60,6 +99,15 @@ define([
           this.hide();
         }
       }
+    },
+
+    _toggleShowAll: function() {
+      if (this.isShowAllActive) {
+        this.options.limit = 30;
+      } else {
+        this.options.limit = null;
+      }
+      this._showList(this.currentList);
     },
 
     _onClickSelector: function(e) {
@@ -74,6 +122,12 @@ define([
       this.$el.find('.current').text(currentText);
 
       e.preventDefault();
+    },
+
+    _changeLimit: function(e) {
+      var limit = $(e.currentTarget).data('limit');
+      this.options.limit = (limit !== 'all') ? Number(limit) : null;
+      this._showList(this.currentList);
     }
 
   });

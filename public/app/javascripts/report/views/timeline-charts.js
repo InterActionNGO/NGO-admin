@@ -89,8 +89,6 @@ define([
         return new Date(year, month, 0).getDate();
       }
 
-      // debugger;
-
       dateRange.by('months', function(date) {
         var activeProjects = [];
         var organizationsActives = [];
@@ -106,7 +104,7 @@ define([
           var sd = new Date(projects[i].startDate).getTime();
           var ed = new Date(projects[i].endDate).getTime();
           if (sd <= today && sd <= d && ed >= d) {
-            activeProjects.push(projects[i]);
+            activeProjects.push(projects[i].organizationId);
           }
           if (sd <= d && sd <= today) {
             totalProjects = totalProjects + 1;
