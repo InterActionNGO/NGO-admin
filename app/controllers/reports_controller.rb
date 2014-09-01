@@ -52,5 +52,22 @@ class ReportsController < ApplicationController
     end
   end
 
+  def organization_profile
+  	@organization = Organization.find (params[:id])
+  	@profile = @organization.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
+  end
+  def country_profile
+  	
+  end
+  def sector_profile
+  	
+  end
+  def donor_profile
+  	
+  end
+
 
 end

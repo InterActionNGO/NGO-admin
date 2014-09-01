@@ -349,4 +349,13 @@ SQL
     ActiveRecord::Base.connection.execute(sql)
   end
 
+  def get_profile
+    profile = {}
+    profile[:details] = {'name' => self.name, 'description' => self.description, 'contact_info' => {'contact_name' => self.contact_name, 'contact_position' => self.contact_position, 'email' => self.contact_email, 'phone' => self.contact_phone_number}, 'donation_info' => {'donation_address' => self.donation_address, 'donation_website' => self.donation_website} }
+    profile[:countries] = Country.joins([:projects => :primary_organization]).where('organizations.id = ?', self.id)
+    profile[:donors] = Donor.joins([:donations => [:project => :primary_organization]]).where('organizations.id = ?', self.id)
+    profile[:projects] = self.projects.select([:budget, :start_date, :end_date, :the_geom])
+    profile
+  end
+
 end
