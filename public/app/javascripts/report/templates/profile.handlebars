@@ -1,0 +1,52 @@
+<h2>{{details.name}}</h2>
+<p>{{details.description}}</p>
+
+<div class="profile-item mod-report-summary">
+  <div class="summary-wrap">
+    <div class="summary-item">
+      <h3>Projects</h3>
+      <span class="value">{{projects.length}}</span>
+    </div>
+
+    <div class="summary-item">
+      <h3>Donors</h3>
+      <span class="value">{{donors.length}}</span>
+    </div>
+
+    <div class="summary-item">
+      <h3>Countries</h3>
+      <span class="value">{{countries.length}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="profile-item is-flex">
+  <div class="budget-item">min. (USD): {{min}}</div>
+  <div class="budget-item">median (USD): {{mid}}</div>
+  <div class="budget-item">max. (USD): {{max}}</div>
+</div>
+
+<div class="profile-item row">
+  {{#each profile.charts}}
+    <div class="mod-report-grid-3">
+      <h3>{{name}}</h3>
+      <div class="mod-report-stacked-chart"></div>
+    </div>
+  {{/each}}
+</div>
+
+<div class="row profile-item">
+  <div class="grid-8">
+    <h3>Contact info</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua.</p>
+  </div>
+
+  <div class="grid-8 offset-1">
+    <h3>Donation info</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua.</p>
+  </div>
+</div>
+
+<div class="profile-item" id="profileMap"></div>
