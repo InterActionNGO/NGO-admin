@@ -6,9 +6,10 @@ define([
   'backbone',
   'handlebars',
   'views/class/chart',
+  'views/class/profile',
   'models/report',
   'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
+], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ProfileView, ReportModel, tpl) {
 
   var OrganizationsSnapshotView = Backbone.View.extend({
 
@@ -93,13 +94,9 @@ define([
 
       } else {
 
-        this.profile = {};
-
-        this.render();
+        this.setProfile(organizations[0].id);
 
       }
-
-
 
       this.$el.removeClass('is-hidden');
     },
@@ -124,6 +121,17 @@ define([
           .setElement($(element))
           .setChart(options);
       }, this));
+    },
+
+    setProfile: function(id) {
+      var profileView = new ProfileView();
+
+      profileView.setElement(this.el);
+
+      profileView.getProfile({
+        slug: 'organization',
+        id: id
+      });
     }
 
   });

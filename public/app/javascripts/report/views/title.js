@@ -9,7 +9,8 @@ define([
     el: '#titleView',
 
     events: {
-      'keyup textarea': 'onKeyUp'
+      'keyup textarea': 'onKeyUp',
+      'click button': 'focus'
     },
 
     initialize: function() {
@@ -40,6 +41,10 @@ define([
       }
 
       this.$textarea.width(w);
+    },
+
+    focus: function() {
+      this.$textarea.focus();
     }
 
   });
