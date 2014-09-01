@@ -60,13 +60,25 @@ class ReportsController < ApplicationController
     end
   end
   def country_profile
-  	
+  	@country = Country.find (params[:id])
+  	@profile = @country.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
   end
   def sector_profile
-  	
+  	@sector = Sector.find (params[:id])
+  	@profile = @sector.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
   end
   def donor_profile
-  	
+  	@donor = Donor.find (params[:id])
+  	@profile = @donor.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
   end
 
 
