@@ -53,7 +53,7 @@
 .report-title {
   textarea {
     display: inline-block;
-    width: 100%;
+    width: auto;
 
     border: 0;
 
@@ -70,6 +70,11 @@
     &:focus {
       outline: 0;
     }
+  }
+
+  .is-inline-btn {
+    vertical-align: 18px;
+    margin-left: -10px;
   }
 }
 
