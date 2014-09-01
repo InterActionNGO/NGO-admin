@@ -1748,7 +1748,7 @@ SQL
       SQL
     else
       sql = <<-SQL
-        SELECT #{the_model}.name,
+        SELECT #{the_model}.name, #{the_model}.id,
         COUNT(DISTINCT p.id) AS projects_count,
         COUNT(DISTINCT d.id) AS donors_count,
         COUNT(DISTINCT c.id) AS countries_count,
@@ -1765,7 +1765,7 @@ SQL
                  INNER JOIN countries c ON (c.id = cp.country_id)
           WHERE true
          #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-          GROUP BY #{the_model}.name
+          GROUP BY #{the_model}.name, #{the_model}.id
           ORDER BY projects_count DESC
           LIMIT #{the_limit}
       SQL
