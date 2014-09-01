@@ -122,16 +122,18 @@ require([
   (function(H) {
     H.wrap(H.Legend.prototype, 'render', function (proceed) {
       var chart = this.chart;
+      var h;
 
       proceed.call(this);
 
       if (this.options.adjustChartSize && this.options.verticalAlign === 'bottom') {
-        chart.chartHeight += this.legendHeight - 100;
-        chart.marginBottom += this.legendHeight - 100;
+        h = this.legendHeight - 100;
+        chart.chartHeight += h;
+        chart.marginBottom += h;
         chart.container.style.height = chart.container.firstChild.style.height = chart.chartHeight + 'px';
 
         this.group.attr({
-          translateY: this.group.attr('translateY') + this.legendHeight - 100
+          translateY: this.group.attr('translateY') + h
         });
       }
     });
