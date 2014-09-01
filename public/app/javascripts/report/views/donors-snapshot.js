@@ -40,7 +40,7 @@ define([
       var donors = ReportModel.instance.get('donors');
       var len = donors.length;
 
-      this.data = this.profile = {};
+      this.data = this.profile = null;
 
       if (len > 1) {
 
@@ -111,7 +111,7 @@ define([
             type: 'column',
             spacingLeft: 0,
             spacingRight: 0,
-            width: 206,
+            width: 188,
             reflow: false
             // height: (this.data.charts[index].series.length > 3) ? 600 : 250
           },

@@ -32,6 +32,10 @@
     width: 50%;
     margin: .5em auto 0 auto;
   }
+
+  .profile-item {
+    margin-top: 1em;
+  }
 }
 
 .mod-applied-filters {
@@ -97,6 +101,30 @@
     font-weight: normal;
     color: $color-1;
   }
+
+  .summary-wrap {
+    @extend .is-flex;
+  }
+
+  .summary-item {
+    text-align: center;
+
+    h3 {
+      font-weight: bold;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 2px 0 5px 0;
+    }
+
+    .value {
+      font-weight: lighter;
+      font-size: 36px;
+    }
+  }
+}
+
+.budget-item {
+  text-transform: uppercase;
 }
 
 .mod-report-budget {
