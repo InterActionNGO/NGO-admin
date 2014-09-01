@@ -14,19 +14,49 @@ define([
 
     parse: function(data) {
 
+      console.log(data);
+
       data.projects = _.map(data.projects, function(project) {
         var result = project.project;
         result.budget = Number(project.budget) || 0;
         return result;
       });
 
-      data.min = _.min(data.projects, function(project) {
-        return project.budget;
-      }, 0).budget;
+      data.sectors = _.sortBy(_.map(data.sectors, function(sector) {
+        return {
+          name: sector.sector.name,
+          data: [sector.sector.name, Number(sector.sector.count)]
+        };
+      }), function(sector) {
+        return -sector.data[2];
+      });
 
-      data.max = _.max(data.projects, function(project) {
-        return project.budget;
-      }, 0).budget;
+      data.countries = _.map(data.countries, function(country) {
+        return {
+          name: country.country.name,
+          data: [country.country.name, Number(country.country.count)]
+        };
+      });
+
+      data.donors = _.map(data.donors, function(donor) {
+        return {
+          name: donor.donor.name,
+          data: [donor.donor.name, Number(donor.donor.count)]
+        };
+      });
+
+      data.budgets = {
+        min: _.min(data.projects, function(project) {
+          return project.budget;
+        }, 0).budget,
+        max: _.max(data.projects, function(project) {
+          return project.budget;
+        }, 0).budget
+      };
+
+      if (_.compact(data.budgets).length === 0) {
+        data.budgets = null;
+      }
 
       return data;
     },
