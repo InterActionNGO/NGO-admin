@@ -20,14 +20,16 @@
   </div>
 </div>
 
-<div class="profile-item is-flex">
-  <div class="budget-item">min. (USD): {{min}}</div>
-  <div class="budget-item">median (USD): {{mid}}</div>
-  <div class="budget-item">max. (USD): {{max}}</div>
-</div>
+{{#if budgets}}
+  <div class="profile-item is-flex">
+    <div class="budget-item">min. (USD): {{budgets.min}}</div>
+    <div class="budget-item">median (USD): {{budgets.mid}}</div>
+    <div class="budget-item">max. (USD): {{budgets.max}}</div>
+  </div>
+{{/if}}
 
 <div class="profile-item row">
-  {{#each profile.charts}}
+  {{#each charts}}
     <div class="mod-report-grid-3">
       <h3>{{name}}</h3>
       <div class="mod-report-stacked-chart"></div>
@@ -38,14 +40,15 @@
 <div class="row profile-item">
   <div class="grid-8">
     <h3>Contact info</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>{{details.contact_info.contact_name}}, {{details.contact_info.contact_position}}<br>
+    {{details.contact_info.phone}}<br>
+    <a href="mailto:{{details.contact_info.email}}">{{details.contact_info.email}}</a></p>
   </div>
 
   <div class="grid-8 offset-1">
     <h3>Donation info</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>{{details.donation_info.donation_address}}<br>
+    <a href="{{details.donation_info.donation_website}}">{{details.donation_info.donation_website}}</a></p>
   </div>
 </div>
 

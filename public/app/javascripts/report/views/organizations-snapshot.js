@@ -8,8 +8,10 @@ define([
   'views/class/chart',
   'views/class/profile',
   'models/report',
+  'models/profile',
+  'text!templates/profile.handlebars',
   'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ProfileView, ReportModel, tpl) {
+], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ProfileView, ReportModel, ProfileModel, profileTpl, tpl) {
 
   var OrganizationsSnapshotView = Backbone.View.extend({
 
@@ -21,16 +23,22 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    templateProfile: Handlebars.compile(profileTpl),
+
     initialize: function() {
+      this.profileModel = new ProfileModel();
       Backbone.Events.on('filters:fetch', this.hide, this);
       Backbone.Events.on('filters:done', this.showSnapshot, this);
     },
 
     render: function() {
       this.$el.html(this.template({
-        snapshot: this.data,
-        profile: this.profile
+        snapshot: this.data
       }));
+    },
+
+    renderProfile: function() {
+      this.$el.html(this.templateProfile(this.data));
     },
 
     hide: function() {
@@ -81,7 +89,7 @@ define([
             name: 'By budget (USD)',
             series: _.map(organizationsByBudget, function(organization) {
               return {
-                name: organization.name || 'Nameless',
+                name: organization.name,
                 data: [[organization.name, organization.budget]]
               };
             })
@@ -124,14 +132,29 @@ define([
     },
 
     setProfile: function(id) {
-      var profileView = new ProfileView();
-
-      profileView.setElement(this.el);
-
-      profileView.getProfile({
+      this.profileModel.getByParams({
         slug: 'organization',
         id: id
-      });
+      }, _.bind(function(model) {
+
+        this.data = model.toJSON();
+
+        this.data.charts = [{
+          name: 'Projects by sectors',
+          series: _.first(this.data.sectors, 5)
+        }, {
+          name: 'By number of countries',
+          series: _.first(this.data.countries, 5)
+        }, {
+          name: 'By budget (USD)',
+          series: _.first(this.data.donors, 5)
+        }];
+
+        this.renderProfile();
+
+        this.setOrganizationsChart();
+
+      }, this));
     }
 
   });
