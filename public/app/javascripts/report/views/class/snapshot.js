@@ -82,9 +82,9 @@ define([
       }
     },
 
-    templateSnapshot: Handlebars.compile(snapshotTpl),
+    profileTemplate: Handlebars.compile(profileTpl),
 
-    templateProfile: Handlebars.compile(profileTpl),
+    snapshotTemplate: Handlebars.compile(snapshotTpl),
 
     initialize: function() {
       this.options = _.defaults(this.options || {}, this.defaults);
@@ -97,19 +97,12 @@ define([
 
     _setListeners: function() {
       Backbone.Events.on('filters:fetch', this.hide, this);
-      Backbone.Events.on('filters:done', this., this);
+      Backbone.Events.on('filters:done', this.show, this);
     },
 
-    renderSnapshot: function() {
-      this.$el.html(this.templateSnapshot( this.data ));
-    },
-
-    renderProfile: function() {
-      this.$el.html(this.templateProfile(this.data));
-    },
-
-    show: function() {
-      this.$el.removeClass('is-hidden');
+    render: function() {
+      var template = (this.data.profile) ? this.profileTemplate : this.snapshotTemplate;
+      this.$el.html(template( this.data ));
     },
 
     hide: function() {
@@ -117,24 +110,36 @@ define([
     },
 
     show: function() {
-      var organizations = this.reportModel.get(this.options.snapshot.slug);
-      var len = organizations.length;
+      $.when(
+        this.getData()
+      ).then(_.bind(function() {
+        this.render();
+        this.setChart();
+        this.$el.removeClass('is-hidden');
+      }, this));
+    },
 
-      this.data = this.profile = null;
+    getData: function() {
+      var $deferred = new $.Deferred();
+
+      var data = this.reportModel.get(this.options.snapshot.slug);
+      var len = data.length;
+
+      this.data = {};
 
       if (len > 1) {
 
-        var organizationsByProjects = _.first(organizations, this.options.snapshot.limit);
-        var organizationsByCountries = _.first(_.sortBy(organizations, function(organization) {
+        var organizationsByProjects = _.first(data, this.options.snapshot.limit);
+        var organizationsByCountries = _.first(_.sortBy(data, function(organization) {
           return -organization.countriesCount;
         }), this.options.limit);
-        var organizationsByBudget = _.first(_.sortBy(organizations, function(organization) {
+        var organizationsByBudget = _.first(_.sortBy(data, function(organization) {
           return -organization.budget;
         }), this.options.limit);
 
-        // var subtitle = 'A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.'
         var subtitle = 'Out of %(organizations)s organizations.';
 
+        this.data.profile = false;
         this.data = {
           title: 'Top 10 Organizations',
           description: _.str.sprintf(subtitle, {
@@ -167,59 +172,35 @@ define([
           }]
         };
 
-        this.renderSnapshot();
-
-        this.setChart();
+        $deferred.resolve();
 
       } else {
 
-        $.when(
-          this.getData()
-        ).then(_.bind(function() {
-          this.renderProfile();
-          this.setChart();
+        this.profileModel.getByParams({
+          slug: this.options.profile.slug,
+          id: data[0].id
+        }, _.bind(function() {
+
+          this.data = this.profileModel.toJSON();
+          this.data.profile = true;
+          this.data.charts = [{
+            name: this.options.profile.titles[0],
+            series: _.first(this.data.sectors, this.options.profile.limit)
+          }, {
+            name: this.options.profile.titles[1],
+            series: _.first(this.data.countries, this.options.profile.limit)
+          }, {
+            name: this.options.profile.titles[2],
+            series: _.first(this.data.donors, this.options.profile.limit)
+          }];
+
+          $deferred.resolve();
+
         }, this));
 
       }
 
-      this.show();
-    },
-
-    showSnapshot: function() {
-
-    },
-
-    getData: function() {
-      var deferred = $.Deferred;
-
-      var data = this.reportModel.get(this.options.snapshot.slug);
-      var len = data.length;
-
-      if () {}
-
-      this.profileModel.getByParams({
-        slug: this.options.profile.slug,
-        id: id
-      }, _.bind(function() {
-
-        this.data = this.profileModel.toJSON();
-
-        this.data.charts = [{
-          name: this.options.profile.titles[0],
-          series: _.first(this.data.sectors, this.options.profile.limit)
-        }, {
-          name: this.options.profile.titles[1],
-          series: _.first(this.data.countries, this.options.profile.limit)
-        }, {
-          name: this.options.profile.titles[2],
-          series: _.first(this.data.donors, this.options.profile.limit)
-        }];
-
-        deferred.resolve();
-
-      }, this));
-
-      return deferred.promise();
+      return $deferred.promise();
     },
 
     setChart: function() {
