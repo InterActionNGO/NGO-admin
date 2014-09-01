@@ -127,7 +127,7 @@ define([
           data: totalProjectsData,
           color: '#CBCBCB'
         }, {
-          name: 'Active projects',
+          name: 'Currently active projects',
           data: activeProjectsData,
           color: '#006C8D'
         }]
