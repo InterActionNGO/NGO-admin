@@ -26,7 +26,10 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template(this.data));
+      this.$el.html(this.template({
+        snapshot: this.data,
+        profile: this.profile
+      }));
     },
 
     hide: function() {
@@ -34,52 +37,66 @@ define([
     },
 
     showSnapshot: function() {
-      var countriesByProjects = _.first(ReportModel.instance.get('countries'), this.options.limit);
-      var countriesByOrganizations = _.first(_.sortBy(ReportModel.instance.get('countries'), function(country) {
-        return -country.organizationsCount;
-      }), this.options.limit);
-      var countriesByDonors = _.first(_.sortBy(ReportModel.instance.get('countries'), function(country) {
-        return -country.donorsCount;
-      }), this.options.limit);
+      var countries = ReportModel.instance.get('countries');
+      var len = countries.length;
 
-      // var subtitle = 'A total of %(countries)s found countries, with %(projects)s projects by %(organizations)s organizations across %(sectors)s sectors.';
-      var subtitle = 'Out of %(countries)s countries';
+      this.data = this.profile = {};
 
-      this.data = {
-        title: 'Top 10 Countries',
-        description: _.str.sprintf(subtitle, {
-          countries: ReportModel.instance.get('countries').length
-        }),
-        charts: [{
-          name: 'By number of projects',
-          series: _.map(countriesByProjects, function(country) {
-            return {
-              name: country.name,
-              data: [[country.name, country.projectsCount]]
-            };
-          })
-        }, {
-          name: 'By number of organizations',
-          series: _.map(countriesByOrganizations, function(country) {
-            return {
-              name: country.name,
-              data: [[country.name, country.organizationsCount]]
-            };
-          })
-        }, {
-          name: 'By number of donors',
-          series: _.map(countriesByDonors, function(country) {
-            return {
-              name: country.name,
-              data: [[country.name, country.donorsCount]]
-            };
-          })
-        }]
-      };
+      if (len > 1) {
 
-      this.render();
+        var countriesByProjects = _.first(countries, this.options.limit);
+        var countriesByOrganizations = _.first(_.sortBy(countries, function(country) {
+          return -country.organizationsCount;
+        }), this.options.limit);
+        var countriesByDonors = _.first(_.sortBy(countries, function(country) {
+          return -country.donorsCount;
+        }), this.options.limit);
 
-      this.setCountriesChart();
+        // var subtitle = 'A total of %(countries)s found countries, with %(projects)s projects by %(organizations)s organizations across %(sectors)s sectors.';
+        var subtitle = 'Out of %(countries)s countries';
+
+        this.data = {
+          title: 'Top 10 Countries',
+          description: _.str.sprintf(subtitle, {
+            countries: ReportModel.instance.get('countries').length
+          }),
+          charts: [{
+            name: 'By number of projects',
+            series: _.map(countriesByProjects, function(country) {
+              return {
+                name: country.name,
+                data: [[country.name, country.projectsCount]]
+              };
+            })
+          }, {
+            name: 'By number of organizations',
+            series: _.map(countriesByOrganizations, function(country) {
+              return {
+                name: country.name,
+                data: [[country.name, country.organizationsCount]]
+              };
+            })
+          }, {
+            name: 'By number of donors',
+            series: _.map(countriesByDonors, function(country) {
+              return {
+                name: country.name,
+                data: [[country.name, country.donorsCount]]
+              };
+            })
+          }]
+        };
+
+        this.render();
+
+        this.setCountriesChart();
+
+      } else {
+
+        this.profile = {};
+        this.render();
+
+      }
 
       this.$el.removeClass('is-hidden');
     },

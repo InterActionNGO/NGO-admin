@@ -26,7 +26,10 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template(this.data));
+      this.$el.html(this.template({
+        snapshot: this.data,
+        profile: this.profile
+      }));
     },
 
     hide: function() {
@@ -34,52 +37,66 @@ define([
     },
 
     showSnapshot: function() {
-      var sectorsByProjects = _.first(ReportModel.instance.get('sectors'), this.options.limit);
-      var sectorsByOrganizations = _.first(_.sortBy(ReportModel.instance.get('sectors'), function(sector) {
-        return -sector.organizationsCount;
-      }), this.options.limit);
-      var sectorsByDonors = _.first(_.sortBy(ReportModel.instance.get('sectors'), function(sector) {
-        return -sector.donorsCount;
-      }), this.options.limit);
+      var sectors = ReportModel.instance.get('sectors');
+      var len = sectors.length;
 
-      // var subtitle = 'A total of %(sectors)s found sectors, supporting %(projects)s projects by %(donors)s donors and %(organizations)s organizations in %(countries)s countries.';
-      var subtitle = 'Out of %(sectors)s sectors.';
+      this.data = this.profile = {};
 
-      this.data = {
-        title: 'Top 10 Sectors',
-        description: _.str.sprintf(subtitle, {
-          sectors: ReportModel.instance.get('sectors').length
-        }),
-        charts: [{
-          name: 'By number of projects',
-          series: _.map(sectorsByProjects, function(sector) {
-            return {
-              name: sector.name,
-              data: [[sector.name, sector.projectsCount]]
-            };
-          })
-        }, {
-          name: 'By number of organizations',
-          series: _.map(sectorsByOrganizations, function(sector) {
-            return {
-              name: sector.name,
-              data: [[sector.name, sector.organizationsCount]]
-            };
-          })
-        }, {
-          name: 'By number of donors',
-          series: _.map(sectorsByDonors, function(sector) {
-            return {
-              name: sector.name,
-              data: [[sector.name, sector.donorsCount]]
-            };
-          })
-        }]
-      };
+      if (len > 1) {
 
-      this.render();
+        var sectorsByProjects = _.first(sectors, this.options.limit);
+        var sectorsByOrganizations = _.first(_.sortBy(sectors, function(sector) {
+          return -sector.organizationsCount;
+        }), this.options.limit);
+        var sectorsByDonors = _.first(_.sortBy(sectors, function(sector) {
+          return -sector.donorsCount;
+        }), this.options.limit);
 
-      this.setSectorsChart();
+        // var subtitle = 'A total of %(sectors)s found sectors, supporting %(projects)s projects by %(donors)s donors and %(organizations)s organizations in %(countries)s countries.';
+        var subtitle = 'Out of %(sectors)s sectors.';
+
+        this.data = {
+          title: 'Top 10 Sectors',
+          description: _.str.sprintf(subtitle, {
+            sectors: len
+          }),
+          charts: [{
+            name: 'By number of projects',
+            series: _.map(sectorsByProjects, function(sector) {
+              return {
+                name: sector.name,
+                data: [[sector.name, sector.projectsCount]]
+              };
+            })
+          }, {
+            name: 'By number of organizations',
+            series: _.map(sectorsByOrganizations, function(sector) {
+              return {
+                name: sector.name,
+                data: [[sector.name, sector.organizationsCount]]
+              };
+            })
+          }, {
+            name: 'By number of donors',
+            series: _.map(sectorsByDonors, function(sector) {
+              return {
+                name: sector.name,
+                data: [[sector.name, sector.donorsCount]]
+              };
+            })
+          }]
+        };
+
+        this.render();
+
+        this.setSectorsChart();
+
+      } else {
+
+        this.profile = {};
+        this.render();
+
+      }
 
       this.$el.removeClass('is-hidden');
     },
