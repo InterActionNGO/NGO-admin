@@ -176,6 +176,11 @@ SQL
   def get_profile
     profile = {}
     profile[:name] = self.name
+    profile[:projects] = self.projects.select([:id, :name, :the_geom, :start_date, :end_date])
+    profile[:organizations] = Organization.joins([:projects => :countries]).where('countries.id = ?', self.id)
+    profile[:donors] = Donor.joins([:donations => [:project => :countries]]).where('countries.id = ?', self.id).select(['donors.name','count(projects.id)']).group('donors.name')
+    profile[:sectors] = Sector.joins([:projects => :countries]).where('countries.id = ?', self.id).select(['sectors.name','count(projects.id)']).group('sectors.name')
+    
     profile
   end
 
