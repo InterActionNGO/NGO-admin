@@ -26,7 +26,10 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template(this.data));
+      this.$el.html(this.template({
+        snapshot: this.data,
+        profile: this.profile
+      }));
     },
 
     hide: function() {
@@ -34,52 +37,69 @@ define([
     },
 
     showSnapshot: function() {
-      var organizationsByProjects = _.first(ReportModel.instance.get('organizations'), this.options.limit);
-      var organizationsByCountries = _.first(_.sortBy(ReportModel.instance.get('organizations'), function(organization) {
-        return -organization.countriesCount;
-      }), this.options.limit);
-      var organizationsByBudget = _.first(_.sortBy(ReportModel.instance.get('organizations'), function(organization) {
-        return -organization.budget;
-      }), this.options.limit);
+      var organizations = ReportModel.instance.get('organizations');
+      var len = organizations.length;
 
-      // var subtitle = 'A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.'
-      var subtitle = 'Out of %(organizations)s organizations.';
+      this.data = this.profile = {};
 
-      this.data = {
-        title: 'Top 10 Organizations',
-        description: _.str.sprintf(subtitle, {
-          organizations: ReportModel.instance.get('organizations').length
-        }),
-        charts: [{
-          name: 'By number of projects',
-          series: _.map(organizationsByProjects, function(organization) {
-            return {
-              name: organization.name,
-              data: [[organization.name, organization.projectsCount]]
-            };
-          })
-        }, {
-          name: 'By number of countries',
-          series: _.map(organizationsByCountries, function(organization) {
-            return {
-              name: organization.name,
-              data: [[organization.name, organization.countriesCount]]
-            };
-          })
-        }, {
-          name: 'By budget (USD)',
-          series: _.map(organizationsByBudget, function(organization) {
-            return {
-              name: organization.name || 'Nameless',
-              data: [[organization.name, organization.budget]]
-            };
-          })
-        }]
-      };
+      if (len > 1) {
 
-      this.render();
+        var organizationsByProjects = _.first(organizations, this.options.limit);
+        var organizationsByCountries = _.first(_.sortBy(organizations, function(organization) {
+          return -organization.countriesCount;
+        }), this.options.limit);
+        var organizationsByBudget = _.first(_.sortBy(organizations, function(organization) {
+          return -organization.budget;
+        }), this.options.limit);
 
-      this.setOrganizationsChart();
+        // var subtitle = 'A total of %(organizations)s found organizations, implementing %(projects)s projects by %(donors)s donors in %(countries)s countries across %(sectors)s sectors.'
+        var subtitle = 'Out of %(organizations)s organizations.';
+
+        this.data = {
+          title: 'Top 10 Organizations',
+          description: _.str.sprintf(subtitle, {
+            organizations: len
+          }),
+          charts: [{
+            name: 'By number of projects',
+            series: _.map(organizationsByProjects, function(organization) {
+              return {
+                name: organization.name,
+                data: [[organization.name, organization.projectsCount]]
+              };
+            })
+          }, {
+            name: 'By number of countries',
+            series: _.map(organizationsByCountries, function(organization) {
+              return {
+                name: organization.name,
+                data: [[organization.name, organization.countriesCount]]
+              };
+            })
+          }, {
+            name: 'By budget (USD)',
+            series: _.map(organizationsByBudget, function(organization) {
+              return {
+                name: organization.name || 'Nameless',
+                data: [[organization.name, organization.budget]]
+              };
+            })
+          }]
+        };
+
+        this.render();
+
+        this.setOrganizationsChart();
+
+      } else {
+
+        this.profile = {};
+
+        this.render();
+
+      }
+
+
 
       this.$el.removeClass('is-hidden');
     },

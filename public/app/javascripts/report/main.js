@@ -118,6 +118,13 @@ require([
     return _.str.toSentence(context);
   });
 
+  Handlebars.registerHelper('if_eq', function(context, options) {
+    if (context === options.hash.compare) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   // Highcharts
   (function(H) {
     H.wrap(H.Legend.prototype, 'render', function (proceed) {
