@@ -130,23 +130,25 @@ define([
       if (len > 1) {
 
         var organizationsByProjects = _.first(data, this.options.snapshot.limit);
+
         var organizationsByCountries = _.first(_.sortBy(data, function(organization) {
           return -organization.countriesCount;
         }), this.options.limit);
+
         var organizationsByBudget = _.first(_.sortBy(data, function(organization) {
           return -organization.budget;
         }), this.options.limit);
 
-        var subtitle = 'Out of %(organizations)s organizations.';
-
-        this.data.profile = false;
         this.data = {
+
           title: 'Top 10 Organizations',
-          description: _.str.sprintf(subtitle, {
+
+          description: _.str.sprintf(this.options.snapshot.subtitle, {
             organizations: len
           }),
+
           charts: [{
-            name: 'By number of projects',
+            name: this.options.snapshot.titles[0],
             series: _.map(organizationsByProjects, function(organization) {
               return {
                 name: organization.name,
@@ -154,7 +156,7 @@ define([
               };
             })
           }, {
-            name: 'By number of countries',
+            name: this.options.snapshot.titles[1],
             series: _.map(organizationsByCountries, function(organization) {
               return {
                 name: organization.name,
@@ -162,7 +164,7 @@ define([
               };
             })
           }, {
-            name: 'By budget (USD)',
+            name: this.options.snapshot.titles[2],
             series: _.map(organizationsByBudget, function(organization) {
               return {
                 name: organization.name,
