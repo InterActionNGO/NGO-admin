@@ -173,4 +173,10 @@ SQL
     [self.id]
   end
 
+  def get_profile
+    profile = {}
+    profile[:name] = self.name
+    profile
+  end
+
 end
