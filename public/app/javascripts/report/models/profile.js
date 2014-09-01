@@ -14,8 +14,6 @@ define([
 
     parse: function(data) {
 
-      console.log(data);
-
       data.projects = _.map(data.projects, function(project) {
         var result = project.project;
         result.budget = Number(project.budget) || 0;
@@ -25,24 +23,28 @@ define([
       data.sectors = _.sortBy(_.map(data.sectors, function(sector) {
         return {
           name: sector.sector.name,
-          data: [sector.sector.name, Number(sector.sector.count)]
+          data: [[sector.sector.name, Number(sector.sector.count)]]
         };
       }), function(sector) {
-        return -sector.data[2];
+        return -sector.data[0][1];
       });
 
-      data.countries = _.map(data.countries, function(country) {
+      data.countries = _.sortBy(_.map(data.countries, function(country) {
         return {
           name: country.country.name,
-          data: [country.country.name, Number(country.country.count)]
+          data: [[country.country.name, Number(country.country.count)]]
         };
+      }), function(country) {
+        return -country.data[0][1];
       });
 
-      data.donors = _.map(data.donors, function(donor) {
+      data.donors = _.sortBy(_.map(data.donors, function(donor) {
         return {
           name: donor.donor.name,
-          data: [donor.donor.name, Number(donor.donor.count)]
+          data: [[donor.donor.name, Number(donor.donor.count)]]
         };
+      }), function(donor) {
+        return -donor.data[0][1];
       });
 
       data.budgets = {
