@@ -1,127 +1,45 @@
 'use strict';
 
 define([
-  'underscore',
-  'underscoreString',
   'backbone',
-  'handlebars',
-  'views/class/chart',
-  'models/report',
-  'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
+  'views/class/snapshot'
+], function(Backbone, SnapshotView) {
 
-  var DonorsSnapshotView = Backbone.View.extend({
-
-    options: {
-      limit: 10
-    },
+  var DonorsSnapshotView = SnapshotView.extend({
 
     el: '#donorsSnapshotView',
 
-    template: Handlebars.compile(tpl),
-
-    initialize: function() {
-      Backbone.Events.on('filters:fetch', this.hide, this);
-      Backbone.Events.on('filters:done', this.showSnapshot, this);
-    },
-
-    render: function() {
-      this.$el.html(this.template({
-        snapshot: this.data,
-        profile: this.profile
-      }));
-    },
-
-    hide: function() {
-      this.$el.addClass('is-hidden');
-    },
-
-    showSnapshot: function() {
-      var donors = ReportModel.instance.get('donors');
-      var len = donors.length;
-
-      this.data = this.profile = null;
-
-      if (len > 1) {
-
-        var donorsByProjects = _.first(donors, this.options.limit);
-        var donorsByOrganizations = _.first(_.sortBy(donors, function(donor) {
-          return -donor.organizationsCount;
-        }), this.options.limit);
-        var donorsByCountries = _.first(_.sortBy(donors, function(donor) {
-          return -donor.countriesCount;
-        }), this.options.limit);
-
-        // var subtitle = 'A total of %(donors)s found donors, supporting %(projects)s projects by %(organizations)s organizations in %(countries)s countries across %(sectors)s sectors.';
-
-        var subtitle = 'Out of %(donors)s donors.';
-
-        this.data = {
-          title: 'Top 10 Donors',
-          description: _.str.sprintf(subtitle, {
-            donors: len
-          }),
-          charts: [{
-            name: 'By number of projects',
-            series: _.map(donorsByProjects, function(donor) {
-              return {
-                name: donor.name,
-                data: [[donor.name, donor.projectsCount]]
-              };
-            })
-          }, {
-            name: 'By number of organizations',
-            series: _.map(donorsByOrganizations, function(donor) {
-              return {
-                name: donor.name,
-                data: [[donor.name, donor.organizationsCount]]
-              };
-            })
-          }, {
-            name: 'By number of countries',
-            series: _.map(donorsByCountries, function(donor) {
-              return {
-                name: donor.name,
-                data: [[donor.name, donor.countriesCount]]
-              };
-            })
-          }]
-        };
-
-        this.render();
-
-        this.setDonorsChart();
-
-      } else {
-
-        this.profile = {};
-        this.render();
-
+    options: {
+      snapshot: {
+        title: 'Top 10 Donors',
+        subtitle: 'Out of %s donors.',
+        slug: 'donors',
+        limit: 10,
+        graphsBy: [{
+          title: 'By number of projects',
+          slug: 'projectsCount'
+        }, {
+          title: 'By number of organizations',
+          slug: 'organizationsCount'
+        }, {
+          title: 'By number of countries',
+          slug: 'countriesCount'
+        }]
+      },
+      profile: {
+        slug: 'donor',
+        limit: 5,
+        graphsBy: [{
+          title: 'By number of sectors',
+          slug: 'sectors'
+        }, {
+          title: 'By number of countries',
+          slug: 'countries'
+        }, {
+          title: 'By number of organizations',
+          slug: 'organizations'
+        }]
       }
-
-      this.$el.removeClass('is-hidden');
-    },
-
-    setDonorsChart: function() {
-      var $chartElements = this.$el.find('.mod-report-stacked-chart');
-
-      $chartElements.each(_.bind(function(index, element) {
-        var options = {
-          chart: {
-            type: 'column',
-            spacingLeft: 0,
-            spacingRight: 0,
-            width: 188,
-            reflow: false
-            // height: (this.data.charts[index].series.length > 3) ? 600 : 250
-          },
-          series: this.data.charts[index].series
-        };
-
-        new SnapshotChart()
-          .setElement($(element))
-          .setChart(options);
-      }, this));
     }
 
   });

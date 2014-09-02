@@ -15,7 +15,7 @@ define([
     parse: function(data) {
 
       data.projects = _.map(data.projects, function(project) {
-        var result = project.project;
+        var result = project.project || project.donor;
         result.budget = Number(result.budget) || 0;
         result.the_geom = result.the_geom.geometries;
         return result;
@@ -65,13 +65,13 @@ define([
         });
       }
 
+      var budgets = _.sortBy(_.compact(_.pluck(data.projects, 'budget')));
+      var budgetsLength = _.size(budgets);
+
       data.budgets = {
-        min: _.min(data.projects, function(project) {
-          return project.budget;
-        }, 0).budget,
-        max: _.max(data.projects, function(project) {
-          return project.budget;
-        }, 0).budget
+        min: _.min(budgets),
+        max: _.max(budgets),
+        mid: (budgetsLength % 2 === 0) ? (budgets[(budgetsLength/2) - 1] + budgets[budgetsLength/2]) / 2  : budgets[(budgetsLength - 1) / 2]
       };
 
       if (_.compact(data.budgets).length === 0) {

@@ -29,11 +29,6 @@ define([
       profile: {
         slug: 'country',
         limit: 5,
-        titles: [
-          'By number of donors',
-          'By number of sectors',
-          'By number of organizations'
-        ],
         graphsBy: [{
           title: 'By number of donors',
           slug: 'donors'
