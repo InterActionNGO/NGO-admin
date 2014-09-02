@@ -311,7 +311,7 @@ def projects_clusters_sectors(site, location_id = nil)
     profile = {}
     profile[:name] = self.name
     #profile[:projects] = Donor.joins([:donations => :project]).select(['projects.id', 'projects.name', 'projects.budget', 'projects.start_date', 'projects.end_date', 'projects.the_geom'])
-    profile[:projects] = self.donations.map{|d| {:project => ['the_geom' => d.project.the_geom, 'id' => d.project.id, 'name' => d.project.name, 'budget' => d.project.budget, 'start_date' => d.project.start_date, 'end_date' => d.project.end_date]} }
+    profile[:projects] = self.donations.map{|d| {:project => {'the_geom' => d.project.the_geom, 'id' => d.project.id, 'name' => d.project.name, 'budget' => d.project.budget, 'start_date' => d.project.start_date, 'end_date' => d.project.end_date}} }
     profile[:organizations] = Organization.joins([:projects => [:donations => :donor]]).where('donors.id = ?', self.id).select(['organizations.name','count(projects.id)']).group('organizations.name')
     profile[:sectors] = Sector.joins([:projects => [:donations => :donor]]).where('donors.id = ?', self.id).select(['sectors.name','count(projects.id)']).group('sectors.name')
     profile[:countries] = Country.joins([:projects => [:donations => :donor]]).where('countries.id = ?', self.id).select(['countries.name','count(projects.id)']).group('countries.name')
