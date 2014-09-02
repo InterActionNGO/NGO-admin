@@ -15,7 +15,7 @@ define([
     parse: function(data) {
 
       data.projects = _.map(data.projects, function(project) {
-        var result = project.project || project.donor;
+        var result = project.project;
         result.budget = Number(result.budget) || 0;
         result.the_geom = result.the_geom.geometries;
         return result;

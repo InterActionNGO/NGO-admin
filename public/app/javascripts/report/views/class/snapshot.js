@@ -252,29 +252,28 @@ define([
     initMap: function() {
       var element = this.$el.find('.profile-map');
 
-      if (element.length > 0) {
+      if (element.length > 0 && this.data.projects.length > 0) {
         var map = L.map(element.get(0), this.options.map);
         var markers = new L.MarkerClusterGroup(this.options.markers);
 
+        element.removeClass('is-hidden');
+
         _.each(this.data.projects, function(p) {
-          if (p.the_geom) {
-            _.each(p.the_geom, function(geom) {
-              var m = L.marker([geom.y, geom.x], {
-                icon: L.divIcon({
-                  className: 'profile-marker'
-                })
-              });
-              markers.addLayer(m);
+          _.each(p.the_geom, function(geom) {
+            console.log(geom);
+            var m = L.marker([geom.y, geom.x], {
+              icon: L.divIcon({
+                className: 'profile-marker'
+              })
             });
-          }
+            markers.addLayer(m);
+          });
         });
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
-        if (markers.length > 0) {
-          markers.addTo(map);
-          map.fitBounds(markers.getBounds());
-        }
+        markers.addTo(map);
+        map.fitBounds(markers.getBounds());
 
         map.invalidateSize(true);
       }
