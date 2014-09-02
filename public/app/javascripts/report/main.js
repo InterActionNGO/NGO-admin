@@ -16,6 +16,7 @@ require.config({
     spin: '../../vendor/spinjs/spin',
     moment: '../../vendor/moment/moment',
     momentRange: '../../vendor/moment-range/lib/moment-range.bare',
+    markerCluster: '../../vendor/leaflet.markercluster/dist/leaflet.markercluster',
     text: '../../vendor/requirejs-text/text'
   },
 
@@ -158,7 +159,7 @@ require([
   new TimelineChartsView();
   // new DonorsSnapshotView();
   new OrganizationsSnapshotView();
-  // new CountriesSnapshotView();
+  new CountriesSnapshotView();
   // new SectorsSnapshotView();
 
   new DonorsListView();

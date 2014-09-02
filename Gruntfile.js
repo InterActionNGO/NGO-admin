@@ -120,6 +120,7 @@ module.exports = function(grunt) {
           '<%= root.dist %>/stylesheets/report.css': [
             '<%= root.app %>/lib/jquery-ui/css/no-theme/jquery-ui-1.10.4.custom.css',
             '<%= root.app %>/vendor/select2/select2.css',
+            '<%= root.app %>/vendor/leaflet.markercluster/dist/MarkerCluster.css',
             '<%= root.tmp %>/stylesheets/report.css'
           ]
         }
