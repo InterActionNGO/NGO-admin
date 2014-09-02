@@ -53,28 +53,28 @@ class ReportsController < ApplicationController
   end
 
   def organization_profile
-  	@organization = Organization.find (params[:id])
+  	@organization = Organization.find(params[:id])
   	@profile = @organization.get_profile
   	respond_to do |format|
       format.json { render :json => @profile.to_json }
     end
   end
   def country_profile
-  	@country = Country.find (params[:id])
+  	@country = Country.find(params[:id])
   	@profile = @country.get_profile
   	respond_to do |format|
       format.json { render :json => @profile.to_json }
     end
   end
   def sector_profile
-  	@sector = Sector.find (params[:id])
+  	@sector = Sector.find(params[:id])
   	@profile = @sector.get_profile
   	respond_to do |format|
       format.json { render :json => @profile.to_json }
     end
   end
   def donor_profile
-  	@donor = Donor.find (params[:id])
+  	@donor = Donor.find(params[:id])
   	@profile = @donor.get_profile
   	respond_to do |format|
       format.json { render :json => @profile.to_json }
