@@ -5,12 +5,13 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
+  'markerCluster',
   'views/class/chart',
   'models/report',
   'models/profile',
   'text!templates/profile.handlebars',
   'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars,
+], function(_, underscoreString, Backbone, Handlebars, markerCluster,
   SnapshotChart, ReportModel, ProfileModel, profileTpl, snapshotTpl) {
 
   var SnapshotView = Backbone.View.extend({
@@ -79,6 +80,42 @@ define([
         credits: {
           enabled: false
         }
+      },
+      map: {
+        center: [0, 0],
+        zoom: 4,
+        minZoom: 2,
+        zoomControl: false,
+        attributionControl: false,
+        dragging: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        tap: false
+      },
+      markers: {
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: false,
+        maxClusterRadius: 20,
+        iconCreateFunction: function(cluster) {
+          var childCount = cluster.getChildCount();
+          var c = ' marker-cluster-';
+          var size = 30;
+
+          if (childCount < 10) {
+            c += 'small';
+            size = 20;
+          } else if (childCount < 100) {
+            c += 'medium';
+            size = 30;
+          } else {
+            c += 'large';
+            size = 50;
+          }
+
+          return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(size, size) });
+        }
       }
     },
 
@@ -116,6 +153,7 @@ define([
         this.render();
         this.setChart();
         this.$el.removeClass('is-hidden');
+        this.initMap();
       }, this));
     },
 
@@ -124,51 +162,52 @@ define([
 
       var data = this.reportModel.get(this.options.snapshot.slug);
       var len = data.length;
+      var first = this.options.snapshot.graphsBy[0].slug;
+      var second = this.options.snapshot.graphsBy[1].slug;
+      var thirth = this.options.snapshot.graphsBy[2].slug;
 
       this.data = {};
 
       if (len > 1) {
 
-        var organizationsByProjects = _.first(data, this.options.snapshot.limit);
+        var projects = _.first(data, this.options.snapshot.limit);
 
-        var organizationsByCountries = _.first(_.sortBy(data, function(organization) {
-          return -organization.countriesCount;
-        }), this.options.limit);
+        var bySecond = _.first(_.sortBy(data, function(p) {
+          return -p[second];
+        }), this.options.snapshot.limit);
 
-        var organizationsByBudget = _.first(_.sortBy(data, function(organization) {
-          return -organization.budget;
-        }), this.options.limit);
+        var byThirth = _.first(_.sortBy(data, function(p) {
+          return -p[thirth];
+        }), this.options.snapshot.limit);
 
         this.data = {
 
-          title: 'Top 10 Organizations',
+          title: this.options.snapshot.title,
 
-          description: _.str.sprintf(this.options.snapshot.subtitle, {
-            organizations: len
-          }),
+          description: _.str.sprintf(this.options.snapshot.subtitle, len),
 
           charts: [{
-            name: this.options.snapshot.titles[0],
-            series: _.map(organizationsByProjects, function(organization) {
+            name: this.options.snapshot.graphsBy[0].title,
+            series: _.map(projects, function(p) {
               return {
-                name: organization.name,
-                data: [[organization.name, organization.projectsCount]]
+                name: p.name,
+                data: [[p.name, p[first]]]
               };
             })
           }, {
-            name: this.options.snapshot.titles[1],
-            series: _.map(organizationsByCountries, function(organization) {
+            name: this.options.snapshot.graphsBy[1].title,
+            series: _.map(bySecond, function(p) {
               return {
-                name: organization.name,
-                data: [[organization.name, organization.countriesCount]]
+                name: p.name,
+                data: [[p.name, p[second]]]
               };
             })
           }, {
-            name: this.options.snapshot.titles[2],
-            series: _.map(organizationsByBudget, function(organization) {
+            name: this.options.snapshot.graphsBy[2].title,
+            series: _.map(byThirth, function(p) {
               return {
-                name: organization.name,
-                data: [[organization.name, organization.budget]]
+                name: p.name,
+                data: [[p.name, p[thirth]]]
               };
             })
           }]
@@ -185,16 +224,12 @@ define([
 
           this.data = this.profileModel.toJSON();
           this.data.profile = true;
-          this.data.charts = [{
-            name: this.options.profile.titles[0],
-            series: _.first(this.data.sectors, this.options.profile.limit)
-          }, {
-            name: this.options.profile.titles[1],
-            series: _.first(this.data.countries, this.options.profile.limit)
-          }, {
-            name: this.options.profile.titles[2],
-            series: _.first(this.data.donors, this.options.profile.limit)
-          }];
+          this.data.charts = _.map(this.options.profile.graphsBy, function(graph) {
+            return {
+              name: graph.title,
+              series: _.first(this.data[graph.slug], this.options.profile.limit)
+            };
+          }, this);
 
           $deferred.resolve();
 
@@ -212,6 +247,34 @@ define([
         this.options.chart.series = this.data.charts[index].series;
         $(element).highcharts(this.options.chart);
       }, this));
+    },
+
+    initMap: function() {
+      var element = this.$el.find('.profile-map');
+
+      if (element.length > 0) {
+        var map = L.map(element.get(0), this.options.map);
+        var markers = new L.MarkerClusterGroup(this.options.markers);
+
+        _.each(this.data.projects, function(p) {
+          _.each(p.the_geom, function(geom) {
+            var m = L.marker([geom.y, geom.x], {
+              icon: L.divIcon({
+                className: 'profile-marker'
+              })
+            });
+            markers.addLayer(m);
+          });
+        });
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+        markers.addTo(map);
+
+        map.fitBounds(markers.getBounds());
+
+        map.invalidateSize(true);
+      }
     }
 
   });

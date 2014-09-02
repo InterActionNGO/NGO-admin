@@ -11,23 +11,34 @@ define([
 
     options: {
       snapshot: {
+        title: 'Top 10 Organizations',
+        subtitle: 'Out of %s organizations.',
         slug: 'organizations',
         limit: 10,
-        titles: [
-          'By number of projects',
-          'By number of countries',
-          'By budget (USD)'
-        ],
-        subtitle: 'Out of %(organizations)s organizations.'
+        graphsBy: [{
+          title: 'By number of projects',
+          slug: 'projectsCount'
+        }, {
+          title: 'By number of countries',
+          slug: 'countriesCount'
+        }, {
+          title: 'By budget (USD)',
+          slug: 'budget'
+        }]
       },
       profile: {
         slug: 'organization',
         limit: 5,
-        titles: [
-          'Projects by sectors',
-          'By number of countries',
-          'By number of donors'
-        ]
+        graphsBy: [{
+          title: 'Projects by sectors',
+          slug: 'sectors'
+        }, {
+          title: 'By number of countries',
+          slug: 'countries'
+        }, {
+          title: 'By number of donors',
+          slug: 'donors'
+        }]
       }
     }
 

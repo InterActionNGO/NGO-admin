@@ -36,6 +36,20 @@
   .profile-item {
     margin-top: 1em;
   }
+
+  .profile-map {
+    min-height: 400px;
+    background-color: $color-4;
+  }
+
+  .profile-marker {
+    width: 20px;
+    height: 20px;
+    color: $color-0;
+    background-color: $color-2;
+    @include border-radius(10px);
+    @include box-shadow(0 0 0 3px rgba($color-0, .6));
+  }
 }
 
 .mod-applied-filters {
