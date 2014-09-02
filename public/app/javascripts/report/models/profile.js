@@ -68,14 +68,12 @@ define([
       var budgets = _.sortBy(_.compact(_.pluck(data.projects, 'budget')));
       var budgetsLength = _.size(budgets);
 
-      data.budgets = {
-        min: _.min(budgets),
-        max: _.max(budgets),
-        mid: (budgetsLength % 2 === 0) ? (budgets[(budgetsLength/2) - 1] + budgets[budgetsLength/2]) / 2  : budgets[(budgetsLength - 1) / 2]
-      };
-
-      if (_.compact(data.budgets).length === 0) {
-        data.budgets = null;
+      if (budgetsLength > 0) {
+        data.budgets = {
+          min: _.min(budgets),
+          max: _.max(budgets),
+          mid: (budgetsLength % 2 === 0) ? (budgets[(budgetsLength/2) - 1] + budgets[budgetsLength/2]) / 2  : budgets[(budgetsLength - 1) / 2]
+        };
       }
 
       return data;
