@@ -40,9 +40,9 @@
 
 {{#if budgets}}
   <div class="profile-item is-flex">
-    <div class="budget-item">min. (USD): {{budgets.min}}</div>
-    <div class="budget-item">median (USD): {{budgets.mid}}</div>
-    <div class="budget-item">max. (USD): {{budgets.max}}</div>
+    <div class="budget-item">min. (USD): ${{commas budgets.min}}</div>
+    <div class="budget-item">median (USD): ${{commas budgets.mid}}</div>
+    <div class="budget-item">max. (USD): ${{commas budgets.max}}</div>
   </div>
 {{/if}}
 

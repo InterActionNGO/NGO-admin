@@ -84,7 +84,7 @@ define([
       map: {
         center: [0, 0],
         zoom: 4,
-        minZoom: 2,
+        minZoom: 1,
         zoomControl: false,
         attributionControl: false,
         dragging: false,
@@ -257,14 +257,16 @@ define([
         var markers = new L.MarkerClusterGroup(this.options.markers);
 
         _.each(this.data.projects, function(p) {
-          _.each(p.the_geom, function(geom) {
-            var m = L.marker([geom.y, geom.x], {
-              icon: L.divIcon({
-                className: 'profile-marker'
-              })
+          if (p.the_geom) {
+            _.each(p.the_geom, function(geom) {
+              var m = L.marker([geom.y, geom.x], {
+                icon: L.divIcon({
+                  className: 'profile-marker'
+                })
+              });
+              markers.addLayer(m);
             });
-            markers.addLayer(m);
-          });
+          }
         });
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);

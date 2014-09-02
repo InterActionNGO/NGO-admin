@@ -157,10 +157,10 @@ require([
   new ActionsView();
 
   new TimelineChartsView();
-  // new DonorsSnapshotView();
+  new DonorsSnapshotView();
   new OrganizationsSnapshotView();
   new CountriesSnapshotView();
-  // new SectorsSnapshotView();
+  new SectorsSnapshotView();
 
   new DonorsListView();
   new OrganizationsListView();
