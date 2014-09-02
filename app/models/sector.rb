@@ -170,5 +170,20 @@ SQL
     else
        'other'
     end
-   end
+  end
+  def get_profile
+    profile = {}
+    profile[:name] = self.name
+    profile[:projects] = self.projects.select([:id, :name, :budget, :start_date, :end_date, :the_geom])
+    profile[:organizations] = Organization.joins('
+      INNER JOIN projects on projects.primary_organization_id = organizations.id
+      INNER JOIN projects_sectors on projects_sectors.project_id = projects.id
+      INNER JOIN sectors on projects_sectors.sector_id = sectors.id
+      ').where('sectors.id = ?', self.id).select(['organizations.name','count(projects.id)']).group('organizations.name')
+    profile[:donors] = Donor.joins([:donations => [:project => :sectors]]).where('sectors.id = ?', self.id).select(['donors.name','count(projects.id)']).group('donors.name')
+    profile[:countries] = Country.joins([:projects => :sectors]).where('sectors.id = ?', self.id).select(['countries.name','count(projects.id)']).group('countries.name')
+
+    profile
+  end
+
 end

@@ -355,7 +355,7 @@ SQL
     profile[:countries] = Country.joins([:projects => :primary_organization]).where('organizations.id = ?', self.id).select(['countries.name','count(projects.id)']).group('countries.name')
     profile[:donors] = Donor.joins([:donations => [:project => :primary_organization]]).where('organizations.id = ?', self.id).select(['donors.name','count(projects.id)']).group('donors.name')
     profile[:sectors] = Sector.joins([:projects => :primary_organization]).where('organizations.id = ?', self.id).select(['sectors.name','count(projects.id)']).group('sectors.name')
-    profile[:projects] = self.projects.select([:budget, :start_date, :end_date, :the_geom])
+    profile[:projects] = self.projects.select([:id, :name, :budget, :start_date, :end_date, :the_geom])
     profile
   end
 
