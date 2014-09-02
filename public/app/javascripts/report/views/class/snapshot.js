@@ -256,11 +256,8 @@ define([
         var map = L.map(element.get(0), this.options.map);
         var markers = new L.MarkerClusterGroup(this.options.markers);
 
-        element.removeClass('is-hidden');
-
         _.each(this.data.projects, function(p) {
           _.each(p.the_geom, function(geom) {
-            console.log(geom);
             var m = L.marker([geom.y, geom.x], {
               icon: L.divIcon({
                 className: 'profile-marker'
