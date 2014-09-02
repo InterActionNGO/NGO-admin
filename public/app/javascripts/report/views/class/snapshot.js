@@ -271,9 +271,10 @@ define([
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
-        markers.addTo(map);
-
-        map.fitBounds(markers.getBounds());
+        if (markers.length > 0) {
+          markers.addTo(map);
+          map.fitBounds(markers.getBounds());
+        }
 
         map.invalidateSize(true);
       }
