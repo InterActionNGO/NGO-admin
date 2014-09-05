@@ -8,9 +8,9 @@ define([
 
     el: '#sectorsListView',
 
-    options: {
+    defaults: {
       slug: 'sectors',
-      limit: 30
+      limit: 10
     }
 
   });

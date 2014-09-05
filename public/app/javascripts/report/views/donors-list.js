@@ -8,7 +8,7 @@ define([
 
     el: '#donorsListView',
 
-    options: {
+    defaults: {
       slug: 'donors',
       limit: 30
     }

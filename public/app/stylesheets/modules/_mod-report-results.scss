@@ -328,7 +328,7 @@ ul.mod-report-locations-header-child {
 .mod-report-lists-selector {
   position: absolute;
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: $color-4;
   border-radius: 15px;
   right: 0;
@@ -340,8 +340,8 @@ ul.mod-report-locations-header-child {
       position: absolute;
       display: none;
       padding: 10px 20px;
-      margin-left: -20px;
-      width: 100%;
+      margin-left: -10px;
+      width: calc(100% - 40px);
       background-color: $color-4;
       border-radius: 0 0 15px 15px;
       li {

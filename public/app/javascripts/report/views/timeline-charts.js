@@ -73,6 +73,7 @@ define([
     },
 
     setCharts: function() {
+      var active = FilterModel.instance.get('active');
       var today = new Date(moment().utc()).getTime();
       var dateRange = moment().range(
         moment(FilterModel.instance.get('startDate')),
@@ -84,6 +85,7 @@ define([
       var activeProjectsData = [];
       var totalProjectsData = [];
       var activeOrganizationsData = [];
+      var seriesData = [];
 
       function daysInMonth(month, year) {
         return new Date(year, month, 0).getDate();
@@ -106,7 +108,7 @@ define([
           if (sd <= today && sd <= d && ed >= d) {
             activeProjects.push(projects[i].organizationId);
           }
-          if (sd <= d && sd <= today) {
+          if (!active && sd <= d && sd <= today) {
             totalProjects = totalProjects + 1;
           }
         }
@@ -114,23 +116,31 @@ define([
         organizationsActives = _.uniq(activeProjects);
 
         activeProjectsData.push([d, activeProjects.length]);
-        totalProjectsData.push([d, totalProjects]);
+        if (!active) {
+          totalProjectsData.push([d, totalProjects]);
+        }
         activeOrganizationsData.push([d, organizationsActives.length]);
+      });
+
+      if (!active) {
+        seriesData.push({
+          name: 'Total projects',
+          data: totalProjectsData,
+          color: '#CBCBCB'
+        });
+      }
+
+      seriesData.push({
+        name: 'Currently active projects',
+        data: activeProjectsData,
+        color: '#006C8D'
       });
 
       this.$projectChart.highcharts(_.extend({}, this.options, {
         title: {
           text: 'Number of Active Projects Over Time'
         },
-        series: [{
-          name: 'Total projects',
-          data: totalProjectsData,
-          color: '#CBCBCB'
-        }, {
-          name: 'Currently active projects',
-          data: activeProjectsData,
-          color: '#006C8D'
-        }]
+        series: seriesData
       }));
 
       this.$organizationsChart.highcharts(_.extend({}, this.options, {
