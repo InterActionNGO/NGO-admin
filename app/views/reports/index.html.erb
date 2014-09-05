@@ -9,7 +9,7 @@
           <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
 
             <div class="block search">
-              <input type="text" value="<%= params[:q] %>" placeholder = "Search by project name" name="q" class="main_search"/>
+              <input type="text" value="<%= params[:q] %>" placeholder = "Search Project Titles" name="q" class="main_search"/>
               <%= submit_tag '' %>
             </div>
 

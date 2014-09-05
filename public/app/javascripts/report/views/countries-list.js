@@ -8,7 +8,7 @@ define([
 
     el: '#countriesListView',
 
-    options: {
+    defaults: {
       slug: 'countries',
       limit: 30
     }

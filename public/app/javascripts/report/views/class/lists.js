@@ -15,11 +15,13 @@ define([
     events: {
       'click .mod-report-lists-selector a': '_onClickSelector',
       'click .is-inline-btn': 'hide',
-      'click .is-show-all-btn': '_toggleShowAll',
+      'click .is-show-all-btn': '_showAll',
+      'click .is-clear-all-btn': '_clearAll',
       'click .show-toolbar button': '_changeLimit'
     },
 
     initialize: function() {
+      this.options = _.defaults(this.options || {}, this.defaults);
       this.isShowAllActive = false;
       this.$page = $('html, body');
       Backbone.Events.on('filters:fetch', this.hide, this);
@@ -43,14 +45,14 @@ define([
     },
 
     _showList: function(list) {
+      this.currentList = list = list || this.currentList;
+
       var items = ReportModel.instance.get(list.name);
       var toolbar;
       var result = [];
+      var isLess;
       var rLen = 0;
       var iLen = 0;
-      var last;
-
-      this.currentList = list;
 
       if (list.name === this.options.slug) {
         this.data = {};
@@ -66,18 +68,20 @@ define([
 
         this.data.pagination = _.first(_.range(10, iLen, 10), 3);
 
-        last = _.last(this.data.pagination);
-
         if (this.options.limit) {
-          this.options.limit = last;
           result = _.first(result, this.options.limit);
         }
 
         rLen = result.length;
+        isLess = rLen < this.options.limit;
+
+        if (isLess) {
+          this.options.limit = rLen;
+        }
 
         this.data[this.options.slug] = result;
 
-        this.data.title = (!this.options.limit || iLen < this.options.limit) ? null : last;
+        this.data.title = (isLess) ? null : this.options.limit;
         this.data.isLong = iLen > rLen;
         this.data.isActive = !!(!this.options.limit);
 
@@ -85,7 +89,7 @@ define([
 
         toolbar = this.$el.find('.show-toolbar');
         toolbar.find('button').removeClass('is-active');
-        toolbar.find('button[data-limit="' + ((!this.options.limit) ? 'all' : last) + '"]').addClass('is-active');
+        toolbar.find('button[data-limit="' + ((!this.options.limit) ? 'all' : this.options.limit) + '"]').addClass('is-active');
 
         _.delay(_.bind(this.show, this), 50);
       }
@@ -101,13 +105,14 @@ define([
       }
     },
 
-    _toggleShowAll: function() {
-      if (this.isShowAllActive) {
-        this.options.limit = 30;
-      } else {
-        this.options.limit = null;
-      }
-      this._showList(this.currentList);
+    _clearAll: function() {
+      this.options.limit = this.defaults.limit;
+      this._showList();
+    },
+
+    _showAll: function() {
+      this.options.limit = null;
+      this._showList();
     },
 
     _onClickSelector: function(e) {
