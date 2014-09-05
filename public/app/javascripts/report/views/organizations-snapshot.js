@@ -22,7 +22,7 @@ define([
           title: 'By number of countries',
           slug: 'countriesCount'
         }, {
-          title: 'By Total Project Budget (USD)',
+          title: 'By Total Project Budgets (USD)',
           slug: 'budget'
         }]
       },
