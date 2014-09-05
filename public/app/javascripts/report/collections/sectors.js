@@ -14,6 +14,7 @@ define([
     parse: function(data) {
       return _.map(data, function(sector) {
         return {
+          id: Number(sector.id),
           name: sector.name,
           projectsCount: Number(sector.projects_count),
           countriesCount: Number(sector.countries_count),

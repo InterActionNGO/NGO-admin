@@ -16,6 +16,7 @@ require.config({
     spin: '../../vendor/spinjs/spin',
     moment: '../../vendor/moment/moment',
     momentRange: '../../vendor/moment-range/lib/moment-range.bare',
+    markerCluster: '../../vendor/leaflet.markercluster/dist/leaflet.markercluster',
     text: '../../vendor/requirejs-text/text'
   },
 
@@ -116,6 +117,13 @@ require([
 
   Handlebars.registerHelper('starray', function(context) {
     return _.str.toSentence(context);
+  });
+
+  Handlebars.registerHelper('if_eq', function(context, options) {
+    if (context === options.hash.compare) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
   });
 
   // Highcharts

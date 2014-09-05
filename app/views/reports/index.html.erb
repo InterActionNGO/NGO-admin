@@ -9,7 +9,7 @@
           <%= form_tag(report_generate_path(:format=>:json), :remote => true,  :method => :get) do %>
 
             <div class="block search">
-              <input type="text" value="<%= params[:q] %>" placeholder = "Search" name="q" class="main_search"/>
+              <input type="text" value="<%= params[:q] %>" placeholder = "Search Project Titles" name="q" class="main_search"/>
               <%= submit_tag '' %>
             </div>
 
@@ -75,6 +75,7 @@
               </li>
 
               <li>
+                <button class="reset" id="resetBtn" type="reset">Reset filters</button>
                 <button class="apply" type="submit">Apply filters</button>
               </li>
             </ul>
@@ -91,7 +92,10 @@
         <div class="report-spinner" id="spinView"></div>
 
         <article class="mod-content-article">
-          <h1 id="titleView" class="report-title"><textarea placeholder="Type your title"></textarea></h1>
+          <h1 id="titleView" class="report-title">
+            <textarea placeholder="Type your title"></textarea>
+            <button class="is-inline-btn is-unprintable">Edit</button>
+          </h1>
 
           <div id="introView" class="mod-report mod-report-intro">
             <p>Start applying some filters to generate a report.</p>

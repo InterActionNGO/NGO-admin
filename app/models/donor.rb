@@ -307,6 +307,17 @@ def projects_clusters_sectors(site, location_id = nil)
     end
   end
 
+  def get_profile
+    profile = {}
+    profile[:name] = self.name
+    profile[:projects] = self.donations.map{|d| {:project => {'the_geom' => d.project.the_geom, 'id' => d.project.id, 'name' => d.project.name, 'budget' => d.project.budget, 'start_date' => d.project.start_date, 'end_date' => d.project.end_date}} }
+    profile[:organizations] = Organization.joins([:projects => [:donations => :donor]]).where('donors.id = ?', self.id).select(['organizations.name','count(projects.id)']).group('organizations.name')
+    profile[:sectors] = Sector.joins([:projects => [:donations => :donor]]).where('donors.id = ?', self.id).select(['sectors.name','count(projects.id)']).group('sectors.name')
+    profile[:countries] = Country.joins([:projects => [:donations => :donor]]).where('countries.id = ?', self.id).select(['countries.name','count(projects.id)']).group('countries.name')
+
+    profile
+  end
+
   private
 
   def filter_by_category_valid?
@@ -318,5 +329,4 @@ def projects_clusters_sectors(site, location_id = nil)
       eval("self.#{att} = Sanitize.clean(self.#{att}.gsub(/\r/,'')) unless self.#{att}.blank?")
     end
   end
-
 end

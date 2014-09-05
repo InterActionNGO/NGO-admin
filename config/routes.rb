@@ -6,6 +6,10 @@ Iom::Application.routes.draw do
   match 'p/analysis' => 'reports#index' , :as => :report_index
   match 'report_generate' => 'reports#report', :as => :report_generate
   get 'list', :to => 'reports#list', :as => :report_list
+  get 'profile/organization/:id', :to => 'reports#organization_profile', :as => 'report_organization_profile'
+  get 'profile/country/:id', :to => 'reports#country_profile', :as => 'report_country_profile'
+  get 'profile/sector/:id', :to => 'reports#sector_profile', :as => 'report_sector_profile'
+  get 'profile/donor/:id', :to => 'reports#donor_profile', :as => 'report_donor_profile'  
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
   match 'about-interaction' => 'sites#about_interaction'

@@ -15,6 +15,7 @@ define([
       var result = _.map(data, function(donor) {
         if (donor.name) {
           return {
+            id: Number(donor.id),
             name: donor.name,
             projectsCount: Number(donor.projects_count),
             countriesCount: Number(donor.countries_count),
