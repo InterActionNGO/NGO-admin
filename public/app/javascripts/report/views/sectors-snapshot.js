@@ -1,109 +1,45 @@
 'use strict';
 
 define([
-  'underscore',
-  'underscoreString',
   'backbone',
-  'handlebars',
-  'views/class/chart',
-  'models/report',
-  'text!templates/snapshot.handlebars'
-], function(_, underscoreString, Backbone, Handlebars, SnapshotChart, ReportModel, tpl) {
+  'views/class/snapshot'
+], function(Backbone, SnapshotView) {
 
-  var SectorsSnapshotView = Backbone.View.extend({
-
-    options: {
-      limit: 10
-    },
+  var SectorsSnapshotView = SnapshotView.extend({
 
     el: '#sectorsSnapshotView',
 
-    template: Handlebars.compile(tpl),
-
-    initialize: function() {
-      Backbone.Events.on('filters:fetch', this.hide, this);
-      Backbone.Events.on('filters:done', this.showSnapshot, this);
-    },
-
-    render: function() {
-      this.$el.html(this.template(this.data));
-    },
-
-    hide: function() {
-      this.$el.addClass('is-hidden');
-    },
-
-    showSnapshot: function() {
-      var sectorsByProjects = _.first(ReportModel.instance.get('sectors'), this.options.limit);
-      var sectorsByOrganizations = _.first(_.sortBy(ReportModel.instance.get('sectors'), function(sector) {
-        return -sector.organizationsCount;
-      }), this.options.limit);
-      var sectorsByDonors = _.first(_.sortBy(ReportModel.instance.get('sectors'), function(sector) {
-        return -sector.donorsCount;
-      }), this.options.limit);
-
-      // var subtitle = 'A total of %(sectors)s found sectors, supporting %(projects)s projects by %(donors)s donors and %(organizations)s organizations in %(countries)s countries.';
-      var subtitle = 'Out of %(sectors)s sectors.';
-
-      this.data = {
+    options: {
+      snapshot: {
         title: 'Top 10 Sectors',
-        description: _.str.sprintf(subtitle, {
-          sectors: ReportModel.instance.get('sectors').length
-        }),
-        charts: [{
-          name: 'By number of projects',
-          series: _.map(sectorsByProjects, function(sector) {
-            return {
-              name: sector.name,
-              data: [[sector.name, sector.projectsCount]]
-            };
-          })
+        subtitle: 'Out of %s sectors.',
+        slug: 'sectors',
+        limit: 10,
+        graphsBy: [{
+          title: 'By number of projects',
+          slug: 'projectsCount'
         }, {
-          name: 'By number of organizations',
-          series: _.map(sectorsByOrganizations, function(sector) {
-            return {
-              name: sector.name,
-              data: [[sector.name, sector.organizationsCount]]
-            };
-          })
+          title: 'By number of organizations',
+          slug: 'organizationsCount'
         }, {
-          name: 'By number of donors',
-          series: _.map(sectorsByDonors, function(sector) {
-            return {
-              name: sector.name,
-              data: [[sector.name, sector.donorsCount]]
-            };
-          })
+          title: 'By number of donors',
+          slug: 'donorsCount'
         }]
-      };
-
-      this.render();
-
-      this.setSectorsChart();
-
-      this.$el.removeClass('is-hidden');
-    },
-
-    setSectorsChart: function() {
-      var $chartElements = this.$el.find('.mod-report-stacked-chart');
-
-      $chartElements.each(_.bind(function(index, element) {
-        var options = {
-          chart: {
-            type: 'column',
-            spacingLeft: 0,
-            spacingRight: 0,
-            width: 206,
-            reflow: false
-            // height: (this.data.charts[index].series.length > 3) ? 600 : 250
-          },
-          series: this.data.charts[index].series
-        };
-
-        new SnapshotChart()
-          .setElement($(element))
-          .setChart(options);
-      }, this));
+      },
+      profile: {
+        slug: 'sector',
+        limit: 5,
+        graphsBy: [{
+          title: 'By number of countries',
+          slug: 'countries'
+        }, {
+          title: 'By number of organizations',
+          slug: 'organizations'
+        }, {
+          title: 'By number of donors',
+          slug: 'donors'
+        }]
+      }
     }
 
   });

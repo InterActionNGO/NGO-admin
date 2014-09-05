@@ -28,7 +28,8 @@ define([
       // 'change #end_date_year': 'checkDate',
       // 'change #end_date_month': 'checkDate',
       // 'change #end_date_day': 'checkDate',
-      'change #activeProjects input': 'checkActive'
+      'change #activeProjects input': 'checkActive',
+      'click #resetBtn': 'reset'
     },
 
     initialize: function() {
@@ -40,6 +41,7 @@ define([
 
       this.$el.find('select').select2({
         width: 'element',
+        allowClear: true,
         escapeMarkup: function(item) {
           return _.str.unescapeHTML(item);
         }
@@ -194,6 +196,21 @@ define([
         this.$startDateSelector.removeClass('is-disabled');
         this.$endDateSelector.removeClass('is-disabled');
       }
+    },
+
+    reset: function(e) {
+      var today = new Date();
+
+      this.$el.find('select').select2('val', '');
+      this.$startDateSelector.find('#start_date_year').select2('val', '1984');
+      this.$startDateSelector.find('#start_date_month').select2('val', '9');
+      this.$startDateSelector.find('#start_date_day').select2('val', '1');
+      this.$endDateSelector.find('#end_date_year').select2('val', today.getUTCFullYear());
+      this.$endDateSelector.find('#end_date_month').select2('val', today.getMonth() + 1);
+      this.$endDateSelector.find('#end_date_day').select2('val', today.getDate());
+      $('#activeProjects input').removeAttr('checked');
+
+      e.preventDefault();
     }
 
   });

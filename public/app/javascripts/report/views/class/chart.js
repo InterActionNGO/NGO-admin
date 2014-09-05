@@ -22,13 +22,15 @@ define([
       },
       legend: {
         useHTML: true,
-        width: 200,
-        itemWidth: 200,
+        width: 188,
+        itemWidth: 188,
         itemDistance: 0,
         itemMarginBottom: 10,
         itemStyle: {
-          width: 175,
-          fontWeight: 'normal'
+          width: 160,
+          fontWeight: 'normal',
+          fontFamily: 'Akzidenz',
+          fontSize: '13px'
         },
         labelFormatter: function() {
           var value = (Number(this.yData[0]) > 999) ? Number(this.yData[0]).toCommas() : this.yData[0];

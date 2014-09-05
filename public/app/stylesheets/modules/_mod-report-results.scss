@@ -32,6 +32,24 @@
     width: 50%;
     margin: .5em auto 0 auto;
   }
+
+  .profile-item {
+    margin-top: 1em;
+  }
+
+  .profile-map {
+    min-height: 400px;
+    background-color: $color-4;
+  }
+
+  .profile-marker {
+    width: 20px;
+    height: 20px;
+    color: $color-0;
+    background-color: $color-2;
+    @include border-radius(10px);
+    @include box-shadow(0 0 0 3px rgba($color-0, .6));
+  }
 }
 
 .mod-applied-filters {
@@ -49,7 +67,7 @@
 .report-title {
   textarea {
     display: inline-block;
-    width: 100%;
+    width: auto;
 
     border: 0;
 
@@ -66,6 +84,11 @@
     &:focus {
       outline: 0;
     }
+  }
+
+  .is-inline-btn {
+    vertical-align: 18px;
+    margin-left: -10px;
   }
 }
 
@@ -97,6 +120,30 @@
     font-weight: normal;
     color: $color-1;
   }
+
+  .summary-wrap {
+    @extend .is-flex;
+  }
+
+  .summary-item {
+    text-align: center;
+
+    h3 {
+      font-weight: bold;
+      font-size: 15px;
+      text-transform: uppercase;
+      margin: 2px 0 5px 0;
+    }
+
+    .value {
+      font-weight: lighter;
+      font-size: 36px;
+    }
+  }
+}
+
+.budget-item {
+  text-transform: uppercase;
 }
 
 .mod-report-budget {
@@ -281,7 +328,7 @@ ul.mod-report-locations-header-child {
 .mod-report-lists-selector {
   position: absolute;
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: $color-4;
   border-radius: 15px;
   right: 0;
@@ -293,8 +340,8 @@ ul.mod-report-locations-header-child {
       position: absolute;
       display: none;
       padding: 10px 20px;
-      margin-left: -20px;
-      width: 100%;
+      margin-left: -10px;
+      width: calc(100% - 40px);
       background-color: $color-4;
       border-radius: 0 0 15px 15px;
       li {

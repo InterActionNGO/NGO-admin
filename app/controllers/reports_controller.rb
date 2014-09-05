@@ -8,7 +8,8 @@ class ReportsController < ApplicationController
 		respond_to do |format|
 			format.html do
 				#render :html => '/reports/index'
-				@org_combo_values = Organization.get_select_values.collect{ |o| [o.name, o.name] }
+				#@org_combo_values = Organization.get_select_values.collect{ |o| [o.name, o.name] }
+				@org_combo_values = Organization.joins('INNER JOIN projects ON projects.primary_organization_id = organizations.id').group('organizations.name').select('organizations.name').collect{ |o| [o.name, o.name] }
 				@countries_combo_values = Country.get_select_values.collect{ |c| [c.name, c.name] }
 				@sectors_combo_values = Sector.get_select_values.collect { |c| [c.name, c.name] }
 				@donors_combo_values = Donor.get_select_values.collect{ |d| [d.name, d.name] }
@@ -49,6 +50,35 @@ class ReportsController < ApplicationController
     @table = Project.get_list(params)
     respond_to do |format|
       format.json { render :json => @table.to_json }
+    end
+  end
+
+  def organization_profile
+  	@organization = Organization.find(params[:id])
+  	@profile = @organization.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
+  end
+  def country_profile
+  	@country = Country.find(params[:id])
+  	@profile = @country.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
+  end
+  def sector_profile
+  	@sector = Sector.find(params[:id])
+  	@profile = @sector.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
+    end
+  end
+  def donor_profile
+  	@donor = Donor.find(params[:id])
+  	@profile = @donor.get_profile
+  	respond_to do |format|
+      format.json { render :json => @profile.to_json }
     end
   end
 

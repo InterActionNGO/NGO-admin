@@ -8,7 +8,7 @@ define([
 
     el: '#organizationsListView',
 
-    options: {
+    defaults: {
       slug: 'organizations',
       limit: 30
     }
