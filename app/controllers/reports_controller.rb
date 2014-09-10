@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
 			format.html do
 				#render :html => '/reports/index'
 				#@org_combo_values = Organization.get_select_values.collect{ |o| [o.name, o.name] }
-				@org_combo_values = Organization.joins('INNER JOIN projects ON projects.primary_organization_id = organizations.id').group('organizations.name').select('organizations.name').collect{ |o| [o.name, o.name] }
+				@org_combo_values = Organization.joins('INNER JOIN projects ON projects.primary_organization_id = organizations.id').group('organizations.name').select('organizations.name').order('organizations.name ASC').collect{ |o| [o.name, o.name] }
 				@countries_combo_values = Country.get_select_values.collect{ |c| [c.name, c.name] }
 				@sectors_combo_values = Sector.get_select_values.collect { |c| [c.name, c.name] }
 				@donors_combo_values = Donor.get_select_values.collect{ |d| [d.name, d.name] }
