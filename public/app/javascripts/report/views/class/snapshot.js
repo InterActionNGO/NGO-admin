@@ -55,7 +55,14 @@ define([
             fontSize: '13px'
           },
           labelFormatter: function() {
-            var value = (Number(this.yData[0]) > 999) ? Number(this.yData[0]).toCommas() : this.yData[0];
+            var value;
+
+            if ((Number(this.yData[0]) > 999)) {
+              value = Number(this.yData[0]).toCommas();
+            } else {
+              value = this.yData[0] ? this.yData[0] : '';
+            }
+
             return this.name + ' (' + value + ')';
           },
           adjustChartSize: true
