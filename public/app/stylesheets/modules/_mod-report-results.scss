@@ -289,6 +289,17 @@ ul.mod-report-locations-header-child {
 .mod-report-lists {
   position: relative;
 
+  .report-list-subtitle {
+    @include clearfix();
+    span {
+      float: left;
+    }
+
+    button {
+      float: right;
+    }
+  }
+
   table {
     margin: 20px 0 0 0;
   }
