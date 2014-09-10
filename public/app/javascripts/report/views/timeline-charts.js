@@ -20,7 +20,8 @@ define([
         type: 'line',
         spacingLeft: 0,
         spacingRight: 0,
-        zoomType: 'x'
+        zoomType: 'x',
+        width: 539
       },
       xAxis: {
         lineWidth: 0,
