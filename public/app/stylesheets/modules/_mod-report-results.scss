@@ -60,6 +60,11 @@
 
   @include border-radius(10px);
 
+  a {
+    color: $color-2;
+    display: inline;
+  }
+
   p {
     margin: .5em 0;
   }
@@ -155,6 +160,10 @@
     .small {
       font-size: 14px;
       vertical-align: baseline;
+      a {
+        display: inline;
+        color: $color-2;
+      }
     }
   }
 
@@ -225,6 +234,7 @@
   @extend .apply;
   width: 48%;
   float: left;
+  margin-bottom: 0;
   &:first-child { margin-right: 4%;}
 
 }
@@ -398,7 +408,6 @@ ul.mod-report-locations-header-child {
   }
 }
 
-
 @media print {
   .mod-header,
   .featured-projects,
@@ -427,4 +436,31 @@ ul.mod-report-locations-header-child {
       display: block !important;
     }
   }
+}
+
+// maybe this should go to a single mod file?
+.mod-report-limitations {
+  padding-top: 30px;
+  a {
+    display: inline;
+    color: $color-2;
+  }
+
+  ol {
+      margin-left: 2em;
+  }
+
+  ol li {
+      list-style-type: decimal;
+      list-style-position: outside;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+.mod-report-line-chart .highchart-label a {
+  color: $color-2;
+  display: inline;
 }
