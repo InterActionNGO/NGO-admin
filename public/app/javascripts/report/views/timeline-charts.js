@@ -23,6 +23,13 @@ define([
         zoomType: 'x',
         width: 539
       },
+      legend: {
+        labelFormatter: function () {
+          return '<span class="highchart-label">' + this.name +
+            '<sup><a onclick="event.stopPropagation()" href="#limitations3">3</a></sup></span>';
+        },
+        useHTML:true
+      },
       xAxis: {
         lineWidth: 0,
         tickLength: 0,

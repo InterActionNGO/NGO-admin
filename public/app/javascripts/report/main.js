@@ -80,6 +80,7 @@ require([
   'views/budgets',
   'views/timeline-charts',
   'views/actions',
+  'views/limitations',
 
   'views/donors-snapshot',
   'views/organizations-snapshot',
@@ -94,7 +95,7 @@ require([
 ], function(
   _, underscoreString, Handlebars, Highcharts,
   SpinView, FiltersFormView, IntroView,
-  TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView, ActionsView,
+  TitleView, FiltersView, SummaryView, BudgetsView, TimelineChartsView, ActionsView, LimitationsView,
   DonorsSnapshotView, OrganizationsSnapshotView, CountriesSnapshotView, SectorsSnapshotView,
   DonorsListView, OrganizationsListView, ProjectsListView, CountriesListView, SectorsListView
 ) {
@@ -155,6 +156,7 @@ require([
   new SummaryView();
   new BudgetsView();
   new ActionsView();
+  new LimitationsView();
 
   new TimelineChartsView();
   new DonorsSnapshotView();
