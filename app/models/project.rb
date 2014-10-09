@@ -1716,7 +1716,7 @@ SQL
     end
 
     if countries && !countries.include?('All')
-      countries_filter = "AND c.name IN (" + countries.map {|str| "'#{str}'"}.join(',') + ")"
+      countries_filter = "AND c.name IN (" + countries.map {|str| "#{ActiveRecord::Base.connection.quote(str)}"}.join(',') + ")"
     end
 
     if organizations && !organizations.include?('All')
