@@ -174,6 +174,9 @@ class User < ActiveRecord::Base
       'last_login'   => last_login
     }
   end
+  def not_blocked?
+    self.blocked = false
+  end
 
   def update_last_login
     self.last_login                             = Time.now
