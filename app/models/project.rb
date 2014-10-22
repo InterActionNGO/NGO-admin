@@ -1720,7 +1720,7 @@ SQL
     end
 
     if organizations && !organizations.include?('All')
-      organizations_filter = "AND o.name IN (" + organizations.map {|str| "'#{str}'"}.join(',') + ")"
+      organizations_filter = "AND o.name IN (" + organizations.map {|str| "#{ActiveRecord::Base.connection.quote(str)}"}.join(',') + ")"
     end
 
     if the_model == 'o'
