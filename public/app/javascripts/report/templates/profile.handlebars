@@ -46,7 +46,9 @@
   </div>
 {{/if}}
 
+  
 <div class="profile-item row">
+  <h3 class="profile-item-title">Profile Overview</h3>
   {{#each charts}}
     <div class="mod-report-grid-3">
       <h3>{{name}}</h3>
@@ -54,7 +56,6 @@
     </div>
   {{/each}}
 </div>
-
 {{#if details}}
   <div class="row profile-item">
     <div class="grid-8">
@@ -72,4 +73,6 @@
   </div>
 {{/if}}
 
-<div class="profile-item profile-map"></div>
+{{#if map}}
+  <div class="profile-item profile-map"></div>
+{{/if}}

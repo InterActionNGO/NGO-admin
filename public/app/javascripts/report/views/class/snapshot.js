@@ -21,7 +21,7 @@ define([
         limit: 10
       },
       profile: {
-        limit: 5
+        limit: 10
       },
       chart: {
         chart: {
@@ -231,6 +231,12 @@ define([
 
           this.data = this.profileModel.toJSON();
           this.data.profile = true;
+
+          if(this.data.countries && this.data.countries.length == 1){
+            this.data.map = false;
+          }else{
+            this.data.map = true;
+          }
           this.data.charts = _.map(this.options.profile.graphsBy, function(graph) {
             return {
               name: graph.title,
