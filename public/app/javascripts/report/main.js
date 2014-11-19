@@ -117,7 +117,9 @@ require([
   });
 
   Handlebars.registerHelper('starray', function(context) {
-    return _.str.toSentence(context);
+    context = _.str.toSentence(context);
+    context = context.replace(/\%26/g, '&');
+    return context;
   });
 
   Handlebars.registerHelper('if_eq', function(context, options) {
