@@ -59,10 +59,13 @@ define([
     },
 
     _getObjFromURI: function(URLParams) {
+      console.log(URLParams);
       var uri = decodeURIComponent(URLParams);
 
       uri = uri.split('+').join(' ');
       uri = uri.replace('&amp;', '%26');
+
+      console.log(uri);
 
       var chunks = uri.split('&');
       var params = {};
@@ -76,6 +79,8 @@ define([
             params[chunk[0]].push(chunk[1].replace(/\+/g, ' '));
           }
         } else {
+          // console.log(params);
+          // console.log(chunk);
           params[chunk[0]] = chunk[1].replace(/\+/g, ' ');
         }
       }
