@@ -42,8 +42,11 @@ define([
       this.$el.find('select').select2({
         width: 'element',
         allowClear: true,
-        escapeMarkup: function(item) {
-          return _.str.unescapeHTML(item);
+        formatResult: function(item){
+          return _.str.unescapeHTML(item.text);
+        },
+        formatSelection: function(item){
+          return _.str.unescapeHTML(item.text);
         }
       });
 

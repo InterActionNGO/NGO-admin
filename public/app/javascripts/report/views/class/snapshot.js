@@ -232,7 +232,7 @@ define([
           this.data = this.profileModel.toJSON();
           this.data.profile = true;
 
-          if(this.data.countries && this.data.countries.length == 1){
+          if(this.data.countries && this.data.countries.length === 1){
             this.data.map = false;
           }else{
             this.data.map = true;
