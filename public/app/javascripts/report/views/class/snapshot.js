@@ -251,6 +251,7 @@ define([
           }, this));
         }
       }
+
       return $deferred.promise();
     },
 
