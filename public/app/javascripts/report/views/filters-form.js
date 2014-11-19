@@ -78,6 +78,8 @@ define([
 
       FilterModel.instance.setByURLParams(this.URLParams);
 
+      this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
+
       $.when(
         this.getDonors(),
         this.getProjects(),
