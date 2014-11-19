@@ -72,9 +72,9 @@ define([
 
 
       this.URLParams = this.$el.find('form').serialize();
-      this.URLParams = this.URLParams.replace('%26','%26amp%3B');
-
-      console.log(this.URLParams);
+      this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
+      this.URLParams = this.URLParams.replace(/%26/g,'%26amp%3B');
+      this.URLParams = this.URLParams.replace('&amp;', '%26');
 
       FilterModel.instance.setByURLParams(this.URLParams);
 

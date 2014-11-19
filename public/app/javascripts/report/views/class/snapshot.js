@@ -169,8 +169,6 @@ define([
 
       var data = this.reportModel.get(this.options.snapshot.slug);
       var len = data.length;
-      console.log(data);
-      console.log(len);
       var first = this.options.snapshot.graphsBy[0].slug;
       var second = this.options.snapshot.graphsBy[1].slug;
       var thirth = this.options.snapshot.graphsBy[2].slug;
