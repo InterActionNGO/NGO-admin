@@ -69,7 +69,12 @@ define([
         this.$window.scrollTop(154);
       }, this), 100);
 
+
+
       this.URLParams = this.$el.find('form').serialize();
+      this.URLParams = this.URLParams.replace('%26','%26amp%3B');
+
+      console.log(this.URLParams);
 
       FilterModel.instance.setByURLParams(this.URLParams);
 
@@ -88,7 +93,6 @@ define([
           countries: this.countriesCollection.toJSON(),
           sectors: this.sectorsCollection.toJSON()
         };
-
         ReportModel.instance.set(data);
 
         window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
