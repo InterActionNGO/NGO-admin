@@ -169,6 +169,8 @@ define([
 
       var data = this.reportModel.get(this.options.snapshot.slug);
       var len = data.length;
+      console.log(data);
+      console.log(len);
       var first = this.options.snapshot.graphsBy[0].slug;
       var second = this.options.snapshot.graphsBy[1].slug;
       var thirth = this.options.snapshot.graphsBy[2].slug;
@@ -231,6 +233,8 @@ define([
 
           this.data = this.profileModel.toJSON();
           this.data.profile = true;
+
+          this.data.name = _.str.unescapeHTML(this.data.name);
 
           if(this.data.countries && this.data.countries.length === 1){
             this.data.map = false;
