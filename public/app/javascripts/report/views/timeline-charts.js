@@ -139,7 +139,7 @@ define([
       }
 
       seriesData.push({
-        name: 'Currently active projects',
+        name: 'Active projects',
         data: activeProjectsData,
         color: '#006C8D'
       });

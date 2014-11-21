@@ -28,9 +28,9 @@ define([
       },
       profile: {
         slug: 'organization',
-        limit: 5,
+        limit: 10,
         graphsBy: [{
-          title: 'Projects by sectors',
+          title: 'By sectors',
           slug: 'sectors'
         }, {
           title: 'By number of countries',

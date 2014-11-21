@@ -21,7 +21,7 @@ define([
         limit: 10
       },
       profile: {
-        limit: 5
+        limit: 10
       },
       chart: {
         chart: {
@@ -223,27 +223,34 @@ define([
         $deferred.resolve();
 
       } else {
+        if (data[0]) {
+          this.profileModel.getByParams({
+            slug: this.options.profile.slug,
+            id: data[0].id
+          }, _.bind(function() {
 
-        this.profileModel.getByParams({
-          slug: this.options.profile.slug,
-          id: data[0].id
-        }, _.bind(function() {
+            this.data = this.profileModel.toJSON();
+            this.data.profile = true;
 
-          this.data = this.profileModel.toJSON();
-          this.data.profile = true;
-          this.data.charts = _.map(this.options.profile.graphsBy, function(graph) {
-            return {
-              name: graph.title,
-              series: _.first(this.data[graph.slug], this.options.profile.limit)
-            };
-          }, this);
+            this.data.name = _.str.unescapeHTML(this.data.name);
 
-          $deferred.resolve();
+            if(this.data.countries && this.data.countries.length === 1){
+              this.data.map = false;
+            }else{
+              this.data.map = true;
+            }
+            this.data.charts = _.map(this.options.profile.graphsBy, function(graph) {
+              return {
+                name: graph.title,
+                series: _.first(this.data[graph.slug], this.options.profile.limit)
+              };
+            }, this);
 
-        }, this));
+            $deferred.resolve();
 
+          }, this));
+        }
       }
-
       return $deferred.promise();
     },
 
