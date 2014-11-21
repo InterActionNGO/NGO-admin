@@ -42,8 +42,11 @@ define([
       this.$el.find('select').select2({
         width: 'element',
         allowClear: true,
-        escapeMarkup: function(item) {
-          return _.str.unescapeHTML(item);
+        formatResult: function(item){
+          return _.str.unescapeHTML(item.text);
+        },
+        formatSelection: function(item){
+          return _.str.unescapeHTML(item.text);
         }
       });
 
@@ -66,9 +69,16 @@ define([
         this.$window.scrollTop(154);
       }, this), 100);
 
+
+
       this.URLParams = this.$el.find('form').serialize();
+      this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
+      this.URLParams = this.URLParams.replace(/%26/g,'%26amp%3B');
+      this.URLParams = this.URLParams.replace('&amp;', '%26');
 
       FilterModel.instance.setByURLParams(this.URLParams);
+
+      this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
 
       $.when(
         this.getDonors(),
@@ -85,7 +95,6 @@ define([
           countries: this.countriesCollection.toJSON(),
           sectors: this.sectorsCollection.toJSON()
         };
-
         ReportModel.instance.set(data);
 
         window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
