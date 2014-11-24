@@ -74,11 +74,11 @@ define([
       this.URLParams = this.$el.find('form').serialize();
       this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
       this.URLParams = this.URLParams.replace(/%26/g,'%26amp%3B');
-      this.URLParams = this.URLParams.replace('&amp;', '%26');
+      this.URLParams = this.URLParams.replace('&amp;', '%26amp%3B');
 
       FilterModel.instance.setByURLParams(this.URLParams);
 
-      this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
+      // this.URLParams = this.URLParams.replace(/%26amp%3B/g,'%26');
 
       $.when(
         this.getDonors(),
