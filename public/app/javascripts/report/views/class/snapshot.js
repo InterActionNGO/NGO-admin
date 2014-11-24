@@ -175,82 +175,127 @@ define([
 
       this.data = {};
 
-      if (len > 1) {
+      var projects = _.first(data, this.options.snapshot.limit);
 
-        var projects = _.first(data, this.options.snapshot.limit);
+      var bySecond = _.first(_.sortBy(data, function(p) {
+        return -p[second];
+      }), this.options.snapshot.limit);
 
-        var bySecond = _.first(_.sortBy(data, function(p) {
-          return -p[second];
-        }), this.options.snapshot.limit);
+      var byThirth = _.first(_.sortBy(data, function(p) {
+        return -p[thirth];
+      }), this.options.snapshot.limit);
 
-        var byThirth = _.first(_.sortBy(data, function(p) {
-          return -p[thirth];
-        }), this.options.snapshot.limit);
+      this.data = {
 
-        this.data = {
+        title: this.options.snapshot.title,
 
-          title: this.options.snapshot.title,
+        description: _.str.sprintf(this.options.snapshot.subtitle, len),
 
-          description: _.str.sprintf(this.options.snapshot.subtitle, len),
+        charts: [{
+          name: this.options.snapshot.graphsBy[0].title,
+          series: _.map(projects, function(p) {
+            return {
+              name: p.name,
+              data: [[p.name, p[first]]]
+            };
+          })
+        }, {
+          name: this.options.snapshot.graphsBy[1].title,
+          series: _.map(bySecond, function(p) {
+            return {
+              name: p.name,
+              data: [[p.name, p[second]]]
+            };
+          })
+        }, {
+          name: this.options.snapshot.graphsBy[2].title,
+          series: _.map(byThirth, function(p) {
+            return {
+              name: p.name,
+              data: [[p.name, p[thirth]]]
+            };
+          })
+        }]
+      };
 
-          charts: [{
-            name: this.options.snapshot.graphsBy[0].title,
-            series: _.map(projects, function(p) {
-              return {
-                name: p.name,
-                data: [[p.name, p[first]]]
-              };
-            })
-          }, {
-            name: this.options.snapshot.graphsBy[1].title,
-            series: _.map(bySecond, function(p) {
-              return {
-                name: p.name,
-                data: [[p.name, p[second]]]
-              };
-            })
-          }, {
-            name: this.options.snapshot.graphsBy[2].title,
-            series: _.map(byThirth, function(p) {
-              return {
-                name: p.name,
-                data: [[p.name, p[thirth]]]
-              };
-            })
-          }]
-        };
+      $deferred.resolve();
 
-        $deferred.resolve();
+      // if (len > 1) {
 
-      } else {
-        if (data[0]) {
-          this.profileModel.getByParams({
-            slug: this.options.profile.slug,
-            id: data[0].id
-          }, _.bind(function() {
+      //   var projects = _.first(data, this.options.snapshot.limit);
 
-            this.data = this.profileModel.toJSON();
-            this.data.profile = true;
+      //   var bySecond = _.first(_.sortBy(data, function(p) {
+      //     return -p[second];
+      //   }), this.options.snapshot.limit);
 
-            this.data.name = _.str.unescapeHTML(this.data.name);
+      //   var byThirth = _.first(_.sortBy(data, function(p) {
+      //     return -p[thirth];
+      //   }), this.options.snapshot.limit);
 
-            if(this.data.countries && this.data.countries.length === 1){
-              this.data.map = false;
-            }else{
-              this.data.map = true;
-            }
-            this.data.charts = _.map(this.options.profile.graphsBy, function(graph) {
-              return {
-                name: graph.title,
-                series: _.first(this.data[graph.slug], this.options.profile.limit)
-              };
-            }, this);
+      //   this.data = {
 
-            $deferred.resolve();
+      //     title: this.options.snapshot.title,
 
-          }, this));
-        }
-      }
+      //     description: _.str.sprintf(this.options.snapshot.subtitle, len),
+
+      //     charts: [{
+      //       name: this.options.snapshot.graphsBy[0].title,
+      //       series: _.map(projects, function(p) {
+      //         return {
+      //           name: p.name,
+      //           data: [[p.name, p[first]]]
+      //         };
+      //       })
+      //     }, {
+      //       name: this.options.snapshot.graphsBy[1].title,
+      //       series: _.map(bySecond, function(p) {
+      //         return {
+      //           name: p.name,
+      //           data: [[p.name, p[second]]]
+      //         };
+      //       })
+      //     }, {
+      //       name: this.options.snapshot.graphsBy[2].title,
+      //       series: _.map(byThirth, function(p) {
+      //         return {
+      //           name: p.name,
+      //           data: [[p.name, p[thirth]]]
+      //         };
+      //       })
+      //     }]
+      //   };
+
+      //   $deferred.resolve();
+
+      // } else {
+      //   if (data[0]) {
+      //     this.profileModel.getByParams({
+      //       slug: this.options.profile.slug,
+      //       id: data[0].id
+      //     }, _.bind(function() {
+
+      //       this.data = this.profileModel.toJSON();
+      //       this.data.profile = true;
+
+      //       this.data.name = _.str.unescapeHTML(this.data.name);
+
+      //       if(this.data.countries && this.data.countries.length === 1){
+      //         this.data.map = false;
+      //       }else{
+      //         this.data.map = true;
+      //       }
+      //       this.data.charts = _.map(this.options.profile.graphsBy, function(graph) {
+      //         return {
+      //           name: graph.title,
+      //           series: _.first(this.data[graph.slug], this.options.profile.limit)
+      //         };
+      //       }, this);
+
+      //       $deferred.resolve();
+
+      //     }, this));
+      //   }
+      // }
 
       return $deferred.promise();
     },
