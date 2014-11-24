@@ -1699,7 +1699,7 @@ SQL
       the_limit='NULL'
     end
 
-    if start_date && end_date && !active == 'yes'
+    if start_date && end_date && !active
       date_filter = "AND p.start_date <= '#{end_date}'::date AND p.end_date >= '#{start_date}'::date"
     elsif active == 'yes'
       date_filter = "AND p.start_date <= '#{Time.now.to_date}'::date AND p.end_date >= '#{Time.now.to_date}'::date"
