@@ -36,7 +36,15 @@ define([
 
     calculeBudgets: function() {
       var result;
-      var budgets = _.sortBy(_.compact(_.pluck(ReportModel.instance.get('projects'), 'budget')));
+      var organizations = ReportModel.instance.get('organizations');
+      var projects = ReportModel.instance.get('projects');
+      var totalBudget = 0;
+
+      _.each(organizations,function(v){
+        totalBudget += v.budget;
+      });
+
+      var budgets = _.sortBy(_.compact(_.pluck(projects, 'budget')));
       var budgetsLength = _.size(budgets);
 
       if (budgetsLength > 0) {
@@ -44,12 +52,9 @@ define([
           min: _.min(budgets),
           max: _.max(budgets),
           median: (budgetsLength % 2 === 0) ? (budgets[(budgetsLength/2) - 1] + budgets[budgetsLength/2]) / 2  : budgets[(budgetsLength - 1) / 2],
-          total: _.reduce(budgets, function(memo, budget) {
-            return memo + budget;
-          }, 0)
+          total: totalBudget
         };
       }
-
       return result;
     },
 
