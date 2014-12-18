@@ -1725,7 +1725,7 @@ SQL
     end
 
     if the_model == 'o'
-      budget_line = ", SUM(distinct(p).budget) AS budget"
+      budget_line = ", SUM(p.budget) AS budget"
     end
     if the_model == 'p'
       sql = <<-SQL
