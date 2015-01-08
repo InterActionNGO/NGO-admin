@@ -1747,6 +1747,43 @@ SQL
           ORDER BY p.name
           LIMIT #{the_limit}
       SQL
+    elsif the_model == 'o'
+      sql = <<-SQL
+        with budget_table AS (
+        SELECT
+        SUM(pr.budget) AS budget
+          FROM (SELECT DISTINCT p.id, p.budget from projects p
+                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                 INNER JOIN countries c ON (c.id = cp.country_id)
+           WHERE true
+         #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}) pr
+        ),
+        query_table AS (
+        SELECT o.name, o.id,
+        COUNT(DISTINCT p.id) AS projects_count,
+        COUNT(DISTINCT d.id) AS donors_count,
+        COUNT(DISTINCT c.id) AS countries_count,
+        COUNT(DISTINCT s.id) AS sectors_count,
+        COUNT(DISTINCT o.id) AS organizations_count
+          FROM projects p
+                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
+                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                 INNER JOIN countries c ON (c.id = cp.country_id)
+          WHERE true
+         #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+          GROUP BY o.name, o.id)
+          SELECT query_table.*,budget_table.budget
+          FROM budget_table, query_table
+      SQL
     else
       sql = <<-SQL
         SELECT #{the_model}.name, #{the_model}.id,
@@ -1755,7 +1792,6 @@ SQL
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count,
         COUNT(DISTINCT o.id) AS organizations_count
-        #{budget_line}
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
