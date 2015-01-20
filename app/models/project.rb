@@ -1747,7 +1747,7 @@ SQL
           ORDER BY p.name
           LIMIT #{the_limit}
       SQL
-    elsif the_model == 'o' && organizations && organizations.size == 1
+    elsif the_model == 'o'
       sql = <<-SQL
         with budget_table AS (
         SELECT
@@ -1792,7 +1792,6 @@ SQL
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count,
         COUNT(DISTINCT o.id) AS organizations_count
-        #{budget_line}
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
