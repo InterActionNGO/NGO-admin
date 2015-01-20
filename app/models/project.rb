@@ -1735,7 +1735,7 @@ SQL
         COUNT(DISTINCT s.id) AS sectors_count
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
-                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id )
                  LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
                  LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
                  INNER JOIN organizations o ON (p.primary_organization_id = o.id)
@@ -1747,7 +1747,7 @@ SQL
           ORDER BY p.name
           LIMIT #{the_limit}
       SQL
-    elsif the_model == 'o'
+    elsif the_model == 'o' && organizations && organizations.size == 1
       sql = <<-SQL
         with budget_table AS (
         SELECT
@@ -1781,7 +1781,7 @@ SQL
           WHERE true
          #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
           GROUP BY o.name, o.id)
-          SELECT query_table.*,budget_table.budget
+          SELECT query_table.*, budget_table.budget
           FROM budget_table, query_table
       SQL
     else
@@ -1792,6 +1792,7 @@ SQL
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count,
         COUNT(DISTINCT o.id) AS organizations_count
+        #{budget_line}
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
