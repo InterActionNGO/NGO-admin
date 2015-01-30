@@ -53,6 +53,13 @@ class ReportsController < ApplicationController
     end
   end
 
+  def budgets
+    @table = Project.get_budgets(params)
+    respond_to do |format|
+      format.json { render :json => @table.to_json }
+    end
+  end
+
   def organization_profile
   	@organization = Organization.find(params[:id])
   	@profile = @organization.get_profile

@@ -14,6 +14,7 @@ define([
   'collections/donors',
   'collections/countries',
   'collections/sectors'
+
 ], function(
   $, select2, _, underscoreString, Backbone, moment, ReportModel, FilterModel,
   ProjectsCollection, OrganizationsCollection, DonorsCollection, CountriesCollection, SectorsCollection
@@ -95,16 +96,58 @@ define([
           countries: this.countriesCollection.toJSON(),
           sectors: this.sectorsCollection.toJSON()
         };
-        ReportModel.instance.set(data);
-
-        window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
-
-        Backbone.Events.trigger('spinner:stop filters:done');
+        // load budgets
+        this.loadBudgets(data);
 
       }, this));
 
       return false;
     },
+
+    loadBudgets: function(data){
+      // Replace budgets by manual budget calculation
+      var projectsByOrganization = this.calculeBudgets(_.groupBy(data.projects,function(p){ return p.organizationId; }));
+      _.each(_.sortBy(data.organizations, function(o){ return o.id; }), function(org,key){
+        org.budget = projectsByOrganization[key].total;
+      });
+
+      ReportModel.instance.set(data);
+
+      window.history.pushState({}, '', window.location.pathname + '?' + this.URLParams);
+
+      Backbone.Events.trigger('spinner:stop filters:done');
+    },
+
+    calculeBudgets: function(projectsByOrganization) {
+      return _.map(projectsByOrganization, _.bind(function(projects, key){
+        var result;
+        var budgets = _.sortBy(_.compact(_.pluck(projects, 'budget')));
+        var budgetsLength = _.size(budgets);
+
+        if (budgetsLength > 0) {
+          result = {
+            orgId: key,
+            min: _.min(budgets),
+            max: _.max(budgets),
+            median: (budgetsLength % 2 === 0) ? (budgets[(budgetsLength/2) - 1] + budgets[budgetsLength/2]) / 2  : budgets[(budgetsLength - 1) / 2],
+            total: _.reduce(budgets, function(memo, budget) {
+              return memo + budget;
+            }, 0)
+          };
+        }else{
+          result = {
+            orgId: key,
+            min: 0,
+            max: 0,
+            median: 0,
+            total: 0
+          };
+        }
+        return result;
+      }, this ));
+    },
+
+
 
     getProjects: function() {
       var deferred = $.Deferred();
