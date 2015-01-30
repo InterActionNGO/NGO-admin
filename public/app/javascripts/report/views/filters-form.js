@@ -106,8 +106,8 @@ define([
 
     loadBudgets: function(data){
       // Replace budgets by manual budget calculation
-      var projectsByOrganization = this.calculeBudgets(_.groupBy(data.projects,function(p){ return p.organizationId }));
-      _.each(_.sortBy(data.organizations, function(o){ return o.id }), function(org,key){
+      var projectsByOrganization = this.calculeBudgets(_.groupBy(data.projects,function(p){ return p.organizationId; }));
+      _.each(_.sortBy(data.organizations, function(o){ return o.id; }), function(org,key){
         org.budget = projectsByOrganization[key].total;
       });
 
