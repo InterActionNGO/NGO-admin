@@ -1735,7 +1735,7 @@ SQL
         COUNT(DISTINCT s.id) AS sectors_count
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
-                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id )
+                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
                  LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
                  LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
                  INNER JOIN organizations o ON (p.primary_organization_id = o.id)
@@ -1747,43 +1747,6 @@ SQL
           ORDER BY p.name
           LIMIT #{the_limit}
       SQL
-    elsif the_model == 'o'
-      sql = <<-SQL
-        with budget_table AS (
-        SELECT
-        SUM(pr.budget) AS budget
-          FROM (SELECT DISTINCT p.id, p.budget from projects p
-                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
-                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
-                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
-                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
-                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
-                 INNER JOIN countries c ON (c.id = cp.country_id)
-           WHERE true
-         #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}) pr
-        ),
-        query_table AS (
-        SELECT o.name, o.id,
-        COUNT(DISTINCT p.id) AS projects_count,
-        COUNT(DISTINCT d.id) AS donors_count,
-        COUNT(DISTINCT c.id) AS countries_count,
-        COUNT(DISTINCT s.id) AS sectors_count,
-        COUNT(DISTINCT o.id) AS organizations_count
-          FROM projects p
-                 INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
-                 LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
-                 LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
-                 INNER JOIN organizations o ON (p.primary_organization_id = o.id)
-                 INNER JOIN countries_projects cp ON (p.id = cp.project_id)
-                 INNER JOIN countries c ON (c.id = cp.country_id)
-          WHERE true
-         #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
-          GROUP BY o.name, o.id)
-          SELECT query_table.*, budget_table.budget
-          FROM budget_table, query_table
-      SQL
     else
       sql = <<-SQL
         SELECT #{the_model}.name, #{the_model}.id,
@@ -1792,6 +1755,7 @@ SQL
         COUNT(DISTINCT c.id) AS countries_count,
         COUNT(DISTINCT s.id) AS sectors_count,
         COUNT(DISTINCT o.id) AS organizations_count
+        #{budget_line}
           FROM projects p
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
@@ -1808,6 +1772,79 @@ SQL
       SQL
     end
     list = ActiveRecord::Base.connection.execute(sql)
+  end
+  def self.get_budgets(params={})
+    start_date = Date.parse(params[:start_date]['day']+"-"+params[:start_date]['month']+"-"+params[:start_date]['year']) if params[:start_date]
+    end_date = Date.parse(params[:end_date]['day']+"-"+params[:end_date]['month']+"-"+params[:end_date]['year']) if params[:end_date]
+    countries = params[:country] if params[:country]
+    donors = params[:donor] if params[:donor]
+    sectors = params[:sector] if params[:sector]
+    organizations = params[:organization] if params[:organization]
+    form_query = params[:q].downcase.strip if params[:q]
+    active = params[:active_projects]
+    if params[:model]
+      the_model = params[:model]
+    else
+      the_model='p'
+    end
+    if params[:limit]
+      the_limit = params[:limit]
+    else
+      the_limit='NULL'
+    end
+
+    if start_date && end_date && !active
+      date_filter = "AND p.start_date <= '#{end_date}'::date AND p.end_date >= '#{start_date}'::date"
+    elsif active == 'yes'
+      date_filter = "AND p.start_date <= '#{Time.now.to_date}'::date AND p.end_date >= '#{Time.now.to_date}'::date"
+    end
+
+    form_query_filter = "AND lower(p.name) LIKE '%" + form_query + "%'" if params[:q]
+
+    if donors && !donors.include?('All')
+      donors_filter = "AND d.name IN (" + donors.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if sectors && !sectors.include?('All')
+      sectors_filter = "AND s.name IN (" + sectors.map {|str| "'#{str}'"}.join(',') + ")"
+    end
+
+    if countries && !countries.include?('All')
+      countries_filter = "AND c.name IN (" + countries.map {|str| "#{ActiveRecord::Base.connection.quote(str)}"}.join(',') + ")"
+    end
+
+    if organizations && !organizations.include?('All')
+      organizations_filter = "AND org.name IN (" + organizations.map {|str| "#{ActiveRecord::Base.connection.quote(str)}"}.join(',') + ")"
+      organizations_filter = organizations_filter.gsub(/&amp;/, '&')
+    end
+
+    sql = <<-SQL
+      WITH budget_table AS (SELECT o.id AS o_id, o.name AS o_name, COALESCE(sum(p.budget), 0) as total_budget
+          FROM organizations o
+          INNER JOIN projects p ON (p.primary_organization_id = o.id)
+          GROUP BY o_id, o_name),
+      query_table AS (SELECT org.id as org_id
+              FROM organizations org
+                     INNER JOIN projects p ON (p.primary_organization_id = org.id)
+                     INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
+                     LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
+                     LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
+                     LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                     INNER JOIN countries_projects cp ON (p.id = cp.project_id)
+                     INNER JOIN countries c ON (c.id = cp.country_id)
+                     WHERE true
+                     #{date_filter} #{form_query_filter} #{donors_filter} #{sectors_filter} #{countries_filter} #{organizations_filter}
+                     )
+      SELECT o_id, o_name, total_budget
+      FROM budget_table
+      INNER JOIN
+      query_table
+      on budget_table.o_id = query_table.org_id
+      GROUP BY o_id, o_name, total_budget
+      ORDER BY total_budget DESC
+      LIMIT #{the_limit}
+    SQL
+    budgets = ActiveRecord::Base.connection.execute(sql)
   end
 
   ################################################
