@@ -237,7 +237,7 @@ define([
         this.$startDateSelector.addClass('is-disabled');
         this.$endDateSelector.addClass('is-disabled');
 
-        this.$startDateSelector.find('#start_date_year').select2('val', '1984');
+        this.$startDateSelector.find('#start_date_year').select2('val', '1985');
         this.$startDateSelector.find('#start_date_month').select2('val', '9');
         this.$startDateSelector.find('#start_date_day').select2('val', '1');
 
@@ -254,7 +254,7 @@ define([
       var today = new Date();
 
       this.$el.find('select').select2('val', '');
-      this.$startDateSelector.find('#start_date_year').select2('val', '1984');
+      this.$startDateSelector.find('#start_date_year').select2('val', '1985');
       this.$startDateSelector.find('#start_date_month').select2('val', '9');
       this.$startDateSelector.find('#start_date_day').select2('val', '1');
       this.$endDateSelector.find('#end_date_year').select2('val', today.getUTCFullYear());
