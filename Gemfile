@@ -30,7 +30,7 @@ gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/rails
 group :development do
   gem 'git-up'
   gem 'capistrano'
-  gem 'rvm-capistrano'
+  gem 'rvm-capistrano', :require => false
   gem 'capistrano-ext'
   gem 'wirble'
   gem 'railroady'
