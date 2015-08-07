@@ -4,9 +4,12 @@ class ChangesOrganizationAttributes < ActiveRecord::Migration
     add_column :organizations, :iati_organizationid, :string
     add_column :organizations, :publishing_to_iati, :boolean, :default => :false
     add_column :organizations, :membership_status, :string, :default => 'active'
-    remove_volumn :organizations,
   end
 
   def self.down
+    remove_column :organizations, :organization_type
+    remove_column :organizations, :iati_organizationid
+    remove_column :organizations, :publishing_to_iati
+    remove_column :organizations, :membership_status
   end
 end
