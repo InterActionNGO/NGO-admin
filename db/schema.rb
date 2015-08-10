@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150804112848) do
+ActiveRecord::Schema.define(:version => 20150810095146) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -435,6 +435,11 @@ ActiveRecord::Schema.define(:version => 20150804112848) do
     t.text     "project_needs"
     t.text     "idprefugee_camp"
     t.string   "organization_id"
+    t.string   "budget_currency"
+    t.date     "budget_value_date"
+    t.integer  "target_project_reach"
+    t.integer  "actual_project_reach"
+    t.string   "project_reach_unit"
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
