@@ -27,6 +27,20 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
 
   add_index "changes_history_records", ["user_id", "what_type", "when"], :name => "index_changes_history_records_on_user_id_and_what_type_and_when"
 
+  create_table "changes_history_records_copy", :id => false, :force => true do |t|
+    t.integer  "id",               :null => false
+    t.integer  "user_id"
+    t.datetime "when"
+    t.text     "how"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "what_id"
+    t.string   "what_type"
+    t.boolean  "reviewed"
+    t.string   "who_email"
+    t.string   "who_organization"
+  end
+
   create_table "clusters", :force => true do |t|
     t.string "name"
   end
@@ -84,11 +98,16 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
     t.date     "start_date"
   end
 
+  add_index "data_denormalization", ["cluster_ids"], :name => "data_denormalization_cluster_idsx"
+  add_index "data_denormalization", ["countries_ids"], :name => "data_denormalization_countries_idsx"
+  add_index "data_denormalization", ["donors_ids"], :name => "data_denormalization_donors_idsx"
   add_index "data_denormalization", ["is_active"], :name => "data_denormalization_is_activex"
   add_index "data_denormalization", ["organization_id"], :name => "data_denormalization_organization_idx"
   add_index "data_denormalization", ["organization_name"], :name => "data_denormalization_organization_namex"
   add_index "data_denormalization", ["project_id"], :name => "data_denormalization_project_idx"
   add_index "data_denormalization", ["project_name"], :name => "data_denormalization_project_name_idx"
+  add_index "data_denormalization", ["regions_ids"], :name => "data_denormalization_regions_idsx"
+  add_index "data_denormalization", ["sector_ids"], :name => "data_denormalization_sector_idsx"
   add_index "data_denormalization", ["site_id"], :name => "data_denormalization_site_idx"
 
   create_table "data_export", :id => false, :force => true do |t|
@@ -162,7 +181,7 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
   add_index "donors", ["name"], :name => "index_donors_on_name"
 
   create_table "geolocations", :force => true do |t|
-    t.string   "uid",               :limit => nil
+    t.integer  "geonameid"
     t.string   "name",              :limit => nil
     t.float    "latitude"
     t.float    "longitude"
@@ -170,7 +189,7 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
     t.string   "fcode",             :limit => nil
     t.string   "country_code",      :limit => nil
     t.string   "country_name",      :limit => nil
-    t.string   "country_uid",       :limit => nil
+    t.integer  "country_geonameid"
     t.string   "cc2",               :limit => nil
     t.string   "admin1",            :limit => nil
     t.string   "admin2",            :limit => nil
@@ -185,14 +204,13 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
     t.string   "g2",                :limit => nil
     t.string   "g3",                :limit => nil
     t.string   "g4",                :limit => nil
-    t.string   "custom_geo_source", :limit => nil
   end
 
   add_index "geolocations", ["admin1"], :name => "index_geolocations_on_admin1"
   add_index "geolocations", ["admin2"], :name => "index_geolocations_on_admin2"
   add_index "geolocations", ["admin3"], :name => "index_geolocations_on_admin3"
   add_index "geolocations", ["admin4"], :name => "index_geolocations_on_admin4"
-  add_index "geolocations", ["uid"], :name => "index_geolocations_on_uid"
+  add_index "geolocations", ["geonameid"], :name => "index_geolocations_on_geonameid"
 
   create_table "geolocations_projects", :id => false, :force => true do |t|
     t.integer "geolocation_id"
@@ -200,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
   end
 
   add_index "geolocations_projects", ["geolocation_id", "project_id"], :name => "index_geolocations_projects_on_geolocation_id_and_project_id"
+  add_index "geolocations_projects", ["project_id"], :name => "index_geolocations_projects_on_project_id"
 
   create_table "layer_styles", :force => true do |t|
     t.string "title"
@@ -305,7 +324,6 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
     t.string   "main_data_contact_country"
     t.string   "organization_id"
     t.string   "organization_type"
-    t.integer  "organization_type_code"
     t.string   "iati_organizationid"
     t.boolean  "publishing_to_iati",              :default => false
     t.string   "membership_status",               :default => "active"
@@ -421,7 +439,7 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "the_geom",                                :limit => nil,  :srid => 4326
+    t.geometry "the_geom",                                :limit => nil,                        :srid => 4326
     t.text     "activities"
     t.string   "intervention_id"
     t.text     "additional_information"
@@ -440,6 +458,15 @@ ActiveRecord::Schema.define(:version => 20150810095146) do
     t.integer  "target_project_reach"
     t.integer  "actual_project_reach"
     t.string   "project_reach_unit"
+    t.date     "project_reach_actual_start_date"
+    t.date     "project_reach_target_start_date"
+    t.date     "project_reach_actual_end_date"
+    t.date     "project_reach_target_end_date"
+    t.string   "project_reach_type",                                      :default => "Output"
+    t.integer  "project_reach_type_code",                                 :default => 1
+    t.string   "project_reach_measure",                                   :default => "Unit"
+    t.integer  "project_reach_measure_code",                              :default => 1
+    t.text     "project_reach_description"
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
