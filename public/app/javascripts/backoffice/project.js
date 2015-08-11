@@ -276,6 +276,116 @@ $(document).ready(function(ev){
     update_project_intervention_id();
   });
 
+
+
+
+
+  // COMBO 2
+  $('div.list_combo2').children('span.combo_large').click(function(ev){
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    $('div.field_info div.field_text').each(function(i,ele){
+      $(ele).closest('label').removeAttr('style');
+      $(ele).fadeOut('fast');
+    });
+
+    if ($(this).attr('id') == 'hidden'){
+      $('div.list_combo2').find('ul.list_combo2_content').css('display','inline');
+      $(this).addClass('displayed');
+      $(this).attr('id','visible');
+
+      resetCombo($('div.list_combo2'));
+    }else{
+      $('div.list_combo2').find('ul.list_combo2_content').css('display','none');
+      $(this).attr('id','hidden');
+      $(this).removeClass('displayed');
+    }
+
+    $(document).click(function(event) {
+      if ((!$(event.target).closest('ul.list_combo2_content').length)&&(!$(event.target).closest('.scroll_pane').length)) {
+        $('div.list_combo2').find('ul.list_combo2_content').css('display','none');
+        $('div.list_combo2').children('span.combo_large').attr('id','hidden');
+        $('div.list_combo2').children('span.combo_large').removeClass('displayed');
+      };
+    });
+  });
+
+  // substring(0,10)+'...'
+
+  $('ul.list_combo2_content').find('li.element').click(function(ev){
+    var id = $(this).attr('id');
+    var name = $(this).children('p.project_name').text();
+    id = id.substring(orgs_id,id.length);
+
+    // id substring
+    $('input#project_reach_type').val(id);
+
+    $('div.list_combo2').find('a.project_reach_type').text(name);
+    $('div.list_combo2').find('ul.list_combo2_content').css('display','none');
+    $('div.list_combo2').children('span.combo_large').attr('id','hidden');
+    $('div.list_combo2').children('span.combo_large').removeClass('displayed');
+  });
+  // end combo tags click
+  $('input#project_reach_type').change(function(){
+    project_reach_type = $(this).val();
+  });
+
+
+
+  // COMBO 2
+  $('div.list_combo3').children('span.combo_large').click(function(ev){
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    $('div.field_info div.field_text').each(function(i,ele){
+      $(ele).closest('label').removeAttr('style');
+      $(ele).fadeOut('fast');
+    });
+
+    if ($(this).attr('id') == 'hidden'){
+      $('div.list_combo3').find('ul.list_combo3_content').css('display','inline');
+      $(this).addClass('displayed');
+      $(this).attr('id','visible');
+
+      resetCombo($('div.list_combo3'));
+    }else{
+      $('div.list_combo3').find('ul.list_combo3_content').css('display','none');
+      $(this).attr('id','hidden');
+      $(this).removeClass('displayed');
+    }
+
+    $(document).click(function(event) {
+      if ((!$(event.target).closest('ul.list_combo3_content').length)&&(!$(event.target).closest('.scroll_pane').length)) {
+        $('div.list_combo3').find('ul.list_combo3_content').css('display','none');
+        $('div.list_combo3').children('span.combo_large').attr('id','hidden');
+        $('div.list_combo3').children('span.combo_large').removeClass('displayed');
+      };
+    });
+  });
+
+  // substring(0,10)+'...'
+
+  $('ul.list_combo3_content').find('li.element').click(function(ev){
+    var id = $(this).attr('id');
+    var name = $(this).children('p.project_name').text();
+    id = id.substring(orgs_id,id.length);
+
+    // id substring
+    $('input#project_reach_measure').val(id);
+
+    $('div.list_combo3').find('a.project_reach_measure').text(name);
+    $('div.list_combo3').find('ul.list_combo3_content').css('display','none');
+    $('div.list_combo3').children('span.combo_large').attr('id','hidden');
+    $('div.list_combo3').children('span.combo_large').removeClass('displayed');
+  });
+  // end combo tags click
+  $('input#project_reach_measure').change(function(){
+    project_reach_measure = $(this).val();
+  });
+
+
+
   /************** CLUSTERS ************************** */
   $('span.combo_cluster_options').click(function(ev){
     ev.stopPropagation();
