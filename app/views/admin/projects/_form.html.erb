@@ -310,8 +310,8 @@
     <label>SECTORS  <strong>*</strong></label>
 <!--     <span id="hidden" class="combo_large <%= 'error' if @project.errors[:sectors].present? %>">
         <%= errors_for @project, :sectors %>
-       <a class="organization"><%= @project.primary_organization.try(:name) %></a> -->
-      </span> -->
+       <a class="organization"><%= @project.primary_organization.try(:name) %></a> </span>-->
+
     <ul class="sectors">
       <% unless @project.sectors.empty? %>
         <% @project.sectors.each do |sector| %>
@@ -881,66 +881,20 @@
     </ul>
   </div>
 
-
-  <div class="field">
+  <div>
     <label>PROJECT REACH TYPE  <strong>*</strong></label>
-
-    <div class="list_combo2">
-      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:project_reach_type].present? %>">
-        <%= errors_for @project, :project_reach_type %>
-        <a class="project_reach_type"><%= @project.project_reach_type %></a>
-      </span>
-      <%= f.hidden_field :project_reach_type , :value => @project.project_reach_type %>
-      <div class="wrapper">
-        <ul class="list_combo2_content scroll_pane">
-          <li class="element" id="orgs_1"><p class="project_name">Default</p></li>
-          <li class="element" id="orgs_2"><p class="project_name">Test1</p></li>
-          <li class="element" id="orgs_3"><p class="project_name">Test2</p></li>
-        </ul>
-      </div>
+    <div>
+      <%= select_tag :project_reach_type_code, "<option value='0'>Default</option><option value='1'>Test1</option><option value='2'>Test2</option>".html_safe %>
     </div>
+
   </div>
 
-
-  <div class="field">
+  <div>
     <label>PROJECT REACH MEASURE  <strong>*</strong></label>
-
-    <div class="list_combo3">
-      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:project_reach_measure].present? %>">
-        <%= errors_for @project, :project_reach_measure %>
-        <a class="project_reach_measure"><%= @project.project_reach_measure %></a>
-      </span>
-      <%= f.hidden_field :project_reach_measure , :value => @project.project_reach_measure %>
-      <div class="wrapper">
-        <ul class="list_combo3_content scroll_pane">
-          <li class="element" id="orgs_1"><p class="project_name">Default</p></li>
-          <li class="element" id="orgs_2"><p class="project_name">Test1</p></li>
-          <li class="element" id="orgs_3"><p class="project_name">Test2</p></li>
-        </ul>
-      </div>
+    <div>
+      <%= select_tag :project_reach_measure_code, "<option value='0'>Default</option><option value='1'>Test1</option><option value='2'>Test2</option>".html_safe %>
     </div>
   </div>
-
-
-  <!-- <div class="two_columns">
-    <div class="left_column">
-      <div class="field">
-        <label>PROJECT REACH MEASURE</label>
-        <span class="input_short">
-          <%= f.text_field :project_reach_measure %>
-        </span>
-      </div>
-    </div>
-    <div class="right_column">
-      <div class="field">
-        <p class="title">PROJECT REACH MEASURE CODE</p>
-        <span class="input_short">
-          <%= f.text_field :project_reach_measure_code %>
-        </span>
-      </div>
-    </div>
-  </div> -->
-
 
   <div class="field">
     <span class="chars">
