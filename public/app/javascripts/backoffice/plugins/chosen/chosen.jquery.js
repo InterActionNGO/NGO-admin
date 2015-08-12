@@ -308,6 +308,8 @@ Copyright (c) 2011 by Harvest
 
       if (this.options.widths)  {
         this.f_width = this.options.widths[this.container_id];
+      } else if(this.options.width) {
+        this.f_width = this.options.width;
       } else {
         this.f_width = this.f_width > 180 ? 180 : this.f_width;
         this.f_width = this.f_width <= 180 ? 180 : this.f_width;

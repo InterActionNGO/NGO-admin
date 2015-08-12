@@ -46,7 +46,7 @@ body {
 .mod-background-main {
   width: 1060px;
   background-color: $color-0;
-  @include clearfix();
+  overflow: hidden;
 }
 
 .mod-backoffice-footer {
