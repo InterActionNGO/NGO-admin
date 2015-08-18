@@ -43,6 +43,7 @@ class Project < ActiveRecord::Base
   has_and_belongs_to_many :sectors
   has_and_belongs_to_many :regions, :after_add => :add_to_country, :after_remove => :remove_from_country
   has_and_belongs_to_many :countries
+  has_and_belongs_to_many :geolocations
   has_and_belongs_to_many :tags, :after_add => :update_tag_counter, :after_remove => :update_tag_counter
   has_many :resources, :conditions => proc {"resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy
   has_many :media_resources, :conditions => proc {"media_resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy, :order => 'position ASC'

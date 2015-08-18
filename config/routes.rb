@@ -10,7 +10,7 @@ Iom::Application.routes.draw do
   get 'profile/organization/:id', :to => 'reports#organization_profile', :as => 'report_organization_profile'
   get 'profile/country/:id', :to => 'reports#country_profile', :as => 'report_country_profile'
   get 'profile/sector/:id', :to => 'reports#sector_profile', :as => 'report_sector_profile'
-  get 'profile/donor/:id', :to => 'reports#donor_profile', :as => 'report_donor_profile'  
+  get 'profile/donor/:id', :to => 'reports#donor_profile', :as => 'report_donor_profile'
   match 'home2' => 'sites#home'
   match 'about' => 'sites#about'
   match 'about-interaction' => 'sites#about_interaction'
@@ -75,6 +75,7 @@ Iom::Application.routes.draw do
       put 'disable', :action => 'disable'
       put 'enable', :action => 'enable'
     end
+    resources :geolocations, :only => [:index]
     resources :tags, :only => [:index]
     resources :regions, :only => [:index]
     resources :organizations do
