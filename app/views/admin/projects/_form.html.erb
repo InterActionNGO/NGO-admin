@@ -882,7 +882,7 @@
   </div>
 
   <div>
-    <label>PROJECT REACH TYPE  <strong>*</strong></label>
+    <label>PROJECT REACH TYPE </label>
     <div>
       <%= select_tag :project_reach_type_code, "<option value='0'>Default</option><option value='1'>Test1</option><option value='2'>Test2</option>".html_safe %>
     </div>
@@ -890,7 +890,7 @@
   </div>
 
   <div>
-    <label>PROJECT REACH MEASURE  <strong>*</strong></label>
+    <label>PROJECT REACH MEASURE </label>
     <div>
       <%= select_tag :project_reach_measure_code, "<option value='0'>Default</option><option value='1'>Test1</option><option value='2'>Test2</option>".html_safe %>
     </div>
@@ -899,7 +899,7 @@
   <div class="field">
     <span class="chars">
       <label>
-        PROJECT REACH DESCRIPTION  <strong>*</strong>
+        PROJECT REACH DESCRIPTION
       </label>
       <% project_reach_description = f.object.project_reach_description || '' %>
       <p id="chars_left_description_reach"><%= 10000 - project_reach_description.length %> chars left</p>
