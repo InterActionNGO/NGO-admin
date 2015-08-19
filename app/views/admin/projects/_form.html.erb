@@ -564,15 +564,12 @@
         <p class="info_region_exp">You can specify the administrative level you need (1st, 2nd or 3rd)</p>
         <div class="level_0">
           <label>COUNTRY <strong>*</strong></label>
-          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader'} %>
+          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
           <span class="region_combo">
             <p id="country_0">Not specified</p>
             <div class="wrapper">
-              <ul class="options scroll_pane">
+              <ul id="country-list" class="options scroll_pane">
                 <li><a id="country_0">Not specified</a></li>
-                <% Country.select("id,name").order("name ASC").all.each do |country| %>
-                  <li class="region_combo_item"><a id="country_<%= country.id %>" href="#"><%= country.name %></a></li>
-                <% end %>
                 <li class="last"></li>
               </ul>
             </div>
@@ -580,7 +577,7 @@
         </div>
 
         <div class="level_1">
-          <img class="loader" src="/images/backoffice/projects/activity-indicator.gif" alt="loader" title="loader"/>
+          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
           <label>1st ADMINISTRATIVE LEVEL</label>
           <span class="region_combo">
             <p id="level1_0">Not specified</p>
@@ -594,7 +591,7 @@
         </div>
 
         <div class="level_2">
-          <img class="loader" src="/images/backoffice/projects/activity-indicator.gif" alt="loader" title="loader"/>
+          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
           <label>2st ADMINISTRATIVE LEVEL</label>
           <span class="region_combo">
             <p id="level2_0">Not specified</p>
