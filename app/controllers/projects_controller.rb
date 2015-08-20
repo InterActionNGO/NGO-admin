@@ -16,6 +16,7 @@ class ProjectsController < ApplicationController
     @raw_project = Project.find_by_sql(sql).first
     raise ActiveRecord::RecordNotFound unless @raw_project
     @project = Project.find(@raw_project['project_id'])
+    puts @project;
     @empty_layer = true
     respond_to do |format|
       format.html do
