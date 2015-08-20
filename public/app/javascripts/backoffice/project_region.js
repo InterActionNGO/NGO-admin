@@ -169,7 +169,7 @@
       next_element = $('div.level_1');
 
       $('div.level_1').children('span.region_combo').children('p').text('Not specified');
-      $('div.level_1').children('span.region_combo').children('p').attr('id','level'+item_level+'_0');
+      $('div.level_1').children('span.region_combo').children('p').attr('id',item_level+'_0');
 
       $('div.level_1').hide();
       $('div.level_2').hide();
@@ -181,7 +181,7 @@
       next_element = $('div.level_2');
 
       $('div.level_2').children('span.region_combo').children('p').text('Not specified');
-      $('div.level_2').children('span.region_combo').children('p').attr('id','level'+item_level+'_0');
+      $('div.level_2').children('span.region_combo').children('p').attr('id',item_level+'_0');
 
       $('div.level_2').hide();
       $('div.level_3').hide();
@@ -192,7 +192,7 @@
       next_element = $('div.level_3');
 
       $('div.level_3').children('span.region_combo').children('p').text('Not specified');
-      $('div.level_3').children('span.region_combo').children('p').attr('id','level'+item_level+'_0');
+      $('div.level_3').children('span.region_combo').children('p').attr('id',item_level+'_0');
 
       $('div.level_3').hide();
 
@@ -232,7 +232,7 @@
         api.getContentPane().children('li').remove();
         api.getContentPane().append('<li class="region_combo_item"><a id="level'+ item_level + '_0">Not specified</a></li>');
         for (var i=0; i<result.length; i++) {
-          var li = $('<li class="region_combo_item"><a id="level'+ item_level + '_'+result[i].geolocation.uid +'" data-id="'+result[i].geolocation.id+'">'+result[i].geolocation.name+'</a></li>');
+          var li = $('<li class="region_combo_item"><a id="'+result[i].geolocation.uid +'" data-id="'+result[i].geolocation.id+'">'+result[i].geolocation.name+'</a></li>');
           li.click(clickHandlerForRegionItem);
           api.getContentPane().append(li);
         }
