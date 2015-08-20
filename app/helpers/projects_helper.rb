@@ -141,4 +141,34 @@ module ProjectsHelper
     end
   end
 
+  def geolocation_breadcrumb(geolocation)
+    geo = Geolocation.find(geolocation)
+
+    country_name = geo.country_name
+    geo_name = geo.name
+
+    result = (country_name +' > '+ geo_name)
+
+    return result
+    # if region.is_a?(Country)
+    #   return region.name
+    # end
+    # result = [region.country.name]
+    # if region.level == 1
+    # elsif region.level == 2
+    #   result << Region.find(region.parent_region_id, :select => "id, name, parent_region_id").name
+    # elsif region.level == 3
+    #   parent = Region.find(region.parent_region_id, :select => "id, name, parent_region_id")
+    #   result << Region.find(parent.parent_region_id, :select => "id, name, parent_region_id").name
+    #   result << parent.name
+    # end
+    # result = (result + [region.name]).join(' > ')
+    # if result.size > 30
+    #   list = result.split(' > ')
+    #   return ([list.first] + ['...'] + [list[-2..-1]]).join(' > ')
+    # else
+    #   return result
+    # end
+  end
+
 end
