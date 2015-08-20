@@ -225,36 +225,38 @@
       }
     } else {
       $.getJSON('/admin/geolocations?level='+item_level+'&geolocation='+item_id,function(result){
-        var settings = {showArrows: false};
-        var pane = next_element.children('span.region_combo').children('div.wrapper').children('ul.scroll_pane')
-        pane.jScrollPane(settings);
-        var api = pane.data('jsp');
-        api.getContentPane().children('li').remove();
-        api.getContentPane().append('<li class="region_combo_item"><a id="level'+ item_level + '_0">Not specified</a></li>');
-        for (var i=0; i<result.length; i++) {
-          var li = $('<li class="region_combo_item"><a id="'+result[i].geolocation.uid +'" data-id="'+result[i].geolocation.id+'">'+result[i].geolocation.name+'</a></li>');
-          li.click(clickHandlerForRegionItem);
-          api.getContentPane().append(li);
-        }
-        api.getContentPane().append('<li class="last"></li>');
+        if (!!result.length) {
+          var settings = {showArrows: false};
+          var pane = next_element.children('span.region_combo').children('div.wrapper').children('ul.scroll_pane')
+          pane.jScrollPane(settings);
+          var api = pane.data('jsp');
+          api.getContentPane().children('li').remove();
+          api.getContentPane().append('<li class="region_combo_item"><a id="level'+ item_level + '_0">Not specified</a></li>');
+          for (var i=0; i<result.length; i++) {
+            var li = $('<li class="region_combo_item"><a id="'+result[i].geolocation.uid +'" data-id="'+result[i].geolocation.id+'">'+result[i].geolocation.name+'</a></li>');
+            li.click(clickHandlerForRegionItem);
+            api.getContentPane().append(li);
+          }
+          api.getContentPane().append('<li class="last"></li>');
 
 
-        if (item_level==1) {
-          $('div.region_window div.bottom_region').prepend($('div.level_0'));
-          $('div.region_window div.top_region').append($('div.region_window h3'));
-          $('div.region_window div.top_region').append($('div.region_window p.info_region_exp'));
-        } else if (item_level==2) {
-          $('div.region_window div.bottom_region').prepend($('div.level_1'));
-          $('div.region_window div.top_region').append($('div.region_window h3'));
-          $('div.region_window div.top_region').append($('div.region_window p.info_region_exp'));
-          $('div.region_window div.top_region').append($('div.level_0'));
-        } else {
-          $('div.region_window div.top_region').append($('div.region_window h3'));
-          $('div.region_window div.top_region').append($('div.region_window p.info_region_exp'));
-          $('div.region_window div.top_region').append($('div.level_0'));
-          $('div.region_window div.top_region').append($('div.level_1'));
+          if (item_level==1) {
+            $('div.region_window div.bottom_region').prepend($('div.level_0'));
+            $('div.region_window div.top_region').append($('div.region_window h3'));
+            $('div.region_window div.top_region').append($('div.region_window p.info_region_exp'));
+          } else if (item_level==2) {
+            $('div.region_window div.bottom_region').prepend($('div.level_1'));
+            $('div.region_window div.top_region').append($('div.region_window h3'));
+            $('div.region_window div.top_region').append($('div.region_window p.info_region_exp'));
+            $('div.region_window div.top_region').append($('div.level_0'));
+          } else {
+            $('div.region_window div.top_region').append($('div.region_window h3'));
+            $('div.region_window div.top_region').append($('div.region_window p.info_region_exp'));
+            $('div.region_window div.top_region').append($('div.level_0'));
+            $('div.region_window div.top_region').append($('div.level_1'));
+          }
+          next_element.show();
         }
-        next_element.show();
 
         $('img.loader').hide();
       });
