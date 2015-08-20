@@ -4,7 +4,7 @@
       $.getJSON('/admin/geolocations?level=0',function(result){
         var country_list = '<li><a id="country_0">Not specified</a></li>';
         for (var i=0; i<result.length; i++) {
-          var li = '<li class="region_combo_item"><a id="'+ result[i].geolocation.uid +'">'+result[i].geolocation.name+'</a></li>';
+          var li = '<li class="region_combo_item"><a id="'+ result[i].geolocation.uid +'" data-id="'+result[i].geolocation.id+'">'+result[i].geolocation.name+'</a></li>';
           country_list += li;
         }
         $('#country-list').jScrollPane({showArrows: false});
@@ -76,33 +76,33 @@
       $('a#add_region_to_list').click(function (e){
           var i = 0;
           var countries_ids = [];
-          var geolocations_ids = [];
+          var geolocation_ids = [];
           var countries_names = [];
           var regions_names = [];
           $('div.region_window div span.region_combo p').each(function(index,element){
             if ($(element).text()!="Not specified") {
               if(i == 0){
-                var country_id   = $(element).attr('id').split('_')[1];
+                var country_id   = $(element).data('id');
                 updateCountryIsoCode(country_id);
                 countries_ids.push(country_id);
                 countries_names.push($(element).html());
               } else {
-                geolocations_ids.push($(element).attr('id').split('_')[1]);
+                geolocation_ids.push($(element).data('id'));
                 regions_names.push($(element).html());
               }
             }
             i++;
           });
 
-          if( geolocations_ids.length == 0 )
-            $('#regions_list').append('<li data-country-id="'+countries_ids[0]+'"><p>'+countries_names[0]+'</p><input type="hidden" name="project[geolocations_ids][]" value="country_'+countries_ids[0]+'" /><a href="javascript:void(null)" class="close"></a></li>');
+          if( geolocation_ids.length == 0 )
+            $('#regions_list').append('<li data-country-id="'+countries_ids[0]+'"><p>'+countries_names[0]+'</p><input type="hidden" name="project[geolocation_ids][]" value="'+countries_ids[0]+'" /><a href="javascript:void(null)" class="close"></a></li>');
           else {
             var breadcrumb = [];
             breadcrumb.push(countries_names[0]);
             for(var i = 0;i<regions_names.length;i++) {
               breadcrumb.push(regions_names[i]);
             }
-            $('#regions_list').append('<li data-country-id="'+countries_ids[0]+'"><p>'+breadcrumb.join(' > ')+'</p><input type="hidden" name="project[geolocations_ids][]" value="region_'+geolocations_ids[geolocations_ids.length - 1]+'" /><a href="javascript:void(null)" class="close"></a></li>');
+            $('#regions_list').append('<li data-country-id="'+countries_ids[0]+'"><p>'+breadcrumb.join(' > ')+'</p><input type="hidden" name="project[geolocation_ids][]" value="'+geolocation_ids[geolocation_ids.length - 1]+'" /><a href="javascript:void(null)" class="close"></a></li>');
           }
 
           e.preventDefault();
@@ -154,7 +154,7 @@
     } else {
       region_combo.children('p').text(new_item.text());
     }
-    region_combo.children('p').attr('id',new_item.attr('id'));
+    region_combo.children('p').data('id',new_item.data('id'));
 
 
     var item_level;
@@ -232,7 +232,7 @@
         api.getContentPane().children('li').remove();
         api.getContentPane().append('<li class="region_combo_item"><a id="level'+ item_level + '_0">Not specified</a></li>');
         for (var i=0; i<result.length; i++) {
-          var li = $('<li class="region_combo_item"><a id="level'+ item_level + '_'+result[i].geolocation.uid +'">'+result[i].geolocation.name+'</a></li>');
+          var li = $('<li class="region_combo_item"><a id="level'+ item_level + '_'+result[i].geolocation.uid +'" data-id="'+result[i].geolocation.id+'">'+result[i].geolocation.name+'</a></li>');
           li.click(clickHandlerForRegionItem);
           api.getContentPane().append(li);
         }
