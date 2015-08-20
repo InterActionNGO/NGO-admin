@@ -5,6 +5,6 @@ class Geolocation < ActiveRecord::Base
     geolocations = Geolocation.where('adm_level = ?', level)
     superlevel  = level.to_i - 1
     geolocations = geolocations.where("g#{superlevel} = ?", geolocation) if geolocation.present? && level.to_i >= 0
-    geolocations
+    geolocations.order(:name)
   end
 end
