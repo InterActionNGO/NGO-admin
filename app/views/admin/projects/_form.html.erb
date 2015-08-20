@@ -539,8 +539,7 @@
   <ul class="ubications" id="regions_list">
     <% @project.geolocation_ids.each do |geolocation| %>
       <li>
-        <!-- <p> <%= geolocation_breadcrumb(geolocation) %> </p> -->
-        <p><%= geolocation %></p>
+        <p> <%= geolocation_breadcrumb(geolocation) %> </p>
         <input type="hidden" name="project[geolocation_ids][]" value="<%= geolocation %>" />
         <a class="close" href="javascript:void(null)"></a>
       </li>
