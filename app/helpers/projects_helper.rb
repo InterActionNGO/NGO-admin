@@ -120,14 +120,14 @@ module ProjectsHelper
   end
 
   def region_breadcrumb(region)
-    if region.is_a?(Country)
+    if region.adm_level == 0
       return region.name
     end
-    result = [region.country.name]
-    if region.level == 1
-    elsif region.level == 2
+    result = [region.country_name]
+    if region.adm_level == 1
+    elsif region.adm_level == 2
       result << Region.find(region.parent_region_id, :select => "id, name, parent_region_id").name
-    elsif region.level == 3
+    elsif region.adm_level == 3
       parent = Region.find(region.parent_region_id, :select => "id, name, parent_region_id")
       result << Region.find(parent.parent_region_id, :select => "id, name, parent_region_id").name
       result << parent.name
@@ -143,32 +143,20 @@ module ProjectsHelper
 
   def geolocation_breadcrumb(geolocation)
     geo = Geolocation.find(geolocation)
-
-    country_name = geo.country_name
-    geo_name = geo.name
-
-    result = (country_name +' > '+ geo_name)
-
-    return result
-    # if region.is_a?(Country)
-    #   return region.name
-    # end
-    # result = [region.country.name]
-    # if region.level == 1
-    # elsif region.level == 2
-    #   result << Region.find(region.parent_region_id, :select => "id, name, parent_region_id").name
-    # elsif region.level == 3
-    #   parent = Region.find(region.parent_region_id, :select => "id, name, parent_region_id")
-    #   result << Region.find(parent.parent_region_id, :select => "id, name, parent_region_id").name
-    #   result << parent.name
-    # end
-    # result = (result + [region.name]).join(' > ')
-    # if result.size > 30
-    #   list = result.split(' > ')
-    #   return ([list.first] + ['...'] + [list[-2..-1]]).join(' > ')
-    # else
-    #   return result
-    # end
+    breadcrumbs = []
+    step = geo.adm_level
+    until step < 0 do
+      current_breadcrumb = Geolocation.where(:uid => eval("geo.g#{step}")).first.try(:name)
+      step -=1
+      breadcrumbs << current_breadcrumb
+    end
+    result = breadcrumbs.reject { |b| b.nil? }.reverse.join(" > ")
+    if result.size > 30
+      list = result.split(' > ')
+      return ([list.first] + ['...'] + [list[-2..-1]]).join(' > ')
+    else
+      return result
+    end
   end
 
 end
