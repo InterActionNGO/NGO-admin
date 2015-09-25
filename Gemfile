@@ -4,9 +4,8 @@ gem 'rails', '3.0.19'
 
 # PostgreSQL
 gem 'pg',                       '0.9.0'
-gem 'nofxx-georuby',                          :require => 'geo_ruby'
+gem 'nofxx-georuby', :require => 'geo_ruby'
 gem 'spatial_adapter'
-
 gem 'newrelic_rpm'
 gem "will_paginate", "3.0.pre2"
 gem 'sanitize', '2.0.3'
@@ -29,8 +28,8 @@ gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/rails
 
 group :development do
   gem 'git-up'
-  gem 'capistrano'
-  gem 'rvm-capistrano', :require => false
+  gem 'capistrano', :require => false
+  gem 'rvm-capistrano'
   gem 'capistrano-ext'
   gem 'wirble'
   gem 'railroady'
