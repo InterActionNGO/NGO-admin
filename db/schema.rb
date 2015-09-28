@@ -176,49 +176,45 @@ ActiveRecord::Schema.define(:version => 20150925072808) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "iati_organizationid"
+    t.string   "organization_type"
+    t.integer  "organization_type_code"
   end
 
   add_index "donors", ["name"], :name => "index_donors_on_name"
 
-  create_table "geolocations", force: :cascade do |t|
-    t.string   "uid"
-    t.string   "name"
+  create_table "geolocations", :force => true do |t|
+    t.string   "uid",               :limit => nil
+    t.string   "name",              :limit => nil
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "fclass"
-    t.string   "fcode"
-    t.string   "country_code"
-    t.string   "country_name"
-    t.string   "country_uid"
-    t.string   "cc2"
-    t.string   "admin1"
-    t.string   "admin2"
-    t.string   "admin3"
-    t.string   "admin4"
-    t.string   "provider",          default: "Geonames"
+    t.string   "fclass",            :limit => nil
+    t.string   "fcode",             :limit => nil
+    t.string   "country_code",      :limit => nil
+    t.string   "country_name",      :limit => nil
+    t.string   "country_uid",       :limit => nil
+    t.string   "cc2",               :limit => nil
+    t.string   "admin1",            :limit => nil
+    t.string   "admin2",            :limit => nil
+    t.string   "admin3",            :limit => nil
+    t.string   "admin4",            :limit => nil
+    t.string   "provider",          :limit => nil, :default => "Geonames"
     t.integer  "adm_level"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "g0"
-    t.string   "g1"
-    t.string   "g2"
-    t.string   "g3"
-    t.string   "g4"
-    t.string   "custom_geo_source"
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+    t.string   "g0",                :limit => nil
+    t.string   "g1",                :limit => nil
+    t.string   "g2",                :limit => nil
+    t.string   "g3",                :limit => nil
+    t.string   "g4",                :limit => nil
+    t.string   "custom_geo_source", :limit => nil
   end
 
-  add_index "geolocations", ["g1"], name: "index_geolocations_on_g1", using: :btree
-  add_index "geolocations", ["g2"], name: "index_geolocations_on_g2", using: :btree
-  add_index "geolocations", ["g3"], name: "index_geolocations_on_g3", using: :btree
-  add_index "geolocations", ["g4"], name: "index_geolocations_on_g4", using: :btree
-  add_index "geolocations", ["uid"], name: "index_geolocations_on_uid", using: :btree
-
-  create_table "geolocations_projects", id: false, force: :cascade do |t|
-    t.integer "geolocation_id"
-    t.integer "project_id"
-  end
-
-  add_index "geolocations_projects", ["geolocation_id", "project_id"], name: "index_geolocations_projects_on_geolocation_id_and_project_id", using: :btree
+  add_index "geolocations", ["admin1"], :name => "index_geolocations_on_admin1"
+  add_index "geolocations", ["admin2"], :name => "index_geolocations_on_admin2"
+  add_index "geolocations", ["admin3"], :name => "index_geolocations_on_admin3"
+  add_index "geolocations", ["admin4"], :name => "index_geolocations_on_admin4"
+  add_index "geolocations", ["uid"], :name => "index_geolocations_on_uid"
 
   create_table "geolocations_projects", :id => false, :force => true do |t|
     t.integer "geolocation_id"
@@ -457,12 +453,12 @@ ActiveRecord::Schema.define(:version => 20150925072808) do
     t.text     "project_needs"
     t.text     "idprefugee_camp"
     t.string   "organization_id"
-    t.integer  "prime_awardee_id"
     t.string   "budget_currency"
     t.date     "budget_value_date"
     t.integer  "target_project_reach"
     t.integer  "actual_project_reach"
     t.string   "project_reach_unit"
+    t.integer  "prime_awardee_id"
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
