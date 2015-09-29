@@ -238,8 +238,8 @@ $(document).ready(function(ev){
   $('#project_geographical_scope').change(set_geographical_scope);
 
   function set_geographical_scope() {
-    $('input[name="project[geolocation_ids][]"]').val('');
     $('#regions_list').html('');
+
     $('#region_combo_item').remove();
     if ($('#project_geographical_scope').val() == 'global') {
       $('#geographical_region-content').hide(0);

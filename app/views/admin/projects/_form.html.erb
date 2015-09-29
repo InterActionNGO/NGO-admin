@@ -515,6 +515,7 @@
 
   <div id="geographical_region-content">
     <label>GEOGRAPHIC REGION <strong>*</strong></label>
+    <input type="hidden" name="project[geolocation_ids][]" value="" />
     <ul class="ubications" id="regions_list">
       <% @project.geolocation_ids.each do |geolocation| %>
         <li data-country-id="<%= geolocation %>">
