@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150925072808) do
+ActiveRecord::Schema.define(:version => 20150929091624) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -326,6 +326,11 @@ ActiveRecord::Schema.define(:version => 20150925072808) do
     t.string   "main_data_contact_state"
     t.string   "main_data_contact_country"
     t.string   "organization_id"
+    t.string   "organization_type"
+    t.integer  "organization_type_code"
+    t.string   "iati_organizationid"
+    t.boolean  "publishing_to_iati",              :default => false
+    t.string   "membership_status",               :default => "active"
     t.boolean  "interaction_member",              :default => false
   end
 
@@ -439,7 +444,7 @@ ActiveRecord::Schema.define(:version => 20150925072808) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "the_geom",                                :limit => nil,  :srid => 4326
+    t.geometry "the_geom",                                :limit => nil,                          :srid => 4326
     t.text     "activities"
     t.string   "intervention_id"
     t.text     "additional_information"
@@ -459,6 +464,7 @@ ActiveRecord::Schema.define(:version => 20150925072808) do
     t.integer  "actual_project_reach"
     t.string   "project_reach_unit"
     t.integer  "prime_awardee_id"
+    t.string   "geographical_scope",                                      :default => "regional"
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"

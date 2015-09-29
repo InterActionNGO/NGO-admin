@@ -39,6 +39,7 @@ class Project < ActiveRecord::Base
   include ModelChangesRecorder
 
   belongs_to :primary_organization, :foreign_key => :primary_organization_id, :class_name => 'Organization'
+  belongs_to :prime_awardee, :foreign_key => :prime_awardee_id, :class_name => 'Organization'
   has_and_belongs_to_many :clusters
   has_and_belongs_to_many :sectors
   has_and_belongs_to_many :regions, :after_add => :add_to_country, :after_remove => :remove_from_country
