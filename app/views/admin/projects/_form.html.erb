@@ -33,7 +33,7 @@
     <label>PRIME AWARDEE  </label>
 
     <div class="list_combo">
-      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:primary_organization_id].present? %>">
+      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:prime_awardee_id].present? %>">
         <%= errors_for @project, :prime_awardee_id %>
         <a class="organization"><%= @project.prime_awardee.try(:name) %></a>
       </span>
@@ -509,7 +509,7 @@
   <h3 class="section museo_sans">LOCATION</h3>
   <label>GEOGRAPHICAL SCOPE <strong>*</strong></label>
   <div class="field">
-    <%= f.select :geographical_scope, [['Global', 'global'], ['National', 'national'], ['Regional', 'regional']] %>
+    <%= f.select :geographical_scope, [['Regional', 'regional'], ['National', 'national'], ['Global', 'global']] %>
   </div>
 
 
