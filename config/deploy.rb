@@ -11,6 +11,7 @@ APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
 set :rollbar_token, APP_CONFIG['rollbar_token']
 set(:rollbar_env) { stage }
 
+set :normalize_asset_timestamps, false
 
 default_run_options[:pty] = true
 
