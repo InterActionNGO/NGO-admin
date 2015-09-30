@@ -176,6 +176,9 @@ ActiveRecord::Schema.define(:version => 20150929091624) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "iati_organizationid"
+    t.string   "organization_type"
+    t.integer  "organization_type_code"
   end
 
   add_index "donors", ["name"], :name => "index_donors_on_name"
@@ -455,13 +458,13 @@ ActiveRecord::Schema.define(:version => 20150929091624) do
     t.text     "project_needs"
     t.text     "idprefugee_camp"
     t.string   "organization_id"
-    t.integer  "prime_awardee_id"
-    t.string   "geographical_scope",                                      :default => "regional"
     t.string   "budget_currency"
     t.date     "budget_value_date"
     t.integer  "target_project_reach"
     t.integer  "actual_project_reach"
     t.string   "project_reach_unit"
+    t.integer  "prime_awardee_id"
+    t.string   "geographical_scope",                                      :default => "regional"
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
@@ -546,6 +549,7 @@ ActiveRecord::Schema.define(:version => 20150929091624) do
   create_table "sectors", :force => true do |t|
     t.string "name"
     t.string "oecd_dac_name"
+    t.string "sector_vocab_code"
     t.string "oecd_dac_purpose_code"
   end
 

@@ -85,6 +85,15 @@
       <%= f.label :contact_phone_number %>
       <%= f.text_field :contact_phone_number, :class=>"short" %>
     </div>
+    <h3>IATI</h3>
+    <div class="field">
+      <%= f.label :organization_type %>
+      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long" %>
+    </div>
+    <div class="field">
+      <%= f.label :iati_organizationid, "IATI organization ID" %>
+      <%= f.text_field :iati_organizationid, :class=>"long" %>
+    </div>
   </div>
 
   <%= f.submit 'Save', :class => "#{'error' if @donor.invalid? && action_name != 'new'}" %>

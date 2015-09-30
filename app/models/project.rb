@@ -851,7 +851,7 @@ SQL
 
   def update_data_denormalization
     sql = """UPDATE data_denormalization
-            SET project_name = '#{self.name}'
+            SET project_name = '#{Project.connection.quote_string(self.name)}'
             WHERE project_id = #{self.id}"""
     ActiveRecord::Base.connection.execute(sql)
   end
