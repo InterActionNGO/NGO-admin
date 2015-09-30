@@ -230,7 +230,7 @@
     <h3>IATI</h3>
     <div class="field">
       <%= f.label :organization_type %>
-      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long" %>
+      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select" %>
     </div>
     <div class="field">
       <%= f.label :iati_organizationid, "IATI organization ID" %>
@@ -238,7 +238,7 @@
     </div>
     <div class="field">
       <%= f.label :membership_status %>
-      <%= f.select :membership_status, ["Active", "Inactive"], {:include_blank => true}, :class=>"long" %>
+      <%= f.select :membership_status, ["Active", "Inactive"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
     </div>
     <div class="field">
       <%= f.label :publishing_to_iati, "Publishing to IATI" %>
@@ -260,3 +260,7 @@
   </script>
 
 <% end -%>
+<script type="text/javascript">
+  $(".chzn-sectors-select").chosen({hide_search:true});
+  $(".chzn-organization-select").chosen({hide_search:true});
+</script>

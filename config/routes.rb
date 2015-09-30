@@ -1,27 +1,7 @@
 Iom::Application.routes.draw do
 
   # Home
-  root :to => "sites#home"
-  # report page
-  match 'p/analysis' => 'reports#index' , :as => :report_index
-  match 'report_generate' => 'reports#report', :as => :report_generate
-  get 'list', :to => 'reports#list', :as => :report_list
-  get 'budgets', :to => 'reports#budgets', :as => :report_budgets
-  get 'profile/organization/:id', :to => 'reports#organization_profile', :as => 'report_organization_profile'
-  get 'profile/country/:id', :to => 'reports#country_profile', :as => 'report_country_profile'
-  get 'profile/sector/:id', :to => 'reports#sector_profile', :as => 'report_sector_profile'
-  get 'profile/donor/:id', :to => 'reports#donor_profile', :as => 'report_donor_profile'
-  match 'home2' => 'sites#home'
-  match 'about' => 'sites#about'
-  match 'about-interaction' => 'sites#about_interaction'
-  match 'about-data' => 'sites#about_data'
-  match 'media' => 'sites#media'
-  match 'testimonials' => 'sites#testimonials'
-  match 'link-ngo-aid-map' => 'sites#link_ngo_aid_map'
-  match 'make-your-own-map' => 'sites#make_your_own_map'
-  match 'faq' => 'sites#faq'
-  match 'contact' => 'sites#contact'
-  match 'explore' => 'sites#explore'
+  root :to => "admin/admin#index"
 
   # Session
   resource :session, :only => [:new, :create, :destroy]
@@ -29,39 +9,6 @@ Iom::Application.routes.draw do
   match 'logout' => 'sessions#destroy', :as => :logout
 
   resource :passwords
-
-  # Front urls
-  # resources :reports
-  resources :donors,        :only => [:index, :show]
-  resources :offices,       :only => [:show]
-  resources :projects,      :only => [:index, :show]
-  resources :organizations, :only => [:index, :show]
-
-  # Global Site projects export links for downloading
-  get '/sites/download/(:id).csv', :to => 'sites#downloads', :format => :csv
-  get '/sites/download/(:id).xls', :to => 'sites#downloads', :format => :xls
-  get '/sites/download/(:id).kml', :to => 'sites#downloads', :format => :kml
-
-  match 'regions/:id' => 'georegion#old_regions'
-  # HACK!! route globbing doesn't work well when trying to get the request format in Rails <=3.0.7
-  match 'location/*ids.csv' => 'georegion#show', :as => 'location', :format => 'csv'
-  match 'location/*ids.xls' => 'georegion#show', :as => 'location', :format => 'xls'
-  match 'location/*ids.kml' => 'georegion#show', :as => 'location', :format => 'kml'
-  # End HACK!!
-  match 'location/*ids' => 'georegion#show', :as => 'location'
-
-  # clusters and sector work through the same controller and view
-  match 'sectors/:id' => 'clusters_sectors#show', :as => 'sector'
-  match 'clusters/:id'   => 'clusters_sectors#show', :as => 'cluster'
-
-  # pages
-  match '/p/:id' => 'pages#show', :as => :page
-  # search
-  match '/search' => 'search#index', :as => :search
-  # list of regions of each level
-  match '/geo/regions/1/:id/json' => 'georegion#list_regions1_from_country', :format => :json
-  match '/geo/regions/2/:id/json' => 'georegion#list_regions2_from_country', :format => :json
-  match '/geo/regions/3/:id/json' => 'georegion#list_regions3_from_country', :format => :json
 
   # Administration
   namespace :admin do
