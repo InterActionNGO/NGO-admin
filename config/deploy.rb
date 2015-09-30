@@ -13,13 +13,14 @@ set(:rollbar_env) { stage }
 
 default_run_options[:pty] = true
 
-set :application, 'iom'
+set :application, 'ngo-admin'
 
 set :scm, :git
 # set :git_enable_submodules, 1
 set :git_shallow_clone, 1
 set :scm_user, 'ubuntu'
 set :repository, "git://github.com/simbiotica/iom.git"
+set :branch, "iati-refactor"
 ssh_options[:forward_agent] = true
 set :keep_releases, 5
 
