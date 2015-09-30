@@ -13,16 +13,35 @@
   <div class="field">
     <label>ORGANIZATION  <strong>*</strong></label>
 
-    <div class="list_combo">
+    <div class="organization_combo list_combo">
       <span id="hidden" class="combo_large <%= 'error' if @project.errors[:primary_organization_id].present? %>">
         <%= errors_for @project, :primary_organization_id %>
         <a class="organization"><%= @project.primary_organization.try(:name) %></a>
       </span>
       <%= f.hidden_field :primary_organization_id , :value => @project.primary_organization_id %>
       <div class="wrapper">
-        <ul class="list_combo_content scroll_pane">
+        <ul class="organization_combo_content list_combo_content scroll_pane">
             <% @organizations_list.each do |organization| %>
               <li class="element" id="orgs_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 40) %></p><p class="amount_projects"><%= pluralize(organization.projects.count, 'project', 'projects')%></p></li>
+            <% end -%>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+   <div class="field">
+    <label>PRIME AWARDEE  </label>
+
+    <div class="prime_awardee_combo list_combo">
+      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:prime_awardee_id].present? %>">
+        <%= errors_for @project, :prime_awardee_id %>
+        <a class="organization"><%= @project.prime_awardee.try(:name) %></a>
+      </span>
+      <%= f.hidden_field :prime_awardee_id , :value => @project.prime_awardee_id %>
+      <div class="wrapper">
+        <ul class="prime_awardee_combo_content list_combo_content scroll_pane">
+            <% @organizations_list.each do |organization| %>
+              <li class="element" id="prime_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 40) %></p></li>
             <% end -%>
         </ul>
       </div>
@@ -259,53 +278,6 @@
 <!-- ##################### CONTEXT ##################### -->
 
   <h3 class="section museo_sans">CONTEXT</h3>
-  <div id="clusters_content" class="field">
-    <label>CLUSTERS <span class="info">(Only valid for UN-coordinated emergencies.)</span>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Cluster</h3>
-            <span class="scroll">
-            <p>United Nations Cluster to which a project or donation is reported. Only applicable for certain emergencies.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-
-    </label>
-
-      <ul class="clusters">
-        <% unless @project.clusters.empty? %>
-          <% @project.clusters.each do |cluster| %>
-          <li id="cluster_<%= cluster.id %>">
-            <p><%= cluster.name %></p><input id="<%= cluster.id %>" type="checkbox" name="project[cluster_ids][]" value="<%= cluster.id %>" checked="true"/><a href="#cluster_<%= cluster.id %>" class="remove_this close"></a>
-          </li>
-          <% end -%>
-        <% end -%>
-      </ul>
-    <div class="cluster_options">
-      <span class="combo_cluster_options">
-        <%= errors_for_span(@project, :clusters) %>
-        <p id="clusters_0">Select more clusters</p>
-        <div class="wrapper">
-          <ul class="options scroll_pane">
-          <% Cluster.get_select_values.collect do |cluster| %>
-            <li><a id="clusters_<%= cluster.id %>"><%= cluster.name %></a></li>
-          <% end %>
-            <li class="last"></li>
-          </ul>
-        </div>
-      </span>
-      <a id="add_cluster_bttn" class="add_cluster museo_sans shadow_green">add cluster</a>
-    </div>
-  </div>
   <div class="field">
     <label>SECTORS  <strong>*</strong></label>
 <!--     <span id="hidden" class="combo_large <%= 'error' if @project.errors[:sectors].present? %>">
@@ -535,90 +507,99 @@
 <!-- ##################### LOCATION ##################### -->
 
   <h3 class="section museo_sans">LOCATION</h3>
-  <label>GEOGRAPHIC REGION <strong>*</strong></label>
-  <ul class="ubications" id="regions_list">
-    <% @project.geolocation_ids.each do |geolocation| %>
-      <li>
-        <p> <%= geolocation_breadcrumb(geolocation) %> </p>
-        <input type="hidden" name="project[geolocation_ids][]" value="<%= geolocation %>" />
-        <a class="close" href="javascript:void(null)"></a>
-      </li>
-    <% end %>
-  </ul>
+  <label>GEOGRAPHICAL SCOPE <strong>*</strong></label>
+  <div class="field" style="margin: 5px 0 0;">
+    <%= f.select :geographical_scope, [['Regional', 'regional'], ['National', 'national'], ['Global', 'global']] %>
+  </div>
 
-  <div class="location_options region_block empty <%= 'error' if @project.errors[:location].present? %>">
-    <% if @project.errors[:location].present? %>
-      <p class="msg">Sorry, location information is mandatory</p>
-    <% else %>
-      <p class="msg">Add / edit the different regions of the project</p>
-    <% end %>
-    <a class="add_location museo_sans shadow_green" id="add_region_map">add region</a>
 
-    <div class="region_window">
-      <div class="top_region">
-        <a class="close">Close</a>
-      </div>
-      <div class="bottom_region">
-        <h3 class="museo_sans">Add a region to the project</h3>
-        <p class="info_region_exp">You can specify the administrative level you need (1st, 2nd or 3rd)</p>
-        <div class="level_0">
-          <label>COUNTRY <strong>*</strong></label>
-          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
-          <span class="region_combo">
-            <p id="country_0">Not specified</p>
-            <div class="wrapper">
-              <ul id="country-list" class="options scroll_pane">
-                <li><a id="country_0">Not specified</a></li>
-                <li class="last"></li>
-              </ul>
-            </div>
-          </span>
+  <div id="geographical_region-content">
+    <label>GEOGRAPHIC REGION <strong>*</strong></label>
+    <input type="hidden" name="project[geolocation_ids][]" value="" />
+    <ul class="ubications" id="regions_list">
+      <% @project.geolocation_ids.each do |geolocation| %>
+        <li data-country-id="<%= geolocation %>">
+          <p> <%= geolocation_breadcrumb(geolocation) %> </p>
+          <input type="hidden" name="project[geolocation_ids][]" value="<%= geolocation %>" />
+          <a class="close" href="javascript:void(null)"></a>
+        </li>
+      <% end %>
+    </ul>
+    <div class="location_options region_block empty <%= 'error' if @project.errors[:location].present? %>">
+      <% if @project.errors[:location].present? %>
+        <p class="msg">Sorry, location information is mandatory</p>
+      <% else %>
+        <p class="msg">Add / edit the different regions of the project</p>
+      <% end %>
+      <a class="add_location museo_sans shadow_green" id="add_region_map">add region</a>
+
+      <div class="region_window">
+        <div class="top_region">
+          <a class="close">Close</a>
         </div>
+        <div class="bottom_region">
+          <h3 class="museo_sans">Add a region to the project</h3>
+          <p class="info_region_exp">You can specify the administrative level you need (1st, 2nd or 3rd)</p>
+          <div class="level_0">
+            <label>COUNTRY <strong>*</strong></label>
+            <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
+            <span class="region_combo">
+              <p id="country_0">Not specified</p>
+              <div class="wrapper">
+                <ul id="country-list" class="options scroll_pane">
+                  <li><a id="country_0">Not specified</a></li>
+                  <li class="last"></li>
+                </ul>
+              </div>
+            </span>
+          </div>
 
-        <div class="level_1">
-          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
-          <label>1st ADMINISTRATIVE LEVEL</label>
-          <span class="region_combo">
-            <p id="level1_0">Not specified</p>
-            <div class="wrapper">
-              <ul class="options scroll_pane">
-                <li><a id="level1_0">Not specified</a></li>
-                <li class="last"></li>
-              </ul>
-            </div>
-          </span>
-        </div>
+          <div class="level_1">
+            <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
+            <label>1st ADMINISTRATIVE LEVEL</label>
+            <span class="region_combo">
+              <p id="level1_0">Not specified</p>
+              <div class="wrapper">
+                <ul class="options scroll_pane">
+                  <li><a id="level1_0">Not specified</a></li>
+                  <li class="last"></li>
+                </ul>
+              </div>
+            </span>
+          </div>
 
-        <div class="level_2">
-          <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
-          <label>2st ADMINISTRATIVE LEVEL</label>
-          <span class="region_combo">
-            <p id="level2_0">Not specified</p>
-            <div class="wrapper">
-              <ul class="options scroll_pane">
-                <li><a id="level2_0">Not specified</a></li>
-                <li class="last"></li>
-              </ul>
-            </div>
-          </span>
-        </div>
+          <div class="level_2">
+            <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
+            <label>2st ADMINISTRATIVE LEVEL</label>
+            <span class="region_combo">
+              <p id="level2_0">Not specified</p>
+              <div class="wrapper">
+                <ul class="options scroll_pane">
+                  <li><a id="level2_0">Not specified</a></li>
+                  <li class="last"></li>
+                </ul>
+              </div>
+            </span>
+          </div>
 
-        <div class="level_3">
-          <label>3st ADMINISTRATIVE LEVEL</label>
-          <span class="region_combo">
-            <p id="level3_0">Not specified</p>
-            <div class="wrapper">
-              <ul class="options scroll_pane">
-                <li><a id="level3_0">Not specified</a></li>
-                <li class="last"></li>
-              </ul>
-            </div>
-          </span>
+          <div class="level_3">
+            <label>3st ADMINISTRATIVE LEVEL</label>
+            <span class="region_combo">
+              <p id="level3_0">Not specified</p>
+              <div class="wrapper">
+                <ul class="options scroll_pane">
+                  <li><a id="level3_0">Not specified</a></li>
+                  <li class="last"></li>
+                </ul>
+              </div>
+            </span>
+          </div>
+          <a class="add_location museo_sans shadow_green" id="add_region_to_list">add region</a>
         </div>
-        <a class="add_location museo_sans shadow_green" id="add_region_to_list">add region</a>
       </div>
     </div>
   </div>
+
   <div id="verbatim_location" class="field">
     <span class="chars">
       <label>VERBATIM LOCATION</label>
@@ -796,122 +777,6 @@
       </div> <!-- field -->
     </div>
   </div>
-
-  <div class="field">
-    <label>PROJECT REACH UNIT
-      <strong>&nbsp;</strong>
-    </label>
-    <span class="input_large">
-      <%= f.text_field :project_reach_unit %>
-    </span>
-  </div>
-
-  <div class="field">
-    <ul class="dates">
-
-      <li class="comboselect date">
-        <label>PROJECT REACH ACTUAL START DATE</label>
-
-        <span class="combo_date <%= 'error' if @project.errors[:project_reach_actual_start_date].present? && action_name != 'new' %>"><p><%= l @project.project_reach_actual_start_date, :format => '%m/%d/%Y' rescue '' %></p>
-        <%= errors_for @project, :project_reach_actual_start_date %>
-        <div class="select_dates">
-          <p id="month" class="title">MONTH</p>
-          <p id="day" class="title">DAY</p>
-          <p id="year" class="title">YEAR</p>
-
-          <%= f.date_select :project_reach_actual_start_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-        </div>
-        </span>
-      </li>
-
-
-      <li class="comboselect date">
-        <label>PROJECT REACH ACTUAL END DATE</label>
-        <span class="combo_date <%= 'error' if @project.errors[:project_reach_actual_end_date].present? && action_name != 'new' %>"><p><%= l @project.project_reach_actual_end_date, :format => '%m/%d/%Y' rescue '' %></p>
-          <%= errors_for @project, :project_reach_actual_end_date %>
-        <div class="select_dates">
-          <p id="month" class="title">MONTH</p>
-          <p id="day" class="title">DAY</p>
-          <p id="year" class="title">YEAR</p>
-
-          <%= f.date_select :project_reach_actual_end_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-        </div>
-        </span>
-      </li>
-
-    </ul>
-  </div>
-
-  <div class="field">
-    <ul class="dates">
-
-      <li class="comboselect date">
-        <label>PROJECT REACH TARGET START DATE</label>
-        <span class="combo_date <%= 'error' if @project.errors[:project_reach_target_start_date].present? && action_name != 'new' %>"><p><%= l @project.project_reach_target_start_date, :format => '%m/%d/%Y' rescue '' %></p>
-          <%= errors_for @project, :project_reach_target_start_date %>
-        <div class="select_dates">
-          <p id="month" class="title">MONTH</p>
-          <p id="day" class="title">DAY</p>
-          <p id="year" class="title">YEAR</p>
-
-          <%= f.date_select :project_reach_target_start_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-        </div>
-        </span>
-      </li>
-
-      <li class="comboselect date">
-        <label>PROJECT REACH ACTUAL END DATE</label>
-
-        <span class="combo_date <%= 'error' if @project.errors[:project_reach_target_end_date].present? && action_name != 'new' %>"><p><%= l @project.project_reach_target_end_date, :format => '%m/%d/%Y' rescue '' %></p>
-        <%= errors_for @project, :project_reach_target_end_date %>
-        <div class="select_dates">
-          <p id="month" class="title">MONTH</p>
-          <p id="day" class="title">DAY</p>
-          <p id="year" class="title">YEAR</p>
-
-          <%= f.date_select :project_reach_target_end_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-        </div>
-        </span>
-      </li>
-
-    </ul>
-  </div>
-
-  <div>
-    <label>PROJECT REACH TYPE </label>
-    <div>
-      <%= select_tag :project_reach_type_code, "<option value='0'>Default</option><option value='1'>Test1</option><option value='2'>Test2</option>".html_safe %>
-    </div>
-
-  </div>
-
-  <div>
-    <label>PROJECT REACH MEASURE </label>
-    <div>
-      <%= select_tag :project_reach_measure_code, "<option value='0'>Default</option><option value='1'>Test1</option><option value='2'>Test2</option>".html_safe %>
-    </div>
-  </div>
-
-  <div class="field">
-    <span class="chars">
-      <label>
-        PROJECT REACH DESCRIPTION
-      </label>
-      <% project_reach_description = f.object.project_reach_description || '' %>
-      <p id="chars_left_description_reach"><%= 10000 - project_reach_description.length %> chars left</p>
-    </span>
-
-    <span class="textarea <%= 'error' if !@project.errors[:project_reach_description].empty? && action_name != 'new' %>">
-        <div class="wrapper">
-            <%= f.text_area :project_reach_description, :maxlength => 10000, :class => "#{'error' if !@project.errors[:project_reach_description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_project_reach_description', 10000, 'chars_left_description_reach')" %>
-        </div>
-    </span>
-
-  </div>
-
-
-
-
 
 <!-- ################################################ -->
 <!-- ################################################ -->
