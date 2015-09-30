@@ -2,6 +2,7 @@ require 'capistrano/ext/multistage'
 require 'config/boot'
 require "bundler/capistrano"
 
+set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
 set :use_sudo, false
 set :stages, %w(staging production smbtc)
 
