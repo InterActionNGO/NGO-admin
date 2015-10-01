@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     rescue_from BrowserIsIE6OrLower,            :with => :old_browser
   end
 
-  before_filter :set_site, :browser_is_ie6_or_lower?
+  before_filter :browser_is_ie6_or_lower?
 
   include AuthenticatedSystem
 
