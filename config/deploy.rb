@@ -62,7 +62,6 @@ task :symlinks, :roles => [:app] do
   run <<-CMD
     ln -s #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml;
     ln -s #{shared_path}/node_modules #{release_path}/node_modules;
-    ln -s #{shared_path}/public/app/vendor #{release_path}/public/app/vendor;
   CMD
 end
 
