@@ -68,11 +68,11 @@ end
 
 desc 'Create asset packages'
 task :asset_packages, :roles => [:app] do
- # run <<-CMD
- #   export RAILS_ENV=production &&
- #   cd #{release_path} &&
- #   npm install &&
- #   bower install &&
- #   grunt build
- # CMD
+ run <<-CMD
+   export RAILS_ENV=production &&
+   cd #{release_path} &&
+   npm install &&
+   bower install &&
+   grunt build
+ CMD
 end
