@@ -71,7 +71,6 @@ task :asset_packages, :roles => [:app] do
    export RAILS_ENV=production &&
    cd #{release_path} &&
    npm install &&
-   bower install &&
-   grunt build
+   bower install
  CMD
 end
