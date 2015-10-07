@@ -2871,7 +2871,7 @@ div.block.project_info div.med div.left form div.list_combo,
 div.block.project_info div.med div.left form div.list_combo2,
 div.block.project_info div.med div.left form div.list_combo3 {
   float: left;
-  width: 419px;
+  width: 564px;
   height: auto;
   position: relative; }
 div.block.project_info div.med div.left form ul.list_combo_content,
@@ -2879,7 +2879,7 @@ div.block.project_info div.med div.left form ul.list_combo2_content,
 div.block.project_info div.med div.left form ul.list_combo3_content {
   position: absolute;
   top: 35px;
-  width: 434px;
+  width: 564px;
   height: 199px;
   display: none;
   left: 0;
@@ -2887,12 +2887,20 @@ div.block.project_info div.med div.left form ul.list_combo3_content {
   background: url("/app/images/backoffice/projects/combos/body_combo_orgs.png") no-repeat 0 0;
   overflow-x: hidden;
   overflow-y: auto; }
+div.block.project_info div.med div.left form ul.huge_list_combo_content {
+  background: url("/app/images/backoffice/projects/combos/huge_body_combo_orgs.png") no-repeat 0 0;
+}
+  div.block.project_info div.med div.left form ul.huge_list_combo_content .jspVerticalBar{
+    width: 29px;
+    right: 2px;
+  }
+
   div.block.project_info div.med div.left form ul.list_combo_content li.element,
   div.block.project_info div.med div.left form ul.list_combo2_content li.element,
   div.block.project_info div.med div.left form ul.list_combo3_content li.element {
     float: left;
     margin: 0 0 0 1px;
-    width: 404px;
+    width: 534px;
     height: 22px;
     font: normal 15px Arial;
     color: #333333;
@@ -2901,7 +2909,9 @@ div.block.project_info div.med div.left form ul.list_combo3_content {
     div.block.project_info div.med div.left form ul.list_combo_content li.element p.project_name,
     div.block.project_info div.med div.left form ul.list_combo2_content li.element p.project_name,
     div.block.project_info div.med div.left form ul.list_combo3_content li.element p.project_name {
-      width: 310px; }
+      width: 415px;
+      white-space: nowrap;
+    }
     div.block.project_info div.med div.left form ul.list_combo_content li.element p.amount_projects,
     div.block.project_info div.med div.left form ul.list_combo2_content li.element p.amount_projects,
     div.block.project_info div.med div.left form ul.list_combo3_content li.element p.amount_projects {
@@ -2942,6 +2952,37 @@ div.block.project_info div.med div.left form span.combo_large {
     background: url("/app/images/backoffice/projects/large_combo_head_displayed2.png") no-repeat 0 0; }
   div.block.project_info div.med div.left form span.combo_large:hover {
     cursor: pointer; }
+
+div.block.project_info div.med div.left form span.combo_huge {
+  float: left;
+  margin: 5px 0 0 0;
+  background: url("/app/images/backoffice/projects/huge_combo_head.png") no-repeat 0 0;
+  width: 552px;
+  height: 24px;
+  font: normal 13px Arial;
+  color: #999999;
+  padding: 9px 0 0 11px;
+  position: relative; }
+  div.block.project_info div.med div.left form span.combo_huge.error {
+    background-position: 0 -36px; }
+  div.block.project_info div.med div.left form span.combo_huge a.organization {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    width: 374px;
+    height: 19px;
+    font: normal 13px Arial;
+    color: #999999; }
+    div.block.project_info div.med div.left form span.combo_huge a.organization:hover {
+      cursor: pointer; }
+  div.block.project_info div.med div.left form span.combo_huge.displayed {
+    background: url("/app/images/backoffice/projects/huge_combo_head_displayed2.png") no-repeat 0 0;
+    background-size: contain;
+  }
+  div.block.project_info div.med div.left form span.combo_huge:hover {
+    cursor: pointer; }
+
+
 div.block.project_info div.med div.left form h3.section {
   float: left;
   margin: 30px 0 0 2px;
@@ -3736,12 +3777,10 @@ div.block.donations_project div.med {
         height: 64px;
         margin: 0 10px 0 15px; }
       div.block.donations_project div.med div.left form div#donor_name span {
+        margin: 4px 0 0 7px;
+        display: block;
         float: left;
-        background: url("/app/images/backoffice/projects/input_donor_name.png") no-repeat 0 0;
-        width: 380px;
-        height: 32px;
-        position: relative;
-        margin: 3px 0 0 7px; }
+      }
       div.block.donations_project div.med div.left form div#office_name span {
         float: left;
         background: url("/app/images/backoffice/projects/input_donor_name.png") no-repeat 0 0;
@@ -3751,12 +3790,12 @@ div.block.donations_project div.med {
         margin: 3px 0 0 7px; }
         div.block.donations_project div.med div.left form div#office_name span.disabled {
           background: url("/app/images/backoffice/projects/input_donor_name_disabled.png") no-repeat 0 0; }
-      div.block.donations_project div.med div.left form div#donor_name span.error, div.block.donations_project div.med div.left form div#office_name span.error {
+      div.block.donations_project div.med div.left form div#office_name span.error {
         background-position: 0 -32px; }
-      div.block.donations_project div.med div.left form div#donor_name span.active, div.block.donations_project div.med div.left form div#office_name span.active {
+      div.block.donations_project div.med div.left form div#office_name span.active {
         background: url("/app/images/backoffice/projects/input_donation_name_active.png") no-repeat 0 0;
         height: 33px; }
-      div.block.donations_project div.med div.left form div#donor_name span input[type="text"], div.block.donations_project div.med div.left form div#office_name span input[type="text"] {
+      div.block.donations_project div.med div.left form div#office_name span input[type="text"] {
         border: none;
         font: normal 13px Arial;
         color: #999999;
@@ -3764,7 +3803,7 @@ div.block.donations_project div.med {
         top: 8px;
         left: 10px;
         width: 253px; }
-      div.block.donations_project div.med div.left form div#donor_name span .spinner, div.block.donations_project div.med div.left form div#office_name span .spinner {
+      div.block.donations_project div.med div.left form div#office_name span .spinner {
         display: none;
         position: absolute;
         top: 8px;

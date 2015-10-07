@@ -224,7 +224,7 @@
         $('div.region_window div.bottom_region').prepend($('div.region_window h3'));
       }
     } else {
-      if ($('#project_geographical_scope').val() === 'regional') {
+      if ($('#project_geographical_scope').val() === 'specific_locations') {
         $.getJSON('/admin/geolocations?level='+item_level+'&geolocation='+item_id,function(result){
           if (!!result.length) {
             var settings = {showArrows: false};
