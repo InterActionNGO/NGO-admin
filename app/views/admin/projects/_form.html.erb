@@ -29,24 +29,6 @@
     </div>
   </div>
 
-   <div class="field">
-    <label>PRIME AWARDEE  </label>
-
-    <div class="prime_awardee_combo list_combo">
-      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:prime_awardee_id].present? %>">
-        <%= errors_for @project, :prime_awardee_id %>
-        <a class="organization"><%= @project.prime_awardee.try(:name) %></a>
-      </span>
-      <%= f.hidden_field :prime_awardee_id , :value => @project.prime_awardee_id %>
-      <div class="wrapper">
-        <ul class="prime_awardee_combo_content list_combo_content scroll_pane">
-            <% @organizations_list.each do |organization| %>
-              <li class="element" id="prime_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 40) %></p></li>
-            <% end -%>
-        </ul>
-      </div>
-    </div>
-  </div>
 
   <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
     <label>InterAction Intervention ID</label>
@@ -342,6 +324,59 @@
 <!-- ##################### PROJECT MANAGEMENT ##################### -->
 
   <h3 class="section museo_sans">PROJECT MANAGEMENT</h3>
+
+  <div class="two_columns">
+    <div class="two_columns">
+      <div class="left_column">
+        <div class="field">
+          <p class="title">BUDGET CURRENCY </p>
+          <span class="input_short">
+            <%= f.text_field :budget_currency %>
+          </span>
+        </div> <!-- field -->
+      </div>
+
+      <div class="right_column">
+        <div class="field">
+          <ul class="dates">
+            <li class="comboselect date">
+              <label>Budget value date
+              <!-- <strong>*</strong> -->
+              <!-- FIELD DESCRIPTION -->
+              <!-- <div class="field_info">
+                <span class="info">i</span>
+                <div class="field_text">
+                  <div class="top">
+                    <a href="#close">x</a>
+                  </div>
+                  <div class="bottom">
+                    <h3>Start date</h3>
+                    <span class="scroll">
+                    <p>Actual start date (beginning of implementation).</p>
+                    </span>
+                  </div>
+                </div>
+              </div> -->
+              <!-- END FIELD DESCRIPTION -->
+              </label>
+
+              <span class="combo_date <%= 'error' if @project.errors[:budget_value_date].present? && action_name != 'new' %>"><p><%= l @project.budget_value_date, :format => '%m/%d/%Y' rescue '' %></p>
+              <%= errors_for @project, :budget_value_date %>
+              <div class="select_dates">
+                <p id="month" class="title">MONTH</p>
+                <p id="day" class="title">DAY</p>
+                <p id="year" class="title">YEAR</p>
+
+                <%= f.date_select :budget_value_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+              </div>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <label>PROJECT BUDGET
       <strong>&nbsp;</strong>
       <!-- FIELD DESCRIPTION -->
@@ -419,30 +454,41 @@
       <%= f.text_field :partner_organizations %>
     </span>
   </div> <!-- field -->
-  <div class="field">
-    <label>PRIME AWARDEE
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Prime Awardee</h3>
-            <span class="scroll">
-            <p>Name of the organization that received the funding directly from the donor.</p>
-            </span>
-          </div>
+
+
+   <div class="field">
+    <label>PRIME AWARDEE</label>
+    <strong>&nbsp;</strong>
+    <!-- FIELD DESCRIPTION -->
+    <div class="field_info">
+      <span class="info">i</span>
+      <div class="field_text">
+        <div class="top">
+          <a href="#close">x</a>
+        </div>
+        <div class="bottom">
+          <h3>Prime Awardee</h3>
+          <span class="scroll">
+          <p>Name of the organization that received the funding directly from the donor.</p>
+          </span>
         </div>
       </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
-    <span class="input_large">
-      <%= f.text_field :awardee_type %>
-    </span>
+    </div>
+    <!-- END FIELD DESCRIPTION -->
+    <div class="prime_awardee_combo list_combo">
+      <span id="hidden" class="combo_large <%= 'error' if @project.errors[:prime_awardee_id].present? %>">
+        <%= errors_for @project, :prime_awardee_id %>
+        <a class="organization"><%= @project.prime_awardee.try(:name) %></a>
+      </span>
+      <%= f.hidden_field :prime_awardee_id , :value => @project.prime_awardee_id %>
+      <div class="wrapper">
+        <ul class="prime_awardee_combo_content list_combo_content scroll_pane">
+            <% @organizations_list.each do |organization| %>
+              <li class="element" id="prime_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 40) %></p></li>
+            <% end -%>
+        </ul>
+      </div>
+    </div>
   </div>
 
 <!-- ##################### PROJECT IMPACT ##################### -->
@@ -705,59 +751,6 @@
 
 
 <!-- ##################### IATI ##################### -->
-
-  <h3 class="section museo_sans">IATI</h3>
-  <div class="two_columns">
-    <div class="two_columns">
-      <div class="left_column">
-        <div class="field">
-          <p class="title">BUDGET CURRENCY </p>
-          <span class="input_short">
-            <%= f.text_field :budget_currency %>
-          </span>
-        </div> <!-- field -->
-      </div>
-
-      <div class="right_column">
-        <div class="field">
-          <ul class="dates">
-            <li class="comboselect date">
-              <label>Budget value date
-              <!-- <strong>*</strong> -->
-              <!-- FIELD DESCRIPTION -->
-              <!-- <div class="field_info">
-                <span class="info">i</span>
-                <div class="field_text">
-                  <div class="top">
-                    <a href="#close">x</a>
-                  </div>
-                  <div class="bottom">
-                    <h3>Start date</h3>
-                    <span class="scroll">
-                    <p>Actual start date (beginning of implementation).</p>
-                    </span>
-                  </div>
-                </div>
-              </div> -->
-              <!-- END FIELD DESCRIPTION -->
-              </label>
-
-              <span class="combo_date <%= 'error' if @project.errors[:budget_value_date].present? && action_name != 'new' %>"><p><%= l @project.budget_value_date, :format => '%m/%d/%Y' rescue '' %></p>
-              <%= errors_for @project, :budget_value_date %>
-              <div class="select_dates">
-                <p id="month" class="title">MONTH</p>
-                <p id="day" class="title">DAY</p>
-                <p id="year" class="title">YEAR</p>
-
-                <%= f.date_select :budget_value_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-              </div>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="two_columns">
     <div class="left_column">
