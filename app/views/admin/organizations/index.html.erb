@@ -18,7 +18,7 @@
         <div class="med ngos_list">
           <% unless @organizations.empty? %>
             <div class="header no_border">
-              <h2><%= pluralize(@organizations.total_entries, 'Organization', 'Organizations') %> implementing projects
+              <h2><%= pluralize(@organizations.total_entries, 'Organization', 'Organizations') %>
                 <% if params[:q]%>
                 on <a class="remove" href="<%= admin_organizations_path %>"><%= params[:q] %></a>
                 <% end %>
