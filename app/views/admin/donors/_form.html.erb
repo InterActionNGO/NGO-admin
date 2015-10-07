@@ -6,6 +6,15 @@
     <%= errors_for @donor, :name %>
   </div>
 
+  <div class="field">
+    <%= f.label :organization_type %>
+    <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select" %>
+  </div>
+  <div class="field">
+    <%= f.label :iati_organizationid, "IATI organization ID" %>
+    <%= f.text_field :iati_organizationid, :class=>"long" %>
+  </div>
+
   <%= f.label :logo %>
   <div class="image_container">
     <% if @donor.logo_file_name? %>
@@ -87,17 +96,6 @@
     </div>
   </div>
 
-  <div class="common">
-    <h3>IATI</h3>
-    <div class="field">
-      <%= f.label :organization_type %>
-      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select" %>
-    </div>
-    <div class="field">
-      <%= f.label :iati_organizationid, "IATI organization ID" %>
-      <%= f.text_field :iati_organizationid, :class=>"long" %>
-    </div>
-  </div>
 
   <%= f.submit 'Save', :class => "#{'error' if @donor.invalid? && action_name != 'new'}" %>
 
