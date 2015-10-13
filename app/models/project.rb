@@ -2,7 +2,7 @@
 #
 # Table name: projects
 #
-#  id                                      :integer         not null, primary key
+#  id                                      :integer          not null, primary key
 #  name                                    :string(2000)
 #  description                             :text
 #  primary_organization_id                 :integer
@@ -13,14 +13,14 @@
 #  end_date                                :date
 #  budget                                  :float
 #  target                                  :text
-#  estimated_people_reached                :integer(8)
+#  estimated_people_reached                :integer
 #  contact_person                          :string(255)
 #  contact_email                           :string(255)
 #  contact_phone_number                    :string(255)
 #  site_specific_information               :text
 #  created_at                              :datetime
 #  updated_at                              :datetime
-#  the_geom                                :string
+#  the_geom                                :geometry
 #  activities                              :text
 #  intervention_id                         :string(255)
 #  additional_information                  :text
@@ -33,7 +33,14 @@
 #  calculation_of_number_of_people_reached :text
 #  project_needs                           :text
 #  idprefugee_camp                         :text
-#
+#  organization_id                         :string(255)
+#  budget_currency                         :string(255)
+#  budget_value_date                       :date
+#  target_project_reach                    :integer
+#  actual_project_reach                    :integer
+#  project_reach_unit                      :string(255)
+#  prime_awardee_id                        :integer
+#  geographical_scope                      :string(255)      default("regional")
 
 class Project < ActiveRecord::Base
   include ModelChangesRecorder
@@ -891,6 +898,22 @@ SQL
     @budget = value
   end
 
+  def budget_currency_sync=(value)
+    self.budget_currency = value
+  end
+
+  def target_project_reach_sync=(value)
+    self.target_project_reach = value
+  end
+
+  def actual_project_reach_sync=(value)
+    self.actual_project_reach = value
+  end
+
+  def project_reach_unit_sync=(value)
+    self.project_reach_unit = value
+  end
+
   def target_groups_sync=(value)
     self.target = value
   end
@@ -911,7 +934,7 @@ SQL
   end
 
   def prime_awardee_sync=(value)
-    self.awardee_type = value
+    @prime_awardee_name = value || ''
   end
 
   def project_contact_position_sync=(value)
@@ -1034,6 +1057,12 @@ SQL
       self.errors.add(:organization, %Q{"#{@organization_name}" doesn't exist})
     end if new_record?
 
+    if @prime_awardee_name && (prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first) && prime_awardee.present?
+      self.prime_awardee_id = prime_awardee.id
+    else
+      self.errors.add(:prime_awardee, %Q{"#{@prime_awardee_name}" doesn't exist})
+    end if new_record?
+
 
     ####
     # COUNTRIES AND REGIONS PARSING/VALIDATION
@@ -1045,11 +1074,13 @@ SQL
         locations.each do |location|
 
           country_name, *regions = location.split('>')
-
+          regions_count = regions.size
+          regions_parsed = []
           all_regions_exist = true
 
           if country_name
-            country = Country.where('lower(trim(name)) = lower(trim(?))', country_name).first
+            country = Geolocation.where('lower(trim(name)) = lower(trim(?)) AND adm_level=0', country_name).first
+
             if country.blank?
               # If country doesn't exits, goes to next location on the cell
               self.sync_errors << "Country #{country_name} doesn't exist on row #@sync_line"
@@ -1060,19 +1091,21 @@ SQL
                 regions.each_with_index do |region_name, level|
                   level += 1
                   # Check that exists the region, with this level for this country
-                  region = Region.where('lower(trim(name)) = lower(trim(?)) AND level=? AND country_id=?', region_name,level,country.id).first
+                  region = Geolocation.where('lower(trim(name)) = lower(trim(?)) AND adm_level=? AND country_uid=?', region_name,level,country.uid).first
                   if region.blank?
                     self.sync_errors << "#{level.ordinalize} Admin level #{region_name} doesn't exist on row #@sync_line"
                     errors.add(:region,  "#{region_name} doesn't exist with level #{level} for country #{country_name}")
                     all_regions_exist = false
                     break #
                   end
-                    self.regions << region unless self.regions.include?(region)
+                    regions_parsed << region
+                    self.geolocations << region unless self.geolocations.include?(region) if regions_parsed.size == regions_count
                 end
+
               end
-              # After check presence of the regions, add then the country (also if no regions present)
-              if all_regions_exist || !regions.present?
-                self.countries << country unless self.countries.include?(country)
+              # After check presence of the regions add country if no regions present
+              if regions.size == 0
+                self.geolocations << country unless self.geolocations.include?(country)
               end
             end
           end
@@ -1123,7 +1156,7 @@ SQL
     end
 
     errors.add(:sectors, :blank)                 if (new_record? && self.sectors.blank?) || (@sectors_sync && @sectors_sync.empty?)
-    errors.add(:location, :blank)                if (new_record? && self.countries.blank? && self.regions.blank?) || (@location_sync && @location_sync.empty?)
+    errors.add(:location, :blank)                if (new_record? && self.geolocations.blank?) || (@location_sync && @location_sync.empty?)
     errors.add(:primary_organization_id, :blank) if (new_record? && self.primary_organization_id.blank?) || (@organization_name && @organization_name.empty?)
   end
 
