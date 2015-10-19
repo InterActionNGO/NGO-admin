@@ -17,7 +17,7 @@
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
-                options_for_select([['All',0]] + Country.get_select_values.collect{ |c| [c.name, c.id] }, params[:country]), :class => :"chzn-select" %>
+                options_for_select([['All',0]] + Geolocation.where(:adm_level => 0).order(:name).collect{ |c| [c.name, c.id] }, params[:country]), :class => :"chzn-select" %>
             </li>
 
             <li class="comboselect">
