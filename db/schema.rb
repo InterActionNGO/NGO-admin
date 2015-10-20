@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150929091624) do
+ActiveRecord::Schema.define(:version => 20151020073350) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -458,12 +458,12 @@ ActiveRecord::Schema.define(:version => 20150929091624) do
     t.text     "project_needs"
     t.text     "idprefugee_camp"
     t.string   "organization_id"
-    t.integer  "prime_awardee_id"
     t.string   "budget_currency"
     t.date     "budget_value_date"
-    t.integer  "target_project_reach"
-    t.integer  "actual_project_reach"
+    t.float    "target_project_reach"
+    t.float    "actual_project_reach"
     t.string   "project_reach_unit"
+    t.integer  "prime_awardee_id"
     t.string   "geographical_scope",                                      :default => "regional"
   end
 
@@ -549,10 +549,8 @@ ActiveRecord::Schema.define(:version => 20150929091624) do
   create_table "sectors", :force => true do |t|
     t.string "name"
     t.string "oecd_dac_name"
-    t.string "oecd_dac_purpose_code"
-    t.string "oec_dac_name"
     t.string "sector_vocab_code"
-    t.string "oec_dac_purpose_code"
+    t.string "oecd_dac_purpose_code"
   end
 
   create_table "settings", :force => true do |t|
