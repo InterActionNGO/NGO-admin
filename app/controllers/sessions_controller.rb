@@ -21,22 +21,11 @@ class SessionsController < ApplicationController
     else
       user = User.authenticate(params[:email], params[:password])
       if user && user.enabled?
-        if user.admin?
-          user.update_last_login
-          self.current_user = user
-          new_cookie_flag = (params[:remember_me] == "1")
-          handle_remember_cookie! new_cookie_flag
-          redirect_back_or_default(admin_admin_path)
-        else
-          note_failed_signin
-          @email       = params[:email]
-          @remember_me = params[:remember_me]
-          flash[:alert] = <<-HTML
-            <p class="error margin">We are currently maintaining the site.<br />
-            sorry for the inconvenience.<br /></p>
-          HTML
-      render :action => 'new' and return
-        end
+        user.update_last_login
+        self.current_user = user
+        new_cookie_flag = (params[:remember_me] == "1")
+        handle_remember_cookie! new_cookie_flag
+        redirect_back_or_default(admin_admin_path)
       else
         note_failed_signin
         @email       = params[:email]
