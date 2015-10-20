@@ -15,7 +15,7 @@ class CreateGeolocations < ActiveRecord::Migration
       t.string :g2
       t.string :g3
       t.string :g4
-      t.string :provider, default: 'Geonames'
+      t.string :provider, :default => 'Geonames'
       t.integer :adm_level
       t.string :custom_geo_source, :string
 
