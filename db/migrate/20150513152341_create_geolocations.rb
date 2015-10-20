@@ -19,7 +19,7 @@ class CreateGeolocations < ActiveRecord::Migration
       t.integer :adm_level
       t.string :custom_geo_source, :string
 
-      t.timestamps null: false
+      t.timestamps :null => false
     end
     add_index :geolocations, :uid
     add_index :geolocations, :g1
