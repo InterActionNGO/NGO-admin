@@ -1059,7 +1059,7 @@ SQL
 
     if @prime_awardee_name && (prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first) && prime_awardee.present?
       self.prime_awardee_id = prime_awardee.id
-    else
+    elsif @prime_awardee_name
       self.errors.add(:prime_awardee, %Q{"#{@prime_awardee_name}" doesn't exist})
     end if new_record?
 
@@ -1067,8 +1067,9 @@ SQL
     ####
     # COUNTRIES AND REGIONS PARSING/VALIDATION
     if @location_sync
-      self.countries.clear
-      self.regions.clear
+      #self.countries.clear
+      #self.regions.clear
+      self.geolocations.clear
 
       if @location_sync.present? && (locations = @location_sync.text2array)
         locations.each do |location|
