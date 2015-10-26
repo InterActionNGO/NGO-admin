@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151020073350) do
+ActiveRecord::Schema.define(:version => 20151022125317) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -214,6 +214,13 @@ ActiveRecord::Schema.define(:version => 20151020073350) do
   add_index "geolocations", ["admin2"], :name => "index_geolocations_on_admin2"
   add_index "geolocations", ["admin3"], :name => "index_geolocations_on_admin3"
   add_index "geolocations", ["admin4"], :name => "index_geolocations_on_admin4"
+  add_index "geolocations", ["country_name"], :name => "index_geolocations_on_country_name"
+  add_index "geolocations", ["country_uid"], :name => "index_geolocations_on_country_uid"
+  add_index "geolocations", ["g0"], :name => "index_geolocations_on_g0"
+  add_index "geolocations", ["g1"], :name => "index_geolocations_on_g1"
+  add_index "geolocations", ["g2"], :name => "index_geolocations_on_g2"
+  add_index "geolocations", ["g3"], :name => "index_geolocations_on_g3"
+  add_index "geolocations", ["g4"], :name => "index_geolocations_on_g4"
   add_index "geolocations", ["uid"], :name => "index_geolocations_on_uid"
 
   create_table "geolocations_projects", :id => false, :force => true do |t|
