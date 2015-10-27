@@ -359,7 +359,7 @@
               </label>
 
               <span class="combo_date <%= 'error' if @project.errors[:budget_value_date].present? && action_name != 'new' %>"><p>
-                <%= @project.budget_value_date.present? ? @project.budget_value_date.strftime("%m/%d/%Y") : @project.start_date.strftime("%m/%d/%Y") %></p>
+                <%= @project.budget_value_date.present? ? @project.budget_value_date.strftime("%m/%d/%Y") : (@project.start_date.present? ? @project.start_date.strftime("%m/%d/%Y") : '') %></p>
               <%= errors_for @project, :budget_value_date %>
               <div class="select_dates">
                 <p id="month" class="title">MONTH</p>
