@@ -704,40 +704,40 @@ SQL
   def set_cached_sites
 
     #We also update its geometry
-    sql = <<-SQL
-      UPDATE projects p SET the_geom = geoms.the_geom
-      FROM (
-        SELECT ST_Collect(r.the_geom) AS the_geom, proj.id
-        FROM
-        projects proj
-        INNER JOIN projects_regions pr ON pr.project_id = proj.id
-        INNER JOIN regions r ON pr.region_id = r.id
-        GROUP BY proj.id
-      ) AS geoms
-      WHERE p.id = geoms.id
-    SQL
-    ActiveRecord::Base.connection.execute(sql)
+    # sql = <<-SQL
+    #   UPDATE projects p SET the_geom = geoms.the_geom
+    #   FROM (
+    #     SELECT ST_Collect(r.the_geom) AS the_geom, proj.id
+    #     FROM
+    #     projects proj
+    #     INNER JOIN projects_regions pr ON pr.project_id = proj.id
+    #     INNER JOIN regions r ON pr.region_id = r.id
+    #     GROUP BY proj.id
+    #   ) AS geoms
+    #   WHERE p.id = geoms.id
+    # SQL
+    # ActiveRecord::Base.connection.execute(sql)
 
-    sql = <<-SQL
-      UPDATE projects p SET the_geom = geoms.the_geom
-      FROM
-      (
-        SELECT ST_Collect(ST_SetSRID(ST_Point(c.center_lon, c.center_lat), 4326)) AS the_geom, proj.id
-        FROM
-        projects proj
-        INNER JOIN countries_projects cp ON cp.project_id = proj.id
-        INNER JOIN countries c ON cp.country_id = c.id
-        GROUP BY proj.id
-      ) AS geoms,
-      (
-        SELECT proj.id
-        FROM projects proj
-        LEFT OUTER JOIN projects_regions pr ON pr.project_id = proj.id
-        WHERE pr.project_id IS NULL
-      ) projects_without_regions
-      WHERE p.id = geoms.id AND  p.id = projects_without_regions.id
-    SQL
-    ActiveRecord::Base.connection.execute(sql)
+    # sql = <<-SQL
+    #   UPDATE projects p SET the_geom = geoms.the_geom
+    #   FROM
+    #   (
+    #     SELECT ST_Collect(ST_SetSRID(ST_Point(c.center_lon, c.center_lat), 4326)) AS the_geom, proj.id
+    #     FROM
+    #     projects proj
+    #     INNER JOIN countries_projects cp ON cp.project_id = proj.id
+    #     INNER JOIN countries c ON cp.country_id = c.id
+    #     GROUP BY proj.id
+    #   ) AS geoms,
+    #   (
+    #     SELECT proj.id
+    #     FROM projects proj
+    #     LEFT OUTER JOIN projects_regions pr ON pr.project_id = proj.id
+    #     WHERE pr.project_id IS NULL
+    #   ) projects_without_regions
+    #   WHERE p.id = geoms.id AND  p.id = projects_without_regions.id
+    # SQL
+    # ActiveRecord::Base.connection.execute(sql)
 
     remove_cached_sites
 
@@ -745,74 +745,74 @@ SQL
       if site.projects.map(&:id).include?(self.id)
         sql = "insert into projects_sites (project_id, site_id) values (#{self.id}, #{site.id})"
         ActiveRecord::Base.connection.execute(sql)
-        sql = "insert into data_denormalization(project_id,project_name,project_description,organization_id,organization_name,end_date,regions,regions_ids,countries,countries_ids,sectors,sector_ids,clusters,cluster_ids,donors_ids,is_active,site_id,created_at)
-        select  * from
-               (SELECT p.id as project_id, p.name as project_name, p.description as project_description,
-               o.id as organization_id, o.name as organization_name,
-               p.end_date as end_date,
-               '|'||array_to_string(array_agg(distinct r.name),'|')||'|' as regions,
-               ('{'||array_to_string(array_agg(distinct r.id),',')||'}')::integer[] as regions_ids,
-               '|'||array_to_string(array_agg(distinct c.name),'|')||'|' as countries,
-               ('{'||array_to_string(array_agg(distinct c.id),',')||'}')::integer[] as countries_ids,
-               '|'||array_to_string(array_agg(distinct sec.name),'|')||'|' as sectors,
-               ('{'||array_to_string(array_agg(distinct sec.id),',')||'}')::integer[] as sector_ids,
-               '|'||array_to_string(array_agg(distinct clus.name),'|')||'|' as clusters,
-               ('{'||array_to_string(array_agg(distinct clus.id),',')||'}')::integer[] as cluster_ids,
-               ('{'||array_to_string(array_agg(distinct d.donor_id),',')||'}')::integer[] as donors_ids,
-               CASE WHEN end_date is null OR p.end_date > now() THEN true ELSE false END AS is_active,
-               ps.site_id,p.created_at
-               FROM projects as p
-               INNER JOIN organizations as o ON p.primary_organization_id=o.id
-               INNER JOIN projects_sites as ps ON p.id=ps.project_id
-               LEFT JOIN projects_regions as pr ON pr.project_id=p.id
-               LEFT JOIN regions as r ON pr.region_id=r.id and r.level=#{site.level_for_region}
-               LEFT JOIN countries_projects as cp ON cp.project_id=p.id
-               LEFT JOIN countries as c ON c.id=cp.country_id
-               LEFT JOIN clusters_projects as cpro ON cpro.project_id=p.id
-               LEFT JOIN clusters as clus ON clus.id=cpro.cluster_id
-               LEFT JOIN projects_sectors as psec ON psec.project_id=p.id
-               LEFT JOIN sectors as sec ON sec.id=psec.sector_id
-               LEFT JOIN donations as d ON d.project_id=ps.project_id
-               where site_id=#{site.id} AND p.id=#{self.id}
-               GROUP BY p.id,p.name,o.id,o.name,p.description,p.end_date,ps.site_id,p.created_at) as subq"
-         ActiveRecord::Base.connection.execute(sql)
+        # sql = "insert into data_denormalization(project_id,project_name,project_description,organization_id,organization_name,end_date,regions,regions_ids,countries,countries_ids,sectors,sector_ids,clusters,cluster_ids,donors_ids,is_active,site_id,created_at)
+        # select  * from
+        #        (SELECT p.id as project_id, p.name as project_name, p.description as project_description,
+        #        o.id as organization_id, o.name as organization_name,
+        #        p.end_date as end_date,
+        #        '|'||array_to_string(array_agg(distinct r.name),'|')||'|' as regions,
+        #        ('{'||array_to_string(array_agg(distinct r.id),',')||'}')::integer[] as regions_ids,
+        #        '|'||array_to_string(array_agg(distinct c.name),'|')||'|' as countries,
+        #        ('{'||array_to_string(array_agg(distinct c.id),',')||'}')::integer[] as countries_ids,
+        #        '|'||array_to_string(array_agg(distinct sec.name),'|')||'|' as sectors,
+        #        ('{'||array_to_string(array_agg(distinct sec.id),',')||'}')::integer[] as sector_ids,
+        #        '|'||array_to_string(array_agg(distinct clus.name),'|')||'|' as clusters,
+        #        ('{'||array_to_string(array_agg(distinct clus.id),',')||'}')::integer[] as cluster_ids,
+        #        ('{'||array_to_string(array_agg(distinct d.donor_id),',')||'}')::integer[] as donors_ids,
+        #        CASE WHEN end_date is null OR p.end_date > now() THEN true ELSE false END AS is_active,
+        #        ps.site_id,p.created_at
+        #        FROM projects as p
+        #        INNER JOIN organizations as o ON p.primary_organization_id=o.id
+        #        INNER JOIN projects_sites as ps ON p.id=ps.project_id
+        #        LEFT JOIN projects_regions as pr ON pr.project_id=p.id
+        #        LEFT JOIN regions as r ON pr.region_id=r.id and r.level=#{site.level_for_region}
+        #        LEFT JOIN countries_projects as cp ON cp.project_id=p.id
+        #        LEFT JOIN countries as c ON c.id=cp.country_id
+        #        LEFT JOIN clusters_projects as cpro ON cpro.project_id=p.id
+        #        LEFT JOIN clusters as clus ON clus.id=cpro.cluster_id
+        #        LEFT JOIN projects_sectors as psec ON psec.project_id=p.id
+        #        LEFT JOIN sectors as sec ON sec.id=psec.sector_id
+        #        LEFT JOIN donations as d ON d.project_id=ps.project_id
+        #        where site_id=#{site.id} AND p.id=#{self.id}
+        #        GROUP BY p.id,p.name,o.id,o.name,p.description,p.end_date,ps.site_id,p.created_at) as subq"
+        #  ActiveRecord::Base.connection.execute(sql)
 
          #We also take the opportunity to add to denormalization the projects which are orphan from a site
          #Those projects not in a site right now also need to be handled for exports
-         sql_for_orphan_projects = """
-            insert into data_denormalization(project_id,project_name,project_description,organization_id,organization_name,
-            start_date,end_date,regions,regions_ids,countries,countries_ids,sectors,sector_ids,clusters,cluster_ids,
-            donors_ids,is_active,created_at)
-            select  * from
-              (SELECT p.id as project_id, p.name as project_name, p.description as project_description,
-                    o.id as organization_id, o.name as organization_name,
-                    p.start_date as start_date ,
-                    p.end_date as end_date,
-                    '|'||array_to_string(array_agg(distinct r.name),'|')||'|' as regions,
-                    ('{'||array_to_string(array_agg(distinct r.id),',')||'}')::integer[] as regions_ids,
-                    '|'||array_to_string(array_agg(distinct c.name),'|')||'|' as countries,
-                    ('{'||array_to_string(array_agg(distinct c.id),',')||'}')::integer[] as countries_ids,
-                    '|'||array_to_string(array_agg(distinct sec.name),'|')||'|' as sectors,
-                    ('{'||array_to_string(array_agg(distinct sec.id),',')||'}')::integer[] as sector_ids,
-                    '|'||array_to_string(array_agg(distinct clus.name),'|')||'|' as clusters,
-                    ('{'||array_to_string(array_agg(distinct clus.id),',')||'}')::integer[] as cluster_ids,
-                    ('{'||array_to_string(array_agg(distinct d.donor_id),',')||'}')::integer[] as donors_ids,
-                    CASE WHEN end_date is null OR p.end_date > now() THEN true ELSE false END AS is_active,
-                    p.created_at
-                    FROM projects as p
-                    INNER JOIN organizations as o ON p.primary_organization_id=o.id
-                    LEFT JOIN projects_regions as pr ON pr.project_id=p.id
-                    LEFT JOIN regions as r ON pr.region_id=r.id
-                    LEFT JOIN countries_projects as cp ON cp.project_id=p.id
-                    LEFT JOIN countries as c ON c.id=cp.country_id
-                    LEFT JOIN clusters_projects as cpro ON cpro.project_id=p.id
-                    LEFT JOIN clusters as clus ON clus.id=cpro.cluster_id
-                    LEFT JOIN projects_sectors as psec ON psec.project_id=p.id
-                    LEFT JOIN sectors as sec ON sec.id=psec.sector_id
-                    LEFT JOIN donations as d ON d.project_id=p.id
-                    where p.id not in (select project_id from projects_sites)
-                    GROUP BY p.id,p.name,o.id,o.name,p.description,p.start_date,p.end_date,p.created_at) as subq"""
-         ActiveRecord::Base.connection.execute(sql_for_orphan_projects)
+         # sql_for_orphan_projects = """
+         #    insert into data_denormalization(project_id,project_name,project_description,organization_id,organization_name,
+         #    start_date,end_date,regions,regions_ids,countries,countries_ids,sectors,sector_ids,clusters,cluster_ids,
+         #    donors_ids,is_active,created_at)
+         #    select  * from
+         #      (SELECT p.id as project_id, p.name as project_name, p.description as project_description,
+         #            o.id as organization_id, o.name as organization_name,
+         #            p.start_date as start_date ,
+         #            p.end_date as end_date,
+         #            '|'||array_to_string(array_agg(distinct r.name),'|')||'|' as regions,
+         #            ('{'||array_to_string(array_agg(distinct r.id),',')||'}')::integer[] as regions_ids,
+         #            '|'||array_to_string(array_agg(distinct c.name),'|')||'|' as countries,
+         #            ('{'||array_to_string(array_agg(distinct c.id),',')||'}')::integer[] as countries_ids,
+         #            '|'||array_to_string(array_agg(distinct sec.name),'|')||'|' as sectors,
+         #            ('{'||array_to_string(array_agg(distinct sec.id),',')||'}')::integer[] as sector_ids,
+         #            '|'||array_to_string(array_agg(distinct clus.name),'|')||'|' as clusters,
+         #            ('{'||array_to_string(array_agg(distinct clus.id),',')||'}')::integer[] as cluster_ids,
+         #            ('{'||array_to_string(array_agg(distinct d.donor_id),',')||'}')::integer[] as donors_ids,
+         #            CASE WHEN end_date is null OR p.end_date > now() THEN true ELSE false END AS is_active,
+         #            p.created_at
+         #            FROM projects as p
+         #            INNER JOIN organizations as o ON p.primary_organization_id=o.id
+         #            LEFT JOIN projects_regions as pr ON pr.project_id=p.id
+         #            LEFT JOIN regions as r ON pr.region_id=r.id
+         #            LEFT JOIN countries_projects as cp ON cp.project_id=p.id
+         #            LEFT JOIN countries as c ON c.id=cp.country_id
+         #            LEFT JOIN clusters_projects as cpro ON cpro.project_id=p.id
+         #            LEFT JOIN clusters as clus ON clus.id=cpro.cluster_id
+         #            LEFT JOIN projects_sectors as psec ON psec.project_id=p.id
+         #            LEFT JOIN sectors as sec ON sec.id=psec.sector_id
+         #            LEFT JOIN donations as d ON d.project_id=p.id
+         #            where p.id not in (select project_id from projects_sites)
+         #            GROUP BY p.id,p.name,o.id,o.name,p.description,p.start_date,p.end_date,p.created_at) as subq"""
+         # ActiveRecord::Base.connection.execute(sql_for_orphan_projects)
 
       end
 
@@ -826,9 +826,9 @@ SQL
     Site.all.each do |site|
       sql = "delete from projects_sites where project_id=#{self.id}"
       ActiveRecord::Base.connection.execute(sql)
-      sql = "delete from data_denormalization where project_id=#{self.id}"
-      ActiveRecord::Base.connection.execute(sql)
-      ActiveRecord::Base.connection.execute("DELETE FROM data_denormalization WHERE site_id = null")
+      # sql = "delete from data_denormalization where project_id=#{self.id}"
+      # ActiveRecord::Base.connection.execute(sql)
+      # ActiveRecord::Base.connection.execute("DELETE FROM data_denormalization WHERE site_id = null")
     end
   end
 
@@ -1059,7 +1059,7 @@ SQL
 
     if @prime_awardee_name && (prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first) && prime_awardee.present?
       self.prime_awardee_id = prime_awardee.id
-    elsif @prime_awardee_name
+    elsif @prime_awardee_name && prime_awardee != nil
       self.errors.add(:prime_awardee, %Q{"#{@prime_awardee_name}" doesn't exist})
     end if new_record?
 
