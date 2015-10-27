@@ -34,7 +34,7 @@
     </div>
     <div class="field">
       <%= f.label :membership_status %>
-      <%= f.select :membership_status, ["Active", "Inactive"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
+      <%= f.select :membership_status, ["Current Member", "Former Member", "Not Member"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
     </div>
 
   <% end %>
