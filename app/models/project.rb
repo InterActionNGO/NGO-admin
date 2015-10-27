@@ -1167,7 +1167,7 @@ SQL
   private
 
   def location_presence
-    return true if region_ids.present? || country_ids.present?
+    return true if region_ids.present? || country_ids.present? || self.geographical_scope != "specific_locations"
     errors.add(:location, 'Sorry, location information is mandatory') if region_ids.blank? && country_ids.blank?
   end
 
