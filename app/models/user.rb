@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
     if u && u.authenticated?(password.strip)
       u.reset_login_fails!
       u
-    else
+    elsif u
       u.handle_login_fails!
       nil
     end

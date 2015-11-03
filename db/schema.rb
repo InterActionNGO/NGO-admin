@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151022125317) do
+ActiveRecord::Schema.define(:version => 20151029121013) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -333,12 +333,12 @@ ActiveRecord::Schema.define(:version => 20151022125317) do
     t.string   "main_data_contact_state"
     t.string   "main_data_contact_country"
     t.string   "organization_id"
-    t.boolean  "interaction_member",              :default => false
     t.string   "organization_type"
     t.integer  "organization_type_code"
     t.string   "iati_organizationid"
     t.boolean  "publishing_to_iati",              :default => false
-    t.string   "membership_status",               :default => "active"
+    t.string   "membership_status",               :default => "Non Member"
+    t.boolean  "interaction_member",              :default => false
   end
 
   add_index "organizations", ["name"], :name => "index_organizations_on_name"
