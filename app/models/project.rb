@@ -934,7 +934,7 @@ SQL
   end
 
   def prime_awardee_sync=(value)
-    @prime_awardee_name = value || ''
+    @prime_awardee_name = value
   end
 
   def project_contact_position_sync=(value)
@@ -1057,11 +1057,13 @@ SQL
       self.errors.add(:organization, %Q{"#{@organization_name}" doesn't exist})
     end if new_record?
 
-    if @prime_awardee_name && (prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first) && prime_awardee.present?
+    if @prime_awardee_name.present? && (prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first) && prime_awardee.present?
       self.prime_awardee_id = prime_awardee.id
-    elsif @prime_awardee_name && prime_awardee != nil
+    elsif @prime_awardee_name.present? && prime_awardee != nil
       self.errors.add(:prime_awardee, %Q{"#{@prime_awardee_name}" doesn't exist})
-    end if new_record?
+    else
+      self.prime_awardee_id = nil
+    end
 
 
     ####
