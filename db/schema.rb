@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
   create_table "countries", :force => true do |t|
     t.string        "name"
     t.string        "code"
-    t.multi_polygon "the_geom",         :limit => nil, :srid => 4326
     t.string        "wiki_url"
     t.text          "wiki_description"
     t.string        "iso2_code"
@@ -64,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.float         "center_lat"
     t.float         "center_lon"
     t.text          "the_geom_geojson"
+    t.multi_polygon "the_geom",         :limit => nil, :srid => 4326
   end
 
   add_index "countries", ["the_geom"], :name => "index_countries_on_the_geom", :spatial => true
@@ -84,14 +84,14 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.string   "organization_name",   :limit => 2000
     t.date     "end_date"
     t.text     "regions"
-    t.string   "regions_ids",         :limit => nil
+    t.string   "regions_ids"
     t.text     "countries"
-    t.string   "countries_ids",       :limit => nil
+    t.string   "countries_ids"
     t.text     "sectors"
-    t.string   "sector_ids",          :limit => nil
+    t.string   "sector_ids"
     t.text     "clusters"
-    t.string   "cluster_ids",         :limit => nil
-    t.string   "donors_ids",          :limit => nil
+    t.string   "cluster_ids"
+    t.string   "donors_ids"
     t.boolean  "is_active"
     t.integer  "site_id"
     t.datetime "created_at"
@@ -184,30 +184,30 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
   add_index "donors", ["name"], :name => "index_donors_on_name"
 
   create_table "geolocations", :force => true do |t|
-    t.string   "uid",               :limit => nil
-    t.string   "name",              :limit => nil
+    t.string   "uid"
+    t.string   "name"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "fclass",            :limit => nil
-    t.string   "fcode",             :limit => nil
-    t.string   "country_code",      :limit => nil
-    t.string   "country_name",      :limit => nil
-    t.string   "country_uid",       :limit => nil
-    t.string   "cc2",               :limit => nil
-    t.string   "admin1",            :limit => nil
-    t.string   "admin2",            :limit => nil
-    t.string   "admin3",            :limit => nil
-    t.string   "admin4",            :limit => nil
-    t.string   "provider",          :limit => nil, :default => "Geonames"
+    t.string   "fclass"
+    t.string   "fcode"
+    t.string   "country_code"
+    t.string   "country_name"
+    t.string   "country_uid"
+    t.string   "cc2"
+    t.string   "admin1"
+    t.string   "admin2"
+    t.string   "admin3"
+    t.string   "admin4"
+    t.string   "provider",          :default => "Geonames"
     t.integer  "adm_level"
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
-    t.string   "g0",                :limit => nil
-    t.string   "g1",                :limit => nil
-    t.string   "g2",                :limit => nil
-    t.string   "g3",                :limit => nil
-    t.string   "g4",                :limit => nil
-    t.string   "custom_geo_source", :limit => nil
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "g0"
+    t.string   "g1"
+    t.string   "g2"
+    t.string   "g3"
+    t.string   "g4"
+    t.string   "custom_geo_source"
   end
 
   add_index "geolocations", ["admin1"], :name => "index_geolocations_on_admin1"
@@ -451,7 +451,6 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "the_geom",                                :limit => nil,                          :srid => 4326
     t.text     "activities"
     t.string   "intervention_id"
     t.text     "additional_information"
@@ -472,6 +471,7 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.string   "project_reach_unit"
     t.integer  "prime_awardee_id"
     t.string   "geographical_scope",                                      :default => "regional"
+    t.geometry "the_geom",                                :limit => nil,                          :srid => 4326
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
@@ -524,7 +524,6 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.integer  "level"
     t.integer  "country_id"
     t.integer  "parent_region_id"
-    t.geometry "the_geom",         :limit => nil, :srid => 4326
     t.integer  "gadm_id"
     t.string   "wiki_url"
     t.text     "wiki_description"
@@ -534,6 +533,7 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.text     "the_geom_geojson"
     t.text     "ia_name"
     t.string   "path"
+    t.geometry "the_geom",         :limit => nil, :srid => 4326
   end
 
   add_index "regions", ["country_id"], :name => "index_regions_on_country_id"
@@ -601,7 +601,6 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.string   "project_context_tags"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "geographic_context_geometry",     :limit => nil,                    :srid => 4326
     t.string   "project_context_tags_ids"
     t.boolean  "status",                                         :default => false
     t.float    "visits",                                         :default => 0.0
@@ -620,6 +619,7 @@ ActiveRecord::Schema.define(:version => 20151029121013) do
     t.integer  "overview_map_zoom"
     t.text     "internal_description"
     t.boolean  "featured",                                       :default => false
+    t.geometry "geographic_context_geometry",     :limit => nil,                    :srid => 4326
   end
 
   add_index "sites", ["geographic_context_geometry"], :name => "index_sites_on_geographic_context_geometry", :spatial => true
