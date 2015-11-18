@@ -1105,6 +1105,13 @@ div.field input[type="text"], div.field input[type="password"], div.field input[
   color: #333333;
   border: none;
   background: url("/app/images/backoffice/donors/long_input.png") no-repeat 0 0; }
+
+div.field input[type="text"].is-readonly, div.field input[type="password"].is-readonly, div.field input[type="email"].is-readonly{
+  background: #CCC;
+  border: 1px solid #AAA;
+  border-radius: 5px;
+}
+
 div.comboselect .chzn-container {
   float: none;
   margin: 7px 0 0 0; }
@@ -2837,6 +2844,11 @@ div.block.project_info div.med div.left form .field input[type="text"] {
   padding: 0;
   border: 0px;
   background: none; }
+div.block.project_info div.med div.left form span.input_large.is-readonly {
+  background: #CCC;
+  border: 1px solid #AAA;
+  border-radius: 5px;
+}
 div.block.project_info div.bottom {
   float: left;
   height: 15px;
