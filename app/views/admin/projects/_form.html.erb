@@ -341,20 +341,20 @@
               <label>Budget value date
               <!-- <strong>*</strong> -->
               <!-- FIELD DESCRIPTION -->
-              <!-- <div class="field_info">
+              <div class="field_info">
                 <span class="info">i</span>
                 <div class="field_text">
                   <div class="top">
                     <a href="#close">x</a>
                   </div>
                   <div class="bottom">
-                    <h3>Start date</h3>
+                    <h3>Budget value date</h3>
                     <span class="scroll">
-                    <p>Actual start date (beginning of implementation).</p>
+                    <p>Date to be used for determining the exchange rate for currency conversions.</p>
                     </span>
                   </div>
                 </div>
-              </div> -->
+              </div>
               <!-- END FIELD DESCRIPTION -->
               </label>
 
@@ -467,7 +467,7 @@
           <div class="bottom">
             <h3>Prime Awardee</h3>
             <span class="scroll">
-            <p>Name of the organization that received the funding directly from the donor.</p>
+            <p>Name of the organization that received the funding directly from the donor.<br><br>Contact mappinginfo@interaction.org if you need an organization added to this list</p>
             </span>
           </div>
         </div>
@@ -483,7 +483,7 @@
       <%= f.hidden_field :prime_awardee_id , :value => @project.prime_awardee_id %>
       <div class="wrapper">
         <ul class="prime_awardee_combo_content list_combo_content huge_list_combo_content scroll_pane">
-            <% Organization.all.unshift(Organization.new(:id => '', :name => '')).each do |organization| %>
+            <% Organization.order(:name).unshift(Organization.new(:id => '', :name => '')).each do |organization| %>
               <li class="element" id="prime_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 60) %></p></li>
             <% end -%>
         </ul>

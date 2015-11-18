@@ -126,6 +126,28 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def target_project_reach=(ammount)
+    if ammount.blank?
+      write_attribute(:target_project_reach, nil)
+    else
+      case ammount
+        when String then write_attribute(:target_project_reach, ammount.delete(',').to_f)
+        else             write_attribute(:target_project_reach, ammount)
+      end
+    end
+  end
+
+  def actual_project_reach=(ammount)
+    if ammount.blank?
+      write_attribute(:actual_project_reach, nil)
+    else
+      case ammount
+        when String then write_attribute(:actual_project_reach, ammount.delete(',').to_f)
+        else             write_attribute(:actual_project_reach, ammount)
+      end
+    end
+  end
+
   def estimated_people_reached=(ammount)
     if ammount.blank?
       write_attribute(:estimated_people_reached, nil)
@@ -902,12 +924,16 @@ SQL
     self.budget_currency = value
   end
 
+  def budget_value_date_sync=(value)
+    self.budget_value_date = value
+  end
+
   def target_project_reach_sync=(value)
-    self.target_project_reach = value
+    @target_project_reach = value
   end
 
   def actual_project_reach_sync=(value)
-    self.actual_project_reach = value
+    @actual_project_reach = value
   end
 
   def project_reach_unit_sync=(value)
@@ -1010,6 +1036,10 @@ SQL
     @donors_sync = value || []
   end
 
+  def geographical_scope_sync=(value)
+    @geographical_scope_sync = value || 'specific_locations'
+  end
+
   def sync_mode_validations
     self.date_provided = Time.now.to_date if new_record?
 
@@ -1023,6 +1053,18 @@ SQL
     rescue
       errors.add(:budget, "only accepts numeric values")
     end if @budget.present?
+
+    begin
+      self.target_project_reach = Float(@target_project_reach)
+    rescue
+      errors.add(:target_project_reach, "only accepts numeric values")
+    end if @target_project_reach.present?
+
+    begin
+      self.actual_project_reach = Float(@actual_project_reach)
+    rescue
+      errors.add(:actual_project_reach, "only accepts numeric values")
+    end if @actual_project_reach.present?
 
     self.start_date = case start_date
                       when Date, DateTime, Time
@@ -1113,6 +1155,17 @@ SQL
             end
           end
         end
+      end
+    end
+
+    if @geographical_scope_sync
+      if @geographical_scope_sync != 'global' || @regional_scope != 'regional' || @regional_scope != 'specific_locations'
+        self.sync_errors << "Incorrect geographical scope on row #@sync_line"
+      else
+        if @geographical_scope_sync == 'global'
+          self.geolocations.clear
+        end
+        self.geographical_scope = @geographical_scope_sync
       end
     end
 
