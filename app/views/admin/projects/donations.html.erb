@@ -5,7 +5,7 @@
       <div class="left">
         <h2><%= @project.name %></h2>
         <p class="by">by <%= link_to(@project.primary_organization.name, edit_admin_organization_path(@project.primary_organization)) %> /
-          <%= @project.countries.select(Country.custom_fields).first.try(:name) %>
+          <%= @project.countries.first.try(:name) %>
         </p>
 
         <% unless @project.donations.empty? %>

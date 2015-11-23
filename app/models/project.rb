@@ -49,8 +49,8 @@ class Project < ActiveRecord::Base
   belongs_to :prime_awardee, :foreign_key => :prime_awardee_id, :class_name => 'Organization'
   has_and_belongs_to_many :clusters
   has_and_belongs_to_many :sectors
-  has_and_belongs_to_many :regions, :after_add => :add_to_country, :after_remove => :remove_from_country
-  has_and_belongs_to_many :countries
+  #has_and_belongs_to_many :regions, :after_add => :add_to_country, :after_remove => :remove_from_country
+  #has_and_belongs_to_many :countries
   has_and_belongs_to_many :geolocations
   has_and_belongs_to_many :tags, :after_add => :update_tag_counter, :after_remove => :update_tag_counter
   has_many :resources, :conditions => proc {"resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy
@@ -85,6 +85,10 @@ class Project < ActiveRecord::Base
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
   before_validation :strip_urls
+
+  def countries
+    Geolocation.where(:uid => self.geolocations.map{|g| g.country_uid}).uniq
+  end
 
   def strip_urls
     if self.website.present?
