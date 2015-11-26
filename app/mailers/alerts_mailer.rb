@@ -1,5 +1,5 @@
 class AlertsMailer < ActionMailer::Base
-  default :from => 'mappinginfo@interaction.org'
+  default :from => 'no-reply@ngoaidmap.org'
 
   def projects_about_to_end(contact_email, projects)
     @projects = projects
