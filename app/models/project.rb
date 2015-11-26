@@ -127,7 +127,7 @@ class Project < ActiveRecord::Base
   end
 
   def budget=(ammount)
-    if ammount.blank? || amount == '' || amount == 0
+    if ammount.blank? || ammount == '' || ammount == 0
       write_attribute(:budget, nil)
     else
       case ammount
