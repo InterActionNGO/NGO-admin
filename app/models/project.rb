@@ -85,9 +85,16 @@ class Project < ActiveRecord::Base
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
   before_validation :strip_urls
+  before_validation :nullify_budget
 
   def countries
     Geolocation.where(:uid => self.geolocations.map{|g| g.country_uid}).uniq
+  end
+
+  def nullify_budget
+    if self.budget.blank? || self.budget == 0 || self.budget == ''
+      self.budget = nil
+    end
   end
 
   def strip_urls
@@ -120,7 +127,7 @@ class Project < ActiveRecord::Base
   end
 
   def budget=(ammount)
-    if ammount.blank?
+    if ammount.blank? || amount == '' || amount == 0
       write_attribute(:budget, nil)
     else
       case ammount
@@ -1052,11 +1059,15 @@ SQL
     errors.add(:start_date,  :blank ) if start_date.blank?
     errors.add(:end_date,    :blank ) if end_date.blank?
 
-    begin
-      self.budget = Float(@budget)
-    rescue
-      errors.add(:budget, "only accepts numeric values")
-    end if @budget.present?
+    if @budget == 0 || @budget == '' || @budget.blank?
+      self.budget = nil
+    else
+      begin
+        self.budget = Float(@budget)
+      rescue
+        errors.add(:budget, "only accepts numeric values")
+      end
+    end
 
     begin
       self.target_project_reach = Float(@target_project_reach)
