@@ -86,6 +86,7 @@ class Project < ActiveRecord::Base
   after_destroy :remove_cached_sites
   before_validation :strip_urls
   before_validation :nullify_budget
+  before_validation :set_budget_value_date
 
   def countries
     Geolocation.where(:uid => self.geolocations.map{|g| g.country_uid}).uniq
@@ -95,6 +96,10 @@ class Project < ActiveRecord::Base
     if self.budget.blank? || self.budget == 0 || self.budget == ''
       self.budget = nil
     end
+  end
+
+  def set_budget_value_date
+    self.budget_value_date = self.start_date unless self.budget_value_date.present? || self.start_date.blank?
   end
 
   def strip_urls
@@ -936,7 +941,11 @@ SQL
   end
 
   def budget_value_date_sync=(value)
-    self.budget_value_date = value
+    if value.present?
+      self.budget_value_date = value
+    else
+      self.budget_value_date = self.start_date unless self.start_date.blank?
+    end
   end
 
   def target_project_reach_sync=(value)
