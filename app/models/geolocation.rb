@@ -1,28 +1,10 @@
-# == Schema Information
-#
-# Table name: geolocations
-#
-#  id                :integer          not null, primary key
-#  geonameid         :integer
-#  name              :string
-#  latitude          :float
-#  longitude         :float
-#  fclass            :string
-#  fcode             :string
-#  country_code      :string
-#  country_name      :string
-#  country_geonameid :integer
-#  cc2               :string
-#  admin1            :string
-#  admin2            :string
-#  admin3            :string
-#  admin4            :string
-#  provider          :string           default("Geonames")
-#  adm_level         :integer
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#
-
 class Geolocation < ActiveRecord::Base
-
+  has_and_belongs_to_many :projects
+  def self.fetch_all(level, geolocation)
+    level ||= 0
+    geolocations = Geolocation.where('adm_level = ?', level)
+    superlevel  = level.to_i - 1
+    geolocations = geolocations.where("g#{superlevel} = ?", geolocation) if geolocation.present? && level.to_i >= 0
+    geolocations.order(:name)
+  end
 end

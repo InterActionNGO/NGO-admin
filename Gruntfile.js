@@ -222,10 +222,11 @@ module.exports = function(grunt) {
       },
       styles: {
         files: [
+          '<%= root.app %>/stylesheets/{,*/}*{,*/}*.css',
           '<%= root.app %>/stylesheets/{,*/}*{,*/}*.{scss,sass}',
           '<%= root.app %>/images/{,*/}*{,*/}*.{png,jpg}'
         ],
-        tasks: ['compass:app']
+        tasks: ['clean','copy:app','compass:app']
       },
       scripts: {
         files: '<%= jshint.all %>',

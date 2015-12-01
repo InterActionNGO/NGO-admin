@@ -1,7 +1,7 @@
 class CreateGeolocations < ActiveRecord::Migration
-  def change
+  def sel.up
     create_table :geolocations do |t|
-      t.integer :geonameid
+      t.integer :uid
       t.string :name
       t.float :latitude
       t.float :longitude
@@ -9,21 +9,22 @@ class CreateGeolocations < ActiveRecord::Migration
       t.string :fcode
       t.string :country_code
       t.string :country_name
-      t.integer :country_geonameid
+      t.integer :country_uid
       t.string :cc2
-      t.string :admin1
-      t.string :admin2
-      t.string :admin3
-      t.string :admin4
-      t.string :provider, default: 'Geonames'
+      t.string :g1
+      t.string :g2
+      t.string :g3
+      t.string :g4
+      t.string :provider, :default => 'Geonames'
       t.integer :adm_level
+      t.string :custom_geo_source, :string
 
-      t.timestamps null: false
+      t.timestamps :null => false
     end
-    add_index :geolocations, :geonameid
-    add_index :geolocations, :admin1
-    add_index :geolocations, :admin2
-    add_index :geolocations, :admin3
-    add_index :geolocations, :admin4
+    add_index :geolocations, :uid
+    add_index :geolocations, :g1
+    add_index :geolocations, :g2
+    add_index :geolocations, :g3
+    add_index :geolocations, :g4
   end
 end

@@ -1,5 +1,5 @@
 class AlertsMailer < ActionMailer::Base
-  default :from => 'mappinginfo@interaction.org'
+  default :from => 'no-reply@ngoaidmap.org'
 
   def projects_about_to_end(contact_email, projects)
     @projects = projects
@@ -13,7 +13,7 @@ class AlertsMailer < ActionMailer::Base
 
   def six_months_since_last_login(user)
     cc = if Rails.env.production?
-           'mappinginfo@interaction.org'
+           'no-reply@interaction.org'
          else
            'fer@ferdev.com'
          end
