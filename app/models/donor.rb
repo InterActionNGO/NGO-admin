@@ -329,4 +329,17 @@ def projects_clusters_sectors(site, location_id = nil)
       eval("self.#{att} = Sanitize.clean(self.#{att}.gsub(/\r/,'')) unless self.#{att}.blank?")
     end
   end
+
+  # IATI
+
+  def self.types
+    ["Government", "Other Public Sector", "International NGO", "National NGO", "Regional NGO", "Public Private Partnership", "Multilateral", "Foundation ", "Private Sector", "Academic, Training and Research"]
+  end
+  def self.type_codes
+    [10, 15, 21, 22, 23, 30, 40, 60, 70, 80]
+  end
+
+  def set_org_type_code
+    self.organization_type_code = Organization.type_codes[Organization.types.index(self.organization_type)] if self.organization_type.present?
+  end
 end
