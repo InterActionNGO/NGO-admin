@@ -27,11 +27,47 @@
   </div>
 
   <% if current_user.admin? %>
-  <div class="field">
-    <label>Organization ID  <strong>*</strong></label>
-    <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}" %>
-    <%= errors_for @organization, :organization_id %>
-  </div>
+    <div class="field">
+      <label>Organization ID  <strong>*</strong></label>
+      <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}" %>
+      <%= errors_for @organization, :organization_id %>
+    </div>
+    <div class="field">
+      <%= f.label :membership_status %>
+      <%= f.select :membership_status, ["Current Member", "Former Member", "Non Member"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
+    </div>
+
+  <% end %>
+
+
+
+
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :organization_type %>
+      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select" %>
+    </div>
+    <div class="field">
+      <%= f.label :iati_organizationid, "IATI organization ID" %>
+      <%= f.text_field :iati_organizationid, :class=>"long" %>
+    </div>
+    <div class="field">
+      <%= f.label :publishing_to_iati, "Publishing to IATI" %>
+      <%= f.check_box :publishing_to_iati, :class=>"long" %>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.label :organization_type %>
+      <%= f.text_field :organization_type, :class=>"long is-readonly", :readonly => true %>
+    </div>
+    <div class="field">
+      <%= f.label :iati_organizationid, "IATI organization ID" %>
+      <%= f.text_field :iati_organizationid, :class=>"long is-readonly", :readonly => true %>
+    </div>
+    <div class="field">
+      <%= f.label :publishing_to_iati, "Publishing to IATI" %>
+      <%= f.text_field :publishing_to_iati, :class=>"long is-readonly", :readonly => true %>
+    </div>
   <% end %>
 
   <%= f.label :logo %>
@@ -59,15 +95,15 @@
   </div>
   <a href="<%= @organization.website %>" class="preview no_margin" id="website" target="_blank">preview the link</a>
 
-  <div class="short_field">
-    <%= f.label :national_staff %>
-    <%= f.text_field :national_staff, :value => number_with_precision(f.object.national_staff, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ','), :class => 'short' %>
+  <!-- <div class="short_field">
+    <%#= f.label :national_staff %>
+    <%#= f.text_field :national_staff, :value => number_with_precision(f.object.national_staff, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ','), :class => 'short' %>
   </div>
 
   <div class="short_field last">
-    <%= f.label :international_staff %>
-    <%= f.text_field :international_staff, :class=>"short" %>
-  </div>
+    <%#= f.label :international_staff %>
+    <%#= f.text_field :international_staff, :class=>"short" %>
+  </div> -->
 
   <div class="common">
     <h3>SOCIAL LINK</h3>
@@ -105,6 +141,9 @@
       <%= f.label :contact_phone_number %>
       <%= f.text_field :contact_phone_number, :class=>"short" %>
     </div>
+  </div>
+  <div class="common">
+    <h3>HQ ADDRESS</h3>
 
     <div class="long_field">
       <%= f.label :hq_address %>
@@ -112,17 +151,17 @@
     </div>
 
     <div class="short_field">
-      <%= f.label :contact_city %>
+      <%= f.label :contact_city, "HQ CITY" %>
       <%= f.text_field :contact_city, :class=>"short" %>
     </div>
 
     <div class="short_field last">
-      <%= f.label :contact_zip %>
+      <%= f.label :contact_zip, "HQ ZIP/POSTAL CODE" %>
       <%= f.text_field :contact_zip, :class=>"short" %>
     </div>
 
     <div class="short_field">
-      <%= f.label :contact_state %>
+      <%= f.label :contact_state, "HQ STATE" %>
       <%= f.text_field :contact_state, :class=>"short" %>
     </div>
 
@@ -241,3 +280,7 @@
   </script>
 
 <% end -%>
+<script type="text/javascript">
+  $(".chzn-sectors-select").chosen({hide_search:true});
+  $(".chzn-organization-select").chosen({hide_search:true});
+</script>

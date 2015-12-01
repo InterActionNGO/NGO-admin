@@ -21,10 +21,10 @@ class Admin::ProjectsController < Admin::AdminController
         end
       end
       unless params[:country].blank? || params[:country] == "0"
-        if country = Country.find_by_id(params[:country])
+        if country = Geolocation.find_by_id(params[:country])
           @conditions[country.name] = {'country' => params[:country]}
-          from << 'countries_projects'
-          projects = projects.from(from.join(',')).where("countries_projects.country_id = #{country.id} AND countries_projects.project_id = projects.id")
+          from << 'geolocations_projects'
+          projects = projects.from(from.join(',')).where("geolocations_projects.geolocation_id = #{country.id} AND geolocations_projects.project_id = projects.id")
         end
       end
       unless params[:cluster].blank? || params[:cluster] == '0'
@@ -47,7 +47,7 @@ class Admin::ProjectsController < Admin::AdminController
           from << 'projects_sites'
           projects = projects.from(from.join(',')).where("projects_sites.site_id = #{site.id} AND projects_sites.project_id = projects.id")
         end
-      end      
+      end
       unless params[:organization].blank? || params[:organization] == '0'
         if org = Organization.find(params[:organization])
           @conditions[org.name] = {'organization' => params[:organization]}
@@ -210,7 +210,7 @@ class Admin::ProjectsController < Admin::AdminController
   private :organizations_ids
 
   def countries_iso_codes
-    Hash[Country.select([:id, :iso2_code]).all.map{|o| [o.id, o.iso2_code]}]
+    Hash[Geolocation.select([:id, :country_code]).where(:adm_level => 0).map{|o| [o.id, o.country_code]}]
   end
   private :countries_iso_codes
 

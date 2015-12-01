@@ -77,6 +77,7 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :user, :reject_if => proc {|a| a['email'].blank?}, :allow_destroy => true
 
   before_save :check_user_valid
+  before_save :set_org_type_code
 
   validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :website_changed?
   validates_format_of :donation_website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :donation_website_changed?
@@ -358,6 +359,19 @@ SQL
     profile[:sectors] = Sector.joins([:projects => :primary_organization]).where('organizations.id = ?', self.id).select(['sectors.name','count(projects.id)']).group('sectors.name')
     profile[:projects] = self.projects.select([:id, :name, :budget, :start_date, :end_date, :the_geom])
     profile
+  end
+
+  # IATI
+
+  def self.types
+    ["Government", "Other Public Sector", "International NGO", "National NGO", "Regional NGO", "Public Private Partnership", "Multilateral", "Foundation ", "Private Sector", "Academic, Training and Research"]
+  end
+  def self.type_codes
+    [10, 15, 21, 22, 23, 30, 40, 60, 70, 80]
+  end
+
+  def set_org_type_code
+    self.organization_type_code = Organization.type_codes[Organization.types.index(self.organization_type)] if self.organization_type.present?
   end
 
 end

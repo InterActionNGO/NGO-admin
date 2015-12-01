@@ -2,6 +2,7 @@ require 'capistrano/ext/multistage'
 require 'config/boot'
 require "bundler/capistrano"
 
+set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
 set :use_sudo, false
 set :stages, %w(staging production smbtc)
 
@@ -10,16 +11,18 @@ APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
 set :rollbar_token, APP_CONFIG['rollbar_token']
 set(:rollbar_env) { stage }
 
+set :normalize_asset_timestamps, false
 
 default_run_options[:pty] = true
 
-set :application, 'iom'
+set :application, 'ngo-admin'
 
 set :scm, :git
 # set :git_enable_submodules, 1
 set :git_shallow_clone, 1
 set :scm_user, 'ubuntu'
 set :repository, "git://github.com/simbiotica/iom.git"
+set :branch, "iati-refactor"
 ssh_options[:forward_agent] = true
 set :keep_releases, 5
 
@@ -59,7 +62,6 @@ task :symlinks, :roles => [:app] do
   run <<-CMD
     ln -s #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml;
     ln -s #{shared_path}/node_modules #{release_path}/node_modules;
-    ln -s #{shared_path}/public/app/vendor #{release_path}/public/app/vendor;
   CMD
 end
 
@@ -69,7 +71,6 @@ task :asset_packages, :roles => [:app] do
    export RAILS_ENV=production &&
    cd #{release_path} &&
    npm install &&
-   bower install &&
-   grunt build
+   bower install
  CMD
 end
