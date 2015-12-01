@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140530130528) do
+ActiveRecord::Schema.define(:version => 20151126155119) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -176,9 +176,59 @@ ActiveRecord::Schema.define(:version => 20140530130528) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "iati_organizationid"
+    t.string   "organization_type"
+    t.integer  "organization_type_code"
   end
 
   add_index "donors", ["name"], :name => "index_donors_on_name"
+
+  create_table "geolocations", :force => true do |t|
+    t.string   "uid",               :limit => nil
+    t.string   "name",              :limit => nil
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "fclass",            :limit => nil
+    t.string   "fcode",             :limit => nil
+    t.string   "country_code",      :limit => nil
+    t.string   "country_name",      :limit => nil
+    t.string   "country_uid",       :limit => nil
+    t.string   "cc2",               :limit => nil
+    t.string   "admin1",            :limit => nil
+    t.string   "admin2",            :limit => nil
+    t.string   "admin3",            :limit => nil
+    t.string   "admin4",            :limit => nil
+    t.string   "provider",          :limit => nil, :default => "Geonames"
+    t.integer  "adm_level"
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+    t.string   "g0",                :limit => nil
+    t.string   "g1",                :limit => nil
+    t.string   "g2",                :limit => nil
+    t.string   "g3",                :limit => nil
+    t.string   "g4",                :limit => nil
+    t.string   "custom_geo_source", :limit => nil
+  end
+
+  add_index "geolocations", ["admin1"], :name => "index_geolocations_on_admin1"
+  add_index "geolocations", ["admin2"], :name => "index_geolocations_on_admin2"
+  add_index "geolocations", ["admin3"], :name => "index_geolocations_on_admin3"
+  add_index "geolocations", ["admin4"], :name => "index_geolocations_on_admin4"
+  add_index "geolocations", ["country_name"], :name => "index_geolocations_on_country_name"
+  add_index "geolocations", ["country_uid"], :name => "index_geolocations_on_country_uid"
+  add_index "geolocations", ["g0"], :name => "index_geolocations_on_g0"
+  add_index "geolocations", ["g1"], :name => "index_geolocations_on_g1"
+  add_index "geolocations", ["g2"], :name => "index_geolocations_on_g2"
+  add_index "geolocations", ["g3"], :name => "index_geolocations_on_g3"
+  add_index "geolocations", ["g4"], :name => "index_geolocations_on_g4"
+  add_index "geolocations", ["uid"], :name => "index_geolocations_on_uid"
+
+  create_table "geolocations_projects", :id => false, :force => true do |t|
+    t.integer "geolocation_id"
+    t.integer "project_id"
+  end
+
+  add_index "geolocations_projects", ["geolocation_id", "project_id"], :name => "index_geolocations_projects_on_geolocation_id_and_project_id"
 
   create_table "layer_styles", :force => true do |t|
     t.string "title"
@@ -283,6 +333,12 @@ ActiveRecord::Schema.define(:version => 20140530130528) do
     t.string   "main_data_contact_state"
     t.string   "main_data_contact_country"
     t.string   "organization_id"
+    t.boolean  "interaction_member",              :default => false
+    t.string   "organization_type"
+    t.integer  "organization_type_code"
+    t.string   "iati_organizationid"
+    t.boolean  "publishing_to_iati",              :default => false
+    t.string   "membership_status",               :default => "Non Member"
   end
 
   add_index "organizations", ["name"], :name => "index_organizations_on_name"
@@ -395,7 +451,7 @@ ActiveRecord::Schema.define(:version => 20140530130528) do
     t.text     "site_specific_information"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "the_geom",                                :limit => nil,  :srid => 4326
+    t.geometry "the_geom",                                :limit => nil,                          :srid => 4326
     t.text     "activities"
     t.string   "intervention_id"
     t.text     "additional_information"
@@ -409,11 +465,19 @@ ActiveRecord::Schema.define(:version => 20140530130528) do
     t.text     "project_needs"
     t.text     "idprefugee_camp"
     t.string   "organization_id"
+    t.string   "budget_currency",                                         :default => "USD"
+    t.date     "budget_value_date"
+    t.float    "target_project_reach"
+    t.float    "actual_project_reach"
+    t.string   "project_reach_unit"
+    t.integer  "prime_awardee_id"
+    t.string   "geographical_scope",                                      :default => "regional"
   end
 
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
   add_index "projects", ["name"], :name => "index_projects_on_name"
   add_index "projects", ["primary_organization_id"], :name => "index_projects_on_primary_organization_id"
+  add_index "projects", ["prime_awardee_id"], :name => "index_projects_on_prime_awardee_id"
   add_index "projects", ["the_geom"], :name => "index_projects_on_the_geom", :spatial => true
 
   create_table "projects_regions", :id => false, :force => true do |t|
@@ -490,7 +554,12 @@ ActiveRecord::Schema.define(:version => 20140530130528) do
   add_index "resources", ["element_type", "element_id"], :name => "index_resources_on_element_type_and_element_id"
 
   create_table "sectors", :force => true do |t|
-    t.string "name"
+    t.string   "name"
+    t.string   "oecd_dac_name"
+    t.string   "sector_vocab_code"
+    t.string   "oecd_dac_purpose_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "settings", :force => true do |t|

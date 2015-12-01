@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.find_by_email(params[:email])
-    if @user.blocked?
+    if @user && @user.blocked?
       note_failed_signin
       @email       = params[:email]
       @remember_me = params[:remember_me]
@@ -20,14 +20,19 @@ class SessionsController < ApplicationController
       render :action => 'new' and return
     else
       user = User.authenticate(params[:email], params[:password])
-      if user && user.enabled?
+      if user.present? && user.enabled?
         user.update_last_login
         self.current_user = user
         new_cookie_flag = (params[:remember_me] == "1")
         handle_remember_cookie! new_cookie_flag
         redirect_back_or_default(admin_admin_path)
-      else
+      elsif user.present?
         note_failed_signin
+        @email       = params[:email]
+        @remember_me = params[:remember_me]
+        flash[:alert] = '<p class="error">Your email / password is not correct</p>'
+        render :action => 'new'
+      else
         @email       = params[:email]
         @remember_me = params[:remember_me]
         flash[:alert] = '<p class="error">Your email / password is not correct</p>'
