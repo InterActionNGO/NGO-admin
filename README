@@ -4,9 +4,9 @@ NGOAIDMAP is a website available at http://ngoaidmap.org/. It was a custom devel
 
 It is probably a very specific application to be used directly, but the ideas and code behind it might be applicable for other people needs. If you have questions on how to use contact@vizzuality.com
 
-== Database structure 
+== Database structure
 
-NGOAIDMAP is a project that allows you to create websites about projects around a certain topic. For example haiti or foodsecurity. 
+NGOAIDMAP is a project that allows you to create websites about projects around a certain topic. For example haiti or foodsecurity.
 
 The database consist of 4 main tables: "projects" done by "organizations" funded by "donors" which are included in different "sites".
 
@@ -21,17 +21,19 @@ NGOAIDMAP is a Ruby on Rails application. The dependencies are:
  * Postgis 1.5.2
  * Bundler gem
 
-== Installation
+== Installation (updated 8/18/2016)
 
-        rvm use 1.8.7
-        rvm gemset create iom
-        rvm use 1.8.7@iom
-        gem install bundler
-        git clone git://github.com/Vizzuality/iom.git
-        cd iom
-        bundle install
-        # edit config/database.yml
-        rake db:setup
-        rails s
-        
-        
+
+* Install ruby 1.9.3
+* `cp .ruby-version.sample .ruby-version`
+* `bundle install`
+* `gem uninstall sass`
+* `gem uninstall compass`
+* `gem install compass`
+* `cp config/app_config.yml.sample config/app_config.yml`
+* `npm install`
+* `npm run bower install`
+* `npm run grunt build`
+* `npm run grunt`
+* `bundle exec rails s`
+
