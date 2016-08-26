@@ -331,13 +331,16 @@ $(document).ready(function(ev){
 
   // END SITES COMBO
 
-
-
-  $('#project_implementer_ids').chosen({
-    width: 420
-  });
-  $('#project_partner_ids').chosen({
-    width: 420
+   // Project Management
+   $('#project_implementer_ids').chosen({
+     width: 420
+   });
+   $('#project_partner_ids').chosen({
+     width: 420
+   });
+  $('#project_budget_currency').chosen({
+    width: 272,
+    hide_search: true
   });
 
   // PRIME AWARDEE click
