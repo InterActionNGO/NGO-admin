@@ -1,14 +1,10 @@
 <div class="main_layout">
-
   <div class="block grey">
     <div class="top"></div>
     <div class="med information">
       <div class="header">
-        <h2 class="museo_sans"><%= link_to 'NGO information', edit_admin_organization_path(current_user.organization) %></h2>
-        <span class="ngo_activity">
-          <p><%= @organization_data.active_projects_count %><em>active</em></p>
-          <p><%= @organization_data.closed_projects_count %><em>closed</em></p>
-        </span>
+        <h2 class="museo_sans"><%= @organization_data.name %></h2>
+        <p><%= link_to 'Edit Organization', edit_admin_organization_path(current_user.organization) %></p>
       </div>
       <div class="info_list">
         <ul>
@@ -35,6 +31,388 @@
     </div>
     <div class="bottom_white"></div>
   </div>
+
+  <div class="block first">
+    <div class="top"></div>
+    <div class="med information">
+      <div class="header">
+        <h2 class="museo_sans">Your Projects</h2>
+      </div>
+      <ul>
+        <li>
+          <label>Active Projects</label>
+          <p class="museo_sans">
+            <%#= @organization_data.active_projects_count %>
+            7
+          </p>
+        </li>
+        <li>
+          <label>Closed Projects</label>
+          <p class="museo_sans">
+            <%#= @organization_data.closed_projects_count %>
+            3
+          </p>
+        </li>
+        <li>
+          <label>Total Projects</label>
+          <p class="museo_sans">
+            <%#= @organization_data.closed_projects_count + @organization_data.active_projects_count %>
+            10
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="med information">
+      <hr>
+
+      <h3>Active Countries (3)</h3>
+      <ul class="bulleted_list">
+        <li>
+          <a href="#TODO">Afgahnistan</a>
+        </li>
+        <li>
+          <a href="#TODO">Albania</a>
+        </li>
+        <li>
+          <a href="#TODO">Algeria</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="med information">
+      <hr>
+
+      <h3>Active Sectors (8)</h3>
+      <ol class="sectors_list">
+        <li>
+          <span class="count active">27</span>
+          Agriculture
+        </li>
+        <li>
+          <span class="count active">5</span>
+          Economic Recovery and Development
+        </li>
+        <li>
+          <span class="count active">3</span>
+          Health
+        </li>
+        <li>
+          <span class="count active">2</span>
+          Human Rights Democracy and Governance
+        </li>
+        <li>
+          <span class="count active">1</span>
+          Communications/Technology
+        </li>
+        <li>
+          <span class="count active">1</span>
+          Education
+        </li>
+        <li>
+          <span class="count active">1</span>
+          Other
+        </li>
+        <li>
+          <span class="count active">1</span>
+          Water Sanitation and Hygiene
+        </li>
+        <li>
+          <span class="count">0</span>
+          Communications
+        </li>
+        <li>
+          <span class="count">0</span>
+          Disaster Management
+        </li>
+        <li>
+          <span class="count">0</span>
+          Environment
+        </li>
+        <li>
+          <span class="count">0</span>
+          Food Aid
+        </li>
+        <li>
+          <span class="count">0</span>
+          Peace and Security
+        </li>
+        <li>
+          <span class="count">0</span>
+          Protection
+        </li>
+        <li>
+          <span class="count">0</span>
+          Shelter and Housing
+        </li>
+        <li>
+          <span class="count">0</span>
+          Energy
+        </li>
+        <li>
+          <span class="count">0</span>
+          Humanitarian Aid
+        </li>
+        <li>
+          <span class="count">0</span>
+          Mining and Extractive Resources
+        </li>
+        <li>
+          <span class="count">0</span>
+          Non-food Relief Items (NFIs)
+        </li>
+        <li>
+          <span class="count">0</span>
+          Safety Nets
+        </li>
+      </ol>
+    </div>
+
+    <div class="med information">
+      <hr>
+
+      <h3>Partners and Donors (5)</h3>
+      <ul class="bulleted_list">
+        <li>
+          <a href="https://ngoaidmap.org/organizations/7">
+            American Jewish Joint Distribution Committee
+          </a>
+        </li>
+        <li>
+          <a href="https://ngoaidmap.org/organizations/7">
+            American Jewish Joint Distribution Committee
+          </a>
+        </li>
+        <li>
+          <a href="https://ngoaidmap.org/organizations/7">
+            American Jewish Joint Distribution Committee
+          </a>
+        </li>
+        <li>
+          <a href="https://ngoaidmap.org/organizations/7">
+            American Jewish Joint Distribution Committee
+          </a>
+        </li>
+        <li>
+          <a href="https://ngoaidmap.org/organizations/7">
+            American Jewish Joint Distribution Committee
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="bottom_white"></div>
+  </div>
+
+
+  <!-- If projects ending soon exist -->
+  <div class="block">
+    <div class="top"></div>
+    <div class="med information">
+      <div class="header">
+        <h2 class="museo_sans">Your Projects Ending Soon</h2>
+      </div>
+
+      <!-- If projects ending in 3 months exist -->
+      <div class="projects_list">
+        <h3 class="table_heading">2 projects ending in 3 months</h3>
+
+        <table collapse="0">
+          <tbody>
+            <tr>
+              <td width="625">
+                <span>
+                  <h3>
+                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
+                    <a href="#TODO">
+                      This is a Project
+                    </a>
+                  </h3>
+                  <p class="margin">
+                    <a class="project_status active">Active</a>
+                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
+                    until Sep 30th, 2016
+                  </p>
+                </span>
+              </td>
+              <td width="150" class="odd center">
+<%
+=begin 
+%>
+                <% unless project.sectors.empty? %>
+                  <% if project.sectors.count == 1 %>
+                    <p><%= project.sectors.first.name %></p>
+                  <% else %>
+                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
+                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
+                  <% end %>
+                <% else %>
+                  <p>N/A</p>
+                <% end %>
+<%
+=end
+%>
+                <p>Economic Recovery and Development</p>
+              </td>
+              <td width="150" class="center">
+                <p>
+                  <%#= project.countries.map(&:name).to_sentence %>
+                  Haiti
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td width="625">
+                <span>
+                  <h3>
+                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
+                    <a href="#TODO">
+                      This is a Project
+                    </a>
+                  </h3>
+                  <p class="margin">
+                    <a class="project_status active">Active</a>
+                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
+                    until Sep 30th, 2016
+                  </p>
+                </span>
+              </td>
+              <td width="150" class="odd center">
+<%
+=begin 
+%>
+                <% unless project.sectors.empty? %>
+                  <% if project.sectors.count == 1 %>
+                    <p><%= project.sectors.first.name %></p>
+                  <% else %>
+                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
+                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
+                  <% end %>
+                <% else %>
+                  <p>N/A</p>
+                <% end %>
+<%
+=end
+%>
+                <p>Economic Recovery and Development</p>
+              </td>
+              <td width="150" class="center">
+                <p>
+                  <%#= project.countries.map(&:name).to_sentence %>
+                  Haiti
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- If projects ending between 3 and 6 months exist -->
+      <div class="projects_list">
+        <h3 class="table_heading">1 project ending in 6 months</h3>
+
+        <table collapse="0">
+          <tbody>
+            <tr>
+              <td width="625">
+                <span>
+                  <h3>
+                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
+                    <a href="#TODO">
+                      This is a Project
+                    </a>
+                  </h3>
+                  <p class="margin">
+                    <a class="project_status active">Active</a>
+                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
+                    until Sep 30th, 2016
+                  </p>
+                </span>
+              </td>
+              <td width="150" class="odd center">
+<%
+=begin 
+%>
+                <% unless project.sectors.empty? %>
+                  <% if project.sectors.count == 1 %>
+                    <p><%= project.sectors.first.name %></p>
+                  <% else %>
+                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
+                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
+                  <% end %>
+                <% else %>
+                  <p>N/A</p>
+                <% end %>
+<%
+=end
+%>
+                <p>Economic Recovery and Development</p>
+              </td>
+              <td width="150" class="center">
+                <p>
+                  <%#= project.countries.map(&:name).to_sentence %>
+                  Haiti
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- If projects ending between 6 and 12 months exist -->
+      <div class="projects_list">
+        <h3 class="table_heading">1 project ending in 12 months</h3>
+
+        <table collapse="0">
+          <tbody>
+            <tr>
+              <td width="625">
+                <span>
+                  <h3>
+                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
+                    <a href="#TODO">
+                      This is a Project
+                    </a>
+                  </h3>
+                  <p class="margin">
+                    <a class="project_status active">Active</a>
+                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
+                    until Sep 30th, 2016
+                  </p>
+                </span>
+              </td>
+              <td width="150" class="odd center">
+<%
+=begin 
+%>
+                <% unless project.sectors.empty? %>
+                  <% if project.sectors.count == 1 %>
+                    <p><%= project.sectors.first.name %></p>
+                  <% else %>
+                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
+                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
+                  <% end %>
+                <% else %>
+                  <p>N/A</p>
+                <% end %>
+<%
+=end
+%>
+                <p>Economic Recovery and Development</p>
+              </td>
+              <td width="150" class="center">
+                <p>
+                  <%#= project.countries.map(&:name).to_sentence %>
+                  Haiti
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="bottom_white"></div>
+  </div>
+
 
   <% @organization_sites.compact.each do |site| -%>
     <div class="block first">
