@@ -4433,7 +4433,8 @@ div.block.media div.med {
             div.block.media div.med div.left div.add_media form input[type="submit"]:hover {
               background-position: 0 -26px;
               cursor: pointer; }
-    div.block.media div.med div.left div#new_video form input[type="submit"] {
+    div.block.media div.med div.left div.video form input[type="submit"],
+    div.block.media div.med div.left div.image form input[type="submit"] {
       position: absolute;
       right: 4px;
       top: 0;
