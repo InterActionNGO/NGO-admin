@@ -3,6 +3,12 @@ body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, form, fieldset, p {
   padding: 0;
   font-weight: normal; }
 
+hr {
+  border: none;
+  border-top: 1px solid #cccccc;
+  margin: 0 0 40px;
+}
+
 img, fieldset {
   border: none;
   padding: 0;
@@ -835,6 +841,45 @@ div.med.information ul {
       font: normal 35px "Akzidenz",Arial;
       color: #333333;
       letter-spacing: -1px; }
+
+div.med.information ul.bulleted_list {
+  float: none;
+  padding-left: 30px;
+}
+div.med.information ul.bulleted_list li {
+  display: list-item;
+  float: none;
+  list-style-type: disc;
+  margin: 0 0 10px;
+}
+
+div.med.information ol.sectors_list {
+  float: none;
+}
+div.med.information ol.sectors_list li {
+  display: list-item;
+  float: left;
+  margin: 0 0 5px;
+  width: 50%;
+}
+div.med.information ol.sectors_list span.count {
+  border: 1px solid #cccccc;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 13px;
+  height: 30px;
+  margin-right: 10px;
+  padding: 8px 0;
+  text-align: center;
+  vertical-align: middle;
+  width: 30px;
+}
+div.med.information ol.sectors_list span.count.active {
+  border-color: #458ba4;
+  color: #458ba4;
+}
+
 div.med.information div.info {
   float: left;
   width: 100%;
@@ -2590,6 +2635,15 @@ div.med .projects_list div.no_results {
       text-decoration: underline; }
       div.med .projects_list div.no_results p a:hover {
         color: #7F2023; }
+div.med .projects_list h3.table_heading {
+  clear: both;
+  margin: 0;
+  padding-bottom: 10px;
+  padding-top: 40px;
+}
+div.med .projects_list h3.table_heading + table {
+  margin-top: 0;
+}
 div.med .projects_list table {
   float: left;
   width: 100%;
