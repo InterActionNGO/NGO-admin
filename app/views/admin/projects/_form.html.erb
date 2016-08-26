@@ -328,9 +328,10 @@
       <div class="left_column">
         <div class="field">
           <p class="title">BUDGET CURRENCY </p>
-          <span class="input_short">
-            <%= f.text_field :budget_currency, :value => (@project.budget_currency.present? ? @project.budget_currency : 'USD') %>
-          </span>
+          <!-- TODO - fill in currencies -->
+          <%= f.select :budget_currency,
+                [['USD', 'USD'], ['Euro', 'Euro']],
+                { :selected => (@project.budget_currency.present? ? @project.budget_currency : 'USD') } %>
         </div> <!-- field -->
       </div>
 

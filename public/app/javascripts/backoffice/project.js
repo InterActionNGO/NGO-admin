@@ -269,8 +269,6 @@ $(document).ready(function(ev){
 
   }
 
-
-
   // END SITES COMBO
   // ORGANIZATION COMBO
   $('div.organization_combo').children('span.combo_large').click(function(ev){
@@ -334,7 +332,11 @@ $(document).ready(function(ev){
   // END SITES COMBO
 
 
-
+   // Project Managementz
+  $('#project_budget_currency').chosen({
+    width: 272,
+    hide_search: true
+  });
 
 
   // PRIME AWARDEE click
