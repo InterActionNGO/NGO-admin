@@ -2641,9 +2641,6 @@ div.med .projects_list h3.table_heading {
   padding-bottom: 10px;
   padding-top: 40px;
 }
-div.med .projects_list h3.table_heading + table {
-  margin-top: 0;
-}
 div.med .projects_list table {
   float: left;
   width: 100%;
@@ -2685,6 +2682,14 @@ div.med .projects_list table {
         background: url("/app/images/backoffice/projects/active_icon.png") no-repeat 0 4px; }
       div.med .projects_list table tr a.project_status.closed {
         background: url("/app/images/backoffice/projects/closed_icon.png") no-repeat 0 3px; }
+
+div.med .projects_list table.condensed {
+  margin-top: 0;
+}
+div.med .projects_list table.condensed tr td {
+  height: auto;
+}
+
 div.med.projects_list ul li p {
   float: left;
   width: 100%;
