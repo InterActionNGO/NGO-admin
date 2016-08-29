@@ -425,8 +425,21 @@
       <!-- END FIELD DESCRIPTION -->
 
     </label>
-    <span class="input_large">
-      <%= f.text_field :implementing_organization %>
+    <span class="input">
+      <!-- TODO - fill in organizations -->
+      <%= f.select :implementing_organization,
+        [
+          ['Organization 1', 'Organization 1'],
+          ['Organization 2', 'Organization 2']
+        ],
+        {
+          :include_blank => true,
+          :selected => (@project.implementing_organization.present? ? @project.implementing_organization : '')
+        },
+        :multiple => true,
+        'data-placeholder' => 'Choose a Partner...'
+      %>
+      <%#= f.text_field :implementing_organization %>
     </span>
   </div>
   <div id="partner_org" class="field">
@@ -450,8 +463,21 @@
       <!-- END FIELD DESCRIPTION -->
 
     </label>
-    <span class="input_large">
-      <%= f.text_field :partner_organizations %>
+    <span class="input">
+      <!-- TODO - fill in organizations -->
+      <%= f.select :partner_organizations,
+        [
+          ['Organization 1', 'Organization 1'],
+          ['Organization 2', 'Organization 2']
+        ],
+        {
+          :include_blank => true,
+          :selected => (@project.implementing_organization.present? ? @project.implementing_organization : '')
+        },
+        :multiple => true,
+        'data-placeholder' => 'Choose a Partner...'
+      %>
+      <%#= f.text_field :partner_organizations %>
     </span>
   </div> <!-- field -->
 

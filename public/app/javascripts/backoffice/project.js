@@ -332,12 +332,18 @@ $(document).ready(function(ev){
   // END SITES COMBO
 
 
-   // Project Managementz
+   // Project Management
   $('#project_budget_currency').chosen({
     width: 272,
     hide_search: true
   });
 
+  $('#project_implementing_organization').chosen({
+    width: 420
+  });
+  $('#project_partner_organizations').chosen({
+    width: 420
+  });
 
   // PRIME AWARDEE click
   $('div.prime_awardee_combo').children('span.combo_large').click(function(ev){
