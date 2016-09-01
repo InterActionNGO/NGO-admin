@@ -14,7 +14,6 @@ module Iom
       def acts_as_resource(options = {})
         belongs_to :project, :foreign_key => :element_id
         belongs_to :organization, :foreign_key => :element_id
-        belongs_to :donor, :foreign_key => :element_id
         belongs_to :site, :foreign_key => :element_id
 
         send :include, InstanceMethods

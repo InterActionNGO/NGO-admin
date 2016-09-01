@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
 				@org_combo_values = Organization.joins('INNER JOIN projects ON projects.primary_organization_id = organizations.id').group('organizations.name').select('organizations.name').order('organizations.name ASC').collect{ |o| [o.name, o.name] }
 				@countries_combo_values = Country.get_select_values.collect{ |c| [c.name, c.name] }
 				@sectors_combo_values = Sector.get_select_values.collect { |c| [c.name, c.name] }
-				@donors_combo_values = Donor.get_select_values.collect{ |d| [d.name, d.name] }
+				@donors_combo_values = Organization.with_donations.uniq.get_select_values.collect{ |d| [d.name, d.name] }
 				@date_start = Project.order('start_date ASC').first.start_date
 				@date_end = Date.today
 			end
@@ -82,7 +82,7 @@ class ReportsController < ApplicationController
     end
   end
   def donor_profile
-  	@donor = Donor.find(params[:id])
+  	@donor = Organization.with_donations.find(params[:id])
   	@profile = @donor.get_profile
   	respond_to do |format|
       format.json { render :json => @profile.to_json }

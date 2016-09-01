@@ -30,7 +30,7 @@
             <li class="comboselect">
               <label>DONOR</label>
               <%= select_tag :donor,
-                options_for_select([['Any donor','All']] + Donor.get_select_values.collect{ |d| [d.name, d.name] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
+                options_for_select([['Any donor','All']] + Organization.with_donations.get_select_values.collect{ |d| [d.name, d.name] }, params[:donor]), :class => :"chzn-select", :multiple => true, :size => 5%>
             </li>
 
             <li class="comboselect">

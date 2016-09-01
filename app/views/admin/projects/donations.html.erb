@@ -15,7 +15,7 @@
           <li>
             <div class="name_box">
               <h3>
-                <%= link_to(truncate(donation.donor.name, :length => 44).html_safe, edit_admin_donor_path(donation.donor)) %>
+                <%= link_to(truncate(donation.donor.name, :length => 44).html_safe, edit_admin_organization_path(donation.donor)) %>
               </h3>
             </div>
             <div class="date_box">
@@ -41,7 +41,7 @@
         <div id="donor_name" class="field">
           <%= f.label :donor_id, raw('DONOR NAME <strong>*</strong>') %>
           <span id="donor_name_input">
-            <%= f.select :donor_id, Donor.order(:name).map{|d| [d.name, d.id]} %>
+            <%= f.select :donor_id, Organization.with_donations.order(:name).map{|d| [d.name, d.id]} %>
             <div class="spinner"></div>
           </span>
         </div>

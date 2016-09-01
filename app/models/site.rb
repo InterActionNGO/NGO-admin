@@ -422,7 +422,7 @@ class Site < ActiveRecord::Base
   end
 
   def donors
-    Donor.find_by_sql("select d.* from donors as d where id in (
+    Organization.find_by_sql("select d.* from organizations as d where id in (
     select don.donor_id from (donations as don inner join projects as p on don.project_id=p.id) inner join projects_sites as ps on p.id=ps.project_id and site_id=#{self.id})")
   end
 
@@ -611,10 +611,10 @@ SQL
   end
 
   def donors_select
-    Donor.find_by_sql " SELECT distinct d.id as id , d.name as name
+    Organization.find_by_sql " SELECT distinct d.id as id , d.name as name
       FROM projects_sites AS ps JOIN projects as p ON ps.project_id = p.id AND ps.site_id = #{self.id} AND p.end_date > NOW()
       JOIN donations as dn ON dn.project_id = p.id
-      JOIN donors as d on d.id = dn.donor_id
+      JOIN organizations as d on d.id = dn.donor_id
       ORDER BY d.name ASC"
   end
 

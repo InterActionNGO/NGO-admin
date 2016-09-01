@@ -14,8 +14,8 @@ class Admin::OfficesController < Admin::AdminController
                   offices = Office
                   if params[:q].present? || params[:filter_donor_id].present?
                     if params[:filter_donor_id].present?
-                      offices = offices.where(["donor_id =?", params[:filter_donor_id]])
-                      @donor_filter = Donor.find(params[:filter_donor_id])
+                      offices = offices.where(["organization_id =?", params[:filter_donor_id]])
+                      @donor_filter = Organization.find(params[:filter_donor_id])
                     end
                     if params[:q].present?
                       q = "%#{params[:q].sanitize_sql!}%"
@@ -29,7 +29,7 @@ class Admin::OfficesController < Admin::AdminController
     @offices = @offices.paginate :per_page => 20,
                                                      :order => 'created_at DESC',
                                                      :page => params[:page]
-    @donors = [['All', nil]] + Donor.order('name').map{|d| [d.name, d.id]}
+    @donors = [['All', nil]] + Organization.with_donations.uniq.order('name').map{|d| [d.name, d.id]}
 
     respond_to do |format|
       format.html
@@ -41,7 +41,7 @@ class Admin::OfficesController < Admin::AdminController
 
   def new
     @office = Office.new(:donor_id => params[:donor_id])
-    @donors = Donor.all.map{|d| [d.name, d.id]}.sort{|a, b| a[0] <=> b[0]}
+    @donors = Organization.with_donations.uniq.map{|d| [d.name, d.id]}.sort{|a, b| a[0] <=> b[0]}
   end
 
   def create
@@ -60,7 +60,7 @@ class Admin::OfficesController < Admin::AdminController
 
   def edit
     @office = Office.find(params[:id])
-    @donors = Donor.all.map{|d| [d.name, d.id]}
+    @donors = Organization.with_donations.uniq.map{|d| [d.name, d.id]}
   end
 
   def update
@@ -83,6 +83,6 @@ class Admin::OfficesController < Admin::AdminController
   private
 
   def get_donor
-    @donor = Donor.find(params[:donor_id]) if params[:donor_id]
+    @donor = Organization.find(params[:donor_id]) if params[:donor_id]
   end
 end

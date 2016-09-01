@@ -80,14 +80,14 @@ class Country < ActiveRecord::Base
     limit = ''
     limit = "LIMIT #{limit}" if limit.present?
 
-    sql="select donors.* from donors
+    sql="select organizations.* from organizations
     inner join donations as d on donors.id=d.donor_id
     inner join projects as p on d.project_id = p.id and (p.end_date is null OR p.end_date > now())
     inner join projects_sites as ps on d.project_id=ps.project_id and ps.site_id=#{site.id}
     inner join countries_projects as cp on ps.project_id=cp.project_id and cp.country_id=#{self.id}
     #{limit}"
 
-    Donor.find_by_sql(sql).uniq
+    Organization.find_by_sql(sql).uniq
   end
 
   # to get only id and name
@@ -178,10 +178,10 @@ SQL
     profile[:name] = self.name
     profile[:projects] = self.projects.select([:id, :name, :the_geom, :start_date, :end_date])
     profile[:organizations] = Organization.joins('
-      INNER JOIN projects on projects.primary_organization_id = organizations.id 
+      INNER JOIN projects on projects.primary_organization_id = organizations.id
       INNER JOIN countries_projects on countries_projects.project_id = projects.id
       INNER JOIN countries on countries_projects.country_id = countries.id ').where('countries.id = ?', self.id).select(['organizations.name','count(projects.id)']).group('organizations.name')
-    profile[:donors] = Donor.joins([:donations => [:project => :countries]]).where('countries.id = ?', self.id).select(['donors.name','count(projects.id)']).group('donors.name')
+    profile[:donors] = Organization.joins([:donations_made => [:project => :countries]]).where('countries.id = ?', self.id).select(['organizations.name','count(projects.id)']).group('organizations.name')
     profile[:sectors] = Sector.joins([:projects => :countries]).where('countries.id = ?', self.id).select(['sectors.name','count(projects.id)']).group('sectors.name')
     profile
   end

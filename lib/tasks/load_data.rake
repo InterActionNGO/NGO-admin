@@ -308,24 +308,6 @@ namespace :iom do
             end
           end
 
-          # -->Donor
-          if(!row.donors.blank?)
-            parsed_donors = row.donors.split(",").map{|e|e.strip}
-            parsed_donors.each do |don|
-
-              donor= Donor.where("name ilike ?",don).first
-              if(!donor)
-                donor = Donor.new
-                donor.name =don
-                donor.save!
-              end
-              donation = Donation.new
-              donation.project = p
-              donation.donor = donor
-              p.donations << donation
-            end
-          end
-
           p.save!
 
           # -->Country
@@ -589,22 +571,6 @@ namespace :iom do
           parsed_clusters = row.clusters.split(",").map{|e|e.strip}
           parsed_clusters.each do |sec|
             p.clusters << Cluster.find_or_create_by_name(:name => sec)
-          end
-        end
-
-        # --> Donors
-        unless row.donors.blank?
-          parsed_donors = row.donors.split(",").map{|e|e.strip}
-          parsed_donors.each do |donor_name|
-            unless donor = Donor.where("name ilike ?", donor_name).first
-              donor = Donor.new
-              donor.name = donor_name
-              donor.save!
-            end
-            donation = Donation.new
-            donation.project = p
-            donation.donor = donor
-            p.donations << donation
           end
         end
 
