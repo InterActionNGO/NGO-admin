@@ -79,7 +79,7 @@ class Region < ActiveRecord::Base
         select distinct don.* from projects_sites as ps
         inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
         inner join donations as d on ps.project_id=d.project_id and ps.site_id=#{site.id}
-        inner join donors as don on don.id=d.donor_id
+        inner join organizations as don on don.id=d.donor_id
         inner join projects_regions as pr on ps.project_id=pr.project_id and region_id=#{self.id}
       ) as count
     SQL
@@ -93,11 +93,11 @@ class Region < ActiveRecord::Base
     sql="select distinct don.* from projects_sites as ps
     inner join donations as d on ps.project_id=d.project_id and ps.site_id=#{site.id}
     inner join projects as p on d.project_id = p.id and (p.end_date is null OR p.end_date > now())
-    inner join donors as don on don.id=d.donor_id
+    inner join organizations as don on don.id=d.donor_id
     inner join projects_regions as pr on ps.project_id=pr.project_id and region_id=#{self.id}
     #{limit}"
 
-    Donor.find_by_sql(sql)
+    Organization.find_by_sql(sql)
   end
 
   def donors_budget(site)

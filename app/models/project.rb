@@ -404,7 +404,7 @@ class Project < ActiveRecord::Base
           (SELECT '|' || array_to_string(array_agg(distinct name),'|') || '|' FROM c INNER JOIN countries_projects cp ON cp.project_id = p.id AND cp.country_id = c.id)
         ) AS location,
         (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM tags AS t INNER JOIN projects_tags AS pt ON t.id=pt.tag_id WHERE pt.project_id=p.id) AS project_tags,
-        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM donors AS d INNER JOIN donations AS dn ON d.id=dn.donor_id AND dn.project_id=p.id) AS donors,
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM organizations AS d INNER JOIN donations AS dn ON d.id=dn.donor_id AND dn.project_id=p.id) AS donors,
         p.organization_id as org_intervention_id,
         CASE WHEN p.end_date > current_date THEN 'active' ELSE 'closed' END AS status
         #{kml_select}
@@ -1225,7 +1225,7 @@ SQL
       self.donors.clear
       if @donors_sync.present? && (donors = @donors_sync.text2array)
         donors.each do |donor_name|
-          donor = Donor.where('lower(trim(name)) = lower(trim(?))', donor_name)
+          donor = Organization.where('lower(trim(name)) = lower(trim(?))', donor_name)
           if donor.blank?
             errors.add(:donor,  "#{donor_name} doesn't exist")
             next
@@ -1441,7 +1441,7 @@ SQL
     donors = {}
     sql = <<-SQL
       SELECT d.name donorName, SUM(dn.amount) as sum, pr.estimated_people_reached as people
-      FROM donors as d JOIN donations as dn ON dn.donor_id = d.id
+      FROM organizations as d JOIN donations as dn ON dn.donor_id = d.id
       JOIN projects as pr ON dn.project_id = pr.id
       WHERE pr.id IN (#{projects})
       GROUP BY d.name, pr.estimated_people_reached, dn.amount
@@ -1605,7 +1605,7 @@ SQL
                INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
                LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-               LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+               LEFT OUTER JOIN organizations d ON (d.id = dt.donor_id)
                INNER JOIN organizations o ON (p.primary_organization_id = o.id)
                INNER JOIN countries_projects cp ON (p.id = cp.project_id)
                INNER JOIN countries c ON (c.id = cp.country_id)
@@ -1859,7 +1859,7 @@ SQL
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
                  LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 LEFT OUTER JOIN organizations d ON (d.id = dt.donor_id)
                  INNER JOIN organizations o ON (p.primary_organization_id = o.id)
                  INNER JOIN countries_projects cp ON (p.id = cp.project_id)
                  INNER JOIN countries c ON (c.id = cp.country_id)
@@ -1882,7 +1882,7 @@ SQL
                  INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                  LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
                  LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-                 LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                 LEFT OUTER JOIN organizations d ON (d.id = dt.donor_id)
                  INNER JOIN organizations o ON (p.primary_organization_id = o.id)
                  INNER JOIN countries_projects cp ON (p.id = cp.project_id)
                  INNER JOIN countries c ON (c.id = cp.country_id)
@@ -1951,7 +1951,7 @@ SQL
                      INNER JOIN projects_sectors ps ON (p.id = ps.project_id)
                      LEFT OUTER JOIN sectors s ON (s.id = ps.sector_id)
                      LEFT OUTER JOIN donations dt ON (p.id = dt.project_id)
-                     LEFT OUTER JOIN donors d ON (d.id = dt.donor_id)
+                     LEFT OUTER JOIN organizations d ON (d.id = dt.donor_id)
                      INNER JOIN countries_projects cp ON (p.id = cp.project_id)
                      INNER JOIN countries c ON (c.id = cp.country_id)
                      WHERE true

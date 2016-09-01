@@ -11,12 +11,12 @@ class Cluster < ActiveRecord::Base
   has_and_belongs_to_many :projects
 
   def donors(site)
-    sql="select distinct d.* from donors as d
-    inner join donations as don on d.id=donor_id
+    sql="select distinct d.* from organizations as d
+    inner join donations as don on d.id=don.donor_id
     inner join clusters_projects as cp on don.project_id=cp.project_id and cp.cluster_id=#{self.id}
     inner join projects as p on cp.project_id=p.id and (p.end_date is null OR p.end_date > now())
     inner join projects_sites as ps on ps.project_id=don.project_id and ps.site_id=#{site.id}"
-    Donor.find_by_sql(sql)
+    Organization.find_by_sql(sql)
   end
 
   def self.custom_fields
