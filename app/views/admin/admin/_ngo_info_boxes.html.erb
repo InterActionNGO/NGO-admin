@@ -280,7 +280,7 @@
       <div class="header">
         <h2 class="museo_sans">Your Active Projects (7)</h2>
         <p>
-          <%= link_to(admin_projects_path) do %>View Projects<% end %>
+          <%= link_to(admin_projects_path(:status => "active")) do %>View All Active Projects<% end %>
         </p>
       </div>
     </div>
@@ -430,7 +430,7 @@
       <div class="header">
         <h2 class="museo_sans">Your Closed Projects (3)</h2>
         <p>
-          <%= link_to(admin_projects_path) do %>View Projects<% end %>
+          <%= link_to(admin_projects_path(:status => "closed")) do %>View All Closed Projects<% end %>
         </p>
       </div>
     </div>
