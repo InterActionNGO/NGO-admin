@@ -29,10 +29,7 @@ div.right {
   width: auto; }
 
 a {
-  display: inline-block;
-  text-decoration: none; }
-  a:focus {
-    outline: none; }
+  display: inline-block; }
 
 ul:focus, input:focus {
   outline: none; }
@@ -232,6 +229,8 @@ div.med div.header {
     height: auto; }
     div.med div.header span.buttons {
       width: auto; }
+    div.med div.header span.buttons a {
+      text-decoration: none; }
     div.med div.header span p {
       display: inline-block;
       zoom: 1;
@@ -273,8 +272,7 @@ div.med .info_list p {
   color: #666666 !important;
   letter-spacing: 0 !important; }
   div.med .info_list p a {
-    color: #EB3F40;
-    text-decoration: none; }
+    color: #EB3F40; }
     div.med .info_list p a:hover {
       color: #EB3F40;
       text-decoration: underline; }
@@ -306,6 +304,7 @@ div.add_new {
     margin: 0px;
     background: url("/app/images/backoffice/dashboard/add_bkg_a.png") repeat-x 0 0;
     text-align: center;
+    text-decoration: none;
     font: normal 27px "Akzidenz",Arial;
     color: #FFF; }
     div.add_new a:hover {
@@ -344,7 +343,8 @@ div.block div.med div.right {
         float: left;
         font: bold 15px Arial;
         color: #c15022;
-        padding: 0 0 0 20px; }
+        padding: 0 0 0 20px;
+        text-decoration: none; }
       div.block div.med div.right ul li p {
         float: left;
         margin: 2px 0 0 7px;
