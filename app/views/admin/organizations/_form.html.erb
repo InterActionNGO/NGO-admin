@@ -26,6 +26,21 @@
     </span>
   </div>
 
+  <!-- TODO: hook up these radio buttons -->
+  <div class="field">
+    <fieldset class="radio-group">
+      <label>
+        <input type="radio" name="org-locale" value="international">
+        International Organization
+      </label>
+
+      <label>
+        <input type="radio" name="org-locale" value="local">
+        Local Organization
+      </label>
+    </fieldset>
+  </div>
+
   <% if current_user.admin? %>
     <div class="field">
       <label>Organization ID  <strong>*</strong></label>
