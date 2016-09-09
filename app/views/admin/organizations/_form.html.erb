@@ -55,6 +55,10 @@
       <%= f.label :publishing_to_iati, "Publishing to IATI" %>
       <%= f.check_box :publishing_to_iati, :class=>"long" %>
     </div>
+    <div class="field">
+      <%= f.label :international, "International? (otherwise will be local)" %>
+      <%= f.check_box :international, :class=>"long" %>
+    </div>
   <% else %>
     <div class="field">
       <%= f.label :organization_type %>
