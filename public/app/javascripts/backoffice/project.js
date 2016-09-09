@@ -333,10 +333,10 @@ $(document).ready(function(ev){
 
 
 
-  $('#project_implementing_organization').chosen({
+  $('#project_implementer_ids').chosen({
     width: 420
   });
-  $('#project_partner_organizations').chosen({
+  $('#project_partner_ids').chosen({
     width: 420
   });
 

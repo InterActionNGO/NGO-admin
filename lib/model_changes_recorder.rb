@@ -38,6 +38,8 @@ module ModelChangesRecorder
         :how              => valid_changes.to_json,
         :when             => Time.now
       )
+    rescue
+      return
     end
 
     def record_new_associated_object(child)
