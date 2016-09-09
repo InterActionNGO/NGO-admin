@@ -21,6 +21,12 @@ body {
 span.clear {
   clear: both; }
 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 div.left {
   float: left;
   width: auto; }
@@ -30,6 +36,12 @@ div.right {
 
 a {
   display: inline-block; }
+
+.link-button {
+  color: #c15022;
+  font-size: 14px;
+  text-decoration: underline;
+}
 
 ul:focus, input:focus {
   outline: none; }
@@ -218,7 +230,7 @@ div.med div.header {
     border-bottom: 0;
     padding: 0; }
   div.med div.header h2 {
-    width: 740px; }
+    width: 720px; }
     div.med div.header h2 a {
       color: #EB3F40; }
       div.med div.header h2 a:hover {
@@ -857,9 +869,11 @@ div.med.information ul.bulleted_list li {
 div.med.information ol.countries_list,
 div.med.information ol.sectors_list {
   float: none;
+  margin: 30px 0;
 }
 div.med.information ol.countries_list li,
 div.med.information ol.sectors_list li {
+  color: #999999;
   display: list-item;
   float: left;
   margin: 0 0 5px;
@@ -876,18 +890,26 @@ div.med.information ol.sectors_list span.count {
   box-sizing: border-box;
   display: inline-block;
   font-size: 13px;
-  height: 30px;
+  height: 26px;
   margin-right: 6px;
-  padding: 8px 0;
+  padding: 6px 0;
   text-align: center;
   vertical-align: middle;
-  width: 30px;
+  width: 26px;
 }
-div.med.information ol.countries_list span.count,
-div.med.information ol.sectors_list span.count.active {
+div.med.information ol.countries_list span.count {
   background-color: #dddddd;
   border-color: #dddddd;
-  color: #458ba4;
+  color: #444444;
+  font-weight: bold;
+}
+div.med.information ol.sectors_list li.active {
+  color: #444444;
+}
+div.med.information ol.sectors_list li.active span.count {
+  background-color: #458ba4;
+  border-color: #458ba4;
+  color: #ffffff;
   font-weight: bold;
 }
 
