@@ -4375,12 +4375,13 @@ div.block.media div.med {
           height: 10px;
           background: url("/app/images/backoffice/backgrounds/bottom_media.png") repeat-y 0 0; }
     div.block.media div.med div.left div.add_media {
+      background-color: #cce599;
+      border: 1px solid #bfbfbf;
+      border-radius: 6px;
       float: left;
       margin: 20px 0 0 0;
       width: 526px;
-      height: 66px;
-      padding: 20px;
-      background: url("/app/images/backoffice/media/add_bkg.png") no-repeat center center; }
+      padding: 20px; }
       div.block.media div.med div.left div.add_media h3 {
         float: left;
         width: auto;
@@ -4407,10 +4408,9 @@ div.block.media div.med {
         div.block.media div.med div.left div.add_media form input {
           margin: 10px 0 0 0; }
           div.block.media div.med div.left div.add_media form input[type="file"] {
-            float: left;
             width: 250px; }
           div.block.media div.med div.left div.add_media form input[type="text"] {
-            float: left;
+            float: none;
             width: 452px;
             height: 16px;
             margin: 0;
@@ -4420,7 +4420,6 @@ div.block.media div.med {
             border: none;
             background: url("/app/images/backoffice/media/video_input.png") no-repeat 0 0; }
           div.block.media div.med div.left div.add_media form input[type="submit"] {
-            float: right;
             width: 56px;
             height: 26px;
             margin: 3px 0 0 0;
@@ -4433,23 +4432,17 @@ div.block.media div.med {
             div.block.media div.med div.left div.add_media form input[type="submit"]:hover {
               background-position: 0 -26px;
               cursor: pointer; }
-    div.block.media div.med div.left div.video form input[type="submit"],
-    div.block.media div.med div.left div.image form input[type="submit"] {
-      position: absolute;
-      right: 4px;
-      top: 0;
-      width: 56px;
-      height: 26px;
-      margin: 3px 0 0 0;
-      background: url("/app/images/backoffice/media/save.png") no-repeat 0 0;
-      border: none;
-      text-indent: -9999px;
-      font-size: 0;
+    div.block.media div.med div.left div.add_media .field label {
       display: block;
-      line-height: 0; }
-      div.block.media div.med div.left div#new_video form input[type="submit"]:hover {
-        background-position: 0 -26px;
-        cursor: pointer; }
+      margin-bottom: 5px;
+    }
+
+    div.block.media div.med div.left div.add_media .field,
+    div.block.media div.med div.left div.add_media .field.save {
+      clear: both;
+      float: none;
+      margin-top: 10px;
+    }
 div.block.media div.bottom {
   float: left;
   height: 15px;

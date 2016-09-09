@@ -72,14 +72,27 @@
         <% end -%>
 
         <div id="new_image upload_image" class="add_media">
-          <label for="image-upload-field">Upload a new image</label>
+          <h3>Add a new Image</h3>
+
           <% if !@resource.valid? && action_name != 'index' %>
             <p class="resource_error"><%= @resource.errors[:base] %></p>
           <% end %>
 
           <%= form_for([:admin, @element, @resource], :html => { :multipart => true }) do |f| %>
             <div class="field">
+              <label for="image-upload-field">Upload a new image</label>
               <%= f.file_field :picture, :id => "image-upload-field", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
+            </div>
+            <div class="field save">
+              <%= f.submit 'save' %>
+            </div>
+          <% end -%>
+
+          <!-- TODO - hook up form -->
+          <%= form_for([:admin, @element, @resource]) do |f| %>
+            <div class="field">
+              <label for="image-url-field">Add a new image by url</label>
+              <%= f.text_field :video_url, :id => "image-url-field", :placeholder => "Enter an Image URL", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
             </div>
             <div class="field save">
               <%= f.submit 'save' %>
@@ -88,7 +101,7 @@
         </div>
 
         <div class="add_media video">
-          <label for="video-url-field">Add a new video</label>
+          <h3>Add a new video</h3>
 
           <% if !@resource.valid? && action_name != 'index' %>
             <p class="resource_error"><%= @resource.errors[:base] %></p>
@@ -96,25 +109,8 @@
 
           <%= form_for([:admin, @element, @resource]) do |f| %>
             <div class="field">
+              <label for="video-url-field" class="">Add a new video</label>
               <%= f.text_field :video_url, :id => "video-url-field", :placeholder => "Enter a Vimeo or Youtube URL", :class => "video #{'error' if !@resource.valid? && action_name != 'index'}" %>
-            </div>
-            <div class="field save">
-              <%= f.submit 'save' %>
-            </div>
-          <% end -%>
-        </div>
-
-        <div class="add_media image">
-          <label for="image-url-field">Add a new image url</label>
-
-          <% if !@resource.valid? && action_name != 'index' %>
-            <p class="resource_error"><%= @resource.errors[:base] %></p>
-          <% end %>
-
-          <!-- TODO - hook up form -->
-          <%= form_for([:admin, @element, @resource]) do |f| %>
-            <div class="field">
-              <%= f.text_field :video_url, :id => "image-url-field", :placeholder => "Enter an Image URL", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
             </div>
             <div class="field save">
               <%= f.submit 'save' %>
