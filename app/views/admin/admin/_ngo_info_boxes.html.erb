@@ -73,7 +73,7 @@
 
       <!-- If projects ending in 3 months exist -->
       <div class="projects_list">
-        <h3 class="table_heading">2 projects ending in 3 months</h3>
+        <h3 class="table_heading">2 projects ending within 3 months</h3>
 
         <table collapse="0" class="condensed">
           <tbody>
@@ -82,7 +82,7 @@
                 <span>
                   <h4>
                     <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="#TODO">
+                    <a href="/admin/projects/19265/edit">
                       This is a Project
                     </a>
                   </h4>
@@ -124,7 +124,7 @@
                 <span>
                   <h4>
                     <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="#TODO">
+                    <a href="/admin/projects/19265/edit">
                       This is a Project
                     </a>
                   </h4>
@@ -167,7 +167,7 @@
 
       <!-- If projects ending between 3 and 6 months exist -->
       <div class="projects_list">
-        <h3 class="table_heading">1 project ending in 6 months</h3>
+        <h3 class="table_heading">1 project ending in 2 to 6 months</h3>
 
         <table collapse="0" class="condensed">
           <tbody>
@@ -176,7 +176,7 @@
                 <span>
                   <h4>
                     <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="#TODO">
+                    <a href="/admin/projects/19265/edit">
                       This is a Project
                     </a>
                   </h4>
@@ -219,7 +219,7 @@
 
       <!-- If projects ending between 6 and 12 months exist -->
       <div class="projects_list">
-        <h3 class="table_heading">1 project ending in 12 months</h3>
+        <h3 class="table_heading">1 project ending in 7 to 12 months</h3>
 
         <table collapse="0" class="condensed">
           <tbody>
@@ -228,7 +228,7 @@
                 <span>
                   <h4>
                     <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="#TODO">
+                    <a href="/admin/projects/19265/edit">
                       This is a Project
                     </a>
                   </h4>
@@ -287,18 +287,111 @@
 
     <div class="med information">
       <h3>Countries (3)</h3>
-      <ol class="countries_list">
+      <ol class="countries_list clearfix">
         <li>
           <span class="count">7</span>
-          <a href="#TODO">Bulgaria</a>
+          <!-- # here should be country ID -->
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Morocco<% end %>
         </li>
         <li>
           <span class="count">4</span>
-          <a href="#TODO">Afghanistan</a>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Iran<% end %>
         </li>
         <li>
           <span class="count">4</span>
-          <a href="#TODO">Albania</a>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Uzbekistan<% end %>
+        </li>
+        <li>
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Afghanistan<% end %>
+        </li>
+        <li>
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Albania<% end %>
+        </li>
+        <li>
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Bulgaria<% end %>
+        </li>
+        <li>
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Congo<% end %>
+        </li>
+        <li>
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Dominica<% end %>
+        </li>
+        <li>
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Egypt<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Finland<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Guyana<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Haiti<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Italy<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Japan<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Latvia<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Myanmar<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Nauru<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Oman<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Pakistan<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Qatar<% end %>
+        </li>
+      </ol>
+
+      <!-- If over 20 countries, split the rest into other section -->
+      <button class="link-button">
+        Show More...
+      </button>
+
+      <ol class="countries_list clearfix">
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Romania<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Saint Helena<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Tonga<% end %>
+        </li>
+        <li>
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Ukraine<% end %>
         </li>
       </ol>
     </div>
@@ -307,38 +400,39 @@
       <hr>
 
       <h3>Sectors (8)</h3>
-      <ol class="sectors_list">
-        <li>
-          <span class="count active">7</span>
-          Agriculture
+      <ol class="sectors_list clearfix">
+        <li class="active">
+          <span class="count">7</span>
+          <!-- # here should be sector ID -->
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Agriculture<% end %>
         </li>
-        <li>
-          <span class="count active">5</span>
-          Economic Recovery and Development
+        <li class="active">
+          <span class="count">5</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Economic Recovery and Development<% end %>
         </li>
-        <li>
-          <span class="count active">3</span>
-          Health
+        <li class="active">
+          <span class="count">3</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Health<% end %>
         </li>
-        <li>
-          <span class="count active">2</span>
-          Human Rights Democracy and Governance
+        <li class="active">
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Human Rights Democracy and Governance<% end %>
         </li>
-        <li>
-          <span class="count active">1</span>
-          Communications/Technology
+        <li class="active">
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Communications/Technology<% end %>
         </li>
-        <li>
-          <span class="count active">1</span>
-          Education
+        <li class="active">
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Education<% end %>
         </li>
-        <li>
-          <span class="count active">1</span>
-          Other
+        <li class="active">
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Other<% end %>
         </li>
-        <li>
-          <span class="count active">1</span>
-          Water Sanitation and Hygiene
+        <li class="active">
+          <span class="count">1</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Water Sanitation and Hygiene<% end %>
         </li>
         <li>
           <span class="count">0</span>
@@ -350,27 +444,15 @@
         </li>
         <li>
           <span class="count">0</span>
+          Energy
+        </li>
+        <li>
+          <span class="count">0</span>
           Environment
         </li>
         <li>
           <span class="count">0</span>
           Food Aid
-        </li>
-        <li>
-          <span class="count">0</span>
-          Peace and Security
-        </li>
-        <li>
-          <span class="count">0</span>
-          Protection
-        </li>
-        <li>
-          <span class="count">0</span>
-          Shelter and Housing
-        </li>
-        <li>
-          <span class="count">0</span>
-          Energy
         </li>
         <li>
           <span class="count">0</span>
@@ -386,7 +468,19 @@
         </li>
         <li>
           <span class="count">0</span>
+          Peace and Security
+        </li>
+        <li>
+          <span class="count">0</span>
+          Protection
+        </li>
+        <li>
+          <span class="count">0</span>
           Safety Nets
+        </li>
+        <li>
+          <span class="count">0</span>
+          Shelter and Housing
         </li>
       </ol>
     </div>
@@ -440,10 +534,10 @@
 
     <div class="med information">
       <h3>Countries (1)</h3>
-      <ol class="countries_list">
+      <ol class="countries_list clearfix">
         <li>
           <span class="count">3</span>
-          <a href="#TODO">Afghanistan</a>
+          <%= link_to(admin_projects_path(:country => 320645)) do %>Afghanistan<% end %>
         </li>
       </ol>
     </div>
@@ -452,14 +546,14 @@
       <hr>
 
       <h3>Sectors (2)</h3>
-      <ol class="sectors_list">
-        <li>
-          <span class="count active">3</span>
-          Agriculture
+      <ol class="sectors_list clearfix">
+        <li class="active">
+          <span class="count">3</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Agriculture<% end %>
         </li>
-        <li>
-          <span class="count active">2</span>
-          Economic Recovery and Development
+        <li class="active">
+          <span class="count">2</span>
+          <%= link_to(admin_projects_path(:sector => 1)) do %>Economic Recovery and Development<% end %>
         </li>
         <li>
           <span class="count">0</span>
@@ -479,6 +573,10 @@
         </li>
         <li>
           <span class="count">0</span>
+          Energy
+        </li>
+        <li>
+          <span class="count">0</span>
           Environment
         </li>
         <li>
@@ -491,7 +589,19 @@
         </li>
         <li>
           <span class="count">0</span>
+          Humanitarian Aid
+        </li>
+        <li>
+          <span class="count">0</span>
           Human Rights Democracy and Governance
+        </li>
+        <li>
+          <span class="count">0</span>
+          Mining and Extractive Resources
+        </li>
+        <li>
+          <span class="count">0</span>
+          Non-food Relief Items (NFIs)
         </li>
         <li>
           <span class="count">0</span>
@@ -507,27 +617,11 @@
         </li>
         <li>
           <span class="count">0</span>
-          Shelter and Housing
-        </li>
-        <li>
-          <span class="count">0</span>
-          Energy
-        </li>
-        <li>
-          <span class="count">0</span>
-          Humanitarian Aid
-        </li>
-        <li>
-          <span class="count">0</span>
-          Mining and Extractive Resources
-        </li>
-        <li>
-          <span class="count">0</span>
-          Non-food Relief Items (NFIs)
-        </li>
-        <li>
-          <span class="count">0</span>
           Safety Nets
+        </li>
+        <li>
+          <span class="count">0</span>
+          Shelter and Housing
         </li>
         <li>
           <span class="count">0</span>
