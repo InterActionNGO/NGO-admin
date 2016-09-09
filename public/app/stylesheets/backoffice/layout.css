@@ -4396,9 +4396,8 @@ div.block.media div.med {
         text-shadow: 0 1px white;
         color: #333333; }
       div.block.media div.med div.left div.add_media p {
-        float: right;
         width: auto;
-        margin: 3px 0 0 0;
+        margin: 20px 0 0 0;
         padding: 0 0 15px;
         font: normal 15px Arial;
         color: #333333; }
