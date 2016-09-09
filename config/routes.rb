@@ -33,7 +33,7 @@ Iom::Application.routes.draw do
       put 'destroy_logo', :on => :member
       resource :activity
     end
-    resources :donors, only: [] do
+    resources :donors, :only => [] do
       resources :media_resources, :only => [:index, :create, :update, :destroy]
       resources :resources, :only => [:index, :create, :destroy]
       resources :offices, :only => [:index]

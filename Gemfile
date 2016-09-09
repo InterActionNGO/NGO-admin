@@ -7,6 +7,7 @@ gem 'rails', '3.0.19'
 # PostgreSQL
 gem 'pg'
 gem 'activerecord-postgis-adapter', '~> 0.6.6'
+gem 'rgeo', '~> 0.3.20'
 gem 'nofxx-georuby', :require => 'geo_ruby'
 gem 'newrelic_rpm'
 gem "will_paginate", "3.0.pre2"

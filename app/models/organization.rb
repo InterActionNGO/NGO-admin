@@ -72,13 +72,13 @@ class Organization < ActiveRecord::Base
 
   has_many :sites, :foreign_key => :project_context_organization_id
   has_many :donations, :through => :projects
-  has_many :donations_made, foreign_key: :donor_id, dependent: :destroy, class_name: "Donation"
-  has_many :offices, dependent: :destroy
-  has_many :all_donated_projects, through: :donations_made, source: :project, uniq: true
+  has_many :donations_made, :foreign_key => :donor_id, :dependent => :destroy, :class_name => "Donation"
+  has_many :offices, :dependent => :destroy
+  has_many :all_donated_projects, :through => :donations_made, :source => :project, :uniq => true
   has_one :user
 
-  scope :with_donations, -> { joins(:donations_made) }
-  scope :active_donated_projects, -> {joins(donations_made: :project).where("projects.end_date IS NULL OR (projects.end_date > ? AND projects.start_date <= ?)", Date.today.to_s(:db), Date.today.to_s(:db))}
+  scope :with_donations, joins(:donations_made)
+  scope :active_donated_projects, lambda { joins(:donations_made => :project).where("projects.end_date IS NULL OR (projects.end_date > ? AND projects.start_date <= ?)", Date.today.to_s(:db), Date.today.to_s(:db)) }
 
   accepts_nested_attributes_for :user, :reject_if => proc {|a| a['email'].blank?}, :allow_destroy => true
 
@@ -485,9 +485,9 @@ SQL
     profile = {}
     profile[:name] = self.name
     profile[:projects] = self.donations_made.map{|d| {:project => {'the_geom' => d.project.the_geom, 'id' => d.project.id, 'name' => d.project.name, 'budget' => d.project.budget, 'start_date' => d.project.start_date, 'end_date' => d.project.end_date}} }
-    profile[:organizations] = Organization.joins(:projects => :donations).where(donations: {donor_id: self.id}).select(['organizations.name','count(projects.id)']).group('organizations.name')
-    profile[:sectors] = Sector.joins(:projects => :donations).where(donations: {donor_id: self.id}).select(['sectors.name','count(projects.id)']).group('sectors.name')
-    profile[:countries] = Country.joins(:projects => :donations).where(donations: {donor_id: self.id}).select(['countries.name','count(projects.id)']).group('countries.name')
+    profile[:organizations] = Organization.joins(:projects => :donations).where(:donations => {:donor_id => self.id}).select(['organizations.name','count(projects.id)']).group('organizations.name')
+    profile[:sectors] = Sector.joins(:projects => :donations).where(:donations => {:donor_id => self.id}).select(['sectors.name','count(projects.id)']).group('sectors.name')
+    profile[:countries] = Country.joins(:projects => :donations).where(:donations => {:donor_id => self.id}).select(['countries.name','count(projects.id)']).group('countries.name')
 
     profile
   end
