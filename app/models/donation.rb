@@ -12,7 +12,7 @@
 class Donation < ActiveRecord::Base
 
   belongs_to :project
-  belongs_to :donor, class_name: 'Organization'
+  belongs_to :donor, :class_name => 'Organization'
   belongs_to :office
 
   validates_presence_of :donor, :project
