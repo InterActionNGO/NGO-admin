@@ -2705,6 +2705,9 @@ div.block.project_info div.med div.left form label {
   width: 100%;
   text-transform: uppercase;
   z-index: 1; }
+div.block.project_info div.med div.left form .field > p {
+  margin: 30px 0 0 3px;
+}
 div.block.project_info div.med div.left form p.title {
   float: left;
   margin: 20px 0 0 3px;
@@ -3948,6 +3951,9 @@ div.block.donations_project div.med {
         color: #333333;
         text-shadow: 0 1px white;
         margin: 22px 0 0 22px; }
+      div.block.donations_project div.med div.left form p {
+        margin: 10px 0 22px 22px; }
+      }
       div.block.donations_project div.med div.left form label {
         float: left;
         width: 400px;
