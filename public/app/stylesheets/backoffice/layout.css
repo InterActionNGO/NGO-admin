@@ -879,6 +879,9 @@ div.med.information ol.sectors_list li {
   margin: 0 0 5px;
   width: 50%;
 }
+div.med.information ol.countries_list li {
+  color: #444444;
+}
 div.med.information ol.countries_list a,
 div.med.information ol.sectors_list a {
   display: inline;
@@ -2681,8 +2684,9 @@ div.med .projects_list div.no_results {
       div.med .projects_list div.no_results p a:hover {
         color: #7F2023; }
 div.med .projects_list h3.table_heading {
+  border-bottom: 1px solid #CCCCCC;
   clear: both;
-  margin: 0;
+  margin: 0 0 -1px 0;
   padding-bottom: 10px;
   padding-top: 40px;
 }
@@ -6201,3 +6205,50 @@ div.disable_user {
     font: normal 15px Arial;
     color: #c15022;
     text-decoration: underline; }
+
+.collapse {
+  display: none;
+}
+.collapse.-expanded {
+  display: block;
+}
+table.collapse.-expanded {
+  display: table;
+}
+.collapse-button.-arrow {
+  background-color: #dddddd;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  display: inline-block;
+  float: right;
+  height: 25px;
+  position: relative;
+  top: -10px;
+  vertical-align: middle;
+  width: 25px;
+}
+.collapse-button.-arrow:after {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #444444;
+  content: '';
+  display: block;
+  height: 0;
+  left: 50%;
+  margin: 0 0 0 -6px;
+  position: relative;
+  top: 50%;
+  width: 0;
+}
+.collapse-button.-arrow.-expanded:after {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.collapse-button.-arrow span {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
