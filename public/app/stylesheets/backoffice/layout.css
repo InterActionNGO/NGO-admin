@@ -1045,6 +1045,17 @@ div.block.edit div.med {
         color: #c15022;
         text-transform: none;
         text-decoration: underline; }
+      div.block.edit div.med div.left fieldset.radio-group {
+        margin: 22px 0;
+      }
+      div.block.edit div.med div.left fieldset.radio-group label {
+        color: #333333;
+        font: inherit;
+        font-family: Helvetica, Arial;
+        font-size: 14px;
+        margin-top: 7px;
+        text-transform: none;
+      }
     div.block.edit div.med div.left div.common {
       float: left;
       width: 100%;
