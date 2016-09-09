@@ -854,15 +854,22 @@ div.med.information ul.bulleted_list li {
   margin: 0 0 10px;
 }
 
+div.med.information ol.countries_list,
 div.med.information ol.sectors_list {
   float: none;
 }
+div.med.information ol.countries_list li,
 div.med.information ol.sectors_list li {
   display: list-item;
   float: left;
   margin: 0 0 5px;
   width: 50%;
 }
+div.med.information ol.countries_list a,
+div.med.information ol.sectors_list a {
+  display: inline;
+}
+div.med.information ol.countries_list span.count,
 div.med.information ol.sectors_list span.count {
   border: 1px solid #cccccc;
   border-radius: 50%;
@@ -870,15 +877,18 @@ div.med.information ol.sectors_list span.count {
   display: inline-block;
   font-size: 13px;
   height: 30px;
-  margin-right: 10px;
+  margin-right: 6px;
   padding: 8px 0;
   text-align: center;
   vertical-align: middle;
   width: 30px;
 }
+div.med.information ol.countries_list span.count,
 div.med.information ol.sectors_list span.count.active {
-  border-color: #458ba4;
+  background-color: #dddddd;
+  border-color: #dddddd;
   color: #458ba4;
+  font-weight: bold;
 }
 
 div.med.information div.info {
