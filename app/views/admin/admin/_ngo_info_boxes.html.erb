@@ -72,10 +72,20 @@
       </div>
 
       <!-- If projects ending in 3 months exist -->
-      <div class="projects_list">
-        <h3 class="table_heading">2 projects ending within 3 months</h3>
+      <div class="projects_list clearfix">
+        <h3
+          class="table_heading">
+            2 projects ending within 1 month
 
-        <table collapse="0" class="condensed">
+            <button
+              class="collapse-button -arrow"
+              aria-controls="ending-projects-1"
+              aria-expanded="false">
+                <span>Expand</span>
+            </button>
+        </h3>
+
+        <table id="ending-projects-1" collapse="0" class="condensed collapse">
           <tbody>
             <tr>
               <td width="625">
@@ -166,10 +176,19 @@
       </div>
 
       <!-- If projects ending between 3 and 6 months exist -->
-      <div class="projects_list">
-        <h3 class="table_heading">1 project ending in 2 to 6 months</h3>
+      <div class="projects_list clearfix">
+        <h3 class="table_heading">
+          1 project ending in 2 to 6 months
 
-        <table collapse="0" class="condensed">
+          <button
+            class="collapse-button -arrow"
+            aria-controls="ending-projects-2"
+            aria-expanded="false">
+              <span>Expand</span>
+          </button>
+        </h3>
+
+        <table id="ending-projects-2" collapse="0" class="condensed collapse">
           <tbody>
             <tr>
               <td width="625">
@@ -218,10 +237,19 @@
       </div>
 
       <!-- If projects ending between 6 and 12 months exist -->
-      <div class="projects_list">
-        <h3 class="table_heading">1 project ending in 7 to 12 months</h3>
+      <div class="projects_list clearfix">
+        <h3 class="table_heading">
+          1 project ending in 7 to 12 months
 
-        <table collapse="0" class="condensed">
+          <button
+            class="collapse-button -arrow"
+            aria-controls="ending-projects-3"
+            aria-expanded="false">
+              <span>Expand</span>
+          </button>
+        </h3>
+
+        <table id="ending-projects-3" collapse="0" class="condensed collapse">
           <tbody>
             <tr>
               <td width="625">
@@ -372,11 +400,14 @@
       </ol>
 
       <!-- If over 20 countries, split the rest into other section -->
-      <button class="link-button">
-        Show More...
+      <button
+        class="link-button collapse-button"
+        aria-controls="more-active-countries"
+        aria-expanded="false">
+          Show More...
       </button>
 
-      <ol class="countries_list clearfix">
+      <ol id="more-active-countries" class="countries_list clearfix collapse">
         <li>
           <span class="count">1</span>
           <%= link_to(admin_projects_path(:country => 320645)) do %>Romania<% end %>
@@ -491,29 +522,19 @@
       <h3>Partners and Donors (5)</h3>
       <ul class="bulleted_list">
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
       </ul>
     </div>
@@ -526,9 +547,6 @@
     <div class="med information">
       <div class="header">
         <h2 class="museo_sans">Your Closed Projects (3)</h2>
-        <p>
-          <%= link_to(admin_projects_path(:status => "closed")) do %>View All Closed Projects<% end %>
-        </p>
       </div>
     </div>
 
@@ -537,7 +555,7 @@
       <ol class="countries_list clearfix">
         <li>
           <span class="count">3</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Afghanistan<% end %>
+          Afghanistan
         </li>
       </ol>
     </div>
@@ -549,11 +567,11 @@
       <ol class="sectors_list clearfix">
         <li class="active">
           <span class="count">3</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Agriculture<% end %>
+          Agriculture
         </li>
         <li class="active">
           <span class="count">2</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Economic Recovery and Development<% end %>
+          Economic Recovery and Development
         </li>
         <li>
           <span class="count">0</span>
@@ -636,14 +654,10 @@
       <h3>Partners and Donors (2)</h3>
       <ul class="bulleted_list">
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
         <li>
-          <a href="https://ngoaidmap.org/organizations/7">
             American Jewish Joint Distribution Committee
-          </a>
         </li>
       </ul>
     </div>
@@ -651,22 +665,45 @@
   </div>
 
 
-
   <div class="block">
-    <div class="one">
-      <p class="museo_sans"><%= number_with_delimiter(Project.count) %></p>
-      <p class="info museo_sans">NGO projects published</p>
+    <div class="top"></div>
+    <div class="med information">
+      <div class="header">
+        <h2 class="museo_sans">NGO Aid Map</h2>
+      </div>
     </div>
-    <div class="one">
-      <p class="museo_sans"><%= number_with_delimiter(Organization.count) %></p>
-      <p class="info museo_sans">NGOs in our database</p>
+    <div class="med information">
+      <ul>
+        <li>
+          <label>Global Total Projects</label>
+          <p class="museo_sans">
+            <%= number_with_delimiter(Project.count) %>
+          </p>
+        </li>
+        <li>
+          <label>Global Active Projects</label>
+          <p class="museo_sans">
+            <!-- TODO - make active, not total -->
+            <%= number_with_delimiter(Project.count) %>
+          </p>
+        </li>
+        <li>
+          <label>Reporting Organizations</label>
+          <p class="museo_sans">
+            <%= number_with_delimiter(Organization.count) %>
+          </p>
+        </li>
+        <li>
+          <label>Countries</label>
+          <p class="museo_sans">
+            <!-- TODO: # of countries with Active projects -->
+            80
+          </p>
+        </li>
+      </ul>
     </div>
-    <div class="one last">
-      <p class="museo_sans">80</p>
-      <p class="info museo_sans">countries</p>
-    </div>
+    <div class="bottom_white"></div>
   </div>
-
 
 
   <% @organization_sites.compact.each do |site| -%>
@@ -706,3 +743,18 @@
   <% end -%>
 
   </div>
+
+
+<script type="text/javascript">
+  $('.collapse-button').each(function() {
+    var controlsID = $(this).attr('aria-controls');
+    var $section   = $('#' + controlsID);
+
+    $(this).click(function() {
+      var expanded = $(this).attr('aria-expanded') === 'true' ? true : false;
+      $section.toggleClass('-expanded', !expanded);
+      $(this).toggleClass('-expanded', !expanded);
+      $(this).attr('aria-expanded', !expanded);
+    })
+  });
+</script>
