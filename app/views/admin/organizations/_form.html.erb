@@ -56,8 +56,9 @@
       <%= f.check_box :publishing_to_iati, :class=>"long" %>
     </div>
     <div class="field">
-      <%= f.label :international, "International? (otherwise will be local)" %>
-      <%= f.check_box :international, :class=>"long" %>
+      <%= f.label :international, "International/Local" %>
+      <label><%= f.radio_button(:international, "1", :checked => f.object.international?) %> International</label>
+      <label><%= f.radio_button(:international, "0", :checked => !f.object.international?) %> Local</label>
     </div>
   <% else %>
     <div class="field">
