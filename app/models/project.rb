@@ -932,14 +932,6 @@ SQL
     self.organization_id = value
   end
 
-  def international_partners_sync=(value)
-    self.implementing_organization = value
-  end
-
-  def local_partners_sync=(value)
-    self.partner_organizations = value
-  end
-
   def budget_numeric_sync=(value)
     @budget = value
   end
@@ -1062,6 +1054,14 @@ SQL
 
   def donors_sync=(value)
     @donors_sync = value || []
+  end
+
+  def partners_sync=(value)
+    @partners_sync = value || []
+  end
+
+  def implementers_sync=(value)
+    @implementers_sync = value || []
   end
 
   def geographical_scope_sync=(value)
@@ -1239,6 +1239,34 @@ SQL
             next
           end
           self.donors << donor
+        end
+      end
+    end
+
+    if @partners_sync
+      self.partnerships.clear
+      if @partners_sync.present? && (partner_names = @partners_sync.text2array)
+        partner_names.each do |partner_name|
+          partner = Organization.where('lower(trim(name)) = lower(trim(?))', partner_name)
+          if partner.blank?
+            errors.add(:partner,  "#{partner_name} doesn't exist")
+            next
+          end
+          self.partners << partner
+        end
+      end
+    end
+
+    if @implementers_sync
+      self.implementer_partnerships.clear
+      if @implementers_sync.present? && (implementer_names = @implementers_sync.text2array)
+        implementer_names.each do |implementer_name|
+          implementer = Organization.where('lower(trim(name)) = lower(trim(?))', implementer_name)
+          if implementer.blank?
+            errors.add(:implementer,  "#{implementer_name} doesn't exist")
+            next
+          end
+          self.implementers << implementer
         end
       end
     end
