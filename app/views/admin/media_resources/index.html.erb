@@ -44,7 +44,7 @@
               <li>
                 <div class="top_media"></div>
                 <div class="med_media">
-                  <%= image_tag(resource.picture.url(:medium)) %>
+                  <%= image_tag(resource.image_url) %>
                   <span class="over">
                     <%= link_to('UP', eval("admin_#{@element.class.name.singularize.downcase}_media_resource_path(@element, resource, :up => true)"), :method => :put, :class => 'up') %>
                     <%= link_to('Delete', eval("admin_#{@element.class.name.singularize.downcase}_media_resource_path(@element, resource)"), :method => :delete, :class=>"delete", :destroy_url => eval("admin_#{@element.class.name.singularize.downcase}_media_resource_path(@element, resource)"), :att_name => "image") %>
@@ -96,7 +96,7 @@
           <%= form_for([:admin, @element, @resource]) do |f| %>
             <div class="field">
               <label for="image-url-field">Add a new image by url</label>
-              <%= f.text_field :image_url, :id => "image-url-field", :placeholder => "Enter an Image URL", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
+              <%= f.text_field :external_image_url, :id => "image-url-field", :placeholder => "Enter an Image URL", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
             </div>
             <div class="field save">
               <%= f.submit 'save' %>

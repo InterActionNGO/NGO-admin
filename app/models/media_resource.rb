@@ -59,6 +59,14 @@ class MediaResource < ActiveRecord::Base
     video_url?
   end
 
+  def image_url
+    if external_image_url?
+      external_image_url
+    elsif picture?
+      picture.url(:medium)
+    end
+  end
+
   def video_url=(value)
     video_metadata = VideoProvider.get(value)
     write_attribute(:video_url, value)
@@ -102,7 +110,7 @@ class MediaResource < ActiveRecord::Base
     end
 
     def presence_of_picture_or_attachment
-      if video_url.blank? && picture_file_name.blank?
+      if video_url.blank? && picture_file_name.blank? && external_image_url.blank?
         errors[:base] << "You have to upload a picture or indicate a video URL"
       end
     end
