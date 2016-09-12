@@ -26,20 +26,6 @@
     </span>
   </div>
 
-  <!-- TODO: hook up these radio buttons -->
-  <div class="field">
-    <fieldset class="radio-group">
-      <label>
-        <input type="radio" name="org-locale" value="international">
-        International Organization
-      </label>
-
-      <label>
-        <input type="radio" name="org-locale" value="local">
-        Local Organization
-      </label>
-    </fieldset>
-  </div>
 
   <% if current_user.admin? %>
     <div class="field">
@@ -53,8 +39,6 @@
     </div>
 
   <% end %>
-
-
 
 
   <% if current_user.admin? %>
@@ -71,9 +55,17 @@
       <%= f.check_box :publishing_to_iati, :class=>"long" %>
     </div>
     <div class="field">
-      <%= f.label :international, "International/Local" %>
-      <label><%= f.radio_button(:international, "1", :checked => f.object.international?) %> International</label>
-      <label><%= f.radio_button(:international, "0", :checked => !f.object.international?) %> Local</label>
+      <fieldset class="radio-group">
+        <label>
+          <%= f.radio_button(:international, "1", :checked => f.object.international?) %>
+          International Organization
+        </label>
+
+        <label>
+          <%= f.radio_button(:international, "0", :checked => !f.object.international?) %>
+          Local Organization
+        </label>
+      </fieldset>
     </div>
   <% else %>
     <div class="field">
@@ -87,6 +79,19 @@
     <div class="field">
       <%= f.label :publishing_to_iati, "Publishing to IATI" %>
       <%= f.text_field :publishing_to_iati, :class=>"long is-readonly", :readonly => true %>
+    </div>
+    <div class="field">
+      <fieldset class="radio-group">
+        <label>
+          <%= f.radio_button(:international, "1", :checked => f.object.international?, :disabled => true) %>
+          International Organization
+        </label>
+
+        <label>
+          <%= f.radio_button(:international, "0", :checked => !f.object.international?, :disabled => true) %>
+          Local Organization
+        </label>
+      </fieldset>
     </div>
   <% end %>
 
