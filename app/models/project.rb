@@ -42,6 +42,8 @@
 #  prime_awardee_id                        :integer
 #  geographical_scope                      :string(255)      default("regional")
 
+require 'fixer_io'
+
 class Project < ActiveRecord::Base
   include ModelChangesRecorder
 
@@ -91,6 +93,7 @@ class Project < ActiveRecord::Base
   before_validation :strip_urls
   before_validation :nullify_budget
   before_validation :set_budget_value_date
+  before_save :set_budget_usd
 
   def countries
     Geolocation.where(:uid => self.geolocations.map{|g| g.country_uid}).uniq
@@ -108,6 +111,27 @@ class Project < ActiveRecord::Base
 
   def set_budget_value_date
     self.budget_value_date = self.start_date unless self.budget_value_date.present? || self.start_date.blank?
+  end
+
+  def set_budget_usd
+    if budget_changed? && budget? && budget_currency?
+      if budget_currency == "USD"
+        self.budget_usd = self.budget
+      else
+        if budget_value_date?
+          self.budget_usd = budget_coverted_to_usd
+        end
+      end
+    end
+  end
+
+  def budget_coverted_to_usd
+    conversion = FixerIo.new(budget_value_date, budget_currency, "USD").rate
+    if conversion.present?
+      budget.to_d * conversion.to_d
+    end
+  rescue
+    nil
   end
 
   def strip_urls

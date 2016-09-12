@@ -106,6 +106,9 @@ GEM
       posix-spawn (~> 0.3.6)
     highline (1.6.19)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.5.0)
     json (1.8.0)
     launchy (2.3.0)
@@ -121,6 +124,7 @@ GEM
       i18n (~> 0.4)
       json
     multi_json (1.7.7)
+    multi_xml (0.5.5)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -241,10 +245,11 @@ DEPENDENCIES
   garb
   geokit
   git-up
+  httparty (~> 0.11.0)
   launchy
   mail_view!
   memcache-client
-  money
+  money (~> 5.0.0)
   newrelic_rpm
   nofxx-georuby
   nokogiri (< 1.6.0)
