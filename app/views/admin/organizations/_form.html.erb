@@ -117,6 +117,52 @@
       <%= f.label :membership_status %>
       <%= f.select :membership_status, ["Current Member", "Former Member", "Non Member"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
     </div>
+
+    <!-- TODO - NEW FIELD -->
+    <div class="field">
+      <ul class="dates">
+        <li class="comboselect date">
+          <label>Member Add Date</label>
+
+          <span class="combo_date <%#= 'error' if @project.errors[:member_add_date].present? && action_name != 'new' %>">
+            <p>
+              <%#= @organization.member_add_date.present? ? @organization.member_add_date.strftime("%m/%d/%Y") : '' %>
+            </p>
+            <%#= errors_for @organization, :member_add_date %>
+            <div class="select_dates">
+              <p id="month" class="title">MONTH</p>
+              <p id="day" class="title">DAY</p>
+              <p id="year" class="title">YEAR</p>
+
+              <%#= f.date_select :member_add_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+            </div>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TODO - NEW FIELD -->
+    <div class="field">
+      <ul class="dates">
+        <li class="comboselect date">
+          <label>Member Drop Date</label>
+
+          <span class="combo_date <%#= 'error' if @project.errors[:member_drop_date].present? && action_name != 'new' %>">
+            <p>
+              <%#= @organization.member_drop_date.present? ? @organization.member_drop_date.strftime("%m/%d/%Y") : '' %>
+            </p>
+            <%#= errors_for @organization, :member_drop_date %>
+            <div class="select_dates">
+              <p id="month" class="title">MONTH</p>
+              <p id="day" class="title">DAY</p>
+              <p id="year" class="title">YEAR</p>
+
+              <%#= f.date_select :member_drop_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+            </div>
+          </span>
+        </li>
+      </ul>
+    </div>
   <% end %>
 
   <% if current_user.admin? %>
@@ -130,6 +176,16 @@
       <%= f.text_field :publishing_to_iati, :class=>"long is-readonly", :readonly => true %>
     </div>
   <% end %>
+
+  <div class="field">
+    <label for="annual_budget">Annual Budget</label>
+    <span class="input_short coin">
+      <p class="coin">$</p>
+      <input id="annual_budget" type="text" name="annual_budget" size="30">
+      <%#= f.text_field :annual_budget, :value => number_with_precision(f.object.annual_budget, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %>
+    </span>
+    <%#= errors_for @organization, :annual_budget %>
+  </div>
 
   <%= f.label :logo %>
   <div class="image_container">
@@ -346,4 +402,5 @@
   $(".chzn-organization-select").chosen({hide_search:true});
   $(".chzn-organization-id-source-select").chosen({ width: 420 });
   $(".chzn-membership-affiliation-select").chosen({ width: 420, hide_search:true });
+  $(".chzn-date-select").chosen();
 </script>
