@@ -270,6 +270,42 @@
   </div>
 
   <div class="common">
+    <h3>HQ ADDRESS</h3>
+
+    <div class="long_field">
+      <%= f.label :hq_address %>
+      <%= f.text_field :hq_address, :class=>"address" %>
+    </div>
+
+     <!-- TODO - NEW FIELD -->
+    <div class="long_field">
+      <label class="screen-reader" for="hq_address_2">HQ Address Line 2</label>
+      <input id="hq_address_2" class="address" type="text" name="hq_address_2">
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_city, "HQ CITY" %>
+      <%= f.text_field :contact_city, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :contact_zip, "HQ ZIP/POSTAL CODE" %>
+      <%= f.text_field :contact_zip, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_state, "HQ STATE" %>
+      <%= f.text_field :contact_state, :class=>"short" %>
+    </div>
+
+    <!-- Added Field Back - Needs countries array -->
+    <div class="short_field last">
+      <%= f.label :contact_country, "HQ Country" %>
+      <%= f.select :contact_country, [], {:include_blank => true}, :class=>"short chzn-select" %>
+    </div>
+  </div>
+
+  <div class="common">
     <h3>CONTACT INFORMATION</h3>
     <div class="short_field">
       <%= f.label :contact_name %>
@@ -290,30 +326,6 @@
       <%= f.label :contact_phone_number %>
       <%= f.text_field :contact_phone_number, :class=>"short" %>
     </div>
-  </div>
-  <div class="common">
-    <h3>HQ ADDRESS</h3>
-
-    <div class="long_field">
-      <%= f.label :hq_address %>
-      <%= f.text_field :hq_address, :class=>"address" %>
-    </div>
-
-    <div class="short_field">
-      <%= f.label :contact_city, "HQ CITY" %>
-      <%= f.text_field :contact_city, :class=>"short" %>
-    </div>
-
-    <div class="short_field last">
-      <%= f.label :contact_zip, "HQ ZIP/POSTAL CODE" %>
-      <%= f.text_field :contact_zip, :class=>"short" %>
-    </div>
-
-    <div class="short_field">
-      <%= f.label :contact_state, "HQ STATE" %>
-      <%= f.text_field :contact_state, :class=>"short" %>
-    </div>
-
   </div>
 
   <div class="common">
@@ -381,6 +393,12 @@
     <div class="long_field">
       <%= f.label :donation_address %>
       <%= f.text_field :donation_address, :class=>"address" %>
+    </div>
+
+    <!-- TODO - NEW FIELD -->
+    <div class="long_field">
+      <label class="screen-reader" for="donation_address_2">Donation Address Line 2</label>
+      <input id="donation_address_2" class="address" type="text" name="donation_address_2">
     </div>
 
     <div class="short_field">
