@@ -3543,15 +3543,17 @@ div.field_info {
       font: normal 13px Arial;
       color: #CCCCCC;
       text-transform: none !important; }
-div.block.project_info div.med div.left form span.input_short.coin p.coin {
+span.input_short.coin p.coin {
   float: left;
   margin: 10px 0 0 8px;
   font: normal 15px Arial;
   color: #999999; }
-div.block.project_info div.med div.left form span.input_short.coin input[type="text"] {
+span.input_short.coin input[type="text"] {
+  background-image: none;
   float: left;
   margin: 9px 0 0 5px;
-  width: 240px;
+  padding: 0;
+  width: 230px;
   height: 20px;
   border: none; }
 div.block.project_info div.med div.left form div.two_columns {
