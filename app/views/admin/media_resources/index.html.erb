@@ -96,7 +96,7 @@
           <%= form_for([:admin, @element, @resource]) do |f| %>
             <div class="field">
               <label for="image-url-field">Add a new image by url</label>
-              <%= f.text_field :video_url, :id => "image-url-field", :placeholder => "Enter an Image URL", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
+              <%= f.text_field :image_url, :id => "image-url-field", :placeholder => "Enter an Image URL", :class => "#{'error' if !@resource.valid? && action_name != 'index'}" %>
             </div>
             <div class="field save">
               <%= f.submit 'save' %>
