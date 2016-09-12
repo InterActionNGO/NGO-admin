@@ -23,6 +23,7 @@
 
   <% description = f.object.description || '' %>
   <div class="field">
+
     <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
     <span class="chars">
       <%= f.label :description, raw("Description<strong aria-label='required'>*</strong>") %>
@@ -30,19 +31,16 @@
     </span>
 
     <span class="textarea">
-      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')"%>
-    </span>
-
-    <!-- IF NOT REPORTING ORGANIZATION - NOT REQUIRED -->
-    <span class="chars">
-      <%= f.label :description, raw("Description") %>
-      <p id="chars_left_long" class="chars-counter"><%= 10000 - description.length %>  chars left</p>
-    </span>
-
-    <span class="textarea">
-      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')"%>
+      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')", :required=>true %>
     </span>
   </div>
+
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :organization_type, raw("Organization Type<strong aria-label='required'>*</strong>") %>
+      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select", :required=>true %>
+    </div>
+  <% end %>
 
   <div class="field">
     <fieldset class="radio-group">
@@ -58,29 +56,49 @@
     </fieldset>
   </div>
 
+  <div class="field">
+    <% if current_user.admin? %>
+        <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
+        <%= f.label :organization_id, raw("Organization ID<strong aria-label='required'>*</strong>") %>
+        <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}", :required=>true %>
+        <%= errors_for @organization, :organization_id %>
+    <% else %>
+      <!-- IF NOT ADMIN, READ-ONLY -->
+      <%= f.label :organization_id, raw("Organization ID") %>
+      <%= f.text_field :organization_id, :class=>"long is-readonly", :readonly => true %>
+    <% end %>
+  </div>
+
+  <!-- TODO - NEW FIELD -->
+  <div class="field">
+    <% if current_user.admin? %>
+      <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
+      <label for="organization_id_source">Organization ID Source<strong aria-label='required'>*</strong></label>
+      <select id="organization_id_source" class="chzn-organization-id-source-select" type="text" name="organization_id_source" required="true" multiple="multiple">
+        <option value="">Select an Option</option>
+        <option value="option-1">Option 1</option>
+        <option value="option-2">Option 2</option>
+      </select>
+      <%#= errors_for @organization, :organization_id_source %>
+    <% else %>
+      <!-- IF NOT ADMIN, READ-ONLY -->
+      <!-- SHOW AS READ-ONLY TEXT FIELD JUST TO DISPLAY VALUE -->
+      <label for="organization_id_source">Organization ID Source</label>
+      <input id="organization_id_source" class="long is-readonly" type="text" name="organization_id_source" readonly="true">
+    <% end %>
+  </div>
+
   <% if current_user.admin? %>
     <div class="field">
-      <label>Organization ID  <strong>*</strong></label>
-      <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}" %>
-      <%= errors_for @organization, :organization_id %>
+      <%= f.label :iati_organizationid, "IATI organization ID" %>
+      <%= f.text_field :iati_organizationid, :class=>"long" %>
     </div>
+
     <div class="field">
       <%= f.label :membership_status %>
       <%= f.select :membership_status, ["Current Member", "Former Member", "Non Member"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
     </div>
 
-  <% end %>
-
-
-  <% if current_user.admin? %>
-    <div class="field">
-      <%= f.label :organization_type %>
-      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select" %>
-    </div>
-    <div class="field">
-      <%= f.label :iati_organizationid, "IATI organization ID" %>
-      <%= f.text_field :iati_organizationid, :class=>"long" %>
-    </div>
     <div class="field">
       <%= f.label :publishing_to_iati, "Publishing to IATI" %>
       <%= f.check_box :publishing_to_iati, :class=>"long" %>
@@ -313,4 +331,5 @@
 <script type="text/javascript">
   $(".chzn-sectors-select").chosen({hide_search:true});
   $(".chzn-organization-select").chosen({hide_search:true});
+  $(".chzn-organization-id-source-select").chosen({hide_search:true});
 </script>
