@@ -328,10 +328,8 @@
       <div class="left_column">
         <div class="field">
           <p class="title">BUDGET CURRENCY </p>
-          <!-- TODO - fill in currencies -->
           <%= f.select :budget_currency,
-                [['USD', 'USD'], ['Euro', 'Euro']],
-                { :selected => (@project.budget_currency.present? ? @project.budget_currency : 'USD') } %>
+                Money::Currency.table.values.map{|c| ["#{c[:name]} (#{c[:iso_code]})", c[:iso_code]] }.sort_by{|o| o.first } %>
         </div> <!-- field -->
       </div>
 
@@ -399,9 +397,7 @@
   </label>
   <div id="project_budget" class="field">
     <span class="input_short coin">
-      <p class="coin">$</p>
       <%= f.text_field :budget, :value => number_with_precision(f.object.budget, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %>
-
     </span>
   </div>
   <div id="implement_org" class="field">
