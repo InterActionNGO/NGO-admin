@@ -826,7 +826,8 @@ div.med.information ul {
     float: left;
     width: auto;
     margin: 0 30px 0 0; }
-    div.med.information ul li label {
+    div.med.information ul li label,
+    div.med.information ul li legend {
       font: normal 11px Arial;
       color: #999999;
       text-transform: uppercase; }
@@ -1033,7 +1034,8 @@ div.block.edit div.med {
         background-position: 0 -214px; }
       div.block.edit div.med div.left textarea:focus {
         outline: none; }
-    div.block.edit div.med div.left label {
+    div.block.edit div.med div.left label,
+    div.block.edit div.med div.left legend {
       float: left;
       width: 100%;
       margin: 18px 0 0 1px;
