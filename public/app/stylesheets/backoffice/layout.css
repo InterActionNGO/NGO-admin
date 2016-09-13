@@ -826,7 +826,8 @@ div.med.information ul {
     float: left;
     width: auto;
     margin: 0 30px 0 0; }
-    div.med.information ul li label {
+    div.med.information ul li label,
+    div.med.information ul li legend {
       font: normal 11px Arial;
       color: #999999;
       text-transform: uppercase; }
@@ -1033,7 +1034,8 @@ div.block.edit div.med {
         background-position: 0 -214px; }
       div.block.edit div.med div.left textarea:focus {
         outline: none; }
-    div.block.edit div.med div.left label {
+    div.block.edit div.med div.left label,
+    div.block.edit div.med div.left legend {
       float: left;
       width: 100%;
       margin: 18px 0 0 1px;
@@ -3543,15 +3545,17 @@ div.field_info {
       font: normal 13px Arial;
       color: #CCCCCC;
       text-transform: none !important; }
-div.block.project_info div.med div.left form span.input_short.coin p.coin {
+span.input_short.coin p.coin {
   float: left;
   margin: 10px 0 0 8px;
   font: normal 15px Arial;
   color: #999999; }
-div.block.project_info div.med div.left form span.input_short.coin input[type="text"] {
+span.input_short.coin input[type="text"] {
+  background-image: none;
   float: left;
   margin: 9px 0 0 5px;
-  width: 240px;
+  padding: 0;
+  width: 230px;
   height: 20px;
   border: none; }
 div.block.project_info div.med div.left form div.two_columns {

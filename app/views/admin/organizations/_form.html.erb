@@ -9,53 +9,48 @@
   <% end -%>
 
   <div class="field">
-    <label>NAME  <strong>*</strong></label>
-    <%= f.text_field :name, :class=>"long #{'error' if !@organization.errors[:name].empty? && action_name != 'new'}" %>
+    <%= f.label :name, raw("NAME<strong aria-label='required'>*</strong>") %>
+    <%= f.text_field :name, :class=>"long #{'error' if !@organization.errors[:name].empty? && action_name != 'new'}", :required=>true %>
     <%= errors_for @organization, :name %>
   </div>
 
+  <!-- TODO - NEW FIELD -->
   <div class="field">
+    <label for="acronym">Acronym</label>
+    <input id="acronym" type="text" name="acronym">
+    <%#= errors_for @organization, :acronym %>
+  </div>
+
+  <% description = f.object.description || '' %>
+  <div class="field">
+
+    <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
     <span class="chars">
-      <%= f.label :description, raw("Description<strong>*</strong>") %>
-      <% description = f.object.description || '' %>
+      <%= f.label :description, raw("Description<strong aria-label='required'>*</strong>") %>
       <p id="chars_left_long" class="chars-counter"><%= 10000 - description.length %>  chars left</p>
     </span>
 
     <span class="textarea">
-      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')"%>
+      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')", :required=>true %>
     </span>
   </div>
 
+  <div class="common">
+    <h3>ORGANIZATION IDENTIFICATION INFORMATION</h3>
+    <div class="field">
+      <% if current_user.admin? %>
+        <%= f.label :organization_type, raw("Organization Type<strong aria-label='required'>*</strong>") %>
+        <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-select", :required=>true %>
+      <% else %>
+        <%= f.label :organization_type %>
+        <%= f.text_field :organization_type, :class=>"long is-readonly", :readonly => true %>
+      <% end %>
+    </div>
 
-  <% if current_user.admin? %>
-    <div class="field">
-      <label>Organization ID  <strong>*</strong></label>
-      <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}" %>
-      <%= errors_for @organization, :organization_id %>
-    </div>
-    <div class="field">
-      <%= f.label :membership_status %>
-      <%= f.select :membership_status, ["Current Member", "Former Member", "Non Member"], {:include_blank => true}, :class=>"long chzn-sectors-select" %>
-    </div>
-
-  <% end %>
-
-
-  <% if current_user.admin? %>
-    <div class="field">
-      <%= f.label :organization_type %>
-      <%= f.select :organization_type, Organization.types, {:include_blank => true}, :class=>"long chzn-organization-select" %>
-    </div>
-    <div class="field">
-      <%= f.label :iati_organizationid, "IATI organization ID" %>
-      <%= f.text_field :iati_organizationid, :class=>"long" %>
-    </div>
-    <div class="field">
-      <%= f.label :publishing_to_iati, "Publishing to IATI" %>
-      <%= f.check_box :publishing_to_iati, :class=>"long" %>
-    </div>
     <div class="field">
       <fieldset class="radio-group">
+        <legend>International/Local Designation</legend>
+
         <label>
           <%= f.radio_button(:international, "1", :checked => f.object.international?) %>
           International Organization
@@ -67,71 +62,214 @@
         </label>
       </fieldset>
     </div>
-  <% else %>
-    <div class="field">
-      <%= f.label :organization_type %>
-      <%= f.text_field :organization_type, :class=>"long is-readonly", :readonly => true %>
-    </div>
-    <div class="field">
-      <%= f.label :iati_organizationid, "IATI organization ID" %>
-      <%= f.text_field :iati_organizationid, :class=>"long is-readonly", :readonly => true %>
-    </div>
-    <div class="field">
-      <%= f.label :publishing_to_iati, "Publishing to IATI" %>
-      <%= f.text_field :publishing_to_iati, :class=>"long is-readonly", :readonly => true %>
-    </div>
-    <div class="field">
-      <fieldset class="radio-group">
-        <label>
-          <%= f.radio_button(:international, "1", :checked => f.object.international?, :disabled => true) %>
-          International Organization
-        </label>
 
-        <label>
-          <%= f.radio_button(:international, "0", :checked => !f.object.international?, :disabled => true) %>
-          Local Organization
-        </label>
-      </fieldset>
-    </div>
-  <% end %>
-
-  <%= f.label :logo %>
-  <div class="image_container">
-    <% if @organization.logo_file_name? %>
-      <%= image_tag(@organization.logo.url(:small)) %>
-    <% end -%>
     <div class="field">
-      <p>JPG, PNG and GIF supported</p>
-      <div id="bttn_upload">
-        <a class="upload_bttn"></a>
-        <div id="wrapper_input">
-          <%= f.file_field :logo %>
-        </div>
-      </div>
-      <% if @organization.logo_file_name? %>
-      <p class="remove_link"> or <%= link_to('remove', destroy_logo_admin_organization_path(@organization), :method => :put, :class => 'remove') %></p>
+      <% if current_user.admin? %>
+          <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
+          <%= f.label :organization_id, raw("Organization ID<strong aria-label='required'>*</strong>") %>
+          <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}", :required=>true %>
+          <%= errors_for @organization, :organization_id %>
+      <% else %>
+        <!-- IF NOT ADMIN, READ-ONLY -->
+        <%= f.label :organization_id, raw("Organization ID") %>
+        <%= f.text_field :organization_id, :class=>"long is-readonly", :readonly => true %>
+      <% end %>
+    </div>
+
+    <!-- TODO - NEW FIELD -->
+    <div class="field">
+      <% if current_user.admin? %>
+        <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
+        <label for="organization_id_source">Organization ID Source<strong aria-label='required'>*</strong></label>
+        <select data-placeholder="Select an Option" id="organization_id_source" class="chzn-organization-id-source-select" type="text" name="organization_id_source" required="true" multiple="multiple">
+          <option value="option-1">Option 1</option>
+          <option value="option-2">Option 2</option>
+        </select>
+        <%#= errors_for @organization, :organization_id_source %>
+      <% else %>
+        <!-- IF NOT ADMIN, READ-ONLY -->
+        <!-- SHOW AS READ-ONLY TEXT FIELD JUST TO DISPLAY VALUE -->
+        <label for="organization_id_source">Organization ID Source</label>
+        <input id="organization_id_source" class="long is-readonly" type="text" name="organization_id_source" readonly="true">
+      <% end %>
+    </div>
+
+    <div class="field">
+      <% if current_user.admin? %>
+        <%= f.label :iati_organizationid, "IATI organization ID" %>
+        <%= f.text_field :iati_organizationid, :class=>"long" %>
+      <% else %>
+        <%= f.label :iati_organizationid, "IATI organization ID" %>
+        <%= f.text_field :iati_organizationid, :class=>"long is-readonly", :readonly => true %>
       <% end %>
     </div>
   </div>
 
-  <div class="short_field">
-    <%= f.label :website %>
-    <%= f.text_field :website, :class=>"short website" %>
-  </div>
-  <a href="<%= @organization.website %>" class="preview no_margin" id="website" target="_blank">preview the link</a>
+  <div class="common">
+    <h3>MEMBERSHIP INFORMATION</h3>
 
-  <!-- <div class="short_field">
-    <%#= f.label :national_staff %>
-    <%#= f.text_field :national_staff, :value => number_with_precision(f.object.national_staff, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ','), :class => 'short' %>
-  </div>
+    <!-- TODO - NEW FIELD -->
+    <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
+    <% if current_user.admin? %>
+      <div class="field">
+        <label for="membership_affiliation">Membership Affiliation<strong aria-label='required'>*</strong></label>
+        <select id="membership_affiliation" class="chzn-select" type="text" name="membership_affiliation" required="true">
+          <option value="option-1">InterAction</option>
+        </select>
+      </div>
+    <% end %>
 
-  <div class="short_field last">
-    <%#= f.label :international_staff %>
-    <%#= f.text_field :international_staff, :class=>"short" %>
-  </div> -->
+    <% if current_user.admin? %>
+      <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
+      <div class="field">
+        <%= f.label :membership_status %>
+        <%= f.select :membership_status, ["Current Member", "Former Member", "Non Member"], {:include_blank => true}, :class=>"long chzn-select" %>
+      </div>
+
+      <!-- TODO - NEW FIELD -->
+      <div class="field">
+        <ul class="dates">
+          <li class="comboselect date">
+            <label>Member Add Date</label>
+
+            <span class="combo_date <%#= 'error' if @project.errors[:member_add_date].present? && action_name != 'new' %>">
+              <p>
+                <%#= @organization.member_add_date.present? ? @organization.member_add_date.strftime("%m/%d/%Y") : '' %>
+              </p>
+              <%#= errors_for @organization, :member_add_date %>
+              <div class="select_dates">
+                <p id="month" class="title">MONTH</p>
+                <p id="day" class="title">DAY</p>
+                <p id="year" class="title">YEAR</p>
+
+                <%#= f.date_select :member_add_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+              </div>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- TODO - NEW FIELD -->
+      <div class="field">
+        <ul class="dates">
+          <li class="comboselect date">
+            <label>Member Drop Date</label>
+
+            <span class="combo_date <%#= 'error' if @project.errors[:member_drop_date].present? && action_name != 'new' %>">
+              <p>
+                <%#= @organization.member_drop_date.present? ? @organization.member_drop_date.strftime("%m/%d/%Y") : '' %>
+              </p>
+              <%#= errors_for @organization, :member_drop_date %>
+              <div class="select_dates">
+                <p id="month" class="title">MONTH</p>
+                <p id="day" class="title">DAY</p>
+                <p id="year" class="title">YEAR</p>
+
+                <%#= f.date_select :member_drop_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+              </div>
+            </span>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if current_user.admin? %>
+      <div class="field">
+        <%= f.label :publishing_to_iati, "Publishing to IATI" %>
+        <%= f.check_box :publishing_to_iati, :class=>"long" %>
+      </div>
+    <% else %>
+      <div class="field">
+        <%= f.label :publishing_to_iati, "Publishing to IATI" %>
+        <%= f.text_field :publishing_to_iati, :class=>"long is-readonly", :readonly => true %>
+      </div>
+    <% end %>
+  </div>
 
   <div class="common">
-    <h3>SOCIAL LINK</h3>
+    <h3>BUDGET INFORMATION</h3>
+
+    <div class="field">
+      <label for="annual_budget">Annual Budget</label>
+      <span id="annual_budget" class="input_short coin">
+        <p class="coin">$</p>
+        <input id="annual_budget" type="text" name="annual_budget" size="30">
+        <%#= f.text_field :annual_budget, :value => number_with_precision(f.object.annual_budget, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %>
+      </span>
+      <%#= errors_for @organization, :annual_budget %>
+    </div>
+
+    <!-- TODO - NEW FIELD -->
+    <div class="field">
+      <label for="annual_budget_currency">Budget Currency</label>
+      <select id="annual_budget_currency" name="annual_budget_currency" class="chzn-select">
+        <option>USD</option>
+        <option>Euro</option>
+      </select>
+    </div>
+
+    <!-- TODO - NEW FIELD -->
+    <div class="field">
+      <ul class="dates">
+        <li class="comboselect date">
+          <label for="fiscal_year_end_date">Fiscal Year End Date</label>
+
+          <span class="combo_date <%#= 'error' if @project.errors[:fiscal_year_end_date].present? && action_name != 'new' %>">
+            <p>
+              <%#= @organization.fiscal_year_end_date.present? ? @organization.fiscal_year_end_date.strftime("%m/%d/%Y") : '' %>
+            </p>
+            <%#= errors_for @organization, :fiscal_year_end_date %>
+            <div class="select_dates">
+              <p id="month" class="title">MONTH</p>
+              <p id="day" class="title">DAY</p>
+              <p id="year" class="title">YEAR</p>
+
+              <%#= f.date_select :fiscal_year_end_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+            </div>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="common">
+    <h3>WEBSITE & SOCIAL ACCOUNTS</h3>
+
+    <%= f.label :logo %>
+    <div class="image_container">
+      <% if @organization.logo_file_name? %>
+        <%= image_tag(@organization.logo.url(:small)) %>
+      <% end -%>
+      <div class="field">
+        <p>JPG, PNG and GIF supported</p>
+        <div id="bttn_upload">
+          <a class="upload_bttn"></a>
+          <div id="wrapper_input">
+            <%= f.file_field :logo %>
+          </div>
+        </div>
+        <% if @organization.logo_file_name? %>
+        <p class="remove_link"> or <%= link_to('remove', destroy_logo_admin_organization_path(@organization), :method => :put, :class => 'remove') %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :website %>
+      <%= f.text_field :website, :class=>"short website" %>
+    </div>
+    <a href="<%= @organization.website %>" class="preview no_margin" id="website" target="_blank">preview the link</a>
+
+    <!-- <div class="short_field">
+      <%#= f.label :national_staff %>
+      <%#= f.text_field :national_staff, :value => number_with_precision(f.object.national_staff, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ','), :class => 'short' %>
+    </div>
+
+    <div class="short_field last">
+      <%#= f.label :international_staff %>
+      <%#= f.text_field :international_staff, :class=>"short" %>
+    </div> -->
+
     <div class="short_field">
       <%= f.label :twitter %>
       <%= f.text_field :twitter, :class=>"short twitter" %>
@@ -143,6 +281,42 @@
       <%= f.text_field :facebook, :class=>"long facebook" %>
     </div>
     <a href="<%= @organization.facebook %>" class="preview" id="facebook" target="_blank">preview the link</a>
+  </div>
+
+  <div class="common">
+    <h3>HQ ADDRESS</h3>
+
+    <div class="long_field">
+      <%= f.label :hq_address %>
+      <%= f.text_field :hq_address, :class=>"address" %>
+    </div>
+
+     <!-- TODO - NEW FIELD -->
+    <div class="long_field">
+      <label class="screen-reader" for="hq_address_2">HQ Address Line 2</label>
+      <input id="hq_address_2" class="address" type="text" name="hq_address_2">
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_city, "HQ CITY" %>
+      <%= f.text_field :contact_city, :class=>"short" %>
+    </div>
+
+    <div class="short_field last">
+      <%= f.label :contact_state, "HQ STATE" %>
+      <%= f.text_field :contact_state, :class=>"short" %>
+    </div>
+
+    <div class="short_field">
+      <%= f.label :contact_zip, "HQ ZIP/POSTAL CODE" %>
+      <%= f.text_field :contact_zip, :class=>"short" %>
+    </div>
+
+    <!-- Added Field Back - Needs countries array -->
+    <div class="short_field last">
+      <%= f.label :contact_country, "HQ Country" %>
+      <%= f.select :contact_country, [], {:include_blank => true}, :class=>"short chzn-select" %>
+    </div>
   </div>
 
   <div class="common">
@@ -166,30 +340,6 @@
       <%= f.label :contact_phone_number %>
       <%= f.text_field :contact_phone_number, :class=>"short" %>
     </div>
-  </div>
-  <div class="common">
-    <h3>HQ ADDRESS</h3>
-
-    <div class="long_field">
-      <%= f.label :hq_address %>
-      <%= f.text_field :hq_address, :class=>"address" %>
-    </div>
-
-    <div class="short_field">
-      <%= f.label :contact_city, "HQ CITY" %>
-      <%= f.text_field :contact_city, :class=>"short" %>
-    </div>
-
-    <div class="short_field last">
-      <%= f.label :contact_zip, "HQ ZIP/POSTAL CODE" %>
-      <%= f.text_field :contact_zip, :class=>"short" %>
-    </div>
-
-    <div class="short_field">
-      <%= f.label :contact_state, "HQ STATE" %>
-      <%= f.text_field :contact_state, :class=>"short" %>
-    </div>
-
   </div>
 
   <div class="common">
@@ -220,15 +370,14 @@
     </div>
 
     <div class="short_field last">
-      <%= f.label :main_data_contact_zip, 'DATA CONTACT ZIP' %>
-      <%= f.text_field :main_data_contact_zip, :class=>"short" %>
-    </div>
-
-    <div class="short_field">
       <%= f.label :main_data_contact_state, 'DATA CONTACT STATE' %>
       <%= f.text_field :main_data_contact_state, :class=>"short" %>
     </div>
 
+    <div class="short_field">
+      <%= f.label :main_data_contact_zip, 'DATA CONTACT ZIP' %>
+      <%= f.text_field :main_data_contact_zip, :class=>"short" %>
+    </div>
   </div>
 
   <div class="common">
@@ -259,19 +408,25 @@
       <%= f.text_field :donation_address, :class=>"address" %>
     </div>
 
+    <!-- TODO - NEW FIELD -->
+    <div class="long_field">
+      <label class="screen-reader" for="donation_address_2">Donation Address Line 2</label>
+      <input id="donation_address_2" class="address" type="text" name="donation_address_2">
+    </div>
+
     <div class="short_field">
       <%= f.label :city %>
       <%= f.text_field :city, :class=>"short" %>
     </div>
 
     <div class="short_field last">
-      <%= f.label :zip_code %>
-      <%= f.text_field :zip_code, :class=>"short" %>
+      <%= f.label :state %>
+      <%= f.text_field :state, :class=>"short" %>
     </div>
 
     <div class="short_field">
-      <%= f.label :state %>
-      <%= f.text_field :state, :class=>"short" %>
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, :class=>"short" %>
     </div>
 
     <div class="short_field last">
@@ -305,7 +460,11 @@
   </script>
 
 <% end -%>
+
 <script type="text/javascript">
-  $(".chzn-sectors-select").chosen({hide_search:true});
-  $(".chzn-organization-select").chosen({hide_search:true});
+  $(".chzn-select").chosen({ hide_search:true });
+  $(".chzn-date-select").chosen();
+
+  // don't hide search on this one
+  $(".chzn-organization-id-source-select").chosen({ width: 420 });
 </script>
