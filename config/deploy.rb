@@ -1,8 +1,7 @@
 require 'capistrano/ext/multistage'
-require 'config/boot'
 require "bundler/capistrano"
 
-set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
+set :rvm_ruby_string, "ruby-1.8.7-p374"
 set :use_sudo, false
 set :stages, %w(staging production smbtc)
 
@@ -11,19 +10,18 @@ APP_CONFIG = YAML.load_file("config/app_config.yml")['production']
 set :rollbar_token, APP_CONFIG['rollbar_token']
 set(:rollbar_env) { stage }
 
-set :normalize_asset_timestamps, false
+set(:rails_env) { fetch(:stage) }
 
-default_run_options[:pty] = true
+set :normalize_asset_timestamps, false
 
 set :application, 'ngo-admin'
 
 set :scm, :git
 # set :git_enable_submodules, 1
 set :git_shallow_clone, 1
-set :scm_user, 'ubuntu'
-set :repository, "git://github.com/simbiotica/iom.git"
-set :branch, "iati-refactor"
-ssh_options[:forward_agent] = true
+set :repository, "git@github.com:InterActionNGO/NGO-admin.git"
+set :branch, "master"
+set :ssh_options, {:forward_agent => true}
 set :keep_releases, 5
 
 # set :linode_staging_old, '178.79.131.104'
@@ -34,22 +32,13 @@ set :user,  'ubuntu'
 
 set :deploy_to, "/home/ubuntu/www/#{application}"
 
-after  "deploy:update_code", :symlinks, :run_migrations, :asset_packages, :set_staging_flag
+after  "deploy:update_code", :symlinks, :asset_packages, :set_staging_flag
 after "deploy:update", "deploy:cleanup"
 
 desc "Restart Application"
 deploy.task :restart, :roles => [:app] do
   run "touch #{current_path}/tmp/restart.txt"
   run "#{sudo} /etc/init.d/memcached force-reload"
-end
-
-desc "Migrations"
-task :run_migrations, :roles => [:app] do
-  run <<-CMD
-    export RAILS_ENV=production &&
-    cd #{release_path} &&
-    bundle exec rake db:migrate
-  CMD
 end
 
 desc "Uploads config yml files to app server's shared config folder"
@@ -67,10 +56,8 @@ end
 
 desc 'Create asset packages'
 task :asset_packages, :roles => [:app] do
- run <<-CMD
-   export RAILS_ENV=production &&
-   cd #{release_path} &&
-   npm install &&
-   bower install
- CMD
+  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm install"
+  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run bower install"
+  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run grunt build"
+  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run grunt"
 end
