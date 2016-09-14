@@ -1,14 +1,19 @@
-require "rvm/capistrano"
-set :default_stage, "smbtc"
-set :rvm_type, :system
+set :application, "ngoaidmap-admin"
+set :user, "deploy"
+set :deploy_via, :remote_cache
 
-set :use_sudo, false
+set :default_environment, {
+  'PATH' => '/opt/rbenv/shims:/usr/local/rbenv/shims:/opt/rbenv/bin:/usr/local/rbenv/bin:$PATH'
+}
 
-role :app, linode_staging
-role :web, linode_staging
-role :db,  linode_staging, :primary => true
+set(:deploy_to)  { "/var/www/#{application}/#{rails_env}" }
 
-set :branch, fetch(:branch, "iati-refactor")
+set :shared_children, %w(public/system log tmp/pids public/uploads)
+
+role :app, "198.199.86.239", :primary => true
+role :web, "198.199.86.239"
+
+server '198.199.86.239', :web, :app, :primary => true
 
 task :set_staging_flag, :roles => [:app] do
   run <<-CMD

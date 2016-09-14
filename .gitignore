@@ -1,6 +1,5 @@
 .DS_Store
 .bundle
-.ruby-version
 doc/
 db/*.sqlite3
 log/*.log

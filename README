@@ -24,8 +24,7 @@ NGOAIDMAP is a Ruby on Rails application. The dependencies are:
 == Installation (updated 8/18/2016)
 
 
-* Install ruby 1.9.3
-* `cp .ruby-version.sample .ruby-version`
+* Install ruby-1.8.7-p374
 * `bundle install`
 * `gem uninstall sass`
 * `gem uninstall compass`
