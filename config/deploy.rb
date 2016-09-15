@@ -52,6 +52,6 @@ desc 'Create asset packages'
 task :asset_packages, :roles => [:app] do
   run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm install"
   run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run bower install"
-  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run grunt build"
   run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run grunt"
+  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && npm run grunt build"
 end
