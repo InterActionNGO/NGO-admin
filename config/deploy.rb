@@ -35,12 +35,6 @@ set :deploy_to, "/home/ubuntu/www/#{application}"
 after  "deploy:update_code", :symlinks, :asset_packages, :set_staging_flag
 after "deploy:update", "deploy:cleanup"
 
-desc "Restart Application"
-deploy.task :restart, :roles => [:app] do
-  run "touch #{current_path}/tmp/restart.txt"
-  run "#{sudo} /etc/init.d/memcached force-reload"
-end
-
 desc "Uploads config yml files to app server's shared config folder"
 task :upload_yml_files, :roles => :app do
   run "mkdir #{deploy_to}/shared/config ; true"
