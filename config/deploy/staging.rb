@@ -26,3 +26,11 @@ desc "Restart Application"
 deploy.task :restart, :roles => [:app] do
   run "touch #{current_path}/tmp/restart.txt"
 end
+
+task :symlinks, :roles => [:app] do
+  run <<-CMD
+    ln -sf #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml;
+    ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml;
+    ln -sf #{shared_path}/node_modules #{release_path}/node_modules;
+  CMD
+end
