@@ -3,7 +3,7 @@ set :user, "deploy"
 set :deploy_via, :remote_cache
 
 set :default_environment, {
-  'PATH' => '/opt/rbenv/shims:/usr/local/rbenv/shims:/opt/rbenv/bin:/usr/local/rbenv/bin:/usr/local/nvm/versions/node/v4.3.1/bin:$PATH'
+  'PATH' => '/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/nvm/versions/node/v4.3.1/bin:$PATH'
 }
 
 set(:deploy_to)  { "/var/www/#{application}/#{rails_env}" }
@@ -20,4 +20,9 @@ task :set_staging_flag, :roles => [:app] do
     cd #{release_path} &&
     touch STAGING
   CMD
+end
+
+desc "Restart Application"
+deploy.task :restart, :roles => [:app] do
+  run "touch #{current_path}/tmp/restart.txt"
 end

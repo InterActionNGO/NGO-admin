@@ -33,7 +33,7 @@ gem 'httparty', '~> 0.11.0'
 group :development do
   gem 'git-up'
   gem 'capistrano', :require => false
-  gem 'rvm-capistrano'
+  gem 'rvm-capistrano', :require => false
   gem 'capistrano-ext'
   gem 'wirble'
   gem 'railroady'
