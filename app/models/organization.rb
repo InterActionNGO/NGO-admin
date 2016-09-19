@@ -84,6 +84,7 @@ class Organization < ActiveRecord::Base
 
   before_save :check_user_valid
   before_save :set_org_type_code
+  before_save :set_budget_usd
 
   validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :website_changed?
   validates_format_of :donation_website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :donation_website_changed?
@@ -503,6 +504,27 @@ SQL
 
   def set_org_type_code
     self.organization_type_code = Organization.type_codes[Organization.types.index(self.organization_type)] if self.organization_type.present?
+  end
+
+  def set_budget_usd
+    if budget_changed? && budget? && budget_currency?
+      if budget_currency == "USD"
+        self.budget_usd = self.budget
+      else
+        if budget_fiscal_year?
+          self.budget_usd = budget_coverted_to_usd
+        end
+      end
+    end
+  end
+
+  def budget_coverted_to_usd
+    conversion = FixerIo.new(budget_fiscal_year, budget_currency, "USD").rate
+    if conversion.present?
+      budget.to_d * conversion.to_d
+    end
+  rescue
+    nil
   end
 
   def projects_sectors_or_clusters(site, location_id = nil, organization_id = nil, is_region = false)
