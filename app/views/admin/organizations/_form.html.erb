@@ -14,11 +14,10 @@
     <%= errors_for @organization, :name %>
   </div>
 
-  <!-- TODO - NEW FIELD -->
   <div class="field">
-    <label for="acronym">Acronym</label>
-    <input id="acronym" type="text" name="acronym">
-    <%#= errors_for @organization, :acronym %>
+    <%= f.label :acronym %>
+    <%= f.text_field :acronym %>
+    <%= errors_for @organization, :acronym -%>
   </div>
 
   <% description = f.object.description || '' %>
@@ -76,6 +75,7 @@
       <% end %>
     </div>
 
+    <%- if false -%>
     <!-- TODO - NEW FIELD -->
     <div class="field">
       <% if current_user.admin? %>
@@ -93,6 +93,7 @@
         <input id="organization_id_source" class="long is-readonly" type="text" name="organization_id_source" readonly="true">
       <% end %>
     </div>
+    <%- end -%>
 
     <div class="field">
       <% if current_user.admin? %>
@@ -108,6 +109,7 @@
   <div class="common">
     <h3>MEMBERSHIP INFORMATION</h3>
 
+    <%- if false -%>
     <!-- TODO - NEW FIELD -->
     <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
     <% if current_user.admin? %>
@@ -118,6 +120,7 @@
         </select>
       </div>
     <% end %>
+    <%- end -%>
 
     <% if current_user.admin? %>
       <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
@@ -126,46 +129,44 @@
         <%= f.select :membership_status, ["Current Member", "Former Member", "Non Member"], {:include_blank => true}, :class=>"long chzn-select" %>
       </div>
 
-      <!-- TODO - NEW FIELD -->
       <div class="field">
         <ul class="dates">
           <li class="comboselect date">
-            <label>Member Add Date</label>
+            <%= f.label :membership_add_date %>
 
-            <span class="combo_date <%#= 'error' if @project.errors[:member_add_date].present? && action_name != 'new' %>">
+            <span class="combo_date <%= 'error' if f.object.errors[:membership_add_date].present? && action_name != 'new' -%>">
               <p>
-                <%#= @organization.member_add_date.present? ? @organization.member_add_date.strftime("%m/%d/%Y") : '' %>
+                <%= @organization.membership_add_date.present? ? @organization.membership_add_date.strftime("%m/%d/%Y") : '' -%>
               </p>
-              <%#= errors_for @organization, :member_add_date %>
+              <%= errors_for @organization, :membership_add_date -%>
               <div class="select_dates">
                 <p id="month" class="title">MONTH</p>
                 <p id="day" class="title">DAY</p>
                 <p id="year" class="title">YEAR</p>
 
-                <%#= f.date_select :member_add_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+                <%= f.date_select :membership_add_date, { :start_year => 1970, :end_year=>100.years.since.year, :include_blank => true, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  -%>
               </div>
             </span>
           </li>
         </ul>
       </div>
 
-      <!-- TODO - NEW FIELD -->
       <div class="field">
         <ul class="dates">
           <li class="comboselect date">
-            <label>Member Drop Date</label>
+            <%= f.label :membership_drop_date %>
 
-            <span class="combo_date <%#= 'error' if @project.errors[:member_drop_date].present? && action_name != 'new' %>">
+            <span class="combo_date <%= 'error' if f.object.errors[:membership_drop_date].present? && action_name != 'new' -%>">
               <p>
-                <%#= @organization.member_drop_date.present? ? @organization.member_drop_date.strftime("%m/%d/%Y") : '' %>
+                <%= @organization.membership_drop_date.present? ? @organization.membership_drop_date.strftime("%m/%d/%Y") : '' -%>
               </p>
-              <%#= errors_for @organization, :member_drop_date %>
+              <%= errors_for @organization, :membership_drop_date -%>
               <div class="select_dates">
                 <p id="month" class="title">MONTH</p>
                 <p id="day" class="title">DAY</p>
                 <p id="year" class="title">YEAR</p>
 
-                <%#= f.date_select :member_drop_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+                <%= f.date_select :membership_drop_date, { :start_year => 1970, :end_year=>100.years.since.year, :include_blank => true, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  -%>
               </div>
             </span>
           </li>
@@ -190,41 +191,36 @@
     <h3>BUDGET INFORMATION</h3>
 
     <div class="field">
-      <label for="annual_budget">Annual Budget</label>
+      <%= f.label :budget, "Annual Budget" %>
       <span id="annual_budget" class="input_short coin">
         <p class="coin">$</p>
-        <input id="annual_budget" type="text" name="annual_budget" size="30">
-        <%#= f.text_field :annual_budget, :value => number_with_precision(f.object.annual_budget, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %>
+        <%= f.text_field :budget, :size => 30 %>
       </span>
-      <%#= errors_for @organization, :annual_budget %>
+      <%= errors_for @organization, :budget -%>
     </div>
 
-    <!-- TODO - NEW FIELD -->
     <div class="field">
-      <label for="annual_budget_currency">Budget Currency</label>
-      <select id="annual_budget_currency" name="annual_budget_currency" class="chzn-select">
-        <option>USD</option>
-        <option>Euro</option>
-      </select>
+      <%= f.label :budget_currency %>
+      <%= f.select :budget_currency,
+            Money::Currency.table.values.map{|c| ["#{c[:name]} (#{c[:iso_code]})", c[:iso_code]] }.sort_by{|o| o.first }, {:include_blank => true}, {:class => 'chzn-select'} %>
     </div>
 
-    <!-- TODO - NEW FIELD -->
     <div class="field">
       <ul class="dates">
         <li class="comboselect date">
-          <label for="fiscal_year_end_date">Fiscal Year End Date</label>
+          <%= f.label :budget_fiscal_year, "Fiscal Year End Date" %>
 
-          <span class="combo_date <%#= 'error' if @project.errors[:fiscal_year_end_date].present? && action_name != 'new' %>">
+          <span class="combo_date <%= 'error' if f.object.errors[:budget_fiscal_year].present? && action_name != 'new' -%>">
             <p>
-              <%#= @organization.fiscal_year_end_date.present? ? @organization.fiscal_year_end_date.strftime("%m/%d/%Y") : '' %>
+              <%= @organization.budget_fiscal_year.present? ? @organization.budget_fiscal_year.strftime("%m/%d/%Y") : '' -%>
             </p>
-            <%#= errors_for @organization, :fiscal_year_end_date %>
+            <%= errors_for @organization, :budget_fiscal_year -%>
             <div class="select_dates">
               <p id="month" class="title">MONTH</p>
               <p id="day" class="title">DAY</p>
               <p id="year" class="title">YEAR</p>
 
-              <%#= f.date_select :fiscal_year_end_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
+              <%= f.date_select :budget_fiscal_year, { :start_year => 1970, :end_year=>100.years.since.year, :include_blank => true, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  -%>
             </div>
           </span>
         </li>
@@ -260,16 +256,6 @@
     </div>
     <a href="<%= @organization.website %>" class="preview no_margin" id="website" target="_blank">preview the link</a>
 
-    <!-- <div class="short_field">
-      <%#= f.label :national_staff %>
-      <%#= f.text_field :national_staff, :value => number_with_precision(f.object.national_staff, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ','), :class => 'short' %>
-    </div>
-
-    <div class="short_field last">
-      <%#= f.label :international_staff %>
-      <%#= f.text_field :international_staff, :class=>"short" %>
-    </div> -->
-
     <div class="short_field">
       <%= f.label :twitter %>
       <%= f.text_field :twitter, :class=>"short twitter" %>
@@ -291,10 +277,9 @@
       <%= f.text_field :hq_address, :class=>"address" %>
     </div>
 
-     <!-- TODO - NEW FIELD -->
     <div class="long_field">
-      <label class="screen-reader" for="hq_address_2">HQ Address Line 2</label>
-      <input id="hq_address_2" class="address" type="text" name="hq_address_2">
+      <%= f.label :hq_address %>
+      <%= f.text_field :hq_address2, :class=>"address" %>
     </div>
 
     <div class="short_field">
@@ -408,10 +393,9 @@
       <%= f.text_field :donation_address, :class=>"address" %>
     </div>
 
-    <!-- TODO - NEW FIELD -->
     <div class="long_field">
-      <label class="screen-reader" for="donation_address_2">Donation Address Line 2</label>
-      <input id="donation_address_2" class="address" type="text" name="donation_address_2">
+      <%= f.label :donation_address2 %>
+      <%= f.text_field :donation_address2, :class=>"address" %>
     </div>
 
     <div class="short_field">
