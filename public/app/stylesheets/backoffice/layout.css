@@ -891,6 +891,7 @@ div.med.information ol.sectors_list span.count {
   border: 1px solid #cccccc;
   border-radius: 50%;
   box-sizing: border-box;
+  color: #444444;
   display: inline-block;
   font-size: 13px;
   height: 26px;
@@ -900,15 +901,7 @@ div.med.information ol.sectors_list span.count {
   vertical-align: middle;
   width: 26px;
 }
-div.med.information ol.countries_list span.count {
-  background-color: #dddddd;
-  border-color: #dddddd;
-  color: #444444;
-  font-weight: bold;
-}
-div.med.information ol.sectors_list li.active {
-  color: #444444;
-}
+div.med.information ol.countries_list span.count,
 div.med.information ol.sectors_list li.active span.count {
   background-color: #458ba4;
   border-color: #458ba4;
