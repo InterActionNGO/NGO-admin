@@ -12,7 +12,7 @@ class Admin::AdminController < ApplicationController
     @changes_count          = ChangesHistoryRecord.count
 
     unless current_user.administrator?
-      organization = current_user.organization
+      @organization = organization = current_user.organization
 
       @organization_data = OpenStruct.new( {
         :name                  => organization.try(:name),
@@ -20,6 +20,7 @@ class Admin::AdminController < ApplicationController
         :closed_projects_count => organization.projects.closed.count,
         :website               => organization.website,
         :contact_information   => [organization.hq_address,
+                                   organization.hq_address2,
                                    organization.contact_city,
                                    organization.contact_zip,
                                    organization.contact_state
@@ -43,6 +44,7 @@ class Admin::AdminController < ApplicationController
           :active_projects_count => active_projects_count,
           :closed_projects_count => closed_projects_count,
           :donation_information  => [attributes.donation_address,
+                                    attributes.donation_address2,
                                     [attributes.zip_code,
                                     attributes.city,
                                     attributes.state].join(', '),

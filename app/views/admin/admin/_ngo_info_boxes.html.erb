@@ -39,21 +39,20 @@
         <li>
           <label>Active Projects</label>
           <p class="museo_sans">
-            <%#= @organization_data.active_projects_count %>
-            7
+            <%= @organization.projects.active.count -%>
           </p>
         </li>
         <li>
           <label>Closed Projects</label>
           <p class="museo_sans">
-            <%#= @organization_data.closed_projects_count %>
+            <%= @organization.projects.closed.count -%>
             3
           </p>
         </li>
         <li>
           <label>Total Projects</label>
           <p class="museo_sans">
-            <%#= @organization_data.closed_projects_count + @organization_data.active_projects_count %>
+            <%= @organization.projects.count -%>
             10
           </p>
         </li>
@@ -63,7 +62,7 @@
   </div>
 
 
-    <!-- If projects ending soon exist -->
+  <%- if @organization.projects.where("end_date > ?", 1.year.from_now.to_date).any? -%>
   <div class="block">
     <div class="top"></div>
     <div class="med information">
@@ -71,594 +70,169 @@
         <h2 class="museo_sans">Projects Ending Soon</h2>
       </div>
 
-      <!-- If projects ending in 3 months exist -->
-      <div class="projects_list clearfix">
-        <h3
-          class="table_heading">
-            2 projects ending within 1 month
+      <%= render :partial => 'ending_projects', :locals => {
+        :projects => @organization.projects.active.where("end_date < ?", 3.months.from_now.to_date),
+        :section_number => '1'
+      } %>
 
-            <button
-              class="collapse-button -arrow"
-              aria-controls="ending-projects-1"
-              aria-expanded="false">
-                <span>Expand</span>
-            </button>
-        </h3>
+      <%= render :partial => 'ending_projects', :locals => {
+        :projects => @organization.projects.where("end_date > ? AND end_date < ?", 3.months.from_now.to_date, 6.months.from_now.to_date),
+        :section_number => '2'
+      } %>
 
-        <table id="ending-projects-1" collapse="0" class="condensed collapse">
-          <tbody>
-            <tr>
-              <td width="625">
-                <span>
-                  <h4>
-                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="/admin/projects/19265/edit">
-                      This is a Project
-                    </a>
-                  </h4>
-                  <p class="margin">
-                    <a class="project_status active">Active</a>
-                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
-                    until Sep 30th, 2016
-                  </p>
-                </span>
-              </td>
-              <td width="150" class="odd center">
-<%
-=begin 
-%>
-                <% unless project.sectors.empty? %>
-                  <% if project.sectors.count == 1 %>
-                    <p><%= project.sectors.first.name %></p>
-                  <% else %>
-                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
-                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
-                  <% end %>
-                <% else %>
-                  <p>N/A</p>
-                <% end %>
-<%
-=end
-%>
-                <p>Economic Recovery and Development</p>
-              </td>
-              <td width="150" class="center">
-                <p>
-                  <%#= project.countries.map(&:name).to_sentence %>
-                  Haiti
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td width="625">
-                <span>
-                  <h4>
-                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="/admin/projects/19265/edit">
-                      This is a Project
-                    </a>
-                  </h4>
-                  <p class="margin">
-                    <a class="project_status active">Active</a>
-                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
-                    until Sep 30th, 2016
-                  </p>
-                </span>
-              </td>
-              <td width="150" class="odd center">
-<%
-=begin 
-%>
-                <% unless project.sectors.empty? %>
-                  <% if project.sectors.count == 1 %>
-                    <p><%= project.sectors.first.name %></p>
-                  <% else %>
-                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
-                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
-                  <% end %>
-                <% else %>
-                  <p>N/A</p>
-                <% end %>
-<%
-=end
-%>
-                <p>Economic Recovery and Development</p>
-              </td>
-              <td width="150" class="center">
-                <p>
-                  <%#= project.countries.map(&:name).to_sentence %>
-                  Haiti
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- If projects ending between 3 and 6 months exist -->
-      <div class="projects_list clearfix">
-        <h3 class="table_heading">
-          1 project ending in 2 to 6 months
-
-          <button
-            class="collapse-button -arrow"
-            aria-controls="ending-projects-2"
-            aria-expanded="false">
-              <span>Expand</span>
-          </button>
-        </h3>
-
-        <table id="ending-projects-2" collapse="0" class="condensed collapse">
-          <tbody>
-            <tr>
-              <td width="625">
-                <span>
-                  <h4>
-                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="/admin/projects/19265/edit">
-                      This is a Project
-                    </a>
-                  </h4>
-                  <p class="margin">
-                    <a class="project_status active">Active</a>
-                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
-                    until Sep 30th, 2016
-                  </p>
-                </span>
-              </td>
-              <td width="150" class="odd center">
-<%
-=begin 
-%>
-                <% unless project.sectors.empty? %>
-                  <% if project.sectors.count == 1 %>
-                    <p><%= project.sectors.first.name %></p>
-                  <% else %>
-                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
-                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
-                  <% end %>
-                <% else %>
-                  <p>N/A</p>
-                <% end %>
-<%
-=end
-%>
-                <p>Economic Recovery and Development</p>
-              </td>
-              <td width="150" class="center">
-                <p>
-                  <%#= project.countries.map(&:name).to_sentence %>
-                  Haiti
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- If projects ending between 6 and 12 months exist -->
-      <div class="projects_list clearfix">
-        <h3 class="table_heading">
-          1 project ending in 7 to 12 months
-
-          <button
-            class="collapse-button -arrow"
-            aria-controls="ending-projects-3"
-            aria-expanded="false">
-              <span>Expand</span>
-          </button>
-        </h3>
-
-        <table id="ending-projects-3" collapse="0" class="condensed collapse">
-          <tbody>
-            <tr>
-              <td width="625">
-                <span>
-                  <h4>
-                    <!-- <a href="<%#= edit_admin_project_path(project) %>"> -->
-                    <a href="/admin/projects/19265/edit">
-                      This is a Project
-                    </a>
-                  </h4>
-                  <p class="margin">
-                    <a class="project_status active">Active</a>
-                    <%#= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
-                    until Sep 30th, 2016
-                  </p>
-                </span>
-              </td>
-              <td width="150" class="odd center">
-<%
-=begin 
-%>
-                <% unless project.sectors.empty? %>
-                  <% if project.sectors.count == 1 %>
-                    <p><%= project.sectors.first.name %></p>
-                  <% else %>
-                    <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
-                    <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
-                  <% end %>
-                <% else %>
-                  <p>N/A</p>
-                <% end %>
-<%
-=end
-%>
-                <p>Economic Recovery and Development</p>
-              </td>
-              <td width="150" class="center">
-                <p>
-                  <%#= project.countries.map(&:name).to_sentence %>
-                  Haiti
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <%= render :partial => 'ending_projects', :locals => {
+        :projects => @organization.projects.where("end_date > ? AND end_date < ?", 6.months.from_now.to_date, 12.months.from_now.to_date),
+        :section_number => '3'
+      } %>
     </div>
     <div class="bottom_white"></div>
   </div>
-
+  <%- end -%>
 
 
   <div class="block">
     <div class="top"></div>
     <div class="med information">
       <div class="header">
-        <h2 class="museo_sans">Your Active Projects (7)</h2>
+        <h2 class="museo_sans">Your Active Projects (<%= @organization.projects.active.count %>)</h2>
         <p>
-          <%= link_to(admin_projects_path(:status => "active")) do %>View All Active Projects<% end %>
+          <%= link_to("View All Active Projects", admin_projects_path(:status => "active")) %>
         </p>
       </div>
     </div>
 
     <div class="med information">
-      <h3>Countries (3)</h3>
+      <% country_count = Geolocation.active.organizations(@organization.id).where(:adm_level => 0).uniq.count %>
+      <h3>Countries (<%= country_count %>)</h3>
       <ol class="countries_list clearfix">
-        <li>
-          <span class="count">7</span>
-          <!-- # here should be country ID -->
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Morocco<% end %>
-        </li>
-        <li>
-          <span class="count">4</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Iran<% end %>
-        </li>
-        <li>
-          <span class="count">4</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Uzbekistan<% end %>
-        </li>
-        <li>
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Afghanistan<% end %>
-        </li>
-        <li>
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Albania<% end %>
-        </li>
-        <li>
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Bulgaria<% end %>
-        </li>
-        <li>
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Congo<% end %>
-        </li>
-        <li>
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Dominica<% end %>
-        </li>
-        <li>
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Egypt<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Finland<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Guyana<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Haiti<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Italy<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Japan<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Latvia<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Myanmar<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Nauru<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Oman<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Pakistan<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Qatar<% end %>
-        </li>
+        <% Geolocation.active.organizations(@organization.id).group_by_project_count.limit(20).each do |geoloaction| %>
+          <li>
+            <span class="count"><%= geoloaction.project_counts %></span>
+            <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
+          </li>
+        <% end %>
       </ol>
 
-      <!-- If over 20 countries, split the rest into other section -->
-      <button
-        class="link-button collapse-button"
-        aria-controls="more-active-countries"
-        aria-expanded="false">
-          Show More...
-      </button>
+      <%- if country_count > 20 -%>
+        <button
+          class="link-button collapse-button"
+          aria-controls="more-active-countries"
+          aria-expanded="false">
+            Show More...
+        </button>
 
-      <ol id="more-active-countries" class="countries_list clearfix collapse">
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Romania<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Saint Helena<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Tonga<% end %>
-        </li>
-        <li>
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:country => 320645)) do %>Ukraine<% end %>
-        </li>
-      </ol>
+        <ol id="more-active-countries" class="countries_list clearfix collapse">
+          <% Geolocation.active.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
+            <li>
+              <span class="count"><%= geoloaction.project_counts %></span>
+              <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
+            </li>
+          <% end %>
+        </ol>
+      <% end %>
     </div>
 
     <div class="med information">
       <hr>
 
-      <h3>Sectors (8)</h3>
+      <h3>Sectors (<%= Sector.active.organizations(@organization.id).count  %>)</h3>
       <ol class="sectors_list clearfix">
-        <li class="active">
-          <span class="count">7</span>
-          <!-- # here should be sector ID -->
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Agriculture<% end %>
-        </li>
-        <li class="active">
-          <span class="count">5</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Economic Recovery and Development<% end %>
-        </li>
-        <li class="active">
-          <span class="count">3</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Health<% end %>
-        </li>
-        <li class="active">
-          <span class="count">2</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Human Rights Democracy and Governance<% end %>
-        </li>
-        <li class="active">
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Communications/Technology<% end %>
-        </li>
-        <li class="active">
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Education<% end %>
-        </li>
-        <li class="active">
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Other<% end %>
-        </li>
-        <li class="active">
-          <span class="count">1</span>
-          <%= link_to(admin_projects_path(:sector => 1)) do %>Water Sanitation and Hygiene<% end %>
-        </li>
-        <li>
-          <span class="count">0</span>
-          Communications
-        </li>
-        <li>
-          <span class="count">0</span>
-          Disaster Management
-        </li>
-        <li>
-          <span class="count">0</span>
-          Energy
-        </li>
-        <li>
-          <span class="count">0</span>
-          Environment
-        </li>
-        <li>
-          <span class="count">0</span>
-          Food Aid
-        </li>
-        <li>
-          <span class="count">0</span>
-          Humanitarian Aid
-        </li>
-        <li>
-          <span class="count">0</span>
-          Mining and Extractive Resources
-        </li>
-        <li>
-          <span class="count">0</span>
-          Non-food Relief Items (NFIs)
-        </li>
-        <li>
-          <span class="count">0</span>
-          Peace and Security
-        </li>
-        <li>
-          <span class="count">0</span>
-          Protection
-        </li>
-        <li>
-          <span class="count">0</span>
-          Safety Nets
-        </li>
-        <li>
-          <span class="count">0</span>
-          Shelter and Housing
-        </li>
+        <%- Sector.ordered_by_project_count_for_organization(@organization).each do |sector| -%>
+          <%- projects_count = sector.projects.active.organizations(@organization).count -%>
+          <li <%= 'class="active"'.html_safe if projects_count > 0 %>>
+            <span class="count"><%= projects_count %></span>
+            <%- if projects_count > 0 -%>
+              <%= link_to sector.name, admin_projects_path(:sector => sector.id) %>
+            <%- else -%>
+              <%= sector.name %>
+            <%- end -%>
+          </li>
+        <%- end -%>
       </ol>
     </div>
 
     <div class="med information">
       <hr>
 
-      <h3>Partners and Donors (5)</h3>
+      <%- all_active_partners_and_donors = @organization.all_active_partners_and_donors -%>
+      <h3>Partners and Donors (<%= all_active_partners_and_donors.size %>)</h3>
       <ul class="bulleted_list">
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
+        <%- all_active_partners_and_donors.each do |organization| -%>
+          <li><%= organization.name %></li>
+        <%- end -%>
       </ul>
     </div>
     <div class="bottom_white"></div>
   </div>
 
 
-    <div class="block">
+  <div class="block">
     <div class="top"></div>
     <div class="med information">
       <div class="header">
-        <h2 class="museo_sans">Your Closed Projects (3)</h2>
+        <h2 class="museo_sans">Your Closed Projects (<%= @organization.projects.active.count %>)</h2>
       </div>
     </div>
 
     <div class="med information">
-      <h3>Countries (1)</h3>
+      <% country_count = Geolocation.closed.organizations(@organization.id).where(:adm_level => 0).uniq.count %>
+      <h3>Countries (<%= country_count %>)</h3>
       <ol class="countries_list clearfix">
-        <li>
-          <span class="count">3</span>
-          Afghanistan
-        </li>
+        <% Geolocation.closed.organizations(@organization.id).group_by_project_count.limit(20).each do |geoloaction| %>
+          <li>
+            <span class="count"><%= geoloaction.project_counts %></span>
+            <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
+          </li>
+        <% end %>
       </ol>
+
+      <%- if country_count > 20 -%>
+        <button
+          class="link-button collapse-button"
+          aria-controls="more-active-countries"
+          aria-expanded="false">
+            Show More...
+        </button>
+
+        <ol id="more-active-countries" class="countries_list clearfix collapse">
+          <% Geolocation.active.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
+            <li>
+              <span class="count"><%= geoloaction.project_counts %></span>
+              <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
+            </li>
+          <% end %>
+        </ol>
+      <% end %>
     </div>
 
     <div class="med information">
       <hr>
 
-      <h3>Sectors (2)</h3>
+      <h3>Sectors (<%= Sector.closed.organizations(@organization.id).count %>)</h3>
       <ol class="sectors_list clearfix">
-        <li class="active">
-          <span class="count">3</span>
-          Agriculture
-        </li>
-        <li class="active">
-          <span class="count">2</span>
-          Economic Recovery and Development
-        </li>
-        <li>
-          <span class="count">0</span>
-          Communications
-        </li>
-        <li>
-          <span class="count">0</span>
-          Communications/Technology
-        </li>
-        <li>
-          <span class="count">0</span>
-          Disaster Management
-        </li>
-        <li>
-          <span class="count">0</span>
-          Education
-        </li>
-        <li>
-          <span class="count">0</span>
-          Energy
-        </li>
-        <li>
-          <span class="count">0</span>
-          Environment
-        </li>
-        <li>
-          <span class="count">0</span>
-          Food Aid
-        </li>
-        <li>
-          <span class="count">0</span>
-          Health
-        </li>
-        <li>
-          <span class="count">0</span>
-          Humanitarian Aid
-        </li>
-        <li>
-          <span class="count">0</span>
-          Human Rights Democracy and Governance
-        </li>
-        <li>
-          <span class="count">0</span>
-          Mining and Extractive Resources
-        </li>
-        <li>
-          <span class="count">0</span>
-          Non-food Relief Items (NFIs)
-        </li>
-        <li>
-          <span class="count">0</span>
-          Other
-        </li>
-        <li>
-          <span class="count">0</span>
-          Peace and Security
-        </li>
-        <li>
-          <span class="count">0</span>
-          Protection
-        </li>
-        <li>
-          <span class="count">0</span>
-          Safety Nets
-        </li>
-        <li>
-          <span class="count">0</span>
-          Shelter and Housing
-        </li>
-        <li>
-          <span class="count">0</span>
-          Water Sanitation and Hygiene
-        </li>
+        <%- Sector.ordered_by_project_count_for_organization(@organization, false).each do |sector| -%>
+          <%- projects_count = sector.projects.closed.organizations(@organization).count -%>
+          <li <%= 'class="active"'.html_safe if projects_count > 0 %>>
+            <span class="count"><%= projects_count %></span>
+            <%- if projects_count > 0 -%>
+              <%= link_to sector.name, admin_projects_path(:sector => sector.id) %>
+            <%- else -%>
+              <%= sector.name %>
+            <%- end -%>
+          </li>
+        <%- end -%>
       </ol>
     </div>
 
     <div class="med information">
       <hr>
 
-      <h3>Partners and Donors (2)</h3>
+      <%- all_closed_partners_and_donors = @organization.all_active_partners_and_donors -%>
+      <h3>Partners and Donors (<%= all_closed_partners_and_donors.size %>)</h3>
       <ul class="bulleted_list">
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
-        <li>
-            American Jewish Joint Distribution Committee
-        </li>
+        <%- all_closed_partners_and_donors.each do |organization| -%>
+          <li><%= organization.name %></li>
+        <%- end -%>
       </ul>
     </div>
     <div class="bottom_white"></div>
@@ -683,8 +257,7 @@
         <li>
           <label>Global Active Projects</label>
           <p class="museo_sans">
-            <!-- TODO - make active, not total -->
-            <%= number_with_delimiter(Project.count) %>
+            <%= number_with_delimiter(Project.active.count) %>
           </p>
         </li>
         <li>
@@ -696,8 +269,7 @@
         <li>
           <label>Countries</label>
           <p class="museo_sans">
-            <!-- TODO: # of countries with Active projects -->
-            80
+            <%= number_with_delimiter(Geolocation.active.where(:adm_level => 0).uniq.count) %>
           </p>
         </li>
       </ul>

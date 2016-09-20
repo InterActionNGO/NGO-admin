@@ -10,6 +10,10 @@ class Sector < ActiveRecord::Base
 
   has_and_belongs_to_many :projects
 
+  scope :organizations, lambda{|orgs| joins(:projects).joins('INNER JOIN organizations on projects.primary_organization_id = organizations.id').where(:organizations => {:id => orgs}) }
+  scope :active, lambda {joins(:projects).where("projects.end_date > ? AND projects.start_date < ?", Date.today.to_s(:db), Date.today.to_s(:db)).select("DISTINCT sectors.*")}
+  scope :closed, lambda {joins(:projects).where("projects.end_date < ?", Date.today.to_s(:db))}
+
   def donors(site)
     sql="select distinct d.* from organizations as d
     inner join donations as don on d.id=donor_id
@@ -17,6 +21,15 @@ class Sector < ActiveRecord::Base
     inner join projects as p on ps.project_id=p.id and (p.end_date is null OR p.end_date > now())
     inner join projects_sites as psi on psi.project_id=ps.project_id and psi.site_id=#{site.id}"
     Organization.find_by_sql(sql)
+  end
+
+  def self.ordered_by_project_count_for_organization(organization, active = true)
+    scope = active ? Project.active.organizations(organization) : Project.closed.organizations(organization)
+    ordered_by = scope.
+      joins(%q{INNER JOIN "projects_sectors" ON "projects".id = "projects_sectors".project_id}).
+      where(%q{"projects_sectors".sector_id = "sectors"."id"}).
+      select("COUNT(projects.id)").to_sql
+    order("(#{ordered_by}) DESC, sectors.name ASC")
   end
 
   def self.custom_fields
