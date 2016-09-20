@@ -1,0 +1,52 @@
+<% if projects.any? %>
+  <div class="projects_list clearfix">
+    <h3
+      class="table_heading">
+        <%= projects.count %> projects ending within 3 months
+
+        <button
+          class="collapse-button -arrow"
+          aria-controls="ending-projects-<%= section_number %>"
+          aria-expanded="false">
+            <span>Expand</span>
+        </button>
+    </h3>
+
+    <table id="ending-projects-<%= section_number %>" collapse="0" class="condensed collapse">
+      <tbody>
+        <% projects.each do |project| %>
+          <tr>
+            <td width="625">
+              <span>
+                <h4>
+                  <%= link_to edit_admin_project_path(project), project.title %>
+                </h4>
+                <p class="margin">
+                  <a class="project_status active">Active</a>
+                  <%= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") -%>
+                </p>
+              </span>
+            </td>
+            <td width="150" class="odd center">
+              <% unless project.sectors.empty? %>
+                <% if project.sectors.count == 1 %>
+                  <p><%= project.sectors.first.name %></p>
+                <% else %>
+                  <p><%= truncate(project.sectors.first.name, :length => 19) %></p>
+                  <p class="secondary"><%= "and #{project.sectors.count - 1} more" %></p>
+                <% end %>
+              <% else %>
+                <p>N/A</p>
+              <% end %>
+            </td>
+            <td width="150" class="center">
+              <p>
+                <%= project.countries.map(&:name).to_sentence -%>
+              </p>
+            </td>
+          </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+<% end %>
