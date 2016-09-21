@@ -3154,7 +3154,7 @@ div.block.project_info div.med div.left form ul.dates {
             width: 124px;
             height: 51px;
             margin: 10px 9px 0 10px; }
-          #organization_budget_fiscal_year_2i_chzn {
+          .select_dates .chzn-container:nth-child(5) {
             width: 124px !important;
           }
           .combo_date.clicked div.select_dates span.day {
@@ -3162,7 +3162,7 @@ div.block.project_info div.med div.left form ul.dates {
             width: 62px;
             height: 51px;
             margin: 10px 9px 0 8px; }
-          #organization_budget_fiscal_year_3i_chzn {
+          .select_dates .chzn-container:nth-child(7) {
             width: 62px !important;
           }
           .combo_date.clicked div.select_dates span.year {
@@ -3170,7 +3170,7 @@ div.block.project_info div.med div.left form ul.dates {
             width: 76px;
             height: 51px;
             margin: 10px 0 0 0; }
-          #organization_budget_fiscal_year_1i_chzn {
+          .select_dates .chzn-container:last-child {
             width: 76px !important;
           }
           .combo_date.clicked div.select_dates p.title {
