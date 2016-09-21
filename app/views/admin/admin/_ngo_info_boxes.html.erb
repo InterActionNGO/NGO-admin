@@ -107,7 +107,7 @@
       <ol class="countries_list clearfix">
         <% Geolocation.active.organizations(@organization.id).group_by_project_count.limit(20).each do |geoloaction| %>
           <li>
-            <span class="count"><%= geoloaction.project_counts %></span>
+            <span class="count"><%= geoloaction.projects_count %></span>
             <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
           </li>
         <% end %>
@@ -124,7 +124,7 @@
         <ol id="more-active-countries" class="countries_list clearfix collapse">
           <% Geolocation.active.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
             <li>
-              <span class="count"><%= geoloaction.project_counts %></span>
+              <span class="count"><%= geoloaction.projects_count %></span>
               <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
             </li>
           <% end %>
@@ -180,7 +180,7 @@
       <ol class="countries_list clearfix">
         <% Geolocation.closed.organizations(@organization.id).group_by_project_count.limit(20).each do |geoloaction| %>
           <li>
-            <span class="count"><%= geoloaction.project_counts %></span>
+            <span class="count"><%= geoloaction.projects_count %></span>
             <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
           </li>
         <% end %>
@@ -197,7 +197,7 @@
         <ol id="more-active-countries" class="countries_list clearfix collapse">
           <% Geolocation.active.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
             <li>
-              <span class="count"><%= geoloaction.project_counts %></span>
+              <span class="count"><%= geoloaction.projects_count %></span>
               <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
             </li>
           <% end %>
