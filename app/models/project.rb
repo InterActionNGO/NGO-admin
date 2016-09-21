@@ -1263,7 +1263,7 @@ SQL
             errors.add(:donor,  "#{donor_name} doesn't exist")
             next
           end
-          self.donors << donor
+          self.donors << donor unless self.donors.include?(donor)
         end
       end
     end
