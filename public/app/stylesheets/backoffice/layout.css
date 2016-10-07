@@ -4407,7 +4407,7 @@ div.block.media div.med {
           div.block.media div.med div.left ul li div.med_media span.over {
             position: absolute;
             display: none;
-            top: 50%;
+            bottom: 40px;
             left: 50%;
             margin: -37px 0 0 -104px;
             z-index: 10000;
