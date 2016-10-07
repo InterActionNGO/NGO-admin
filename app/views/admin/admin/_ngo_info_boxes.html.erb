@@ -62,7 +62,6 @@
   </div>
 
 
-  <%- if @organization.projects.where("end_date > ?", 1.year.from_now.to_date).any? -%>
   <div class="block">
     <div class="top"></div>
     <div class="med information">
@@ -70,24 +69,32 @@
         <h2 class="museo_sans">Projects Ending Soon</h2>
       </div>
 
-      <%= render :partial => 'ending_projects', :locals => {
-        :projects => @organization.projects.active.where("end_date < ?", 3.months.from_now.to_date),
-        :section_number => '1'
-      } %>
+      <%- if @organization.projects.active.where("end_date < ?", 1.year.from_now.to_date).any? -%>
 
-      <%= render :partial => 'ending_projects', :locals => {
-        :projects => @organization.projects.where("end_date > ? AND end_date < ?", 3.months.from_now.to_date, 6.months.from_now.to_date),
-        :section_number => '2'
-      } %>
+        <%= render :partial => 'ending_projects', :locals => {
+          :projects => @organization.projects.active.where("end_date < ?", 3.months.from_now.to_date),
+          :section_number => '1'
+        } %>
 
-      <%= render :partial => 'ending_projects', :locals => {
-        :projects => @organization.projects.where("end_date > ? AND end_date < ?", 6.months.from_now.to_date, 12.months.from_now.to_date),
-        :section_number => '3'
-      } %>
+        <%= render :partial => 'ending_projects', :locals => {
+          :projects => @organization.projects.where("end_date > ? AND end_date < ?", 3.months.from_now.to_date, 6.months.from_now.to_date),
+          :section_number => '2'
+        } %>
+
+        <%= render :partial => 'ending_projects', :locals => {
+          :projects => @organization.projects.where("end_date > ? AND end_date < ?", 6.months.from_now.to_date, 12.months.from_now.to_date),
+          :section_number => '3'
+        } %>
+
+      <%- else -%>
+        <div style="padding-top: 30px;">
+          <p>No projects are ending in the next 12 months.</p>
+        </div>
+      <%- end -%>
+
     </div>
     <div class="bottom_white"></div>
   </div>
-  <%- end -%>
 
 
   <div class="block">
