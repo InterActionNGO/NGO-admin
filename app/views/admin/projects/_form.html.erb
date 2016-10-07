@@ -405,38 +405,8 @@
     <p>If the organization is not listed here, you should complete and submit the new organization request form. You can access the form at <a href="http://bit.ly/2cpDqAk" style="display: inline;">http://bit.ly/2cpDqAk</a>.</p>
   </div>
 
-  <div id="implement_org" class="field">
-    <label>INTERNATIONAL PARTNERS
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>International Partners</h3>
-            <span class="scroll">
-            <p>Name(s) of international, non-local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods. Multiple entries should be separated by a comma.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
-    <span class="input">
-      <%= f.collection_select :implementer_ids,
-        Organization.order(:name), :id, :name,
-        { :include_blank => true },
-        :multiple => true,
-        'data-placeholder' => 'Choose a Partner...'
-      %>
-    </span>
-  </div>
   <div id="partner_org" class="field">
-    <label>LOCAL PARTNERS
+    <label>PARTNERS
       <strong>&nbsp;</strong>
       <!-- FIELD DESCRIPTION -->
       <div class="field_info">
@@ -446,7 +416,7 @@
             <a href="#close">x</a>
           </div>
           <div class="bottom">
-            <h3>Local Partners</h3>
+            <h3>Partners</h3>
             <span class="scroll">
             <p>Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods. Multiple entries should be separated by a comma.</p>
             </span>
