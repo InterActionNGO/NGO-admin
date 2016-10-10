@@ -395,9 +395,13 @@ SQL
     end
   end
 
-  def budget(site)
-    atts_for_site = attributes_for_site(site)
-    return (atts_for_site[:usg_funding].to_f || 0) + (atts_for_site[:private_funding].to_f || 0) + (atts_for_site[:other_funding].to_f || 0)
+  def budget(site = nil)
+    if site
+      atts_for_site = attributes_for_site(site)
+      return (atts_for_site[:usg_funding].to_f || 0) + (atts_for_site[:private_funding].to_f || 0) + (atts_for_site[:other_funding].to_f || 0)
+    else
+      self[:budget]
+    end
   end
 
   # to get only id and name

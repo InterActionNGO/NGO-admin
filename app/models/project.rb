@@ -1256,14 +1256,22 @@ SQL
 
     if @donors_sync
       self.donors.clear
-      if @donors_sync.present? && (donors = @donors_sync.text2array)
-        donors.each do |donor_name|
-          donor = Organization.where('lower(trim(name)) = lower(trim(?))', donor_name)
+      if @donors_sync.present? && (donors_list = @donors_sync.text2array)
+        donors_list.each do |donor_name|
+          donor = Organization.where('lower(trim(name)) = lower(trim(?))', donor_name).first
           if donor.blank?
             errors.add(:donor,  "#{donor_name} doesn't exist")
             next
           end
-          self.donors << donor unless self.donors.include?(donor)
+          Rails.logger.info(self.donors.map(&:id).inspect)
+          Rails.logger.info(donor.inspect)
+          begin
+            self.donors << donor unless self.donors.include?(donor)
+          rescue => e
+            puts e.inspect
+            puts e.record.inspect
+            raise
+          end
         end
       end
     end
