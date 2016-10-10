@@ -526,7 +526,7 @@ SQL
   def set_budget_usd
     if budget_changed? && budget? && budget_currency?
       if budget_currency == "USD"
-        self.budget_usd = self.budget
+        self.budget_usd = self[:budget]
       else
         if budget_fiscal_year?
           self.budget_usd = budget_coverted_to_usd
