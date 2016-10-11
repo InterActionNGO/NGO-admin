@@ -61,8 +61,6 @@ class Project < ActiveRecord::Base
   has_many :donors, :through => :donations
   has_many :partnerships, :dependent => :destroy
   has_many :partners, :through => :partnerships
-  has_many :implementer_partnerships, :dependent => :destroy
-  has_many :implementers, :through => :implementer_partnerships
   has_many :cached_sites, :class_name => 'Site', :finder_sql => 'select sites.* from sites, projects_sites where projects_sites.project_id = #{id} and projects_sites.site_id = sites.id'
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
@@ -1085,10 +1083,6 @@ SQL
     @partners_sync = value || []
   end
 
-  def implementers_sync=(value)
-    @implementers_sync = value || []
-  end
-
   def geographical_scope_sync=(value)
     @geographical_scope_sync = value || 'specific_locations'
   end
@@ -1286,20 +1280,6 @@ SQL
             next
           end
           self.partners << partner
-        end
-      end
-    end
-
-    if @implementers_sync
-      self.implementer_partnerships.clear
-      if @implementers_sync.present? && (implementer_names = @implementers_sync.text2array)
-        implementer_names.each do |implementer_name|
-          implementer = Organization.where('lower(trim(name)) = lower(trim(?))', implementer_name)
-          if implementer.blank?
-            errors.add(:implementer,  "#{implementer_name} doesn't exist")
-            next
-          end
-          self.implementers << implementer
         end
       end
     end

@@ -117,7 +117,6 @@ class Organization < ActiveRecord::Base
   def all_active_partners_and_donors
     [
       projects.active.map(&:partners),
-      projects.active.map(&:implementers),
       projects.active.map(&:donors)
     ].flatten.compact.uniq
   end
@@ -125,7 +124,6 @@ class Organization < ActiveRecord::Base
   def all_closed_partners_and_donors
     [
       projects.closed.map(&:partners),
-      projects.closed.map(&:implementers),
       projects.closed.map(&:donors)
     ].flatten.compact.uniq
   end
