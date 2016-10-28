@@ -404,8 +404,6 @@ class Project < ActiveRecord::Base
         p.description as project_description,
         primary_organization_id,
         o.name AS organization,
-        implementing_organization as international_partners,
-        partner_organizations AS local_partners,
         cross_cutting_issues,
         p.start_date,
         p.end_date,
@@ -436,6 +434,8 @@ class Project < ActiveRecord::Base
         ) AS location,
         (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM tags AS t INNER JOIN projects_tags AS pt ON t.id=pt.tag_id WHERE pt.project_id=p.id) AS project_tags,
         (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM organizations AS d INNER JOIN donations AS dn ON d.id=dn.donor_id AND dn.project_id=p.id) AS donors,
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM organizations AS o INNER JOIN partnerships ON o.id=partnerships.partner_id AND partnerships.project_id=p.id AND o.international IS TRUE) AS international_partners,
+        (SELECT '|' || array_to_string(array_agg(distinct name),'|') ||'|' FROM organizations AS o INNER JOIN partnerships ON o.id=partnerships.partner_id AND partnerships.project_id=p.id AND o.international IS NOT TRUE) AS local_partners,
         p.organization_id as org_intervention_id,
         CASE WHEN p.end_date > current_date THEN 'active' ELSE 'closed' END AS status
         #{kml_select}
