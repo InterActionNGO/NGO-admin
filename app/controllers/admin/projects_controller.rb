@@ -68,18 +68,6 @@ class Admin::ProjectsController < Admin::AdminController
       format.html do
         render :template => template if template.present?
       end
-      format.csv do
-        if projects.present?
-          filename = if @organization
-            "#{@organization.name}_projects.csv"
-          else
-            "projects.csv"
-          end
-          send_data projects.serialize_to_csv(:headers => Project.csv_attributes),
-            :type => 'application/download; application/vnd.ms-excel; text/csv; charset=iso-8859-1; header=present',
-            :disposition => "attachment; filename=#{filename}"
-        end
-      end
     end
   end
 
