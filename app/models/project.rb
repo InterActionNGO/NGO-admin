@@ -1257,15 +1257,7 @@ SQL
             errors.add(:donor,  "#{donor_name} doesn't exist")
             next
           end
-          Rails.logger.info(self.donors.map(&:id).inspect)
-          Rails.logger.info(donor.inspect)
-          begin
-            self.donors << donor unless self.donors.include?(donor)
-          rescue => e
-            puts e.inspect
-            puts e.record.inspect
-            raise
-          end
+          self.donors << donor unless self.donors.include?(donor)
         end
       end
     end

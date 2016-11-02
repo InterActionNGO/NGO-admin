@@ -17,8 +17,6 @@ class Donation < ActiveRecord::Base
 
   validates_presence_of :donor, :project
 
-  accepts_nested_attributes_for :donor, :office
-
   def amount=(ammount)
     if ammount.blank?
       write_attribute(:ammount, 0)
