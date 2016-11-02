@@ -58,7 +58,6 @@ class ProjectsSynchronization < ActiveRecord::Base
 
   def process_projects_file_data
     setup_book unless persisted?
-    puts "Inside model"
     @line   = 1
     projects_file_data.each do |row_hash|
       @line += 1
