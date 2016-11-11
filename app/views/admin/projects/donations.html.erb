@@ -39,7 +39,7 @@
     <%= form_for([:admin, @project, (@donation || @project.donations.new)]) do |f| %>
       <h4 class="museo_sans shadow_white">Add a new donation</h4>
 
-      <p>If the organization is not listed here, you should complete and submit the new organization request form. You can access the form at <a href="http://bit.ly/2cpDqAk">http://bit.ly/2cpDqAk</a>.</p>
+      <p>If the organization is not listed here, you should complete and submit the new organization request form. You can access the form at <a href="http://bit.ly/2cpDqAk" style="display: inline;">http://bit.ly/2cpDqAk</a>.</p>
 
         <div id="donor_name" class="field">
           <%= f.label :donor_id, raw('DONOR NAME <strong>*</strong>') %>
@@ -52,7 +52,7 @@
         <div id="donation_date" class="field comboselect date">
           <%= f.label :date, 'DONATION DATE' %>
 
-          <span class="combo_date"><p><%= l @project.date_provided, :format => '%m/%d/%Y' rescue '' %></p>
+          <span class="combo_date" style="padding: 0;"><p><%= l @project.date_provided, :format => '%m/%d/%Y' rescue '' %></p>
           <div class="select_dates">
             <p id="month" class="title">MONTH</p>
             <p id="day" class="title">DAY</p>
