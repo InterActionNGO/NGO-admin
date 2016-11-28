@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/simbiotica/iom/issues"
   },
+  "engines": {
+    "node": "0.10.29"
+  },
   "homepage": "https://github.com/simbiotica/iom",
   "devDependencies": {
     "bower": "^1.7.9",
