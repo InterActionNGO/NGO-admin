@@ -3,7 +3,7 @@ set :user, "deploy"
 set :deploy_via, :remote_cache
 
 set :default_environment, {
-  'PATH' => '/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/nvm/versions/node/v4.3.1/bin:$PATH'
+  'PATH' => '/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/nvm/versions/node/v0.10.29/bin:$PATH'
 }
 
 set(:deploy_to)  { "/var/www/#{application}/#{rails_env}" }
