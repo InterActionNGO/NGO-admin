@@ -13,6 +13,9 @@ class FixerIo
 
   def rate
     data['rates'][to_currency.to_s]
+  rescue => e
+    Rails.logger.info" [ERROR] #{e.inspect} at #{e.backtrace[0]} with #{data.inspect} and currency(#{@base_currency.inspect})"
+    nil
   end
 
   private
