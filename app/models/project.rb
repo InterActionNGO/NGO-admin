@@ -113,7 +113,7 @@ class Project < ActiveRecord::Base
   end
 
   def set_budget_usd
-    if budget_changed? && budget? && budget_currency?
+    if budget_field_changed? && budget? && budget_currency?
       if budget_currency == "USD"
         self.budget_usd = self.budget
       else
@@ -122,6 +122,10 @@ class Project < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def budget_field_changed?
+    budget_changed? || budget_currency_changed? || budget_value_date_changed?
   end
 
   def budget_coverted_to_usd

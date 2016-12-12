@@ -14,10 +14,10 @@ namespace :iom do
     end
 
     projects = Project.where("projects.budget_usd IS NULL").
-      where("projects.budget_currency IS NOT NULL").
+      where("projects.budget_currency IS NOT NULL AND projects.budget_currency != ?", "").
       where("projects.budget IS NOT NULL").
       where('projects.budget_currency != ?', "USD").
-      where('budget_value_date IS NOT NULL')
+      where('projects.budget_value_date IS NOT NULL')
 
     projects.each do |project|
       begin
