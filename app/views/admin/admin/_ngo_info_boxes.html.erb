@@ -76,15 +76,15 @@
         } %>
 
         <%= render :partial => 'ending_projects', :locals => {
-          :projects => @organization.projects.where("end_date > ? AND end_date < ?", 3.months.from_now.to_date, 6.months.from_now.to_date),
+          :projects => @organization.projects.where("end_date >= ? AND end_date < ?", 3.months.from_now.to_date, 6.months.from_now.to_date),
           :section_number => '2',
-          :heading_months => '6'
+          :heading_months => '3 to 6'
         } %>
 
         <%= render :partial => 'ending_projects', :locals => {
-          :projects => @organization.projects.where("end_date > ? AND end_date < ?", 6.months.from_now.to_date, 12.months.from_now.to_date),
+          :projects => @organization.projects.where("end_date >= ? AND end_date < ?", 6.months.from_now.to_date, 12.months.from_now.to_date),
           :section_number => '3',
-          :heading_months => '12'
+          :heading_months => '6 to 12'
         } %>
 
       <%- else -%>
