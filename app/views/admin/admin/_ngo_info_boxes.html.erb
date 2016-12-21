@@ -203,7 +203,7 @@
         </button>
 
         <ol id="more-active-countries" class="countries_list clearfix collapse">
-          <% Geolocation.active.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
+          <% Geolocation.closed.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
             <li>
               <span class="count"><%= geoloaction.projects_count %></span>
               <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
@@ -235,7 +235,7 @@
     <div class="med information">
       <hr>
 
-      <%- all_closed_partners_and_donors = @organization.all_active_partners_and_donors -%>
+      <%- all_closed_partners_and_donors = @organization.all_closed_partners_and_donors -%>
       <h3>Partners and Donors (<%= all_closed_partners_and_donors.size %>)</h3>
       <ul class="bulleted_list">
         <%- all_closed_partners_and_donors.each do |organization| -%>
