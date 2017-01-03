@@ -19,3 +19,5 @@ public/dist
 public/app/vendor
 
 app/views_old
+
+config/database.yml
