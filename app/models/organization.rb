@@ -118,14 +118,14 @@ class Organization < ActiveRecord::Base
     [
       projects.active.map(&:partners),
       projects.active.map(&:donors)
-    ].flatten.compact.uniq
+    ].flatten.compact.uniq.sort_by(&:name)
   end
 
   def all_closed_partners_and_donors
     [
       projects.closed.map(&:partners),
       projects.closed.map(&:donors)
-    ].flatten.compact.uniq
+    ].flatten.compact.uniq.sort_by(&:name)
   end
 
 
