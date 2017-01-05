@@ -65,7 +65,7 @@ class Project < ActiveRecord::Base
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
   scope :closed, lambda { where("end_date < ?", Date.today.to_s(:db)) }
-  scope :by_end_date, lambda{ order(:end_date, :asc) }
+  scope :by_end_date, lambda{ order(:end_date) }
   scope :organizations, lambda{|orgs| where(:primary_organization_id => orgs) }
   scope :with_no_country, select('projects.*').
                           joins(:regions).
