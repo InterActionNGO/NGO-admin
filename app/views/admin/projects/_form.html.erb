@@ -22,7 +22,7 @@
       <div class="wrapper">
         <ul class="organization_combo_content list_combo_content huge_list_combo_content scroll_pane">
             <% @organizations_list.each do |organization| %>
-              <li class="element" id="orgs_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 60) %></p><p class="amount_projects"><%= pluralize(organization.projects.count, 'project', 'projects')%></p></li>
+              <li class="element" id="orgs_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 60) %></p></li>
             <% end -%>
         </ul>
       </div>
