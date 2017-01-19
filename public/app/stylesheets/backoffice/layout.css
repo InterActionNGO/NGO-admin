@@ -2043,11 +2043,8 @@ div.block.edit div.med div.left form ul.list_combo3_content {
       color: #333333;
       width: auto; }
     div.block.edit div.med div.left form ul.list_combo,
-    div.block.edit div.med div.left form ul.list_combo_content li.element p.amount_projects,
     div.block.edit div.med div.left form ul.list_combo2,
-    div.block.edit div.med div.left form ul.list_combo2_content li.element p.amount_projects,
-    div.block.edit div.med div.left form ul.list_combo3,
-    div.block.edit div.med div.left form ul.list_combo3_content li.element p.amount_projects {
+    div.block.edit div.med div.left form ul.list_combo3, {
       position: absolute;
       top: 7px;
       right: 10px;
@@ -3028,15 +3025,6 @@ div.block.project_info div.med div.left form ul.huge_list_combo_content {
       width: 415px;
       white-space: nowrap;
     }
-    div.block.project_info div.med div.left form ul.list_combo_content li.element p.amount_projects,
-    div.block.project_info div.med div.left form ul.list_combo2_content li.element p.amount_projects,
-    div.block.project_info div.med div.left form ul.list_combo3_content li.element p.amount_projects {
-      position: absolute;
-      top: 7px;
-      right: 30px;
-      font: normal 13px Arial;
-      color: #666666;
-      width: auto; }
     div.block.project_info div.med div.left form ul.list_combo_content li.element:hover,
     div.block.project_info div.med div.left form ul.list_combo2_content li.element:hover,
     div.block.project_info div.med div.left form ul.list_combo3_content li.element:hover {
