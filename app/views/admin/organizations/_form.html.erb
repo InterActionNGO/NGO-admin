@@ -300,7 +300,7 @@
     <!-- Added Field Back - Needs countries array -->
     <div class="short_field last">
       <%= f.label :contact_country, "HQ Country" %>
-      <%= f.select :contact_country, [], {:include_blank => true}, :class=>"short chzn-select" %>
+      <%= f.collection_select :contact_country, Geolocation.countries.order(:name), :country_code, :name, {:include_blank => true}, :class=>"short chzn-select" %>
     </div>
   </div>
 
