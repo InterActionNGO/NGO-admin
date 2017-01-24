@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/railsdog/searchlogic.git
-  revision: dfe4a45f224aa84d5dcc1c1e28c598b08b7aee7a
-  specs:
-    rd_searchlogic (3.0.1)
-      activerecord (>= 3.0.0)
-
-GIT
   remote: https://github.com/37signals/mail_view.git
   revision: 2e2b00897cb79b1a6924240b43a7521915efe215
   specs:
@@ -166,6 +159,8 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.4)
     rake (10.1.0)
+    rd_searchlogic (3.0.1)
+      activerecord (>= 3.0.0)
     rdoc (3.12.2)
       json (~> 1.4)
     rgeo (0.3.20)
@@ -258,7 +253,7 @@ DEPENDENCIES
   puma
   railroady
   rails (= 3.0.19)
-  rd_searchlogic!
+  rd_searchlogic (~> 3.0, >= 3.0.1)
   rgeo (~> 0.3.20)
   roadie
   rr
@@ -278,4 +273,4 @@ RUBY VERSION
    ruby 1.8.7p374
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
