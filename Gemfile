@@ -27,7 +27,7 @@ gem 'sass'
 gem 'compass'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
-gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
+gem 'rd_searchlogic', '~> 3.0', '>= 3.0.1'
 gem 'httparty', '~> 0.11.0'
 
 group :development do
