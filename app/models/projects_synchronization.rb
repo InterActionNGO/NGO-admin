@@ -74,7 +74,8 @@ class ProjectsSynchronization < ActiveRecord::Base
     end
   rescue Ole::Storage::FormatError
     self.projects_errors << 'Invalid File. File must be an Excel 97-2003 file'
-  rescue Exception => e
+  rescue => e
+    logger.error("[ProjectsSynchronization.process_projects_file_data ERROR]")
     logger.error e
     logger.error e.backtrace.join("\n")
     self.projects_errors << 'Unexpected error. Please, try again later.'
