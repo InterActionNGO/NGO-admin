@@ -8,7 +8,7 @@ class Admin::UsersController < Admin::AdminController
     @user          = User.new(params[:user])
     @users         = User.order('id asc')
     @users         = @users.filter_by_organization(params[:user])
-    @users         = @users.paginate :per_page => 20, :order => 'name asc', :page => params[:page]
+    @users         = @users.order('name asc').paginate :per_page => 20, :page => params[:page]
     @organizations = grouped_organizations
     render :partial => 'users' and return if request.xhr?
 

@@ -22,7 +22,7 @@ Iom::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
   config.log_level = :debug
-    
+
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
@@ -43,4 +43,14 @@ Iom::Application.configure do
       "/app#{asset_path}"
     end
   }
+
+  # Bullet config
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.add_footer = true
+  end
 end

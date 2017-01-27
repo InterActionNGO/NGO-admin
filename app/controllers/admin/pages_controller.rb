@@ -4,7 +4,7 @@ class Admin::PagesController < ApplicationController
   before_filter :login_required, :set_site
 
   def index
-    @pages = pages.highlighted.paginate :per_page => 20, :order => 'created_at DESC', :page => params[:page]
+    @pages = pages.highlighted.order('created_at DESC').paginate :per_page => 20, :page => params[:page]
     @all_pages = @pages
   end
 

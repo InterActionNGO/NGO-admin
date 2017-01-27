@@ -20,7 +20,7 @@ class SitesController < ApplicationController
 
   def general_home
     @main_page = MainPage.order('id asc').first
-    @sites = Site.published.paginate :per_page => 20, :page => params[:page], :order => 'id DESC'
+    @sites = Site.published.order('id DESC').includes(:geographic_context_country).paginate :per_page => 20, :page => params[:page]
     render :general_home
   end
 

@@ -2,15 +2,16 @@ source 'http://rubygems.org'
 
 ruby '1.8.7'
 
-gem 'rails', '3.0.19'
+gem 'rails', '3.0.20'
 
 # PostgreSQL
 gem 'pg'
 gem 'activerecord-postgis-adapter', '~> 0.6.6'
 gem 'rgeo', '~> 0.3.20'
 gem 'nofxx-georuby', :require => 'geo_ruby'
+gem 'rake', '~> 10.1'
 gem 'newrelic_rpm'
-gem "will_paginate", "3.0.pre2"
+gem "will_paginate", "~> 3.1"
 gem 'sanitize', '2.0.3'
 gem 'paperclip', '~> 2.7'
 gem 'garb'
@@ -30,6 +31,7 @@ gem 'wicked_pdf'
 gem 'rd_searchlogic', '~> 3.0', '>= 3.0.1'
 gem 'httparty', '~> 0.11.0'
 
+
 group :development do
   gem 'git-up'
   gem 'capistrano', :require => false
@@ -39,6 +41,7 @@ group :development do
   gem 'railroady'
   gem 'mail_view', :git => 'https://github.com/37signals/mail_view.git'
   gem 'puma'
+  gem 'bullet', '~> 5.4.3'
 end
 
 group :test, :development do
