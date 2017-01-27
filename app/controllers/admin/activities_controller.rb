@@ -39,7 +39,7 @@ class Admin::ActivitiesController < Admin::AdminController
   private :get_changes
 
   def paginate
-    @changes = @changes.paginate :per_page => 20, :order => 'changes_history_records.when DESC', :page => params[:page]
+    @changes = @changes.order('changes_history_records.when DESC').paginate :per_page => 20, :page => params[:page]
   end
   private :paginate
 

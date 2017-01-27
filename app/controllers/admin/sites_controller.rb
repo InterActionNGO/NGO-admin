@@ -1,7 +1,7 @@
 class Admin::SitesController < Admin::AdminController
 
   def index
-    @sites = Site.order('name asc').paginate :per_page => 20, :order => 'created_at DESC', :page => params[:page]
+    @sites = Site.includes(:geographic_context_country).order('created_at DESC').paginate :per_page => 20, :page => params[:page]
   end
 
   def new
@@ -24,8 +24,8 @@ class Admin::SitesController < Admin::AdminController
                 select("projects.*").
                 from("projects, projects_sites").
                 where("projects_sites.site_id = #{@site.id} and projects_sites.project_id = projects.id").
-                order('projects.name asc').
-                paginate :per_page => 10, :order => 'created_at DESC', :page => params[:page]
+                order('projects.name asc, created_at DESC').
+                paginate :per_page => 10, :page => params[:page]
   end
 
   def edit

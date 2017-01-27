@@ -54,14 +54,14 @@ class Admin::ProjectsController < Admin::AdminController
           projects = projects.where("primary_organization_id = #{params[:organization]}")
         end
       end
-      @projects = projects.paginate :per_page => 20, :order => 'name asc', :page => params[:page]
+      @projects = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     elsif params[:organization_id]
       template      = 'admin/organizations/projects'
       @organization = current_user.admin?? Organization.find(params[:organization_id]) : current_user.organization
       projects      = @organization.projects
-      @projects     = projects.paginate :per_page => 20, :order => 'name asc', :page => params[:page]
+      @projects     = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     else
-      @projects = find_projects.paginate :per_page => 20, :order => 'name asc', :page => params[:page]
+      @projects = find_projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     end
 
     respond_to do |format|
@@ -176,7 +176,7 @@ class Admin::ProjectsController < Admin::AdminController
       projects = current_user.organization.projects
     end
     projects = projects.where(where) if where.present?
-    projects || []
+    projects.includes(:geolocations, :sectors, :primary_organization) || []
   end
   private :find_projects
 

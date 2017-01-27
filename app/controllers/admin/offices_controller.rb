@@ -26,8 +26,7 @@ class Admin::OfficesController < Admin::AdminController
                 end
 
     @offices = @offices.joins(:donor).order('offices.name asc').all
-    @offices = @offices.paginate :per_page => 20,
-                                                     :order => 'created_at DESC',
+    @offices = @offices.order('created_at DESC').paginate :per_page => 20,
                                                      :page => params[:page]
     @donors = [['All', nil]] + Organization.with_donations.uniq.order('name').map{|d| [d.name, d.id]}
 
