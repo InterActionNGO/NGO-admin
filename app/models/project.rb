@@ -898,11 +898,13 @@ SQL
 
   def remove_cached_sites
     Site.all.each do |site|
-      sql = "delete from projects_sites where project_id=#{self.id}"
-      ActiveRecord::Base.connection.execute(sql)
-      # sql = "delete from data_denormalization where project_id=#{self.id}"
-      # ActiveRecord::Base.connection.execute(sql)
-      # ActiveRecord::Base.connection.execute("DELETE FROM data_denormalization WHERE site_id = null")
+      if persisted? && self.id.present?
+        sql = "delete from projects_sites where project_id=#{self.id}"
+        ActiveRecord::Base.connection.execute(sql)
+        # sql = "delete from data_denormalization where project_id=#{self.id}"
+        # ActiveRecord::Base.connection.execute(sql)
+        # ActiveRecord::Base.connection.execute("DELETE FROM data_denormalization WHERE site_id = null")
+      end
     end
   end
 

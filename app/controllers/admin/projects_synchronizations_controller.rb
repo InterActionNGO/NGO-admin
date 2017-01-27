@@ -5,7 +5,17 @@ class Admin::ProjectsSynchronizationsController < Admin::AdminController
   def create
     synchronization = ProjectsSynchronization.new(:projects_file => params[:qqfile])
     synchronization.user = current_user
-    synchronization.save
+    begin
+      synchronization.save
+    rescue => e
+      Rails.logger.error("[ProjectsSynchronization ERROR FOR save]")
+      Rails.logger.error e
+      Rails.logger.error e.backtrace.join("\n")
+    end
+
+    if synchronization.projects_errors.present?
+      Rails.logger.error("[PROJECT ERRORS FOR BATCH IMPORT] #{synchronization.projects_errors.inspect}")
+    end
 
     respond_to do |format|
       format.html {
