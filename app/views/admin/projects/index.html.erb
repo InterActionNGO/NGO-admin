@@ -34,12 +34,14 @@
                 options_for_select([['Any site',0]] + Site.get_select_values.collect { |c| [c.name.capitalize.strip, c.id] }, params[:site]), :class => :"chzn-sites-select" %>
 
             </li>
-            <li class="comboselect">
-              <label>ORGANIZATION</label>
+            <% if current_user.admin? %>
+                <li class="comboselect">
+                <label>ORGANIZATION</label>
 
-              <%= select_tag :organization,
-                options_for_select([['Any Organization',0]] + Organization.get_select_values.collect { |o| [o.name.capitalize.strip, o.id] }, params[:organization]), :class => :"chzn-sites-select" %>
-            </li>
+                <%= select_tag :organization,
+                    options_for_select([['Any Organization',0]] + Organization.get_select_values.collect { |o| [o.name.capitalize.strip, o.id] }, params[:organization]), :class => :"chzn-sites-select" %>
+                </li>
+            <% end %>
           </ul>
         <% end %>
       </div>
