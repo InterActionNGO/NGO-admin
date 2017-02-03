@@ -44,7 +44,7 @@ class Admin::OrganizationsController < ApplicationController
   end
 
   def update
-    @organization = Organization.find(params[:id])
+    @organization = current_user.admin? ? Organization.find(params[:id]) : current_user.organization
     if params[:site_id]
       if @site = Site.find(params[:site_id])
         @organization.attributes_for_site = {:organization_values => params[:organization], :site_id => params[:site_id]}
