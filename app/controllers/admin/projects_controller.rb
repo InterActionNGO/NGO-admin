@@ -4,63 +4,58 @@ class Admin::ProjectsController < Admin::AdminController
   before_filter :get_organizations_list
 
   def index
-    @total_projects_count = current_user.admin?? Project.count : current_user.organization.projects.count
     @conditions = {}
 
     if params[:q]
-      q = "%#{params[:q].sanitize_sql!}%"
-      projects = find_projects(["name ilike ? OR description ilike ? OR intervention_id ilike ? OR organization_id ilike ?", q, q, q, q])
-      from = ["projects"]
-      unless params[:status].blank?
+      if params[:q].blank?
+          projects = find_projects
+      else
+        q = "%#{params[:q].sanitize_sql!}%"
+        projects = find_projects(["projects.name ilike ? OR projects.description ilike ? OR projects.intervention_id ilike ? OR projects.organization_id ilike ?", q, q, q, q])
+        @conditions['find text'] = q[1..-2]
+      end
+      unless params[:status].blank? || params[:status] == "0"
         if params[:status] == 'active'
-          @conditions['active'] = {'status' => 'active'}
-          projects = projects.where("end_date > ?", Date.today.to_s(:db))
+          projects = projects.active
         elsif params[:status] == 'closed'
-          @conditions['closed'] = {'status' => 'closed'}
-          projects = projects.where("end_date < ?", Date.today.to_s(:db))
+          projects = projects.closed
         end
+        @conditions['status'] = params[:status]
       end
       unless params[:country].blank? || params[:country] == "0"
-        if country = Geolocation.find_by_id(params[:country])
-          @conditions[country.name] = {'country' => params[:country]}
-          from << 'geolocations_projects'
-          projects = projects.from(from.join(',')).where("geolocations_projects.geolocation_id = #{country.id} AND geolocations_projects.project_id = projects.id")
-        end
-      end
-      unless params[:cluster].blank? || params[:cluster] == '0'
-        if cluster = Cluster.find_by_id(params[:cluster])
-          @conditions[cluster.name] = {'cluster' => params[:cluster]}
-          from << 'clusters_projects'
-          projects = projects.from(from.join(',')).where("clusters_projects.cluster_id = #{cluster.id} AND clusters_projects.project_id = projects.id")
+        if country = Geolocation.where('country_code = ?', params[:country]).first
+            @conditions['country'] = country.country_name
+            projects = projects.where("geolocations.country_code = ?", params[:country])
         end
       end
       unless params[:sector].blank? || params[:sector] == '0'
         if sector = Sector.find_by_id(params[:sector])
-          @conditions[sector.name] = {'sector' => params[:sector]}
-          from << 'projects_sectors'
-          projects = projects.from(from.join(',')).where("projects_sectors.sector_id = #{sector.id} AND projects_sectors.project_id = projects.id")
+          @conditions['sector'] = sector.name
+          projects = projects.where("sectors.id = #{sector.id}")
         end
       end
       unless params[:site].blank? || params[:site] == '0'
         if site = Site.find(params[:site])
-          @conditions[site.name] = {'site' => params[:site]}
-          from << 'projects_sites'
-          projects = projects.from(from.join(',')).where("projects_sites.site_id = #{site.id} AND projects_sites.project_id = projects.id")
+          @conditions['site'] = site.name
+          projects = projects.includes(:sites).where("sites.id = #{site.id}")
         end
       end
       unless params[:organization].blank? || params[:organization] == '0'
-        if org = Organization.find(params[:organization])
-          @conditions[org.name] = {'organization' => params[:organization]}
+        if (org = Organization.find(params[:organization])) && current_user.admin?
+          @conditions['organization'] = org.name
           projects = projects.where("primary_organization_id = #{params[:organization]}")
         end
       end
-      @projects = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
+      @projects_query_total = projects.size
+      @projects = projects.order('projects.name asc').paginate :per_page => 20, :page => params[:page]
     elsif params[:organization_id]
       template      = 'admin/organizations/projects'
       @organization = current_user.admin?? Organization.find(params[:organization_id]) : current_user.organization
-      projects      = @organization.projects
+      projects      = @organization.projects.includes(:donors, :sectors, :geolocations, :partners)
+      @projects_query_total = projects.size
       @projects     = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     else
+      @projects_query_total = @projects_count
       @projects = find_projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     end
 
@@ -170,13 +165,15 @@ class Admin::ProjectsController < Admin::AdminController
 
 
   def find_projects(where = nil)
+    associations = [:geolocations, :sectors]
     if current_user.admin?
       projects = Project.scoped
+      associations << :primary_organization
     else
       projects = current_user.organization.projects
     end
     projects = projects.where(where) if where.present?
-    projects.includes(:geolocations, :sectors, :primary_organization) || []
+    projects.includes(associations) || []
   end
   private :find_projects
 

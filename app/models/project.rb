@@ -62,6 +62,7 @@ class Project < ActiveRecord::Base
   has_many :partnerships, :dependent => :destroy
   has_many :partners, :through => :partnerships
   has_many :cached_sites, :class_name => 'Site', :finder_sql => 'select sites.* from sites, projects_sites where projects_sites.project_id = #{id} and projects_sites.site_id = sites.id'
+  has_and_belongs_to_many :sites
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
   scope :closed, lambda { where("end_date < ?", Date.today.to_s(:db)) }
@@ -644,7 +645,7 @@ SQL
       if options[:organization_filter]
         where << "site_id=#{site.id} and (end_date is null OR end_date > now()) and organization_id = #{options[:organization_filter]}"
       else
-        where <<" site_id=#{site.id} and (end_date is null OR end_date > now())"
+        where << " site_id=#{site.id} and (end_date is null OR end_date > now())"
       end
       if options[:category_id]
         where << "sector_ids && '{#{options[:category_id]}}'"

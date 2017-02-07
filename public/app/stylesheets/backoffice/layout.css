@@ -239,6 +239,9 @@ div.med div.header {
     float: right;
     width: 273px;
     height: auto; }
+    div.med div.header div.clearfix {
+        clear: both;
+    }
     div.med div.header span.buttons {
       width: auto; }
     div.med div.header span.buttons a {
@@ -2307,7 +2310,7 @@ div.long_search ul.combos {
       display: block;
       clear: both;
       width: 104px;
-      margin-bottom: 7px; }
+      padding: 10px 0; }
 
 /*settings*/
 /*donors-NGO edit&new&settings*/

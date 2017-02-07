@@ -77,6 +77,7 @@ class Organization < ActiveRecord::Base
   has_many :all_donated_projects, :through => :donations_made, :source => :project, :uniq => true
   has_one :user
 
+  scope :has_projects, where('id in (select primary_organization_id from projects)')
   scope :with_donations, joins(:donations_made)
   scope :active_donated_projects, lambda { joins(:donations_made => :project).where("projects.end_date IS NULL OR (projects.end_date > ? AND projects.start_date <= ?)", Date.today.to_s(:db), Date.today.to_s(:db)) }
 
