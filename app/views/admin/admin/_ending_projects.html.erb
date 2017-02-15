@@ -2,7 +2,7 @@
   <div class="projects_list clearfix">
     <h3
       class="table_heading">
-        <%= projects.count %> projects ending <%= heading_months %> months
+        <%= pluralize(projects.count, 'project') %> ending <%= heading_months %> months
 
         <button
           class="collapse-button -arrow"
@@ -14,7 +14,7 @@
 
     <table id="ending-projects-<%= section_number %>" collapse="0" class="condensed collapse">
       <tbody>
-        <% projects.each do |project| %>
+        <% projects.includes(:geolocations,:sectors).each do |project| %>
           <tr>
             <td width="625">
               <span>
