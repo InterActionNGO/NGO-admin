@@ -142,15 +142,15 @@
 
     <div class="med information">
       <hr>
-
-      <h3>Sectors (<%= Sector.active.organizations(@organization.id).count  %>)</h3>
+    
+      <h3>Sectors (<%= Sector.active.organizations(@organization.id).uniq.count  %>)</h3>
       <ol class="sectors_list clearfix">
         <%- Sector.ordered_by_project_count_for_organization(@organization).each do |sector| -%>
           <%- projects_count = sector.projects.active.organizations(@organization).count -%>
           <li <%= 'class="active"'.html_safe if projects_count > 0 %>>
             <span class="count"><%= projects_count %></span>
             <%- if projects_count > 0 -%>
-              <%= link_to sector.name, admin_projects_path(:sector => sector.id) %>
+              <%= link_to sector.name, admin_projects_path(:sector => sector.id, :status => 'active', :q => '') %>
             <%- else -%>
               <%= sector.name %>
             <%- end -%>
@@ -216,14 +216,14 @@
     <div class="med information">
       <hr>
 
-      <h3>Sectors (<%= Sector.closed.organizations(@organization.id).count %>)</h3>
+      <h3>Sectors (<%= Sector.closed.organizations(@organization.id).uniq.count %>)</h3>
       <ol class="sectors_list clearfix">
         <%- Sector.ordered_by_project_count_for_organization(@organization, false).each do |sector| -%>
           <%- projects_count = sector.projects.closed.organizations(@organization).count -%>
           <li <%= 'class="active"'.html_safe if projects_count > 0 %>>
             <span class="count"><%= projects_count %></span>
             <%- if projects_count > 0 -%>
-              <%= link_to sector.name, admin_projects_path(:sector => sector.id) %>
+              <%= link_to sector.name, admin_projects_path(:sector => sector.id, :status => 'closed', :q => '') %>
             <%- else -%>
               <%= sector.name %>
             <%- end -%>
