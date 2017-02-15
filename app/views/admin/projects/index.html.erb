@@ -11,35 +11,37 @@
             <li class="comboselect status">
               <label>STATUS</label>
               <%= select_tag :status,
-                options_for_select([['All statuses', 0], ['Active', 'active'], ['Closed', 'closed']], params[:status]), :class => :"chzn-select" %>
+                options_for_select([['All', 0], ['Active', 'active'], ['Closed', 'closed']], params[:status]), :class => :"chzn-select" %>
             </li>
 
             <li class="comboselect">
               <label>COUNTRY</label>
               <%= select_tag :country,
-                options_for_select([['All',0]] + Geolocation.where(:adm_level => 0).order(:name).collect{ |c| [c.name, c.id] }, params[:country]), :class => :"chzn-select" %>
+                options_for_select([['All',0]] + Geolocation.countries.order(:name).collect{ |c| [c.name, c.country_code] }, params[:country]), :class => :"chzn-select" %>
             </li>
 
             <li class="comboselect">
               <label>SECTOR</label>
 
               <%= select_tag :sector,
-                options_for_select([['Any sector',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-sectors-select" %>
+                options_for_select([['All',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-select" %>
             </li>
 
             <li class="comboselect">
               <label>SITE</label>
 
               <%= select_tag :site,
-                options_for_select([['Any site',0]] + Site.get_select_values.collect { |c| [c.name.capitalize.strip, c.id] }, params[:site]), :class => :"chzn-sites-select" %>
+                options_for_select([['All',0]] + Site.get_select_values.collect { |c| [c.name.capitalize.strip, c.id] }, params[:site]), :class => :"chzn-select" %>
 
             </li>
-            <li class="comboselect">
-              <label>ORGANIZATION</label>
+            <% if current_user.admin? %>
+                <li class="comboselect">
+                <label>REPORTING ORGANIZATION</label>
 
-              <%= select_tag :organization,
-                options_for_select([['Any Organization',0]] + Organization.get_select_values.collect { |o| [o.name.capitalize.strip, o.id] }, params[:organization]), :class => :"chzn-sites-select" %>
-            </li>
+                <%= select_tag :organization,
+                    options_for_select([['All',0]] + Organization.has_projects.get_select_values.collect { |o| [o.name, o.id] }, params[:organization]), :class => :"chzn-select" %>
+                </li>
+            <% end %>
           </ul>
         <% end %>
       </div>
@@ -51,22 +53,18 @@
     <div class="top"></div>
     <div class="med">
       <div class="header no_border">
-        <h2 class="museo_sans">
-          <%= pluralize(@projects.total_entries, 'project', 'projects') %>
-          <% if @conditions.any? %>
-            on
-            <%=raw(
-              @conditions.map do |c, vh|
-                if new_conditions = @conditions.dup.delete_if{ |k,v| k == c }.values.first
-                  new_conditions.merge!(:q => params[:q])
-                else
-                  new_conditions = {:q => params[:q]}
-                end
-                link_to(c, admin_projects_path(new_conditions), :class => 'remove')
-              end.join(' & ')
-            )%>
+        <h2 class="museo_sans"><%= pluralize(number_with_delimiter(@projects_query_total, :delimiter => ','), 'project', 'projects') %></h2>
+        <% if @conditions.any? %>
+            <div class="clearfix"></div>
+            <h5>FILTERS</h5>
+            <ul>
+                <% @conditions.each do |k,v| %>
+                    <li>
+                        <%= k.capitalize %>:  <strong><%= v %></strong>
+                    </li>
+                <% end %>
+            </ul>
         <% end %>
-      </h2>
       <span class="buttons">
         <a class="add_project museo_sans shadow_green" href="<%= new_admin_project_path %>">New project</a>
         <a class="import_csv museo_sans shadow_black" href="<%= admin_export_projects_path(:format => 'xls') %>">Export projects</a>
@@ -121,13 +119,13 @@
       <% else %>
         <% if Project.count>1 %>
           <div class="no_results">
-            <h2>There are not projects for your search</h2>
-            <p>Try to search with different terms or simply <a href="<%= admin_projects_path %>">browse all projects</a></p>
+            <h2>Your search returned no results :(</h2>
+            <p>Try different filters or simply <a href="<%= admin_projects_path %>">browse all projects</a></p>
           </div>
         <% else %>
           <div class="no_results">
-            <h2>There are not projects in the site</h2>
-            <p>Try to <a href="<%= new_admin_project_path %>">add new one</a>.</p>
+            <h2>Looks like there's no projects in this site!</h2>
+            <p>Get started by <a href="<%= new_admin_project_path %>">adding a new one</a></p>
           </div>
         <% end %>
       <% end %>
@@ -142,7 +140,7 @@
 <div class="add_new">
   <a class="museo_sans" href="<%= new_admin_project_path %>">
     Create new project<br/>
-    <strong>You already have <%= pluralize(@total_projects_count, 'project', 'projects') %> created</strong>
+    <strong>You already have <%= pluralize(number_with_delimiter(@total_projects_count, :delimiter => ','), 'project', 'projects') %> created</strong>
   </a>
 </div>
 </div>
@@ -151,7 +149,5 @@
 
 <script type="text/javascript">
   $(".chzn-select").chosen();
-  $(".chzn-sectors-select").chosen({hide_search:true});
-  $(".chzn-sites-select").chosen({hide_search:true});
   var endpoint = '<%= url_for([:admin, ProjectsSynchronization.new]) %>';
 </script>
