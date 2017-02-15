@@ -36,11 +36,15 @@ class Admin::OrganizationsController < ApplicationController
   end
 
   def edit
-    @organization = Organization.find(params[:id])
+     if !current_user.admin? && params[:id] != current_user.organization.id.to_s
+         redirect_to edit_admin_organization_path(current_user.organization)
+     else
+        @organization = current_user.admin? ? Organization.find(params[:id]) : current_user.organization
+     end
   end
 
   def update
-    @organization = Organization.find(params[:id])
+    @organization = current_user.admin? ? Organization.find(params[:id]) : current_user.organization
     if params[:site_id]
       if @site = Site.find(params[:site_id])
         @organization.attributes_for_site = {:organization_values => params[:organization], :site_id => params[:site_id]}

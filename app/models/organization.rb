@@ -77,6 +77,7 @@ class Organization < ActiveRecord::Base
   has_many :all_donated_projects, :through => :donations_made, :source => :project, :uniq => true
   has_one :user
 
+  scope :has_projects, where('id in (select primary_organization_id from projects)')
   scope :with_donations, joins(:donations_made)
   scope :active_donated_projects, lambda { joins(:donations_made => :project).where("projects.end_date IS NULL OR (projects.end_date > ? AND projects.start_date <= ?)", Date.today.to_s(:db), Date.today.to_s(:db)) }
 
@@ -116,15 +117,15 @@ class Organization < ActiveRecord::Base
 
   def all_active_partners_and_donors
     [
-      projects.active.map(&:partners),
-      projects.active.map(&:donors)
+      projects.active.includes(:partners).map(&:partners),
+      projects.active.includes(:donors).map(&:donors)
     ].flatten.compact.uniq.sort_by(&:name)
   end
 
   def all_closed_partners_and_donors
     [
-      projects.closed.map(&:partners),
-      projects.closed.map(&:donors)
+      projects.closed.includes(:partners).map(&:partners),
+      projects.closed.includes(:donors).map(&:donors)
     ].flatten.compact.uniq.sort_by(&:name)
   end
 
