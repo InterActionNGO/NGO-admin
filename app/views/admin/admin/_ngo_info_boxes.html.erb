@@ -257,27 +257,27 @@
     <div class="med information">
       <ul>
         <li>
-          <label>Global Total Projects</label>
+          <label>Total Projects</label>
           <p class="museo_sans">
             <%= number_with_delimiter(Project.count) %>
           </p>
         </li>
         <li>
-          <label>Global Active Projects</label>
+          <label>Active Projects</label>
           <p class="museo_sans">
             <%= number_with_delimiter(Project.active.count) %>
           </p>
         </li>
         <li>
-          <label>Reporting Organizations</label>
+          <label>Total Reporting Organizations</label>
           <p class="museo_sans">
-            <%= number_with_delimiter(Organization.count) %>
+            <%= number_with_delimiter(Organization.has_projects.size) %>
           </p>
         </li>
         <li>
-          <label>Countries</label>
+          <label>Active Countries</label>
           <p class="museo_sans">
-            <%= number_with_delimiter(Geolocation.active.where(:adm_level => 0).uniq.count) %>
+            <%= number_with_delimiter(Geolocation.active.select('distinct country_code').size) %>
           </p>
         </li>
       </ul>
