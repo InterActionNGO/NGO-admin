@@ -197,12 +197,12 @@
       <%- if countries.to_a.size > 20 -%>
         <button
           class="link-button collapse-button"
-          aria-controls="more-active-countries"
+          aria-controls="more-closed-countries"
           aria-expanded="false">
             Show More...
         </button>
 
-        <ol id="more-active-countries" class="countries_list clearfix collapse">
+        <ol id="more-closed-countries" class="countries_list clearfix collapse">
           <% countries.offset(20).each do |geolocation| %>
             <li>
               <span class="count"><%= geolocation.count %></span>
