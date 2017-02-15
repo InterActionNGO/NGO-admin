@@ -130,10 +130,10 @@
         </button>
 
         <ol id="more-active-countries" class="countries_list clearfix collapse">
-          <% Geolocation.active.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
+          <% countries.offset(20).each do |geolocation| %>
             <li>
-              <span class="count"><%= geoloaction.projects_count %></span>
-              <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id, :q => 'a')) %>
+              <span class="count"><%= geolocation.count %></span>
+              <%= link_to(geolocation.country_name, admin_projects_path(:country => geolocation.country_code, :q => '', :status => 'active')) %>
             </li>
           <% end %>
         </ol>
@@ -183,18 +183,18 @@
     </div>
 
     <div class="med information">
-      <% country_count = Geolocation.closed.organizations(@organization.id).where(:adm_level => 0).uniq.count %>
-      <h3>Countries (<%= country_count %>)</h3>
+      <% countries = Geolocation.closed.organizations(@organization.id).project_count_by_country %>
+      <h3>Countries (<%= countries.to_a.size %>)</h3>
       <ol class="countries_list clearfix">
-        <% Geolocation.closed.organizations(@organization.id).group_by_project_count.limit(20).each do |geoloaction| %>
+        <% countries.limit(20).each do |geolocation| %>
           <li>
-            <span class="count"><%= geoloaction.projects_count %></span>
-            <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
+            <span class="count"><%= geolocation.count %></span>
+            <%= link_to(geolocation.country_name, admin_projects_path(:country => geolocation.country_code, :q => '', :status => 'closed')) %>
           </li>
         <% end %>
       </ol>
 
-      <%- if country_count > 20 -%>
+      <%- if countries.to_a.size > 20 -%>
         <button
           class="link-button collapse-button"
           aria-controls="more-active-countries"
@@ -203,10 +203,10 @@
         </button>
 
         <ol id="more-active-countries" class="countries_list clearfix collapse">
-          <% Geolocation.closed.organizations(@organization.id).group_by_project_count.offset(20).each do |geoloaction| %>
+          <% countries.offset(20).each do |geolocation| %>
             <li>
-              <span class="count"><%= geoloaction.projects_count %></span>
-              <%= link_to(geoloaction.reload.name, admin_projects_path(:country => geoloaction.id)) %>
+              <span class="count"><%= geolocation.count %></span>
+              <%= link_to(geolocation.country_name, admin_projects_path(:country => geolocation.country_code, :q => '', :status => 'closed')) %>
             </li>
           <% end %>
         </ol>

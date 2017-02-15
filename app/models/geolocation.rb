@@ -20,6 +20,12 @@ class Geolocation < ActiveRecord::Base
         select("geolocations_projects.geolocation_id AS id, COUNT(geolocations_projects.project_id) AS projects_count")
   end
   
+  def self.project_count_by_country
+      order("count desc, country_name").
+      group(:country_name, :country_code).
+      select("country_name, country_code, count(distinct project_id)")
+  end
+  
   def self.countries
      Geolocation.where(:adm_level => 0)
   end
