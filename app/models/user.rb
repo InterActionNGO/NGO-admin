@@ -175,7 +175,7 @@ class User < ActiveRecord::Base
     }
   end
   def not_blocked?
-    self.blocked = false
+    self.blocked == false
   end
 
   def update_last_login
@@ -186,7 +186,7 @@ class User < ActiveRecord::Base
 
   def generate_token(column)
     begin
-      self[column] = SecureRandom.base64
+      self[column] = SecureRandom.hex(25)
     end while User.exists?(column => self[column])
   end
   private :generate_token
