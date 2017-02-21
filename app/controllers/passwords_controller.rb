@@ -30,7 +30,7 @@ class PasswordsController < ApplicationController
         handle_remember_cookie! new_cookie_flag
         redirect_back_or_default(admin_admin_path, :notice => "Password has been reset!")
       else
-        redirect_to root_url, :notice => "Password has been reset!"
+        redirect_to new_session_path, :notice => "Password has been reset!"
       end
     else
       flash[:alert] = %Q{<p class="error">#{@user.errors.full_messages.first}</p>}
