@@ -34,13 +34,14 @@ class Admin::ActivitiesController < Admin::AdminController
 
     @changes = @project.changes_history_records      if @project
     @changes = @organization.changes_history_records if @organization
+
     @changes ||= ChangesHistoryRecord.search(@search)
 
   end
   private :get_changes
 
   def paginate
-    @changes = @changes.order('changes_history_records.when DESC').paginate :per_page => 20, :page => params[:page]
+    @changes = @changes.includes(:what, { :who => :organization }).paginate :per_page => 25, :page => params[:page]
   end
   private :paginate
 
