@@ -18,8 +18,11 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.day, :at => '10:00 am' do
+every 1.day, :at => '8:00 am' do
+  rake "iom:visits:update"
+end
+
+every 2.weeks, :at => 'Monday 10AM' do
   rake "iom:alerts:projects_about_to_end"
   rake "iom:alerts:six_months_since_last_login"
-  rake "iom:visits:update"
 end
