@@ -22,7 +22,7 @@ every 1.day, :at => '8:00 am' do
   rake "iom:visits:update"
 end
 
-every 2.weeks, :at => 'Monday 10AM' do
+every 1.week, :at => 'Tuesday 4PM' do
   rake "iom:alerts:projects_about_to_end"
   rake "iom:alerts:six_months_since_last_login"
 end
