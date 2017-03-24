@@ -1,7 +1,7 @@
 development:
   adapter: postgis
   encoding: unicode
-  database: ngoaidmap_development
+  database: iom_development
 
 test:
   adapter: postgis

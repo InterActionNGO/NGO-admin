@@ -28,6 +28,7 @@
       </div>
     </div>
   </div>
+  <%= select_tag :primary_organization_id, options_from_collection_for_select(Organization.has_projects.order(:name), :id, :name, @project.primary_organization_id), {:class=>'chosen-select',:prompt=>'Select an Organization',:include_blank => true} %>
 
 
   <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
