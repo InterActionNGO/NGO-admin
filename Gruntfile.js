@@ -56,7 +56,8 @@ module.exports = function(grunt) {
           cwd: '<%= root.app %>',
           dest: '<%= root.tmp %>',
           src: [
-            'stylesheets/backoffice/**/*'
+            'stylesheets/backoffice/**/*',
+            'javascripts/backoffice/**/*'
           ]
         }]
       },

@@ -859,9 +859,7 @@ $(function() {
   }
 
   if ($('#donation_donor_id').length > 0){
-    $('#donation_donor_id').chosen({
-      width: 300,
-    });
+    $('#donation_donor_id').chosen({width: $('#donation_donor_id').parent('div').width()});
     // var custom_donors_url = '/admin/donors?q=';
 
     // // AUTOCOMPLETE FOR DONORS IN PROJECT

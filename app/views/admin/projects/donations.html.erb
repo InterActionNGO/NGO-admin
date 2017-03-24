@@ -1,5 +1,5 @@
 <div class="main_layout">
-  <div class="block first donations_project">
+  <div class="block first donations_project mod-project-donations">
     <div class="top"></div>
     <div class="med">
       <div class="left">
@@ -46,10 +46,10 @@
 
         <div id="donor_name" class="field">
           <%= f.label :donor_id, raw('DONOR NAME <strong>*</strong>') %>
-          <span id="donor_name_input">
-            <%= f.select :donor_id, Organization.with_donations.order(:name).map{|d| [d.name, d.id]} %>
+          <div id="donor_name_input" class="donor-select">
+            <%= f.select :donor_id, Organization.order(:name).map{|d| [d.name, d.id]}, :prompt => 'Select a donor' %>
             <div class="spinner"></div>
-          </span>
+          </div>
         </div>
 
         <div id="donation_date" class="field comboselect date">
