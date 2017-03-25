@@ -70,8 +70,7 @@ jQuery.fn.dateCombos = (function(options){
       width[$(this).attr('id') + '_chzn'] = combos_widths[combo_type];
 
       $(this).chosen({
-        widths: width,
-        hide_search: true
+        widths: width
       });
 
       var $chosen_combo = $this.next('.chzn-container');

@@ -10,24 +10,17 @@
   <% end -%>
 
   <h3 class="section museo_sans">PROJECT IDENTIFICATION</h3>
-  <div class="field">
-    <label>ORGANIZATION  <strong>*</strong></label>
-
-    <div class="organization_combo list_combo">
-      <span id="hidden" class="combo_large combo_huge <%= 'error' if @project.errors[:primary_organization_id].present? %>">
-        <%= errors_for @project, :primary_organization_id %>
-        <a class="organization"><%= @project.primary_organization.try(:name) %></a>
-      </span>
-      <%= f.hidden_field :primary_organization_id , :value => @project.primary_organization_id %>
-      <div class="wrapper">
-        <ul class="organization_combo_content list_combo_content huge_list_combo_content scroll_pane">
-            <% @organizations_list.each do |organization| %>
-              <li class="element" id="orgs_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 60) %></p></li>
-            <% end -%>
-        </ul>
-      </div>
-    </div>
+  <div class="">
+      <%= f.label :primary_organization_id, 'Organization' %>
+      <% if @project.errors[:primary_organization_id].present? %>
+        <span id="hidden" class="error">
+            <%= errors_for @project, :primary_organization_id %>
+            <a class="organization"><%= @project.primary_organization.try(:name) %></a>
+        </span>
+      <% end %>
+      <%= f.select :primary_organization_id, options_from_collection_for_select(@organizations_list, :id, :name, @project.primary_organization_id), {:prompt=>'Select an Organization'} %>
   </div>
+  
 
 
   <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
@@ -260,38 +253,21 @@
 <!-- ##################### CONTEXT ##################### -->
 
   <h3 class="section museo_sans">CONTEXT</h3>
+  
   <div class="field">
-    <label>SECTORS  <strong>*</strong></label>
-<!--     <span id="hidden" class="combo_large <%= 'error' if @project.errors[:sectors].present? %>">
-        <%= errors_for @project, :sectors %>
-       <a class="organization"><%= @project.primary_organization.try(:name) %></a> </span>-->
-
-    <ul class="sectors">
-      <% unless @project.sectors.empty? %>
-        <% @project.sectors.each do |sector| %>
-          <li id="sector_<%= sector.id %>"><p><%= sector.name %></p><input id="<%= sector.id %>" type="checkbox" name="project[sector_ids][]" value="<%= sector.id %>" checked="true"/><a href="#sector_<%= sector.id %>" class="remove_this close"></a>
-          </li>
-        <% end -%>
-      <% end -%>
-    </ul>
-
-    <div class="sector_options">
-      <span id="sector" class="combo_sector_options">
-        <%= errors_for_span(@project, :sectors) %>
-
-        <p id="sectors_0">Select more sectors</p>
-        <div class="wrapper">
-          <ul class="options scroll_pane">
-          <% Sector.get_select_values.collect do |sector| %>
-            <li><a id="sectors_<%= sector.id %>"><%= sector.name %></a></li>
-          <% end %>
-            <li class="last"></li>
-          </ul>
-        </div>
-      </span>
-      <a class="add_sector museo_sans shadow_green">add sector</a>
-    </div>
+    <%= f.label :sectors %>
+    <% if @project.errors[:sectors].present? %>
+        <span id="hidden" class="error">
+            <%= errors_for @project, :sectors %>
+        </span>
+    <% end %>
+    <%= f.collection_select :sector_ids, Sector.order(:name), :id, :name,{}, 'data-placeholder' => 'Choose a sector', :multiple => true %>
   </div>
+  
+ 
+  
+  
+  
   <div id="cross_cutting" class="field">
     <span class="chars">
       <label>CROSS-CUTTING ISSUES
@@ -437,7 +413,7 @@
   </div> <!-- field -->
 
 
-   <div class="field">
+   <div class="">
     <label>
       PRIME AWARDEE <strong>&nbsp;</strong>
       <div class="field_info">
@@ -457,7 +433,7 @@
     </label>
     <!-- FIELD DESCRIPTION -->
     <!-- END FIELD DESCRIPTION -->
-    <div class="prime_awardee_combo list_combo">
+    <!--<div class="prime_awardee_combo list_combo">
       <span id="hidden" class="combo_large combo_huge <%= 'error' if @project.errors[:prime_awardee_id].present? %>">
         <%= errors_for @project, :prime_awardee_id %>
         <a class="organization"><%= @project.prime_awardee.try(:name) %></a>
@@ -470,7 +446,14 @@
             <% end -%>
         </ul>
       </div>
-    </div>
+    </div>-->
+    <% if @project.errors[:prime_awardee_id].present? %>
+        <span id="hidden" class="error">
+            <%= errors_for @project, :prime_awardee_id %>
+        </span>
+    <% end %>
+    <%= f.collection_select :prime_awardee_id, Organization.order(:name), :id, :name, {:include_blank=>true}, :'data-placeholder' => 'Select an Organization' %>
+  
   </div>
 
 <!-- ##################### PROJECT IMPACT ##################### -->
@@ -583,6 +566,7 @@
         </li>
       <% end %>
     </ul>
+    
     <div class="location_options region_block empty <%= 'error' if @project.errors[:location].present? %>">
       <% if @project.errors[:location].present? %>
         <p class="msg">Sorry, location information is mandatory</p>
