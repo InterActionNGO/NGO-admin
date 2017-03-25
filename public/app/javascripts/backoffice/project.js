@@ -226,6 +226,9 @@ $(document).ready(function(ev){
   //   console.log($(e.currentTarget).val());
   //   update_project_intervention_id($(e.currentTarget).val());
   // });
+  $('#project_primary_organization_id').chosen({
+      width: $("#project_primary_organization_id").parent('div').width()
+    });
 
   // TYPE
   var global_geographical_scope_previous = $('#project_geographical_scope').val();
@@ -339,11 +342,14 @@ $(document).ready(function(ev){
      width: 420
    });
   $('#project_budget_currency').chosen({
-    width: 272,
-    hide_search: true
+    width: 272
   });
 
   // PRIME AWARDEE click
+  $('#project_prime_awardee_id').chosen({
+      width: $("#project_prime_awardee_id").parent('div').width()
+  });
+  /*
   $('div.prime_awardee_combo').children('span.combo_large').click(function(ev){
     ev.stopPropagation();
     ev.preventDefault();
@@ -395,185 +401,190 @@ $(document).ready(function(ev){
     $('div.prime_awardee_combo').find('ul.prime_awardee_combo_content').css('display','none');
     $('div.prime_awardee_combo').children('span.combo_large').attr('id','hidden');
     $('div.prime_awardee_combo').children('span.combo_large').removeClass('displayed');
-  });
+  });*/
 
 
   /************** CLUSTERS ************************** */
-  $('span.combo_cluster_options').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    // Check if clicks in jscrollpane
-    if (
-      $(ev.target).hasClass('jspTrack') ||
-      $(ev.target).hasClass('jspDrag')
-    ) {
-      return false;
-    }
-
-    if (!$(this).hasClass('clicked')){
-
-      // THIS IS A IE HACK
-      $(this).css('position','relative');
-
-      $(this).addClass('clicked');
-      resetCombo($('span.combo_cluster_options'));
-    }else {
-      $(this).removeClass('clicked');
-      $(this).css('position','static');
-    }
-
-    $(document).click(function(event) {
-      if ((!$(event.target).closest('span.combo_cluster_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
-        $('span.combo_cluster_options.clicked').removeClass('clicked');
-        $('span.combo_cluster_options').css('position','static');
-      };
-    });
-  });
-
-  // IF WE ADD SOME CLUSTER
-  $('span.combo_cluster_options').find('ul.options li').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-    $('span.combo_cluster_options').children('p').text($(this).children('a').text());
-    var id = $(this).children('a').attr('id');
-    id = id.substring(clusters_id,id.length);
-    $('span.combo_cluster_options').children('p').attr('id','clusterToAdd_'+id);
-    $('span.combo_cluster_options.clicked').removeClass('clicked');
-
-  });
-
-  // CLICK ON ADD CLUSTER
-  $('a#add_cluster_bttn').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    var id = $('span.combo_cluster_options').children('p').attr('id');
-    id = id.substring(clusterToAdd,id.length);
-
-    var notAdded = false;
-    notAdded = checkElementAdded($('ul.clusters'),id);
-
-    // If we have some element (id=0 is a simple control to test it)
-    if ((id != 0)&&(!notAdded)){
-      var text = $('span.combo_cluster_options').children('p').text();
-
-      var htmlToAdd = '<li id="cluster_'+id+'"><p>'+text+'</p><input id="'+id+'"type="checkbox" name="project[cluster_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
-
-      $('ul.clusters').append(htmlToAdd);
-      $('span.combo_cluster_options').children('p').text('Select more clusters');
-      $('span.combo_cluster_options').children('p').attr('id','clusterToAdd_0');
-    }
-    $('div.block div.med div.left').resize();
-  });
-
-  // CLICK ON REMOVE CLUSTER
-  $('ul.clusters').find('a.remove_this').live('click',function(ev){
-    $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
-    $(this).parent().remove();
-    $('div.block div.med div.left').resize();
-  });
+//   $('span.combo_cluster_options').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+// 
+//     // Check if clicks in jscrollpane
+//     if (
+//       $(ev.target).hasClass('jspTrack') ||
+//       $(ev.target).hasClass('jspDrag')
+//     ) {
+//       return false;
+//     }
+// 
+//     if (!$(this).hasClass('clicked')){
+// 
+//       // THIS IS A IE HACK
+//       $(this).css('position','relative');
+// 
+//       $(this).addClass('clicked');
+//       resetCombo($('span.combo_cluster_options'));
+//     }else {
+//       $(this).removeClass('clicked');
+//       $(this).css('position','static');
+//     }
+// 
+//     $(document).click(function(event) {
+//       if ((!$(event.target).closest('span.combo_cluster_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
+//         $('span.combo_cluster_options.clicked').removeClass('clicked');
+//         $('span.combo_cluster_options').css('position','static');
+//       };
+//     });
+//   });
+// 
+//   // IF WE ADD SOME CLUSTER
+//   $('span.combo_cluster_options').find('ul.options li').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+//     $('span.combo_cluster_options').children('p').text($(this).children('a').text());
+//     var id = $(this).children('a').attr('id');
+//     id = id.substring(clusters_id,id.length);
+//     $('span.combo_cluster_options').children('p').attr('id','clusterToAdd_'+id);
+//     $('span.combo_cluster_options.clicked').removeClass('clicked');
+// 
+//   });
+// 
+//   // CLICK ON ADD CLUSTER
+//   $('a#add_cluster_bttn').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+// 
+//     var id = $('span.combo_cluster_options').children('p').attr('id');
+//     id = id.substring(clusterToAdd,id.length);
+// 
+//     var notAdded = false;
+//     notAdded = checkElementAdded($('ul.clusters'),id);
+// 
+//     // If we have some element (id=0 is a simple control to test it)
+//     if ((id != 0)&&(!notAdded)){
+//       var text = $('span.combo_cluster_options').children('p').text();
+// 
+//       var htmlToAdd = '<li id="cluster_'+id+'"><p>'+text+'</p><input id="'+id+'"type="checkbox" name="project[cluster_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
+// 
+//       $('ul.clusters').append(htmlToAdd);
+//       $('span.combo_cluster_options').children('p').text('Select more clusters');
+//       $('span.combo_cluster_options').children('p').attr('id','clusterToAdd_0');
+//     }
+//     $('div.block div.med div.left').resize();
+//   });
+// 
+//   // CLICK ON REMOVE CLUSTER
+//   $('ul.clusters').find('a.remove_this').live('click',function(ev){
+//     $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
+//     $(this).parent().remove();
+//     $('div.block div.med div.left').resize();
+//   });
 
 
   /************** SECTORS ************************** */
-  $('span#sector').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
+//   $('span#sector').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+// 
+//     // Check if clicks in jscrollpane
+//     if (
+//       $(ev.target).hasClass('jspTrack') ||
+//       $(ev.target).hasClass('jspDrag')
+//     ) {
+//       return false;
+//     }
+// 
+//     if (!$(this).hasClass('clicked')){
+//       $(this).css('position','relative');
+//       $(this).addClass('clicked');
+//       resetCombo($('span#sector'));
+//     }else {
+//       $(this).removeClass('clicked');
+//       //$(this).css('position','static');
+//     }
+// 
+//     $(document).click(function(event) {
+//       if ((!$(event.target).closest('span.combo_sector_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
+//         $('span.combo_sector_options.clicked').removeClass('clicked');
+//         // $('span#sector').css('position','static');
+//       };
+//     });
+//   });
+// 
+//   // IF WE ADD SOME SECTOR
+//   $('span#sector').find('ul.options li').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+//     $('span#sector').children('p').text($(this).children('a').text());
+//     var id = $(this).children('a').attr('id');
+// 
+//     id = id.substring(sectors_id,id.length);
+//     $('span#sector').children('p').attr('id','sectorToAdd_'+id);
+//     $('span#sector.clicked').removeClass('clicked');
+//   });
+// 
+//   // CLICK ON ADD SECTOR
+//   $('a.add_sector').click(function(ev){
+// 
+//     ev.stopPropagation();
+//     ev.preventDefault();
+// 
+//     var id = $('span#sector').children('p').attr('id');
+//     id = id.substring(sectorToAdd,id.length);
+//     var notAdded = false;
+//     notAdded = checkElementAdded($('ul.sectors'),id);
+// 
+//     // If we have some element (id=0 is a simple control to test it)
+//     if ((id != 0)&&(!notAdded)){
+//       var text = $('span#sector').children('p').text();
+//       var htmlToAdd = '<li id="sector_'+id+'"><p>'+text+'</p><input id="'+id+'"type="checkbox" name="project[sector_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
+// 
+//       $('ul.sectors').append(htmlToAdd);
+//       $('span#sector').children('p').text('Select more sectors');
+//       $('span#sector').children('p').attr('id','sectorToAdd_0');
+//     }
+//     $('div.block div.med div.left').resize();
+//   });
+// 
+//   // CLICK ON REMOVE SECTOR
+//   $('ul.sectors').find('a.remove_this').live('click',function(ev){
+//     $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
+//     $(this).parent().remove();
+//     $('div.block div.med div.left').resize();
+//   });
 
-    // Check if clicks in jscrollpane
-    if (
-      $(ev.target).hasClass('jspTrack') ||
-      $(ev.target).hasClass('jspDrag')
-    ) {
-      return false;
-    }
-
-    if (!$(this).hasClass('clicked')){
-      $(this).css('position','relative');
-      $(this).addClass('clicked');
-      resetCombo($('span#sector'));
-    }else {
-      $(this).removeClass('clicked');
-      //$(this).css('position','static');
-    }
-
-    $(document).click(function(event) {
-      if ((!$(event.target).closest('span.combo_sector_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
-        $('span.combo_sector_options.clicked').removeClass('clicked');
-        // $('span#sector').css('position','static');
-      };
+  
+  $('#project_sector_ids').chosen({
+      width: $('#project_sector_ids').parent('div').width()
     });
-  });
-
-  // IF WE ADD SOME SECTOR
-  $('span#sector').find('ul.options li').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-    $('span#sector').children('p').text($(this).children('a').text());
-    var id = $(this).children('a').attr('id');
-
-    id = id.substring(sectors_id,id.length);
-    $('span#sector').children('p').attr('id','sectorToAdd_'+id);
-    $('span#sector.clicked').removeClass('clicked');
-  });
-
-  // CLICK ON ADD SECTOR
-  $('a.add_sector').click(function(ev){
-
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    var id = $('span#sector').children('p').attr('id');
-    id = id.substring(sectorToAdd,id.length);
-    var notAdded = false;
-    notAdded = checkElementAdded($('ul.sectors'),id);
-
-    // If we have some element (id=0 is a simple control to test it)
-    if ((id != 0)&&(!notAdded)){
-      var text = $('span#sector').children('p').text();
-      var htmlToAdd = '<li id="sector_'+id+'"><p>'+text+'</p><input id="'+id+'"type="checkbox" name="project[sector_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
-
-      $('ul.sectors').append(htmlToAdd);
-      $('span#sector').children('p').text('Select more sectors');
-      $('span#sector').children('p').attr('id','sectorToAdd_0');
-    }
-    $('div.block div.med div.left').resize();
-  });
-
-  // CLICK ON REMOVE SECTOR
-  $('ul.sectors').find('a.remove_this').live('click',function(ev){
-    $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
-    $(this).parent().remove();
-    $('div.block div.med div.left').resize();
-  });
-
+  
   /************** SUBSECTORS ************************** */
-  $('span#subsector').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    if (!$(this).hasClass('clicked')){
-      $(this).addClass('clicked');
-    }else {
-      $(this).removeClass('clicked');
-    }
-
-    $(document).click(function(event) {
-      if (!$(event.target).closest('span#subsector').length) {
-        $('span#subsector.clicked').removeClass('clicked');
-      };
-    });
-  });
-
-  // IF WE ADD SOME SECTOR
-  $('span#subsector').find('ul.options li').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-    $('span#subsector').children('p').text($(this).children('a').text());
-    $('span#subsector').children('p').attr('id',$(this).children('a').attr('id'));
-    $('span#subsector.clicked').removeClass('clicked');
-    $('div.block div.med div.left').resize();
-  });
+//   $('span#subsector').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+// 
+//     if (!$(this).hasClass('clicked')){
+//       $(this).addClass('clicked');
+//     }else {
+//       $(this).removeClass('clicked');
+//     }
+// 
+//     $(document).click(function(event) {
+//       if (!$(event.target).closest('span#subsector').length) {
+//         $('span#subsector.clicked').removeClass('clicked');
+//       };
+//     });
+//   });
+// 
+//   // IF WE ADD SOME SECTOR
+//   $('span#subsector').find('ul.options li').click(function(ev){
+//     ev.stopPropagation();
+//     ev.preventDefault();
+//     $('span#subsector').children('p').text($(this).children('a').text());
+//     $('span#subsector').children('p').attr('id',$(this).children('a').attr('id'));
+//     $('span#subsector.clicked').removeClass('clicked');
+//     $('div.block div.med div.left').resize();
+//   });
 
   // CLICK ON ADD SECTOR
   // $('a.add_sector').click(function(ev){
