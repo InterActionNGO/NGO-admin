@@ -5,7 +5,7 @@
           <div class="content padding">
             <%= form_tag(admin_organizations_path, :method => :get, :class => 'search') do %>
               <label>SEARCH BY TEXT</label>
-              <input type="text" value="<%= params[:q] %>" placeholder="Search organizations by name or headquarter location" name="q" class="main_search"/>
+              <input type="text" value="<%= params[:q] %>" placeholder="Search in name, acronym, and description" name="q" class="main_search"/>
               <input type="submit" value="" />
             <% end %>
           </div>
