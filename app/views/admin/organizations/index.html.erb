@@ -7,6 +7,41 @@
               <label>SEARCH BY TEXT</label>
               <input type="text" value="<%= params[:q] %>" placeholder="Search in name, acronym, and description" name="q" class="main_search"/>
               <input type="submit" value="" />
+              
+              
+              <ul class="combos">
+                    <li class="comboselect status">
+                        <label>MEMBERSHIP STATUS</label>
+                        <%= select_tag :membership_status,
+                            options_for_select(Organization.all.map(&:membership_status).uniq.compact.sort, params[:membership_status]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                    </li>
+                    
+                    <li class="comboselect status">
+                        <label>ORGANIZATION TYPE</label>
+                        <%= select_tag :organization_type,
+                            options_for_select(Organization.all.map(&:organization_type).uniq.compact.sort, params[:organization_type]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                    </li>
+                    
+                    <li class="comboselect status">
+                        <label>LOCAL/INTERNATIONAL</label>
+                        <%= select_tag :international,
+                            options_for_select([['International',true],['Local',false]], params[:international]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                    </li>
+                    
+                    <li class="comboselect status">
+                        <label>PUBLISHING TO IATI</label>
+                        <%= select_tag :publishing_to_iati,
+                            options_for_select([['Yes',true],['No',false]], params[:publishing_to_iati]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                    </li>
+                    
+                    <li class="comboselect status">
+                        <label>HQ COUNTRY</label>
+                        <%= select_tag :contact_country,
+                            options_for_select(Geolocation.countries.order(:name).map{|c|[c.name,c.country_code]},:selected => params[:contact_country], :disabled => ['AR']), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                    </li>
+                </ul>
+              
+              
             <% end %>
           </div>
           <span class="bottom"></span>
@@ -18,17 +53,25 @@
         <div class="med ngos_list">
           <% unless @organizations.empty? %>
             <div class="header no_border">
-              <h2><%= pluralize(@organizations.total_entries, 'Organization', 'Organizations') %>
-                <% if params[:q]%>
-                on <a class="remove" href="<%= admin_organizations_path %>"><%= params[:q] %></a>
+                <h2 class="museo_sans"><%= pluralize(number_with_delimiter(@organizations_query_total, :delimiter => ','), 'organization') %></h2>
+                <% if @conditions.any? %>
+                    <div class="clearfix"></div>
+                    <h5>FILTERS</h5>
+                    <ul>
+                        <% @conditions.each do |k,v| %>
+                            <li>
+                                <%= k.capitalize %>:  <strong><%= v %></strong>
+                            </li>
+                        <% end %>
+                    </ul>
                 <% end %>
-              </h2>
+                
               <span class="buttons">
                 <a class="add_project museo_sans shadow_green" href="<%= new_admin_organization_path %>">New org.</a>
                 <a class="import_csv museo_sans shadow_black" href="<%= admin_export_organizations_path(:format => 'csv') %>">Export orgs.</a>
               </span>
             </div>
-            <ul>
+            <ul class="organizations-list">
               <% @organizations.each do |organization| %>
                 <li>
                   <h3><%= link_to(truncate(organization.name, :length => 60), edit_admin_organization_path(organization)) %></h3>
@@ -39,15 +82,15 @@
             </ul>
           <% else %>
             <% if Organization.count>1 %>
-              <div class="no_results">
-                <h2>There are not organizations for your search</h2>
-                <p>Try to search with different terms or simply <a href="<%= admin_organizations_path %>">browse all organizations</a></p>
-              </div>
+                <div class="no_results">
+                    <h2>Your search returned no results :(</h2>
+                    <p>Try different filters or simply <a href="<%= admin_organizations_path %>">browse all organizations</a></p>
+                </div>
             <% else %>
-              <div class="no_results">
-                <h2>There are not organizations in the site</h2>
-                <p>Try to <a href="<%= new_admin_organization_path %>">add new one</a>.</p>
-              </div>
+                <div class="no_results">
+                    <h2>Looks like there's no organizations in this site!</h2>
+                    <p>Get started by <a href="<%= new_admin_organization_path %>">adding a new one</a></p>
+                </div>
             <% end %>
           <% end %>
         </div>
@@ -58,9 +101,10 @@
 
       <div class="add_new">
         <a href="<%= new_admin_organization_path %>">
-          Add a new Organizations<br/>
-          <strong>There are already <%= pluralize(Organization.count, 'Organization', 'Organizations') %> registered</strong>
+          Add a new Organization<br/>
+          <strong>There are already <%= pluralize(Organization.count, 'Organization', 'Organizations') %></strong>
         </a>
       </div>
     </div>
-
+    
+<%= javascript_include_tag "backoffice/organizations.js" %>

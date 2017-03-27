@@ -2309,7 +2309,6 @@ div.long_search ul.combos {
     div.long_search ul.combos li.comboselect label {
       display: block;
       clear: both;
-      width: 104px;
       padding: 10px 0; }
 
 /*settings*/
@@ -4094,33 +4093,33 @@ div.med.ngos_list h2 a.remove {
   div.med.ngos_list h2 a.remove:hover {
     border-bottom: 1px solid #c15022;
     text-decoration: none; }
-div.med.ngos_list ul {
+div.med.ngos_list .organizations-list {
   float: left;
   width: 100%;
   padding: 0;
   margin: 23px 0 0 0;
   border-top: 1px solid #CCCCCC; }
-  div.med.ngos_list ul li {
+  div.med.ngos_list .organizations-list li {
     float: left;
     width: 100%;
     padding: 0;
     margin: 0;
     border-bottom: 1px solid #CCCCCC;
     height: 71px; }
-    div.med.ngos_list ul li.last {
+    div.med.ngos_list .organizations-list li.last {
       border: none; }
-    div.med.ngos_list ul li h3 {
+    div.med.ngos_list .organizations-list li h3 {
       float: left;
       width: 546px;
       height: 71px;
       margin: 0;
       padding: 27px 0; }
-      div.med.ngos_list ul li h3 a {
+      div.med.ngos_list .organizations-list li h3 a {
         font: bold 17px Arial;
         color: #c15022; }
-        div.med.ngos_list ul li h3 a:hover {
+        div.med.ngos_list .organizations-list li h3 a:hover {
           text-decoration: underline; }
-    div.med.ngos_list ul li p {
+    div.med.ngos_list .organizations-list li p {
       float: left;
       width: 167px;
       height: 41px;
@@ -4129,15 +4128,15 @@ div.med.ngos_list ul {
       font: normal 13px Arial;
       color: #666666;
       text-align: center; }
-      div.med.ngos_list ul li p a {
+      div.med.ngos_list .organizations-list li p a {
         padding: 0;
         font: normal 13px Arial;
         color: #666666; }
-        div.med.ngos_list ul li p a:hover {
+        div.med.ngos_list .organizations-list li p a:hover {
           text-decoration: underline; }
-      div.med.ngos_list ul li p.red {
+      div.med.ngos_list .organizations-list li p.red {
         background: #f7f7f7; }
-        div.med.ngos_list ul li p.red a {
+        div.med.ngos_list .organizations-list li p.red a {
           color: #c15022; }
 div.med.ngos_list div.no_results {
   float: left;

@@ -3,14 +3,46 @@ class Admin::OrganizationsController < ApplicationController
   before_filter :login_required
 
   def index
+      
     redirect_to edit_admin_organization_path(current_user.organization) and return unless current_user.admin?
-
-    organizations = if params[:q]
-      q = "%#{params[:q].sanitize_sql!}%"
-      Organization.where(["name ilike ? OR description ilike ? OR acronym ilike ?", q, q, q])
-    else
-      Organization
+    
+    organizations = Organization
+    @conditions = {}
+    
+    if params[:q]
+        unless params[:q].blank?
+            q = "%#{params[:q].sanitize_sql!}%"
+            organizations = Organization.where(["name ilike ? OR description ilike ? OR acronym ilike ?", q, q, q])
+            @conditions['find text'] = q[1..-2]
+        end
+        
+        unless params[:membership_status].blank?
+            organizations = organizations.where(:membership_status => params[:membership_status])
+            @conditions['Membership Status'] = params[:membership_status]
+        end
+        
+        unless params[:organization_type].blank?
+           organizations = organizations.where(:organization_type => params[:organization_type])
+           @conditions['Organization_Type'] = params[:organization_type]
+        end
+        
+        unless params[:international].blank?
+           organizations = organizations.where(:international => params[:international])
+           @conditions['Local/International'] = params[:international] ? 'International' : 'Local'
+        end
+        
+        unless params[:publishing_to_iati].blank?
+           organizations = organizations.where(:publishing_to_iati => params[:publishing_to_iati])
+           @conditions['Publishing to IATI'] = params[:publishing_to_iati] ? 'Yes' : 'No'
+        end
+        
+        unless params[:contact_country].blank?
+           organizations = organizations.where(:contact_country => params[:contact_country])
+           @conditions['HQ Country'] = params[:contact_country]
+        end
     end
+
+    @organizations_query_total = organizations.count
     @organizations = organizations.order('name asc, created_at DESC').paginate :per_page => 20, :page => params[:page]
   end
 
