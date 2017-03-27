@@ -7,7 +7,7 @@ class Admin::OrganizationsController < ApplicationController
 
     organizations = if params[:q]
       q = "%#{params[:q].sanitize_sql!}%"
-      Organization.where(["name ilike ? OR description ilike ?", q, q])
+      Organization.where(["name ilike ? OR description ilike ? OR acronym ilike ?", q, q, q])
     else
       Organization
     end
