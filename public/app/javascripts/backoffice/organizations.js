@@ -11,3 +11,5 @@ var chooseProjectsFile = function() {
 var importProjectsFile = function(){
   alert('WADUS');
 };
+
+$(".chzn-select").chosen();
