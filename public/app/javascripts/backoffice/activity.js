@@ -1,7 +1,7 @@
 $(document).ready(function(ev){
 
   $('span.combo_date').dateCombos({submitOnChange: true});
-  $(".chzn-users-select").chosen();
+  $(".chzn-users-select").chosen({ width: 300 });
   $(".chzn-types-select").chosen({hide_search :true});
 
   $('.chzn-container').click(function(ev){

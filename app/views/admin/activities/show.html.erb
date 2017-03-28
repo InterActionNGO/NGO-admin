@@ -9,10 +9,16 @@
           <%= form_for(:search, :url => admin_activity_path, :html => {:method => 'get'}) do |form| %>
             <ul class="combos">
 
-              <li class="comboselect">
-                <%= form.label :who, 'NGO USER' %>
-                <%= form.select :who, User.all.map{|u| [(u.name.presence || u.email), u.id]}, {:include_blank => 'All users' }, { :class => :"chzn-users-select"} %>
+              <li class="comboselect comboselect-wide">
+                <%= form.label :who, 'USER' %>
+                <%= form.select :who, User.order(:email).all.map{|u| ["#{u.email} (#{u.name})", u.id]}, {:include_blank => 'All users' }, { :class => :"chzn-users-select"} %>
               </li>
+              
+              <li class="comboselect comboselect-wide">
+                <%= form.label :organization, 'ORGANIZATION' %>
+                <%= form.select :organization, Organization.has_projects.order(:name).all.map{|o| [o.name,o.id]}, {:include_blank => 'All Organizations' }, { :class => :"chzn-users-select"} %>
+              </li>
+              
               <li class="comboselect">
                 <%= form.label :what_type, 'TYPE' %>
                 <%= form.select :what_type, ModelChangesRecorder.included_in.map{|c| [c.name, c.name]}.uniq, {:include_blank => 'All types'}, { :class => :"chzn-types-select"} %>
