@@ -8,6 +8,9 @@ class ChangesHistoryRecord < ActiveRecord::Base
 
   def self.search(search_params)
     query = where('user_id IS NOT NULL AND what_id IS NOT NULL')
+    query = query.joins('join users u on u.id = changes_history_records.user_id').
+        joins('join organizations o on o.id = u.organization_id').
+        where('o.id = ?', search_params.organization) if search_params.organization.present?
     query = query.where(:user_id => search_params.who)                                if search_params.who.present?
     query = query.where(:what_type => search_params.what_type)                        if search_params.what_type.present?
     query = query.where('changes_history_records.when > ?', search_params.when_start) if search_params.when_start.present?

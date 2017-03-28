@@ -2217,6 +2217,10 @@ div.long_search ul.combos {
     float: left;
     width: 190px;
     height: 100%; }
+    div.long_search ul.combos li.comboselect.comboselect-wide {
+        width: 300px;
+        margin-right: 10px;
+    }
     div.long_search ul.combos li.comboselect.status {
       width: 190px; }
     div.long_search ul.combos li.comboselect.date {
