@@ -61,7 +61,7 @@ Iom::Application.routes.draw do
     end
     resource :activity
     resources :changes_history_records, :controller => "activities"
-    resources :pages
+#     resources :pages
     resources :projects_synchronizations, :only => [:create, :update]
     resources :layers
   end
