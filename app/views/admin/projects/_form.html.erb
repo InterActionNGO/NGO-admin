@@ -252,7 +252,7 @@
 
 <!-- ##################### CONTEXT ##################### -->
 
-  <h3 class="section museo_sans">CONTEXT</h3>
+<!--  <h3 class="section museo_sans">CONTEXT</h3>-->
   
   <div class="field">
     <%= f.label :sectors %>
@@ -261,7 +261,7 @@
             <%= errors_for @project, :sectors %>
         </span>
     <% end %>
-    <%= f.collection_select :sector_ids, Sector.order(:name), :id, :name,{}, 'data-placeholder' => 'Choose a sector', :multiple => true %>
+    <%= f.collection_select :sector_ids, Sector.order(:name), :id, :name,{}, 'data-placeholder' => 'Add sector(s)', :multiple => true %>
   </div>
   
  
@@ -297,13 +297,13 @@
 
 <!-- ##################### PROJECT MANAGEMENT ##################### -->
 
-  <h3 class="section museo_sans">PROJECT MANAGEMENT</h3>
+  <h3 class="section museo_sans">PROJECT BUDGET</h3>
 
   <div class="two_columns">
     <div class="two_columns">
       <div class="left_column">
         <div class="field">
-          <p class="title">BUDGET CURRENCY </p>
+          <%= f.label :budget_currency %>
           <%= f.select :budget_currency,
                 Money::Currency.table.values.map{|c| ["#{c[:name]} (#{c[:iso_code]})", c[:iso_code]] }.sort_by{|o| o.first } %>
         </div> <!-- field -->
@@ -311,9 +311,9 @@
 
       <div class="right_column">
         <div class="field">
-          <ul class="dates">
-            <li class="comboselect date">
-              <label>Budget value date
+<!--           <ul class="dates"> -->
+<!--             <li class="comboselect date"> -->
+              <label for="project[budget_value_date]">Budget value date
               <!-- <strong>*</strong> -->
               <!-- FIELD DESCRIPTION -->
               <div class="field_info">
@@ -344,8 +344,8 @@
                 <%= f.date_select :budget_value_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
               </div>
               </span>
-            </li>
-          </ul>
+<!--             </li> -->
+<!--           </ul> -->
         </div>
       </div>
     </div>
@@ -377,10 +377,6 @@
     </span>
   </div>
 
-  <div class="field">
-    <p>If the organization is not listed here, you should complete and submit the new organization request form. You can access the form at <a href="http://bit.ly/2cpDqAk" style="display: inline;">http://bit.ly/2cpDqAk</a>.</p>
-  </div>
-
   <div id="partner_org" class="field">
     <label>PARTNERS
       <strong>&nbsp;</strong>
@@ -394,7 +390,7 @@
           <div class="bottom">
             <h3>Partners</h3>
             <span class="scroll">
-            <p>Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods. Multiple entries should be separated by a comma.</p>
+            <p>Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods.</p>
             </span>
           </div>
         </div>
@@ -407,7 +403,7 @@
         Organization.order(:name), :id, :name,
         { :include_blank => true },
         :multiple => true,
-        'data-placeholder' => 'Choose a Partner...'
+        'data-placeholder' => 'Add partner(s)'
       %>
     </span>
   </div> <!-- field -->
@@ -425,7 +421,7 @@
           <div class="bottom">
             <h3>Prime Awardee</h3>
             <span class="scroll">
-            <p>Name of the organization that received the funding directly from the donor.<br><br>Contact mappinginfo@interaction.org if you need an organization added to this list</p>
+            <p>Name of the organization that received the funding directly from the donor.</p>
             </span>
           </div>
         </div>
@@ -452,8 +448,12 @@
             <%= errors_for @project, :prime_awardee_id %>
         </span>
     <% end %>
-    <%= f.collection_select :prime_awardee_id, Organization.order(:name), :id, :name, {:include_blank=>true}, :'data-placeholder' => 'Select an Organization' %>
+    <%= f.collection_select :prime_awardee_id, Organization.order(:name), :id, :name, {:include_blank=>true}, :'data-placeholder' => 'Select an organization' %>
   
+  </div>
+  
+  <div class="field">
+    <p>If an organization is not listed here, complete the new organization request form at <a href="http://bit.ly/2cpDqAk" style="display: inline;">http://bit.ly/2cpDqAk</a>.</p>
   </div>
 
 <!-- ##################### PROJECT IMPACT ##################### -->

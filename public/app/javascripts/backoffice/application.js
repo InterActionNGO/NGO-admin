@@ -118,7 +118,7 @@ $(document).ready(function(ev){
         evt.preventDefault();
         removeAndGo(href_);
       });
-      $('div#modal_window h4').text('You are about deleting this '+capitaliseFirstLetter(name_));
+      $('div#modal_window h4').text('Are you sure you want to delete this '+capitaliseFirstLetter(name_)+'?');
       $('div#modal_window p').text('If you delete this '+name_+', it will not appear in any site.');
       if (no_subtitle) {
         $('div#modal_window p').text('');

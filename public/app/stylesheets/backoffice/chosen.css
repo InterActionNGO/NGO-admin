@@ -5,7 +5,9 @@
   display: inline-block;
   zoom: 1;
   *display: inline;
-  vertical-align: top; }
+  vertical-align: top;
+  margin-top: 5px;
+}
   .chzn-container .chzn-single span {
     margin: 0 !important; }
   .chzn-container .chzn-drop {

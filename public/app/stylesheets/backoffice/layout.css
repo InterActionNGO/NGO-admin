@@ -79,6 +79,18 @@ input[type="text"], textarea {
 
 .hidden {
   display: none; }
+.button-submit {
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    border-radius: 5px;
+    background: #8d9127;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;   
+}
+.button-submit:hover{
+    box-shadow: 0 0 3px -1px;   
+}
 
 /*The next is neccesary to fix properly the content scrollable*/
 div.wrapper {
