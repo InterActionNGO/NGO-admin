@@ -9,7 +9,7 @@
           <%= @project.countries.first.name %>
         </p>
         <%end%>
-        <p class="resources_account"><%= pluralize(@element.resources.count, 'resource', 'resources') %></p>
+        <p class="resources_account"><%= pluralize(@element.resources.count, 'link') %></p>
 
         <% unless @element.is_a?(Organization) %>
           <ul>
@@ -50,7 +50,7 @@
         <% end %>
 
         <%= form_for([:admin, @element, @resource]) do |f| %>
-          <h4 class="museo_sans">Add new resources<h4>
+          <h4 class="museo_sans">Add link to related content<h4>
           <div class="field">
             <label>TITLE <strong>*</strong></label>
             <%= f.text_field :title, :class=>"title" %>
@@ -60,7 +60,7 @@
             <%= f.text_field :url %>
           </div>
           <div class="field">
-            <%= f.submit 'add resource', :class=>'add' %>
+            <%= f.submit 'Add Link', :class=>'button-submit' %>
           </div>
         <% end -%>
 
