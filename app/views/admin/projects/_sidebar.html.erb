@@ -6,7 +6,7 @@
     <%= link_to("Media", admin_project_media_resources_path(@project)) %><% if !@project.media_resources.empty? %> <p><span><%=@project.media_resources.count%></span></p><% end %>
   </li>
   <li <%= selected_if_current_page(admin_project_resources_path(@project)) %>>
-    <%= link_to("Resources", admin_project_resources_path(@project)) %><% if !@project.resources.empty? %> <p><span><%=@project.resources.count%></span></p><% end %>
+    <%= link_to("Related Content", admin_project_resources_path(@project)) %><% if !@project.resources.empty? %> <p><span><%=@project.resources.count%></span></p><% end %>
   </li>
 
   <li <%= selected_if_current_page(donations_admin_project_path(@project)) %>>
@@ -23,7 +23,7 @@
 <% if current_user.admin? -%>
 <div class="delete">
   <h5 class="museo_sans">DELETE THIS PROJECT</h5>
-  <p>Clicking the link below will permanently delete this donor and its references within the sites</p>
+  <p>Clicking the link below will permanently delete this project and its references within the sites</p>
   <%= link_to("Delete this project", '#', :destroy_url => admin_project_path(@project), :att_name => 'project') %>
 </div>
 <% end -%>
