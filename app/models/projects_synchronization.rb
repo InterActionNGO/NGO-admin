@@ -123,6 +123,10 @@ class ProjectsSynchronization < ActiveRecord::Base
   end
 
   def process_project_validations(row_hash, project)
+    # check if project is valid twice here to ensure that all
+    # possible invalidations are caught
+    project.valid?
+
     if project.invalid?
       self.projects_errors += project.errors.full_messages.flatten.map{|msg| "#{msg} on row #@line"}
       project_not_updated << project
