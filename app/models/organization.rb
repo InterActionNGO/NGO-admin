@@ -94,7 +94,7 @@ class Organization < ActiveRecord::Base
   validates_format_of :twitter, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :twitter_changed?
 
   validates_presence_of :name
-  validates_uniqueness_of :organization_id, if: :organization_id
+  validates_uniqueness_of :organization_id, :if => :organization_id
 
   serialize :site_specific_information
 
