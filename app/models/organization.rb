@@ -519,6 +519,79 @@ SQL
     profile
   end
 
+  def self.find_like(q, threshold=0.5)
+    self.where("similarity(regexp_replace(name, 'foundation|international','','i'), ?) > ?", q, threshold).order("similarity(regexp_replace(name, 'foundation|international','','i'), #{ActiveRecord::Base.connection.quote(q)}) DESC") 
+  end
+  
+
+  # New CSV export
+  def self.to_csv
+
+     FasterCSV.generate do |csv|
+        csv << csv_headers.map{ |h| h[1] }
+        self.all.each do |o|
+           csv << csv_headers.map{ |h| o[h[0]] }.concat(Organization.find_like(o.name, 0.6).map(&:name).join('|').to_a)
+        end
+     end
+     
+  end
+    
+  def self.csv_headers
+      # [:field, :label]
+     [ 
+         [:id, :id],
+         [:name, :name],
+         [:acronym, :acronym],
+         [:international, :international],
+         [:membership_status, :interaction_membership_status],
+         [:membership_add_date, :membership_added],
+         [:membership_drop_date, :membership_dropped],
+         [:description, :description],
+         [:budget, :annual_budget],
+         [:budget_currency, :annual_budget_currency],
+         [:budget_usd, :annual_budget_in_usd],
+         [:budget_fiscal_year, :annual_budget_fiscal_year],
+         [:organization_type, :iati_organization_type],
+         [:iati_organizationid, :iati_organization_id],
+         [:publishing_to_iati, :publishing_to_iati],
+         [:website, :website],
+         [:twitter, :twitter],
+         [:facebook, :facebook],
+         [:hq_address, :hq_address_line1],
+         [:hq_address2, :hq_address_line2],
+         [:contact_city, :hq_city],
+         [:contact_state, :hq_admin1],
+         [:contact_zip, :hq_zipcode],
+         [:contact_country, :hq_country],
+         [:contact_name, :general_contact_name],
+         [:contact_position, :general_contact_position],
+         [:contact_email, :general_contact_email],
+         [:contact_phone_number, :general_contact_phone],
+         [:main_data_contact_name, :data_contact_name],
+         [:main_data_contact_position, :data_contact_position],
+         [:main_data_contact_email, :data_contact_email],
+         [:main_data_contact_phone_number, :data_contact_phone],
+         [:main_data_contact_city, :data_contact_city],
+         [:main_data_contact_state, :data_contact_admin1],
+         [:main_data_contact_zip, :data_contact_zipcode],
+         [:main_data_contact_country, :data_contact_country],
+         [:media_contact_name, :media_contact_name],
+         [:media_contact_position, :media_contact_position],
+         [:media_contact_email, :media_contact_email],
+         [:media_contact_phone_number, :media_contact_phone],
+         [:donation_address1, :donation_address_line1],
+         [:donation_address2, :donation_address_line2],
+         [:city, :donation_address_city],
+         [:state, :donation_address_admin1],
+         [:zip_code, :donation_address_zipcode],
+         [:donation_country, :donation_address_country],
+         [:donation_phone_number, :donation_phone],
+         [:donation_website, :donation_website],
+         [:created_at, :created],
+         [:updated_at, :last_updated]
+     ]
+  end
+
   # IATI
 
   def self.types
