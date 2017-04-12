@@ -76,6 +76,7 @@ class Organization < ActiveRecord::Base
   has_many :offices, :dependent => :destroy
   has_many :all_donated_projects, :through => :donations_made, :source => :project, :uniq => true
   has_one :user
+  has_many :identifiers, :as => :identifiable, :dependent => :destroy
 
   scope :has_projects, where('id in (select primary_organization_id from projects)')
   scope :with_donations, joins(:donations_made)
