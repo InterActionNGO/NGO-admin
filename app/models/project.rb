@@ -64,6 +64,7 @@ class Project < ActiveRecord::Base
   has_many :cached_sites, :class_name => 'Site', :finder_sql => 'select sites.* from sites, projects_sites where projects_sites.project_id = #{id} and projects_sites.site_id = sites.id'
   has_and_belongs_to_many :sites
   has_many :identifiers, :as => :identifiable, :dependent => :destroy
+  accepts_nested_attributes_for :identifiers
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
   scope :closed, lambda { where("end_date < ?", Date.today.to_s(:db)) }
