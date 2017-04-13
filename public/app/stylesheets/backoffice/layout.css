@@ -1196,7 +1196,7 @@ div.block.edit div.med {
         margin: 43px 0 0 0; }
       div.block.edit div.med div.left a.preview:hover {
         color: #7F2023; }
-div.field input[type="text"], div.field input[type="password"], div.field input[type="email"] {
+div.field input[type="text"]:not(.field-input), div.field input[type="password"], div.field input[type="email"] {
   float: left;
   width: 403px;
   height: 18px;
@@ -2812,7 +2812,7 @@ div.block.project_info div.med div.left form input[type="checkbox"] {
   float: left;
   visibility: hidden;
   width: 2px; }
-div.block.project_info div.med div.left form label {
+div.block.project_info div.med div.left form label:not(.field-label) {
   position: relative;
   float: left;
   margin: 20px 0 0 3px;
@@ -2952,7 +2952,7 @@ ul.ui-autocomplete.site_tags {
 /*END - AUTOCOMPLETE - TAGS*/
 /*AUTOCOMPLETE - FILTERING TAGS*/
 /*END - AUTOCOMPLETE - TAGS*/
-div.block.project_info div.med div.left form .field input[type="text"] {
+div.block.project_info div.med div.left form .field input[type="text"]:not(.field-input) {
   float: left;
   margin: 7px 0 0 7px;
   width: 400px;

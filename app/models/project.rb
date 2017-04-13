@@ -918,22 +918,27 @@ SQL
   end
 
   def generate_intervention_id
-    Project.where(:id => id).update_all(:intervention_id => [
-      primary_organization.try(:organization_id).presence || 'XXXX',
-      geolocations.first.try(:country_code).presence || 'XX',
-      start_date.strftime('%y'),
-      id
-    ].join('-'))
+#     Project.where(:id => id).update_all(:intervention_id => [
+#       primary_organization.try(:organization_id).presence || 'XXXX',
+#       geolocations.first.try(:country_code).presence || 'XX',
+#       start_date.strftime('%y'),
+#       id
+#     ].join('-'))
+    self.intervention_id = [primary_organization.id, id].join('-')
+    save!
+    self.identifiers.create!({ :assigner_org_id => Organization.where(:name => 'InterAction').first.id, :identifier => self.intervention_id })
+    
+    
   end
 
-  def create_intervention_id
-    generate_intervention_id
-    update_attribute(:intervention_id, intervention_id)
-  end
+#   def create_intervention_id
+#     generate_intervention_id
+#     update_attribute(:intervention_id, intervention_id)
+#   end
 
-  def update_intervention_id
-    generate_intervention_id if Project.where('intervention_id = ? AND id <> ?', intervention_id, id).count > 0
-  end
+#   def update_intervention_id
+#     generate_intervention_id if Project.where('intervention_id = ? AND id <> ?', intervention_id, id).count > 0
+#   end
 
   def update_data_denormalization
     sql = """UPDATE data_denormalization

@@ -68,6 +68,7 @@ class Admin::ProjectsController < Admin::AdminController
 
   def new
     @project = new_project(:date_provided => Time.now)
+    @project.identifiers.build
 
     if Rails.env.development?
       @project.start_date  = Time.now
@@ -79,6 +80,7 @@ class Admin::ProjectsController < Admin::AdminController
   end
 
   def create
+    params = filter_empty_identifiers(params)
     @project = new_project(params[:project])
     @project.intervention_id = nil
     @project.updated_by = current_user
@@ -99,11 +101,14 @@ class Admin::ProjectsController < Admin::AdminController
   def edit
     @project              = find_project(params[:id])
     @project.date_updated = Time.now
+    @project.identifiers.build
+    
     @organizations_ids   = organizations_ids
     @countries_iso_codes = countries_iso_codes
   end
 
   def update
+    params = filter_empty_identifiers(params)
     @project = find_project(params[:id])
     @sectors = @project.sectors
     @project.attributes = params[:project]
@@ -196,5 +201,10 @@ class Admin::ProjectsController < Admin::AdminController
     Hash[Geolocation.select([:id, :country_code]).where(:adm_level => 0).map{|o| [o.id, o.country_code]}]
   end
   private :countries_iso_codes
+  
+  def filter_empty_identifiers(params)
+     params[:project][:identifiers_attributes].delete_if { |key,val| val['assigner_org_id'].blank? && val['identifier'].blank? } 
+  end
+  private :filter_empty_identifiers
 
 end

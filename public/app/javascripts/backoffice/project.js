@@ -229,6 +229,9 @@ $(document).ready(function(ev){
   $('#project_primary_organization_id').chosen({
       width: $("#project_primary_organization_id").parent('div').width()
     });
+  $('.identifier .field-select').chosen({
+     width: 333
+  });
 
   // TYPE
   var global_geographical_scope_previous = $('#project_geographical_scope').val();
@@ -956,8 +959,8 @@ $(function() {
 
 function update_project_intervention_id(organization_id) {
   var project_intervention_id = organization_id + '-' +
-                                (country_iso_codes.sort()[0] || 'XX') + '-' +
-                                current_year_last_digits + '-' +
+//                                 (country_iso_codes.sort()[0] || 'XX') + '-' +
+//                                 current_year_last_digits + '-' +
                                 project_id;
 
   $('input#project_intervention_id.auto').val(project_intervention_id);

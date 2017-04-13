@@ -167,7 +167,7 @@ ActiveRecord::Schema.define(:version => 20170412174618) do
   end
 
   create_table "identifiers", :force => true do |t|
-    t.integer  "identifier",        :null => false
+    t.string   "identifier",        :null => false
     t.integer  "assigner_org_id",   :null => false
     t.integer  "identifiable_id"
     t.string   "identifiable_type"
