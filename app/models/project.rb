@@ -64,7 +64,9 @@ class Project < ActiveRecord::Base
   has_many :cached_sites, :class_name => 'Site', :finder_sql => 'select sites.* from sites, projects_sites where projects_sites.project_id = #{id} and projects_sites.site_id = sites.id'
   has_and_belongs_to_many :sites
   has_many :identifiers, :as => :identifiable, :dependent => :destroy
-  accepts_nested_attributes_for :identifiers
+  accepts_nested_attributes_for :identifiers, 
+          :reject_if => :all_blank,
+          :allow_destroy => true
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
   scope :closed, lambda { where("end_date < ?", Date.today.to_s(:db)) }
@@ -90,14 +92,14 @@ class Project < ActiveRecord::Base
     #intervention_id.present?
   #end)
 
-  after_create :generate_intervention_id
+  after_create :update_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
   before_validation :strip_urls
   before_validation :nullify_budget
   before_validation :set_budget_value_date
   before_save :set_budget_usd
-
+  
   def countries
     Geolocation.where(:uid => self.geolocations.map{|g| g.country_uid}).uniq
   end
@@ -917,28 +919,26 @@ SQL
     save!
   end
 
-  def generate_intervention_id
-#     Project.where(:id => id).update_all(:intervention_id => [
-#       primary_organization.try(:organization_id).presence || 'XXXX',
-#       geolocations.first.try(:country_code).presence || 'XX',
-#       start_date.strftime('%y'),
-#       id
-#     ].join('-'))
-    self.intervention_id = [primary_organization.id, id].join('-')
-    save!
-    self.identifiers.create!({ :assigner_org_id => Organization.where(:name => 'InterAction').first.id, :identifier => self.intervention_id })
+  def update_intervention_id
     
+    owner = Organization.where(:name => 'InterAction').first
+    primary = self.identifiers.where(:assigner_org_id => owner.id)
+    
+    Project.transaction do
+        # Update the intervention id
+        self.intervention_id = [primary_organization.id, id].join('-')
+        save!
+        # update the identifier that holds the intervention id (for backwards compatibility)
+        if primary.empty?
+            self.identifiers.create!({ :assigner_org_id => owner.id, :identifier => self.intervention_id })
+        else
+            primary = Identifier.find(primary.first.id)
+            primary.identifier = self.intervention_id
+            primary.save!
+        end
+    end
     
   end
-
-#   def create_intervention_id
-#     generate_intervention_id
-#     update_attribute(:intervention_id, intervention_id)
-#   end
-
-#   def update_intervention_id
-#     generate_intervention_id if Project.where('intervention_id = ? AND id <> ?', intervention_id, id).count > 0
-#   end
 
   def update_data_denormalization
     sql = """UPDATE data_denormalization

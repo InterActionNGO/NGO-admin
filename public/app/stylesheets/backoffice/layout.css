@@ -2808,10 +2808,6 @@ div.block div.med div.left form {
    */
   position: relative;
   z-index: 1; }
-div.block.project_info div.med div.left form input[type="checkbox"] {
-  float: left;
-  visibility: hidden;
-  width: 2px; }
 div.block.project_info div.med div.left form label:not(.field-label) {
   position: relative;
   float: left;

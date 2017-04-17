@@ -226,12 +226,56 @@ $(document).ready(function(ev){
   //   console.log($(e.currentTarget).val());
   //   update_project_intervention_id($(e.currentTarget).val());
   // });
+  
+  /////////////////////
+  //  IDENTIFIERS 
+  ///////////////////////
   $('#project_primary_organization_id').chosen({
       width: $("#project_primary_organization_id").parent('div').width()
     });
   $('.identifier .field-select').chosen({
      width: 333
   });
+  $('#add_identifier').click(function (ev) {
+     tbody = $(ev.target).parents('.identifier').find('tbody');
+     len = tbody.children('tr').length;
+     newRow = tbody.children('tr:eq(0)').clone(true);
+     newRow.find('.identifier-id').attr({
+         id: 'project_identifiers_attributes_'+len+'_identifier',
+         name: 'project[identifiers_attributes]['+len+'][identifier]',
+         value: ''
+     });
+     
+     newRow.find('.chzn-container').remove();
+     newRow.find('option[selected=selected]').removeAttr('selected');
+     newRow.find('.field-select').attr({
+         id: 'project_identifiers_attributes_'+len+'_assigner_org_id',
+         name: 'project[identifiers_attributes]['+len+'][assigner_org_id]',
+         class: 'field-select'
+     });
+     tbody.append(newRow);
+     tbody.find('.field-select').chosen({
+        width: 333 
+     })
+  });
+  $('.custom-checkbox').click(function(){
+        if($(this).attr('checked') == undefined)
+        {
+            $(this).attr('checked',"");
+            $(this).removeAttr('unchecked');
+            $(this).parent('td').find('.checkbox').attr('checked', true);
+        }
+        else
+        {
+            $(this).removeAttr('checked');
+            $(this).attr('unchecked',"");
+            $(this).parent('td').find('.checkbox').attr('checked', false);
+        }
+    });
+  
+  //////////////////////////
+  // END IDENTIFIERS 
+  /////////////////////////
 
   // TYPE
   var global_geographical_scope_previous = $('#project_geographical_scope').val();

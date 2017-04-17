@@ -9,7 +9,7 @@
       margin: 7px 0;
       
       &.identifier-id {
-          width: 175px;
+          width: 145px;
       }
       &.identifier-assigner {
           
@@ -52,4 +52,38 @@
    .float {
       float: left;   
    }
+   .link {
+        font: normal 13px Arial;
+        color: #c15022;
+        text-decoration: none; 
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;   
+        }
+   }
+   .remove-identifier-container {
+      width: 30px;
+   }
+   
+   .chzn-container {
+      margin: 0;   
+   }
+   .custom-checkbox {
+        display:inline-block;
+        width:13px;
+        height:13px;
+        border-radius: 3px;
+        padding:2px;
+        border:1px #ccc solid;
+        cursor:pointer;
+    }
+    .custom-checkbox[checked]{
+        background:url('/app/images/backoffice/common/delete15.png') no-repeat 1px 1px;
+    }
+    .custom-checkbox[unchecked]{
+        background: none;
+    }
+    input[type=checkbox] {
+        display:none;
+    }
 }

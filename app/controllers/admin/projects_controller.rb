@@ -80,9 +80,10 @@ class Admin::ProjectsController < Admin::AdminController
   end
 
   def create
-    params = filter_empty_identifiers(params)
+    @params = params
+    params = filter_empty_identifiers(@params)
     @project = new_project(params[:project])
-    @project.intervention_id = nil
+#     @project.intervention_id = nil
     @project.updated_by = current_user
     if @project.save
       flash[:notice] = "Project created! Now you can <a href='#{donations_admin_project_path(@project)}'>provide the donor information</a> for this project."
@@ -101,18 +102,20 @@ class Admin::ProjectsController < Admin::AdminController
   def edit
     @project              = find_project(params[:id])
     @project.date_updated = Time.now
-    @project.identifiers.build
     
     @organizations_ids   = organizations_ids
     @countries_iso_codes = countries_iso_codes
   end
 
   def update
-    params = filter_empty_identifiers(params)
+      @params = params
+    params = filter_empty_identifiers(@params)
+    
     @project = find_project(params[:id])
     @sectors = @project.sectors
     @project.attributes = params[:project]
     @project.updated_by = current_user
+     @project.update_intervention_id if @project.primary_organization_id_changed?
     if params[:project][:sector_ids].nil? && !@project.sectors.empty?
         @organizations_ids   = organizations_ids
         @countries_iso_codes = countries_iso_codes
@@ -203,7 +206,8 @@ class Admin::ProjectsController < Admin::AdminController
   private :countries_iso_codes
   
   def filter_empty_identifiers(params)
-     params[:project][:identifiers_attributes].delete_if { |key,val| val['assigner_org_id'].blank? && val['identifier'].blank? } 
+      params[:project][:identifiers_attributes].delete_if { |key,val| val['assigner_org_id'].blank? || val['identifier'].blank? }
+      params
   end
   private :filter_empty_identifiers
 
