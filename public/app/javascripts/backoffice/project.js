@@ -241,32 +241,6 @@ $(document).ready(function(ev){
      len = tbody.children('tr').length;
      
      column1 = $('<td>')
-        .addClass('remove-identifier-container')
-        .attr('title', 'Remove Identifier');
-     column1.append($('<span>')
-        .attr({
-            class: 'custom-checkbox',
-            unchecked: ''
-        })
-        .click(toggleCheckbox));
-     column1.append($('<input>')
-        .attr({
-            type: 'hidden',
-            value: '0',
-            name: 'project[identifiers_attributes]['+len+'][_destroy]'
-        })
-     );
-     column1.append($('<input>')
-        .attr({
-            type: 'checkbox',
-            value: '1',
-            class: 'checkbox',
-            name: 'project[identifiers_attributes]['+len+'][_destroy]',
-            id: 'project_identifiers_attributes_'+len+'__destroy'
-        })
-     );
-     
-     column2 = $('<td>')
         .append($('<input>')
         .attr({
             type: 'text',
@@ -283,7 +257,7 @@ $(document).ready(function(ev){
         .children('option')
         .clone(true);
      options.removeAttr('selected');
-     column3 = $('<td>')
+     column2 = $('<td>')
         .append($('<select>')
         .attr({
             class: 'field-select',
@@ -292,6 +266,33 @@ $(document).ready(function(ev){
             id: 'project_identifiers_attributes_'+len+'_assigner_org_id'
         })
         .append(options));
+        
+      
+     column3 = $('<td>')
+        .addClass('remove-identifier-container')
+        .attr('title', 'Remove Identifier');
+     column3.append($('<span>')
+        .attr({
+            class: 'custom-checkbox',
+            unchecked: ''
+        })
+        .click(toggleCheckbox));
+     column3.append($('<input>')
+        .attr({
+            type: 'hidden',
+            value: '0',
+            name: 'project[identifiers_attributes]['+len+'][_destroy]'
+        })
+     );
+     column3.append($('<input>')
+        .attr({
+            type: 'checkbox',
+            value: '1',
+            class: 'checkbox',
+            name: 'project[identifiers_attributes]['+len+'][_destroy]',
+            id: 'project_identifiers_attributes_'+len+'__destroy'
+        })
+     );
         
      tbody.append($('<tr>').append(column1).append(column2).append(column3));
      tbody.find('.field-select').chosen({

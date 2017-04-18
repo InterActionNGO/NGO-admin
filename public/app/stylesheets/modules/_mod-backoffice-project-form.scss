@@ -44,12 +44,13 @@
            font-size: 16px;
         }
         .add-identifier-link {
-           margin: -2em 1.5em 0 0;
-            text-align: right;
+           margin: -2em 0 0 1.5em;
             font-size: 14px;   
         }
         &.field {
-           margin-bottom: 1em;   
+           margin-bottom: 1em;  
+           width: 100%;
+           box-sizing: border-box;
         }
    }
    .float {
@@ -65,7 +66,7 @@
         }
    }
    .remove-identifier-container {
-      width: 30px;
+      max-width: 30px;
    }
    
    .chzn-container {
@@ -79,6 +80,7 @@
         padding:2px;
         border:1px #ccc solid;
         cursor:pointer;
+        margin-left: 10px;
     }
     .custom-checkbox[checked]{
         background:url('/app/images/backoffice/common/delete15.png') no-repeat 1px 1px;
