@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170412174618) do
+ActiveRecord::Schema.define(:version => 20170418180949) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
