@@ -65,7 +65,6 @@ class Project < ActiveRecord::Base
   has_and_belongs_to_many :sites
   has_many :identifiers, :as => :identifiable, :dependent => :destroy
   accepts_nested_attributes_for :identifiers, 
-          :reject_if => :all_blank,
           :allow_destroy => true
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
@@ -921,20 +920,25 @@ SQL
 
   def update_intervention_id
     
-    owner = Organization.where(:name => 'InterAction').first
-    primary = self.identifiers.where(:assigner_org_id => owner.id)
+    interaction = Organization.where(:name => 'InterAction').first
+    app_id = self.identifiers.where(:assigner_org_id => interaction.id)
+    publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
     
     Project.transaction do
         # Update the intervention id
         self.intervention_id = [primary_organization.id, id].join('-')
         save!
         # update the identifier that holds the intervention id (for backwards compatibility)
-        if primary.empty?
-            self.identifiers.create!({ :assigner_org_id => owner.id, :identifier => self.intervention_id })
+        if app_id.empty?
+            self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
         else
-            primary = Identifier.find(primary.first.id)
-            primary.identifier = self.intervention_id
-            primary.save!
+            app_id = Identifier.find(app_id.first.id)
+            app_id.identifier = self.intervention_id
+            app_id.save!
+        end
+        # update the identifier that holds the organization_intervention_id (for backwards compatibility)
+        unless publisher_id.empty?
+           self.organization_id = publisher_id.first.identifier
         end
     end
     

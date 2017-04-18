@@ -239,26 +239,67 @@ $(document).ready(function(ev){
   $('#add_identifier').click(function (ev) {
      tbody = $(ev.target).parents('.identifier').find('tbody');
      len = tbody.children('tr').length;
-     newRow = tbody.children('tr:eq(0)').clone(true);
-     newRow.find('.identifier-id').attr({
-         id: 'project_identifiers_attributes_'+len+'_identifier',
-         name: 'project[identifiers_attributes]['+len+'][identifier]',
-         value: ''
-     });
      
-     newRow.find('.chzn-container').remove();
-     newRow.find('option[selected=selected]').removeAttr('selected');
-     newRow.find('.field-select').attr({
-         id: 'project_identifiers_attributes_'+len+'_assigner_org_id',
-         name: 'project[identifiers_attributes]['+len+'][assigner_org_id]',
-         class: 'field-select'
-     });
-     tbody.append(newRow);
+     column1 = $('<td>')
+        .addClass('remove-identifier-container')
+        .attr('title', 'Remove Identifier');
+     column1.append($('<span>')
+        .attr({
+            class: 'custom-checkbox',
+            unchecked: ''
+        })
+        .click(toggleCheckbox));
+     column1.append($('<input>')
+        .attr({
+            type: 'hidden',
+            value: '0',
+            name: 'project[identifiers_attributes]['+len+'][_destroy]'
+        })
+     );
+     column1.append($('<input>')
+        .attr({
+            type: 'checkbox',
+            value: '1',
+            class: 'checkbox',
+            name: 'project[identifiers_attributes]['+len+'][_destroy]',
+            id: 'project_identifiers_attributes_'+len+'__destroy'
+        })
+     );
+     
+     column2 = $('<td>')
+        .append($('<input>')
+        .attr({
+            type: 'text',
+            value: '',
+            size: '30',
+            placeholder: 'Add Identifier',
+            class: 'field-input identifier-id',
+            name: 'project[identifiers_attributes]['+len+'][identifier]',
+            id: 'project_identifiers_attributes_'+len+'_identifier'
+        })
+     );
+     
+     options = tbody.find('.field-select:eq(0)')
+        .children('option')
+        .clone(true);
+     options.removeAttr('selected');
+     column3 = $('<td>')
+        .append($('<select>')
+        .attr({
+            class: 'field-select',
+            'data-placeholder': 'Select an Organization',
+            name: 'project[identifiers_attributes]['+len+'][assigner_org_id]',
+            id: 'project_identifiers_attributes_'+len+'_assigner_org_id'
+        })
+        .append(options));
+        
+     tbody.append($('<tr>').append(column1).append(column2).append(column3));
      tbody.find('.field-select').chosen({
         width: 333 
      })
   });
-  $('.custom-checkbox').click(function(){
+  $('.custom-checkbox').click(toggleCheckbox);
+  function toggleCheckbox () {
         if($(this).attr('checked') == undefined)
         {
             $(this).attr('checked',"");
@@ -271,7 +312,7 @@ $(document).ready(function(ev){
             $(this).attr('unchecked',"");
             $(this).parent('td').find('.checkbox').attr('checked', false);
         }
-    });
+    }
   
   //////////////////////////
   // END IDENTIFIERS 
