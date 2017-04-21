@@ -54,7 +54,9 @@ class Project < ActiveRecord::Base
   #has_and_belongs_to_many :regions, :after_add => :add_to_country, :after_remove => :remove_from_country
   #has_and_belongs_to_many :countries
   has_and_belongs_to_many :geolocations
-  has_and_belongs_to_many :tags, :after_add => :update_tag_counter, :after_remove => :update_tag_counter
+  has_and_belongs_to_many :tags,
+          :before_add => :increment_tag_counter,
+          :before_remove => :decrement_tag_counter
   has_many :resources, :conditions => proc {"resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy
   has_many :media_resources, :conditions => proc {"media_resources.element_type = #{Iom::ActsAsResource::PROJECT_TYPE}"}, :foreign_key => :element_id, :dependent => :destroy, :order => 'position ASC'
   has_many :donations, :dependent => :destroy
@@ -82,7 +84,6 @@ class Project < ActiveRecord::Base
   validate :location_presence,                                       :unless => lambda { sync_mode }
   validate :dates_consistency#, :presence_of_clusters_and_sectors
   validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :message => "URL is invalid (your changes were not saved). Make sure the web address begins with 'http://' or 'https://'.", :allow_blank => true, :if => :website_changed?
-
 
   #validates_uniqueness_of :intervention_id, :if => (lambda do
     #intervention_id.present?
@@ -244,8 +245,13 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def update_tag_counter(tag)
-    tag.update_tag_counter
+  def increment_tag_counter(tag)
+      puts "Project.increment called"
+    tag.increment_tag_counter(self)
+  end
+  
+  def decrement_tag_counter(tag)
+    tag.decrement_tag_counter(self)
   end
 
   def finished?
