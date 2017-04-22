@@ -1,86 +1,28 @@
-<%= form_for(@layer, :url => (@layer.new_record? ? admin_layers_path : admin_layer_path(@layer))) do |f| %>
+<%= form_for(@tag, :url => (@tag.new_record? ? admin_tags_path : admin_tag_path(@tag))) do |f| %>
   <% if flash[:error] -%>
   <div class="form_error"><%= flash[:error] %></div>
   <% end -%>
   <div class="field">
-    <label class="first">LAYER TITLE <strong>*</strong></label>
-    <span class="input_large <%= 'error' if !@layer.errors[:title].empty? && action_name != 'new' %>">
-      <%= f.text_field :title, :class=>"long #{'error' if !@layer.errors[:title].empty? && action_name != 'new'}" %>
-      <%= errors_for @layer, :title %>
+    <label class="first">Tag Name <strong>*</strong></label>
+    <span class="input_large <%= 'error' if !@tag.errors[:name].empty? && action_name != 'new' %>">
+      <%= f.text_field :name, :class=>"long #{'error' if !@tag.errors[:name].empty? && action_name != 'new'}" %>
+      <%= errors_for @tag, :name %>
     </span>
   </div>
   <div class="field">
-    <label class="first">LAYER LONG TITLE <strong>*</strong></label>
-    <span class="input_large <%= 'error' if !@layer.errors[:long_title].empty? && action_name != 'new' %>">
-      <%= f.text_field :long_title, :class=>"long #{'error' if !@layer.errors[:long_title].empty? && action_name != 'new'}" %>
-      <%= errors_for @layer, :long_title %>
+    <label class="first">Tag Description</label>
+    <span class="textarea <%= 'error' if !@tag.errors[:description].empty? && action_name != 'new' %>">
+      <%= f.text_area :description, :class=>"#{'error' if !@tag.errors[:description].empty? && action_name != 'new'}" %>
+      <%= errors_for @tag, :description %>
     </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>CartoDB Table <strong>*</strong></label>
-    </span>
-    <span class="input_large <%= 'error' if !@layer.errors[:cartodb_table].empty? && action_name != 'new' %>">
-      <%= f.text_field :cartodb_table %>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>DESCRIPTION </label>
-    </span>
-    <span class="textarea <%= 'error' if !@layer.errors[:description].empty? && action_name != 'new' %>">
-      <%= f.text_area :description %>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>CREDITS</label>
-    </span>
-    <span class="textarea <%= 'error' if !@layer.errors[:credits].empty? && action_name != 'new' %>">
-      <%= f.text_area :credits%>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>MIN <strong>*</strong></label>
-    </span>
-    <span class="input_large <%= 'error' if !@layer.errors[:min].empty? && action_name != 'new' %>">
-      <%= f.text_field :min %>
-    </span>
-  </div>
-   <div class="submit floating">
-    <%= f.submit 'Save changes', :class => "#{'error' if @layer.invalid? && action_name != 'new'}" %>
-   </div>
-   <div class="field">
-    <span class="chars">
-      <label>MAX <strong>*</strong></label>
-    </span>
-    <span class="input_large <%= 'error' if !@layer.errors[:max].empty? && action_name != 'new' %>">
-      <%= f.text_field :max %>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>Units</label>
-    </span>
-    <span class="input_large <%= 'error' if !@layer.errors[:units].empty? && action_name != 'new' %>">
-      <%= f.text_field :units %>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>ENABLED</label>
-    </span>
-
-    <%= f.select(:status, [['Enabled', true], ['Disabled', false]]) %>
   </div>
 
 
 
    <div class="submit floating">
-    <%= f.submit 'Save changes', :class => "#{'error' if @layer.invalid? && action_name != 'new'}" %>
+    <%= f.submit '', :class => "#{'error' if @tag.invalid? && action_name != 'new'}" %>
    </div>
 
 <%end%>
 
-  <%= javascript_include_tag "backoffice/application.js", "backoffice/site_map.js" %>
+  <%= javascript_include_tag "backoffice/application.js" %>

@@ -1,23 +1,17 @@
-<div class="main_layout layer">
- <div class="block edit first">
-   <div class="top"></div>
-   <div class="med">
-		<div class="left">
-		<h2 class="museo_sans"><%= @layer.title %></h2>
-		<%= render :partial => 'form' %>
-		</div>
-		<div class="right menu">
-		<% if current_user.admin? -%>
-		  <div class="delete">
-		    <h5>DELETE THIS LAYER</h5>
-		    <p>Clicking the link below will permanently delete this layer</p>
-		    <%= link_to("Delete this LAYER", '#', :destroy_url => admin_layer_path(@layer), :att_name=>"layer") %>
-		  </div>
-			<% end %>
-		</div>
-   </div>
-   <div class="bottom"></div>
- </div>
+<div class="main_layout">
+    <div class="block edit first">
+        <div class="top"></div>
+        <div class="med">
+            <div class="left">
+		<h2 class="museo_sans"><%= @tag.name %></h2>
+                <%= render :partial => 'form' %>
+            </div>
+            <div class="right menu">
+                <%= render 'sidebar' %>
+            </div>
+        </div>
+        <div class="bottom"></div>
+    </div>
 </div>
 
 <%= javascript_include_tag "backoffice/application.js" %>
