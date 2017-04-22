@@ -36,6 +36,9 @@
                     </table>
                 <% end -%>
             </div>
+            <div class="right menu">
+                <%= render 'admin/tags/sidebar' %>
+            </div>
         </div>
         <div class="bottom_grey paginate">
             <%= will_paginate(@projects) %>
