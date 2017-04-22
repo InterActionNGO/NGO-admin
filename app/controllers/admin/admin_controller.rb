@@ -62,7 +62,7 @@ class Admin::AdminController < ApplicationController
 
     end
   end
-
+  # Fix this method!  Specifically the Project.to_csv method...
   def export_projects
     options = {
       :include_non_active =>true
@@ -77,7 +77,7 @@ class Admin::AdminController < ApplicationController
       end
       format.csv do
         send_data Project.to_csv(nil, options),
-          :type => 'text/plain; charset=utf-8; application/download',
+          :type => 'text/csv; charset=utf-8; application/download',
           :disposition => "attachment; filename=ngoaidmap_projects.csv"
       end
       format.xls do
