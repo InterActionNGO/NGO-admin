@@ -1,24 +1,26 @@
 <ul>
-  <li <%= selected_if_current_page(edit_admin_tag_path(@tag)) %>>
-    <%= link_to('Basic information', edit_admin_tag_path(@tag)) %>
-  </li>
-  <li <%= selected_if_current_page(admin_tag_projects_path(@tag)) %>>
-    <div class="bottom_selected">
-      <%= link_to('Tag projects', admin_tag_projects_path(@tag)) %><% if @tag.projects.present? %> <p><span><%=@tag.projects.count%></span></p><% end %>
-    </div>
-  </li>
+    <li <%= selected_if_current_page(edit_admin_tag_path(@tag)) %>>
+        <%= link_to('Basic information', edit_admin_tag_path(@tag)) %>
+    </li>
+    <li <%= selected_if_current_page(admin_tag_projects_path(@tag)) %>>
+        <div class="bottom_selected">
+            <%= link_to('Tag projects', admin_tag_projects_path(@tag)) %>
+            <% if @tag.projects.present? %>
+                <p><span><%= @tag.projects.count %></span></p>
+            <% end %>
+        </div>
+    </li>
 </ul>
-
-<% if current_user.admin? -%>
-  <div class="export_import">
-    <div id="links">
-      <%= link_to 'Export Projects', admin_export_projects_path(:tag_id => @tag.id, :format => :csv) %>
-      </div>
-  </div>
-  <div class="delete">
-    <h5>DELETE THIS TAG</h5>
-    <p>Clicking the link below will permanently delete this tag and its references within the sites</p>
-    <%= link_to("Delete this tag", '#', :destroy_url => admin_tag_path(@tag), :att_name=>"tag") %>
-  </div>
-<% end -%>
+<% if current_user.admin? %>
+    <div class="export_import">
+        <div id="links">
+            <%= link_to 'Export Projects', admin_export_projects_path(:tag_id => @tag.id, :format => :csv) %>
+        </div>
+    </div>
+    <div class="delete">
+        <h5>DELETE THIS TAG</h5>
+        <p>Clicking the link below will permanently delete this tag and its references within the sites</p>
+        <%= link_to("Delete this tag", '#', :destroy_url => admin_tag_path(@tag), :att_name=>"tag") %>
+    </div>
+<% end %>
 
