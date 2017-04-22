@@ -37,7 +37,7 @@
 <% if current_user.admin? -%>
   <div class="export_import">
     <div id="links">
-      <%= link_to 'Export Projects', admin_export_projects_path(:organization_id => @organization.to_param, :format => :xls) %>
+      <%= link_to 'Export Projects', admin_export_projects_path(:organization_id => @organization.id, :format => :csv) %>
       </div>
   </div>
   <div class="delete">

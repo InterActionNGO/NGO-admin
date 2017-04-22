@@ -39,6 +39,10 @@
               <li class="<%= (controller_name == 'activities' && action_name == 'show' && @project.blank? && @organization.blank? ? 'selected' : nil) %>"><%= link_to(admin_activity_path) do %>activity<% end %></li>
               
               <li class="<%= (controller_name == 'layers' && @site.blank? ? 'selected' : nil) %>"><%= link_to(admin_layers_path) do %>layers<% end %></li>
+              
+              <li class="<%= (controller_name == 'tags' && @site.blank? ? 'selected' : nil) %>">
+                <%= link_to('tags', admin_tags_path) %>
+              </li>
             <% else -%>
               <li class="<%= (controller_name == 'admin' ? 'selected' : nil) %>"><%= link_to(admin_admin_path) do %>dashboard<% end %></li>
               <li class="<%= (((controller_name == 'projects' && !@organization) || (@element && @element.is_a?(Project))) ? 'selected' : nil) %>"><%= link_to(admin_projects_path) do %>Your projects<% end %></li>

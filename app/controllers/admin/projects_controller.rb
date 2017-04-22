@@ -54,6 +54,11 @@ class Admin::ProjectsController < Admin::AdminController
       projects      = @organization.projects.includes(:donors, :sectors, :geolocations, :partners)
       @projects_query_total = projects.size
       @projects     = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
+    elsif params[:tag_id]
+      template      = 'admin/tags/projects'
+      @tag = Tag.find(params[:tag_id])
+      projects      = @tag.projects
+      @projects     = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     else
       @projects_query_total = @projects_count
       @projects = find_projects.order('name asc').paginate :per_page => 20, :page => params[:page]
