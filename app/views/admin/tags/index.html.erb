@@ -1,4 +1,4 @@
-<div class="main_layout">
+<div class="main_layout mod-backoffice-tags">
     <div class="block">
         <div class="long_search">
             <span class="top"></span>
@@ -35,10 +35,10 @@
                         </span>
                     </div>
                     
-                    <ul class="organizations-list">
+                    <ul class="tag-list">
                         <% @tags.each do |tag| %>
-                            <li>
-                                <h3><%= link_to(truncate(tag.name, :length => 60), edit_admin_tag_path(tag)) %></h3>
+                            <li class="tag-list-item">
+                                <p class="tag-list-item-name"><%= link_to(truncate(tag.name, :length => 60), edit_admin_tag_path(tag)) %></p>
                                 <p class="red"><%= link_to(pluralize(tag.projects.count,' project','projects'), admin_tag_projects_path(tag)) %></a></p>
                             </li>
                         <% end %>
@@ -57,7 +57,7 @@
         <div class="add_new">
             <a href="<%= new_admin_tag_path %>">
             Add a new tag<br/>
-            <strong>There are already <%= pluralize(Tag.count, 'Tag') %> created</strong>
+            <strong>There are already <%= pluralize(Tag.count, 'Tag') %></strong>
             </a>
         </div>
     </div>
