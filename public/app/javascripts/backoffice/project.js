@@ -344,6 +344,9 @@ $(document).ready(function(ev){
   $('#project_budget_currency').chosen({
     width: 272
   });
+  $('#project_tag_ids').chosen({
+     width: 420
+   });
 
   // PRIME AWARDEE click
   $('#project_prime_awardee_id').chosen({
@@ -820,130 +823,130 @@ $(function() {
   }
 
 
-  if ($('#project_tags').length > 0){
-    var custom_url =  '/admin/tags?term=';
-
-    $("#project_tags").autocomplete({
-      style: 'project_tags',
-      source: function( request, response ) {
-        $('span#tags_combo').addClass('active');
-        var value = $("#project_tags").val();
-        if (value.indexOf(',') != -1 ) {
-          value = value.substring(value.indexOf(',')+1, value.length);
-        }
-        $.ajax({
-          url: custom_url + value,
-          dataType: "json",
-          success: function( data ) {
-            if(data != null) {
-              response($.map(data, function(tag) {
-                return {
-                  label: tag.name + ' ' + tag.count + ' projects',
-                value: tag.name
-                }
-              }));
-            }
-          }
-        });
-      },
-      minLength: 2,
-      focus: function() {
-        // prevent value inserted on focus
-        return false;
-      },
-      select: function( event, ui ) {
-        var terms = split( this.value );
-        // remove the current input
-        terms.pop();
-        // add the selected item
-        terms.push( ui.item.value );
-        // add placeholder to get the comma-and-space at the end
-        terms.push( "" );
-        this.value = terms.join( ", " );
-
-        return false;
-      },
-      refresh: function(){
-        this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
-      }
-    });
-  }
-
-  if ($('#donation_donor_id').length > 0){
-    $('#donation_donor_id').chosen({width: $('#donation_donor_id').parent('div').width()});
-    // var custom_donors_url = '/admin/donors?q=';
-
-    // // AUTOCOMPLETE FOR DONORS IN PROJECT
-    // $("#autocomplete_donor_name").autocomplete({
-    //   style:'donor_names',
-    //   source: function( request, response ) {
-    //     var textbox = $('#autocomplete_donor_name');
-    //     var value = $("#autocomplete_donor_name").val();
-    //     textbox.next('.spinner').fadeIn('fast');
-    //     $.ajax({
-    //       url: custom_donors_url + value,
-    //       dataType: "json",
-    //       success: function( data ) {
-    //         textbox.next('.spinner').fadeOut('fast');
-    //         if(data != null) {
-    //           response(data);
-    //         }
-    //       }
-    //     });
-    //   },
-    //   minLength: 2,
-    //   focus: function() {
-    //     // prevent value inserted on focus
-    //     return false;
-    //   },
-    //   select: function( event, ui ) {
-    //     $('#donation_donor_id').val(ui.item.element_id);
-    //     $('#donation_office_attributes_donor_id').val(ui.item.element_id);
-    //   },
-    //   refresh: function(){
-    //     this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
-    //     $('span#donor_name_input').addClass('active');
-    //   }
-  }
-
-
-  if ($('#autocomplete_office_name').length > 0){
-    // AUTOCOMPLETE FOR offices IN PROJECT
-    $("#autocomplete_office_name").autocomplete({
-      style:'donor_names',
-      source: function( request, response ) {
-        if($('#autocomplete_office_name:disabled')[0] || !$('#donation_donor_id').val() || $('#donation_donor_id').val() == '') {
-          return false;
-        };
-        var custom_offices_url = '/admin/donors/' + $('#donation_office_attributes_donor_id').val() + '/offices?q=';
-        var textbox = $('#autocomplete_office_name');
-        var value = $("#autocomplete_office_name").val();
-        textbox.next('.spinner').fadeIn('fast');
-        $.ajax({
-          url: custom_offices_url + value,
-          dataType: "json",
-          success: function( data ) {
-            textbox.next('.spinner').fadeOut('fast');
-            if(data != null) {
-              response(data);
-            }
-          }
-        });
-      },
-      minLength: 2,
-      focus: function() {
-        // prevent value inserted on focus
-        return false;
-      },
-      select: function( event, ui ) {
-        $('#donation_office_id').val(ui.item.element_id);
-      },
-      refresh: function(){
-        this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
-        $('span#office_name_input').addClass('active');
-      }
-    });
-  }
+//   if ($('#project_tags').length > 0){
+//     var custom_url =  '/admin/tags?term=';
+// 
+//     $("#project_tags").autocomplete({
+//       style: 'project_tags',
+//       source: function( request, response ) {
+//         $('span#tags_combo').addClass('active');
+//         var value = $("#project_tags").val();
+//         if (value.indexOf(',') != -1 ) {
+//           value = value.substring(value.indexOf(',')+1, value.length);
+//         }
+//         $.ajax({
+//           url: custom_url + value,
+//           dataType: "json",
+//           success: function( data ) {
+//             if(data != null) {
+//               response($.map(data, function(tag) {
+//                 return {
+//                   label: tag.name + ' ' + tag.count + ' projects',
+//                 value: tag.name
+//                 }
+//               }));
+//             }
+//           }
+//         });
+//       },
+//       minLength: 2,
+//       focus: function() {
+//         // prevent value inserted on focus
+//         return false;
+//       },
+//       select: function( event, ui ) {
+//         var terms = split( this.value );
+//         // remove the current input
+//         terms.pop();
+//         // add the selected item
+//         terms.push( ui.item.value );
+//         // add placeholder to get the comma-and-space at the end
+//         terms.push( "" );
+//         this.value = terms.join( ", " );
+// 
+//         return false;
+//       },
+//       refresh: function(){
+//         this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
+//       }
+//     });
+//   }
+// 
+//   if ($('#donation_donor_id').length > 0){
+//     $('#donation_donor_id').chosen({width: $('#donation_donor_id').parent('div').width()});
+//     // var custom_donors_url = '/admin/donors?q=';
+// 
+//     // // AUTOCOMPLETE FOR DONORS IN PROJECT
+//     // $("#autocomplete_donor_name").autocomplete({
+//     //   style:'donor_names',
+//     //   source: function( request, response ) {
+//     //     var textbox = $('#autocomplete_donor_name');
+//     //     var value = $("#autocomplete_donor_name").val();
+//     //     textbox.next('.spinner').fadeIn('fast');
+//     //     $.ajax({
+//     //       url: custom_donors_url + value,
+//     //       dataType: "json",
+//     //       success: function( data ) {
+//     //         textbox.next('.spinner').fadeOut('fast');
+//     //         if(data != null) {
+//     //           response(data);
+//     //         }
+//     //       }
+//     //     });
+//     //   },
+//     //   minLength: 2,
+//     //   focus: function() {
+//     //     // prevent value inserted on focus
+//     //     return false;
+//     //   },
+//     //   select: function( event, ui ) {
+//     //     $('#donation_donor_id').val(ui.item.element_id);
+//     //     $('#donation_office_attributes_donor_id').val(ui.item.element_id);
+//     //   },
+//     //   refresh: function(){
+//     //     this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
+//     //     $('span#donor_name_input').addClass('active');
+//     //   }
+//   }
+// 
+// 
+//   if ($('#autocomplete_office_name').length > 0){
+//     // AUTOCOMPLETE FOR offices IN PROJECT
+//     $("#autocomplete_office_name").autocomplete({
+//       style:'donor_names',
+//       source: function( request, response ) {
+//         if($('#autocomplete_office_name:disabled')[0] || !$('#donation_donor_id').val() || $('#donation_donor_id').val() == '') {
+//           return false;
+//         };
+//         var custom_offices_url = '/admin/donors/' + $('#donation_office_attributes_donor_id').val() + '/offices?q=';
+//         var textbox = $('#autocomplete_office_name');
+//         var value = $("#autocomplete_office_name").val();
+//         textbox.next('.spinner').fadeIn('fast');
+//         $.ajax({
+//           url: custom_offices_url + value,
+//           dataType: "json",
+//           success: function( data ) {
+//             textbox.next('.spinner').fadeOut('fast');
+//             if(data != null) {
+//               response(data);
+//             }
+//           }
+//         });
+//       },
+//       minLength: 2,
+//       focus: function() {
+//         // prevent value inserted on focus
+//         return false;
+//       },
+//       select: function( event, ui ) {
+//         $('#donation_office_id').val(ui.item.element_id);
+//       },
+//       refresh: function(){
+//         this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
+//         $('span#office_name_input').addClass('active');
+//       }
+//     });
+//   }
 
   $('span.combo_date:not(.disabled)').dateCombos();
 
