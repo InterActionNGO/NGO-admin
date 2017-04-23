@@ -146,28 +146,28 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def tags=(tag_names)
-    if tag_names.blank?
-      tags.clear
-      return
-    end
-    if tag_names.is_a?(String)
-      tag_names = tag_names.split(/[\||,]/).map{ |t| t.strip }.compact.delete_if{ |t| t.blank? }
-    end
-    Tag.transaction do
-      tags.clear
-      tag_names.each do |tag_name|
-        if tag = Tag.find_by_name(tag_name)
-          unless tags.include?(tag)
-            tags << tag
-          end
-        else
-          tag = Tag.create :name => tag_name
-          tags << tag
-        end
-      end
-    end
-  end
+#   def tags=(tag_names)
+#     if tag_names.blank?
+#       tags.clear
+#       return
+#     end
+#     if tag_names.is_a?(String)
+#       tag_names = tag_names.split(/[\||,]/).map{ |t| t.strip }.compact.delete_if{ |t| t.blank? }
+#     end
+#     Tag.transaction do
+#       tags.clear
+#       tag_names.each do |tag_name|
+#         if tag = Tag.find_by_name(tag_name)
+#           unless tags.include?(tag)
+#             tags << tag
+#           end
+#         else
+#           tag = Tag.create :name => tag_name
+#           tags << tag
+#         end
+#       end
+#     end
+#   end
 
   def budget=(ammount)
     if ammount.blank? || ammount == '' || ammount == 0
