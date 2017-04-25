@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170421190955) do
+ActiveRecord::Schema.define(:version => 20170424151703) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -527,6 +527,11 @@ ActiveRecord::Schema.define(:version => 20170421190955) do
     t.integer  "overview_map_zoom"
     t.text     "internal_description"
     t.boolean  "featured",                                                                    :default => false
+  end
+
+  create_table "sites_tags", :id => false, :force => true do |t|
+    t.integer "site_id"
+    t.integer "tag_id"
   end
 
   create_table "stats", :force => true do |t|

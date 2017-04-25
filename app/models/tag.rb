@@ -3,6 +3,7 @@ class Tag < ActiveRecord::Base
   has_and_belongs_to_many :projects,
           :before_add => :increment_tag_counter,
           :before_remove => :decrement_tag_counter
+  has_and_belongs_to_many :sites
 
   validates_uniqueness_of :name
 
