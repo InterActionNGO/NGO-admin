@@ -62,9 +62,10 @@ class Site < ActiveRecord::Base
   has_many :pages, :dependent => :destroy
   has_many :cached_projects, :class_name => 'Project', :finder_sql => 'select projects.* from projects, projects_sites where projects_sites.site_id = #{id} and projects_sites.project_id = projects.id'
   has_many :stats, :dependent => :destroy
-
   has_many :site_layers
   has_many :layer, :through => :site_layers
+  has_and_belongs_to_many :tags
+  has_and_belongs_to_many :projects
 
   has_attached_file :logo, :styles => {
                                       :small => {
@@ -99,7 +100,7 @@ class Site < ActiveRecord::Base
   before_validation :clean_html
   attr_accessor :geographic_context, :project_context, :show_blog, :geographic_boundary_box
 
-  before_save :set_project_context, :set_project_context_tags_ids
+  before_save :set_project_context #, :set_project_context_tags_ids
   after_save :set_cached_projects
   after_create :create_pages
   after_destroy :remove_cached_projects
@@ -212,9 +213,9 @@ class Site < ActiveRecord::Base
     end
 
     # (4)
-    if project_context_tags_ids?
+    if tags.count > 0
       from << "projects_tags"
-      where << "(projects_tags.project_id = projects.id AND projects_tags.tag_id IN (#{project_context_tags_ids}))"
+      where << "(projects_tags.project_id = projects.id AND projects_tags.tag_id IN (#{tags.map(&:id).join(',')}))"
     end
 
     # (5)
@@ -251,9 +252,9 @@ class Site < ActiveRecord::Base
   end
 
   # Return All the projects within the Site (already executed)
-  def projects(options = {})
-    projects_sql(options.merge(:limit => nil, :offset => nil)).all
-  end
+#   def projects(options = {})
+#     projects_sql(options.merge(:limit => nil, :offset => nil)).all
+#   end
 
   def level_for_region
     if navigate_by_level1?
@@ -798,9 +799,9 @@ SQL
 
     def set_project_context
       return if project_context.blank?
-      unless project_context.include?('tags')
-        self.project_context_tags = nil
-      end
+#       unless project_context.include?('tags')
+#         self.project_context_tags = nil
+#       end
       unless project_context.include?('cluster')
         self.project_context_cluster_id = nil
       end
@@ -810,11 +811,11 @@ SQL
     end
 
     # Get project tags names and sets the id's from that tags
-    def set_project_context_tags_ids
-      return if project_context_tags.blank?
-      tag_names = project_context_tags.split(',').map{ |t| t.strip }.compact.delete_if{ |t| t.blank? }
-      self.project_context_tags_ids = tag_names.map{ |tag_name| Tag.find_by_name(tag_name).try(:id) }.compact.join(',')
-    end
+#     def set_project_context_tags_ids
+#       return if project_context_tags.blank?
+#       tag_names = project_context_tags.split(',').map{ |t| t.strip }.compact.delete_if{ |t| t.blank? }
+#       self.project_context_tags_ids = tag_names.map{ |tag_name| Tag.find_by_name(tag_name).try(:id) }.compact.join(',')
+#     end
 
     def create_pages
       about = self.pages.create :title => 'About'
