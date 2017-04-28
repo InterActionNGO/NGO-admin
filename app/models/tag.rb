@@ -7,7 +7,7 @@ class Tag < ActiveRecord::Base
 
   validates_uniqueness_of :name
   
-  self.update_all_counts do
+  def self.update_all_counts do
     self.find_each do |tag|
          puts "Updating count for tag: #{tag.name}"
          tag.count = tag.projects.uniq.size
