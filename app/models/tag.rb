@@ -6,6 +6,14 @@ class Tag < ActiveRecord::Base
   has_and_belongs_to_many :sites
 
   validates_uniqueness_of :name
+  
+  self.update_all_counts do
+    self.find_each do |tag|
+         puts "Updating count for tag: #{tag.name}"
+         tag.count = tag.projects.uniq.size
+         tag.save!
+      end
+  end
 
   def increment_tag_counter (project)
     self.class.increment_counter(:count, id)
