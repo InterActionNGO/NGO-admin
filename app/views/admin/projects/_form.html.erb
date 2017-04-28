@@ -55,11 +55,27 @@
       <%= f.text_field :organization_id %>
     </span>
   </div>
+  
   <div class="field">
-    <p class="title">TAGS <span class="info">Use comma (",") to separate project tags</span></p>
-    <span id="tags_combo" class="input_large">
-      <%= f.text_field :tags, :value => @project.tags.map{ |tag| tag.name }.join(', ') %>
-    </span>
+    <label>TAGS <strong>&nbsp;</strong>
+    <!-- FIELD DESCRIPTION -->
+      <div class="field_info">
+        <span class="info">i</span>
+        <div class="field_text">
+          <div class="top">
+            <a href="#close">x</a>
+          </div>
+          <div class="bottom">
+            <h3>Tags</h3>
+            <span class="scroll">
+            <p>Tags are special flags to group projects together under a common issue/event/crisis.</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </label>
+      <!-- END FIELD DESCRIPTION -->
+    <%= f.collection_select :tag_ids, Tag.order('count desc, name asc'), :id, :name, {}, 'data-placeholder' => 'Add tag(s)', :multiple => true %>
   </div>
 
 <!-- ##################### PROJECT DETAILS ##################### -->

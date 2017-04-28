@@ -4896,10 +4896,10 @@ div.block.site_info div.med {
           border: 2px solid #8EA06B; }
       div.block.site_info div.med div.left form ul.project_tipo_options {
         float: left;
-        width: 235px;
+/*         width: 235px; */
         height: auto;
         margin: 1px 0 0 0px; }
-        div.block.site_info div.med div.left form ul.project_tipo_options li {
+        div.block.site_info div.med div.left form ul.project_tipo_options li:not(.search-choice) {
           float: left;
           margin: 7px 0 0 12px;
           width: 600px; }

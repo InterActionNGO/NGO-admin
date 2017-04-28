@@ -1,0 +1,28 @@
+<%= form_for(@tag, :url => (@tag.new_record? ? admin_tags_path : admin_tag_path(@tag))) do |f| %>
+  <% if flash[:error] -%>
+  <div class="form_error"><%= flash[:error] %></div>
+  <% end -%>
+  <div class="field">
+    <label class="first">Tag Name <strong>*</strong></label>
+    <span class="input_large <%= 'error' if !@tag.errors[:name].empty? && action_name != 'new' %>">
+      <%= f.text_field :name, :class=>"long #{'error' if !@tag.errors[:name].empty? && action_name != 'new'}" %>
+      <%= errors_for @tag, :name %>
+    </span>
+  </div>
+  <div class="field">
+    <label class="first">Tag Description</label>
+    <span class="textarea <%= 'error' if !@tag.errors[:description].empty? && action_name != 'new' %>">
+      <%= f.text_area :description, :class=>"#{'error' if !@tag.errors[:description].empty? && action_name != 'new'}" %>
+      <%= errors_for @tag, :description %>
+    </span>
+  </div>
+
+
+
+   <div class="submit floating">
+    <%= f.submit '', :class => "#{'error' if @tag.invalid? && action_name != 'new'}" %>
+   </div>
+
+<%end%>
+
+  <%= javascript_include_tag "backoffice/application.js" %>

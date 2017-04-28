@@ -1,0 +1,40 @@
+.mod-backoffice-tags {
+    h2 {
+        text-transform: none;
+    }
+    .tag-list {
+        float: left;
+        width: 100%;
+        padding: 0;
+        margin: 23px 0 0 0;
+        border-top: 1px solid $color-4;
+    }
+    .tag-list-item {
+        float: left;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border-bottom: 1px solid $color-10;
+        height: 71px;   
+        
+        p {
+           float: left;
+            width: 167px;
+            height: 41px;
+            padding: 30px 0 0 0;
+            margin: 0;
+            color: $color-4;
+            text-align: center;
+            
+            &.tag-list-item-name {
+                width: 100%;
+                margin-right: -167px;
+                text-align: left;
+            }
+        }
+    }
+   
+   .red {
+      background: $color-4;   
+   }
+}

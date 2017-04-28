@@ -46,84 +46,88 @@
   <h3 class="section museo_sans">GEOGRAPHIC CONTEXT</h3>
 
   <div class="field">
-  <label>SITE GEOGRAPHICAL CONTEXT</label>
-  <ul class="geographic_options">
-  <li id="gc_worldwide" class="<%= selected_if_worldwide(@site) %> option">
-    <a class="combo limited">Worldwide, not limited</a>
-  </li>
-  <li id="gc_limited_region" class="<%= selected_if_field_present(@site, :geographic_context_country_id) %> option">
-    <a class="limited combo">Limited to a country and region</a>
-    <div class="content">
-      <%= f.select :geographic_context_country_id, Country.get_select_values.collect{ |c| [c.name, c.id] }, {:prompt => 'Select a country'}, {:id => 'gc_limited_country_section'}%>
-      <div id="regions">
-      </div>
-    </div>
-  </li>
-  <li id="gc_limited_bbox" class="<%= selected_if_field_present(@site, :geographic_boundary_box) %> option">
-    <a class="limited combo">Limited by a boundary box</a>
-    <%= f.hidden_field :geographic_boundary_box %>
-    <div class="content">
-      <div id="map_bbox"></div>
-    </div>
-  </li>
-  </ul>
+    <label>SITE GEOGRAPHICAL CONTEXT</label>
+    <ul class="geographic_options">
+        <li id="gc_worldwide" class="<%= selected_if_worldwide(@site) %> option">
+            <a class="combo limited">Worldwide, not limited</a>
+        </li>
+        <li id="gc_limited_region" class="<%= selected_if_field_present(@site, :geographic_context_country_id) %> option">
+            <a class="limited combo">Limited to a country and region</a>
+            <div class="content">
+                <%= f.select :geographic_context_country_id, Country.get_select_values.collect{ |c| [c.name, c.id] }, {:prompt => 'Select a country'}, {:id => 'gc_limited_country_section'}%>
+                <div id="regions"></div>
+            </div>
+        </li>
+        <li id="gc_limited_bbox" class="<%= selected_if_field_present(@site, :geographic_boundary_box) %> option">
+            <a class="limited combo">Limited by a boundary box</a>
+            <%= f.hidden_field :geographic_boundary_box %>
+            <div class="content">
+                <div id="map_bbox"></div>
+            </div>
+        </li>
+    </ul>
   </div>  <!-- field -->
   <h3 class="section museo_sans">PROJECT FILTERING</h3>
 
   <div class="field">
-  <label>PROJECT TYPOLOGY</label>
+    <label>PROJECT TYPOLOGY</label>
 
-  <ul class="project_tipo_options">
-    <li id="include_sector_cluster" class="<%= 'selected' if @site.project_context_cluster_id? %>">
-      <a class="check">Include only projects from a particular cluster or sector</a>
-      <div class="content">
-        <span class="select_combo_typology"><p class="cluster_sector">Select a cluster or a sector</p>
-          <div class="values">
-            <%= f.hidden_field :project_context_cluster_id  %>
-            <div class="wrapper">
-              <ul class="clusters_or_sectors scroll_pane">
-                <li class="section"><p>CLUSTERS</p></li>
-                <% Cluster.get_select_values.each do |cluster| %>
-                  <li><a class="cluster_value" id="cluster_<%= cluster.id %>"><%= truncate(cluster.name, :length => 30)  %></a></li>
-                <%end -%>
-                <%= f.hidden_field :project_context_sector_id  %>
-                <li class="section"><p>SECTORS</p></li>
-                <% Sector.get_select_values.each do |sector| %>
-                  <li><a class="sector_value" id="sector_<%= sector.id %>"><%= truncate(sector.name, :length => 30)  %></a></li>
-                <%end -%>
-              </ul>
+    <ul class="project_tipo_options">
+        <li id="include_sector_cluster" class="<%= 'selected' if @site.project_context_cluster_id? %>">
+            <a class="check">Include only projects from a particular cluster or sector</a>
+            <div class="content">
+            <span class="select_combo_typology"><p class="cluster_sector">Select a cluster or a sector</p>
+            <div class="values">
+                <%= f.hidden_field :project_context_cluster_id  %>
+                <div class="wrapper">
+                <ul class="clusters_or_sectors scroll_pane">
+                    <li class="section"><p>CLUSTERS</p></li>
+                    <% Cluster.get_select_values.each do |cluster| %>
+                    <li><a class="cluster_value" id="cluster_<%= cluster.id %>"><%= truncate(cluster.name, :length => 30)  %></a></li>
+                    <%end -%>
+                    <%= f.hidden_field :project_context_sector_id  %>
+                    <li class="section"><p>SECTORS</p></li>
+                    <% Sector.get_select_values.each do |sector| %>
+                    <li><a class="sector_value" id="sector_<%= sector.id %>"><%= truncate(sector.name, :length => 30)  %></a></li>
+                    <%end -%>
+                </ul>
+                </div>
             </div>
-          </div>
-        </span>
-      </div>
-    </li>
-    <li id="include_ngo" class="<%= 'selected' if @site.project_context_organization_id? %>">
-      <a class="check">Include only projects from a particular NGO</a>
-      <div class="content">
-        <span class="select_combo_typology"><p class="ngo">Select an NGO</p>
-          <div class="values">
-            <div class="wrapper">
-              <ul class="organizations scroll_pane">
-                <%= f.hidden_field :project_context_organization_id  %>
-                <% Organization.get_select_values.each do |organization| %>
-                  <li><a class="organization" id="orgs_<%= organization.id %>"><%= truncate(organization.name, :length => 31) %></a></li>
-                <%end -%>
-              </ul>
+            </span>
+        </div>
+        </li>
+        <li id="include_ngo" class="<%= 'selected' if @site.project_context_organization_id? %>">
+            <a class="check">Include only projects from a particular NGO</a>
+            <div class="content">
+                <span class="select_combo_typology"><p class="ngo">Select an NGO</p>
+                    <div class="values">
+                        <div class="wrapper">
+                            <ul class="organizations scroll_pane">
+                                <%= f.hidden_field :project_context_organization_id  %>
+                                <% Organization.get_select_values.each do |organization| %>
+                                <li><a class="organization" id="orgs_<%= organization.id %>"><%= truncate(organization.name, :length => 31) %></a></li>
+                                <%end -%>
+                            </ul>
+                        </div>
+                    </div>
+                </span>
             </div>
-          </div>
-        </span>
-      </div>
+        </li>
+    </ul>
+  </div>
+<!--     <li id="include_tags" class="<%= 'selected' if @site.project_context_tags? %>"> -->
+<div class="field">
+<!--       <a class="check">Include only matching some tags</a> -->
+      <label>Include only matching these tags:</label>
+      <!--<div class="content">-->
+      <!--<div>-->
+<!--         <span class="tags_site"> -->
+<!--           <%= f.text_field :project_context_tags, {:id => 'pc_tags_section'} %> -->
+          <%= f.collection_select :tag_ids, Tag.order('count desc, name asc'), :id, :name, {}, 'data-placeholder' => 'Add tag(s)', :multiple => true %>
+<!--         </span> -->
+      <!--</div>-->
     </li>
-    <li id="include_tags" class="<%= 'selected' if @site.project_context_tags? %>">
-      <a class="check">Include only matching some tags</a>
-      <div class="content">
-        <span class="tags_site">
-          <%= f.text_field :project_context_tags, {:id => 'pc_tags_section'} %>
-
-        </span>
-      </div>
-    </li>
-  </ul>
+<!--   </ul> -->
   </div> <!-- field -->
   <h3 class="section museo_sans">CONTACT INFORMATION</h3>
     <div class="two_columns">

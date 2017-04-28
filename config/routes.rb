@@ -64,6 +64,9 @@ Iom::Application.routes.draw do
 #     resources :pages
     resources :projects_synchronizations, :only => [:create, :update]
     resources :layers
+    resources :tags do
+        resources :projects, :only => [:index]
+    end
   end
 
   if Rails.env.development?

@@ -13,9 +13,9 @@ $(document).ready(function(ev){
         var name = $('ul.organizations').find('a#orgs_'+id_org).text();
         $('li#include_ngo').find('p.ngo').text(name);
     }
-    if (!$('input#pc_tags_section').val()){
-        $('li#include_tags').removeClass('selected');
-    }
+//     if (!$('input#pc_tags_section').val()){
+//         $('li#include_tags').removeClass('selected');
+//     }
 
 
     // CLEANING TYPOLOGY
@@ -130,9 +130,9 @@ $(document).ready(function(ev){
           }else if (id == 'include_ngo'){
             $('input#site_project_context_organization_id').val(null);
             $(this).parent().find('p.ngo').text('Select an NGO');
-          }else if (id == 'include_tags'){
+          }/*else if (id == 'include_tags'){
             $('input#project_context_tags').val(null);
-          }
+          }*/
         }else {
           $(this).parent().addClass('selected');
         }
@@ -197,7 +197,10 @@ $(document).ready(function(ev){
         $('span.select_combo_typology.clicked').removeClass('clicked');
 
       });
-
+    $('#site_tag_ids').chosen({
+        width: 420
+    });
+    
     floatingSubmit($('form .submit'), $('div.main_layout div.block div.med div.right div.delete'));
 });
 
@@ -215,47 +218,47 @@ function split( val ) {
       });
     });
 
-  $("#pc_tags_section").autocomplete({
-    style: 'site_tags',
-    source: function( request, response ) {
-      $('span.tags_site').addClass('active');
-      var value = $("#pc_tags_section").val();
-      if (value.indexOf(',') != -1 ) {
-        value = value.substring(value.indexOf(',')+1, value.length);
-      }
-      $.ajax({
-        url: '/admin/tags?term=' + value,
-        dataType: "json",
-        success: function( data ) {
-          if(data != null) {
-            response($.map(data, function(tag) {
-              return {
-                label: tag.name,
-                value: tag.name
-              }
-            }));
-          }
-        }
-      });
-    },
-    minLength: 2,
-    focus: function() {
-      // prevent value inserted on focus
-      return false;
-    },
-    select: function( event, ui ) {
-      var terms = split( this.value );
-      // remove the current input
-      terms.pop();
-      // add the selected item
-      terms.push( ui.item.value );
-      // add placeholder to get the comma-and-space at the end
-      terms.push( "" );
-      this.value = terms.join( ", " );
-      return false;
-    },
-    refresh: function(){
-       this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
-    }
-  });
+//   $("#pc_tags_section").autocomplete({
+//     style: 'site_tags',
+//     source: function( request, response ) {
+//       $('span.tags_site').addClass('active');
+//       var value = $("#pc_tags_section").val();
+//       if (value.indexOf(',') != -1 ) {
+//         value = value.substring(value.indexOf(',')+1, value.length);
+//       }
+//       $.ajax({
+//         url: '/admin/tags?term=' + value,
+//         dataType: "json",
+//         success: function( data ) {
+//           if(data != null) {
+//             response($.map(data, function(tag) {
+//               return {
+//                 label: tag.name,
+//                 value: tag.name
+//               }
+//             }));
+//           }
+//         }
+//       });
+//     },
+//     minLength: 2,
+//     focus: function() {
+//       // prevent value inserted on focus
+//       return false;
+//     },
+//     select: function( event, ui ) {
+//       var terms = split( this.value );
+//       // remove the current input
+//       terms.pop();
+//       // add the selected item
+//       terms.push( ui.item.value );
+//       // add placeholder to get the comma-and-space at the end
+//       terms.push( "" );
+//       this.value = terms.join( ", " );
+//       return false;
+//     },
+//     refresh: function(){
+//        this.element.children("li.ui-menu-item:odd a").addClass("ui-menu-item-alternate");
+//     }
+//   });
 });
