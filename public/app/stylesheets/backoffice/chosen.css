@@ -136,7 +136,7 @@
   padding: 0;
   cursor: text;
   overflow: hidden;
-  height: auto !important;
+  height: auto;
   height: 1%;
   position: relative; }
   .chzn-container-multi .chzn-choices li {

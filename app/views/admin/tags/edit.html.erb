@@ -1,0 +1,17 @@
+<div class="main_layout mod-backoffice-tags">
+    <div class="block edit first">
+        <div class="top"></div>
+        <div class="med">
+            <div class="left">
+		<h2 class="museo_sans"><%= @tag.name %></h2>
+                <%= render :partial => 'form' %>
+            </div>
+            <div class="right menu">
+                <%= render 'sidebar' %>
+            </div>
+        </div>
+        <div class="bottom"></div>
+    </div>
+</div>
+
+<%= javascript_include_tag "backoffice/application.js" %>
