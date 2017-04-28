@@ -166,15 +166,6 @@ ActiveRecord::Schema.define(:version => 20170424151703) do
     t.integer "project_id"
   end
 
-  create_table "identifiers", :force => true do |t|
-    t.string   "identifier",        :null => false
-    t.integer  "assigner_org_id",   :null => false
-    t.integer  "identifiable_id"
-    t.string   "identifiable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "layer_styles", :force => true do |t|
     t.string "title"
     t.string "name"
