@@ -23,7 +23,9 @@ Iom::Application.routes.draw do
       put 'enable', :action => 'enable'
     end
     resources :geolocations, :only => [:index]
-    resources :tags, :only => [:index, :create, :update, :destroy]
+    resources :tags do
+       resources :projects, :only => [:index] 
+    end
     resources :regions, :only => [:index]
     resources :organizations do
       resources :projects, :only => [:index]
@@ -64,9 +66,6 @@ Iom::Application.routes.draw do
 #     resources :pages
     resources :projects_synchronizations, :only => [:create, :update]
     resources :layers
-    resources :tags do
-        resources :projects, :only => [:index]
-    end
   end
 
   if Rails.env.development?
