@@ -26,7 +26,7 @@ class Admin::TagsController < ApplicationController
       @tag = Tag.new(params[:tag])
       if @tag.save
       flash[:notice] = 'Tag created successfully.'
-      redirect_to edit_admin_tag_path(@tag), :flash => {:success => 'Ta ghas been created successfully'}
+      redirect_to edit_admin_tag_path(@tag)
     else
       render :action => 'new'
     end
@@ -43,7 +43,7 @@ class Admin::TagsController < ApplicationController
     if @tag.save
       flash[:notice] = 'Tag updated successfully.'
 
-      redirect_to edit_admin_tag_path(@tag), :flash => {:success => 'Tag has been updated successfully'}
+      redirect_to edit_admin_tag_path(@tag)
     else
       flash.now[:error] = @tag.errors.full_messages
       render :action => 'edit'
@@ -52,8 +52,13 @@ class Admin::TagsController < ApplicationController
   
   def destroy
     @tag = Tag.find(params[:id])
-    @tag.destroy
-    redirect_to admin_tags_path, :flash => {:success => 'Tag has been deleted successfully'}
+    if @tag.destroy
+        flash[:notice] = 'Tag deleted successfully'
+        redirect_to admin_tags_path
+    else
+      flash.now[:error] = @tag.errors.full_messages
+      render :action => 'edit'
+    end
   end
 
 end

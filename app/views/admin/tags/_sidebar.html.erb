@@ -20,7 +20,7 @@
     <div class="delete">
         <h5>DELETE THIS TAG</h5>
         <p>Clicking the link below will permanently delete this tag and its references within the sites</p>
-        <%= link_to("Delete this tag", '#', :destroy_url => admin_tag_path(@tag), :att_name=>"tag") %>
+        <%= link_to 'Delete this tag', '#', :destroy_url => admin_tag_path(@tag), :att_name => 'tag' %>
     </div>
 <% end %>
 
