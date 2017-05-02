@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170418180949) do
+ActiveRecord::Schema.define(:version => 20170424151703) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -529,6 +529,11 @@ ActiveRecord::Schema.define(:version => 20170418180949) do
     t.boolean  "featured",                                                                    :default => false
   end
 
+  create_table "sites_tags", :id => false, :force => true do |t|
+    t.integer "site_id"
+    t.integer "tag_id"
+  end
+
   create_table "stats", :force => true do |t|
     t.integer "site_id"
     t.integer "visits"
@@ -536,8 +541,11 @@ ActiveRecord::Schema.define(:version => 20170418180949) do
   end
 
   create_table "tags", :force => true do |t|
-    t.string  "name"
-    t.integer "count", :default => 0
+    t.string   "name"
+    t.integer  "count",       :default => 0
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "themes", :force => true do |t|
