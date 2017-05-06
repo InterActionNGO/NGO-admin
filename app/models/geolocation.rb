@@ -5,6 +5,8 @@ class Geolocation < ActiveRecord::Base
   scope :closed, lambda {joins(:projects).where("projects.end_date < ?", Date.today.to_s(:db))}
   scope :organizations, lambda{|orgs| joins(:projects).joins('INNER JOIN organizations on projects.primary_organization_id = organizations.id').where(:organizations => {:id => orgs})}
 
+  before_save :set_readable_path
+  
   def self.fetch_all(level, geolocation)
     level ||= 0
     geolocations = Geolocation.where('adm_level = ?', level)
@@ -21,5 +23,9 @@ class Geolocation < ActiveRecord::Base
   
   def self.countries
      Geolocation.where(:adm_level => 0)
+  end
+  
+  def set_readable_path
+    self.readable_path = [self.g0, self.g1, self.g2, self.g3, self.g4].compact.map{|g| Geolocation.where(:uid => g).first.try(:name)}.compact.reject{ |x| x.strip.empty? }.join('>')
   end
 end
