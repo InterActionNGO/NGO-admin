@@ -3,7 +3,7 @@ class AddReadablePathToGeolocations < ActiveRecord::Migration
       add_column :geolocations, :readable_path, :string
       
       Geolocation.find_each do |g|
-        g.readable_path = [self.g0, self.g1, self.g2, self.g3, self.g4].compact.map{|g| Geolocation.where(:uid => g).first.try(:name)}.compact.reject{ |x| x.strip.empty? }.join('>')
+        g.readable_path = [g.g0, g.g1, g.g2, g.g3, g.g4].compact.map{|g| Geolocation.where(:uid => g).first.try(:name)}.compact.reject{ |x| x.strip.empty? }.join('>')
         if g.save!
              puts "Success: added #{g.readable_path}"
          else
