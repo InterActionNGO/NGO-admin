@@ -1,0 +1,17 @@
+<div class="main_layout mod-backoffice-stories">
+    <div class="block edit first">
+        <div class="top"></div>
+        <div class="med">
+            <div class="left">
+		<h2 class="museo_sans"><%= @story.name %></h2>
+		<h3>Story ID: <%= @story.id %></h3>
+                <%= render :partial => 'form' %>
+            </div>
+            <div class="right menu">
+                <%= render 'sidebar' %>
+            </div>
+        </div>
+        <div class="bottom"></div>
+    </div>
+</div>
+

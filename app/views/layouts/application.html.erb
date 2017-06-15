@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>IOM - Administrator</title>
-    <%= stylesheet_link_tag 'backoffice.css' %>
-    <%= stylesheet_link_tag 'backoffice/jscroll.css', 'backoffice/chosen.css', 'backoffice/plugins/fineuploader-3.3.0.css', 'backoffice/jquery-ui-1.7.2.custom.css', 'backoffice/layout.css', 'backoffice/smbtc-layout.css', 'backoffice.css' %>
+    <%= stylesheet_link_tag 'backoffice/jscroll.css', 'backoffice/chosen.css', 'backoffice/plugins/fineuploader-3.3.0.css', 'backoffice/jquery-ui-1.7.2.custom.css', 'backoffice/layout.css', 'backoffice/smbtc-layout.css', 'backoffice.css', 'backoffice/formtastic.css' %>
 
     <%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=false', 'backoffice/jquery.min.js', 'backoffice/jquery.ui.core.js', 'backoffice/jquery.ui.widget.js', 'backoffice/jquery.ui.position.js', 'backoffice/jquery.ui.autocomplete.js', 'backoffice/rails.js', 'backoffice/plugins/chosen/chosen-CUSTOMIZED.jquery.js', 'backoffice/plugins/jquery.mousewheel.js','backoffice/plugins/jquery.jscrollpane.js', 'backoffice/plugins/date_combos.js', 'backoffice/plugins/jquery.mousewheel.js', 'backoffice/plugins/jquery.livequery.min.js', 'backoffice/plugins/jquery.stylish-select.js', 'backoffice/plugins/jHtmlArea-0.7.0.min.js', 'backoffice/plugins/fineuploader-3.3.0.js' %>
 
@@ -42,6 +41,9 @@
               
               <li class="<%= (controller_name == 'tags' && @site.blank? ? 'selected' : nil) %>">
                 <%= link_to('tags', admin_tags_path) %>
+              </li>
+              <li class="<%= (controller_name == 'stories' && @site.blank? ? 'selected' : nil) %>">
+                <%= link_to('stories', admin_stories_path) %>
               </li>
             <% else -%>
               <li class="<%= (controller_name == 'admin' ? 'selected' : nil) %>"><%= link_to(admin_admin_path) do %>dashboard<% end %></li>

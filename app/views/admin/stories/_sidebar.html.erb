@@ -1,0 +1,13 @@
+<ul>
+    <li <%= selected_if_current_page(edit_admin_story_path(@story)) %>>
+        <%= link_to('Basic information', edit_admin_story_path(@story)) %>
+    </li>
+</ul>
+<% if current_user.admin? %>
+    <div class="delete">
+        <h5>DELETE THIS STORY</h5>
+        <p>Clicking the link below will permanently delete this story</p>
+        <%= link_to 'Delete this story', '#', :destroy_url => admin_story_path(@story), :att_name => 'story' %>
+    </div>
+<% end %>
+

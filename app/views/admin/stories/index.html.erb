@@ -1,0 +1,63 @@
+<div class="main_layout mod-backoffice-tags">
+    <div class="block">
+        <div class="long_search">
+            <span class="top"></span>
+            <div class="content padding">
+                <%= form_tag(admin_stories_path, :method => :get, :class => 'search') do %>
+                    <label>SEARCH BY TEXT</label>
+                    <input type="text" value="<%= params[:q] %>" placeholder="Search story text and names" name="q" class="main_search"/>
+                    <input type="submit" value="" />
+                <% end %>
+            </div>
+            <span class="bottom"></span>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="top"></div>
+            <div class="med ngos_list">
+                <% if !@stories.empty? %>
+                    <div class="header no_border">
+                        <h2><%= pluralize(@stories.count, 'Story') %></h2>
+                        <% if @conditions.any? %>
+                            <div class="clearfix"></div>
+                            <h5>FILTERS</h5>
+                            <ul>
+                                <% @conditions.each do |k,v| %>
+                                    <li>
+                                        <%= k.capitalize %>:  <strong><%= v %></strong>
+                                    </li>
+                                <% end %>
+                            </ul>
+                        <% end %>
+                        <span class="buttons">
+                            <a class="add_project museo_sans shadow_green" href="<%= new_admin_story_path %>">New Story</a>
+                        </span>
+                    </div>
+                    
+                    <ul class="tag-list">
+                        <% @stories.each do |story| %>
+                            <li class="tag-list-item">
+                                <p class="tag-list-item-name"><%= link_to(story.name.present? ? truncate(story.try(:name), :length => 60) : 'Anonymous', edit_admin_story_path(story)) %></p>
+                            </li>
+                        <% end %>
+                    </ul>
+                <% else %>
+                    <div class="no_results">
+                        <h2>There are no stories in this site</h2>
+                        <p><a href="<%= new_admin_story_path %>">Add new one</a>.</p>
+                    </div>
+                <% end %>
+            </div>
+            <div class="bottom_grey paginate">
+                <%= will_paginate(@stories) %>
+            </div>
+        </div>
+        <div class="add_new">
+            <a href="<%= new_admin_story_path %>">
+            Add a new story<br/>
+            <strong>There are already <%= pluralize(Story.count, 'Story') %></strong>
+            </a>
+        </div>
+    </div>
+</div>

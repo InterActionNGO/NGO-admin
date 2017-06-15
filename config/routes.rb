@@ -26,6 +26,7 @@ Iom::Application.routes.draw do
     resources :tags do
        resources :projects, :only => [:index] 
     end
+    resources :stories
     resources :regions, :only => [:index]
     resources :organizations do
       resources :projects, :only => [:index]

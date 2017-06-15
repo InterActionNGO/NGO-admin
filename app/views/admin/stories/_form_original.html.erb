@@ -1,0 +1,55 @@
+<%= form_for(@story, :url => (@story.new_record? ? admin_stories_path : admin_story_path(@story)), :html => {:multipart => true}) do |f| %>
+    <% if flash[:error] -%>
+        <div class="form_error"><%= flash[:error] %></div>
+    <% end -%>
+    
+    <div class="field">
+        <label class="first">Story <strong>*</strong></label>
+        <span class="textarea <%= 'error' if !@story.errors[:story].empty? && action_name != 'new' %>">
+        <%= f.text_area :story, :class=>"#{'error' if !@story.errors[:description].empty? && action_name != 'new'}" %>
+        <%= errors_for @story, :story %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <label class="first">Name</label>
+        <span class="input_large <%= 'error' if !@story.errors[:name].empty? && action_name != 'new' %>">
+        <%= f.text_field :name, :class=>"long #{'error' if !@story.errors[:name].empty? && action_name != 'new'}" %>
+        <%= errors_for @story, :name %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <label class="first">Email</label>
+        <span class="input_large <%= 'error' if !@story.errors[:email].empty? && action_name != 'new' %>">
+        <%= f.email_field :email, :class=>"long #{'error' if !@story.errors[:email].empty? && action_name != 'new'}" %>
+        <%= errors_for @story, :email %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <label class="first">Organization</label>
+        <span class="input_large <%= 'error' if !@story.errors[:organization].empty? && action_name != 'new' %>">
+        <%= f.text_field :organization, :class=>"long #{'error' if !@story.errors[:organization].empty? && action_name != 'new'}" %>
+        <%= errors_for @story, :organization %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <label class="first">Image (3MB max)</label>
+        <% if @story.image.file? %>
+            <%= image_tag @story.image.url %>
+        <% end %>
+        <span class="file <%= 'error' if !@story.errors[:image].empty? && action_name != 'new' %>">
+        <%= f.file_field :image, :class=>"long #{'error' if !@story.errors[:organization].empty? && action_name != 'new'}" %>
+        <%= errors_for @story, :image %>
+        </span>
+    </div>
+
+    <div class="submit floating">
+        <%= f.submit '', :class => "#{'error' if @story.invalid? && action_name != 'new'}" %>
+    </div>
+
+<%end%>
+
+  <%= javascript_include_tag "backoffice/application.js" %>
