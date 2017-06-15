@@ -23,7 +23,7 @@ class Admin::StoriesController < ApplicationController
   end
   
   def create
-      @story = Story.new(params[:story])
+      @story = Story.new(story_params)
       if @story.save
       flash[:notice] = 'Story created successfully.'
       redirect_to edit_admin_story_path(@story)
@@ -40,7 +40,7 @@ class Admin::StoriesController < ApplicationController
   
   def update
     @story = Story.find(params[:id])
-    @story.attributes = params[:story]
+    @story.attributes = story_params
     @story.last_reviewed_by_id = current_user.id if @story.published_changed? && !@story.published.nil?
 
     if @story.save
@@ -64,4 +64,8 @@ class Admin::StoriesController < ApplicationController
     end
   end
 
+  private
+  def story_params
+     params.require(:story).permit(:name, :story, :email, :organization, :image, :published, :user_profession, :reviewed) 
+  end
 end
