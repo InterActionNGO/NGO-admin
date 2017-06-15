@@ -1,0 +1,64 @@
+<%= semantic_form_for @story, :url => (@story.new_record? ? admin_stories_path : admin_story_path(@story)), :html => { :multipart => true } do |f| %>
+
+    <% if flash[:error] %>
+        <div class="form_error">
+            <% flash[:error].each do |e| %>
+                <%= e %><br>
+            <% end %>
+        </div>
+    <% end %>
+    
+    <%= f.inputs do %>
+    
+        <%= f.input :name %>
+        <%= f.input :story %>
+        <%= f.input :email %>
+        <%= f.input :organization %>
+        <%= f.input :user_profession, :as => :select, :collection => [[nil],[:practitioner],[:researcher],["Investor / Donor",:donor],[:journalist],[:other]], :prompt => 'Choose One' %>
+        <%= f.input :image %>
+        <% if @story.image.file? %>
+            <%= image_tag @story.image.url(:medium) %>
+        <% end %>
+        
+    <% end %>
+    
+    <% if !@story.new_record? %>
+        
+        <span class="faux-label">Reviewed</span>
+        <p><%= @story.reviewed? ? 'Yes' : 'No' %></p>
+        
+        <span class="faux-label">Last reviewed by</span>
+        <p><%= @story.last_reviewed_by_id.nil? ? 'n/a' : User.find(@story.last_reviewed_by_id).email %></p>
+        
+        <span class="faux-label">Last reviewed at</span>
+        <p><%= @story.last_reviewed_at || 'n/a' %></p>
+        
+        <span class="faux-label">Created</span>
+        <p><%= @story.created_at %></p>
+        
+        <span class="faux-label">Last Updated</span>
+        <p><%= @story.updated_at %></p>
+        
+        <%= f.inputs do %>
+            <%= f.input :published if !@story.published.nil? %>
+        <% end %>
+        
+    <% end %>
+    
+    <% if !@story.new_record? && !@story.reviewed? %>
+    
+        <div class="needs-review">
+            <p>This story is still awaiting review.</p>
+            <p>Upon reviewing, choose an option below, or leave as is and keep this story unreviewed.</p>
+            <%= f.input :published, :label => false, :as => :radio, :collection => { "Take No Action" => nil, "Publish" => :true, "Do Not Publish" => :false }, :wrapper_html => { :class => 'publish-options' } %>
+        </div>
+        
+    <% end %>
+    
+    <%= f.actions do %>
+        <%= f.action :submit, :label => '' %>
+        <%= f.action :cancel, :label => 'Cancel', :url => admin_stories_path %>
+    <% end %>
+    
+<% end %>
+

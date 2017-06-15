@@ -17,6 +17,7 @@ node_modules
 public/.tmp
 public/dist
 public/app/vendor
+public/system
 
 app/views_old
 
