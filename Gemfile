@@ -32,6 +32,7 @@ gem 'rd_searchlogic', '~> 3.0', '>= 3.0.1'
 gem 'httparty', '~> 0.11.0'
 gem 'whenever', '~> 0.8.4'
 gem 'formtastic'
+gem 'strong_parameters'
 
 
 group :development do

@@ -1,4 +1,5 @@
 class Story < ActiveRecord::Base
+    include ActiveModel::ForbiddenAttributesProtection
     
     has_attached_file :image, :styles => {
         :medium => ["x500", :jpg],
