@@ -22,7 +22,7 @@ class AlertsMailer < ActionMailer::Base
 
   def new_story_notice(story)
         @story = story
-        mail(:to => 'rburnett@interaction.org', :subject => "NGO Aid Map - New Story Added")
+        mail(:to => 'mappinginfo@interaction.org', :subject => "NGO Aid Map - New Story Added")
   end
   
   if Rails.env.development?
