@@ -1,4 +1,4 @@
-<div class="main_layout mod-backoffice-tags">
+<div class="main_layout mod-backoffice-stories">
     <div class="block">
         <div class="long_search">
             <span class="top"></span>
@@ -7,6 +7,32 @@
                     <label>SEARCH BY TEXT</label>
                     <input type="text" value="<%= params[:q] %>" placeholder="Search story text and names" name="q" class="main_search"/>
                     <input type="submit" value="" />
+                    
+                    <ul class="combos">
+                        <li class="comboselect status">
+                            <label>NAME</label>
+                            <%= select_tag :name,
+                                options_for_select(Story.all.map(&:name).uniq.compact.sort, params[:name]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                        
+                        <li class="comboselect status">
+                            <label>ORGANIZATION</label>
+                            <%= select_tag :organization,
+                                options_for_select(Story.all.map(&:organization).uniq.compact.sort, params[:organization]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                        
+                        <li class="comboselect status">
+                            <label>REVIEWED</label>
+                            <%= select_tag :reviewed,
+                                options_for_select([['Yes',true],['No',false]], params[:reviewed]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                        
+                        <li class="comboselect status">
+                            <label>PUBLISHED</label>
+                            <%= select_tag :published,
+                                options_for_select([['Yes',true],['No',false]], params[:published]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                    </ul>
                 <% end %>
             </div>
             <span class="bottom"></span>
@@ -18,7 +44,7 @@
             <div class="med ngos_list">
                 <% if !@stories.empty? %>
                     <div class="header no_border">
-                        <h2><%= pluralize(@stories.count, 'Story') %></h2>
+                        <h2><%= pluralize(number_with_delimiter(@stories_query_total, :delimiter => ','), 'story') %></h2>
                         <% if @conditions.any? %>
                             <div class="clearfix"></div>
                             <h5>FILTERS</h5>
@@ -35,13 +61,28 @@
                         </span>
                     </div>
                     
-                    <ul class="tag-list">
-                        <% @stories.each do |story| %>
-                            <li class="tag-list-item">
-                                <p class="tag-list-item-name"><%= link_to(story.name.present? ? truncate(story.try(:name), :length => 60) : 'Anonymous', edit_admin_story_path(story)) %></p>
-                            </li>
-                        <% end %>
-                    </ul>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="th first">Name</th>
+                                <th class="th">Organization</th>
+                                <th class="th">Created</th>
+                                <th class="th text-center">Reviewed</th>
+                                <th class="th text-center">Published</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @stories.each do |story| %>
+                                <tr class="tr">
+                                    <td class="td first"><%= link_to story.name, edit_admin_story_path(story) %></td>
+                                    <td class="td"><%= story.organization %></td>
+                                    <td class="td"><%= story.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+                                    <td class="td"><div class="circle <%= story.reviewed? ? "true" : "falsy" %>"></div></td>
+                                    <td class="td"><div class="circle <%= story.published? ? "true" : "falsy" %>"></div></td>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
                 <% else %>
                     <div class="no_results">
                         <h2>There are no stories in this site</h2>
@@ -61,3 +102,6 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(".chzn-select").chosen();
+</script>

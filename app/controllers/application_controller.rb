@@ -122,6 +122,10 @@ class ApplicationController < ActionController::Base
       @site ? 'site_layout' : 'root_layout'
     end
   end
+  
+  def redirect_unauthorized
+     redirect_to '/' and return unless current_user.admin? 
+  end
 
 
   protected :sites_layout

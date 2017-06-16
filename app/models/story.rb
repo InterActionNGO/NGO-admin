@@ -20,6 +20,7 @@ class Story < ActiveRecord::Base
     validates :story, :length => { :minimum => 5 }
     validates :email, :email => true, :allow_blank => true
     validates :user_profession, :inclusion => { :in => %w(practitioner researcher donor journalist other), :message => "%{value} is not a valid option" }, :allow_blank => true
+    validates :published, :inclusion => { :in => [true, false, nil] }
     
     before_save :mark_reviewed
     
