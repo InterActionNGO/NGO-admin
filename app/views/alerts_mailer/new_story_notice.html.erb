@@ -76,7 +76,7 @@
 
       <p>A new story has been submitted to NGO Aid Map by <%=@story.name.present? ? @story.name : 'an anonymous user' %><%= @story.organization.present? ? " of #{@story.organization}" : "" %>!</p>
 
-      <p>To review and publish this story, visit the <a href="https://office.ngoaidmap.org/admin/stories">Stories</a> page in the backend. Or use the following direct link: <%= link_to edit_admin_story_url(@story), edit_admin_story_url(@story) %>.</p>
+      <p>To review and publish this story, visit the <a href="https://office.ngoaidmap.org/admin/stories">Stories</a> page in the backend. Or use the following direct link: <%= link_to File.join('https://office.ngoaidmap.org', edit_admin_story_path(@story)), File.join('https://office.ngoaidmap.org', edit_admin_story_path(@story)) %>.</p>
       
       <p>This story will not appear on the public site until it is reviewed and published.</p>
 
