@@ -15,16 +15,21 @@ class AlertsMailer < ActionMailer::Base
     cc = if Rails.env.production?
            'no-reply@interaction.org'
          else
-           'mappinginfo@interaction.org'
+           'rob@example.com'
          end
     mail(:to => user.email, :cc => cc, :subject => "NGO Aid Map - We Miss You!")
   end
 
+  def new_story_notice(story)
+        @story = story
+        mail(:to => 'rburnett@interaction.org', :subject => "NGO Aid Map - New Story Added")
+  end
+  
   if Rails.env.development?
     class Preview < MailView
 
       def projects_about_to_end
-        contact_email = 'fer@ferdev.com'
+        contact_email = 'rob@example.com'
         projects = Project.first(6).map do |project|
           {
             :id           => project.id,
