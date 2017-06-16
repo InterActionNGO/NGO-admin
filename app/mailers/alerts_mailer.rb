@@ -15,7 +15,7 @@ class AlertsMailer < ActionMailer::Base
     cc = if Rails.env.production?
            'no-reply@interaction.org'
          else
-           'fer@ferdev.com'
+           'mappinginfo@interaction.org'
          end
     mail(:to => user.email, :cc => cc, :subject => "NGO Aid Map - We Miss You!")
   end

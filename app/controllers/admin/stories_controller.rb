@@ -1,7 +1,8 @@
 class Admin::StoriesController < ApplicationController
 
   before_filter :login_required
-
+  before_filter :redirect_unauthorized
+  
   def index
     
     stories = Story.scoped
@@ -13,7 +14,24 @@ class Admin::StoriesController < ApplicationController
             stories = Story.where(["name ilike ? OR story ilike ?", q, q])
             @conditions['text contains'] = q[1..-2]
        end
+       unless params[:name].blank?
+           stories = stories.where(:name => params[:name])
+           @conditions['Name'] = params[:name]
+       end
+       unless params[:organization].blank?
+           stories = stories.where(:organization => params[:organization])
+           @conditions['Organization'] = params[:organization]
+       end
+       unless params[:reviewed].blank?
+           stories = stories.where(:reviewed => params[:reviewed])
+           @conditions['Reviewed'] = params[:reviewed]
+       end
+       unless params[:published].blank?
+           stories = stories.where(:published => params[:published])
+           @conditions['Published'] = params[:published]
+       end
     end
+    @stories_query_total = stories.count
     @stories = stories.order('created_at desc').paginate :per_page => 25, :page => params[:page]
     
   end
@@ -66,6 +84,8 @@ class Admin::StoriesController < ApplicationController
 
   private
   def story_params
-     params.require(:story).permit(:name, :story, :email, :organization, :image, :published, :user_profession, :reviewed) 
+     params.require(:story).permit(:name, :story, :email, :organization, :image, :published, :user_profession, :reviewed)
+#      params.permit(:q)
   end
+
 end

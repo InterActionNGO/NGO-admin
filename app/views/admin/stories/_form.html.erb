@@ -50,7 +50,12 @@
         <div class="needs-review">
             <p>This story is still awaiting review.</p>
             <p>Upon reviewing, choose an option below, or leave as is and keep this story unreviewed.</p>
-            <%= f.input :published, :label => false, :as => :radio, :collection => { "Take No Action" => nil, "Publish" => :true, "Do Not Publish" => :false }, :wrapper_html => { :class => 'publish-options' } %>
+            
+            <%= f.radio_button :published, false, :checked => false%>
+            <%= f.label :published_false, 'Do Not Publish' %>
+            
+            <%= f.radio_button :published, true, :checked => false %>
+            <%= f.label :published_true, 'Publish' %>
         </div>
         
     <% end %>
