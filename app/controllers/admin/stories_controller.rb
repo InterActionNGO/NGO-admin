@@ -40,16 +40,17 @@ class Admin::StoriesController < ApplicationController
       @story = Story.new
   end
   
-  def create
-      @story = Story.new(story_params)
-      if @story.save
-      flash[:notice] = 'Story created successfully.'
-      redirect_to edit_admin_story_path(@story)
-    else
-        flash[:error] = @story.errors.full_messages
-      render :action => 'new'
+    def create
+        @story = Story.new(story_params)
+        if @story.save
+            flash[:notice] = 'Story created successfully.'
+            redirect_to edit_admin_story_path(@story)
+            AlertsMailer.new_story_notice(@story).deliver
+        else
+            flash[:error] = @story.errors.full_messages
+            render :action => 'new'
+        end
     end
-  end
   
   def edit
       @story = Story.find(params[:id])
@@ -85,7 +86,6 @@ class Admin::StoriesController < ApplicationController
   private
   def story_params
      params.require(:story).permit(:name, :story, :email, :organization, :image, :published, :user_profession, :reviewed)
-#      params.permit(:q)
   end
 
 end
