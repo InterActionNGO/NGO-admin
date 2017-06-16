@@ -1,7 +1,8 @@
 class Admin::TagsController < ApplicationController
 
   before_filter :login_required
-
+  before_filter :redirect_unauthorized
+  
   def index
     
     tags = Tag.scoped
@@ -23,7 +24,7 @@ class Admin::TagsController < ApplicationController
   end
   
   def create
-      @tag = Tag.new(params[:tag])
+      @tag = Tag.new(tag_params)
       if @tag.save
       flash[:notice] = 'Tag created successfully.'
       redirect_to edit_admin_tag_path(@tag)
@@ -38,7 +39,7 @@ class Admin::TagsController < ApplicationController
   
   def update
     @tag = Tag.find(params[:id])
-    @tag.attributes = params[:tag]
+    @tag.attributes = tag_params
 
     if @tag.save
       flash[:notice] = 'Tag updated successfully.'
@@ -59,6 +60,11 @@ class Admin::TagsController < ApplicationController
       flash.now[:error] = @tag.errors.full_messages
       render :action => 'edit'
     end
+  end
+  
+  private
+  def tag_params
+     params.require(:tag).permit(:name, :description) 
   end
 
 end
