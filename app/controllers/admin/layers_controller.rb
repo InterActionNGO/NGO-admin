@@ -1,6 +1,7 @@
 class Admin::LayersController < ApplicationController
 
   before_filter :login_required
+  before_filter :redirect_unauthorized
 
   def index
     @layers = Layer.all

@@ -1,4 +1,5 @@
 class Admin::ActivitiesController < Admin::AdminController
+  
   before_filter :get_search_params, :only => :show
   before_filter :get_changes, :only => :show
   before_filter :paginate, :only => :show
