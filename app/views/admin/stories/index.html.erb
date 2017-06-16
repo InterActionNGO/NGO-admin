@@ -74,7 +74,7 @@
                         <tbody>
                             <% @stories.each do |story| %>
                                 <tr class="tr">
-                                    <td class="td first"><%= link_to story.name, edit_admin_story_path(story) %></td>
+                                    <td class="td first"><%= link_to story.name.present? ? story.name : 'Anonymous', edit_admin_story_path(story) %></td>
                                     <td class="td"><%= story.organization %></td>
                                     <td class="td"><%= story.created_at.strftime('%Y-%m-%d %H:%M') %></td>
                                     <td class="td"><div class="circle <%= story.reviewed? ? "true" : "falsy" %>"></div></td>
