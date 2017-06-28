@@ -135,14 +135,10 @@ $(document).ready(function(ev){
     });
 
     //change preview link if twitter/facebook/website changes
-    $('input.website').change(function(ev){
-      $('a#website').attr('href',$(this).attr('value'));
-    });
-    $('input.twitter').change(function(ev){
-      $('a#twitter').attr('href','http://twitter.com/'+$(this).attr('value'));
-    });
-    $('input.facebook').change(function(ev){
-      $('a#facebook').attr('href',$(this).attr('value'));
+    ['website','donation_website','facebook','twitter'].forEach(function (link) {
+       $("input."+link).bind("keyup focus", function (ev) {
+          $("a#"+link).attr('href', $(this).attr('value')); 
+       });
     });
 
     //if there is an error in some field
