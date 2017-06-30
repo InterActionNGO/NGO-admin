@@ -1,5 +1,5 @@
 class CreateGeolocations < ActiveRecord::Migration
-  def sel.up
+  def self.up
     create_table :geolocations do |t|
       t.integer :uid
       t.string :name

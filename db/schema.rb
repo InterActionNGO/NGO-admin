@@ -133,8 +133,7 @@ ActiveRecord::Schema.define(:version => 20170630144854) do
     t.integer "office_id"
   end
 
-  create_table "geolocations", :id => false, :force => true do |t|
-    t.integer  "id",                                                       :null => false
+  create_table "geolocations", :force => true do |t|
     t.string   "uid",               :limit => nil
     t.string   "name",              :limit => nil
     t.float    "latitude"
