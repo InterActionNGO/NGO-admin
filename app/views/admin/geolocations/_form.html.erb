@@ -1,4 +1,4 @@
-<%= semantic_form_for @geolocation, :url => (@geolocation.new_record? ? admin_geolocations_path : admin_geolocation_path(@geolocation)), :html => { :multipart => true } do |f| %>
+<%= semantic_form_for @geolocation, :url => (@geolocation.new_record? ? admin_geolocations_path : admin_geolocation_path(@geolocation)) do |f| %>
 
     <% if flash[:error] %>
         <div class="form_error">
