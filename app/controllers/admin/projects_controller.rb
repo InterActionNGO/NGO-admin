@@ -59,6 +59,11 @@ class Admin::ProjectsController < Admin::AdminController
       @tag = Tag.find(params[:tag_id])
       projects      = @tag.projects
       @projects     = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
+    elsif params[:geolocation_id]
+      template      = 'admin/geolocations/projects'
+      @geolocation = Geolocation.find(params[:geolocation_id])
+      projects      = @geolocation.projects
+      @projects     = projects.order('name asc').paginate :per_page => 20, :page => params[:page]
     else
       @projects_query_total = @projects_count
       @projects = find_projects.order('name asc').paginate :per_page => 20, :page => params[:page]

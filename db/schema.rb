@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170605180034) do
+ActiveRecord::Schema.define(:version => 20170630144854) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -539,6 +539,24 @@ ActiveRecord::Schema.define(:version => 20170605180034) do
     t.integer "site_id"
     t.integer "visits"
     t.date    "date"
+  end
+
+  create_table "stories", :force => true do |t|
+    t.string   "name",                :limit => nil
+    t.text     "story",                                                 :null => false
+    t.string   "organization",        :limit => nil
+    t.string   "email",               :limit => nil
+    t.string   "image_file_name",     :limit => nil
+    t.string   "image_content_type",  :limit => nil
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean  "published"
+    t.boolean  "reviewed",                           :default => false, :null => false
+    t.string   "user_profession",     :limit => nil
+    t.integer  "last_reviewed_by_id"
+    t.datetime "last_reviewed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tags", :force => true do |t|

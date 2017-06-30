@@ -45,6 +45,9 @@
               <li class="<%= (controller_name == 'stories' && @site.blank? ? 'selected' : nil) %>">
                 <%= link_to('stories', admin_stories_path) %>
               </li>
+              <li class="<%= (controller_name == 'geolocations' && @site.blank? ? 'selected' : nil) %>">
+                <%= link_to('geolocations', admin_geolocations_path) %>
+              </li>
             <% else -%>
               <li class="<%= (controller_name == 'admin' ? 'selected' : nil) %>"><%= link_to(admin_admin_path) do %>dashboard<% end %></li>
               <li class="<%= (((controller_name == 'projects' && !@organization) || (@element && @element.is_a?(Project))) ? 'selected' : nil) %>"><%= link_to(admin_projects_path) do %>Your projects<% end %></li>

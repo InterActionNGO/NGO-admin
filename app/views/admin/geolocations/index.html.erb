@@ -1,0 +1,103 @@
+<div class="main_layout mod-backoffice-geolocations">
+    <div class="block">
+        <div class="long_search">
+            <span class="top"></span>
+            <div class="content padding">
+                <%= form_tag(admin_geolocations_path, :method => :get, :class => 'search') do %>
+                    <label>SEARCH BY TEXT</label>
+                    <input type="text" value="<%= params[:q] %>" placeholder="Search geolocation names" name="q" class="main_search"/>
+                    <input type="submit" value="" />
+                    
+                    <ul class="combos">
+                        <li class="comboselect status">
+                            <label>COUNTRY</label>
+                            <%= select_tag :country,
+                                options_for_select(Geolocation.countries.select(:name).order(:name).map(&:name), params[:country]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                        
+                        <li class="comboselect status">
+                            <label>ADMIN LEVEL</label>
+                            <%= select_tag :level,
+                                options_for_select([0,1,2,3], params[:level]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                        
+                        <li class="comboselect status">
+                            <label>DATA SOURCE</label>
+                            <%= select_tag :source,
+                                options_for_select([["Geonames","gn"],["GADM","gadm"],["OpenStreetMap","osm"],["Custom","custom"]], params[:source]), {:include_blank => 'Any', :class => :"chzn-select"} %>
+                        </li>
+                    </ul>
+                <% end %>
+            </div>
+            <span class="bottom"></span>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="top"></div>
+            <div class="med ngos_list">
+                <% if !@geolocations.empty? %>
+                    <div class="header no_border">
+                        <h2><%= pluralize(number_with_delimiter(@geolocations_query_total, :delimiter => ','), 'geolocation') %></h2>
+                        <% if @conditions.any? %>
+                            <div class="clearfix"></div>
+                            <h5>FILTERS</h5>
+                            <ul>
+                                <% @conditions.each do |k,v| %>
+                                    <li>
+                                        <%= k.capitalize %>:  <strong><%= v %></strong>
+                                    </li>
+                                <% end %>
+                            </ul>
+                        <% end %>
+                        <span class="buttons">
+                            <a class="museo_sans button-new" href="<%= new_admin_geolocation_path %>">New Geolocation</a>
+                        </span>
+                    </div>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="th first">Name</th>
+                                <th class="th">Admin Level</th>
+                                <th class="th">Country</th>
+                                <th class="th">Code</th>
+                                <th class="th">Source</th>
+                                <th class="th text-center">Projects</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @geolocations.each do |geo| %>
+                                <tr class="tr">
+                                    <td class="td first"><%= link_to geo.name, edit_admin_geolocation_path(geo) %></td>
+                                    <td class="td"><%= geo.adm_level %></td>
+                                    <td class="td"><%= geo.country_name %></td>
+                                    <td class="td"><%= geo.country_code %></td>
+                                    <td class="td"><%= geo.provider %></td>
+                                    <td class="td text-center"><%= link_to(geo.projects.size, admin_geolocation_projects_path(geo)) %></td>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                <% else %>
+                    <div class="no_results">
+                        <h2>No Geolocations Found :(</h2>
+                        <p><a href="<%= new_admin_geolocation_path %>">Add a new one</a>.</p>
+                    </div>
+                <% end %>
+            </div>
+            <div class="bottom_grey paginate">
+                <%= will_paginate(@geolocations) %>
+            </div>
+        </div>
+        <div class="add_new">
+            <a href="<%= new_admin_geolocation_path %>">
+            Add a new geolocation<br/>
+            <strong>There are already <%= pluralize(Geolocation.count, 'Geolocation') %></strong>
+            </a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".chzn-select").chosen();
+</script>

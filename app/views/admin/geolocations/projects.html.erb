@@ -1,0 +1,55 @@
+<div class="main_layout mod-backoffice-geolocations">
+    <div class="block first">
+        <div class="top"></div>
+        <div class="med">
+            <div class="left projects_list">
+                <h2><%= @geolocation.name %></h2>
+                <p><%= pluralize(@projects.total_entries, 'project', 'projects') %> linked to this geolocation.</p>
+                <p>Projects linked to child geolocations are not included here.</p>
+
+                <% unless @projects.empty? %>
+                    <%= form_tag({:controller => :geolocations, :action => :reassign}, :method => "post", :class=>"formtastic") do %>
+                        <%= label_tag :reassign_to, "Reassign Projects To:" %>
+                        <%= text_field_tag :reassign_to,nil, {:placeholder => 'Geolocation ID'}  %>
+                        <%= submit_tag 'Reassign', :class => "button-new" %>
+                    <% end %>
+                    <table collapse="0">
+                        <tbody>
+                            <% @projects.each do |project| %>
+                                <tr>
+                                    <td width="625">
+                                        <span>
+                                            <h3><a href="<%= edit_admin_project_path(project) %>"><%= project.name %></a></h3>
+                                            <p class="margin">
+                                                <a class="project_status <%= project.finished? ? 'closed' : 'active' %>">
+                                                <%= project.finished? ? 'Closed' : 'Active' %></a>
+                                                <% if project.end_date.present? -%>
+                                                    <% if project.finished? -%>
+                                                        <%= project.end_date.strftime("since %b #{project.end_date.day.ordinalize}, %Y") %>
+                                                    <% else -%>
+                                                        <%= project.end_date.strftime("until %b #{project.end_date.day.ordinalize}, %Y") %>
+                                                    <% end -%>
+                                                <% end -%>
+                                            </p>
+                                        </span>
+                                    </td>
+                                    <td width="150" class="odd center">
+                                        <p><%= project.countries.first.try(:name) %></p>
+                                    </td>
+                                </tr>
+                            <% end -%>
+                        </tbody>
+                    </table>
+                <% end -%>
+            </div>
+            <div class="right menu">
+                <%= render 'admin/geolocations/sidebar' %>
+            </div>
+        </div>
+        <div class="bottom_grey paginate">
+            <%= will_paginate(@projects) %>
+        </div>
+    </div>
+</div>
+<%= javascript_include_tag "backoffice/application.js" %>
+
