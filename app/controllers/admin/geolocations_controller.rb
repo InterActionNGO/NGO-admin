@@ -103,6 +103,6 @@ class Admin::GeolocationsController < Admin::AdminController
     
     private
     def geolocation_params
-        params.require(:geolocation).permit(:name,:country_name,:country_code,:adm_level,:provider,:custom_geo_source,:g0,:g1,:g2,:g3,:g4,:uid,:country_uid,:latitude,:longitude)
+        params.require(:geolocation).permit(:name,:country_name,:country_code,:adm_level,:provider,:custom_geo_source,:g0,:g1,:g2,:g3,:g4,:uid,:country_uid,:latitude,:longitude,:fclass,:fcode,:cc2,:admin1,:admin2,:admin3,:admin4)
     end
 end
