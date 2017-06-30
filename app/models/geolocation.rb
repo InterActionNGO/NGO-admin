@@ -28,4 +28,16 @@ class Geolocation < ActiveRecord::Base
   def set_readable_path
     self.readable_path = [self.g0, self.g1, self.g2, self.g3, self.g4].compact.map{|g| Geolocation.where(:uid => g).first.try(:name)}.compact.reject{ |x| x.strip.empty? }.join('>')
   end
+
+  def reassign_projects(to_geolocation)
+    if to_geolocation.is_a?(Geolocation)
+      transaction do
+        projects_to_move = self.projects
+        to_geolocation.projects << projects_to_move
+        self.projects.clear
+      end
+    else
+      false
+    end
+  end
 end

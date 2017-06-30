@@ -22,7 +22,10 @@ Iom::Application.routes.draw do
       put 'disable', :action => 'disable'
       put 'enable', :action => 'enable'
     end
-    resources :geolocations, :only => [:index]
+    resources :geolocations do
+	post 'reassign', :action => 'reassign'
+        resources :projects, :only => [:index]
+    end
     resources :tags do
        resources :projects, :only => [:index] 
     end

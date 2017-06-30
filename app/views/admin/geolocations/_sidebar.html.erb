@@ -1,0 +1,27 @@
+<ul>
+    <li <%= selected_if_current_page(edit_admin_geolocation_path(@geolocation)) %>>
+        <%= link_to('Basic information', edit_admin_geolocation_path(@geolocation)) %>
+    </li>
+    <li <%= selected_if_current_page(admin_geolocation_projects_path(@geolocation)) %>>
+        <div class="bottom_selected">
+            <%= link_to('Projects', admin_geolocation_projects_path(@geolocation)) %>
+            <% if @geolocation.projects.present? %>
+                <p><span><%= @geolocation.projects.count %></span></p>
+            <% end %>
+        </div>
+    </li>
+</ul>
+<% if current_user.admin? %>
+    <div class="export_import">
+        <div id="links">
+            <%= link_to 'Export Projects', admin_export_projects_path(:geolocation_id => @geolocation.id, :format => :csv) %>
+        </div>
+    </div>
+    <div class="delete">
+        <h5>DELETE THIS GEOLOCATION</h5>
+        <p>Clicking the link below will permanently delete this geolocation</p>
+        <%= link_to 'Delete this geolocation', '#', :destroy_url => admin_geolocation_path(@geolocation), :att_name => 'geolocation' %>
+    </div>
+<% end %>
+<%= javascript_include_tag 'backoffice/application.js' %>
+
