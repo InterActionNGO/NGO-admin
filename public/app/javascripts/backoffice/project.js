@@ -347,6 +347,9 @@ $(document).ready(function(ev){
   $('#project_tag_ids').chosen({
      width: 420
    });
+  $('#donation_donor_id').chosen({
+      width: 385
+  });
 
   // PRIME AWARDEE click
   $('#project_prime_awardee_id').chosen({
