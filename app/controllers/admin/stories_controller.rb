@@ -1,8 +1,5 @@
-class Admin::StoriesController < ApplicationController
+class Admin::StoriesController < Admin::AdminController
 
-  before_filter :login_required
-  before_filter :redirect_unauthorized
-  
   def index
     
     stories = Story.scoped

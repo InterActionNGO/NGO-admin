@@ -1,7 +1,5 @@
 class Admin::DonationsController < Admin::AdminController
 
-  before_filter :login_required
-
   def create
     @project = Project.find(params[:project_id])
     donor = Organization.where(:id => params[:donation][:donor_id]).first

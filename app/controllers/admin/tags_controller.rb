@@ -1,7 +1,4 @@
-class Admin::TagsController < ApplicationController
-
-  before_filter :login_required
-  before_filter :redirect_unauthorized
+class Admin::TagsController < Admin::AdminController
   
   def index
     

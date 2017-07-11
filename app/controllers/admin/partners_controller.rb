@@ -1,6 +1,4 @@
-class Admin::PartnersController < ApplicationController
-
-  before_filter :login_required
+class Admin::PartnersController < Admin::AdminController
 
   def create
     @site = Site.find(params[:site_id])

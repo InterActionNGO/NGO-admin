@@ -1,6 +1,5 @@
-class Admin::MediaResourcesController < ApplicationController
+class Admin::MediaResourcesController < Admin::AdminController
 
-  before_filter :login_required
   before_filter :set_element
 
   def index
@@ -43,13 +42,15 @@ class Admin::MediaResourcesController < ApplicationController
 
     def set_element
       if params[:project_id]
-        @element = @project = Project.find(params[:project_id])
+        @element = @project = current_user.admin? ?
+            Project.find(params[:project_id]) :
+            current_user.organization.projects.find(params[:project_id])
       elsif params[:organization_id]
-        @element = @organization = Organization.find(params[:organization_id])
-      elsif params[:donor_id]
-        @element = @donor = Organization.find(params[:donor_id])
+        @element = @organization = current_user.admin? ?
+            Organization.find(params[:organization_id]) :
+            current_user.organization
       elsif params[:site_id]
-        @element = @site = Site.find(params[:site_id])
+        @element = @site = Site.find(params[:site_id]) if current_user.admin?
       end
     end
 
