@@ -1,10 +1,6 @@
-class Admin::OrganizationsController < ApplicationController
-
-  before_filter :login_required
+class Admin::OrganizationsController < Admin::AdminController
 
   def index
-      
-    redirect_to edit_admin_organization_path(current_user.organization) and return unless current_user.admin?
     
     organizations = Organization
     @conditions = {}
@@ -62,21 +58,22 @@ class Admin::OrganizationsController < ApplicationController
   end
 
   def specific_information
-    @organization = Organization.find(params[:id])
+    @organization = get_organization
     @site = Site.find(params[:site_id])
     @organization.attributes = @organization.attributes_for_site(@site)
   end
 
   def edit
-     if !current_user.admin? && params[:id] != current_user.organization.id.to_s
-         redirect_to edit_admin_organization_path(current_user.organization)
-     else
-        @organization = current_user.admin? ? Organization.find(params[:id]) : current_user.organization
-     end
+      if user_can_edit_org?
+          @organization = Organization.find(params[:id])
+      else
+          redirect_to edit_admin_organization_path(current_user.organization)
+      end
+          
   end
 
   def update
-    @organization = current_user.admin? ? Organization.find(params[:id]) : current_user.organization
+    @organization = get_organization
     if params[:site_id]
       if @site = Site.find(params[:site_id])
         @organization.attributes_for_site = {:organization_values => params[:organization], :site_id => params[:site_id]}
@@ -100,13 +97,13 @@ class Admin::OrganizationsController < ApplicationController
   end
 
   def destroy
-    @organization = Organization.find(params[:id])
+    @organization = get_organization
     @organization.destroy
     redirect_to admin_organizations_path, :flash => {:success => 'Organization has been deleted successfully'}
   end
 
   def destroy_logo
-    @organization = Organization.find(params[:id])
+    @organization = get_organization
     @organization.logo.clear
     @organization.save
     respond_to do |format|
@@ -115,5 +112,18 @@ class Admin::OrganizationsController < ApplicationController
       end
     end
   end
-
+  
+  private
+  def get_organization
+      if current_user.admin?
+          Organization.find(params[:id])
+      else
+          current_user.organization
+      end
+  end
+  
+  def user_can_edit_org?
+      current_user.admin? || current_user.organization.id.to_s == params[:id]
+  end
+  
 end

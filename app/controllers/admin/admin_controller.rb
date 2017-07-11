@@ -1,11 +1,7 @@
 class Admin::AdminController < ApplicationController
+    
   before_filter :login_required
   before_filter :check_user_permissions
-  # before_filter :temporal_redirect
-
-  # def temporal_redirect
-  #   redirect_to "/"
-  # end
 
   def index
     @changes_last_day_count = ChangesHistoryRecord.in_last_24h.count
@@ -100,7 +96,16 @@ class Admin::AdminController < ApplicationController
 
   def check_user_permissions
     unless current_user.admin?
-      redirect_to admin_admin_path unless controller_name == 'projects' || controller_name == 'organizations' || controller_name == 'geolocations' || (controller_name == 'admin' && (action_name == 'export_projects' || action_name == 'index')) || (controller_name == 'donors' && action_name == 'index' && request.format.json?) || (controller_name = 'donations' && ( action_name == 'create' || action_name == 'destroy' ))
+      redirect_to admin_admin_path unless
+        controller_name == 'projects' ||
+        (controller_name == 'organizations' && ['specific_information','destroy_logo','edit','update'].include?(action_name)) ||
+        (controller_name == 'geolocations' && action_name == 'index' && request.format.json?) ||
+        (controller_name == 'admin' &&
+            (action_name == 'export_projects' || action_name == 'index')) ||
+        (controller_name == 'donations' &&
+            (['create','destroy'].include?(action_name))) ||
+        controller_name == 'media_resources'
+        controller_name == 'resources'
     end
   end
   private :check_user_permissions

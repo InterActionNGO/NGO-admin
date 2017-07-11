@@ -1,7 +1,7 @@
-class Admin::PagesController < ApplicationController
+class Admin::PagesController < Admin::AdminController
   include Admin::PagesHelper
 
-  before_filter :login_required, :set_site
+  before_filter :set_site
 
   def index
     @pages = pages.highlighted.order('created_at DESC').paginate :per_page => 20, :page => params[:page]
