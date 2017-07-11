@@ -1,7 +1,7 @@
 class Admin::GeolocationsController < Admin::AdminController
     
     before_filter :login_required
-    before_filter :redirect_unauthorized
+#     before_filter :redirect_unauthorized
     
     def index
         respond_to do |format|
