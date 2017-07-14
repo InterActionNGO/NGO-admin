@@ -7,9 +7,18 @@ class Admin::OrganizationsController < Admin::AdminController
     
     if params[:q]
         unless params[:q].blank?
-            q = "%#{params[:q].sanitize_sql!}%"
-            organizations = Organization.where(["name ilike ? OR description ilike ? OR acronym ilike ?", q, q, q])
-            @conditions['find text'] = q[1..-2]
+            q1 = params[:q].sanitize_sql!
+            q2 = "%#{q1}%"
+            qstring = "name ilike ? or description ilike ? or acronym ilike ?"
+            where_array = [q2]*3
+            if params[:fuzzy_search]
+                qstring += " or similarity(name, ?) > 0.3" 
+                where_array << q1
+            end
+            where_array.unshift(qstring)
+            organizations = Organization.where(where_array)
+            @conditions['find text'] = q1
+            @conditions['approximate search'] = params[:fuzzy_search] ? 'Yes' : 'No'
         end
         
         unless params[:membership_status].blank?
