@@ -1,4 +1,4 @@
-    <div class="main_layout">
+    <div class="main_layout mod-backoffice-organizations">
       <div class="block">
         <div class="long_search">
           <span class="top"></span>
@@ -6,6 +6,8 @@
             <%= form_tag(admin_organizations_path, :method => :get, :class => 'search') do %>
               <label>SEARCH BY TEXT</label>
               <input type="text" value="<%= params[:q] %>" placeholder="Search in name, acronym, and description" name="q" class="main_search"/>
+              <%= check_box_tag :fuzzy_search %>
+              <%= label_tag :fuzzy_search, "Use approximate matching", :class => 'checkbox-label' %>
               <input type="submit" value="" />
               
               
