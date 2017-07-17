@@ -1,7 +1,7 @@
 class Admin::ProjectsController < Admin::AdminController
 
-  before_filter :count_projects
-  before_filter :get_organizations_list
+  before_filter :count_projects, :only => [:index]
+  before_filter :get_organizations_list, :only => [:new, :edit]
 
   def index
     @conditions = {}
