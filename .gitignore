@@ -22,3 +22,4 @@ public/system
 app/views_old
 
 config/database.yml
+config/environments/development.rb
