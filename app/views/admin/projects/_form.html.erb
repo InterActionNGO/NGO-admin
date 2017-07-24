@@ -1,776 +1,399 @@
 <%= form_for(@project, :url => (@project.new_record? ? admin_projects_path : admin_project_path(@project))) do |f| %>
-<!-- ##################### PROJECT IDENTIFICATION ##################### -->
 
-  <% if @project.errors.full_messages.any? %>
-  <div class="form_error">
-    <% @project.errors.full_messages.each do |error_message| %>
-      <p><%= error_message %></p> <br />
-    <% end %>
-  </div>
-  <% end -%>
+    <% if @project.errors.full_messages.any? %>
+        <div class="form_error">
+            <% @project.errors.full_messages.each do |error_message| %>
+                <p><%= error_message %></p> <br />
+            <% end %>
+        </div>
+    <% end -%>
 
-  <h3 class="section museo_sans">PROJECT IDENTIFICATION</h3>
-  <div class="">
-      <%= f.label :primary_organization_id, 'Organization' %>
-      <% if @project.errors[:primary_organization_id].present? %>
-        <span id="hidden" class="error">
-            <%= errors_for @project, :primary_organization_id %>
-            <a class="organization"><%= @project.primary_organization.try(:name) %></a>
-        </span>
-      <% end %>
-      <%= f.select :primary_organization_id, options_from_collection_for_select(@organizations_list, :id, :name, @project.primary_organization_id), {:prompt=>'Select an Organization'} %>
-  </div>
+    <!-- ##################### PROJECT IDENTIFICATION ##################### -->
+    <h3 class="section museo_sans">PROJECT IDENTIFICATION</h3>
   
-
-
-  <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
-    <label>InterAction Intervention ID</label>
-    <span class="input_large is-readonly">
-      <%= f.text_field :intervention_id, :readonly => true %>
-    </span>
-  </div>
-
-  <div class="field">
-    <label>Organization Intervention ID
-    <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Organization ID</h3>
-            <span class="scroll">
-            <p>Alpha/numeric code assigned to an intervention or shipment by an organization in its internal systems.</p>
+    <div class="field">
+        <%= f.label :primary_organization_id, 'Organization' %>
+        <% if @project.errors[:primary_organization_id].present? %>
+            <span id="hidden" class="error">
+                <%= errors_for @project, :primary_organization_id %>
+                <a class="organization"><%= @project.primary_organization.try(:name) %></a>
             </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
-    <span class="input_large">
-      <%= f.text_field :organization_id %>
-    </span>
-  </div>
-  
-  <div class="field">
-    <label>TAGS <strong>&nbsp;</strong>
-    <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Tags</h3>
-            <span class="scroll">
-            <p>Tags are used to categorize projects for featured maps and other datasets that are specific to a common issue, event, or crisis.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-    </label>
-      <!-- END FIELD DESCRIPTION -->
-    <%= f.collection_select :tag_ids, Tag.order('count desc, name asc'), :id, :name, {}, 'data-placeholder' => 'Add tag(s)', :multiple => true %>
-  </div>
-
-<!-- ##################### PROJECT DETAILS ##################### -->
-
-  <h3 class="section museo_sans">PROJECT DETAILS</h3>
-  <div class="field">
-    <label>PROJECT NAME  <strong>*</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Project name</h3>
-            <span class="scroll">
-            <p>The official title of the project, preferable the official name used in program/project/etc documents.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-    </label>
-    <span class="input_large <%= 'error' if !@project.errors[:name].empty? && action_name != 'new' %>">
-        <%= f.text_field :name, :class=>"long #{'error' if !@project.errors[:name].empty? && action_name != 'new'}" %>
-        <%= errors_for @project, :name %>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>
-        DESCRIPTION  <strong>*</strong>
-        <!-- FIELD DESCRIPTION -->
-        <div class="field_info">
-          <span class="info">i</span>
-          <div class="field_text">
-            <div class="top">
-              <a href="#close">x</a>
-            </div>
-            <div class="bottom">
-              <h3>Project description</h3>
-              <span class="scroll">
-              <p>Brief description of the project (at least 150 words), including if possible, goals and/or objectives</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- END FIELD DESCRIPTION -->
-      </label>
-      <% description = f.object.description || '' %>
-      <p id="chars_left_description"><%= 10000 - description.length %> chars left</p>
-    </span>
-
-    <span class="textarea <%= 'error' if !@project.errors[:description].empty? && action_name != 'new' %>">
-        <div class="wrapper">
-            <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 10000, 'chars_left_description')" %>
-        </div>
-    </span>
-
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>ACTIVITIES
-        <strong>&nbsp;</strong>
-        <!-- FIELD DESCRIPTION -->
-        <div class="field_info">
-          <span class="info">i</span>
-          <div class="field_text">
-            <div class="top">
-              <a href="#close">x</a>
-            </div>
-            <div class="bottom">
-              <h3>Project activities</h3>
-              <span class="scroll">
-              <p>Description of project activities.</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- END FIELD DESCRIPTION -->
-      </label>
-      <% activities = f.object.activities || '' %>
-      <p id="chars_left_activities"><%= 10000 - activities.length %> chars left</p>
-    </span>
-    <span class="textarea">
-      <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 10000, 'chars_left_activities')"%>
-    </span>
-  </div>
-  <div class="field">
-    <span class="chars">
-      <label>ADDITIONAL INFORMATION
-        <strong>&nbsp;</strong>
-        <!-- FIELD DESCRIPTION -->
-        <div class="field_info">
-          <span class="info">i</span>
-          <div class="field_text">
-            <div class="top">
-              <a href="#close">x</a>
-            </div>
-            <div class="bottom">
-              <h3>Additional information</h3>
-              <span class="scroll">
-              <p>Optional field that can be used to provide additional information on the project, such as progress to date, results data, etc.</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- END FIELD DESCRIPTION -->
-      </label>
-      <% additional_information = f.object.additional_information || '' %>
-      <p id="chars_left_aditional_info"><%= 10000 - additional_information.length %> chars left</p>
-    </span>
-    <span class="textarea">
-      <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 10000, 'chars_left_aditional_info')" %>
-    </span>
-  </div>
-  <div class="field">
-    <ul class="dates">
-
-      <li class="comboselect date">
-        <label>START DATE
-        <strong>*</strong>
-        <!-- FIELD DESCRIPTION -->
-        <div class="field_info">
-          <span class="info">i</span>
-          <div class="field_text">
-            <div class="top">
-              <a href="#close">x</a>
-            </div>
-            <div class="bottom">
-              <h3>Start date</h3>
-              <span class="scroll">
-              <p>Actual start date (beginning of implementation).</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- END FIELD DESCRIPTION -->
-        </label>
-
-        <span class="combo_date <%= 'error' if @project.errors[:start_date].present? && action_name != 'new' %>"><p><%= l @project.start_date, :format => '%m/%d/%Y' rescue '' %></p>
-        <%= errors_for @project, :start_date %>
-        <div class="select_dates">
-          <p id="month" class="title">MONTH</p>
-          <p id="day" class="title">DAY</p>
-          <p id="year" class="title">YEAR</p>
-
-          <%= f.date_select :start_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-        </div>
-        </span>
-      </li>
-
-
-      <li class="comboselect date">
-        <label>END DATE
-        <strong>*</strong>
-        <!-- FIELD DESCRIPTION -->
-        <div class="field_info">
-          <span class="info">i</span>
-          <div class="field_text">
-            <div class="top">
-              <a href="#close">x</a>
-            </div>
-            <div class="bottom">
-              <h3>End date</h3>
-              <span class="scroll">
-              <p>Date by which project is expected to be completed. Can be edited to update with actual end date upon completion</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- END FIELD DESCRIPTION -->
-
-        </label>
-        <span class="combo_date <%= 'error' if @project.errors[:end_date].present? && action_name != 'new' %>"><p><%= l @project.end_date, :format => '%m/%d/%Y' rescue '' %></p>
-          <%= errors_for @project, :end_date %>
-        <div class="select_dates">
-          <p id="month" class="title">MONTH</p>
-          <p id="day" class="title">DAY</p>
-          <p id="year" class="title">YEAR</p>
-
-          <%= f.date_select :end_date, { :start_year => 1970, :end_year=>100.years.since.year, :order => [:month, :day, :year],  :prompt => '-'}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-        </div>
-        </span>
-      </li>
-
-    </ul>
-  </div>
-
-<!-- ##################### CONTEXT ##################### -->
-
-<!--  <h3 class="section museo_sans">CONTEXT</h3>-->
-  
-  <div class="field">
-    <%= f.label :sectors %>
-    <% if @project.errors[:sectors].present? %>
-        <span id="hidden" class="error">
-            <%= errors_for @project, :sectors %>
-        </span>
-    <% end %>
-    <%= f.collection_select :sector_ids, Sector.order(:name), :id, :name,{}, 'data-placeholder' => 'Add sector(s)', :multiple => true %>
-  </div>
-  
- 
-  
-  
-  
-  <div id="cross_cutting" class="field">
-    <span class="chars">
-      <label>CROSS-CUTTING ISSUES
-        <strong>&nbsp;</strong>
-        <!-- FIELD DESCRIPTION -->
-        <div class="field_info">
-          <span class="info">i</span>
-          <div class="field_text">
-            <div class="top">
-              <a href="#close">x</a>
-            </div>
-            <div class="bottom">
-              <h3>Cross-cutting issues</h3>
-              <span class="scroll">
-              <p>Issues that cut across more than one sector, or that should not be managed as a sector, such as gender or the environment. Separate multiple entries with a comma.</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- END FIELD DESCRIPTION -->
-      </label>
-    </span>
-    <span class="input_large">
-      <%= f.text_field :cross_cutting_issues %>
-    </span>
-  </div>
-
-<!-- ##################### PROJECT MANAGEMENT ##################### -->
-
-  <h3 class="section museo_sans">PROJECT BUDGET</h3>
-
-  <div class="two_columns">
-    <div class="two_columns">
-      <div class="left_column">
-        <div class="field">
-          <%= f.label :budget_currency %>
-          <%= f.select :budget_currency,
-                Money::Currency.table.values.map{|c| ["#{c[:name]} (#{c[:iso_code]})", c[:iso_code]] }.sort_by{|o| o.first } %>
-        </div> <!-- field -->
-      </div>
-
-      <div class="right_column">
-        <div class="field">
-<!--           <ul class="dates"> -->
-<!--             <li class="comboselect date"> -->
-              <label for="project[budget_value_date]">Budget value date
-              <!-- <strong>*</strong> -->
-              <!-- FIELD DESCRIPTION -->
-              <div class="field_info">
-                <span class="info">i</span>
-                <div class="field_text">
-                  <div class="top">
-                    <a href="#close">x</a>
-                  </div>
-                  <div class="bottom">
-                    <h3>Budget value date</h3>
-                    <span class="scroll">
-                    <p>Date to be used for determining the exchange rate for currency conversions.</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <!-- END FIELD DESCRIPTION -->
-              </label>
-
-              <span class="combo_date <%= 'error' if @project.errors[:budget_value_date].present? && action_name != 'new' %>"><p>
-                <%= @project.budget_value_date.present? ? @project.budget_value_date.strftime("%m/%d/%Y") : (@project.start_date.present? ? @project.start_date.strftime("%m/%d/%Y") : '') %></p>
-              <%= errors_for @project, :budget_value_date %>
-              <div class="select_dates">
-                <p id="month" class="title">MONTH</p>
-                <p id="day" class="title">DAY</p>
-                <p id="year" class="title">YEAR</p>
-
-                <%= f.date_select :budget_value_date, { :start_year => 1970, :end_year=>100.years.since.year, :default => @project.start_date, :order => [:month, :day, :year]}, { :class => :"chzn-date-select", :"data-placeholder" => ' '}  %>
-              </div>
-              </span>
-<!--             </li> -->
-<!--           </ul> -->
-        </div>
-      </div>
+        <% end %>
+        <%= f.select :primary_organization_id, select_box_options,{},:class => 'input-med' %>
     </div>
-  </div>
-
-  <label>PROJECT BUDGET
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Project budget</h3>
-            <span class="scroll">
-            <p> Amount budgeted for a project or, in the case of in-kind donations, the value of a shipment</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-  </label>
-  <div id="project_budget" class="field">
-    <span class="input_short coin">
-      <%= f.text_field :budget, :value => number_with_precision(f.object.budget, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %>
-    </span>
-  </div>
-
-  <div id="partner_org" class="field">
-    <label>PARTNERS
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Partners</h3>
-            <span class="scroll">
-            <p>Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-
-    </label>
-    <span class="input">
-      <%= f.collection_select :partner_ids,
-        Organization.order(:name), :id, :name,
-        { :include_blank => true },
-        :multiple => true,
-        'data-placeholder' => 'Add partner(s)'
-      %>
-    </span>
-  </div> <!-- field -->
+  
 
 
-   <div class="">
-    <label>
-      PRIME AWARDEE <strong>&nbsp;</strong>
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Prime Awardee</h3>
-            <span class="scroll">
-            <p>Name of the organization that received the funding directly from the donor.</p>
-            </span>
-          </div>
-        </div>
-      </div>
-    </label>
-    <!-- FIELD DESCRIPTION -->
-    <!-- END FIELD DESCRIPTION -->
-    <!--<div class="prime_awardee_combo list_combo">
-      <span id="hidden" class="combo_large combo_huge <%= 'error' if @project.errors[:prime_awardee_id].present? %>">
-        <%= errors_for @project, :prime_awardee_id %>
-        <a class="organization"><%= @project.prime_awardee.try(:name) %></a>
-      </span>
-      <%= f.hidden_field :prime_awardee_id , :value => @project.prime_awardee_id %>
-      <div class="wrapper">
-        <ul class="prime_awardee_combo_content list_combo_content huge_list_combo_content scroll_pane">
-            <% Organization.order(:name).unshift(Organization.new(:id => '', :name => '')).each do |organization| %>
-              <li class="element" id="prime_<%= organization.id %>"><p class="project_name"><%= truncate(organization.name, :length=> 60) %></p></li>
-            <% end -%>
-        </ul>
-      </div>
-    </div>-->
-    <% if @project.errors[:prime_awardee_id].present? %>
-        <span id="hidden" class="error">
-            <%= errors_for @project, :prime_awardee_id %>
+    <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
+        <label>InterAction Intervention ID</label>
+        <span class="input_large is-readonly">
+            <%= f.text_field :intervention_id, :readonly => true %>
         </span>
-    <% end %>
-    <%= f.collection_select :prime_awardee_id, Organization.order(:name), :id, :name, {:include_blank=>true}, :'data-placeholder' => 'Select an organization' %>
-  
-  </div>
-  
-  <div class="field">
-    <p>If an organization is not listed here, complete the new organization request form at <a href="http://bit.ly/2cpDqAk" style="display: inline;">http://bit.ly/2cpDqAk</a>.</p>
-  </div>
-
-<!-- ##################### PROJECT IMPACT ##################### -->
-
-  <h3 class="section museo_sans">PROJECT IMPACT</h3>
-    <!-- <div class="left_column">
-       <div id="estimated_people" class="field">
-          <label>ESTIMATED PEOPLE REACHED <sup>(direct)</sup>
-            <strong>&nbsp;</strong>
-
-              <div class="field_info">
-                <span class="info">i</span>
-                <div class="field_text">
-                  <div class="top">
-                    <a href="#close">x</a>
-                  </div>
-                  <div class="bottom">
-                    <h3>Estimated people reached</h3>
-                    <span class="scroll">
-                    <p>Target number of individuals to be reached over the life of the project. Should correspond to number of individuals intended to directly benefit from the project.</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-          </label>
-          <span class="input_short">
-            <%= f.text_field :estimated_people_reached, :value => number_with_precision(f.object.estimated_people_reached, :precision => 0, :strip_insignificant_zeros => true, :delimiter => ',') %>
-            <p class="msg">people</p>
-          </span>
-        </div>
-    </div> -->
-  <div class="field">
-    <label>PROJECT REACH UNIT</label>
-    <span class="input_short">
-      <%= f.text_field :project_reach_unit %>
-    </span>
-  </div>
-  <div class="field">
-    <label>TARGET PROJECT REACH</label>
-    <span class="input_short">
-      <%= f.text_field :target_project_reach %>
-    </span>
-  </div>
-  <div class="field">
-    <p class="title">ACTUAL PROJECT REACH</p>
-    <span class="input_short">
-      <%= f.text_field :actual_project_reach %>
-    </span>
-  </div> <!-- field -->
-  <div id="target" class="field">
-    <label>TARGET GROUPS
-      <strong>&nbsp;</strong>
-      <!-- FIELD DESCRIPTION -->
-      <div class="field_info">
-        <span class="info">i</span>
-        <div class="field_text">
-          <div class="top">
-            <a href="#close">x</a>
-          </div>
-          <div class="bottom">
-            <h3>Target Groups</h3>
-            <span class="scroll">
-            <p>Type of individuals or groups primarily intended to benefit from the project (e.g. children under five, pregnant women, people with disabilities, etc)</p>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- END FIELD DESCRIPTION -->
-    </label>
-    <span class="input_short">
-      <%= f.text_field :target %>
-    </span>
-  </div>
-
-<!-- ##################### LOCATION ##################### -->
-
-  <h3 class="section museo_sans">LOCATION</h3>
-  <label>GEOGRAPHICAL SCOPE
-    <strong>&nbsp;</strong>
-    <div class="field_info">
-      <span class="info">i</span>
-      <div class="field_text">
-        <div class="top">
-          <a href="#close">x</a>
-        </div>
-        <div class="bottom">
-          <h3>GEOGRAPHICAL SCOPE</h3>
-          <span class="scroll">
-          <p>If your project is national or global in scope - meaning it does not take place in specific locations - please select either "National" or "Global" from the drop down menu. If either of these options is selected, you will not be able to provide sub-national location information.</p>
-          </span>
-        </div>
-      </div>
     </div>
-  </label>
-  <div class="field" style="margin: 5px 0 0;">
-    <%= f.select :geographical_scope, [['Specific locations', 'specific_locations'], ['National', 'national'], ['Global', 'global']] %>
-  </div>
 
+    <div class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Organization Intervention ID', :text => 'Alpha/numeric code assigned to an intervention or shipment by an organization in its internal systems.'} %>
+        
+        <span class="input_large">
+            <%= f.text_field :organization_id %>
+        </span>
+    </div>
+  
+    <div class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Tags', :text => 'Tags are used to categorize projects for featured maps and other datasets that are specific to a common issue, event, or crisis.'} %>
+        
+        <%= f.collection_select :tag_ids, Tag.order('count desc, name asc'), :id, :name, {}, 'data-placeholder' => 'Add tag(s)', :multiple => true %>
+    </div>
 
-  <div id="geographical_region-content">
-    <label>GEOGRAPHIC LOCATION <strong>*</strong></label>
-    <input type="hidden" name="project[geolocation_ids][]" value="" />
-    <ul class="ubications" id="regions_list">
-      <% @project.geolocation_ids.each do |geolocation| %>
-        <li data-country-id="<%= geolocation %>">
-          <p> <%= geolocation_breadcrumb(geolocation) %> </p>
-          <input type="hidden" name="project[geolocation_ids][]" value="<%= geolocation %>" />
-          <a class="close" href="javascript:void(null)"></a>
-        </li>
-      <% end %>
-    </ul>
     
-    <div class="location_options region_block empty <%= 'error' if @project.errors[:location].present? %>">
-      <% if @project.errors[:location].present? %>
-        <p class="msg">Sorry, location information is mandatory</p>
-      <% else %>
-        <p class="msg">Add / edit the different locations of the project</p>
-      <% end %>
-      <a class="add_location museo_sans shadow_green" id="add_region_map">add location</a>
+    <!-- ##################### PROJECT DETAILS ##################### -->
+    <h3 class="section museo_sans">PROJECT DETAILS</h3>
+    
+    <div class="field">
+        <%= render :partial => 'field-label', :locals => {:required => true, :label => 'Project Name', :text => 'The official title of the project, preferable the official name used in program/project/etc documents.'} %>
+        
+        <span class="input_large <%= 'error' if !@project.errors[:name].empty? && action_name != 'new' %>">
+            <%= f.text_field :name, :class=>"long #{'error' if !@project.errors[:name].empty? && action_name != 'new'}" %>
+            <%= errors_for @project, :name %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <span class="chars">
+            <%= render :partial => 'field-label', :locals => {:required => true, :label => 'Description', :text => 'Brief description of the project (at least 150 words), including if possible, goals and/or objectives.'} %>
+            <% description = f.object.description || '' %>
+            <p id="chars_left_description"><%= 10000 - description.length %> chars left</p>
+        </span>
 
-      <div class="region_window">
-        <div class="top_region">
-          <a class="close">Close</a>
+        <span class="textarea <%= 'error' if !@project.errors[:description].empty? && action_name != 'new' %>">
+            <div class="wrapper">
+                <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@project.errors[:description].empty? && action_name != 'new'}", :onkeyup=> "limitChars('project_description', 10000, 'chars_left_description')" %>
+            </div>
+        </span>
+
+    </div>
+    
+    <div class="field">
+        <span class="chars">
+            <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Activities', :text => 'Description of project activities.'} %>
+            <% activities = f.object.activities || '' %>
+            <p id="chars_left_activities"><%= 10000 - activities.length %> chars left</p>
+        </span>
+        <span class="textarea">
+            <%= f.text_area :activities, :onkeyup=> "limitChars('project_activities', 10000, 'chars_left_activities')"%>
+        </span>
+    </div>
+    
+    <div class="field">
+        <span class="chars">
+            <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Additional Information', :text => 'Optional field that can be used to provide additional information on the project, such as progress to date, results data, etc.'} %>
+            <% additional_information = f.object.additional_information || '' %>
+            <p id="chars_left_aditional_info"><%= 10000 - additional_information.length %> chars left</p>
+        </span>
+        <span class="textarea">
+            <%= f.text_area :additional_information, :onkeyup=> "limitChars('project_additional_information', 10000, 'chars_left_aditional_info')" %>
+        </span>
+    </div>
+  
+    <div class="field column-3 <%= 'error' if @project.errors[:start_date].present? && action_name != 'new' %>">
+        <%= errors_for @project, :start_date %>
+        <%= render :partial => 'field-label', :locals => {:label => 'Start Date', :text => 'Actual start date (beginning of implementation).', :required => true} %>
+        <%= f.text_field :start_date, :class=>'datepicker', :value => format_date(@project.start_date) %>
+    </div>
+  
+    <div class="field column-3 <%= 'error' if @project.errors[:end_date].present? && action_name != 'new' %>">
+        <%= errors_for @project, :end_date %>
+        <%= render :partial => 'field-label', :locals => {:label => 'End Date', :text => 'Date by which project is expected to be completed. Can be edited to update with actual end date upon completion.', :required => true} %>
+        <%= f.text_field :end_date, :class => 'datepicker' %>
+    </div>
+  
+    <div class="field">
+        <%= f.label :sectors %>
+        <% if @project.errors[:sectors].present? %>
+            <span id="hidden" class="error">
+                <%= errors_for @project, :sectors %>
+            </span>
+        <% end %>
+        <%= f.collection_select :sector_ids, Sector.order(:name), :id, :name,{}, 'data-placeholder' => 'Add sector(s)', :multiple => true %>
+    </div>
+  
+    <div id="cross_cutting" class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Cross-Cutting Issues', :text => 'Issues that cut across more than one sector, or that should not be managed as a sector, such as gender or the environment. Separate multiple entries with a comma.'} %>
+        <span class="input_large">
+            <%= f.text_field :cross_cutting_issues %>
+        </span>
+    </div>
+
+    
+    <h3 class="section museo_sans">PROJECT BUDGET</h3>
+
+    <div class="field">
+        <%= f.label :budget_currency %>
+        <%= f.select :budget_currency, get_currency_list %>
+    </div>
+
+    <div class="field column-3 <%= 'error' if @project.errors[:budget_value_date].present? && action_name != 'new' %>">
+        <%= errors_for @project, :budget_value_date %>
+        <%= render :partial => 'field-label', :locals => {:label => 'Budget Value Date', :text => 'Date to be used for determining the exchange rate for currency conversions.', :required => false} %>
+        <%= f.text_field :budget_value_date, :class => 'datepicker' %>
+    </div>
+    
+    <div id="project_budget" class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Budget', :text => 'Amount budgeted for a project or, in the case of in-kind donations, the value of a shipment.'} %>
+        <span class="input_short coin">
+            <%= f.text_field :budget, :value => number_with_precision(f.object.budget, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ',') %>
+        </span>
+    </div>
+
+    <div id="partner_org" class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Partners', :text => 'Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods.'} %>
+        <span class="input">
+            <%= f.select :partner_ids, select_box_options(:partners), {},{ :multiple => true, :class => 'input-lg-multiple' } %>
+        </span>
+    </div>
+
+    <div class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Prime Awardee', :text => 'Name of the organization that received the funding directly from the donor.'} %>
+        <% if @project.errors[:prime_awardee_id].present? %>
+            <span id="hidden" class="error">
+                <%= errors_for @project, :prime_awardee_id %>
+            </span>
+        <% end %>
+        <%= f.select :prime_awardee_id, select_box_options(:prime_awardee),{},:class => 'input-med' %>
+    </div>
+  
+    <div class="field">
+        <p>If an organization is not listed here, complete the new organization request form at <a href="http://bit.ly/2cpDqAk" style="display: inline;">http://bit.ly/2cpDqAk</a>.</p>
+    </div>
+    
+    
+    <!-- ##################### PROJECT IMPACT ##################### -->
+    <h3 class="section museo_sans">PROJECT IMPACT</h3>
+    
+    <div class="field">
+        <label>PROJECT REACH UNIT</label>
+        <span class="input_short">
+            <%= f.text_field :project_reach_unit %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <label>TARGET PROJECT REACH</label>
+        <span class="input_short">
+            <%= f.text_field :target_project_reach %>
+        </span>
+    </div>
+    
+    <div class="field">
+        <p class="title">ACTUAL PROJECT REACH</p>
+        <span class="input_short">
+            <%= f.text_field :actual_project_reach %>
+        </span>
+    </div>
+    
+    <div id="target" class="field">
+        <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Target Groups', :text => 'Type of individuals or groups primarily intended to benefit from the project (e.g. children under five, pregnant women, people with disabilities, etc).'} %>
+        <span class="input_short">
+            <%= f.text_field :target %>
+        </span>
+    </div>
+
+    
+    <!-- ##################### LOCATION ##################### -->
+    <h3 class="section museo_sans">LOCATION</h3>
+    
+    <div class="field">
+        <%= render :partial => 'field-label', :locals => {:required => true, :label => 'Geographic Scope', :text => 'If your project is national or global in scope - meaning it does not take place in specific locations - please select either "National" or "Global" from the drop down menu. If either of these options is selected, you will not be able to provide sub-national location information.'} %>
+        <%= f.select :geographical_scope, [['Specific locations', 'specific_locations'], ['National', 'national'], ['Global', 'global']] %>
+    </div>
+
+
+    <div id="geographical_region-content">
+        <label>GEOGRAPHIC LOCATION <strong>*</strong></label>
+        <input type="hidden" name="project[geolocation_ids][]" value="" />
+        <ul class="ubications" id="regions_list">
+            <% @project.geolocation_ids.each do |geolocation| %>
+                <li data-country-id="<%= geolocation %>">
+                    <p> <%= geolocation_breadcrumb(geolocation) %> </p>
+                    <input type="hidden" name="project[geolocation_ids][]" value="<%= geolocation %>" />
+                    <a class="close" href="javascript:void(null)"></a>
+                </li>
+            <% end %>
+        </ul>
+        
+        <div class="location_options region_block empty <%= 'error' if @project.errors[:location].present? %>">
+            <% if @project.errors[:location].present? %>
+                <p class="msg">Sorry, location information is mandatory</p>
+            <% else %>
+                <p class="msg">Add / edit the different locations of the project</p>
+            <% end %>
+            <a class="add_location museo_sans shadow_green" id="add_region_map">add location</a>
+        
+            <div class="region_window">
+                <div class="top_region">
+                    <a class="close">Close</a>
+                </div>
+                <div class="bottom_region">
+                    <h3 class="museo_sans">Add a location to the project</h3>
+                    <p class="info_region_exp">You can specify the administrative level you need (1st, 2nd or 3rd)</p>
+                    <div class="level_0">
+                        <label>COUNTRY <strong>*</strong></label>
+                        <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
+                        <span class="region_combo">
+                            <p id="country_0">Not specified</p>
+                            <div class="wrapper">
+                                <ul id="country-list" class="options scroll_pane">
+                                    <li><a id="country_0">Not specified</a></li>
+                                    <li class="last"></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="level_1">
+                        <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
+                        <label>1st ADMINISTRATIVE LEVEL</label>
+                        <span class="region_combo">
+                            <p id="level1_0">Not specified</p>
+                            <div class="wrapper">
+                                <ul class="options scroll_pane">
+                                    <li><a id="level1_0">Not specified</a></li>
+                                    <li class="last"></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="level_2">
+                        <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
+                        <label>2st ADMINISTRATIVE LEVEL</label>
+                        <span class="region_combo">
+                            <p id="level2_0">Not specified</p>
+                            <div class="wrapper">
+                                <ul class="options scroll_pane">
+                                    <li><a id="level2_0">Not specified</a></li>
+                                    <li class="last"></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="level_3">
+                        <label>3st ADMINISTRATIVE LEVEL</label>
+                        <span class="region_combo">
+                            <p id="level3_0">Not specified</p>
+                            <div class="wrapper">
+                                <ul class="options scroll_pane">
+                                    <li><a id="level3_0">Not specified</a></li>
+                                    <li class="last"></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+                    <a class="add_location museo_sans shadow_green" id="add_region_to_list">add location</a>
+                </div>
+            </div>
         </div>
-        <div class="bottom_region">
-          <h3 class="museo_sans">Add a location to the project</h3>
-          <p class="info_region_exp">You can specify the administrative level you need (1st, 2nd or 3rd)</p>
-          <div class="level_0">
-            <label>COUNTRY <strong>*</strong></label>
-            <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
-            <span class="region_combo">
-              <p id="country_0">Not specified</p>
-              <div class="wrapper">
-                <ul id="country-list" class="options scroll_pane">
-                  <li><a id="country_0">Not specified</a></li>
-                  <li class="last"></li>
-                </ul>
-              </div>
-            </span>
-          </div>
-
-          <div class="level_1">
-            <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
-            <label>1st ADMINISTRATIVE LEVEL</label>
-            <span class="region_combo">
-              <p id="level1_0">Not specified</p>
-              <div class="wrapper">
-                <ul class="options scroll_pane">
-                  <li><a id="level1_0">Not specified</a></li>
-                  <li class="last"></li>
-                </ul>
-              </div>
-            </span>
-          </div>
-
-          <div class="level_2">
-            <%= image_tag "backoffice/projects/activity-indicator.gif", {:alt => "loader", :title => 'loader', :class => 'loader'} %>
-            <label>2st ADMINISTRATIVE LEVEL</label>
-            <span class="region_combo">
-              <p id="level2_0">Not specified</p>
-              <div class="wrapper">
-                <ul class="options scroll_pane">
-                  <li><a id="level2_0">Not specified</a></li>
-                  <li class="last"></li>
-                </ul>
-              </div>
-            </span>
-          </div>
-
-          <div class="level_3">
-            <label>3st ADMINISTRATIVE LEVEL</label>
-            <span class="region_combo">
-              <p id="level3_0">Not specified</p>
-              <div class="wrapper">
-                <ul class="options scroll_pane">
-                  <li><a id="level3_0">Not specified</a></li>
-                  <li class="last"></li>
-                </ul>
-              </div>
-            </span>
-          </div>
-          <a class="add_location museo_sans shadow_green" id="add_region_to_list">add location</a>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <div id="verbatim_location" class="field">
-    <span class="chars">
-      <label>VERBATIM LOCATION</label>
-    </span>
+    <div id="verbatim_location" class="field">
+        <label>VERBATIM LOCATION</label>
 
-    <span class="input_large">
-      <%= f.text_field :verbatim_location %>
-    </span>
-  </div>
-
-  <div id="idprefugee_camp" class="field">
-    <span class="chars">
-      <label>IDP/REFUGEE CAMP</label>
-    </span>
-
-    <span class="input_large">
-      <%= f.text_field :idprefugee_camp %>
-    </span>
-  </div>
-
-<!-- ##################### CONTACT INFORMATION ##################### -->
-
-  <h3 class="section museo_sans">CONTACT INFORMATION</h3>
-  <div class="two_columns">
-    <div class="left_column">
-      <div class="field">
-        <label>CONTACT PERSON</label>
-        <span class="input_short">
-          <%= f.text_field :contact_person %>
+        <span class="input_large">
+            <%= f.text_field :verbatim_location %>
         </span>
-      </div>
     </div>
-    <div class="right_column">
-      <div class="field">
-        <p class="title">CONTACT TITLE</p>
-        <span class="input_short">
-          <%= f.text_field :contact_position %>
-        </span>
-      </div> <!-- field -->
-    </div>
-  </div>
-  <div class="two_columns">
-    <div class="left_column">
-      <div class="field">
-        <label>CONTACT EMAIL</label>
-        <span class="input_short">
-          <%= f.text_field :contact_email %>
-        </span>
-      </div>
-    </div>
-    <div class="right_column">
-      <div class="field">
-        <p class="title">CONTACT PHONE <span class="info">Include international prefix</span></p>
-        <span class="input_short">
-          <%= f.text_field :contact_phone_number %>
-        </span>
-      </div> <!-- field -->
-    </div>
-  </div>
-  <div class="field">
-    <label>PROJECT WEBSITE</label>
-    <span class="input_large">
-      <%= f.text_field :website %>
-    </span>
-  </div>
 
-<!-- ##################### INTERNAL MANAGEMENT ##################### -->
+    <div id="idprefugee_camp" class="field">
+        <label>IDP/REFUGEE CAMP</label>
 
-  <h3 class="section museo_sans">INTERNAL MANAGEMENT</h3>
-  <div class="two_columns">
+        <span class="input_large">
+            <%= f.text_field :idprefugee_camp %>
+        </span>
+    </div>
+
+    
+    <!-- ##################### CONTACT INFORMATION ##################### -->
+    <h3 class="section museo_sans">CONTACT INFORMATION</h3>
+    
     <div class="two_columns">
-      <div class="left_column">
-        <div class="field">
-          <%= f.label :date_provided, 'DATE PROVIDED' %>
-          <span class="input_short">
-            <%= f.text_field :date_provided, :value => format_date(@project.date_provided), :disabled => true %>
-            <%= f.hidden_field :date_provided, :value => format_date(@project.date_provided) %>
-          </span>
+        <div class="left_column">
+            <div class="field">
+                <label>CONTACT PERSON</label>
+                <span class="input_short">
+                    <%= f.text_field :contact_person %>
+                </span>
+            </div>
         </div>
-      </div>
-
-      <div class="right_column">
-        <div class="field">
-          <%= f.label :date_updated, 'DATE UPDATED' %>
-          <span class="input_short">
-            <%= f.text_field :date_updated, :value => format_date(@project.date_updated), :disabled => true %>
-            <%= f.hidden_field :date_updated, :value => format_date(@project.date_updated) %>
-          </span>
+        <div class="right_column">
+            <div class="field">
+                <p class="title">CONTACT TITLE</p>
+                <span class="input_short">
+                    <%= f.text_field :contact_position %>
+                </span>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <%#<div id="project_needs" class="field">%>
-    <%#<label>PROJECT NEEDS</label>%>
-    <%#<span class="textarea">%>
-      <%# f.text_area :project_needs %>
-    <%#</span>%>
-  <%#</div>%>
+    
+    <div class="two_columns">
+        <div class="left_column">
+            <div class="field">
+                <label>CONTACT EMAIL</label>
+                <span class="input_short">
+                    <%= f.text_field :contact_email %>
+                </span>
+            </div>
+        </div>
+        <div class="right_column">
+            <div class="field">
+                <p class="title">CONTACT PHONE <span class="info">Include international prefix</span></p>
+                <span class="input_short">
+                    <%= f.text_field :contact_phone_number %>
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="field">
+        <label>PROJECT WEBSITE</label>
+        <span class="input_large">
+            <%= f.text_field :website %>
+        </span>
+    </div>
 
+    
+    <!-- ##################### INTERNAL MANAGEMENT ##################### -->
+    <h3 class="section museo_sans">INTERNAL MANAGEMENT</h3>
+    
+    <div class="two_columns">
+        <div class="left_column">
+            <div class="field">
+                <%= f.label :date_provided, 'DATE PROVIDED' %>
+                <span class="input_short">
+                    <%= f.text_field :date_provided, :value => format_date(@project.date_provided), :disabled => true %>
+                    <%= f.hidden_field :date_provided, :value => format_date(@project.date_provided) %>
+                </span>
+            </div>
+        </div>
 
+        <div class="right_column">
+            <div class="field">
+                <%= f.label :date_updated, 'DATE UPDATED' %>
+                <span class="input_short">
+                    <%= f.text_field :date_updated, :value => format_date(@project.date_updated), :disabled => true %>
+                    <%= f.hidden_field :date_updated, :value => format_date(@project.date_updated) %>
+                </span>
+            </div>
+        </div>
+    </div>
 
-<!-- ################################################ -->
-<!-- ################################################ -->
-<!-- ################################################ -->
-
-  <div class="submit floating">
-    <%= f.submit '', :class => "#{'error' if @project.invalid? && action_name != 'new'}" %>
-  </div>
-  <!-- END EDIT PAGE -->
+    <div class="submit floating">
+        <%= f.submit '', :class => "#{'error' if @project.invalid? && action_name != 'new'}" %>
+    </div>
 
 <%end%>
 
-  <div class="map_window">
+<!--  <div class="map_window">
     <a class="close">Close</a>
     <h3 class="museo_sans">Geolocate this project</h3>
     <div class="outer_map">
@@ -782,15 +405,21 @@
     </div>
     <p>You can click multiple points to add<br/>several locations to the project</p>
     <a class="save" href="javascript:void(null)">save position</a>
-  </div>
+  </div>-->
 
   <!-- COMMON IN EDIT AND NEW FORM -->
 
-  <script type="text/javascript">
+<!--  <script type="text/javascript">
     var organization_id     = '<%= @project.primary_organization.try(:organization_id).presence || 'XXXX' %>';
     var project_id          = '<%= @project.organization_id.presence || 'XXX' %>';
     var organizations_ids   = <%= (@organizations_ids || {}).to_json.html_safe %>;
     var countries_iso_codes = <%= (@countries_iso_codes || {}).to_json.html_safe %>;
-  </script>
+  </script>-->
+<script type="text/javascript">
+    var reporting_organizations = <%= raw(organizations_list(true)) %>;
+    var organizations = <%= raw(organizations_list) %>;
+    var countries_iso_codes = <%= (@countries_iso_codes || {}).to_json.html_safe %>;
+    
+</script>
 
-  <%= javascript_include_tag "backoffice/project_map.js", "backoffice/project.js", "backoffice/project_region.js" %>
+<%= javascript_include_tag "backoffice/project.js", "backoffice/project_region.js" %>
