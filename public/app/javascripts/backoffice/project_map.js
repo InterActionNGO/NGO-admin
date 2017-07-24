@@ -1,4 +1,6 @@
-
+/* Unused, experimental code for adding project locations via 
+ * clickable google map_
+ */
     var markers_position = [];
     var map;
     var geocoder = new google.maps.Geocoder();
