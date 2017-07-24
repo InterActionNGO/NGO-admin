@@ -1,7 +1,9 @@
 class Admin::ProjectsController < Admin::AdminController
 
   before_filter :count_projects, :only => [:index]
-  before_filter :get_organizations_list, :only => [:new, :edit]
+  before_filter :set_user_vars, :only => [:new, :edit, :create, :update]
+  caches_action [:new, :edit], :expires_in => 1.day, :cache_path => Proc.new { |c| c.params }
+  layout 'admin_projects_layout'
 
   def index
     @conditions = {}
@@ -78,13 +80,6 @@ class Admin::ProjectsController < Admin::AdminController
 
   def new
     @project = new_project(:date_provided => Time.now)
-
-    if Rails.env.development?
-      @project.start_date  = Time.now
-      @project.end_date    = 10.years.since
-    end
-
-    @organizations_ids   = organizations_ids
     @countries_iso_codes = countries_iso_codes
   end
 
@@ -96,8 +91,6 @@ class Admin::ProjectsController < Admin::AdminController
       flash[:notice] = "Project created! Now you can <a href='#{donations_admin_project_path(@project)}'>provide the donor information</a> for this project."
       redirect_to edit_admin_project_path(@project), :flash => {:success => 'Project has been created successfully'}
     else
-      @organizations_ids   = organizations_ids
-      @countries_iso_codes = countries_iso_codes
       render :action => 'new'
     end
   end
@@ -109,7 +102,6 @@ class Admin::ProjectsController < Admin::AdminController
   def edit
     @project              = find_project(params[:id])
     @project.date_updated = Time.now
-    @organizations_ids   = organizations_ids
     @countries_iso_codes = countries_iso_codes
   end
 
@@ -119,7 +111,6 @@ class Admin::ProjectsController < Admin::AdminController
     @project.attributes = params[:project]
     @project.updated_by = current_user
     if params[:project][:sector_ids].nil? && !@project.sectors.empty?
-        @organizations_ids   = organizations_ids
         @countries_iso_codes = countries_iso_codes
         @project.sectors = @sectors
         flash.now[:error] = 'Sorry, you can\'t remove all sectors'
@@ -130,7 +121,6 @@ class Admin::ProjectsController < Admin::AdminController
         flash[:notice] = 'Project updated successfully.'
         redirect_to edit_admin_project_path(@project), :flash => {:success => 'Project has been updated successfully'}
       else
-        @organizations_ids   = organizations_ids
         @countries_iso_codes = countries_iso_codes
         flash.now[:error] = 'Sorry, there are some errors that must be corrected.'
         render :action => 'edit'
@@ -186,21 +176,17 @@ class Admin::ProjectsController < Admin::AdminController
     projects.includes(associations) || []
   end
   private :find_projects
-
-  def get_organizations_list
-    @organizations_list = if current_user.admin?
-      Organization.get_select_values
-    else
-      [current_user.organization]
-    end
-    @organizations_list
+  
+  def set_user_vars
+      @admin = current_user.admin?
+      @user_org = current_user.organization
   end
-  private :get_organizations_list
+  private :set_user_vars
 
-  def organizations_ids
-    Hash[Organization.select([:id, :organization_id]).all.map{|o| [o.id, o.organization_id]}]
-  end
-  private :organizations_ids
+#   def organizations_ids
+#     Hash[Organization.select([:id, :organization_id]).all.map{|o| [o.id, o.organization_id]}]
+#   end
+#   private :organizations_ids
 
   def countries_iso_codes
     Hash[Geolocation.select([:id, :country_code]).where(:adm_level => 0).map{|o| [o.id, o.country_code]}]
