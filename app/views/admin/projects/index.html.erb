@@ -8,26 +8,26 @@
           <input type="text" value="<%= params[:q] %>" placeholder = "Search projects by name, description, organization intervention ID.." name="q" class="main_search"/>
           <input type="submit" value="" />
           <ul class="combos">
-            <li class="comboselect status">
+            <li class="column-3 select-filter">
               <label>STATUS</label>
               <%= select_tag :status,
                 options_for_select([['All', 0], ['Active', 'active'], ['Closed', 'closed']], params[:status]), :class => :"chzn-select" %>
             </li>
 
-            <li class="comboselect">
+            <li class="column-3 select-filter">
               <label>COUNTRY</label>
               <%= select_tag :country,
                 options_for_select([['All',0]] + Geolocation.countries.order(:name).collect{ |c| [c.name, c.country_code] }, params[:country]), :class => :"chzn-select" %>
             </li>
 
-            <li class="comboselect">
+            <li class="column-3 select-filter">
               <label>SECTOR</label>
 
               <%= select_tag :sector,
                 options_for_select([['All',0]] + Sector.get_select_values.collect { |c| [c.name, c.id] }, params[:sector]), :class => :"chzn-select" %>
             </li>
 
-            <li class="comboselect">
+            <li class="column-3 select-filter">
               <label>SITE</label>
 
               <%= select_tag :site,
@@ -35,7 +35,7 @@
 
             </li>
             <% if current_user.admin? %>
-                <li class="comboselect">
+                <li class="column-3 select-filter">
                 <label>REPORTING ORGANIZATION</label>
 
                 <%= select_tag :organization,
@@ -148,6 +148,6 @@
 <%= javascript_include_tag "backoffice/application.js", "backoffice/projects.js" %>
 
 <script type="text/javascript">
-  $(".chzn-select").chosen();
+  $(".chzn-select").select2();
   var endpoint = '<%= url_for([:admin, ProjectsSynchronization.new]) %>';
 </script>
