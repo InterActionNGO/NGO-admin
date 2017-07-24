@@ -13,7 +13,7 @@ class AlertsMailer < ActionMailer::Base
 
   def six_months_since_last_login(user)
     cc = if Rails.env.production?
-           'no-reply@interaction.org'
+           'mappinginfo@interaction.org'
          else
            'rob@example.com'
          end
