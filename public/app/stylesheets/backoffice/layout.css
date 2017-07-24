@@ -2952,7 +2952,7 @@ ul.ui-autocomplete.site_tags {
 /*END - AUTOCOMPLETE - TAGS*/
 /*AUTOCOMPLETE - FILTERING TAGS*/
 /*END - AUTOCOMPLETE - TAGS*/
-div.block.project_info div.med div.left form .field input[type="text"] {
+div.block.project_info div.med div.left form .field input:not(.datepicker)[type="text"] {
   float: left;
   margin: 7px 0 0 7px;
   width: 400px;
@@ -3814,10 +3814,10 @@ div.block.donations_project div.med {
     float: left;
     width: 572px;
     position: relative; }
-    div.block.donations_project div.med div.left div.field input[type="text"], div.block.donations_project div.med div.left div.field input[type="password"], div.block.donations_project div.med div.left div.field input[type="email"] {
+    /*div.block.donations_project div.med div.left div.field input[type="text"], div.block.donations_project div.med div.left div.field input[type="password"], div.block.donations_project div.med div.left div.field input[type="email"] {
       margin: auto;
       padding: 0;
-      background: none; }
+      background: none; }*/
     div.block.donations_project div.med div.left p {
       float: left;
       width: 100%;
@@ -3896,7 +3896,7 @@ div.block.donations_project div.med {
       font: bold 15px Arial;
       color: #333333;
       margin: 26px 0 0 5px; }
-    div.block.donations_project div.med div.left form {
+    /*div.block.donations_project div.med div.left form {
       position: relative;
       float: left;
       width: 571px;
@@ -3908,13 +3908,13 @@ div.block.donations_project div.med {
         float: left;
         width: 385px;
         height: 64px;
-        margin: 0 10px 0 15px; }
-      div.block.donations_project div.med div.left form div#donor_name span {
+        margin: 0 10px 0 15px; }*/
+      /*div.block.donations_project div.med div.left form div#donor_name span {
         margin: 4px 0 0 7px;
         display: block;
         float: left;
-      }
-      div.block.donations_project div.med div.left form div#office_name span {
+      }*/
+      /*div.block.donations_project div.med div.left form div#office_name span {
         float: left;
         background: url("/app/images/backoffice/projects/input_donor_name.png") no-repeat 0 0;
         width: 380px;
@@ -3943,8 +3943,8 @@ div.block.donations_project div.med {
         right: 8px;
         background: url("/app/images/backoffice/projects/donors_spinner.gif") no-repeat 0 0;
         width: 16px;
-        height: 16px; }
-      div.block.donations_project div.med div.left form div#donation_date {
+        height: 16px; }*/
+      /*div.block.donations_project div.med div.left form div#donation_date {
         float: left;
         width: 142px;
         height: 64px; }
@@ -4042,8 +4042,8 @@ div.block.donations_project div.med {
                   background: url("/app/images/backoffice/projects/date/year_combo.png") no-repeat 0 0;
                   width: 68px;
                   height: 23px;
-                  padding: 9px 0 0 10px; }
-      div.block.donations_project div.med div.left form div#donation_amount {
+                  padding: 9px 0 0 10px; }*/
+      /*div.block.donations_project div.med div.left form div#donation_amount {
         float: left;
         width: 132px;
         height: 64px;
@@ -4054,8 +4054,8 @@ div.block.donations_project div.med {
           height: 34px;
           background: url("/app/images/backoffice/projects/amount_donation_input.png") no-repeat 0 0;
           position: relative;
-          margin: 0 0 0 8px; }
-          div.block.donations_project div.med div.left form div#donation_amount span input[type="text"] {
+          margin: 0 0 0 8px; }*/
+          /*div.block.donations_project div.med div.left form div#donation_amount span input[type="text"] {
             position: absolute;
             top: 5px;
             left: 22px;
@@ -4063,16 +4063,16 @@ div.block.donations_project div.med {
             width: 64px;
             height: 21px;
             font: normal 15px Arial;
-            color: #333333; }
-      div.block.donations_project div.med div.left form h4 {
+            color: #333333; }*/
+      /*div.block.donations_project div.med div.left form h4 {
         font: normal 21px "Akzidenz",Arial;
         color: #333333;
         text-shadow: 0 1px white;
-        margin: 22px 0 0 22px; }
-      div.block.donations_project div.med div.left form p {
+        margin: 22px 0 0 22px; }*/
+      /*div.block.donations_project div.med div.left form p {
         margin: 10px 0 22px 22px; }
-      }
-      div.block.donations_project div.med div.left form label {
+      }*/
+      /*div.block.donations_project div.med div.left form label {
         float: left;
         width: 400px;
         margin: 17px 0 0 9px;
@@ -4080,7 +4080,7 @@ div.block.donations_project div.med {
         color: #666666;
         text-shadow: none;
         text-transform: uppercase;
-        width: 100px; }
+        width: 100px; }*/
       div.block.donations_project div.med div.left form input[type="submit"] {
         float: right;
         width: 128px;
