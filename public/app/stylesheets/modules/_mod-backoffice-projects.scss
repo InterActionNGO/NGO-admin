@@ -1,0 +1,80 @@
+.mod-backoffice-projects {
+    .chzn-choices {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        height: 2.5em;
+    }
+    .select2-container {
+        margin-top: 7px;
+        .select2-selection--single {
+            height: auto;
+            padding: 3px;
+        }
+        .select2-selection--multiple{
+            height: 150px;
+            padding: 3px;
+        }
+    }
+    .select2-container--default {
+        .select2-selection--single {
+            .select2-selection__arrow {
+                padding: 3px;
+            }
+        }
+    }
+    .input-med {
+        width: 420px;
+    }
+    .input-lg-multiple {
+        width: 550px;
+    }
+    .column-3 {
+        width: 30%;
+        float: left;
+        &.select-filter {
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+    }
+    .chzn-select {
+        width: 100%;
+    }
+    .field {
+        .datepicker {
+            width: 95%;
+            float: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            height: 30px;
+            padding: 3px 6px;
+            box-sizing: border-box;
+            background: $color-0;
+        }
+    }
+    .scroll_pane {
+        .jspVerticalBar {
+            display: none;
+        }
+        .jspPane {
+            height: 250px;
+            width: 267px;
+            overflow: auto;
+        }
+    }
+    .new_donation {
+        background: $color-4;
+        padding: 1.5em;
+        box-sizing: border-box;
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        p {
+            margin-bottom: 1.5em;
+        }
+        .field {
+            margin: 1em 0;
+        }
+    }
+    
+}
