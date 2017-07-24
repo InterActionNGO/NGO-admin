@@ -31,15 +31,12 @@ namespace :iom do
 
     desc 'Send an email alert to all managers who have not logged in in the last six months'
     task :six_months_since_last_login => :environment do
-      User.where(<<-SQL, false, 6.months.ago).find_each do |user|
-        (six_months_since_last_login_alert_sent IS NULL OR
-         six_months_since_last_login_alert_sent = ?) AND
-        (last_login IS NULL OR last_login < ?)
-        SQL
+        
+        User.no_login_since(6.months.ago).find_each do |user|
 
-        AlertsMailer.six_months_since_last_login(user).deliver
-        user.update_attribute('six_months_since_last_login_alert_sent', true)
-      end
+            AlertsMailer.six_months_since_last_login(user).deliver
+            user.update_attribute('six_months_since_last_login_alert_sent', true)
+        end
     end
 
   end

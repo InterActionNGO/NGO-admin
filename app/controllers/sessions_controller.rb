@@ -14,8 +14,8 @@ class SessionsController < ApplicationController
       @email       = params[:email]
       @remember_me = params[:remember_me]
       flash[:alert] = <<-HTML
-        <p class="error margin">Your user account is blocked temporally.<br />
-        <a href="mailto:jmontgom@interaction.org">Write us</a> if this is a problem for you.</p>
+        <p class="error margin">Your user account is blocked temporarily.<br />
+        <a href="mailto:mappinginfo@interaction.org">Write us</a> if this is a problem for you.</p>
       HTML
       render :action => 'new' and return
     else
