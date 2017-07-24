@@ -418,6 +418,10 @@ SQL
   def self.get_select_values
     scoped.select("id,name").order("name ASC")
   end
+  
+  def self.max_updated_at
+     select('max(updated_at)').first.max 
+  end
 
   def self.with_admin_user
     select('DISTINCT organizations.id, organizations.name').
