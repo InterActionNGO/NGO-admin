@@ -923,11 +923,7 @@ SQL
 
   def generate_intervention_id
     Project.where(:id => id).update_all(:intervention_id => [
-      primary_organization.try(:organization_id).presence || 'XXXX',
-      geolocations.first.try(:country_code).presence || 'XX',
-      start_date.strftime('%y'),
-      id
-    ].join('-'))
+      primary_organization_id, id].join('-'))
   end
 
   def create_intervention_id
