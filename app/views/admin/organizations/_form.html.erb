@@ -25,12 +25,12 @@
 
     <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
     <span class="chars">
-      <%= f.label :description, raw("Description<strong aria-label='required'>*</strong>") %>
+      <%= f.label :description %>
       <p id="chars_left_long" class="chars-counter"><%= 10000 - description.length %>  chars left</p>
     </span>
 
     <span class="textarea">
-      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')", :required=>true %>
+      <%= f.text_area :description, :maxlength => 10000, :class => "#{'error' if !@organization.errors[:description].empty? && action_name != 'new'}" , :onkeyup=>"limitChars('organization_description', 10000, 'chars_left_long')" %>
     </span>
   </div>
 
@@ -65,8 +65,8 @@
     <div class="field">
       <% if current_user.admin? %>
           <!-- IF REPORTING ORGANIZATION - FIELD REQUIRED -->
-          <%= f.label :organization_id, raw("Organization ID<strong aria-label='required'>*</strong>") %>
-          <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}", :required=>true %>
+          <%= f.label :organization_id %>
+          <%= f.text_field :organization_id, :class=>"long #{'error' if !@organization.errors[:organization_id].empty? && action_name != 'new'}" %>
           <%= errors_for @organization, :organization_id %>
       <% else %>
         <!-- IF NOT ADMIN, READ-ONLY -->

@@ -95,6 +95,7 @@ class Organization < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :organization_id, :if => :organization_id
+  validates_presence_of :description, :if => Proc.new { |org| org.membership_status.eql?('Current Member')}, :message => 'is required for InterAction member organizations'
 
   serialize :site_specific_information
 
