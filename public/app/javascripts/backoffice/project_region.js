@@ -18,6 +18,7 @@
 
     }
     function init() {
+        
       $('a#add_region_map').click(function(ev){
         ev.preventDefault();
         ev.stopPropagation();
@@ -63,6 +64,10 @@
         });
       });
       $('.region_combo_item').click(clickHandlerForRegionItem);
+      
+      /* TEST */
+      $("#test").on("change", clickHandlerForRegionItem);
+      /* End test */
 
 
       $('#regions_list a.close').live('click',function (e){
@@ -146,6 +151,7 @@
   }
 
   function clickHandlerForRegionItem(ev){
+    
     var region_combo = $(this).closest('.region_combo');
     var new_item     = $(this).children('a');
 

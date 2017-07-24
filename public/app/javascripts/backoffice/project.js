@@ -13,7 +13,16 @@ var country_iso_codes        = [];
 var current_year_last_digits = (new Date()).getFullYear().toString().substr(2, 2);
 var geographical_scope;
 $(document).ready(function(ev){
-
+    
+    $(".datepicker").datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        defaultDate: "+0d"
+    });
+    
   $('div.long_search form.search select').change(function(){
     $(this).closest('form').submit();
   });
@@ -220,24 +229,19 @@ $(document).ready(function(ev){
 
 
   // // ORGANIZATION
-  // $('#primary_organization_id').chosen({
-  //   width: 420,
-  // }).change(function(e){
-  //   console.log($(e.currentTarget).val());
-  //   update_project_intervention_id($(e.currentTarget).val());
-  // });
-  $('#project_primary_organization_id').chosen({
-      width: $("#project_primary_organization_id").parent('div').width()
-    });
+//   $('#project_primary_organization_id').chosen({
+//       width: $("#project_primary_organization_id").parent('div').width()
+//     });
 
   // TYPE
   var global_geographical_scope_previous = $('#project_geographical_scope').val();
   var global_geographical_scope_next;
 
-  $('#project_geographical_scope').chosen({
-    width: 420,
-    hide_search: true
-  });
+//   $('#project_geographical_scope').chosen({
+//     width: 420,
+//     hide_search: true
+//   });
+  $("#project_geographical_scope").select2();
 
   (global_geographical_scope_previous === 'global') ? $('#geographical_region-content').hide(0) : $('#geographical_region-content').show(0);
 
@@ -306,316 +310,72 @@ $(document).ready(function(ev){
 
   // substring(0,10)+'...'
 
-  $('ul.organization_combo_content').find('li.element').click(function(ev){
-    var id = $(this).attr('id');
-    var name = $(this).children('p.project_name').text();
-    id = id.substring(orgs_id,id.length);
-
-    // id substring
-    $('input#project_primary_organization_id').val(id);
-
-    organization_id = 'XXXX';
-    if (organizations_ids[id] && organizations_ids[id] != '') {
-      organization_id = organizations_ids[id];
-    }
-
-    update_project_intervention_id();
-
-    $('div.organization_combo').find('a.organization').text(name);
-    $('div.organization_combo').find('ul.organization_combo_content').css('display','none');
-    $('div.organization_combo').children('span.combo_large').attr('id','hidden');
-    $('div.organization_combo').children('span.combo_large').removeClass('displayed');
-  });
-  // end combo tags click
-  $('input#project_organization_id').change(function(){
-    project_id = $(this).val();
-    update_project_intervention_id();
-  });
+  /* Remove js handling of interaction's intervention id -- move to rails */
+//   $('ul.organization_combo_content').find('li.element').click(function(ev){
+//     var id = $(this).attr('id');
+//     var name = $(this).children('p.project_name').text();
+//     id = id.substring(orgs_id,id.length);
+// 
+//     // id substring
+//     $('input#project_primary_organization_id').val(id);
+// 
+//     organization_id = 'XXXX';
+//     if (organizations_ids[id] && organizations_ids[id] != '') {
+//       organization_id = organizations_ids[id];
+//     }
+// 
+//     update_project_intervention_id();
+// 
+//     $('div.organization_combo').find('a.organization').text(name);
+//     $('div.organization_combo').find('ul.organization_combo_content').css('display','none');
+//     $('div.organization_combo').children('span.combo_large').attr('id','hidden');
+//     $('div.organization_combo').children('span.combo_large').removeClass('displayed');
+//   });
+//   // end combo tags click
+//   $('input#project_organization_id').change(function(){
+//     project_id = $(this).val();
+//     update_project_intervention_id();
+//   });
 
   // END SITES COMBO
 
    // Project Management
-   $('#project_implementer_ids').chosen({
-     width: 420
-   });
-   $('#project_partner_ids').chosen({
-     width: 420
-   });
-  $('#project_budget_currency').chosen({
-    width: 272
-  });
-  $('#project_tag_ids').chosen({
-     width: 420
-   });
-  $('#donation_donor_id').chosen({
-      width: 385
-  });
+//    $('#project_implementer_ids').chosen({
+//      width: 420
+//    });
+//    $('#project_partner_ids').chosen({
+//      width: 420
+//    });
+//   $('#project_budget_currency').chosen({
+//     width: 272
+//   });
+     $("#project_budget_currency").select2();
+//   $('#project_tag_ids').chosen({
+//      width: 420
+//    });
+     $("#project_tag_ids").select2({
+         placeholder: 'Add Tag(s)',
+         allowClear: true
+    });
+//   $('#donation_donor_id').chosen({
+//       width: 385
+//   });
+     $("#donation_donor_id").select2({
+         data: organizations,
+         placeholder: 'Choose an Organization',
+         allowClear: true
+    });
+//   $('#project_sector_ids').chosen({
+//       width: 420
+//   });
+     $("#project_sector_ids").select2();
 
   // PRIME AWARDEE click
-  $('#project_prime_awardee_id').chosen({
-      width: $("#project_prime_awardee_id").parent('div').width()
-  });
+//   $('#project_prime_awardee_id').chosen({
+//       width: $("#project_prime_awardee_id").parent('div').width()
+//   });
   /*
-  $('div.prime_awardee_combo').children('span.combo_large').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    $('div.field_info div.field_text').each(function(i,ele){
-      $(ele).closest('label').removeAttr('style');
-      $(ele).fadeOut('fast');
-    });
-
-    if ($(this).attr('id') == 'hidden'){
-      $('div.prime_awardee_combo').find('ul.prime_awardee_combo_content').css('display','inline');
-      $(this).addClass('displayed');
-      $(this).attr('id','visible');
-
-      resetCombo($('div.prime_awardee_combo'));
-    }else{
-      $('div.prime_awardee_combo').find('ul.prime_awardee_combo_content').css('display','none');
-      $(this).attr('id','hidden');
-      $(this).removeClass('displayed');
-    }
-
-    $(document).click(function(event) {
-      if ((!$(event.target).closest('ul.prime_awardee_combo_content').length)&&(!$(event.target).closest('.scroll_pane').length)) {
-        $('div.prime_awardee_combo').find('ul.prime_awardee_combo_content').css('display','none');
-        $('div.prime_awardee_combo').children('span.combo_large').attr('id','hidden');
-        $('div.prime_awardee_combo').children('span.combo_large').removeClass('displayed');
-      };
-    });
-  });
-
-  // substring(0,10)+'...'
-
-  $('ul.prime_awardee_combo_content').find('li.element').click(function(ev){
-    var id = $(this).attr('id');
-    var name = $(this).children('p.project_name').text();
-    id = id.substring(prime_id,id.length);
-
-    // id substring
-    $('input#project_prime_awardee_id').val(id);
-
-    organization_id = 'XXXX';
-    if (organizations_ids[id] && organizations_ids[id] != '') {
-      organization_id = organizations_ids[id];
-    }
-
-    update_project_intervention_id();
-
-    $('div.prime_awardee_combo').find('a.organization').text(name);
-    $('div.prime_awardee_combo').find('ul.prime_awardee_combo_content').css('display','none');
-    $('div.prime_awardee_combo').children('span.combo_large').attr('id','hidden');
-    $('div.prime_awardee_combo').children('span.combo_large').removeClass('displayed');
-  });*/
-
-
-  /************** CLUSTERS ************************** */
-//   $('span.combo_cluster_options').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-// 
-//     // Check if clicks in jscrollpane
-//     if (
-//       $(ev.target).hasClass('jspTrack') ||
-//       $(ev.target).hasClass('jspDrag')
-//     ) {
-//       return false;
-//     }
-// 
-//     if (!$(this).hasClass('clicked')){
-// 
-//       // THIS IS A IE HACK
-//       $(this).css('position','relative');
-// 
-//       $(this).addClass('clicked');
-//       resetCombo($('span.combo_cluster_options'));
-//     }else {
-//       $(this).removeClass('clicked');
-//       $(this).css('position','static');
-//     }
-// 
-//     $(document).click(function(event) {
-//       if ((!$(event.target).closest('span.combo_cluster_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
-//         $('span.combo_cluster_options.clicked').removeClass('clicked');
-//         $('span.combo_cluster_options').css('position','static');
-//       };
-//     });
-//   });
-// 
-//   // IF WE ADD SOME CLUSTER
-//   $('span.combo_cluster_options').find('ul.options li').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-//     $('span.combo_cluster_options').children('p').text($(this).children('a').text());
-//     var id = $(this).children('a').attr('id');
-//     id = id.substring(clusters_id,id.length);
-//     $('span.combo_cluster_options').children('p').attr('id','clusterToAdd_'+id);
-//     $('span.combo_cluster_options.clicked').removeClass('clicked');
-// 
-//   });
-// 
-//   // CLICK ON ADD CLUSTER
-//   $('a#add_cluster_bttn').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-// 
-//     var id = $('span.combo_cluster_options').children('p').attr('id');
-//     id = id.substring(clusterToAdd,id.length);
-// 
-//     var notAdded = false;
-//     notAdded = checkElementAdded($('ul.clusters'),id);
-// 
-//     // If we have some element (id=0 is a simple control to test it)
-//     if ((id != 0)&&(!notAdded)){
-//       var text = $('span.combo_cluster_options').children('p').text();
-// 
-//       var htmlToAdd = '<li id="cluster_'+id+'"><p>'+text+'</p><input id="'+id+'"type="checkbox" name="project[cluster_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
-// 
-//       $('ul.clusters').append(htmlToAdd);
-//       $('span.combo_cluster_options').children('p').text('Select more clusters');
-//       $('span.combo_cluster_options').children('p').attr('id','clusterToAdd_0');
-//     }
-//     $('div.block div.med div.left').resize();
-//   });
-// 
-//   // CLICK ON REMOVE CLUSTER
-//   $('ul.clusters').find('a.remove_this').live('click',function(ev){
-//     $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
-//     $(this).parent().remove();
-//     $('div.block div.med div.left').resize();
-//   });
-
-
-  /************** SECTORS ************************** */
-//   $('span#sector').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-// 
-//     // Check if clicks in jscrollpane
-//     if (
-//       $(ev.target).hasClass('jspTrack') ||
-//       $(ev.target).hasClass('jspDrag')
-//     ) {
-//       return false;
-//     }
-// 
-//     if (!$(this).hasClass('clicked')){
-//       $(this).css('position','relative');
-//       $(this).addClass('clicked');
-//       resetCombo($('span#sector'));
-//     }else {
-//       $(this).removeClass('clicked');
-//       //$(this).css('position','static');
-//     }
-// 
-//     $(document).click(function(event) {
-//       if ((!$(event.target).closest('span.combo_sector_options').length)&&(!$(event.target).closest('.scroll_pane').length)) {
-//         $('span.combo_sector_options.clicked').removeClass('clicked');
-//         // $('span#sector').css('position','static');
-//       };
-//     });
-//   });
-// 
-//   // IF WE ADD SOME SECTOR
-//   $('span#sector').find('ul.options li').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-//     $('span#sector').children('p').text($(this).children('a').text());
-//     var id = $(this).children('a').attr('id');
-// 
-//     id = id.substring(sectors_id,id.length);
-//     $('span#sector').children('p').attr('id','sectorToAdd_'+id);
-//     $('span#sector.clicked').removeClass('clicked');
-//   });
-// 
-//   // CLICK ON ADD SECTOR
-//   $('a.add_sector').click(function(ev){
-// 
-//     ev.stopPropagation();
-//     ev.preventDefault();
-// 
-//     var id = $('span#sector').children('p').attr('id');
-//     id = id.substring(sectorToAdd,id.length);
-//     var notAdded = false;
-//     notAdded = checkElementAdded($('ul.sectors'),id);
-// 
-//     // If we have some element (id=0 is a simple control to test it)
-//     if ((id != 0)&&(!notAdded)){
-//       var text = $('span#sector').children('p').text();
-//       var htmlToAdd = '<li id="sector_'+id+'"><p>'+text+'</p><input id="'+id+'"type="checkbox" name="project[sector_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
-// 
-//       $('ul.sectors').append(htmlToAdd);
-//       $('span#sector').children('p').text('Select more sectors');
-//       $('span#sector').children('p').attr('id','sectorToAdd_0');
-//     }
-//     $('div.block div.med div.left').resize();
-//   });
-// 
-//   // CLICK ON REMOVE SECTOR
-//   $('ul.sectors').find('a.remove_this').live('click',function(ev){
-//     $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
-//     $(this).parent().remove();
-//     $('div.block div.med div.left').resize();
-//   });
-
-  
-  $('#project_sector_ids').chosen({
-      width: $('#project_sector_ids').parent('div').width()
-    });
-  
-  /************** SUBSECTORS ************************** */
-//   $('span#subsector').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-// 
-//     if (!$(this).hasClass('clicked')){
-//       $(this).addClass('clicked');
-//     }else {
-//       $(this).removeClass('clicked');
-//     }
-// 
-//     $(document).click(function(event) {
-//       if (!$(event.target).closest('span#subsector').length) {
-//         $('span#subsector.clicked').removeClass('clicked');
-//       };
-//     });
-//   });
-// 
-//   // IF WE ADD SOME SECTOR
-//   $('span#subsector').find('ul.options li').click(function(ev){
-//     ev.stopPropagation();
-//     ev.preventDefault();
-//     $('span#subsector').children('p').text($(this).children('a').text());
-//     $('span#subsector').children('p').attr('id',$(this).children('a').attr('id'));
-//     $('span#subsector.clicked').removeClass('clicked');
-//     $('div.block div.med div.left').resize();
-//   });
-
-  // CLICK ON ADD SECTOR
-  // $('a.add_sector').click(function(ev){
-  //
-  //   ev.stopPropagation();
-  //   ev.preventDefault();
-  //
-  //   var id = $('span#sector').children('p').attr('id');
-  //
-  //   // If we have some element (id=0 is a simple control to test it)
-  //   if (id != 0){
-  //     var text = $('span#sector').children('p').text();
-  //     var htmlToAdd = '<li id="sector_'+id+'">'+text+'<input id="'+id+'"type="checkbox" name="project[sector_ids][]" value="'+id+'" checked="true"" /><a id="'+id+'" class="remove_this close"></a></li>';
-  //
-  //     $('ul.sectors').append(htmlToAdd);
-  //     $('span#sector').children('p').text('Select more sectors');
-  //     $('span#sector').children('p').attr('id','0');
-  //   }
-  //         });
-
-  // CLICK ON REMOVE SECTOR
-  // $('ul.sectors').find('a.remove_this').live('click',function(ev){
-  //   $(this).parent().children('input#' + $(this).attr('id') +'').attr('checked',false);
-  //   $(this).parent().remove();
-  // });
+ 
 
   /************** SITE PAGE  ************************** */
 
@@ -791,6 +551,30 @@ $(document).ready(function(ev){
   if (typeof floatingSubmit == 'function') {
     floatingSubmit($('form .submit'), $('div.main_layout div.block div.med div.right div.delete'));
   }
+  
+    $("#project_primary_organization_id").select2({
+        data: reporting_organizations,
+        placeholder: 'Select an Organization',
+        allowClear: false
+    });
+    $("#project_partner_ids").select2({
+        data: organizations,
+        placeholder: 'Add Partner(s)',
+        allowClear: true
+    });
+    $("#project_prime_awardee_id").select2({
+        data: organizations,
+        placeholder: 'Select an Organization',
+        allowClear: true
+    });
+    
+//   $('span.combo_date:not(.disabled)').dateCombos();
+
+  $('.chzn-container').click(function(ev){
+    ev.stopPropagation();
+    ev.preventDefault();
+  });
+
 
 });
 
@@ -818,14 +602,23 @@ function hideCountryCombo(){
     $('div.newList_content').find('ul').css('visibility','hidden');
   });
 }
+function updateCountryIsoCode(country_id) {
+  country_iso_codes.push(countries_iso_codes[country_id]);
+//   update_project_intervention_id();
+}
 
-// AUTOCOMPLETE TAGS
-$(function() {
-  function split( val ) {
-    return val.split( /,\s*/ );
-  }
+function removeCountryIsoCode(country_id) {
+  var iso_code = countries_iso_codes[country_id];
+  country_iso_codes.splice(country_iso_codes.indexOf(iso_code), 1)
+//   update_project_intervention_id();
+}
 
-
+// AUTOCOMPLETE
+// $(function() {
+//     
+//     function split( val ) {
+//         return val.split( /,\s*/ );
+//     }
 //   if ($('#project_tags').length > 0){
 //     var custom_url =  '/admin/tags?term=';
 // 
@@ -950,32 +743,5 @@ $(function() {
 //       }
 //     });
 //   }
-
-  $('span.combo_date:not(.disabled)').dateCombos();
-
-  $('.chzn-container').click(function(ev){
-    ev.stopPropagation();
-    ev.preventDefault();
-  });
-
-});
-
-function update_project_intervention_id(organization_id) {
-  var project_intervention_id = organization_id + '-' +
-                                (country_iso_codes.sort()[0] || 'XX') + '-' +
-                                current_year_last_digits + '-' +
-                                project_id;
-
-  $('input#project_intervention_id.auto').val(project_intervention_id);
-}
-
-function updateCountryIsoCode(country_id) {
-  country_iso_codes.push(countries_iso_codes[country_id]);
-  update_project_intervention_id();
-}
-
-function removeCountryIsoCode(country_id) {
-  var iso_code = countries_iso_codes[country_id];
-  country_iso_codes.splice(country_iso_codes.indexOf(iso_code), 1)
-  update_project_intervention_id();
-}
+   
+// });
