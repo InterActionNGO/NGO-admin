@@ -15,6 +15,9 @@ Iom::Application.routes.draw do
     match '/' => 'admin#index', :as => :admin
     match '/export_projects' => 'admin#export_projects', :as => :export_projects
     match '/export_organizations' => 'admin#export_organizations', :as => :export_organizations
+    get '/iati' => 'iati#index'
+    get '/iati/eligible' => 'iati#eligible'
+    get '/iati/publish' => 'iati#publish'
     # match '/report' => 'reports#index', :as => :report_index
     # match '/report_generate' => 'reports#report', :as => :report_generate
     resources :settings, :only => [:edit, :update]

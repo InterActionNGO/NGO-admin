@@ -97,6 +97,10 @@ class Project < ActiveRecord::Base
   before_validation :set_budget_value_date
   before_save :set_budget_usd
 
+  def self.last_added
+        order('created_at desc').first;
+  end
+  
   def countries
     Geolocation.where(:uid => self.geolocations.map{|g| g.country_uid}).uniq
   end

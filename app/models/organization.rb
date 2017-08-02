@@ -598,7 +598,9 @@ SQL
   end
 
   # IATI
-
+    def self.iati_eligible
+       where(:publishing_to_iati => false).where(:membership_status => 'Current Member') 
+    end
   def self.types
     ["Government", "Other Public Sector", "International NGO", "National NGO", "Regional NGO", "Public Private Partnership", "Multilateral", "Foundation ", "Private Sector", "Academic, Training and Research"]
   end
