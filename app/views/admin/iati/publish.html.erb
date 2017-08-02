@@ -1,0 +1,48 @@
+<style>
+    
+</style>
+<div class="main_layout mod-backoffice-stories">
+    <div class="block">
+        <div class="top"></div>
+        <div class="med ngos_list">
+            
+            <h2>IATI Publisher</h2>
+            <p>IATI Registry last synced with NGO Aid Map @ TIMESTAMP</p>
+            <p>Next sync is scheduled for TIMESTAMP</p>
+            
+            <div id="accordion">
+                <h3>Organizations to to add to registry on next sync <span>(<%=@toPublish.size%></span>)</h3>
+                <ul>
+                    <% @toPublish.each do |o| %>
+                        <li><%= o.name %></li>
+                    <% end %>
+                </ul>
+                <h3>Organizations to remove from registry on next sync <span>(<%=@toUnpublish.size%>)</span></h3>
+                <ul>
+                    <% @toUnpublish.each do |o| %>
+                        <li><%= o.name %></li>
+                    <% end %>
+                </ul>
+                <h3>Organizations to update on registry on next sync <span>(<%=@toUpdate.size%>)</span></h3>
+                <ul>
+                    <% @toUpdate.each do |o| %>
+                        <li><%= o.name %></li>
+                    <% end %>
+                </ul>
+            </div>
+            <button id="iati_sync">Manual Sync Now</button>
+            
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $( function() {
+        $( "#accordion" ).accordion({
+            collapsible: true,
+            active: false,
+            header: 'h3'
+        });
+    } );
+    
+</script>
