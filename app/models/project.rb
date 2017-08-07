@@ -98,7 +98,11 @@ class Project < ActiveRecord::Base
   before_save :set_budget_usd
 
   def self.last_added
-        order('created_at desc').first;
+        order('created_at desc').first
+  end
+  
+  def self.by_last_updated
+        order('updated_at desc')
   end
   
   def countries

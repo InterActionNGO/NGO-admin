@@ -1,7 +1,4 @@
-<style>
-    
-</style>
-<div class="main_layout mod-backoffice-stories">
+<div class="main_layout mod-backoffice-stories mod-backoffice-iati-publisher">
     <div class="block">
         <div class="top"></div>
         <div class="med ngos_list">
@@ -11,22 +8,22 @@
             <p>Next sync is scheduled for TIMESTAMP</p>
             
             <div id="accordion">
-                <h3>Organizations to to add to registry on next sync <span>(<%=@toPublish.size%></span>)</h3>
+                <h3>Organizations to to add to registry on next sync <span class="<%= 'non-zero' if @toPublish.size > 0 %>"><%=@toPublish.size%></span></h3>
                 <ul>
                     <% @toPublish.each do |o| %>
-                        <li><%= o.name %></li>
+                        <li><%= link_to o.name, edit_admin_organization_path(o.id) %></li>
                     <% end %>
                 </ul>
-                <h3>Organizations to remove from registry on next sync <span>(<%=@toUnpublish.size%>)</span></h3>
+                <h3>Organizations to remove from registry on next sync <span class="<%= 'non-zero' if @toUnpublish.size > 0 %>"><%=@toUnpublish.size%></span></h3>
                 <ul>
                     <% @toUnpublish.each do |o| %>
-                        <li><%= o.name %></li>
+                        <li><%= link_to o.name, edit_admin_organization_path(o.id) %></li>
                     <% end %>
                 </ul>
-                <h3>Organizations to update on registry on next sync <span>(<%=@toUpdate.size%>)</span></h3>
+                <h3>Organizations to update on registry on next sync <span class="<%= 'non-zero' if @toUpdate.size > 0 %>"><%=@toUpdate.size%></span></h3>
                 <ul>
                     <% @toUpdate.each do |o| %>
-                        <li><%= o.name %></li>
+                        <li><%= link_to o.name, edit_admin_organization_path(o.id) %></li>
                     <% end %>
                 </ul>
             </div>
@@ -41,7 +38,8 @@
         $( "#accordion" ).accordion({
             collapsible: true,
             active: false,
-            header: 'h3'
+            header: 'h3',
+            heightStyle: 'content'
         });
     } );
     

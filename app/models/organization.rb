@@ -601,6 +601,19 @@ SQL
     def self.iati_eligible
        where(:publishing_to_iati => false).where(:membership_status => 'Current Member') 
     end
+    
+    def self.sync_to_iati_registry(options={})
+        if options.has_key?(:add)
+            puts options[:add]
+        end
+        if options.has_key?(:remove)
+            
+        end
+        if options.has_key?(:update)
+            
+        end
+    end
+    
   def self.types
     ["Government", "Other Public Sector", "International NGO", "National NGO", "Regional NGO", "Public Private Partnership", "Multilateral", "Foundation ", "Private Sector", "Academic, Training and Research"]
   end
