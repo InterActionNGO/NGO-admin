@@ -1,0 +1,28 @@
+<ul class="main-menu">
+    <% if current_user.admin? -%>
+        <li class="<%= (controller_name == 'admin' ? 'selected' : nil) %>"><%= link_to(admin_admin_path) do %>dashboard<% end %></li>
+        <li class="<%= ((controller_name == 'sites' || (@element && @element.is_a?(Site))) ? 'selected' : nil) %>"><%= link_to(admin_sites_path) do %>sites<% end %></li>
+        <li class="<%= (((controller_name == 'projects' && !@organization) || (@element && @element.is_a?(Project)) || (controller_name == 'activities' && action_name == 'show' && @project.present?)) ? 'selected' : nil) %>"><%= link_to(admin_projects_path) do %>projects<% end %></li>
+        <li class="<%= ((@organization || controller_name == 'organizations' || (@element && @element.is_a?(Organization))) ? 'selected' : nil) %>"><%= link_to(admin_organizations_path) do %>organizations<% end %></li>
+        <li class="<%= (controller_name == 'activities' && action_name == 'show' && @project.blank? && @organization.blank? ? 'selected' : nil) %>"><%= link_to(admin_activity_path) do %>activity<% end %></li>
+        
+        <li class="<%= (controller_name == 'layers' && @site.blank? ? 'selected' : nil) %>"><%= link_to(admin_layers_path) do %>layers<% end %></li>
+        
+        <li class="<%= (controller_name == 'tags' && @site.blank? ? 'selected' : nil) %>">
+        <%= link_to('tags', admin_tags_path) %>
+        </li>
+        <li class="<%= (controller_name == 'stories' && @site.blank? ? 'selected' : nil) %>">
+        <%= link_to('stories', admin_stories_path) %>
+        </li>
+        <li class="<%= (controller_name == 'geolocations' && @site.blank? ? 'selected' : nil) %>">
+            <%= link_to('geolocations', admin_geolocations_path) %>
+        </li>
+        <li class="<%= (controller_name == 'iati' && @site.blank? ? 'selected' : nil) %>">
+            <%= link_to('iati', admin_iati_path) %>
+        </li>
+    <% else -%>
+        <li class="<%= (controller_name == 'admin' ? 'selected' : nil) %>"><%= link_to(admin_admin_path) do %>dashboard<% end %></li>
+        <li class="<%= (((controller_name == 'projects' && !@organization) || (@element && @element.is_a?(Project))) ? 'selected' : nil) %>"><%= link_to(admin_projects_path) do %>Your projects<% end %></li>
+        <li class="<%= ((@organization || controller_name == 'organizations' || (@element && @element.is_a?(Organization))) ? 'selected' : nil) %>"><%= link_to(edit_admin_organization_path(current_user.organization)) do %>Your organization<% end %></li>
+    <% end -%>
+</ul>

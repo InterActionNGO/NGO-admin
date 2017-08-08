@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>IOM - Administrator</title>
-    <%= stylesheet_link_tag 'backoffice/jscroll_original.css', 'backoffice/chosen.css', 'backoffice/plugins/fineuploader-3.3.0.css', 'backoffice/jquery-ui-1.7.2.custom.css', 'backoffice/layout.css', 'backoffice/smbtc-layout.css', 'backoffice.css', 'backoffice/formtastic.css', 'backoffice/select2.min.css' %>
-    <%= javascript_include_tag 'backoffice/jquery-original.min.js', 'backoffice/jquery.ui.core.js', 'backoffice/jquery.ui.widget.js', 'backoffice/jquery.ui.position.js', 'backoffice/jquery.ui.autocomplete.js', 'backoffice/rails.js', 'backoffice/plugins/select2-full.min.js', 'backoffice/plugins/jquery.mousewheel.original.js','backoffice/plugins/jquery.jscrollpane.original.js', 'backoffice/plugins/jquery.livequery.min.js', 'backoffice/plugins/jquery.stylish-select.js', 'backoffice/plugins/jHtmlArea-0.7.0.min.js', 'backoffice/plugins/fineuploader-3.3.0.js','backoffice/plugins/chosen/chosen-CUSTOMIZED.jquery.js', 'backoffice/plugins/date_combos.js' %>
+    <%= stylesheet_link_tag 'backoffice/layout.css', 'backoffice/smbtc-layout.css', 'backoffice.css', 'backoffice/jquery.ui.min.css' %>
+
+    <%= javascript_include_tag 'backoffice/jquery.min.js', 'backoffice/jquery.ui.js', 'backoffice/iati.js' %>
 
     <%= csrf_meta_tag %>
 
@@ -29,7 +30,7 @@
           </ul>
 
           <%= render :partial => 'admin/shared/main-menu' %>
-          
+
         </div> <!--  mod-backoffice-menu -->
     <% end %>
 
@@ -37,6 +38,11 @@
     <% if flash[:notice] -%>
       <div class="flash">
         <div class="notice"><%= raw flash[:notice] %></div>
+      </div>
+    <% end -%>
+    <% if flash[:error] -%>
+      <div class="flash">
+        <div class="notice"><%= raw flash[:error] %></div>
       </div>
     <% end -%>
 
