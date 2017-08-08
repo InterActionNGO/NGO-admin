@@ -22,7 +22,7 @@ every 1.day, :at => '8:00 am' do
   rake "iom:visits:update"
 end
 
-every 1.day :at => '6:00 am' do
+every 1.day :at => '8:00 pm' do
    rake "iom:iati:sync" 
 end
 
