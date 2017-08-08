@@ -1,22 +1,15 @@
-<style>
-    .section-link {
-        border-bottom: 1px solid #eaeaea;
-        padding-bottom: 1em;
-        margin-top: 1em;
-    }
-</style>
-<div class="main_layout mod-backoffice-stories">
+<div class="main_layout mod-backoffice-iati-publisher">
     <div class="block">
         <div class="top"></div>
         <div class="med ngos_list">
             
             <div class="section-link">
-                <h2><%= link_to 'Publisher Info', 'profile' %></h2>
+                <h2><%= link_to 'Publisher Info', '#', :class => 'disabled' %></h2>
                 <p>View data linked to your publisher profile on the IATI Registry</p>
             </div>
             
             <div class="section-link">
-                <h2><%= link_to 'Revision History', 'history' %></h2>
+                <h2><%= link_to 'Revision History', '#', :class=> 'disabled' %></h2>
                 <p>History of your publisher's activity on the IATI Registry</p>
             </div>
             
@@ -28,8 +21,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-
-    
-</script>

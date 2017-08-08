@@ -4,8 +4,7 @@
         <div class="med ngos_list">
             
             <h2>IATI Publisher</h2>
-            <p>IATI Registry last synced with NGO Aid Map @ TIMESTAMP</p>
-            <p>Next sync is scheduled for TIMESTAMP</p>
+            <p>Next sync is scheduled for 1am EST</p>
             
             <div id="accordion">
                 <h3>Organizations to to add to registry on next sync <span class="<%= 'non-zero' if @toPublish.size > 0 %>"><%=@toPublish.size%></span></h3>
@@ -27,20 +26,11 @@
                     <% end %>
                 </ul>
             </div>
-            <button id="iati_sync">Manual Sync Now</button>
+            <%= button_to 'Manual Sync Now', '/admin/iati/sync' %>
+            <% if action_name.eql?('sync') %>
+                <p class="sync-results"><%= @output.html_safe %></p>
+            <% end %>
             
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $( function() {
-        $( "#accordion" ).accordion({
-            collapsible: true,
-            active: false,
-            header: 'h3',
-            heightStyle: 'content'
-        });
-    } );
-    
-</script>
