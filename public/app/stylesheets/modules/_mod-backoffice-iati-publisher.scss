@@ -1,0 +1,60 @@
+.mod-backoffice-iati-publisher {
+    
+    p {
+        margin-bottom: 1em;
+    }
+    button,
+    input[type="submit"]{
+        background: $color-8;
+        padding: 1em;
+        font-weight: bold;
+        color: $color-0;
+        margin: 1em auto;
+        cursor: pointer;
+        &:hover,
+        &:focus,
+        &:active {
+            background: darken($color-8, 5%);
+            background-image: linear-gradient($color-8, darken($color-8, 5%));
+        }
+    }
+    h3 {
+        &.ui-accordion-header {
+            background: $color-4;
+            padding: 1em 2em;
+            cursor: pointer;
+            color: $color-5;
+            & > span {
+                float: right;
+                &.non-zero {
+                    color: $color-2;
+                }
+            }
+        }
+    }
+    ul {
+        background: $color-4;
+        li {
+            padding: 0.5em;
+            background: $color-0;
+            margin: 3px 0;
+
+        }
+    }
+    .sync-results {
+        border: 2px solid lighten($color-8, 10%);
+        padding: 1em;
+        font-size: 1.2em;
+        line-height: 1.4;
+
+    }
+    .section-link {
+        border-bottom: 1px solid #eaeaea;
+        padding-bottom: 1em;
+        margin-top: 1em;
+    }
+    .disabled {
+        color: $color-5;
+    }
+
+}

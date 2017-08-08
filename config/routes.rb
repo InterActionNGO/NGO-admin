@@ -15,6 +15,10 @@ Iom::Application.routes.draw do
     match '/' => 'admin#index', :as => :admin
     match '/export_projects' => 'admin#export_projects', :as => :export_projects
     match '/export_organizations' => 'admin#export_organizations', :as => :export_organizations
+    get '/iati' => 'iati#index'
+    get '/iati/published' => 'iati#published_organizations', :as => 'iati_published_organizations'
+    get '/iati/publisher' => 'iati#publisher', :as => 'iati_publisher'
+    post '/iati/sync' => 'iati#sync', :as => 'iati_sync'
     # match '/report' => 'reports#index', :as => :report_index
     # match '/report_generate' => 'reports#report', :as => :report_generate
     resources :settings, :only => [:edit, :update]
@@ -73,6 +77,7 @@ Iom::Application.routes.draw do
   end
 
   if Rails.env.development?
+    mount IatiMailer::Preview => 'mail_view_iati'
     mount AlertsMailer::Preview => 'mail_view'
   end
 end

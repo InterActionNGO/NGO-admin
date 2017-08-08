@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-family: Arial;
+        font-size: 15px;
+        color: #666666;
+        width: 800px;
+        padding: 20px;
+      }
+
+      #content {
+        padding-bottom: 15px;
+        border-bottom: 1px solid #cad0da;
+      }
+
+      h1 {
+        font-size: 27px;
+        color: black;
+        margin-bottom: 5px;
+      }
+
+      a {
+        color: #E93E3F;
+        text-decoration: none;
+      }
+
+      h2 {
+        font-size: 17px;
+        color: #000;
+        margin-top:1.5em;
+        margin-bottom: 1em;
+      }
+      li {
+        margin-left: 2em;
+        }
+      #footer {
+        font-size: 13px;
+        text-align: right;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <h1>IATI Registry Sync Report</h1>
+
+      <h2>Additions</h2>
+      <p><%= @result[:add][:total] %> found to add to the registry.<br><strong>Done, with <%= pluralize(@result[:add][:errors].size, 'error') %>.</p>
+      <% @result[:add][:errors].each do |e|%>
+        <li><%= e.to_s %></li>
+      <% end %>
+      
+      <h2>Deletions</h2>
+      <p><%= @result[:remove][:total] %> found to remove from the registry.<br><strong>Done, with <%= pluralize(@result[:remove][:errors].size, 'error') %>.</p>
+      <% @result[:remove][:errors].each do |e|%>
+        <li><%= e.to_s %></li>
+      <% end %>
+      
+      <h2>Updates</h2>
+      <p><%= @result[:update][:total] %> found to update on the registry.<br><strong>Done, with <%= pluralize(@result[:update][:errors].size, 'error') %>.</p>
+      <% @result[:update][:errors].each do |e|%>
+        <li><%= e.body %></li>
+      <% end %>
+
+    </div>
+    <p id="footer">
+      <a href="http://office.ngoaidmap.org/admin">http://office.ngoaidmap.org/admin</a>
+    </p>
+  </body>
+</html>
+
