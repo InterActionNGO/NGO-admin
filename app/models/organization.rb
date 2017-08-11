@@ -148,41 +148,41 @@ class Organization < ActiveRecord::Base
     atts[value[:site_id].to_s] = value[:organization_values]
 
     # Funding values set to float
-    if atts[value[:site_id].to_s][:usg_funding]
-      if atts[value[:site_id].to_s][:usg_funding].is_a?(String)
-        atts[value[:site_id].to_s][:usg_funding] = atts[value[:site_id].to_s][:usg_funding].delete(',').to_f
-      end
-    else
-      atts[value[:site_id].to_s][:usg_funding] = 0.0
-    end
-    if atts[value[:site_id].to_s][:private_funding]
-      if atts[value[:site_id].to_s][:private_funding].is_a?(String)
-        atts[value[:site_id].to_s][:private_funding] = atts[value[:site_id].to_s][:private_funding].delete(',').to_f
-      end
-    else
-      atts[value[:site_id].to_s][:private_funding] = 0.0
-    end
-    if atts[value[:site_id].to_s][:other_funding]
-      if atts[value[:site_id].to_s][:other_funding].is_a?(String)
-        atts[value[:site_id].to_s][:other_funding] = atts[value[:site_id].to_s][:other_funding].delete(',').to_f
-      end
-    else
-      atts[value[:site_id].to_s][:other_funding] = 0.0
-    end
+#     if atts[value[:site_id].to_s][:usg_funding]
+#       if atts[value[:site_id].to_s][:usg_funding].is_a?(String)
+#         atts[value[:site_id].to_s][:usg_funding] = atts[value[:site_id].to_s][:usg_funding].delete(',').to_f
+#       end
+#     else
+#       atts[value[:site_id].to_s][:usg_funding] = 0.0
+#     end
+#     if atts[value[:site_id].to_s][:private_funding]
+#       if atts[value[:site_id].to_s][:private_funding].is_a?(String)
+#         atts[value[:site_id].to_s][:private_funding] = atts[value[:site_id].to_s][:private_funding].delete(',').to_f
+#       end
+#     else
+#       atts[value[:site_id].to_s][:private_funding] = 0.0
+#     end
+#     if atts[value[:site_id].to_s][:other_funding]
+#       if atts[value[:site_id].to_s][:other_funding].is_a?(String)
+#         atts[value[:site_id].to_s][:other_funding] = atts[value[:site_id].to_s][:other_funding].delete(',').to_f
+#       end
+#     else
+#       atts[value[:site_id].to_s][:other_funding] = 0.0
+#     end
 
     update_attribute(:site_specific_information, atts)
   end
 
-  def national_staff=(ammount)
-    if ammount.blank?
-      write_attribute(:national_staff, 0)
-    else
-      case ammount
-        when String then write_attribute(:national_staff, ammount.delete(',').to_f)
-        else             write_attribute(:national_staff, ammount)
-      end
-    end
-  end
+#   def national_staff=(ammount)
+#     if ammount.blank?
+#       write_attribute(:national_staff, 0)
+#     else
+#       case ammount
+#         when String then write_attribute(:national_staff, ammount.delete(',').to_f)
+#         else             write_attribute(:national_staff, ammount)
+#       end
+#     end
+#   end
 
   def donors_count
     @donors_count ||= donations.map{ |d| d.donor_id }.uniq.size
@@ -396,12 +396,12 @@ SQL
   end
 
   def budget(site = nil)
-    if site
-      atts_for_site = attributes_for_site(site)
-      return (atts_for_site[:usg_funding].to_f || 0) + (atts_for_site[:private_funding].to_f || 0) + (atts_for_site[:other_funding].to_f || 0)
-    else
+#     if site
+#       atts_for_site = attributes_for_site(site)
+#       return (atts_for_site[:usg_funding].to_f || 0) + (atts_for_site[:private_funding].to_f || 0) + (atts_for_site[:other_funding].to_f || 0)
+#     else
       self[:budget]
-    end
+#     end
   end
 
   def budget=(ammount)

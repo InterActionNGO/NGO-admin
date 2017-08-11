@@ -24,15 +24,6 @@
         <%= f.text_field :website, :class => "short" %>
       </div>
 
-      <div class="short_field">
-        <%= f.label :national_staff %>
-        <%= f.text_field :national_staff, :class => "short people" %>
-      </div>
-
-      <div class="short_field last">
-        <%= f.label :international_staff %>
-        <%= f.text_field :international_staff, :class=>"short people" %>
-      </div>
     </div>
     <div class="bottom"></div>
   </div>
@@ -44,20 +35,6 @@
         <h3 class="museo_sans">FUNDING</h3>
         <p class="paylock close"><a href="#">Click to edit the specific fields</a></p>
       </span>
-      <div class="short_field">
-        <%= f.label :private_funding %>
-        <%= f.text_field :private_funding, :value => number_with_precision(f.object.private_funding, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ','), :class => "short budget" %>
-      </div>
-
-      <div class="short_field">
-        <%= f.label :usg_funding %>
-        <%= f.text_field :usg_funding, :value => number_with_precision(f.object.usg_funding, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ','), :class => "short budget" %>
-      </div>
-
-      <div class="short_field">
-        <%= f.label :other_funding %>
-        <%= f.text_field :other_funding, :value => number_with_precision(f.object.other_funding, :precision => 2, :strip_insignificant_zeros => true, :delimiter => ','), :class => "short budget" %>
-      </div>
     </div>
     <div class="bottom"></div>
   </div>
