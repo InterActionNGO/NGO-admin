@@ -95,7 +95,7 @@ class Project < ActiveRecord::Base
   before_validation :strip_urls
   before_validation :nullify_budget
   before_validation :set_budget_value_date
-  before_save :set_budget_usd
+  before_save :set_budget_usd, :set_global_geolocation
 
   def self.last_added
         order('created_at desc').first
@@ -132,6 +132,12 @@ class Project < ActiveRecord::Base
           self.budget_usd = budget_coverted_to_usd
         end
       end
+    end
+  end
+
+  def set_global_geolocation
+    if geographical_scope.eql?('global')
+      self.geolocations << Geolocation.where(:uid => 'global')
     end
   end
 
