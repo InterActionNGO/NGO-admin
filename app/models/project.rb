@@ -137,7 +137,7 @@ class Project < ActiveRecord::Base
 
   def set_global_geolocation
     if geographical_scope.eql?('global')
-      self.geolocations << Geolocation.where(:uid => 'global')
+      self.geolocations.clear << Geolocation.where(:uid => 'global')
     end
   end
 
