@@ -1,0 +1,83 @@
+<div class="main_layout">
+  <div class="block first donations_project mod-backoffice-projects">
+    <div class="top"></div>
+
+    <div class="med">
+      <div class="left">
+        <h2><%= @project.name %></h2>
+
+        <p class="by">
+          <% if @project.primary_organization %>
+            by
+            <%= link_to @project.primary_organization.name,
+              [:edit, :admin, @project.primary_organization] %> /
+          <% end %>
+
+          <% if @project.countries.any? %>
+            <%= @project.countries.first.name %>
+          <% end %>
+        </p>
+
+        <table style="width: 100%">
+          <tr>
+            <th>Type</th>
+            <th>Vocabulary</th>
+            <th></th>
+          </tr>
+
+          <% @project.humanitarian_scopes.each do |humanitarian_scope| %>
+            <tr>
+              <td>
+                <%= humanitarian_scope.humanitarian_scope_type.name %>
+              </td>
+
+              <td>
+                <%= humanitarian_scope.humanitarian_scope_vocabulary.name %>
+              </td>
+
+              <td>
+                <%= link_to "Delete", [:admin, @project, humanitarian_scope],
+                  :method => :delete %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+
+        <%= form_for [:admin, @project, @humanitarian_scope] do |f| %>
+          <% if @humanitarian_scope.errors.any? %>
+            <ul style="color: red">
+              <% @humanitarian_scope.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <p class="field">
+            <%= f.label :humanitarian_scope_type_id %><br>
+            <%= f.select :humanitarian_scope_type_id,
+              type_options, :class => 'input-med' %>
+          </p>
+
+          <p class="field">
+            <%= f.label :humanitarian_scope_vocabulary_id %><br>
+            <%= f.select :humanitarian_scope_vocabulary_id,
+              vocabulary_options, :class => 'input-med' %>
+          </p>
+
+          <p class="field">
+            <%= f.label :narrative %><br>
+            <%= f.text_area :narrative, :style => "border: 1px solid black" %>
+          </p>
+
+          <%= f.submit "Add humanitarian scope" %>
+        <% end %>
+      </div>
+
+      <div class="right menu">
+        <%= render "admin/projects/sidebar" %>
+      </div>
+    </div>
+
+    <div class="bottom"></div>
+  </div>
+</div>
