@@ -110,7 +110,7 @@ describe Admin::HumanitarianScopesController do
       end
 
       it "includes error message" do
-        response.body.should =~ /Humanitarian scope vocabulary can.*t be blank/
+        response.body.should =~ /can.*t be blank/
       end
     end
 
