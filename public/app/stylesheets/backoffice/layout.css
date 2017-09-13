@@ -4123,7 +4123,7 @@ div.block.project-humanitarian-scopes div.med div.left {
 
 div.block.project-humanitarian-scopes table.humanitarian-scopes {
   border-top: 1px solid #ccc;
-  margin: 120px 0 20px;
+  margin: 20px 0;
   width: 100%;
 }
 
@@ -4147,6 +4147,7 @@ div.block.project-humanitarian-scopes textarea,
 div.block.project-humanitarian-scopes input[type="text"] {
   border: 1px solid rgb(166, 166, 166);
   border-radius: 3px;
+  padding: 3px;
 }
 
 
