@@ -76,5 +76,18 @@
             margin: 1em 0;
         }
     }
-    
+    .field.humanitarian {
+       margin-top: 20px;
+
+      input {
+          visibility: visible !important;
+          float: none !important;
+          width: auto !important;
+      }
+
+      label {
+          float: none !important;
+          margin-left: 0 !important;
+      }
+    }
 }
