@@ -41,15 +41,4 @@ class Admin::HumanitarianScopesController < Admin::AdminController
         :notice => "Project must be flagged humanitarian before creating scope"
     end
   end
-
-  def type_options
-    HumanitarianScopeType.order(:name).map { |t| [t.name, t.id] }.unshift("")
-  end
-  helper_method :type_options
-
-  def vocabulary_options
-    HumanitarianScopeVocabulary.order(:name).map { |t| [t.name, t.id] }.unshift("")
-  end
-  helper_method :vocabulary_options
-
 end
