@@ -18,6 +18,8 @@
           <% end %>
         </p>
 
+        <div style="clear: both"></div>
+
         <table class="humanitarian-scopes">
           <tr>
             <th>Type</th>
@@ -28,13 +30,11 @@
           <% @project.humanitarian_scopes.each do |humanitarian_scope| %>
             <tr>
               <td>
-                <%= humanitarian_scope.humanitarian_scope_type.name %>
-                (code <%= humanitarian_scope.humanitarian_scope_type.code %>)
+                <%= humanitarian_scope.humanitarian_scope_type %>
               </td>
 
               <td>
-                <%= humanitarian_scope.humanitarian_scope_vocabulary.name %>
-                (code <%= humanitarian_scope.humanitarian_scope_vocabulary.code %>)
+                <%= humanitarian_scope.humanitarian_scope_vocabulary %>
               </td>
 
               <td>
@@ -48,11 +48,11 @@
 
         <%= semantic_form_for [:admin, @project, @humanitarian_scope] do |f| %>
           <p class="field">
-            <%= f.input :humanitarian_scope_type %>
+            <%= f.input :humanitarian_scope_type, :label => "Type" %>
           </p>
 
           <p class="field">
-            <%= f.input :humanitarian_scope_vocabulary %>
+            <%= f.input :humanitarian_scope_vocabulary, :label => "Vocabulary" %>
           </p>
 
           <p class="field">
