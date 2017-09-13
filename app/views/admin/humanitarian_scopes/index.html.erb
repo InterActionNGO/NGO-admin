@@ -56,6 +56,15 @@
           </p>
 
           <p class="field">
+            <%= f.input :code %>
+          </p>
+
+          <p class="field">
+            <%= f.input :vocabulary_uri,
+              :hint => "Optional unless vocabulary is 'Reporting Organisation'" %>
+          </p>
+
+          <p class="field">
             <%= f.input :narrative, :as => :text, :input_html => { :rows => 5 } %>
           </p>
 

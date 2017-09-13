@@ -4143,7 +4143,8 @@ div.block.project-humanitarian-scopes input[type="submit"] {
   padding: 5px 7px;
 }
 
-div.block.project-humanitarian-scopes textarea {
+div.block.project-humanitarian-scopes textarea,
+div.block.project-humanitarian-scopes input[type="text"] {
   border: 1px solid rgb(166, 166, 166);
   border-radius: 3px;
 }

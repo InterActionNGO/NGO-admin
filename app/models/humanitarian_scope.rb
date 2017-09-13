@@ -6,6 +6,13 @@ class HumanitarianScope < ActiveRecord::Base
   validates :project,
             :humanitarian_scope_type,
             :humanitarian_scope_vocabulary,
+            :code,
             :presence => true
-end
 
+  validates :vocabulary_uri, :presence => {
+    :if => lambda do |scope|
+      scope.humanitarian_scope_vocabulary &&
+      scope.humanitarian_scope_vocabulary.url.blank?
+    end
+  }
+end
