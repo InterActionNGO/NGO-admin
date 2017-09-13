@@ -38,11 +38,11 @@ describe Admin::HumanitarianScopesController do
   end
 
   let :vocab1 do
-    HumanitarianScopeVocabulary.create!(:code => "1-2", :name => "Glide")
+    HumanitarianScopeVocabulary.create!(:code => "1-2", :name => "Glide", :url => "#")
   end
 
   let :vocab2 do
-    HumanitarianScopeVocabulary.create!(:code => "2-1", :name => "Humanitarian Plan")
+    HumanitarianScopeVocabulary.create!(:code => "2-1", :name => "Humanitarian Plan", :url => "#")
   end
 
   before do
@@ -54,7 +54,8 @@ describe Admin::HumanitarianScopesController do
 
     project.humanitarian_scopes.create!(
       :humanitarian_scope_type       => type1,
-      :humanitarian_scope_vocabulary => vocab1
+      :humanitarian_scope_vocabulary => vocab1,
+      :code                          => "abc123"
     )
 
     Settings.create
@@ -81,7 +82,8 @@ describe Admin::HumanitarianScopesController do
       before do
         post :create, :project_id => project.id, :humanitarian_scope => {
           :humanitarian_scope_type_id       => type2.id,
-          :humanitarian_scope_vocabulary_id => vocab2.id
+          :humanitarian_scope_vocabulary_id => vocab2.id,
+          :code                             => "abc123"
         }
       end
 
@@ -120,7 +122,8 @@ describe Admin::HumanitarianScopesController do
 
         post :create, :project_id => project.id, :humanitarian_scope => {
           :humanitarian_scope_type_id       => type2.id,
-          :humanitarian_scope_vocabulary_id => vocab2.id
+          :humanitarian_scope_vocabulary_id => vocab2.id,
+          :code                             => "abc123"
         }
       end
 
@@ -135,6 +138,18 @@ describe Admin::HumanitarianScopesController do
   end
 
   context "DELETE #destroy" do
+    before do
+      delete :destroy,
+        :project_id => project.id,
+        :id         => project.humanitarian_scopes.first.id
+    end
 
+    it "responds with redirect" do
+      response.status.should == 302
+    end
+
+    it "deletes the humanitarian scope" do
+      project.humanitarian_scopes.count.should == 0
+    end
   end
 end
