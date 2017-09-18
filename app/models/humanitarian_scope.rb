@@ -1,5 +1,5 @@
 class HumanitarianScope < ActiveRecord::Base
-  belongs_to :project
+  belongs_to :project, :touch => true
   belongs_to :humanitarian_scope_type
   belongs_to :humanitarian_scope_vocabulary
 
