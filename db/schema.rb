@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170815175616) do
+ActiveRecord::Schema.define(:version => 20170911194910) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -164,6 +164,32 @@ ActiveRecord::Schema.define(:version => 20170815175616) do
   create_table "geolocations_projects", :id => false, :force => true do |t|
     t.integer "geolocation_id"
     t.integer "project_id"
+  end
+
+  create_table "humanitarian_scope_types", :force => true do |t|
+    t.string   "code",       :limit => nil, :null => false
+    t.string   "name",       :limit => nil, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  create_table "humanitarian_scope_vocabularies", :force => true do |t|
+    t.string   "code",       :limit => nil, :null => false
+    t.string   "name",       :limit => nil, :null => false
+    t.string   "url",        :limit => nil
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  create_table "humanitarian_scopes", :force => true do |t|
+    t.integer  "project_id",                                      :null => false
+    t.integer  "humanitarian_scope_type_id",                      :null => false
+    t.integer  "humanitarian_scope_vocabulary_id",                :null => false
+    t.string   "vocabulary_uri",                   :limit => nil
+    t.string   "code",                             :limit => nil, :null => false
+    t.string   "narrative",                        :limit => nil
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
   end
 
   create_table "identifiers", :force => true do |t|
@@ -407,6 +433,7 @@ ActiveRecord::Schema.define(:version => 20170815175616) do
     t.integer  "prime_awardee_id"
     t.string   "geographical_scope",                                                                                                 :default => "regional"
     t.decimal  "budget_usd",                                                                          :precision => 13, :scale => 2
+    t.boolean  "humanitarian",                                                                                                       :default => false,         :null => false
   end
 
   create_table "projects_regions", :id => false, :force => true do |t|
