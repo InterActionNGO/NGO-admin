@@ -1,0 +1,82 @@
+<div class="main_layout">
+  <div class="block first project-humanitarian-scopes mod-backoffice-projects">
+    <div class="top"></div>
+
+    <div class="med">
+      <div class="left">
+        <h2><%= @project.name %></h2>
+
+        <p class="by">
+          <% if @project.primary_organization %>
+            by
+            <%= link_to @project.primary_organization.name,
+              [:edit, :admin, @project.primary_organization] %> /
+          <% end %>
+
+          <% if @project.countries.any? %>
+            <%= @project.countries.first.name %>
+          <% end %>
+        </p>
+
+        <div style="clear: both"></div>
+
+        <table class="humanitarian-scopes">
+          <tr>
+            <th>Type</th>
+            <th>Vocabulary</th>
+            <th></th>
+          </tr>
+
+          <% @project.humanitarian_scopes.each do |humanitarian_scope| %>
+            <tr>
+              <td>
+                <%= humanitarian_scope.humanitarian_scope_type %>
+              </td>
+
+              <td>
+                <%= humanitarian_scope.humanitarian_scope_vocabulary %>
+              </td>
+
+              <td>
+                <%= button_to "Delete", [:admin, @project, humanitarian_scope],
+                  :method => :delete,
+                  :confirm => "Are you sure you want to delete this humanitarian scope?" %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+
+        <%= semantic_form_for [:admin, @project, @humanitarian_scope] do |f| %>
+          <p class="field">
+            <%= f.input :humanitarian_scope_type, :label => "Type" %>
+          </p>
+
+          <p class="field">
+            <%= f.input :humanitarian_scope_vocabulary, :label => "Vocabulary" %>
+          </p>
+
+          <p class="field">
+            <%= f.input :code %>
+          </p>
+
+          <p class="field">
+            <%= f.input :vocabulary_uri,
+              :hint => "Optional unless vocabulary is 'Reporting Organisation'" %>
+          </p>
+
+          <p class="field">
+            <%= f.input :narrative, :as => :text, :input_html => { :rows => 5 } %>
+          </p>
+
+          <%= f.submit "Add humanitarian scope" %>
+        <% end %>
+      </div>
+
+      <div class="right menu">
+        <%= render "admin/projects/sidebar" %>
+      </div>
+    </div>
+
+    <div class="bottom"></div>
+  </div>
+</div>

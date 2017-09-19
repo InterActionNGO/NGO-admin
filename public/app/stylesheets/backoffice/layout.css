@@ -4101,6 +4101,56 @@ div.block.donations_project div.bottom {
   height: 15px;
   width: 100%;
   background: url("/app/images/backoffice/backgrounds/bottom_two_columns.png") no-repeat scroll top left !important; }
+
+div.block.project-humanitarian-scopes div.top {
+  float: left;
+  width: 100%;
+  background: url("/app/images/backoffice/backgrounds/top_two_columns.png") no-repeat center 0 !important;
+}
+
+div.block.project-humanitarian-scopes div.med {
+  float: left;
+  width: 880px;
+  padding: 16px 31px 28px;
+  background: url("/app/images/backoffice/backgrounds/middle_two_columns.png") repeat-y center 0 !important;
+}
+
+div.block.project-humanitarian-scopes div.med div.left {
+  float: left;
+  width: 572px;
+  position: relative;
+}
+
+div.block.project-humanitarian-scopes table.humanitarian-scopes {
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+  width: 100%;
+}
+
+div.block.project-humanitarian-scopes table.humanitarian-scopes td,
+div.block.project-humanitarian-scopes table.humanitarian-scopes th {
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+}
+
+div.block.project-humanitarian-scopes table.humanitarian-scopes th {
+  font-weight: bold;
+}
+
+div.block.project-humanitarian-scopes input[type="submit"] {
+  border-radius: 3px;
+  color: #333;
+  padding: 5px 7px;
+}
+
+div.block.project-humanitarian-scopes textarea,
+div.block.project-humanitarian-scopes input[type="text"] {
+  border: 1px solid rgb(166, 166, 166);
+  border-radius: 3px;
+  padding: 3px;
+}
+
+
 div.med.ngos_list h2 a.remove {
   padding: 0 10px 0 0;
   color: #333333;

@@ -57,6 +57,7 @@ Iom::Application.routes.draw do
       get 'donations', :on => :member
       resources :donations, :only => [:create, :destroy]
       resource :activity
+      resources :humanitarian_scopes
     end
     resources :sites do
       get 'customization', :on => :member
