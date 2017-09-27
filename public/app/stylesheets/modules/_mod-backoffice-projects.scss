@@ -52,13 +52,16 @@
         }
     }
     .scroll_pane {
+        height: 300px;
         .jspVerticalBar {
             display: none;
         }
         .jspPane {
-            height: 250px;
+            position: unset;
             width: 267px;
             overflow: auto;
+            background: #fff;
+            height: 100%;
         }
     }
     .new_donation {

@@ -3554,10 +3554,10 @@ div.region_window {
         top: 32px;
         left: 0;
         width: 281px;
-        height: 197px;
+/*         height: 197px; */
         display: inline;
         z-index: 100;
-        background: url("/app/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0;
+/*         background: url("/app/images/backoffice/projects/combos/body_combo_cluster.png") no-repeat 0 0; */
         overflow-x: hidden;
         overflow-y: auto; }
         div.region_window span.region_combo.clicked ul.options li {
