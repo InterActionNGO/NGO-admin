@@ -91,7 +91,8 @@ class Project < ActiveRecord::Base
     #intervention_id.present?
   #end)
 
-  after_create :update_intervention_id
+  after_create :create_identifiers
+  after_update :update_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
   before_validation :strip_urls
@@ -918,29 +919,53 @@ SQL
     save!
   end
 
-  def update_intervention_id
-    
+  def create_identifiers
+      
     interaction = Organization.where(:name => 'InterAction').first
-    app_id = self.identifiers.where(:assigner_org_id => interaction.id)
     publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
     
-    Project.transaction do
-        # Update the intervention id
-        self.intervention_id = [primary_organization.id, id].join('-')
-        save!
-        # update the identifier that holds the intervention id (for backwards compatibility)
-        if app_id.empty?
-            self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
-        else
-            app_id = Identifier.find(app_id.first.id)
-            app_id.identifier = self.intervention_id
-            app_id.save!
+    # backwards compatibility for interaction intervention id
+    self.update_attribute(:intervention_id, [primary_organization.id, id].join('-'))
+    
+    # Add Identifiers for intervention_id and iati id
+    existing = self.identifiers.where(:assigner_org_id => interaction.id)
+    unless existing.empty?
+        existing.each do |i|
+            i.destroy
         end
+    end
+    self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
+    self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => "#{interaction.iati_organizationid}NAM-#{self.intervention_id}" })
+    
+    # Backwards compatibility for org intervention id
+    unless publisher_id.empty?
+       self.organization_id = publisher_id.first.identifier 
+    end
+  end
+  
+  def update_intervention_id
+    
+#     interaction = Organization.where(:name => 'InterAction').first
+#     app_id = self.identifiers.where(:assigner_org_id => interaction.id)
+    publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
+    
+#     Project.transaction do
+        # Update the intervention id
+#         self.intervention_id = [primary_organization.id, id].join('-')
+#         save!
+        # update the identifier that holds the intervention id (for backwards compatibility)
+#         if app_id.empty?
+#             self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
+#         else
+#             app_id = Identifier.find(app_id.first.id)
+#             app_id.identifier = self.intervention_id
+#             app_id.save!
+#         end
         # update the identifier that holds the organization_intervention_id (for backwards compatibility)
         unless publisher_id.empty?
            self.organization_id = publisher_id.first.identifier
         end
-    end
+#     end
     
   end
 

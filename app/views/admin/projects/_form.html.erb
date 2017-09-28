@@ -46,7 +46,7 @@
             <%= f.fields_for :identifiers do |i| %>
                 <tr>
                     <td><%= i.text_field :identifier, :placeholder => 'Add Identifier', :class => 'field-input identifier-id', :readonly => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false %></td>
-                    <td><%= i.collection_select :assigner_org_id, Organization.order(:name), :id, :name, { :include_blank => true, :selected => action_name.eql?('new') ? nil : i.object.identifier.nil? ? f.object.try(:primary_organization).id : i.object.try(:assigner_org_id) }, {:'data-placeholder' => 'Select an Organization', :class => 'field-select', :disabled => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false } %></td>
+                    <td><%= i.collection_select :assigner_org_id, Organization.order(:name).select([:name,:id]), :id, :name, { :include_blank => true }, {:'data-placeholder' => 'Select an Organization', :class => 'field-select', :disabled => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false } %></td>
                     <% unless action_name.eql?('new') %>
                         <td class="remove-identifier-container" title="Remove Identifier">
                             <% unless i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) %>
@@ -813,4 +813,4 @@
     var countries_iso_codes = <%= (@countries_iso_codes || {}).to_json.html_safe %>;
   </script>
 
-  <%= javascript_include_tag "backoffice/project_map.js", "backoffice/project.js", "backoffice/project_region.js" %>
+  <%= javascript_include_tag "backoffice/project.js", "backoffice/project_region.js" %>
