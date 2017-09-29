@@ -66,6 +66,9 @@ class Project < ActiveRecord::Base
   has_many :cached_sites, :class_name => 'Site', :finder_sql => 'select sites.* from sites, projects_sites where projects_sites.project_id = #{id} and projects_sites.site_id = sites.id'
   has_many :humanitarian_scopes
   has_and_belongs_to_many :sites
+  has_many :identifiers, :as => :identifiable, :dependent => :destroy
+  accepts_nested_attributes_for :identifiers, 
+          :allow_destroy => true
 
   scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
   scope :closed, lambda { where("end_date < ?", Date.today.to_s(:db)) }
@@ -90,7 +93,8 @@ class Project < ActiveRecord::Base
     #intervention_id.present?
   #end)
 
-  after_create :generate_intervention_id
+  after_create :create_identifiers
+  after_update :update_intervention_id
   after_commit :set_cached_sites
   after_destroy :remove_cached_sites
   before_validation :strip_urls
@@ -936,18 +940,44 @@ SQL
     save!
   end
 
-  def generate_intervention_id
-    Project.where(:id => id).update_all(:intervention_id => [
-      primary_organization_id, id].join('-'))
+  def create_identifiers
+      
+    interaction = Organization.where(:name => 'InterAction').first
+    publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
+    
+    # backwards compatibility for interaction intervention id
+    self.update_attribute(:intervention_id, [primary_organization.id, id].join('-'))
+    
+    # Add Identifiers for intervention_id and iati id
+    existing = self.identifiers.where(:assigner_org_id => interaction.id)
+    unless existing.empty?
+        existing.each do |i|
+            i.destroy
+        end
+    end
+    self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
+    self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => "#{interaction.iati_organizationid}NAM-#{self.intervention_id}" })
+    
+    # Backwards compatibility for org intervention id
+    if publisher_id.empty? && !self.organization_id.nil?
+        self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
+    elsif !publisher_id.empty?
+         self.organization_id = publisher_id.first.identifier 
+    end
   end
-
-  def create_intervention_id
-    generate_intervention_id
-    update_attribute(:intervention_id, intervention_id)
-  end
-
+  
   def update_intervention_id
-    generate_intervention_id if Project.where('intervention_id = ? AND id <> ?', intervention_id, id).count > 0
+     
+    publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
+    
+    if publisher_id.empty? && !self.organization_id.nil?
+        self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
+    elsif !publisher_id.empty? && !self.organization_id.nil?
+        publisher_id.first.update_attribute(:identifier, self.organization_id)
+    elsif !publisher_id.empty?
+         self.organization_id = publisher_id.first.identifier 
+    end
+    
   end
 
   def update_data_denormalization
@@ -978,6 +1008,12 @@ SQL
 
   def org_intervention_id_sync=(value)
     self.organization_id = value
+    if value.nil?
+       existing = self.identifiers.where('assigner_org_id' => self.primary_organization_id)
+       unless existing.empty?
+           existing.first.delete
+       end
+    end
   end
 
   def budget_numeric_sync=(value)

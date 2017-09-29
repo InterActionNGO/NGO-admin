@@ -1,0 +1,98 @@
+.mod-backoffice-project-form {
+    
+   .field-input {
+       
+      float: left;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 5px 7px;
+      margin: 7px 0;
+      
+      &.identifier-id {
+          width: 145px;
+      }
+      &.identifier-assigner {
+          
+      }
+   }
+   .field-label {
+       position: relative;
+        float: left;
+        margin: 20px 0 0 3px;
+        font: bold 11px Arial;
+        color: $color-5;
+        text-transform: uppercase;
+        z-index: 1;
+   }
+   .identifier {
+       table {
+         margin-top: 20px;
+         background: $color-4;
+        padding: 1em 1em 2.5em 1em;
+        display: block;
+       }
+       .field-select {
+            max-width: 365px;
+        }
+        .field-label {
+           float:none; 
+           //display: block;
+        }
+        .field-input {
+           float: none;  
+           margin-right: 15px;
+           font-size: 16px;
+        }
+        .add-identifier-link {
+           margin: -2em 0 0 1.5em;
+            font-size: 14px;   
+        }
+        &.field {
+           margin-bottom: 1em;  
+           width: 100%;
+           box-sizing: border-box;
+        }
+   }
+   .float {
+      float: left;   
+   }
+   .link {
+        font: normal 13px Arial;
+        color: #c15022;
+        text-decoration: none; 
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;   
+        }
+   }
+   .remove-identifier-container {
+      max-width: 30px;
+   }
+   
+   .chzn-container {
+      margin: 0;   
+   }
+   .custom-checkbox {
+        display:inline-block;
+        width:13px;
+        height:13px;
+        border-radius: 3px;
+        padding:2px;
+        border:1px #ccc solid;
+        cursor:pointer;
+        margin-left: 10px;
+    }
+    .custom-checkbox[checked]{
+        background:url('/app/images/backoffice/common/delete15.png') no-repeat 1px 1px;
+    }
+    .custom-checkbox[unchecked]{
+        background: none;
+    }
+    input[type=checkbox] {
+        display:none;
+    }
+    .help-text {
+        font-size: 14px;
+        color: $color-5;
+    }
+}

@@ -1,22 +1,120 @@
-<%= form_for(@project, :url => (@project.new_record? ? admin_projects_path : admin_project_path(@project))) do |f| %>
+<%= form_for(@project, :url => (@project.new_record? ? admin_projects_path : admin_project_path(@project)), :html => {:class =>'mod-backoffice-project-form'}) do |f| %>
+<!-- ##################### PROJECT IDENTIFICATION ##################### -->
 
-    <% if @project.errors.full_messages.any? %>
-        <div class="form_error">
-            <% @project.errors.full_messages.each do |error_message| %>
-                <p><%= error_message %></p> <br />
-            <% end %>
-        </div>
-    <% end -%>
+  <% if @project.errors.full_messages.any? %>
+  <div class="form_error">
+    <% @project.errors.full_messages.each do |error_message| %>
+      <p><%= error_message %></p> <br />
+    <% end %>
+  </div>
+  <% end -%>
 
-    <!-- ##################### PROJECT IDENTIFICATION ##################### -->
-    <h3 class="section museo_sans">PROJECT IDENTIFICATION</h3>
+  <h3 class="section museo_sans">PROJECT IDENTIFICATION</h3>
+  <div class="">
+      <%= f.label :primary_organization_id, 'Organization' %>
+      <% if @project.errors[:primary_organization_id].present? %>
+        <span id="hidden" class="error">
+            <%= errors_for @project, :primary_organization_id %>
+            <a class="organization"><%= @project.primary_organization.try(:name) %></a>
+        </span>
+      <% end %>
+      <%= f.select :primary_organization_id, options_from_collection_for_select(@organizations_list, :id, :name, @project.primary_organization_id), {:prompt=>'Select an Organization'} %>
+  </div>
   
-    <div class="field">
-        <%= f.label :primary_organization_id, 'Organization' %>
-        <% if @project.errors[:primary_organization_id].present? %>
-            <span id="hidden" class="error">
-                <%= errors_for @project, :primary_organization_id %>
-                <a class="organization"><%= @project.primary_organization.try(:name) %></a>
+
+
+<!--  <div class="field <%= 'hidden' unless current_user.admin? && @project.persisted? %>">
+    <label>InterAction Intervention ID</label>
+    <span class="input_large is-readonly">
+      <%= f.text_field :intervention_id, :readonly => true %>
+    </span>
+  </div>-->
+  
+  
+  <div class="field identifier">
+    <table>
+        <thead>
+            <p class="help-text">Add your organization's identifier(s) for this project (formerly "organization intervention id") here by selecting your organization from the dropdown. You can add other identifiers here as well, e.g. from your donor contracts.  InterAction identifiers are automatically assigned upon project creation.</p>
+            <tr>
+                <th class="field-label">Project Identifier</th>
+                <th class="field-label">Assigned By</th>
+                <% unless action_name.eql?('new') %>
+                    <th class="field-label"></th>
+                <% end %>
+            </tr>
+        </thead>
+        <tbody>
+            <%= f.fields_for :identifiers do |i| %>
+                <tr>
+                    <td><%= i.text_field :identifier, :placeholder => 'Add Identifier', :class => 'field-input identifier-id', :readonly => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false %></td>
+                    <td><%= i.collection_select :assigner_org_id, Organization.order(:name).select([:name,:id]), :id, :name, { :include_blank => true }, {:'data-placeholder' => 'Select an Organization', :'data-org-id' => @project.primary_organization.try(:id), :class => "field-select #{@org_intervention_class}", :disabled => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false } %></td>
+                    <% unless action_name.eql?('new') %>
+                        <td class="remove-identifier-container" title="Remove Identifier">
+                            <% unless i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) %>
+                                <span class="custom-checkbox" unchecked></span>
+                                <%= i.check_box '_destroy', :class => 'checkbox' %>
+                            <% end %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <div class="add-identifier-link">
+      <span id="add_identifier" class="link">Add More</span>
+    </div>
+  </div>
+  
+
+<!--    <div class="field">
+    <label>Organization Intervention ID
+    <strong>&nbsp;</strong>-->
+      <!-- FIELD DESCRIPTION -->
+     <!-- <div class="field_info">
+        <span class="info">i</span>
+        <div class="field_text">
+          <div class="top">
+            <a href="#close">x</a>
+          </div>
+          <div class="bottom">
+            <h3>Organization ID</h3>
+            <span class="scroll">
+            <p>Alpha/numeric code assigned to an intervention or shipment by an organization in its internal systems.</p>
+            </span>
+          </div>
+        </div>
+      </div>-->
+      <!-- END FIELD DESCRIPTION -->
+
+<!--    </label>
+    <span class="input_large">
+      <%= f.text_field :organization_id %>
+    </span>
+  </div>-->
+  
+  <div class="field">
+    <p class="title">TAGS <span class="info">Use comma (",") to separate project tags</span></p>
+    <span id="tags_combo" class="input_large">
+      <%= f.text_field :tags, :value => @project.tags.map{ |tag| tag.name }.join(', ') %>
+    </span>
+  </div>
+
+<!-- ##################### PROJECT DETAILS ##################### -->
+
+  <h3 class="section museo_sans">PROJECT DETAILS</h3>
+  <div class="field">
+    <label>PROJECT NAME  <strong>*</strong>
+      <!-- FIELD DESCRIPTION -->
+      <div class="field_info">
+        <span class="info">i</span>
+        <div class="field_text">
+          <div class="top">
+            <a href="#close">x</a>
+          </div>
+          <div class="bottom">
+            <h3>Project name</h3>
+            <span class="scroll">
+            <p>The official title of the project, preferable the official name used in program/project/etc documents.</p>
             </span>
         <% end %>
         <%= f.select :primary_organization_id, select_box_options,{},:class => 'input-med' %>
@@ -426,4 +524,5 @@
     
 </script>
 
-<%= javascript_include_tag "backoffice/project.js", "backoffice/project_region.js" %>
+
+  <%= javascript_include_tag "backoffice/project.js", "backoffice/project_region.js" %>
