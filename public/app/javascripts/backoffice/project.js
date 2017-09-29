@@ -230,6 +230,10 @@ $(document).ready(function(ev){
   /////////////////////
   //  IDENTIFIERS 
   ///////////////////////
+  var org_id = $('.new-org-intervention').data('org-id');
+  $('.new-org-intervention').val(org_id);
+  $('.new-org-intervention').trigger('change');
+  
   $('#project_primary_organization_id').chosen({
       width: $("#project_primary_organization_id").parent('div').width()
     });

@@ -34,6 +34,7 @@
   <div class="field identifier">
     <table>
         <thead>
+            <p class="help-text">Add your organization's identifier(s) for this project (formerly "organization intervention id") here by selecting your organization from the dropdown. You can add other identifiers here as well, e.g. from your donor contracts.  InterAction identifiers are automatically assigned upon project creation.</p>
             <tr>
                 <th class="field-label">Project Identifier</th>
                 <th class="field-label">Assigned By</th>
@@ -46,7 +47,7 @@
             <%= f.fields_for :identifiers do |i| %>
                 <tr>
                     <td><%= i.text_field :identifier, :placeholder => 'Add Identifier', :class => 'field-input identifier-id', :readonly => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false %></td>
-                    <td><%= i.collection_select :assigner_org_id, Organization.order(:name).select([:name,:id]), :id, :name, { :include_blank => true }, {:'data-placeholder' => 'Select an Organization', :class => 'field-select', :disabled => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false } %></td>
+                    <td><%= i.collection_select :assigner_org_id, Organization.order(:name).select([:name,:id]), :id, :name, { :include_blank => true }, {:'data-placeholder' => 'Select an Organization', :'data-org-id' => @project.primary_organization.try(:id), :class => "field-select #{@org_intervention_class}", :disabled => i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) ? true : false } %></td>
                     <% unless action_name.eql?('new') %>
                         <td class="remove-identifier-container" title="Remove Identifier">
                             <% unless i.object.assigner_org_id.eql?(Organization.where(:name => 'InterAction').first.id) %>

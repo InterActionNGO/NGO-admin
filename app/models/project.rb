@@ -938,34 +938,24 @@ SQL
     self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => "#{interaction.iati_organizationid}NAM-#{self.intervention_id}" })
     
     # Backwards compatibility for org intervention id
-    unless publisher_id.empty?
-       self.organization_id = publisher_id.first.identifier 
+    if publisher_id.empty? && !self.organization_id.nil?
+        self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
+    elsif !publisher_id.empty?
+         self.organization_id = publisher_id.first.identifier 
     end
   end
   
   def update_intervention_id
-    
-#     interaction = Organization.where(:name => 'InterAction').first
-#     app_id = self.identifiers.where(:assigner_org_id => interaction.id)
+     
     publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
     
-#     Project.transaction do
-        # Update the intervention id
-#         self.intervention_id = [primary_organization.id, id].join('-')
-#         save!
-        # update the identifier that holds the intervention id (for backwards compatibility)
-#         if app_id.empty?
-#             self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
-#         else
-#             app_id = Identifier.find(app_id.first.id)
-#             app_id.identifier = self.intervention_id
-#             app_id.save!
-#         end
-        # update the identifier that holds the organization_intervention_id (for backwards compatibility)
-        unless publisher_id.empty?
-           self.organization_id = publisher_id.first.identifier
-        end
-#     end
+    if publisher_id.empty? && !self.organization_id.nil?
+        self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
+    elsif !publisher_id.empty? && !self.organization_id.nil?
+        publisher_id.first.update_attribute(:identifier, self.organization_id)
+    elsif !publisher_id.empty?
+         self.organization_id = publisher_id.first.identifier 
+    end
     
   end
 
@@ -997,6 +987,12 @@ SQL
 
   def org_intervention_id_sync=(value)
     self.organization_id = value
+    if value.nil?
+       existing = self.identifiers.where('assigner_org_id' => self.primary_organization_id)
+       unless existing.empty?
+           existing.first.delete
+       end
+    end
   end
 
   def budget_numeric_sync=(value)
