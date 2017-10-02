@@ -102,6 +102,10 @@ class Organization < ActiveRecord::Base
 
   before_validation :strip_urls
 
+  def self.interaction_members
+    where(:membership_status => 'Current Member')
+  end
+  
   def strip_urls
     if self.website.present?
       self.website = self.website.strip

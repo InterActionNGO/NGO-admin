@@ -46,7 +46,7 @@
 
         <div class="field">
           <%= f.label :donor_id, raw('DONOR NAME <strong>*</strong>') %>
-            <%= f.select :donor_id, select_box_options,{},:class => 'input-med' %>
+            <%= f.select :donor_id, select_box_options,{:include_blank => true},:class => 'input-med', :'data-placeholder' => "Choose Organization" %>
         </div>
 
         <div class="field">

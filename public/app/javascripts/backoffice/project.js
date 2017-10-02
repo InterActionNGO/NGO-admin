@@ -243,10 +243,10 @@ $(document).ready(function(ev){
   $('.new-org-intervention').val(org_id);
   $('.new-org-intervention').trigger('change');
   
-  $('#project_primary_organization_id').chosen({
-      width: $("#project_primary_organization_id").parent('div').width()
+  $('#project_primary_organization_id').select2({
+      width: 'resolve'
     });
-  $('.identifier .field-select').chosen({
+  $('.identifier .field-select').select2({
      width: 333
   });
   $('#add_identifier').click(function (ev) {
@@ -308,9 +308,9 @@ $(document).ready(function(ev){
      );
         
      tbody.append($('<tr>').append(column1).append(column2).append(column3));
-     tbody.find('.field-select').chosen({
+     tbody.find('.field-select').select2({
         width: 333 
-     })
+     });
   });
   $('.custom-checkbox').click(toggleCheckbox);
   function toggleCheckbox () {
@@ -651,11 +651,11 @@ $(document).ready(function(ev){
     floatingSubmit($('form .submit'), $('div.main_layout div.block div.med div.right div.delete'));
   }
   
-    $("#project_primary_organization_id").select2({
-        data: reporting_organizations,
-        placeholder: 'Select an Organization',
-        allowClear: false
-    });
+//     $("#project_primary_organization_id").select2({
+//         data: reporting_organizations,
+//         placeholder: 'Select an Organization',
+//         allowClear: false
+//     });
     $("#project_partner_ids").select2({
         data: organizations,
         placeholder: 'Add Partner(s)',
@@ -759,7 +759,7 @@ $(function() {
   }
 
   if ($('#donation_donor_id').length > 0){
-    $('#donation_donor_id').chosen({width: $('#donation_donor_id').parent('div').width()});
+    $('#donation_donor_id').select2({width: $('#donation_donor_id').parent('div').width()});
     // var custom_donors_url = '/admin/donors?q=';
 
     // // AUTOCOMPLETE FOR DONORS IN PROJECT
@@ -834,7 +834,7 @@ $(function() {
     });
   }
 
-  $('span.combo_date:not(.disabled)').dateCombos();
+//   $('span.combo_date:not(.disabled)').dateCombos();
 
   $('.chzn-container').click(function(ev){
     ev.stopPropagation();
@@ -843,14 +843,14 @@ $(function() {
 
 });
 
-function update_project_intervention_id(organization_id) {
-  var project_intervention_id = organization_id + '-' +
-//                                 (country_iso_codes.sort()[0] || 'XX') + '-' +
-//                                 current_year_last_digits + '-' +
-                                project_id;
-
-  $('input#project_intervention_id.auto').val(project_intervention_id);
-}
+// function update_project_intervention_id(organization_id) {
+//   var project_intervention_id = organization_id + '-' +
+// //                                 (country_iso_codes.sort()[0] || 'XX') + '-' +
+// //                                 current_year_last_digits + '-' +
+//                                 project_id;
+// 
+//   $('input#project_intervention_id.auto').val(project_intervention_id);
+// }
 
 function updateCountryIsoCode(country_id) {
   country_iso_codes.push(countries_iso_codes[country_id]);
@@ -859,7 +859,7 @@ function updateCountryIsoCode(country_id) {
 
 function removeCountryIsoCode(country_id) {
   var iso_code = countries_iso_codes[country_id];
-  country_iso_codes.splice(country_iso_codes.indexOf(iso_code), 1)
+  country_iso_codes.splice(country_iso_codes.indexOf(iso_code), 1);
 //   update_project_intervention_id();
 }
 

@@ -948,7 +948,7 @@ SQL
     # backwards compatibility for interaction intervention id
     self.update_attribute(:intervention_id, [primary_organization.id, id].join('-'))
     
-    # Add Identifiers for intervention_id and iati id
+    # Add Identifiers for intervention_id
     existing = self.identifiers.where(:assigner_org_id => interaction.id)
     unless existing.empty?
         existing.each do |i|
@@ -956,13 +956,12 @@ SQL
         end
     end
     self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
-    self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => "#{interaction.iati_organizationid}NAM-#{self.intervention_id}" })
     
     # Backwards compatibility for org intervention id
     if publisher_id.empty? && !self.organization_id.nil?
         self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
     elsif !publisher_id.empty?
-         self.organization_id = publisher_id.first.identifier 
+         self.update_attribute(:organization_id, publisher_id.first.identifier)
     end
   end
   
@@ -975,7 +974,7 @@ SQL
     elsif !publisher_id.empty? && !self.organization_id.nil?
         publisher_id.first.update_attribute(:identifier, self.organization_id)
     elsif !publisher_id.empty?
-         self.organization_id = publisher_id.first.identifier 
+         self.update_attribute(:organization_id, publisher_id.first.identifier)
     end
     
   end

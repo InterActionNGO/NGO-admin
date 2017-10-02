@@ -1196,7 +1196,7 @@ div.block.edit div.med {
         margin: 43px 0 0 0; }
       div.block.edit div.med div.left a.preview:hover {
         color: #7F2023; }
-div.field input[type="text"]:not(.field-input), div.field input[type="password"], div.field input[type="email"] {
+div.field input[type="text"], div.field input[type="password"], div.field input[type="email"] {
   float: left;
   width: 403px;
   height: 18px;
@@ -2808,6 +2808,11 @@ div.block div.med div.left form {
    */
   position: relative;
   z-index: 1; }
+div.block.project_info div.med div.left form input[type="checkbox"] {
+    float: left;
+    visibility: hidden;
+    width: 2px;
+}
 div.block.project_info div.med div.left form label:not(.field-label) {
   position: relative;
   float: left;
@@ -2948,10 +2953,10 @@ ul.ui-autocomplete.site_tags {
 /*END - AUTOCOMPLETE - TAGS*/
 /*AUTOCOMPLETE - FILTERING TAGS*/
 /*END - AUTOCOMPLETE - TAGS*/
-div.block.project_info div.med div.left form .field input[type="text"]:not(.field-input) {
+div.block.project_info div.med div.left form .field input[type="text"]:not(.datepicker) {
   float: left;
   margin: 7px 0 0 7px;
-  width: 400px;
+  width: 100%;
   height: 21px;
   font: normal 15px Arial;
   color: #333333;

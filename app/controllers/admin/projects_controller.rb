@@ -80,7 +80,7 @@ class Admin::ProjectsController < Admin::AdminController
 
   def new
     @project = new_project(:date_provided => Time.now)
-    @project.identifiers.build({ :assigner_org_id => @project.primary_organization.id })
+    @project.identifiers.build({ :assigner_org_id => @project.primary_organization.try(:id) })
     @org_intervention_class = current_user.admin? ? '' : 'new-org-intervention'
 
     @countries_iso_codes = countries_iso_codes
@@ -88,6 +88,7 @@ class Admin::ProjectsController < Admin::AdminController
 
   def create
     @params = params
+    params = filter_empty_identifiers(@params)
     @project = new_project(params[:project])
      @project.intervention_id = nil
     @project.updated_by = current_user
