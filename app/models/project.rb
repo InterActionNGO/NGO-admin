@@ -1144,7 +1144,7 @@ SQL
   end
 
   def geographical_scope_sync=(value)
-    @geographical_scope_sync = value || 'specific_locations'
+    @geographical_scope_sync = value.downcase || 'specific_locations'
   end
 
   def sync_mode_validations
@@ -1235,7 +1235,11 @@ SQL
           all_regions_exist = true
 
           if country_name
-            country = Geolocation.where('lower(trim(name)) = lower(trim(?)) AND adm_level=0', country_name).first
+              if country_name.downcase.strip == 'global'
+                  country = Geolocation.where(:name => 'global').first
+              else
+                country = Geolocation.where('lower(trim(name)) = lower(trim(?)) AND adm_level=0', country_name).first
+              end
 
             if country.blank?
               # If country doesn't exits, goes to next location on the cell
