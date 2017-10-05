@@ -1236,7 +1236,7 @@ SQL
 
           if country_name
               if country_name.downcase.strip == 'global'
-                  country = Geolocation.where(:name => 'global').first
+                  country = Geolocation.where(:adm_level => -1).first
               else
                 country = Geolocation.where('lower(trim(name)) = lower(trim(?)) AND adm_level=0', country_name).first
               end
