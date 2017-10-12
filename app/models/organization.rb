@@ -102,8 +102,12 @@ class Organization < ActiveRecord::Base
 
   before_validation :strip_urls
 
-  def self.interaction_members
-    where(:membership_status => 'Current Member')
+  def self.interaction_members(historic=false)
+      if historic
+          where("membership_status in ('Current Member', 'Former Member')")
+      else
+          where(:membership_status => 'Current Member')
+      end
   end
   
   def strip_urls

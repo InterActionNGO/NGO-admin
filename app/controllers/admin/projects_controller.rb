@@ -131,8 +131,8 @@ class Admin::ProjectsController < Admin::AdminController
         redirect_to edit_admin_project_path(@project), :flash => {:success => 'Project has been updated successfully'}
       else
         @countries_iso_codes = countries_iso_codes
-        flash.now[:error] = 'Sorry, there are some errors that must be corrected.'
-        render :action => 'edit'
+        flash.now[:error] = @project.errors.full_messages || 'Something went wrong and the project was not saved. Contact mappinginfo@interaction.org if the problem persists.'
+        render :edit
       end
     end
   end

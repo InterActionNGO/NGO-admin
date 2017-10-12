@@ -958,7 +958,7 @@ SQL
     self.identifiers.create!({ :assigner_org_id => interaction.id, :identifier => self.intervention_id })
     
     # Backwards compatibility for org intervention id
-    if publisher_id.empty? && !self.organization_id.nil?
+    if publisher_id.empty? && !self.organization_id.blank?
         self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
     elsif !publisher_id.empty?
          self.update_attribute(:organization_id, publisher_id.first.identifier)
@@ -969,9 +969,9 @@ SQL
      
     publisher_id = self.identifiers.where(:assigner_org_id => self.primary_organization_id)
     
-    if publisher_id.empty? && !self.organization_id.nil?
+    if publisher_id.empty? && !self.organization_id.blank?
         self.identifiers.create!({:assigner_org_id => self.primary_organization_id, :identifier => self.organization_id })
-    elsif !publisher_id.empty? && !self.organization_id.nil?
+    elsif !publisher_id.empty? && !self.organization_id.blank?
         publisher_id.first.update_attribute(:identifier, self.organization_id)
     elsif !publisher_id.empty?
          self.update_attribute(:organization_id, publisher_id.first.identifier)

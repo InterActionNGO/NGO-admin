@@ -19,7 +19,7 @@
             </span>
         <% end %>
         <% if @admin %>
-            <%= f.select :primary_organization_id, options_from_collection_for_select(Organization.interaction_members, :id, :name, @project.primary_organization_id), {:prompt=>'Select an Organization'}, {:class => 'full-width'} %>
+            <%= f.select :primary_organization_id, Organization.interaction_members(true).order(:name).select([:id,:name]).map { |i| [i.name, i.id] }, {:prompt=>'Select an Organization'}, {:class => 'full-width'} %>
         <% else %>
             <%= f.select :primary_organization_id, options_for_select([[@project.primary_organization.try(:name), @project.primary_organization.try(:id)]]), {}, {:class => 'full-width'} %>
         <% end %>
@@ -170,6 +170,7 @@
     <div id="partner_org" class="field">
         <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Partners', :text => 'Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods.'} %>
         <span class="input">
+        <%= @project.new_record? %>
             <%= f.select :partner_ids, select_box_options(:partners), {},{ :multiple => true, :class => 'input-lg-multiple' } %>
         </span>
     </div>
