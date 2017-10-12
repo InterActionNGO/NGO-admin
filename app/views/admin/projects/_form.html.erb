@@ -170,7 +170,6 @@
     <div id="partner_org" class="field">
         <%= render :partial => 'field-label', :locals => {:required => false, :label => 'Partners', :text => 'Name(s) of local organization(s) involved in the implementation of the project. In the case of in-kind donations, list organizations receiving goods.'} %>
         <span class="input">
-        <%= @project.new_record? %>
             <%= f.select :partner_ids, select_box_options(:partners), {},{ :multiple => true, :class => 'input-lg-multiple' } %>
         </span>
     </div>
