@@ -100,8 +100,14 @@ class Project < ActiveRecord::Base
   before_validation :strip_urls
   before_validation :nullify_budget
   before_validation :set_budget_value_date
-  before_save :set_budget_usd, :set_global_geolocation
+  before_save :set_budget_usd, :set_global_geolocation, :sync_humanitarian_fields
 
+  def sync_humanitarian_fields 
+        if self.sector_ids.include?(Sector.where(:name => "Humanitarian Aid").first.id)
+           self.humanitarian = true
+        end
+  end
+  
   def self.last_added
         order('created_at desc').first
   end
