@@ -63,8 +63,8 @@ class Admin::AdminController < ApplicationController
     options = {
       :include_non_active =>true
     }
-    options[:organization]    = params[:organization_id] if params[:organization_id].present?
-    options[:organization]    = current_user.organization_id unless current_user.admin?
+    options[:organizations]    = params[:organization_id].to_i if params[:organization_id].present?
+    options[:organizations]    = current_user.organization_id unless current_user.admin?
     options[:headers_options] = {:show_private_fields => true}
 
     respond_to do |format|
@@ -76,11 +76,11 @@ class Admin::AdminController < ApplicationController
           :type => 'text/csv; charset=utf-8; application/download',
           :disposition => "attachment; filename=ngoaidmap_projects.csv"
       end
-      format.xls do
-        send_data Project.to_excel(nil, options),
-          :type => 'application/vnd.ms-excel',
-          :disposition => "attachment; filename=ngoaidmap_projects.xls"
-      end
+#       format.xls do
+#         send_data Project.to_excel(nil, options),
+#           :type => 'application/vnd.ms-excel',
+#           :disposition => "attachment; filename=ngoaidmap_projects.xls"
+#       end
     end
   end
 

@@ -70,7 +70,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :identifiers, 
           :allow_destroy => true
 
-  scope :active, lambda { where("end_date > ?", Date.today.to_s(:db)) }
+  scope :active, lambda { where("projects.end_date > ? AND projects.start_date <= ?", Date.today.to_s(:db), Date.today.to_s(:db)) }
   scope :closed, lambda { where("end_date < ?", Date.today.to_s(:db)) }
   scope :by_end_date, lambda{ order(:end_date) }
   scope :organizations, lambda{|orgs| where(:primary_organization_id => orgs) }
@@ -78,6 +78,29 @@ class Project < ActiveRecord::Base
                           joins(:regions).
                           includes(:countries).
                           where('countries_projects.project_id IS NULL AND regions.id IS NOT NULL')
+    scope :site, lambda { |site| joins(:sites).where(:sites => {:id => site}) }
+#     scope :geolocation, lambda { |geolocation,level=0|  joins(:geolocations).where("g#{level}=?", geolocation).where('adm_level >= ?', level)}
+    
+    def geolocation (geolocation, level=0)
+        joins(:geolocations).where("g#{level}=?", geolocation).where('adm_level >= ?', level)
+    end
+    scope :global, lambda { where(:geographical_scope => 'global') }
+    scope :projects, lambda {|projects| where(:projects => {:id => projects}) }
+    scope :countries, lambda { |countries| joins(:geolocations).where(:geolocations => {:country_uid => countries}) }
+    scope :organizations, lambda { |orgs| joins(:primary_organization).where(:organizations => {:id => orgs}) }
+    scope :sectors, lambda { |sectors| joins(:sectors).where(:sectors => {:id => sectors}) }
+    scope :donors, lambda { |donors| joins(:donors).where(:donations => {:donor_id => donors}) }
+    scope :partners, lambda { |partners| joins(:partners).where(:partnerships => {:partner_id => partners}) }
+    scope :text_query, lambda { |q| where('projects.name ilike ? OR projects.description ilike ?', "%%#{q}%%", "%%#{q}%%") }
+    scope :starting_after, lambda { |data| where "start_date > ?", date }
+    scope :ending_before, lambda { |data| where "end_date < ?", date }
+    scope :tags, lambda { |tags| joins(:tags).where(:tags => {:id => tags}) }
+    scope :updated_since, lambda { |timestamp| where "projects.updated_at > timestamp with time zone ?", timestamp }
+    
+    scope :with_partners, lambda { joins(:partners) }
+    scope :with_international_partners, lambda { with_partners.where('organizations.international = true') }
+    scope :with_local_partners, lambda { with_partners.where('organizations.international = false') }
+  
 
   attr_accessor :sync_errors, :sync_mode, :location
 
@@ -101,7 +124,15 @@ class Project < ActiveRecord::Base
   before_validation :nullify_budget
   before_validation :set_budget_value_date
   before_save :set_budget_usd, :set_global_geolocation, :sync_humanitarian_fields
-
+  
+  def active?
+      if self.end_date >= Date.today(:db) && self.start_date < Date.today(:db)
+          true
+      else
+          false
+      end
+  end
+  
   def sync_humanitarian_fields 
         if self.sector_ids.include?(Sector.where(:name => "Humanitarian Aid").first.id)
            self.humanitarian = true
@@ -301,14 +332,83 @@ class Project < ActiveRecord::Base
 
   def self.export_headers(options = {})
     options = {:show_private_fields => false}.merge(options || {})
-
+    
+    # object keys are field headers, object values are value accessors
+    public_fields = [
+        { :organization => lambda { |obj| obj.primary_organization.name } },
+        { :interaction_intervention_id => :intervention_id },
+        { :org_intervention_id => :organization_id },
+        { :project_tags => lambda { |obj| obj.tags.map{ |tag| tag.name }.join('|') } },
+        { :humanitarian => :humanitarian },
+        { :project_name => :name },
+        { :project_description => :description },
+        { :activities => :activities },
+        { :additional_information => :additional_information },
+        { :start_date => lambda { |obj| obj[:start_date] =~ /^00(\d\d\-.+)/ ? "20#{$1}" : obj[:start_date] } },
+        { :end_date => lambda { |obj| obj[:end_date] =~ /^00(\d\d\-.+)/ ? "20#{$1}" : obj[:end_date] } },
+        { :sectors => lambda { |obj| obj.sectors.map(&:name).join('|') } },
+        { :cross_cutting_issues => :cross_cutting_issues },
+        { :budget_numeric => :budget },
+        { :budget_currency => :budget_currency },
+        { :budget_value_date => :budget_value_date },
+        { :donors => lambda { |obj| obj.donors.map(&:name).join('|') } },
+        { :international_partners => lambda { |obj| obj.partners.where(:international => true).map(&:name).join('|') } },
+        { :local_partners => lambda { |obj| obj.partners.where('international != true').map(&:name).join("|") } },
+        { :prime_awardee => lambda { |obj| obj.prime_awardee.try(:name) } },
+        { :target_project_reach => :target_project_reach },
+        { :actual_project_reach => :actual_project_reach },
+        { :project_reach_unit => :project_reach_unit },
+        { :target_groups => :target },
+        { :geographic_scope => :geographical_scope },
+        { :location => lambda { |obj| obj.geolocations.map(&:readable_path).join('|') } },
+        { :project_contact_person => :contact_person },
+        { :project_contact_position => :contact_position },
+        { :project_contact_email => :contact_email },
+        { :project_contact_phone_number => :contact_phone_number },
+        { :project_website => :website },
+        { :date_provided => :date_provided },
+        { :date_updated => :date_updated },
+        { :status => lambda { |obj| obj.active? ? 'active' : 'closed' } }
+    ]
     if options[:show_private_fields]
-      %w(organization interaction_intervention_id org_intervention_id project_tags project_name project_description activities additional_information start_date end_date sectors cross_cutting_issues budget_numeric international_partners local_partners prime_awardee target_project_reach actual_project_reach project_reach_unit target_groups location verbatim_location idprefugee_camp project_contact_person project_contact_position project_contact_email project_contact_phone_number project_website date_provided date_updated status donors)
+        public_fields
+#         public_fields.insert(26, "verbatim_location", "idprefugee_camp")
     else
-      %w(organization interaction_intervention_id org_intervention_id project_tags project_name project_description activities additional_information start_date end_date clusters sectors cross_cutting_issues budget_numeric international_partners local_partners prime_awardee estimated_people_reached target_groups location project_contact_person project_contact_position project_contact_email project_contact_phone_number project_website date_provided date_updated status donors)
+        public_fields
     end
   end
 
+  def self.fetch_all(options = {})
+    level = Geolocation.where(:uid => options[:geolocation]).first.try(:adm_level) || 0 if options[:geolocation]
+
+    #projects = Project.includes([:primary_organization, :geolocations, :sectors, :donors, :tags, :partners, :prime_awardee]).references(:organizations)
+    # it's faster to use includes as needed downstream rather rather than clogging up this widely-used method
+    projects = self.preload(:primary_organization)
+    projects = projects.site(options[:site]) if options[:site] && options[:site].to_i != 12
+    projects = projects.geolocation(options[:geolocation], level).preload(:geolocations) if options[:geolocation] && level >= 0
+    projects = projects.global if options[:geolocation] && level < 0
+    projects = projects.projects(options[:projects]) if options[:projects]
+    projects = projects.countries(options[:countries]).preload(:geolocations) if options[:countries]
+    projects = projects.organizations(options[:organizations]) if options[:organizations]
+    projects = projects.partners(options[:partners]).preload(:partners) if options[:partners]
+    projects = projects.sectors(options[:sectors]).preload(:sectors) if options[:sectors]
+    projects = projects.donors(options[:donors]).preload(:donors) if options[:donors]
+    projects = projects.text_query(options[:q]) if options[:q]
+    projects = projects.starting_after(options[:starting_after]) if options[:starting_after]
+    projects = projects.ending_before(options[:ending_before]) if options[:ending_before]
+    projects = projects.offset(options[:offset].to_i) if options[:offset]
+    projects = projects.limit(options[:limit].to_i) if options[:limit]
+    projects = projects.active if options[:status] && options[:status] == 'active'
+    projects = projects.inactive if options[:status] && options[:status] == 'inactive'
+    projects = projects.tags(options[:tags]) if options[:tags]
+    projects = projects.updated_since(options[:updated_since]) if options[:updated_since]
+    projects = projects.uniq
+    projects
+  end
+  
+  
+  
+  
   def self.list_for_export(site = nil, options = {})
     where = []
 
@@ -318,24 +418,24 @@ class Project < ActiveRecord::Base
     where << '(p.end_date is null OR p.end_date > now())' if !options[:include_non_active]
 
 
-    if options[:kml]
-      kml_select = <<-SQL
-        , CASE WHEN pr.region_id IS NOT NULL THEN
-        (select
-        '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-        from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE pr.project_id=p.id)
-        ELSE
-        (select
-        '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
-        from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where cp.project_id=p.id)
-        END
-        as kml
-      SQL
-      kml_group_by = <<-SQL
-        country_id,
-        region_id,
-      SQL
-    end
+#     if options[:kml]
+#       kml_select = <<-SQL
+#         , CASE WHEN pr.region_id IS NOT NULL THEN
+#         (select
+#         '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
+#         from regions as r INNER JOIN projects_regions AS pr ON r.id=pr.region_id WHERE pr.project_id=p.id)
+#         ELSE
+#         (select
+#         '<MultiGeometry><Point><coordinates>'|| array_to_string(array_agg(distinct center_lon ||','|| center_lat),'</coordinates></Point><Point><coordinates>') || '</coordinates></Point></MultiGeometry>' as lat
+#         from countries as c INNER JOIN countries_projects AS cp ON c.id=cp.country_id where cp.project_id=p.id)
+#         END
+#         as kml
+#       SQL
+#       kml_group_by = <<-SQL
+#         country_id,
+#         region_id,
+#       SQL
+#     end
     if options[:category] && options[:from_donors]
       if site.navigate_by_cluster?
         where << "clpr.cluster_id = #{options[:category]}"
@@ -522,35 +622,28 @@ class Project < ActiveRecord::Base
     ActiveRecord::Base.connection.execute(sql)
   end
 
-  def self.to_csv(site, options = {})
-    projects = self.list_for_export(site, options)
-    csv_headers = self.export_headers(options[:headers_options])
+    def self.to_csv(site, options = {})
+        projects = self.fetch_all(options)
+        fields = self.export_headers(options[:headers_options])
 
-    csv_data = FasterCSV.generate(:col_sep => ',') do |csv|
-      csv << csv_headers
-      projects.each do |project|
-        line = []
-        csv_headers.each do |field_name|
-          v = project[field_name]
-          line << if v.nil?
-            ""
-          else
-            if %W{ start_date end_date date_provided date_updated }.include?(field_name)
-              if v =~ /^00(\d\d\-.+)/
-                "20#{$1}"
-              else
-                v
-              end
-            else
-              v.text2array.join(',')
+        csv_data = FasterCSV.generate(:col_sep => ',') do |csv|
+            
+            # Headers
+            csv << fields.map { |f| f.keys }
+            
+            # Data
+            projects.each do |project|
+                line = []
+                fields.each do |f|
+                    line << f.first.second.call(project) if f.first.second.is_a?(Proc)
+                    line << project[f.first.second] if f.first.second.is_a?(Symbol)
+                end
+                csv << line
             end
-          end
+        
         end
-        csv << line
-      end
+        csv_data
     end
-    csv_data
-  end
 
   def self.to_excel(site, options = {})
     projects = self.list_for_export(site, options)
