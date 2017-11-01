@@ -174,12 +174,7 @@ module IATI
                     'filetype' => 'activity',
                     'language' => 'en',
                     'secondary_publisher' => nam.name,
-                    # iati_version is not auto-converted, so manually add to extras
-                    'extras' => [
-                        {   'key' => 'iati_version',
-                            'value' => IATI_STANDARD_VERSION
-                        }
-                    ]
+                    'iati_version' => IATI_STANDARD_VERSION
                          
                 }
                 
