@@ -173,13 +173,13 @@ module IATI
                     'data_updated' => nam.projects.by_last_updated.first.updated_at.strftime('%FT%T'),
                     'filetype' => 'activity',
                     'language' => 'en',
-#                     'secondary_publisher' => nam.name,
+                    'secondary_publisher' => nam.name,
                     'iati_version' => IATI_STANDARD_VERSION
-                         
                 }
                 
                 # For handling existing registry packages
                 unless org.class == Organization
+                    org.delete("extras")
                     @object = org.merge(@object)
                 end
             end
