@@ -1162,7 +1162,7 @@ SQL
   end
 
   def prime_awardee_sync=(value)
-    @prime_awardee_name = value
+    @prime_awardee_name = value || []
   end
 
   def project_contact_position_sync=(value)
@@ -1308,13 +1308,16 @@ SQL
     else
       self.errors.add(:organization, %Q{"#{@organization_name}" doesn't exist})
     end if new_record?
-
-    if @prime_awardee_name.present? && (prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first) && prime_awardee.present?
-      self.prime_awardee_id = prime_awardee.id
-    elsif @prime_awardee_name.present? && prime_awardee != nil
-      self.errors.add(:prime_awardee, %Q{"#{@prime_awardee_name}" doesn't exist})
+    
+    if @prime_awardee_name.present?
+        prime_awardee = Organization.where('lower(trim(name)) = lower(trim(?))', @prime_awardee_name).first
+        if prime_awardee.present?
+           self.prime_awardee_id = prime_awardee.id 
+        else
+            self.errors.add(:prime_awardee, %Q{"#{@prime_awardee_name}" doesn't exist})
+        end
     else
-      self.prime_awardee_id = nil
+        self.prime_awardee_id = nil
     end
 
 
@@ -1383,18 +1386,18 @@ SQL
       end
     end
 
-    if @sectors_sync
-      self.sectors.clear
-      if @sectors_sync.present? && (sectors = @sectors_sync.text2array)
-        sectors.each do |sector_name|
-          sector = Sector.where('lower(trim(name)) = lower(trim(?))', sector_name).first
-          if sector.blank? && new_record?
-            errors.add(:sector,  "#{sector_name} doesn't exist")
-            next
-          end
-          self.sectors << sector
+    if @sectors_sync.present?
+        if sectors = @sectors_sync.text2array
+            self.sectors.clear
+            sectors.each do |sector_name|
+                sector = Sector.where('lower(trim(name)) = lower(trim(?))', sector_name).first
+                if sector.blank?
+                    errors.add(:sector,  "#{sector_name} doesn't exist")
+                    next
+                end
+                self.sectors << sector
+            end
         end
-      end
     end
 
     if @clusters_sync
