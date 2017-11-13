@@ -203,7 +203,7 @@ class Admin::ProjectsController < Admin::AdminController
   private :countries_iso_codes
   
   def filter_empty_identifiers(params)
-      params[:project][:identifiers_attributes].delete_if { |key,val| val['assigner_org_id'].blank? || val['identifier'].blank? }
+      params[:project][:identifiers_attributes].delete_if { |key,val| val['assigner_org_id'].blank? || val['identifier'].blank? } if params[:project][:identifiers_attributes]
       params
   end
   private :filter_empty_identifiers
