@@ -40,6 +40,11 @@
         <div class="notice"><%= raw flash[:notice] %></div>
       </div>
     <% end -%>
+    <% if flash[:success] -%>
+      <div class="flash">
+        <div class="notice"><%= raw flash[:success] %></div>
+      </div>
+    <% end -%>
     <% if flash[:error] %>
         <% flash[:error] = [flash[:error]] if !flash[:error].is_a?(Array) %>
         <div class="flash">

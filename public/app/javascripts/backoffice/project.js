@@ -464,6 +464,8 @@ $(document).ready(function(ev){
          placeholder: 'Choose an Organization',
          allowClear: true
     });
+     
+     $("#donation_amount_currency").select2();
 //   $('#project_sector_ids').chosen({
 //       width: 420
 //   });

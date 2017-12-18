@@ -3850,8 +3850,8 @@ div.block.donations_project div.med {
           position: relative; }
           div.block.donations_project div.med div.left ul.donations li div.amount_box a.delete {
             position: absolute;
-            right: 5px;
-            top: 28px;
+            right: -20px;
+            top: 27px;
             width: 15px;
             height: 16px;
             background: url("/app/images/backoffice/icons/close_bkg.png") no-repeat 0 0;

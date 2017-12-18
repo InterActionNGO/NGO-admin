@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170424151703) do
+ActiveRecord::Schema.define(:version => 20171215212239) do
 
   create_table "changes_history_records", :force => true do |t|
     t.integer  "user_id"
@@ -128,13 +128,14 @@ ActiveRecord::Schema.define(:version => 20170424151703) do
   create_table "donations", :force => true do |t|
     t.integer "donor_id"
     t.integer "project_id"
-    t.float   "amount"
+    t.decimal "amount",                         :precision => 13, :scale => 2
     t.date    "date"
     t.integer "office_id"
+    t.decimal "amount_usd",                     :precision => 13, :scale => 2
+    t.string  "amount_currency", :limit => nil
   end
 
-  create_table "geolocations", :id => false, :force => true do |t|
-    t.integer  "id",                                                       :null => false
+  create_table "geolocations", :force => true do |t|
     t.string   "uid",               :limit => nil
     t.string   "name",              :limit => nil
     t.float    "latitude"
@@ -567,7 +568,7 @@ ActiveRecord::Schema.define(:version => 20170424151703) do
     t.integer "visits"
     t.date    "date"
   end
-  
+
   create_table "stories", :force => true do |t|
     t.string   "name",                :limit => nil
     t.text     "story",                                                 :null => false
