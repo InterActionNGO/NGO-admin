@@ -53,7 +53,7 @@ end
 
 desc 'Create asset packages'
 task :asset_packages, :roles => [:app] do
-  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && nvm use 0.10.29 && bundle exec npm install"
+  run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && /usr/bin/env && nvm use 0.10.29 && bundle exec npm install"
   run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && node_modules/.bin/bower install"
   run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && node_modules/.bin/grunt"
   run "export RAILS_ENV=#{fetch :rails_env} && cd #{release_path} && node_modules/.bin/grunt build"
