@@ -2,7 +2,7 @@
 # default_run_options[:pty] = true
 set :default_stage, "production"
 set :default_environment, {
-  'PATH' => '/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin/rbenv:/home/deploy/.nvm/v0.10.29/bin/node:$PATH'
+  'PATH' => '/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin/rbenv:/home/deploy/.nvm/v0.10.29/bin:$PATH'
 }
 role :app, "52.179.82.220"
 role :web, "52.179.82.220"
