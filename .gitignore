@@ -13,7 +13,7 @@ update/
 # front-end
 *.log
 .sass-cache
-node_modules
+node_modules/
 public/.tmp
 public/dist
 public/app/vendor
