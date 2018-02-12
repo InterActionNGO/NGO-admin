@@ -38,7 +38,6 @@ gem 'strong_parameters'
 group :development do
   gem 'git-up'
   gem 'capistrano', :require => false
-  gem 'rvm-capistrano', :require => false
   gem 'capistrano-ext'
   gem 'wirble'
   gem 'railroady'

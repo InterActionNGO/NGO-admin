@@ -1,13 +1,15 @@
-require "rvm/capistrano"
-default_run_options[:pty] = true
+# require "rvm/capistrano"
+# default_run_options[:pty] = true
 set :default_stage, "production"
-role :app, linode_production
-role :web, linode_production
-role :db,  linode_production, :primary => true
-set :use_sudo, false
-set :rvm_type, :system
-task :set_staging_flag, :roles => [:app] do
-end
+set :default_environment, {
+  'PATH' => '/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin/rbenv:/home/deploy/.nvm/v0.10.29/bin/node:$PATH'
+}
+role :app, "52.179.82.220"
+role :web, "52.179.82.220"
+role :db, "52.179.82.220"
+
+server '52.179.82.220', :web, :app, :db, :primary => true
+
 
 desc "Restart Application"
 deploy.task :restart, :roles => [:app] do
