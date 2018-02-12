@@ -194,8 +194,6 @@ GEM
     ruby-oembed (0.8.8)
     ruby-ole (1.2.11.7)
     rubyzip (0.9.9)
-    rvm-capistrano (1.5.1)
-      capistrano (~> 2.15.4)
     safe_yaml (0.9.4)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
@@ -277,7 +275,6 @@ DEPENDENCIES
   rr
   rspec-rails
   ruby-oembed
-  rvm-capistrano
   sanitize (= 2.0.3)
   sass
   spreadsheet
