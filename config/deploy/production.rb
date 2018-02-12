@@ -1,5 +1,7 @@
 # require "rvm/capistrano"
 # default_run_options[:pty] = true
+set :rbenv_type, :user
+set :rbenv_ruby, '1.8.7-p384'
 set :default_stage, "production"
 set :default_environment, {
   'PATH' => '/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin/rbenv:/home/deploy/.nvm/v0.10.29/bin/npm:/home/deploy/.nvm/v0.10.29/bin/node:/home/deploy/.nvm/v0.10.29/bin/bower:$PATH'
