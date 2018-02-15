@@ -4,6 +4,7 @@ if Rails.env.production? || Rails.env.staging?
     :address              => "localhost",
     :port                 => 25,
     :domain               => 'ngoaidmap.org',
-    :enable_starttls_auto => true   }
+    :enable_starttls_auto => true,
+    :openssl_verify_mode  => 'peer'   }
   end
 end
