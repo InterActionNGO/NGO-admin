@@ -96,9 +96,6 @@ GEM
       crack (>= 0.1.6)
     geokit (1.6.5)
       multi_json
-    gibbon (1.1.4)
-      httparty
-      multi_json (>= 1.3.4)
     git-up (0.5.12)
       colored (>= 1.2)
       grit
@@ -257,7 +254,6 @@ DEPENDENCIES
   formtastic
   garb
   geokit
-  gibbon
   git-up
   httparty (~> 0.11.0)
   launchy

@@ -33,7 +33,6 @@ gem 'httparty', '~> 0.11.0'
 gem 'whenever', '~> 0.8.4'
 gem 'formtastic'
 gem 'strong_parameters'
-gem 'gibbon'
 
 
 group :development do
