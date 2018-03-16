@@ -104,8 +104,9 @@ class Admin::AdminController < ApplicationController
             (action_name == 'export_projects' || action_name == 'index')) ||
         (controller_name == 'donations' &&
             (['create','destroy'].include?(action_name))) ||
-        controller_name == 'media_resources'
-        controller_name == 'resources'
+        controller_name == 'media_resources' ||
+        controller_name == 'resources' ||
+        controller_name == 'humanitarian_scopes'
     end
   end
   private :check_user_permissions
