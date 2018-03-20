@@ -30,7 +30,7 @@ every 1.day, :at => '6:00 am' do
    rake "iom:iati:sync" 
 end
 
-every 'Tuesday', :at => '4PM' do
+every 'Tuesday', :at => '2:50PM' do
   rake "iom:alerts:projects_about_to_end"
   rake "iom:alerts:six_months_since_last_login"
 end
