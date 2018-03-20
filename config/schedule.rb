@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-job_type :rake, ". $HOME/.env; cd :path; :environment_variable=:environment :bundle_command rake :task :output"
+job_type :rake, '. $HOME/.env; export PATH="$HOME/.rbenv/bin:$PATH"; eval "$(rbenv init -)"; cd :path; :environment_variable=:environment :bundle_command rake :task :output'
 set :bundle_command, "/home/deploy/.rbenv/versions/1.8.7-p374/bin/bundle exec"
 set :output, { :error => '/var/www/shared/cron.front.error.log', :standard => '/var/www/shared/cron.front.log' }
 
@@ -31,7 +31,7 @@ every 1.day, :at => '6:00 am' do
    rake "iom:iati:sync" 
 end
 
-every 'Tuesday', :at => '2:50PM' do
+every 'Tuesday', :at => '9:10AM' do
   rake "iom:alerts:projects_about_to_end"
   rake "iom:alerts:six_months_since_last_login"
 end
