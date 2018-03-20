@@ -18,8 +18,13 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-job_type :rake, ". $HOME/.env; cd :path && :environment_variable=:environment :bundle_command rake :task --silent :output"
-set :bundle_command, "/home/deploy/.rbenv/versions/1.8.7-p374/bin/bundle exec"
+set :rbenv_root, '/home/deploy/.rbenv'
+set :rbenv_version, '1.8.7-p374'
+env 'RBENV_ROOT', rbenv_root
+env 'RBENV_VERSION', rbenv_version
+
+job_type :rake, ". $HOME/.env; cd :path && :environment_variable=:environment bundle rake :task --silent :output"
+#set :bundle_command, "/home/deploy/.rbenv/versions/1.8.7-p374/bin/bundle exec"
 set :output, { :error => '/var/www/shared/cron.front.error.log', :standard => '/var/www/shared/cron.front.log' }
 
 every 1.day, :at => '8:00 am' do
