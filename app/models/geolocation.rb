@@ -22,11 +22,15 @@ class Geolocation < ActiveRecord::Base
   end
   
   def self.countries
-     Geolocation.where(:adm_level => 0)
+     where(:adm_level => 0)
   end
   
   def set_readable_path
     self.readable_path = [self.g0, self.g1, self.g2, self.g3, self.g4].compact.map{|g| Geolocation.where(:uid => g).first.try(:name)}.compact.reject{ |x| x.strip.empty? }.join('>')
+  end
+  
+  def self.get_select_values
+     countries.select('uid, name').order('name asc').collect{ |g| [g.name, g.uid] } 
   end
 
   def reassign_projects(to_geolocation)

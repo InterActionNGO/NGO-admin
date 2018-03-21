@@ -52,19 +52,13 @@
             <a class="combo limited">Worldwide, not limited</a>
         </li>
         <li id="gc_limited_region" class="<%= selected_if_field_present(@site, :geographic_context_country_id) %> option">
-            <a class="limited combo">Limited to a country and region</a>
+            <a class="limited combo">Limited to a country</a>
             <div class="content">
-                <%= f.select :geographic_context_country_id, Country.get_select_values.collect{ |c| [c.name, c.id] }, {:prompt => 'Select a country'}, {:id => 'gc_limited_country_section'}%>
+                <%= f.select :geographic_context_country_id, Geolocation.countries.get_select_values, {:prompt => 'Select a country'}, {:id => 'gc_limited_country_section'}%>
                 <div id="regions"></div>
             </div>
         </li>
-        <li id="gc_limited_bbox" class="<%= selected_if_field_present(@site, :geographic_boundary_box) %> option">
-            <a class="limited combo">Limited by a boundary box</a>
-            <%= f.hidden_field :geographic_boundary_box %>
-            <div class="content">
-                <div id="map_bbox"></div>
-            </div>
-        </li>
+        
     </ul>
   </div>  <!-- field -->
   <h3 class="section museo_sans">PROJECT FILTERING</h3>
